@@ -20997,6 +20997,256 @@ theorem toRemark395ConstructedGlobalCThetaScaleComparisonAudit_endpoint
       audit.sourceBridge_to_globalCTheta_chain,
       audit.dichotomy⟩
 
+set_option linter.style.longLine false in
+/--
+Direct selected-q Remark 3.9.5 endpoint from the strict typed `(Ind2)`
+action-packet theta-pilot source.
+
+This avoids making callers first expose the intermediate quotient source.  Lean
+constructs that quotient source internally, builds the constructed
+Remark 3.9.5 hull/determinant source with the selected q-region, and returns
+the typed-core transport audit at the same boundary.
+-/
+theorem ofFiberInd2ActionPacketSource_toRemark395SelectedQHullLogVolumeAudit_endpoint
+    {β : Type v} [Fintype β]
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (recordThetaPossibleImageUnion recordConcrete))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      packageConcrete.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          hullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        packageConcrete.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      packageConcrete.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordConcrete)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (ofFiberInd2ActionPacketSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion.toSet
+          (ofFiberInd2ActionPacketSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion_subset_recordUnion
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -packageConcrete.preLedger.qSigned)
+    (normalization : packageConcrete.preLedger.normalization) :
+    let quotientSource :=
+      ofFiberInd2ActionPacketSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let constructedSource :=
+      quotientSource.toRemark395ConstructedHolomorphicHullDeterminantSource
+        operation hullOperation determinantOperation hullOperator
+        ob3ob4Source compatibility measure_eq_hullLogVolume
+        tensorPower_bound hullDetBridge_eq q_pilot_positive normalization;
+    let hullCompatibility := quotientSource.toHullCompatibility hullOperator;
+    sourceData.PostProcessionTypedCoreTransportAudit ∧
+      OneSidedSelectedQHullLogVolumeAudit
+        quotientSource.toConstruction constructedSource hullCompatibility rfl ∧
+      constructedSource.qPilotRegion =
+        (quotientSource.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap selectedQChoice)).toSet ∧
+      constructedSource.hullOperator.logVolume constructedSource.qPilotRegion <=
+        packageConcrete.preLedger.thetaSigned ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).logVolume choice₁ =
+            (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).logVolume choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap choice₁ =
+            (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityGenerators.ind3_step choice₁ choice₂ -> False) ∧
+      packageConcrete.preLedger.qSigned <= packageConcrete.preLedger.thetaSigned := by
+  intro quotientSource constructedSource hullCompatibility
+  let selectedEndpoint :=
+    quotientSource.toRemark395SelectedQHullLogVolumeAudit_endpoint
+      operation hullOperation determinantOperation hullOperator
+      ob3ob4Source compatibility measure_eq_hullLogVolume
+      tensorPower_bound hullDetBridge_eq q_pilot_positive normalization
+  let typedAudit := sourceData.postProcessionTypedCoreTransportAudit
+  exact
+    ⟨typedAudit,
+      selectedEndpoint.1,
+      selectedEndpoint.2.1,
+      selectedEndpoint.2.2.2.1,
+      typedAudit.fiberTransport_logVolume_eq,
+      typedAudit.fiberTransport_equalityQuotientMap_eq,
+      typedAudit.equalityQuotient_no_ind3_generator,
+      selectedEndpoint.2.2.2.2.2.2.2⟩
+
+set_option linter.style.longLine false in
+/--
+Direct global \(C_\Theta\) endpoint from the strict typed `(Ind2)`
+action-packet theta-pilot source.
+
+The theorem builds the quotient theta-pilot source and the constructed
+Remark 3.9.5 source internally, preserves the typed-core transport audit, and
+then applies the constructed global-\(C_\Theta\) comparison audit.  The only
+numeric input remains the comparison between the constructed canonical scale
+and the paper/global \(C_\Theta\).
+-/
+theorem ofFiberInd2ActionPacketSource_toRemark395ConstructedGlobalCThetaScaleComparisonAudit_endpoint
+    {β : Type v} [Fintype β]
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (recordThetaPossibleImageUnion recordConcrete))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      packageConcrete.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          hullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        packageConcrete.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      packageConcrete.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordConcrete)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (ofFiberInd2ActionPacketSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion.toSet
+          (ofFiberInd2ActionPacketSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion_subset_recordUnion
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -packageConcrete.preLedger.qSigned)
+    (normalization : packageConcrete.preLedger.normalization)
+    (cTheta : Real)
+    (canonicalCThetaScale_le_cTheta :
+      ((ofFiberInd2ActionPacketSource
+          (record := recordConcrete) (indData := indData)
+          sourceData gluingTorsor selectedQChoice)
+        |>.toRemark395ConstructedHolomorphicHullDeterminantSource
+          operation hullOperation determinantOperation hullOperator
+          ob3ob4Source compatibility measure_eq_hullLogVolume
+          tensorPower_bound hullDetBridge_eq q_pilot_positive
+          normalization).canonicalCThetaScale <= cTheta) :
+    let quotientSource :=
+      ofFiberInd2ActionPacketSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let constructedSource :=
+      quotientSource.toRemark395ConstructedHolomorphicHullDeterminantSource
+        operation hullOperation determinantOperation hullOperator
+        ob3ob4Source compatibility measure_eq_hullLogVolume
+        tensorPower_bound hullDetBridge_eq q_pilot_positive normalization;
+    sourceData.PostProcessionTypedCoreTransportAudit ∧
+      constructedSource.qPilotRegion =
+        (quotientSource.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap selectedQChoice)).toSet ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).logVolume choice₁ =
+            (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).logVolume choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap choice₁ =
+            (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityGenerators.ind3_step choice₁ choice₂ -> False) ∧
+      packageConcrete.preLedger.qSigned <= packageConcrete.preLedger.thetaSigned ∧
+      packageConcrete.preLedger.thetaSigned <=
+        cTheta * (-packageConcrete.preLedger.qSigned) ∧
+      constructedSource.hullOperator.logVolume constructedSource.qPilotRegion <=
+        cTheta * (-packageConcrete.preLedger.qSigned) ∧
+      ((packageConcrete.preLedger.qSigned =
+          packageConcrete.preLedger.thetaSigned ∧
+          packageConcrete.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) := by
+  intro quotientSource constructedSource
+  let globalEndpoint :=
+    quotientSource.toRemark395ConstructedGlobalCThetaScaleComparisonAudit_endpoint
+      operation hullOperation determinantOperation hullOperator
+      ob3ob4Source compatibility measure_eq_hullLogVolume
+      tensorPower_bound hullDetBridge_eq q_pilot_positive normalization
+      cTheta canonicalCThetaScale_le_cTheta
+  let typedAudit := sourceData.postProcessionTypedCoreTransportAudit
+  exact
+    ⟨typedAudit,
+      globalEndpoint.2.1,
+      typedAudit.fiberTransport_logVolume_eq,
+      typedAudit.fiberTransport_equalityQuotientMap_eq,
+      typedAudit.equalityQuotient_no_ind3_generator,
+      globalEndpoint.2.2.1,
+      globalEndpoint.2.2.2.1,
+      globalEndpoint.2.2.2.2.1,
+      globalEndpoint.2.2.2.2.2⟩
+
 end ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
 
 set_option linter.style.longLine false in
