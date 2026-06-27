@@ -25095,6 +25095,78 @@ theorem flProcessionRemark395Ob5Ob6_endpoint
         hchoice_le_HXi,
         hxi_exact_log⟩
 
+set_option linter.style.longLine false in
+/--
+`F_l` procession transition through the canonical `Phi` family and constructed
+exact `Xi` family.
+
+This removes the arbitrary Ob6 approximant-family inputs from the procession
+boundary.  The `Phi(P_B)` family is the canonical hull approximant of the
+Remark 3.9.5 possible-image family, and `Xi(P_B)` is built from the exact
+source-paper log-volume calibration.
+-/
+theorem flProcessionRemark395CanonicalExactXiOb5Ob6_endpoint
+    (construction :
+      IUTStage1Theorem311OneSidedMultiradialConstructionSource
+        (package := package) record l)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (exactXiSource :
+      let familySource :=
+        construction.equalityQuotientPossibleImages
+          |>.toRemark395PossibleImageFamilySource hullOperator;
+      IUTStage1Remark395PossibleImageExactXiFamilySource familySource)
+    (t : ZMod l.value) (choice : index) :
+    let translatedChoice :=
+      construction.flProcessionAction.transition t choice;
+    let familySource :=
+      construction.equalityQuotientPossibleImages.toRemark395PossibleImageFamilySource
+        hullOperator;
+    let phiFamily :=
+      IUTStage1HullLogVolumeApproximantFamily.canonical
+        familySource.hullData familySource.familyUnion;
+    let xiFamily := exactXiSource.toXiFamilyWithIndex phiFamily.canonicalIndex;
+    Fintype.card (ZMod l.value) = l.value ∧
+      construction.typedIndeterminacyCore.equalityQuotientMap choice =
+        construction.typedIndeterminacyCore.equalityQuotientMap
+          translatedChoice ∧
+      familySource.possibleRegion
+          (construction.typedIndeterminacyCore.equalityQuotientMap choice) =
+        familySource.possibleRegion
+          (construction.typedIndeterminacyCore.equalityQuotientMap
+            translatedChoice) ∧
+      familySource.familyUnion ⊆ familySource.canonicalHull ∧
+      familySource.possibleRegion
+          (construction.typedIndeterminacyCore.equalityQuotientMap choice) ⊆
+        familySource.canonicalHull ∧
+      familySource.possibleRegion
+          (construction.typedIndeterminacyCore.equalityQuotientMap
+            translatedChoice) ⊆
+        familySource.canonicalHull ∧
+      familySource.HPhi phiFamily = familySource.canonicalHull ∧
+      familySource.hullOperator.logVolume familySource.familyUnion <=
+        familySource.hullOperator.logVolume (familySource.HPhi phiFamily) ∧
+      familySource.hullOperator.logVolume
+          (familySource.possibleRegion
+            (construction.typedIndeterminacyCore.equalityQuotientMap choice)) <=
+        familySource.hullOperator.logVolume (familySource.HPhi phiFamily) ∧
+      familySource.HXi xiFamily = familySource.canonicalHull ∧
+      familySource.hullOperator.logVolume familySource.familyUnion <=
+        familySource.hullOperator.logVolume (familySource.HXi xiFamily) ∧
+      familySource.hullOperator.logVolume
+          (familySource.possibleRegion
+            (construction.typedIndeterminacyCore.equalityQuotientMap choice)) <=
+        familySource.hullOperator.logVolume (familySource.HXi xiFamily) ∧
+      familySource.hullOperator.logVolume
+          ((xiFamily.exactApproximant phiFamily.canonicalIndex).approximant).approximant =
+        familySource.hullOperator.logVolume familySource.familyUnion :=
+  by
+    intro translatedChoice familySource phiFamily xiFamily
+    exact
+      flProcessionRemark395Ob5Ob6_endpoint
+        (construction := construction) hullOperator phiFamily xiFamily
+        phiFamily.canonicalIndex t choice
+
 end IUTStage1Theorem311OneSidedMultiradialConstructionSource
 
 end IUTStage1Theorem311HullDetSourceConstructor
