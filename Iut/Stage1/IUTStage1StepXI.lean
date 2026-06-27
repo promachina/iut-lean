@@ -11063,6 +11063,9 @@ structure ActionAudit
     ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
       (sourceData.fullLabelSource choice).FullLabelProcessionChoiceLogVolumeAudit
         indData
+  absolute_label_choice_audit :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (sourceData.fullLabelSource choice).AbsoluteLabelProcessionChoiceAudit
   action_label_cardinality :
     Fintype.card (ZMod l.value) = l.value
   action_zero :
@@ -11098,6 +11101,12 @@ structure ActionAudit
     ∀ t (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l),
       ((sourceData.action gluingTorsor).transition t choice).coordinate.flLabel =
         zmodLabelTranslate l t choice.coordinate.flLabel
+  action_absolute_label_eq :
+    ∀ t (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l),
+      (sourceData.fullLabelSource choice).toAbsoluteLabelProcessionSource.absoluteLabel
+          (((sourceData.action gluingTorsor).transition t choice).coordinate.flLabel) =
+        (sourceData.fullLabelSource choice).toAbsoluteLabelProcessionSource.absoluteLabel
+          (zmodLabelTranslate l t choice.coordinate.flLabel)
   action_equalityQuotientMap_eq :
     ∀ t (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l),
       (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
@@ -11124,6 +11133,10 @@ theorem actionAudit
         exact
           (sourceData.fullLabelSource choice).fullLabelProcessionChoiceLogVolumeAudit
             indData,
+      absolute_label_choice_audit := by
+        intro choice
+        exact
+          (sourceData.fullLabelSource choice).absoluteLabelProcessionChoiceAudit,
       action_label_cardinality := actionEndpoint.1,
       action_zero := actionEndpoint.2.1,
       action_add := actionEndpoint.2.2.1,
@@ -11143,6 +11156,13 @@ theorem actionAudit
           (sourceData.fullLabelSource choice).logVolume_choiceAt_eq indData
             ((action.transition t choice).coordinate.flLabel),
       action_transition_label_eq := actionEndpoint.2.2.2.2,
+      action_absolute_label_eq := by
+        intro t choice
+        simpa [ConcreteHodgeTheaterLogThetaFullLabelProcessionSource.action]
+          using
+            congrArg
+              ((sourceData.fullLabelSource choice).toAbsoluteLabelProcessionSource.absoluteLabel)
+              (actionEndpoint.2.2.2.2 t choice),
       action_equalityQuotientMap_eq := actionEndpoint.2.2.2.1 }
 
 set_option linter.style.longLine false in

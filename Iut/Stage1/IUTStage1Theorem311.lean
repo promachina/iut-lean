@@ -679,6 +679,165 @@ theorem fullLabelProcessionAudit
 end IUTStage1FLLabelProcessionSource
 
 /--
+Plus-minus/absolute label procession source over a fixed log-theta lattice node.
+
+Remark 3.11.2 distinguishes the full arithmetic-holomorphic `F_l` labels from
+the labels in `|F_l|` that feed the mono-analytic `±`-processions.  In the finite
+model already present in this corridor, `|F_l|` is the zero label together with
+the sign quotient of nonzero `ZMod l` labels.
+-/
+structure IUTStage1AbsoluteFLLabelProcessionSource
+    (l : PrimeGeFive) where
+  fullLabelSource : IUTStage1FLLabelProcessionSource l
+
+namespace IUTStage1AbsoluteFLLabelProcessionSource
+
+variable {l : PrimeGeFive}
+
+/-- Build the `|F_l|` source by quotienting a full `F_l` source by sign. -/
+def ofFullLabelSource
+    (source : IUTStage1FLLabelProcessionSource l) :
+    IUTStage1AbsoluteFLLabelProcessionSource l :=
+  { fullLabelSource := source }
+
+/-- The absolute/plus-minus label attached to a full `F_l` coordinate. -/
+def absoluteLabel
+    (_source : IUTStage1AbsoluteFLLabelProcessionSource l)
+    (label : ZMod l.value) :
+    IUTStage1ZModCuspFullLabel l :=
+  IUTStage1ZModCuspFullLabel.fromCoordinate l label
+
+/-- The absolute/plus-minus label read from a concrete log-theta coordinate. -/
+def absoluteLabelAtCoordinate
+    (_source : IUTStage1AbsoluteFLLabelProcessionSource l)
+    (coordinate : IUTStage1Theorem311LogThetaLatticeCoordinate l) :
+    IUTStage1ZModCuspFullLabel l :=
+  IUTStage1ZModCuspFullLabel.fromCoordinate l coordinate.flLabel
+
+theorem absoluteLabel_zero
+    (source : IUTStage1AbsoluteFLLabelProcessionSource l) :
+    source.absoluteLabel (0 : ZMod l.value) = IUTStage1ZModCuspFullLabel.zero :=
+  IUTStage1ZModCuspFullLabel.fromCoordinate_zero l
+
+theorem absoluteLabel_nonzero
+    (source : IUTStage1AbsoluteFLLabelProcessionSource l)
+    (label : ZMod l.value) (hlabel : label ≠ 0) :
+    source.absoluteLabel label =
+      IUTStage1ZModCuspFullLabel.nonzero
+        (zmodSignLabelFromCoordinate l label hlabel) :=
+  IUTStage1ZModCuspFullLabel.fromCoordinate_nonzero l label hlabel
+
+theorem absoluteLabel_neg
+    (source : IUTStage1AbsoluteFLLabelProcessionSource l)
+    (label : ZMod l.value) (hlabel : label ≠ 0) :
+    source.absoluteLabel (-label) = source.absoluteLabel label :=
+  IUTStage1ZModCuspFullLabel.fromCoordinate_neg l label hlabel
+
+theorem absoluteLabel_eq_iff
+    (source : IUTStage1AbsoluteFLLabelProcessionSource l)
+    (label₁ label₂ : ZMod l.value) :
+    source.absoluteLabel label₁ = source.absoluteLabel label₂ ↔
+      label₁ = label₂ ∨ label₁ = -label₂ :=
+  IUTStage1ZModCuspFullLabel.fromCoordinate_eq_iff label₁ label₂
+
+/-- Every label of `|F_l|` is represented by a full `F_l` label. -/
+theorem all_absolute_labels_present
+    (source : IUTStage1AbsoluteFLLabelProcessionSource l) :
+    ∀ absLabel : IUTStage1ZModCuspFullLabel l,
+      ∃ label : ZMod l.value, source.absoluteLabel label = absLabel :=
+  IUTStage1ZModCuspFullLabel.fromCoordinate_surjective
+
+theorem nonzero_absolute_label_fiber_eq_sign_pair
+    (source : IUTStage1AbsoluteFLLabelProcessionSource l)
+    (absLabel : (zmodSignAction l).SignLabelQuotient) :
+    ∃ (label : ZMod l.value) (_hlabel : label ≠ 0),
+      ∀ k : ZMod l.value,
+        source.absoluteLabel k =
+            IUTStage1ZModCuspFullLabel.nonzero absLabel ↔
+          k = label ∨ k = -label :=
+  IUTStage1ZModCuspFullLabel.nonzero_fullLabel_fiber_eq_sign_pair absLabel
+
+set_option linter.style.longLine false in
+/--
+Compatibility of the ordinary `F_l` procession action with the induced
+`|F_l|`/`±`-procession label map.
+
+This is the Lean form of the Remark 3.11.2 compatibility between processions and
+`±`-processions relative to the natural map `F_l -> |F_l|`.
+-/
+theorem ordinary_to_absolute_procession_compatibility
+    (source : IUTStage1AbsoluteFLLabelProcessionSource l)
+    (t label : ZMod l.value) :
+    source.absoluteLabel (zmodLabelTranslate l t label) =
+      source.absoluteLabelAtCoordinate
+        ((source.fullLabelSource.coordinate label).translateFLLabel t) :=
+  rfl
+
+theorem full_label_coordinate_absoluteLabel
+    (source : IUTStage1AbsoluteFLLabelProcessionSource l)
+    (label : ZMod l.value) :
+    source.absoluteLabel label =
+      source.absoluteLabelAtCoordinate
+        (source.fullLabelSource.coordinate label) :=
+  rfl
+
+set_option linter.style.longLine false in
+/--
+Audit for the passage `F_l -> |F_l| -> ±`-processions in Remark 3.11.2.
+
+The audit reuses the full-label no-omission/cardinality facts, then proves the
+source-paper quotient facts: zero is retained, nonzero labels descend to the
+sign quotient, opposite labels are identified, every `|F_l|` label occurs, and
+ordinary processions are compatible with `±`-processions.
+-/
+structure AbsoluteLabelProcessionAudit
+    (source : IUTStage1AbsoluteFLLabelProcessionSource l) : Prop where
+  full_label_audit : source.fullLabelSource.FullLabelProcessionAudit
+  all_absolute_labels_present :
+    ∀ absLabel : IUTStage1ZModCuspFullLabel l,
+      ∃ label : ZMod l.value, source.absoluteLabel label = absLabel
+  zero_label :
+    source.absoluteLabel (0 : ZMod l.value) = IUTStage1ZModCuspFullLabel.zero
+  nonzero_label :
+    ∀ (label : ZMod l.value) (hlabel : label ≠ 0),
+      source.absoluteLabel label =
+        IUTStage1ZModCuspFullLabel.nonzero
+          (zmodSignLabelFromCoordinate l label hlabel)
+  neg_identifies_opposite_labels :
+    ∀ (label : ZMod l.value) (_hlabel : label ≠ 0),
+      source.absoluteLabel (-label) = source.absoluteLabel label
+  quotient_identification :
+    ∀ label₁ label₂ : ZMod l.value,
+      source.absoluteLabel label₁ = source.absoluteLabel label₂ ↔
+        label₁ = label₂ ∨ label₁ = -label₂
+  ordinary_to_absolute_procession_compatibility :
+    ∀ t label : ZMod l.value,
+      source.absoluteLabel (zmodLabelTranslate l t label) =
+        source.absoluteLabelAtCoordinate
+          ((source.fullLabelSource.coordinate label).translateFLLabel t)
+
+theorem absoluteLabelProcessionAudit
+    (source : IUTStage1AbsoluteFLLabelProcessionSource l) :
+    source.AbsoluteLabelProcessionAudit :=
+  { full_label_audit := source.fullLabelSource.fullLabelProcessionAudit,
+    all_absolute_labels_present := source.all_absolute_labels_present,
+    zero_label := source.absoluteLabel_zero,
+    nonzero_label := by
+      intro label hlabel
+      exact source.absoluteLabel_nonzero label hlabel,
+    neg_identifies_opposite_labels := by
+      intro label hlabel
+      exact source.absoluteLabel_neg label hlabel,
+    quotient_identification := by
+      intro label₁ label₂
+      exact source.absoluteLabel_eq_iff label₁ label₂,
+    ordinary_to_absolute_procession_compatibility := by
+      intro t label
+      exact source.ordinary_to_absolute_procession_compatibility t label }
+
+end IUTStage1AbsoluteFLLabelProcessionSource
+
+/--
 Concrete Hodge-theater/log-theta choice for Theorem 3.11.
 
 This is the first choice space in the corridor whose indices are not anonymous:
@@ -1183,6 +1342,83 @@ theorem thetaPilotClass_choiceAt
     (label : ZMod l.value) :
     thetaPilotClass (source.choiceAt label) = thetaPilotClass choice :=
   (ind1_thetaPilotClass_eq (source.ind1Step_choiceAt label)).symm
+
+/-- The `|F_l|`/`±`-procession source induced by a choice-level full-label source. -/
+def toAbsoluteLabelProcessionSource
+    {choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : FLLabelProcessionChoiceSource choice) :
+    IUTStage1AbsoluteFLLabelProcessionSource l :=
+  IUTStage1AbsoluteFLLabelProcessionSource.ofFullLabelSource source.labelSource
+
+theorem absoluteLabel_choiceAt
+    {choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : FLLabelProcessionChoiceSource choice)
+    (label : ZMod l.value) :
+    source.toAbsoluteLabelProcessionSource.absoluteLabel label =
+      source.toAbsoluteLabelProcessionSource.absoluteLabelAtCoordinate
+        (source.choiceAt label).coordinate :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem ordinary_to_absolute_choice_procession_compatibility
+    {choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : FLLabelProcessionChoiceSource choice)
+    (t label : ZMod l.value) :
+    source.toAbsoluteLabelProcessionSource.absoluteLabel
+        (zmodLabelTranslate l t label) =
+      source.toAbsoluteLabelProcessionSource.absoluteLabelAtCoordinate
+        ((source.labelSource.coordinate label).translateFLLabel t) :=
+  source.toAbsoluteLabelProcessionSource
+    |>.ordinary_to_absolute_procession_compatibility t label
+
+set_option linter.style.longLine false in
+/--
+Choice-level audit for the Remark 3.11.2 passage from full processions to
+`±`-processions.
+
+It says that the choice-level full `F_l` procession induces a no-omission
+`|F_l|` label family, that choice representatives carry the induced absolute
+label, and that the ordinary procession action is compatible with the
+plus-minus procession label map.
+-/
+structure AbsoluteLabelProcessionChoiceAudit
+    {choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : FLLabelProcessionChoiceSource choice) : Prop where
+  source_audit :
+    source.toAbsoluteLabelProcessionSource.AbsoluteLabelProcessionAudit
+  all_absolute_labels_present :
+    ∀ absLabel : IUTStage1ZModCuspFullLabel l,
+      ∃ label : ZMod l.value,
+        source.toAbsoluteLabelProcessionSource.absoluteLabel label = absLabel
+  choice_absolute_label :
+    ∀ label : ZMod l.value,
+      source.toAbsoluteLabelProcessionSource.absoluteLabel label =
+        source.toAbsoluteLabelProcessionSource.absoluteLabelAtCoordinate
+          (source.choiceAt label).coordinate
+  ordinary_to_absolute_procession_compatibility :
+    ∀ t label : ZMod l.value,
+      source.toAbsoluteLabelProcessionSource.absoluteLabel
+          (zmodLabelTranslate l t label) =
+        source.toAbsoluteLabelProcessionSource.absoluteLabelAtCoordinate
+          ((source.labelSource.coordinate label).translateFLLabel t)
+
+theorem absoluteLabelProcessionChoiceAudit
+    {choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : FLLabelProcessionChoiceSource choice) :
+    AbsoluteLabelProcessionChoiceAudit source :=
+  { source_audit :=
+      source.toAbsoluteLabelProcessionSource.absoluteLabelProcessionAudit,
+    all_absolute_labels_present := by
+      intro absLabel
+      exact
+        source.toAbsoluteLabelProcessionSource.all_absolute_labels_present
+          absLabel,
+    choice_absolute_label := by
+      intro label
+      exact source.absoluteLabel_choiceAt label,
+    ordinary_to_absolute_procession_compatibility := by
+      intro t label
+      exact source.ordinary_to_absolute_choice_procession_compatibility t label }
 
 set_option linter.style.longLine false in
 /--
