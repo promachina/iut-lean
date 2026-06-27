@@ -28873,6 +28873,380 @@ end ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellChartSourc
 
 set_option linter.style.longLine false in
 /--
+Log-shell image source for two-sided valuation-ball exactness.
+
+This lowers the log-shell chart boundary once more.  Instead of naming a
+coordinate function on transported theta-region points, the source states that
+the transported theta region is exactly the realization image of a local
+log-shell region, and that this log-shell region agrees with the compact-open
+valuation ball up to the two containments needed downstream.  Lean chooses the
+local coordinate from the image statement and derives the previous
+`LogShellChartSource`.
+-/
+structure ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellImageSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    {η : Type z} {K : Type x}
+    {β : Type v} {γ : Type w} {Λ : Type max u v w x z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (valuationSource :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        (Point target)
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric))
+        η K β γ Λ) :
+    Type (max u v w x z) where
+  cellThetaClass :
+    β ->
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric)
+  coverPlace : β -> γ
+  logShellRegion : β -> Set K
+  fallbackCoordinate : β -> K
+  fallbackCoordinate_mem_logShell :
+    ∀ index : β, fallbackCoordinate index ∈ logShellRegion index
+  thetaRegion_subset_realizedLogShell :
+    ∀ index : β,
+      let factor :=
+        valuationSource.valuationCover.valuationBallFactor
+          index (coverPlace index);
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        (cellThetaClass index)).toSet ⊆
+        factor.realizedRegion (logShellRegion index)
+  realizedLogShell_subset_thetaRegion :
+    ∀ index : β,
+      let factor :=
+        valuationSource.valuationCover.valuationBallFactor
+          index (coverPlace index);
+      factor.realizedRegion (logShellRegion index) ⊆
+        (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+          (cellThetaClass index)).toSet
+  logShell_subset_valuationBall :
+    ∀ index : β,
+      let factor :=
+        valuationSource.valuationCover.valuationBallFactor
+          index (coverPlace index);
+      logShellRegion index ⊆
+        factor.valuationBall factor.compactOpenRadius
+  valuationBall_subset_logShell :
+    ∀ index : β,
+      let factor :=
+        valuationSource.valuationCover.valuationBallFactor
+          index (coverPlace index);
+      factor.valuationBall factor.compactOpenRadius ⊆
+        logShellRegion index
+  thetaRegion_point_in_valuationRegion :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      ∀ point : Point target,
+        point ∈
+          (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+            thetaClass).toSet ->
+          point ∈ valuationSource.valuationCover.possibleRegion thetaClass
+  valuationRegion_point_in_thetaRegion :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      ∀ point : Point target,
+        point ∈ valuationSource.valuationCover.possibleRegion thetaClass ->
+          point ∈
+            (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+              thetaClass).toSet
+
+namespace ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellImageSource
+
+variable
+  {sourceData :
+    ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+      (source := source) (target := target) (l := l)
+      recordConcrete indData}
+  {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+  {selectedQChoice :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+  {η : Type z} {K : Type x}
+  {β : Type v} {γ : Type w} {Λ : Type max u v w x z}
+  [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+  [Fintype β] [Fintype γ]
+  {valuationSource :
+    IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+      (Point target)
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric))
+      η K β γ Λ}
+
+set_option linter.style.longLine false in
+theorem thetaRegion_point_lifts_to_logShell
+    (imageSource :
+      ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellImageSource
+        sourceData gluingTorsor selectedQChoice valuationSource)
+    (index : β) :
+    let factor :=
+      valuationSource.valuationCover.valuationBallFactor
+        index (imageSource.coverPlace index);
+    ∀ point : Point target,
+      point ∈
+        (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+          (imageSource.cellThetaClass index)).toSet ->
+        ∃ localPoint : K,
+          localPoint ∈ imageSource.logShellRegion index ∧
+            factor.realization localPoint = point := by
+  intro factor point hpoint
+  have hrealized :
+      point ∈ factor.realizedRegion (imageSource.logShellRegion index) :=
+    imageSource.thetaRegion_subset_realizedLogShell index hpoint
+  have himage :
+      point ∈ factor.realization '' imageSource.logShellRegion index := by
+    rw [← factor.realizedRegion_eq_image (imageSource.logShellRegion index)]
+    exact hrealized
+  rcases himage with ⟨localPoint, hlocal, hrealize⟩
+  exact ⟨localPoint, hlocal, hrealize⟩
+
+set_option linter.style.longLine false in
+noncomputable def thetaRegionLogShellCoordinate
+    (imageSource :
+      ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellImageSource
+        sourceData gluingTorsor selectedQChoice valuationSource)
+    (index : β) (point : Point target) : K := by
+  classical
+  by_cases hpoint :
+      point ∈
+        (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+          (imageSource.cellThetaClass index)).toSet
+  · exact
+      Classical.choose
+        (imageSource.thetaRegion_point_lifts_to_logShell index point hpoint)
+  · exact imageSource.fallbackCoordinate index
+
+set_option linter.style.longLine false in
+theorem thetaRegionLogShellCoordinate_mem_logShell
+    (imageSource :
+      ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellImageSource
+        sourceData gluingTorsor selectedQChoice valuationSource)
+    (index : β) :
+    ∀ point : Point target,
+      point ∈
+        (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+          (imageSource.cellThetaClass index)).toSet ->
+        imageSource.thetaRegionLogShellCoordinate index point ∈
+          imageSource.logShellRegion index := by
+  classical
+  intro point hpoint
+  have hspec :=
+    Classical.choose_spec
+      (imageSource.thetaRegion_point_lifts_to_logShell index point hpoint)
+  unfold thetaRegionLogShellCoordinate
+  rw [dif_pos hpoint]
+  exact hspec.1
+
+set_option linter.style.longLine false in
+theorem thetaRegionLogShellCoordinate_realization
+    (imageSource :
+      ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellImageSource
+        sourceData gluingTorsor selectedQChoice valuationSource)
+    (index : β) :
+    let factor :=
+      valuationSource.valuationCover.valuationBallFactor
+        index (imageSource.coverPlace index);
+    ∀ point : Point target,
+      point ∈
+        (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+          (imageSource.cellThetaClass index)).toSet ->
+        factor.realization
+            (imageSource.thetaRegionLogShellCoordinate index point) = point := by
+  classical
+  intro factor point hpoint
+  have hspec :=
+    Classical.choose_spec
+      (imageSource.thetaRegion_point_lifts_to_logShell index point hpoint)
+  unfold thetaRegionLogShellCoordinate
+  rw [dif_pos hpoint]
+  exact hspec.2
+
+set_option linter.style.longLine false in
+theorem valuationBall_point_realizes_in_thetaRegion
+    (imageSource :
+      ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellImageSource
+        sourceData gluingTorsor selectedQChoice valuationSource)
+    (index : β) :
+    let factor :=
+      valuationSource.valuationCover.valuationBallFactor
+        index (imageSource.coverPlace index);
+    ∀ localPoint : K,
+      factor.valuationNorm localPoint <= factor.compactOpenRadius ->
+        factor.realization localPoint ∈
+          (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+            (imageSource.cellThetaClass index)).toSet := by
+  intro factor localPoint hnorm
+  have hball :
+      localPoint ∈ factor.valuationBall factor.compactOpenRadius := by
+    simpa [IUTStage1ValuationBallAdditiveHaarNormalizationSource.valuationBall]
+      using hnorm
+  have hlog :
+      localPoint ∈ imageSource.logShellRegion index :=
+    imageSource.valuationBall_subset_logShell index hball
+  have hrealized :
+      factor.realization localPoint ∈
+        factor.realizedRegion (imageSource.logShellRegion index) := by
+    rw [factor.realizedRegion_eq_image (imageSource.logShellRegion index)]
+    exact ⟨localPoint, hlog, rfl⟩
+  exact imageSource.realizedLogShell_subset_thetaRegion index hrealized
+
+set_option linter.style.longLine false in
+noncomputable def toLogShellChartSource
+    (imageSource :
+      ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellImageSource
+        sourceData gluingTorsor selectedQChoice valuationSource) :
+    ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellChartSource
+      sourceData gluingTorsor selectedQChoice valuationSource where
+  cellThetaClass := imageSource.cellThetaClass
+  coverPlace := imageSource.coverPlace
+  logShellRegion := imageSource.logShellRegion
+  thetaRegionLogShellCoordinate :=
+    imageSource.thetaRegionLogShellCoordinate
+  thetaRegionLogShellCoordinate_mem_logShell :=
+    imageSource.thetaRegionLogShellCoordinate_mem_logShell
+  logShell_subset_valuationBall :=
+    imageSource.logShell_subset_valuationBall
+  thetaRegionLogShellCoordinate_realization :=
+    imageSource.thetaRegionLogShellCoordinate_realization
+  valuationBall_point_realizes_in_thetaRegion :=
+    imageSource.valuationBall_point_realizes_in_thetaRegion
+  thetaRegion_point_in_valuationRegion :=
+    imageSource.thetaRegion_point_in_valuationRegion
+  valuationRegion_point_in_thetaRegion :=
+    imageSource.valuationRegion_point_in_thetaRegion
+
+set_option linter.style.longLine false in
+noncomputable def toValuationBallLocalChartSource
+    (imageSource :
+      ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellImageSource
+        sourceData gluingTorsor selectedQChoice valuationSource) :
+    ConcreteValuationBallThetaClassFiberTransportValuationBallLocalChartSource
+      sourceData gluingTorsor selectedQChoice valuationSource :=
+  imageSource.toLogShellChartSource.toValuationBallLocalChartSource
+
+set_option linter.style.longLine false in
+noncomputable def toValuationBallPointwiseSource
+    (imageSource :
+      ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellImageSource
+        sourceData gluingTorsor selectedQChoice valuationSource) :
+    ConcreteValuationBallThetaClassFiberTransportValuationBallPointwiseSource
+      sourceData gluingTorsor selectedQChoice valuationSource :=
+  imageSource.toLogShellChartSource.toValuationBallPointwiseSource
+
+set_option linter.style.longLine false in
+noncomputable def toValuationBallExactSource
+    (imageSource :
+      ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellImageSource
+        sourceData gluingTorsor selectedQChoice valuationSource) :
+    ConcreteValuationBallThetaClassFiberTransportValuationBallExactSource
+      sourceData gluingTorsor selectedQChoice valuationSource :=
+  imageSource.toLogShellChartSource.toValuationBallExactSource
+
+set_option linter.style.longLine false in
+noncomputable def toValuationNormGaugeSource
+    (imageSource :
+      ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellImageSource
+        sourceData gluingTorsor selectedQChoice valuationSource) :
+    ConcreteValuationBallThetaClassFiberTransportValuationNormGaugeSource
+      sourceData gluingTorsor selectedQChoice valuationSource :=
+  imageSource.toLogShellChartSource.toValuationNormGaugeSource
+
+set_option linter.style.longLine false in
+theorem thetaRegion_toSet_eq_realizedLogShell
+    (imageSource :
+      ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellImageSource
+        sourceData gluingTorsor selectedQChoice valuationSource)
+    (index : β) :
+    let factor :=
+      valuationSource.valuationCover.valuationBallFactor
+        index (imageSource.coverPlace index);
+    (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+      (imageSource.cellThetaClass index)).toSet =
+      factor.realizedRegion (imageSource.logShellRegion index) :=
+  by
+    intro factor
+    exact
+      Set.Subset.antisymm
+        (imageSource.thetaRegion_subset_realizedLogShell index)
+        (imageSource.realizedLogShell_subset_thetaRegion index)
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (imageSource :
+      ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellImageSource
+        sourceData gluingTorsor selectedQChoice valuationSource) :
+    (∀ index : β,
+      imageSource.fallbackCoordinate index ∈ imageSource.logShellRegion index) ∧
+      (∀ index : β,
+        let factor :=
+          valuationSource.valuationCover.valuationBallFactor
+            index (imageSource.coverPlace index);
+        (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+          (imageSource.cellThetaClass index)).toSet =
+          factor.realizedRegion (imageSource.logShellRegion index)) ∧
+      (∀ index : β,
+        let factor :=
+          valuationSource.valuationCover.valuationBallFactor
+            index (imageSource.coverPlace index);
+        imageSource.logShellRegion index ⊆
+          factor.valuationBall factor.compactOpenRadius) ∧
+      (∀ index : β,
+        let factor :=
+          valuationSource.valuationCover.valuationBallFactor
+            index (imageSource.coverPlace index);
+        factor.valuationBall factor.compactOpenRadius ⊆
+          imageSource.logShellRegion index) ∧
+      (∀ index : β,
+        ∀ point : Point target,
+          point ∈
+            (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+              (imageSource.cellThetaClass index)).toSet ->
+            imageSource.thetaRegionLogShellCoordinate index point ∈
+              imageSource.logShellRegion index) ∧
+      (∀ index : β,
+        let factor :=
+          valuationSource.valuationCover.valuationBallFactor
+            index (imageSource.coverPlace index);
+        ∀ point : Point target,
+          point ∈
+            (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+              (imageSource.cellThetaClass index)).toSet ->
+            factor.realization
+                (imageSource.thetaRegionLogShellCoordinate index point) =
+              point) ∧
+      (let logShellSource := imageSource.toLogShellChartSource;
+      let localChartSource := logShellSource.toValuationBallLocalChartSource;
+      let pointwiseSource := localChartSource.toValuationBallPointwiseSource;
+      ∀ index : β,
+        let factor :=
+          valuationSource.valuationCover.valuationBallFactor
+            index (pointwiseSource.coverPlace index);
+        (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+          (pointwiseSource.cellThetaClass index)).toSet =
+          factor.realizedRegion (factor.valuationBall factor.compactOpenRadius)) :=
+  let logShellSource := imageSource.toLogShellChartSource
+  let localChartSource := logShellSource.toValuationBallLocalChartSource
+  let pointwiseSource := localChartSource.toValuationBallPointwiseSource
+  ⟨imageSource.fallbackCoordinate_mem_logShell,
+    imageSource.thetaRegion_toSet_eq_realizedLogShell,
+    imageSource.logShell_subset_valuationBall,
+    imageSource.valuationBall_subset_logShell,
+    imageSource.thetaRegionLogShellCoordinate_mem_logShell,
+    imageSource.thetaRegionLogShellCoordinate_realization,
+    pointwiseSource.endpoint.2.2.2.2.1⟩
+
+end ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellImageSource
+
+set_option linter.style.longLine false in
+/--
 Principal valuation-ball provenance for the product-hull exact-`Xi(P_B)`
 source.
 
@@ -32543,6 +32917,139 @@ theorem sourceLevelTransportPrincipalValuationBallThetaClassFiberTransportValuat
     measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
     q_pilot_positive normalization cTheta canonicalCThetaScale_le_cTheta
     logShellSource.toValuationBallLocalChartSource
+    hullOperator_eq_principalProductHullOperator t
+
+set_option linter.style.longLine false in
+/--
+Log-shell-image valuation-ball transport principal valuation-ball exact-`Xi`
+global `C_Theta` audit.
+
+This lowers the log-shell-chart endpoint by deriving the pointwise local
+coordinate from the realized-image statement for the local log-shell region.
+-/
+theorem sourceLevelTransportPrincipalValuationBallThetaClassFiberTransportValuationBallLogShellImageFamilyExactXiSelectedQRemark395GlobalCThetaAudit
+    {β : Type v} [Fintype β]
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (recordThetaPossibleImageUnion recordConcrete))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      packageConcrete.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          hullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        packageConcrete.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      packageConcrete.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordConcrete)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (ofFiberInd2ActionPacketTransportSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion.toSet
+          (ofFiberInd2ActionPacketTransportSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion_subset_recordUnion
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -packageConcrete.preLedger.qSigned)
+    (normalization : packageConcrete.preLedger.normalization)
+    (cTheta : Real)
+    (canonicalCThetaScale_le_cTheta :
+      ((ofFiberInd2ActionPacketTransportSource
+          (record := recordConcrete) (indData := indData)
+          sourceData gluingTorsor selectedQChoice)
+        |>.toRemark395ConstructedHolomorphicHullDeterminantSource
+          operation hullOperation determinantOperation hullOperator
+          ob3ob4Source compatibility measure_eq_hullLogVolume
+          tensorPower_bound hullDetBridge_eq q_pilot_positive
+          normalization).canonicalCThetaScale <= cTheta)
+    {η : Type z} {K : Type x}
+    {βv : Type v} {γv : Type w} {Λ : Type max u v w x z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype βv] [Fintype γv]
+    {valuationSource :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        (Point target)
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric))
+        η K βv γv Λ}
+    (imageSource :
+      ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellImageSource
+        sourceData gluingTorsor selectedQChoice valuationSource)
+    (hullOperator_eq_principalProductHullOperator :
+      hullOperator =
+        valuationSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator)
+    (t : ZMod l.value) :
+    let logShellSource := imageSource.toLogShellChartSource;
+    let localChartSource := logShellSource.toValuationBallLocalChartSource;
+    let pointwiseSource := localChartSource.toValuationBallPointwiseSource;
+    let exactSource := pointwiseSource.toValuationBallExactSource;
+    let gaugeSource := exactSource.toValuationNormGaugeSource;
+    let inequalitySource := gaugeSource.toLocalThetaInequalitySource;
+    let predicateSource := inequalitySource.toLocalThetaPredicateSource;
+    let estimateSource := predicateSource.toLocalThetaEstimateSource;
+    let radiusSource := estimateSource.toValuationRadiusCoverSource;
+    let localFactorSource := radiusSource.toFiberTransportLocalFactorCoverSource;
+    let cellSource := localFactorSource.toFiberTransportCellCoverSource;
+    SourceLevelTransportCanonicalExactXiSelectedQRemark395GlobalCThetaAudit
+      sourceData gluingTorsor selectedQChoice operation hullOperation
+      determinantOperation hullOperator ob3ob4Source compatibility
+      measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+      q_pilot_positive normalization cTheta canonicalCThetaScale_le_cTheta
+      ((let fiberTransportBackedSource :=
+          cellSource.toFiberTransportBackedFamilyUnionSource;
+        let thetaCellCoverSource :=
+          cellSource.toThetaClassDirectProductCellCoverSource;
+        let imageLawBackedSource :=
+          fiberTransportBackedSource.toThetaClassLatticeImageLawBackedFamilyUnionSource;
+        let latticeBackedSource :=
+          imageLawBackedSource.toThetaClassLatticeFormulaBackedFamilyUnionSource;
+        let imageBackedSource :=
+          latticeBackedSource.toThetaClassImageBackedFamilyUnionSource;
+        let fiberBackedSource :=
+          imageBackedSource.toThetaClassFiberBackedFamilyUnionSource;
+        let cellCoverSource :=
+          thetaCellCoverSource.toDirectProductCellCoverSource;
+        let cellExactSource := cellCoverSource.toDirectProductCellUnionExactSource;
+        let selectedSource := cellExactSource.toSelectedPrincipalHullSource;
+        let thetaClassSource := fiberBackedSource.toThetaClassIndexedFamilyUnionSource;
+        let choiceIndexedSource := thetaClassSource.toChoiceIndexedFamilyUnionSource;
+        let indexedSource := choiceIndexedSource.toIndexedFamilyUnionSource;
+        let principalSource :=
+          indexedSource.toPrincipalValuationBallHullFixedFamilyUnionExactXiSource
+            selectedSource hullOperator_eq_principalProductHullOperator;
+        principalSource).toClosedFamilyUnionExactXiSource.toCalibrationSource.toExactXiFamilySource) t :=
+  sourceLevelTransportPrincipalValuationBallThetaClassFiberTransportValuationBallLogShellChartFamilyExactXiSelectedQRemark395GlobalCThetaAudit
+    (recordConcrete := recordConcrete) (indData := indData)
+    sourceData gluingTorsor selectedQChoice operation hullOperation
+    determinantOperation hullOperator ob3ob4Source compatibility
+    measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+    q_pilot_positive normalization cTheta canonicalCThetaScale_le_cTheta
+    imageSource.toLogShellChartSource
     hullOperator_eq_principalProductHullOperator t
 
 end ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource

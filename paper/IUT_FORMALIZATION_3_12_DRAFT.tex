@@ -3570,23 +3570,36 @@ for each transported theta point \(y\), the source names its local coordinate
 \]
 This removes the existential lift, but at this stage the valuation-radius bound
 is still a raw source field.
-The preferred lower boundary is now
+The preferred lower boundary has now been pushed one step further to
 \[
 \begin{array}{l}
-\texttt{ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellChartSource}.
+\texttt{ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellImageSource}.
 \end{array}
 \]
-It names a local log-shell region \(I_\beta\), a coordinate
-\(x_\beta(y)\in I_\beta\), and the containment
+It names a local log-shell region \(I_\beta\), a base point used only outside
+the transported theta region, the realized-image equality presented as the two
+containments
 \[
-  I_\beta\subseteq \{x:\|x\|_v\le r_\beta\}.
+  P_{\Theta,\beta}\subseteq \mathrm{realization}(I_\beta),
+  \qquad
+  \mathrm{realization}(I_\beta)\subseteq P_{\Theta,\beta},
 \]
-\Lean{} derives the valuation-radius inequality from this containment and then
-reuses the local-chart, pointwise, exact, and valuation-norm-gauge routes.  Thus
-the remaining paper-side payload is no longer an existential lift, a set
-equality field, or a raw norm-bound field.  It is the construction of the actual
-local log-shell chart, the log-shell-to-valuation-ball containment, the
-realization identity, and the pointwise class-region membership laws.
+and the two valuation-ball containments
+\[
+  I_\beta\subseteq \{x:\|x\|_v\le r_\beta\},
+  \qquad
+  \{x:\|x\|_v\le r_\beta\}\subseteq I_\beta.
+\]
+\Lean{} chooses \(x_\beta(y)\) from the image statement when
+\(y\in P_{\Theta,\beta}\), proves \(x_\beta(y)\in I_\beta\) and
+\(\mathrm{realization}(x_\beta(y))=y\), derives the valuation-radius inequality
+from \(I_\beta\subseteq \{x:\|x\|_v\le r_\beta\}\), and then reuses the
+local-chart, pointwise, exact, and valuation-norm-gauge routes.  Thus the
+remaining paper-side payload is no longer an existential lift, a supplied
+coordinate, a set equality field, or a raw norm-bound field.  It is the
+construction of the actual local log-shell region and its realized-image
+equality, the two log-shell/valuation-ball containments, and the pointwise
+class-region membership laws.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -12168,8 +12181,8 @@ The practical priority order is now:
   than accepting them as source-facing packet-boundary fields.
 \item Construct the remaining Step~(xi) holomorphic-hull/determinant fields
   from Remark~3.9.5 and Step~(xi): genuine hulls, determinant lines,
-  the local log-shell chart for transported theta points, the containment of
-  the log-shell in the compact-open valuation ball, the realization law,
+  the local log-shell realized-image equality for transported theta regions,
+  the two log-shell/valuation-ball containments,
   pointwise class-region membership compatibility with the valuation-cover
   regions, Ob5/Ob7 compatibility, and the
   \(\theta_{\mathrm{signed}}\) log-volume identification.
