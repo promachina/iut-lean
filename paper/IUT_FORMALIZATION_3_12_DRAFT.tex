@@ -827,11 +827,16 @@ log-Kummer compatibility and label-wise vertical log-link operations.  Lean
 uses Proposition~3.10-style preservation of the realified log-volume, together
 with the local-object identification of the log-link, to construct the
 transport of every labelled log-shell representative back to the base object.
-Thus the remaining source payload is no longer the construction of the label
-transports themselves; it is the lower local-log-shell construction: matching
-paper-native local objects to the realified Frobenioid degree objects and
-proving the source/target finite log-volume comparison for the transported base
-objects.
+The preferred boundary is now one step lower.  A
+\texttt{ColumnRealifiedLogShellZModLogShellPacketLocalObjectSource} supplies, at
+each column, an IUT~I, Example~3.5(iii), realified Frobenioid log-shell divisor
+source.  Lean constructs the finite local log-shell object from the
+log-shell divisor log-volume and identifies it with the corresponding
+realified Frobenioid degree object under the normalized-Frobenius condition.
+The remaining source payload is therefore sharper: construct the paper-native
+column family of these log-shell divisor sources, prove the log-link
+local-object identifications, and prove the source/target base finite
+log-volume comparisons used by the \((\Ind3)\) upper-semi step.
 The theta-pilot possible-image boundary has also been tightened.  The
 class-indexed and lattice-key image-law constructors now have
 procession-normalized entry points: instead of receiving an arbitrary
@@ -12301,15 +12306,15 @@ are migrated or retired.
 
 The practical priority order is now:
 \begin{enumerate}
-\item Construct the actual vertical log-Kummer/log-link label transports for
-  the \(ZMod(\ell)\)-labelled local log-shell representatives.  The finite
-  \(F_\ell\)-average, label-function extraction, label-transport-to-family
-  promotion, capsule promotion, packet-state reindexing, average-to-local-object
-  equality, and older classified/direct bridges are now constructed by \Lean{}.
-\item Construct the remaining source comparison below the transported log-shell
-  packet source: the paper-native local objects, the upper-semi source/target
-  base-log-shell identifications, and the log-Kummer comparison behind those
-  finite log-volume equalities.
+\item Construct the paper-native column family of realified Frobenioid
+  log-shell divisor sources.  The finite local log-shell object, its
+  realified-degree comparison under normalized Frobenius, the column
+  log-link transport family, the transported \(ZMod(\ell)\) family, and the
+  older capsule/classified/direct bridges are now constructed by \Lean{}.
+\item Construct the remaining log-Kummer/log-link comparison below that column
+  source: the local-object identifications for labelled representatives and the
+  source/target base finite log-volume equalities that feed the \((\Ind3)\)
+  upper-semi comparison.
 \item Migrate or retire older certificate-pinned \(\IPL\) review aliases that
   are no longer preferred source surfaces.
 \item Extend the recovered finite-divisor packet-local source from the

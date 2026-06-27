@@ -1117,6 +1117,259 @@ theorem audit
 
 end IUTStage1VerticalLogKummerLogShellTransportFamilySource
 
+set_option linter.style.longLine false in
+/--
+Finite local log-shell object constructed from realified Frobenioid
+log-shell divisor data.
+
+The paper-side input is the IUT I, Example 3.5(iii), log-shell copy of the
+realified divisor source.  Lean turns its log-shell divisor log-volume into the
+finite local log-volume object consumed by the Stage 1 packet corridor.
+-/
+structure IUTStage1RealifiedLogShellLocalObjectSource
+    (π : Type u) [Fintype π] where
+  logShell : IUTStage1LogShellRealifiedFrobenioidDivisorSource π
+  normalization : IUTStage1LogVolumeNormalization
+
+namespace IUTStage1RealifiedLogShellLocalObjectSource
+
+variable {π : Type u} [Fintype π]
+
+noncomputable def toLocalLogVolumeObject
+    (source : IUTStage1RealifiedLogShellLocalObjectSource π) :
+    IUTStage1LocalLogVolumeObject IUTStage1PlaceKind.nonarchimedean :=
+  { object := source.logShell.base.object,
+    normalization := source.normalization,
+    logVolume := source.logShell.logShellDivisorLogVolume }
+
+noncomputable def toFiniteLocalLogVolumeObject
+    (source : IUTStage1RealifiedLogShellLocalObjectSource π) :
+    IUTStage1FiniteLocalLogVolumeObject IUTStage1PlaceKind.nonarchimedean :=
+  { localObject := source.toLocalLogVolumeObject,
+    finiteLogVolume := source.logShell.logShellDivisorLogVolume,
+    finite_log_volume_eq := rfl }
+
+def toRealifiedFrobenioidDegreeObject
+    (source : IUTStage1RealifiedLogShellLocalObjectSource π) :
+    IUTStage1RealifiedFrobenioidDegreeObject :=
+  source.logShell.base.toDegreeObject
+
+theorem finiteLogVolume_eq_logShellDivisorLogVolume
+    (source : IUTStage1RealifiedLogShellLocalObjectSource π) :
+    source.toFiniteLocalLogVolumeObject.finiteLogVolume =
+      source.logShell.logShellDivisorLogVolume :=
+  rfl
+
+theorem localObject_logVolume_eq_logShellDivisorLogVolume
+    (source : IUTStage1RealifiedLogShellLocalObjectSource π) :
+    source.toLocalLogVolumeObject.logVolume =
+      source.logShell.logShellDivisorLogVolume :=
+  rfl
+
+theorem degreeObject_realifiedLogVolume_eq_base
+    (source : IUTStage1RealifiedLogShellLocalObjectSource π) :
+    source.toRealifiedFrobenioidDegreeObject.realifiedLogVolume =
+      source.logShell.base.realifiedLogVolume :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem finiteLogVolume_eq_realified_of_normalized_one
+    (source : IUTStage1RealifiedLogShellLocalObjectSource π)
+    (hnorm : source.logShell.normalizedFrobeniusLogVolume = 1) :
+    source.toFiniteLocalLogVolumeObject.finiteLogVolume =
+      source.toRealifiedFrobenioidDegreeObject.realifiedLogVolume := by
+  calc
+    source.toFiniteLocalLogVolumeObject.finiteLogVolume =
+        source.logShell.logShellDivisorLogVolume :=
+      source.finiteLogVolume_eq_logShellDivisorLogVolume
+    _ = source.logShell.base.realifiedLogVolume :=
+      source.logShell.logShellDivisorLogVolume_eq_base_realified_of_normalized_one
+        hnorm
+    _ = source.toRealifiedFrobenioidDegreeObject.realifiedLogVolume := rfl
+
+set_option linter.style.longLine false in
+/-- Audit endpoint for the local log-shell object construction. -/
+structure Audit
+    (source : IUTStage1RealifiedLogShellLocalObjectSource π) : Prop where
+  finiteLogVolume_eq_logShellDivisorLogVolume :
+    source.toFiniteLocalLogVolumeObject.finiteLogVolume =
+      source.logShell.logShellDivisorLogVolume
+  localObject_logVolume_eq_logShellDivisorLogVolume :
+    source.toFiniteLocalLogVolumeObject.localObject.logVolume =
+      source.logShell.logShellDivisorLogVolume
+  degreeObject_realifiedLogVolume_eq_base :
+    source.toRealifiedFrobenioidDegreeObject.realifiedLogVolume =
+      source.logShell.base.realifiedLogVolume
+  normalized_one_gives_realified :
+    source.logShell.normalizedFrobeniusLogVolume = 1 ->
+      source.toFiniteLocalLogVolumeObject.finiteLogVolume =
+        source.toRealifiedFrobenioidDegreeObject.realifiedLogVolume
+
+theorem audit
+    (source : IUTStage1RealifiedLogShellLocalObjectSource π) :
+    Audit source :=
+  { finiteLogVolume_eq_logShellDivisorLogVolume :=
+      source.finiteLogVolume_eq_logShellDivisorLogVolume,
+    localObject_logVolume_eq_logShellDivisorLogVolume := rfl,
+    degreeObject_realifiedLogVolume_eq_base :=
+      source.degreeObject_realifiedLogVolume_eq_base,
+    normalized_one_gives_realified := by
+      intro hnorm
+      exact source.finiteLogVolume_eq_realified_of_normalized_one hnorm }
+
+end IUTStage1RealifiedLogShellLocalObjectSource
+
+set_option linter.style.longLine false in
+/--
+Column family of realified log-shell local objects.
+
+This lowers `IUTStage1VerticalLogKummerLogShellTransportFamilySource`: instead
+of supplying finite local log-shell objects and their realified calibrations,
+the source supplies a finite log-shell divisor object at every vertical
+coordinate.  Normalization identifies each relevant log-shell divisor
+log-volume with its realified Frobenioid degree object, and the log-link
+translation law supplies the column compatibility.
+-/
+structure IUTStage1ColumnRealifiedLogShellLocalObjectFamilySource
+    (π : Type u) [Fintype π] (l : PrimeGeFive) where
+  columnSource : Int -> IUTStage1RealifiedLogShellLocalObjectSource π
+  baseColumn : Int
+  labelColumnShift : ZMod l.value -> Int
+  translate_realifiedLogVolume_eq :
+    ∀ shift m : Int,
+      (columnSource (m + shift)).toRealifiedFrobenioidDegreeObject.realifiedLogVolume =
+        (columnSource m).toRealifiedFrobenioidDegreeObject.realifiedLogVolume
+  base_normalized :
+    (columnSource baseColumn).logShell.normalizedFrobeniusLogVolume = 1
+  label_normalized :
+    ∀ label : ZMod l.value,
+      (columnSource (baseColumn + labelColumnShift label)).logShell.normalizedFrobeniusLogVolume =
+        1
+  label_localObject_eq_base :
+    ∀ label : ZMod l.value,
+      (columnSource (baseColumn + labelColumnShift label)).toFiniteLocalLogVolumeObject.localObject =
+        (columnSource baseColumn).toFiniteLocalLogVolumeObject.localObject
+
+namespace IUTStage1ColumnRealifiedLogShellLocalObjectFamilySource
+
+variable {π : Type u} [Fintype π] {l : PrimeGeFive}
+
+def toColumnFrobenioidLogKummerCompatibility
+    (source : IUTStage1ColumnRealifiedLogShellLocalObjectFamilySource π l) :
+    IUTStage1ColumnFrobenioidLogKummerCompatibility :=
+  { frobenioidObject := fun m =>
+      (source.columnSource m).toRealifiedFrobenioidDegreeObject,
+    translate_realifiedLogVolume_eq :=
+      source.translate_realifiedLogVolume_eq }
+
+noncomputable def baseFiniteLocalObject
+    (source : IUTStage1ColumnRealifiedLogShellLocalObjectFamilySource π l) :
+    IUTStage1FiniteLocalLogVolumeObject IUTStage1PlaceKind.nonarchimedean :=
+  (source.columnSource source.baseColumn).toFiniteLocalLogVolumeObject
+
+noncomputable def labelFiniteLocalObject
+    (source : IUTStage1ColumnRealifiedLogShellLocalObjectFamilySource π l)
+    (label : ZMod l.value) :
+    IUTStage1FiniteLocalLogVolumeObject IUTStage1PlaceKind.nonarchimedean :=
+  (source.columnSource
+    (source.baseColumn + source.labelColumnShift label)).toFiniteLocalLogVolumeObject
+
+theorem base_finiteLogVolume_eq_realified
+    (source : IUTStage1ColumnRealifiedLogShellLocalObjectFamilySource π l) :
+    source.baseFiniteLocalObject.finiteLogVolume =
+      (source.toColumnFrobenioidLogKummerCompatibility.frobenioidObject
+        source.baseColumn).realifiedLogVolume :=
+  (source.columnSource source.baseColumn)
+    |>.finiteLogVolume_eq_realified_of_normalized_one source.base_normalized
+
+theorem label_finiteLogVolume_eq_realified
+    (source : IUTStage1ColumnRealifiedLogShellLocalObjectFamilySource π l)
+    (label : ZMod l.value) :
+    (source.labelFiniteLocalObject label).finiteLogVolume =
+      (source.toColumnFrobenioidLogKummerCompatibility.frobenioidObject
+        (source.baseColumn + source.labelColumnShift label)).realifiedLogVolume :=
+  (source.columnSource
+    (source.baseColumn + source.labelColumnShift label))
+    |>.finiteLogVolume_eq_realified_of_normalized_one
+      (source.label_normalized label)
+
+set_option linter.style.longLine false in
+noncomputable def labelOperation
+    (source : IUTStage1ColumnRealifiedLogShellLocalObjectFamilySource π l)
+    (label : ZMod l.value) :
+    IUTStage1VerticalLogKummerLogShellLabelOperation
+      source.toColumnFrobenioidLogKummerCompatibility
+      source.baseColumn source.baseFiniteLocalObject label
+      (source.labelFiniteLocalObject label) :=
+  { columnShift := source.labelColumnShift label,
+    label_localObject_eq_base := source.label_localObject_eq_base label,
+    base_finiteLogVolume_eq_realified :=
+      source.base_finiteLogVolume_eq_realified,
+    label_finiteLogVolume_eq_realified :=
+      source.label_finiteLogVolume_eq_realified label }
+
+set_option linter.style.longLine false in
+noncomputable def toVerticalLogKummerLogShellTransportFamilySource
+    (source : IUTStage1ColumnRealifiedLogShellLocalObjectFamilySource π l) :
+    IUTStage1VerticalLogKummerLogShellTransportFamilySource
+      l IUTStage1PlaceKind.nonarchimedean :=
+  { compatibility := source.toColumnFrobenioidLogKummerCompatibility,
+    baseColumn := source.baseColumn,
+    baseObject := source.baseFiniteLocalObject,
+    labelObject := source.labelFiniteLocalObject,
+    labelOperation := source.labelOperation }
+
+set_option linter.style.longLine false in
+/--
+Audit endpoint for constructing the column log-link transport family from
+finite log-shell divisor data.
+-/
+structure Audit
+    (source : IUTStage1ColumnRealifiedLogShellLocalObjectFamilySource π l) :
+    Prop where
+  base_local_object_audit :
+    IUTStage1RealifiedLogShellLocalObjectSource.Audit
+      (source.columnSource source.baseColumn)
+  label_local_object_audit :
+    ∀ label : ZMod l.value,
+      IUTStage1RealifiedLogShellLocalObjectSource.Audit
+        (source.columnSource
+          (source.baseColumn + source.labelColumnShift label))
+  base_finiteLogVolume_eq_realified :
+    source.baseFiniteLocalObject.finiteLogVolume =
+      (source.toColumnFrobenioidLogKummerCompatibility.frobenioidObject
+        source.baseColumn).realifiedLogVolume
+  label_finiteLogVolume_eq_realified :
+    ∀ label : ZMod l.value,
+      (source.labelFiniteLocalObject label).finiteLogVolume =
+        (source.toColumnFrobenioidLogKummerCompatibility.frobenioidObject
+          (source.baseColumn + source.labelColumnShift label)).realifiedLogVolume
+  transported_family_from_local_logShells :
+    source.toVerticalLogKummerLogShellTransportFamilySource.baseObject =
+        source.baseFiniteLocalObject ∧
+      (∀ label : ZMod l.value,
+        source.toVerticalLogKummerLogShellTransportFamilySource.labelObject label =
+          source.labelFiniteLocalObject label)
+
+theorem audit
+    (source : IUTStage1ColumnRealifiedLogShellLocalObjectFamilySource π l) :
+    Audit source :=
+  { base_local_object_audit :=
+      (source.columnSource source.baseColumn).audit,
+    label_local_object_audit := by
+      intro label
+      exact
+        (source.columnSource
+          (source.baseColumn + source.labelColumnShift label)).audit,
+    base_finiteLogVolume_eq_realified :=
+      source.base_finiteLogVolume_eq_realified,
+    label_finiteLogVolume_eq_realified :=
+      source.label_finiteLogVolume_eq_realified,
+    transported_family_from_local_logShells := by
+      exact ⟨rfl, fun _label => rfl⟩ }
+
+end IUTStage1ColumnRealifiedLogShellLocalObjectFamilySource
+
 /--
 Container estimate for one capsule log-volume entry.
 
