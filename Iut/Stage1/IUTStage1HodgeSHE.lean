@@ -824,6 +824,101 @@ theorem finiteLogVolume_eq_base
 
 end IUTStage1ZModLogShellLabelTransport
 
+namespace IUTStage1FiniteLocalLogVolumeObject
+
+variable {kind : IUTStage1PlaceKind}
+
+theorem ext_of_localObject_eq_of_finiteLogVolume_eq
+    {object₁ object₂ : IUTStage1FiniteLocalLogVolumeObject kind}
+    (hlocal : object₁.localObject = object₂.localObject)
+    (hfinite : object₁.finiteLogVolume = object₂.finiteLogVolume) :
+    object₁ = object₂ := by
+  cases object₁
+  cases object₂
+  cases hlocal
+  cases hfinite
+  rfl
+
+end IUTStage1FiniteLocalLogVolumeObject
+
+set_option linter.style.longLine false in
+/--
+One vertical log-Kummer/log-link operation on a labelled local log-shell object.
+
+The source-paper role is Proposition 3.10-style compatibility along a fixed
+log-theta-lattice column: translating from the base vertical coordinate to the
+label coordinate preserves the realified Frobenioid log-volume.  Together with
+the local-object identification of the log-link, this constructs the equality
+needed by the transported `ZMod l` log-shell family.
+-/
+structure IUTStage1VerticalLogKummerLogShellLabelOperation
+    {l : PrimeGeFive} {kind : IUTStage1PlaceKind}
+    (compat : IUTStage1ColumnFrobenioidLogKummerCompatibility)
+    (baseColumn : Int)
+    (baseObject : IUTStage1FiniteLocalLogVolumeObject kind)
+    (label : ZMod l.value)
+    (labelObject : IUTStage1FiniteLocalLogVolumeObject kind) where
+  columnShift : Int
+  label_localObject_eq_base :
+    labelObject.localObject = baseObject.localObject
+  base_finiteLogVolume_eq_realified :
+    baseObject.finiteLogVolume =
+      (compat.frobenioidObject baseColumn).realifiedLogVolume
+  label_finiteLogVolume_eq_realified :
+    labelObject.finiteLogVolume =
+      (compat.frobenioidObject (baseColumn + columnShift)).realifiedLogVolume
+
+namespace IUTStage1VerticalLogKummerLogShellLabelOperation
+
+variable {l : PrimeGeFive} {kind : IUTStage1PlaceKind}
+variable {compat : IUTStage1ColumnFrobenioidLogKummerCompatibility}
+variable {baseColumn : Int}
+variable {baseObject labelObject : IUTStage1FiniteLocalLogVolumeObject kind}
+variable {label : ZMod l.value}
+
+theorem label_finiteLogVolume_eq_base
+    (operation :
+      IUTStage1VerticalLogKummerLogShellLabelOperation
+        compat baseColumn baseObject label labelObject) :
+    labelObject.finiteLogVolume = baseObject.finiteLogVolume := by
+  calc
+    labelObject.finiteLogVolume =
+        (compat.frobenioidObject
+          (baseColumn + operation.columnShift)).realifiedLogVolume :=
+      operation.label_finiteLogVolume_eq_realified
+    _ = (compat.frobenioidObject baseColumn).realifiedLogVolume := by
+      simpa [add_comm] using
+        compat.translate_preserves_realifiedLogVolume
+          operation.columnShift baseColumn
+    _ = baseObject.finiteLogVolume :=
+      operation.base_finiteLogVolume_eq_realified.symm
+
+theorem labelObject_eq_base
+    (operation :
+      IUTStage1VerticalLogKummerLogShellLabelOperation
+        compat baseColumn baseObject label labelObject) :
+    labelObject = baseObject :=
+  IUTStage1FiniteLocalLogVolumeObject.ext_of_localObject_eq_of_finiteLogVolume_eq
+    operation.label_localObject_eq_base
+    operation.label_finiteLogVolume_eq_base
+
+def toZModLogShellLabelTransport
+    (operation :
+      IUTStage1VerticalLogKummerLogShellLabelOperation
+        compat baseColumn baseObject label labelObject) :
+    IUTStage1ZModLogShellLabelTransport (l := l) baseObject labelObject :=
+  { label := label,
+    transported_eq_base := operation.labelObject_eq_base }
+
+theorem toZModLogShellLabelTransport_label
+    (operation :
+      IUTStage1VerticalLogKummerLogShellLabelOperation
+        compat baseColumn baseObject label labelObject) :
+    operation.toZModLogShellLabelTransport.label = label :=
+  rfl
+
+end IUTStage1VerticalLogKummerLogShellLabelOperation
+
 set_option linter.style.longLine false in
 /--
 `ZMod l`-labelled local log-shell family constructed from label transports.
@@ -923,6 +1018,104 @@ theorem constantFromBaseObject_toZModLabelledLogShellFamily
   rfl
 
 end IUTStage1ZModLabelledLogShellTransportFamily
+
+set_option linter.style.longLine false in
+/--
+`ZMod l`-labelled local log-shell family constructed from vertical
+log-Kummer/log-link operations.
+
+This is the source-facing layer below
+`IUTStage1ZModLabelledLogShellTransportFamily`: the data are a fixed
+realified-Frobenioid column compatibility, a base local log-shell object, and
+for each `F_l` label a log-link operation from a translated vertical coordinate
+back to the base coordinate.
+-/
+structure IUTStage1VerticalLogKummerLogShellTransportFamilySource
+    (l : PrimeGeFive) (kind : IUTStage1PlaceKind) where
+  compatibility : IUTStage1ColumnFrobenioidLogKummerCompatibility
+  baseColumn : Int
+  baseObject : IUTStage1FiniteLocalLogVolumeObject kind
+  labelObject : ZMod l.value -> IUTStage1FiniteLocalLogVolumeObject kind
+  labelOperation :
+    ∀ label : ZMod l.value,
+      IUTStage1VerticalLogKummerLogShellLabelOperation
+        compatibility baseColumn baseObject label (labelObject label)
+
+namespace IUTStage1VerticalLogKummerLogShellTransportFamilySource
+
+variable {l : PrimeGeFive} {kind : IUTStage1PlaceKind}
+
+def labelTransport
+    (source : IUTStage1VerticalLogKummerLogShellTransportFamilySource l kind)
+    (label : ZMod l.value) :
+    IUTStage1ZModLogShellLabelTransport
+      (l := l) source.baseObject (source.labelObject label) :=
+  (source.labelOperation label).toZModLogShellLabelTransport
+
+def toZModLabelledLogShellTransportFamily
+    (source : IUTStage1VerticalLogKummerLogShellTransportFamilySource l kind) :
+    IUTStage1ZModLabelledLogShellTransportFamily l kind :=
+  { baseObject := source.baseObject,
+    labelObject := source.labelObject,
+    labelTransport := source.labelTransport }
+
+theorem labelObject_eq_base
+    (source : IUTStage1VerticalLogKummerLogShellTransportFamilySource l kind)
+    (label : ZMod l.value) :
+    source.labelObject label = source.baseObject :=
+  (source.labelOperation label).labelObject_eq_base
+
+theorem labelObject_finiteLogVolume_eq_base
+    (source : IUTStage1VerticalLogKummerLogShellTransportFamilySource l kind)
+    (label : ZMod l.value) :
+    (source.labelObject label).finiteLogVolume =
+      source.baseObject.finiteLogVolume :=
+  (source.labelOperation label).label_finiteLogVolume_eq_base
+
+theorem toZModLabelledLogShellTransportFamily_baseObject
+    (source : IUTStage1VerticalLogKummerLogShellTransportFamilySource l kind) :
+    source.toZModLabelledLogShellTransportFamily.baseObject =
+      source.baseObject :=
+  rfl
+
+theorem toZModLabelledLogShellTransportFamily_labelObject
+    (source : IUTStage1VerticalLogKummerLogShellTransportFamilySource l kind)
+    (label : ZMod l.value) :
+    source.toZModLabelledLogShellTransportFamily.labelObject label =
+      source.labelObject label :=
+  rfl
+
+set_option linter.style.longLine false in
+/--
+Audit endpoint for the column-log-link construction of the transported
+log-shell family.
+-/
+structure Audit
+    (source : IUTStage1VerticalLogKummerLogShellTransportFamilySource l kind) :
+    Prop where
+  label_transport_eq_base :
+    ∀ label : ZMod l.value,
+      source.labelObject label = source.baseObject
+  label_finiteLogVolume_eq_base :
+    ∀ label : ZMod l.value,
+      (source.labelObject label).finiteLogVolume =
+        source.baseObject.finiteLogVolume
+  transported_family_from_logLinks :
+    source.toZModLabelledLogShellTransportFamily.baseObject =
+        source.baseObject ∧
+      (∀ label : ZMod l.value,
+        source.toZModLabelledLogShellTransportFamily.labelObject label =
+          source.labelObject label)
+
+theorem audit
+    (source : IUTStage1VerticalLogKummerLogShellTransportFamilySource l kind) :
+    Audit source :=
+  { label_transport_eq_base := source.labelObject_eq_base,
+    label_finiteLogVolume_eq_base := source.labelObject_finiteLogVolume_eq_base,
+    transported_family_from_logLinks := by
+      exact ⟨rfl, fun _label => rfl⟩ }
+
+end IUTStage1VerticalLogKummerLogShellTransportFamilySource
 
 /--
 Container estimate for one capsule log-volume entry.

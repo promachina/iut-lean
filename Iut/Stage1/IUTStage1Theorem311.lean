@@ -4323,6 +4323,166 @@ theorem audit :
 
 end LogThetaLabelProcessionVerticalLogKummerTransportedZModLogShellPacketLocalObjectSource
 
+set_option linter.style.longLine false in
+/--
+Column-log-link `ZMod l` log-shell packet-local source.
+
+This lowers the transported log-shell boundary by requiring, for each
+theta-pilot class, an explicit vertical log-Kummer/log-link construction of the
+label transports.  The source supplies a realified-Frobenioid column
+compatibility plus label-wise log-link operations; Lean constructs the
+transported labelled log-shell family before entering the existing packet-local
+source.
+-/
+structure LogThetaLabelProcessionVerticalLogKummerColumnLogLinkZModLogShellPacketLocalObjectSource
+    (coric : Type u) (l : PrimeGeFive) where
+  logShellLogLinkFamily :
+    ThetaPilotClass (coric := coric) ->
+      IUTStage1VerticalLogKummerLogShellTransportFamilySource
+        l IUTStage1PlaceKind.nonarchimedean
+  direct_summand_count_eq_zmodCard :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      choice.local_tensor_state.directSummandCount = Fintype.card (ZMod l.value)
+  ind3_source_baseLogShell_eq_upperSemiSource :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (logShellLogLinkFamily (thetaPilotClass choice₁)).baseObject.finiteLogVolume =
+          choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  ind3_target_baseLogShell_eq_upperSemiTarget :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (logShellLogLinkFamily (thetaPilotClass choice₂)).baseObject.finiteLogVolume =
+          choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume
+
+namespace LogThetaLabelProcessionVerticalLogKummerColumnLogLinkZModLogShellPacketLocalObjectSource
+
+variable
+  (source :
+    LogThetaLabelProcessionVerticalLogKummerColumnLogLinkZModLogShellPacketLocalObjectSource
+      coric l)
+
+def logShellTransportFamily
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    IUTStage1ZModLabelledLogShellTransportFamily
+      l IUTStage1PlaceKind.nonarchimedean :=
+  (source.logShellLogLinkFamily thetaClass).toZModLabelledLogShellTransportFamily
+
+set_option linter.style.longLine false in
+/-- Promote column log-link families to the transported log-shell source. -/
+noncomputable def toTransportedZModLogShellPacketLocalObjectSource :
+    LogThetaLabelProcessionVerticalLogKummerTransportedZModLogShellPacketLocalObjectSource
+      coric l :=
+  { logShellTransportFamily := source.logShellTransportFamily,
+    direct_summand_count_eq_zmodCard := by
+      intro choice
+      exact source.direct_summand_count_eq_zmodCard choice,
+    ind3_source_baseLogShell_eq_upperSemiSource := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_source_baseLogShell_eq_upperSemiSource hstep,
+    ind3_target_baseLogShell_eq_upperSemiTarget := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_target_baseLogShell_eq_upperSemiTarget hstep }
+
+set_option linter.style.longLine false in
+/-- Forget to the constructed `ZMod l` log-shell source. -/
+noncomputable def toConstructedZModLogShellPacketLocalObjectSource :
+    LogThetaLabelProcessionVerticalLogKummerConstructedZModLogShellPacketLocalObjectSource
+      coric l :=
+  source.toTransportedZModLogShellPacketLocalObjectSource
+    |>.toConstructedZModLogShellPacketLocalObjectSource
+
+set_option linter.style.longLine false in
+/-- Forget to the finite averaged source consumed by older wrappers. -/
+noncomputable def toProcessionNormalizedLogVolumeSource :
+    ProcessionNormalizedLogVolumeSource coric l :=
+  source.toTransportedZModLogShellPacketLocalObjectSource
+    |>.toProcessionNormalizedLogVolumeSource
+
+theorem logShellTransportFamily_baseObject
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    (source.logShellTransportFamily thetaClass).baseObject =
+      (source.logShellLogLinkFamily thetaClass).baseObject :=
+  rfl
+
+theorem logShellTransportFamily_labelObject
+    (thetaClass : ThetaPilotClass (coric := coric))
+    (label : ZMod l.value) :
+    (source.logShellTransportFamily thetaClass).labelObject label =
+      (source.logShellLogLinkFamily thetaClass).labelObject label :=
+  rfl
+
+set_option linter.style.longLine false in
+/--
+Audit for deriving the transported log-shell boundary from column
+log-Kummer/log-link compatibility.
+-/
+structure Audit : Prop where
+  transported_logShell_audit :
+    LogThetaLabelProcessionVerticalLogKummerTransportedZModLogShellPacketLocalObjectSource.Audit
+      source.toTransportedZModLogShellPacketLocalObjectSource
+  logLink_family_audit :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      IUTStage1VerticalLogKummerLogShellTransportFamilySource.Audit
+        (source.logShellLogLinkFamily thetaClass)
+  logShellTransportFamily_from_logLinks :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      source.logShellTransportFamily thetaClass =
+        (source.logShellLogLinkFamily thetaClass).toZModLabelledLogShellTransportFamily
+  label_logLink_eq_base :
+    ∀ (thetaClass : ThetaPilotClass (coric := coric)) (label : ZMod l.value),
+      (source.logShellLogLinkFamily thetaClass).labelObject label =
+        (source.logShellLogLinkFamily thetaClass).baseObject
+  label_finiteLogVolume_eq_base :
+    ∀ (thetaClass : ThetaPilotClass (coric := coric)) (label : ZMod l.value),
+      ((source.logShellLogLinkFamily thetaClass).labelObject label).finiteLogVolume =
+        (source.logShellLogLinkFamily thetaClass).baseObject.finiteLogVolume
+  direct_summand_count_eq_zmodCard :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      choice.local_tensor_state.directSummandCount = Fintype.card (ZMod l.value)
+  ind3_source_baseLogShell_eq_upperSemiSource :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (source.logShellLogLinkFamily
+          (thetaPilotClass choice₁)).baseObject.finiteLogVolume =
+          choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  ind3_target_baseLogShell_eq_upperSemiTarget :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        (source.logShellLogLinkFamily
+          (thetaPilotClass choice₂)).baseObject.finiteLogVolume =
+          choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume
+
+set_option linter.style.longLine false in
+theorem audit :
+    Audit source :=
+  { transported_logShell_audit :=
+      source.toTransportedZModLogShellPacketLocalObjectSource.audit,
+    logLink_family_audit := by
+      intro thetaClass
+      exact (source.logShellLogLinkFamily thetaClass).audit,
+    logShellTransportFamily_from_logLinks := by
+      intro thetaClass
+      rfl,
+    label_logLink_eq_base := by
+      intro thetaClass label
+      exact (source.logShellLogLinkFamily thetaClass).labelObject_eq_base label,
+    label_finiteLogVolume_eq_base := by
+      intro thetaClass label
+      exact
+        (source.logShellLogLinkFamily thetaClass).labelObject_finiteLogVolume_eq_base
+          label,
+    direct_summand_count_eq_zmodCard := by
+      intro choice
+      exact source.direct_summand_count_eq_zmodCard choice,
+    ind3_source_baseLogShell_eq_upperSemiSource := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_source_baseLogShell_eq_upperSemiSource hstep,
+    ind3_target_baseLogShell_eq_upperSemiTarget := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_target_baseLogShell_eq_upperSemiTarget hstep }
+
+end LogThetaLabelProcessionVerticalLogKummerColumnLogLinkZModLogShellPacketLocalObjectSource
+
 namespace ProcessionNormalizedLogVolumeSource
 
 variable
