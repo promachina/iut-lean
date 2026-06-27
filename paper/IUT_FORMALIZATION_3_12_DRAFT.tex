@@ -9693,9 +9693,16 @@ matching constructors for the typed transports: \((\Ind_1)\) is built from
 \texttt{ProcessionTransport}, \((\Ind_2)\) from procession and upper-semi
 transports plus the local summand-count equality, and \((\Ind_3)\) from
 \texttt{UpperSemiTransport} together with the explicit log-theta-column
-equality.  The upper-semi and procession fiber-source layers now expose this
-directly: each proves the post-procession concrete \((\Ind_2)\) step from the
-typed transports available at that layer, converting equality fields to typed
+equality.  This transport boundary is now checked against the typed
+Theorem~3.11 core itself:
+\texttt{typedInd1ProcessionTransportAudit} and
+\texttt{typedInd2LocalTransportAudit} produce the corresponding equality
+generators, normalized-log-volume preservation, and equality-quotient
+identifications, while \texttt{typedInd3UpperSemiTransportAudit} produces only
+the one-sided upper-semi audit and the no-\((\Ind_3)\)-equality guard.  The
+upper-semi and procession fiber-source layers expose the same reconstruction:
+each proves the post-procession concrete \((\Ind_2)\) step from the typed
+transports available at that layer, converting equality fields to typed
 transports only at the older boundary.  The remaining source payload is
 therefore sharper: construct these transport records and the single
 label-transport source from the underlying Hodge-theater and log-theta-lattice
