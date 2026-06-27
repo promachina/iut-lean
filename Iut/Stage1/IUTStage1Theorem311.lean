@@ -4959,6 +4959,183 @@ theorem audit :
 
 end LogThetaLabelProcessionVerticalLogKummerRawColumnRealifiedLogShellDivisorBaseVolumeZModLogShellPacketLocalObjectSource
 
+set_option linter.style.longLine false in
+/--
+Column log-Kummer divisor source with the `(Ind3)` base comparison stated at
+the realified Frobenioid divisor level.
+
+This lowers the raw base-volume source by replacing the raw vertical
+translation and labelled object-equality fields with a column
+Frobenioid/log-Kummer compatibility and a labelled log-link local-object
+identification.  The projection to the previous source derives the raw column
+translation and object equality before using the existing base-volume route.
+-/
+structure LogThetaLabelProcessionVerticalLogKummerColumnLogKummerRealifiedLogShellDivisorBaseVolumeZModLogShellPacketLocalObjectSource
+    (coric : Type u) (l : PrimeGeFive) (π : Type v) [Fintype π] where
+  columnLogKummerDivisorFamily :
+    ThetaPilotClass (coric := coric) ->
+      IUTStage1ColumnLogKummerRealifiedLogShellDivisorFamilySource π l
+  direct_summand_count_eq_zmodCard :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      choice.local_tensor_state.directSummandCount = Fintype.card (ZMod l.value)
+  ind3_source_baseRealified_eq_upperSemiSource :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        let family := columnLogKummerDivisorFamily (thetaPilotClass choice₁)
+        (family.columnLogShell family.baseColumn).base.realifiedLogVolume =
+          choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  ind3_target_baseRealified_eq_upperSemiTarget :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        let family := columnLogKummerDivisorFamily (thetaPilotClass choice₂)
+        (family.columnLogShell family.baseColumn).base.realifiedLogVolume =
+          choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume
+
+namespace LogThetaLabelProcessionVerticalLogKummerColumnLogKummerRealifiedLogShellDivisorBaseVolumeZModLogShellPacketLocalObjectSource
+
+variable {π : Type v} [Fintype π]
+variable
+  (source :
+    LogThetaLabelProcessionVerticalLogKummerColumnLogKummerRealifiedLogShellDivisorBaseVolumeZModLogShellPacketLocalObjectSource
+      coric l π)
+
+set_option linter.style.longLine false in
+def rawLogShellDivisorFamily
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    IUTStage1RawColumnRealifiedLogShellDivisorFamilySource π l :=
+  (source.columnLogKummerDivisorFamily thetaClass).toRawColumnRealifiedLogShellDivisorFamilySource
+
+set_option linter.style.longLine false in
+def toRawColumnRealifiedLogShellDivisorBaseVolumeZModLogShellPacketLocalObjectSource :
+    LogThetaLabelProcessionVerticalLogKummerRawColumnRealifiedLogShellDivisorBaseVolumeZModLogShellPacketLocalObjectSource
+      coric l π :=
+  { rawLogShellDivisorFamily := source.rawLogShellDivisorFamily,
+    direct_summand_count_eq_zmodCard := source.direct_summand_count_eq_zmodCard,
+    ind3_source_baseRealified_eq_upperSemiSource := by
+      intro choice₁ choice₂ hstep
+      let family := source.columnLogKummerDivisorFamily (thetaPilotClass choice₁)
+      simpa [rawLogShellDivisorFamily, family,
+        IUTStage1ColumnLogKummerRealifiedLogShellDivisorFamilySource.toRawColumnRealifiedLogShellDivisorFamilySource]
+        using source.ind3_source_baseRealified_eq_upperSemiSource hstep,
+    ind3_target_baseRealified_eq_upperSemiTarget := by
+      intro choice₁ choice₂ hstep
+      let family := source.columnLogKummerDivisorFamily (thetaPilotClass choice₂)
+      simpa [rawLogShellDivisorFamily, family,
+        IUTStage1ColumnLogKummerRealifiedLogShellDivisorFamilySource.toRawColumnRealifiedLogShellDivisorFamilySource]
+        using source.ind3_target_baseRealified_eq_upperSemiTarget hstep }
+
+set_option linter.style.longLine false in
+def toRawColumnRealifiedLogShellDivisorZModLogShellPacketLocalObjectSource :
+    LogThetaLabelProcessionVerticalLogKummerRawColumnRealifiedLogShellDivisorZModLogShellPacketLocalObjectSource
+      coric l π :=
+  source.toRawColumnRealifiedLogShellDivisorBaseVolumeZModLogShellPacketLocalObjectSource
+    |>.toRawColumnRealifiedLogShellDivisorZModLogShellPacketLocalObjectSource
+
+set_option linter.style.longLine false in
+noncomputable def toColumnRealifiedLogShellZModLogShellPacketLocalObjectSource :
+    LogThetaLabelProcessionVerticalLogKummerColumnRealifiedLogShellZModLogShellPacketLocalObjectSource
+      coric l π :=
+  source.toRawColumnRealifiedLogShellDivisorBaseVolumeZModLogShellPacketLocalObjectSource
+    |>.toColumnRealifiedLogShellZModLogShellPacketLocalObjectSource
+
+set_option linter.style.longLine false in
+noncomputable def toColumnLogLinkZModLogShellPacketLocalObjectSource :
+    LogThetaLabelProcessionVerticalLogKummerColumnLogLinkZModLogShellPacketLocalObjectSource
+      coric l :=
+  source.toRawColumnRealifiedLogShellDivisorBaseVolumeZModLogShellPacketLocalObjectSource
+    |>.toColumnLogLinkZModLogShellPacketLocalObjectSource
+
+set_option linter.style.longLine false in
+noncomputable def toProcessionNormalizedLogVolumeSource :
+    ProcessionNormalizedLogVolumeSource coric l :=
+  source.toRawColumnRealifiedLogShellDivisorBaseVolumeZModLogShellPacketLocalObjectSource
+    |>.toProcessionNormalizedLogVolumeSource
+
+set_option linter.style.longLine false in
+theorem ind3_source_baseLogShell_eq_upperSemiSource
+    {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hstep : Ind3UpperSemiStep choice₁ choice₂) :
+    ((source.rawLogShellDivisorFamily
+      (thetaPilotClass choice₁)).toColumnRealifiedLogShellLocalObjectFamilySource).baseFiniteLocalObject.finiteLogVolume =
+      choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume :=
+  source.toRawColumnRealifiedLogShellDivisorBaseVolumeZModLogShellPacketLocalObjectSource
+    |>.ind3_source_baseLogShell_eq_upperSemiSource hstep
+
+set_option linter.style.longLine false in
+theorem ind3_target_baseLogShell_eq_upperSemiTarget
+    {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hstep : Ind3UpperSemiStep choice₁ choice₂) :
+    ((source.rawLogShellDivisorFamily
+      (thetaPilotClass choice₂)).toColumnRealifiedLogShellLocalObjectFamilySource).baseFiniteLocalObject.finiteLogVolume =
+      choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume :=
+  source.toRawColumnRealifiedLogShellDivisorBaseVolumeZModLogShellPacketLocalObjectSource
+    |>.ind3_target_baseLogShell_eq_upperSemiTarget hstep
+
+set_option linter.style.longLine false in
+/-- Audit for deriving the raw base-volume corridor from column log-Kummer divisor data. -/
+structure Audit : Prop where
+  raw_base_volume_audit :
+    LogThetaLabelProcessionVerticalLogKummerRawColumnRealifiedLogShellDivisorBaseVolumeZModLogShellPacketLocalObjectSource.Audit
+      source.toRawColumnRealifiedLogShellDivisorBaseVolumeZModLogShellPacketLocalObjectSource
+  column_logKummer_divisor_family_audit :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      IUTStage1ColumnLogKummerRealifiedLogShellDivisorFamilySource.Audit
+        (source.columnLogKummerDivisorFamily thetaClass)
+  raw_family_eq_constructed :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      source.rawLogShellDivisorFamily thetaClass =
+        (source.columnLogKummerDivisorFamily thetaClass).toRawColumnRealifiedLogShellDivisorFamilySource
+  ind3_source_baseRealified_eq_upperSemiSource :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        let family := source.columnLogKummerDivisorFamily (thetaPilotClass choice₁)
+        (family.columnLogShell family.baseColumn).base.realifiedLogVolume =
+          choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  ind3_target_baseRealified_eq_upperSemiTarget :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        let family := source.columnLogKummerDivisorFamily (thetaPilotClass choice₂)
+        (family.columnLogShell family.baseColumn).base.realifiedLogVolume =
+          choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume
+  ind3_source_baseLogShell_eq_upperSemiSource :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        ((source.rawLogShellDivisorFamily
+          (thetaPilotClass choice₁)).toColumnRealifiedLogShellLocalObjectFamilySource).baseFiniteLocalObject.finiteLogVolume =
+          choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  ind3_target_baseLogShell_eq_upperSemiTarget :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        ((source.rawLogShellDivisorFamily
+          (thetaPilotClass choice₂)).toColumnRealifiedLogShellLocalObjectFamilySource).baseFiniteLocalObject.finiteLogVolume =
+          choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume
+
+set_option linter.style.longLine false in
+theorem audit :
+    Audit source :=
+  { raw_base_volume_audit :=
+      source.toRawColumnRealifiedLogShellDivisorBaseVolumeZModLogShellPacketLocalObjectSource.audit,
+    column_logKummer_divisor_family_audit := by
+      intro thetaClass
+      exact (source.columnLogKummerDivisorFamily thetaClass).audit,
+    raw_family_eq_constructed := by
+      intro thetaClass
+      rfl,
+    ind3_source_baseRealified_eq_upperSemiSource := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_source_baseRealified_eq_upperSemiSource hstep,
+    ind3_target_baseRealified_eq_upperSemiTarget := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_target_baseRealified_eq_upperSemiTarget hstep,
+    ind3_source_baseLogShell_eq_upperSemiSource := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_source_baseLogShell_eq_upperSemiSource hstep,
+    ind3_target_baseLogShell_eq_upperSemiTarget := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_target_baseLogShell_eq_upperSemiTarget hstep }
+
+end LogThetaLabelProcessionVerticalLogKummerColumnLogKummerRealifiedLogShellDivisorBaseVolumeZModLogShellPacketLocalObjectSource
+
 namespace ProcessionNormalizedLogVolumeSource
 
 variable

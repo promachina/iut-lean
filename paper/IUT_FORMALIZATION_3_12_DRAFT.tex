@@ -843,9 +843,18 @@ source.  The \((\Ind3)\) base comparison has now also been lowered through this
 construction: a base-volume source states the source and target comparisons for
 the raw base divisor's realified Frobenioid log-volume, and Lean derives the
 finite local log-shell object equalities required by the older raw-column
-source.  The remaining payload is therefore sharper: construct these raw
-divisor-column data and the raw source/target base-realified equalities from
-the paper's log-Kummer/log-link geometry.
+source.  The raw column boundary has now been lowered below its translation
+fields by
+\texttt{ColumnLogKummerRealifiedLogShellDivisorFamilySource}.  This source
+starts from a column Frobenioid/log-Kummer compatibility, a divisor realization
+of each vertical column, and the labelled log-link local-object identity.  Lean
+derives realified log-volume preservation under vertical column translation,
+derives the labelled base-object equality, promotes the data to the raw
+divisor-column source, and exposes the same one-sided Step~(xi) endpoint.  The
+remaining payload is therefore sharper: construct the column
+Frobenioid/log-Kummer compatibility, the divisor realization, the normalized
+Frobenius witnesses, and the \((\Ind3)\) source/target base-realified
+comparisons directly from the paper's log-Kummer/log-link geometry.
 The theta-pilot possible-image boundary has also been tightened.  The
 class-indexed and lattice-key image-law constructors now have
 procession-normalized entry points: instead of receiving an arbitrary
@@ -12315,17 +12324,16 @@ are migrated or retired.
 
 The practical priority order is now:
 \begin{enumerate}
-\item Construct the raw column-indexed realified Frobenioid log-shell divisor
-  data, together with the source/target base-realified comparisons for
-  \((\Ind3)\), from the paper-native log-Kummer/log-link geometry.  Once those
-  data are available, \Lean{} now constructs the finite local log-shell objects,
-  derives the base finite-log-volume equalities from raw realified divisor
-  equalities, builds the column log-link transport family, and recovers the
-  transported \(ZMod(\ell)\), capsule, classified, and direct bridges.
-\item Replace the remaining source-facing raw column fields by paper-native
-  log-Kummer/Frobenioid constructions: vertical column translation of realified
-  log-volume, normalized-Frobenius witnesses, and labelled local-object
-  identity.
+\item Construct the column Frobenioid/log-Kummer compatibility and column
+  divisor realization from the paper-native vertical log-Kummer
+  correspondences.  The current Lean boundary already derives raw vertical
+  translation and labelled base-object equality from these data.
+\item Construct the normalized-Frobenius witnesses and the source/target
+  base-realified \((\Ind3)\) comparisons from the same log-Kummer/log-link
+  geometry.  Once these are available, \Lean{} constructs the finite local
+  log-shell objects, derives the base finite-log-volume equalities, builds the
+  column log-link transport family, and recovers the transported
+  \(ZMod(\ell)\), capsule, classified, and direct bridges.
 \item Migrate or retire older certificate-pinned \(\IPL\) review aliases that
   are no longer preferred source surfaces.
 \item Extend the recovered finite-divisor packet-local source from the
