@@ -13281,6 +13281,52 @@ theorem fiberTransport_procession_eq
     (fiberTransport_procession_column_eq (l := l) transport)
 
 set_option linter.style.longLine false in
+/--
+Build the post-procession concrete `(Ind2)` step at the procession-transport
+source boundary.
+
+The procession component is retained as a typed transport; the upper-semi
+component is still available here as equality and is converted to the
+corresponding typed transport.  The direct-summand count equality is derived
+from the finite direct-summand symmetry.
+-/
+theorem fiberTransport_ind2AfterProcession
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTransportSource
+        record indData)
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂) :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind2LocalTensorStep
+      (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+        (l := l) choice₁ choice₂)
+      choice₂ :=
+  IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind2LocalTensorStep.ofTypedLocalTransports
+    (by
+      simpa [
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate]
+        using transport.hodgeTheater_eq)
+    (by
+      simpa [
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate]
+        using transport.historyLabel_eq)
+    (ConcreteHodgeTheaterLogThetaThetaPilotFiberLocalTensorDataSource.fiberTransport_processionShifted_coordinate_eq
+      (l := l) transport)
+    (sourceData.fiberTransport_processionTransport transport)
+    ((sourceData.fiberTransport_directSummandSymmetry transport).directSummandCount_eq)
+    (IUTStage1UpperSemiCompatibilityState.UpperSemiTransport.ofEq
+      (sourceData.fiberTransport_upperSemi_eq transport))
+    (by
+      simpa [
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate]
+        using transport.coric_eq)
+
+set_option linter.style.longLine false in
 /-- Forget procession transport data to the direct-summand symmetry source. -/
 def toFiberDirectSummandSymmetrySource
     (sourceData :
@@ -13482,6 +13528,50 @@ theorem fiberTransport_upperSemi_eq
   IUTStage1UpperSemiCompatibilityState.UpperSemiTransport.eq_of_logThetaColumn_eq
     (sourceData.fiberTransport_upperSemiTransport transport)
     (fiberTransport_upperSemi_logThetaColumn_eq (l := l) transport)
+
+set_option linter.style.longLine false in
+/--
+Build the post-procession concrete `(Ind2)` step at the upper-semi transport
+source boundary.
+
+At this layer both the procession component and the upper-semi component are
+typed transports.  The local tensor input is only the direct-summand symmetry,
+from which Lean derives the required direct-summand-count equality.
+-/
+theorem fiberTransport_ind2AfterProcession
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberUpperSemiTransportSource
+        record indData)
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂) :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind2LocalTensorStep
+      (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+        (l := l) choice₁ choice₂)
+      choice₂ :=
+  IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind2LocalTensorStep.ofTypedLocalTransports
+    (by
+      simpa [
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate]
+        using transport.hodgeTheater_eq)
+    (by
+      simpa [
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate]
+        using transport.historyLabel_eq)
+    (ConcreteHodgeTheaterLogThetaThetaPilotFiberLocalTensorDataSource.fiberTransport_processionShifted_coordinate_eq
+      (l := l) transport)
+    (sourceData.fiberTransport_processionTransport transport)
+    ((sourceData.fiberTransport_directSummandSymmetry transport).directSummandCount_eq)
+    (sourceData.fiberTransport_upperSemiTransport transport)
+    (by
+      simpa [
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate]
+        using transport.coric_eq)
 
 set_option linter.style.longLine false in
 /-- Forget upper-semi transport data to the procession-transport source. -/

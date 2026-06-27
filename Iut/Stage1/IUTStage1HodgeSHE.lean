@@ -3313,6 +3313,13 @@ structure ProcessionTransport
   procession_eq : state₁.procession = state₂.procession
   representative_eq : state₁.representative = state₂.representative
 
+theorem ProcessionTransport.ofEq
+    {state₁ state₂ : IUTStage1ProcessionState}
+    (h : state₁ = state₂) :
+    ProcessionTransport state₁ state₂ := by
+  cases h
+  exact ⟨rfl, rfl⟩
+
 theorem same_procession_of_eq
     {state₁ state₂ : IUTStage1ProcessionState}
     (h : state₁ = state₂) :
@@ -4243,6 +4250,13 @@ structure UpperSemiTransport
     state₁.hasArchimedeanSurjections = state₂.hasArchimedeanSurjections
   logVolumeCompatible_eq :
     state₁.logVolumeCompatible = state₂.logVolumeCompatible
+
+theorem UpperSemiTransport.ofEq
+    {state₁ state₂ : IUTStage1UpperSemiCompatibilityState}
+    (h : state₁ = state₂) :
+    UpperSemiTransport state₁ state₂ := by
+  cases h
+  exact ⟨rfl, rfl, rfl, rfl, rfl, rfl, rfl⟩
 
 theorem logVolumeCompatibleProof
     (state : IUTStage1UpperSemiCompatibilityState) :
