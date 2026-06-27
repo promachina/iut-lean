@@ -25066,6 +25066,127 @@ theorem ConcreteProductHullFamilyUnionExactXiSource.endpoint
 
 set_option linter.style.longLine false in
 /--
+Index type of the concrete Theorem 3.11 quotient possible-image family.
+
+This is the quotient of Hodge-theater/log-theta choices by the typed
+`(Ind1)`/`(Ind2)` equality relation.  We name it because the valuation-ball
+refinement below must compare this quotient index with the index carried by the
+local valuation-ball cover, rather than merely assuming equality of their
+unions.
+-/
+abbrev ConcreteHodgeTheaterLogThetaQuotientIndex
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l) :
+    Type u :=
+  Quot
+    (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+      indData).equalityQuotient.relation
+
+set_option linter.style.longLine false in
+/--
+Indexed provenance for the valuation-ball possible-image union.
+
+The source-paper local valuation-ball cover should be the same family as the
+Theorem 3.11 quotient possible-image family after reindexing.  This structure
+records that precise statement: an equivalence from quotient classes to
+valuation-cover indices, plus pointwise equality of the corresponding regions.
+Lean derives the equality of the two unions from these data.
+-/
+structure ConcreteValuationBallIndexedFamilyUnionSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    {ι : Type y} {η : Type z} {K : Type x}
+    {β : Type v} {γ : Type w} {Λ : Type max v w x y z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (valuationSource :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        (Point target) ι η K β γ Λ) where
+  quotientIndexEquiv :
+    ConcreteHodgeTheaterLogThetaQuotientIndex (coric := coric) (l := l)
+      indData ≃ ι
+  possibleRegion_eq_valuationRegion :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let productOperator :=
+      valuationSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator;
+    let familySource :=
+      quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource productOperator;
+    ∀ q :
+      ConcreteHodgeTheaterLogThetaQuotientIndex (coric := coric) (l := l)
+        indData,
+      familySource.possibleRegion q =
+        valuationSource.valuationCover.possibleRegion (quotientIndexEquiv q)
+
+namespace ConcreteValuationBallIndexedFamilyUnionSource
+
+variable
+  {sourceData :
+    ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+      (source := source) (target := target) (l := l)
+      recordConcrete indData}
+  {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+  {selectedQChoice :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+  {ι : Type y} {η : Type z} {K : Type x}
+  {β : Type v} {γ : Type w} {Λ : Type max v w x y z}
+  [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+  [Fintype β] [Fintype γ]
+  {valuationSource :
+    IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+      (Point target) ι η K β γ Λ}
+
+set_option linter.style.longLine false in
+theorem familyUnion_eq_valuationUnion
+    (indexedSource :
+      ConcreteValuationBallIndexedFamilyUnionSource
+        sourceData gluingTorsor selectedQChoice valuationSource) :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let productOperator :=
+      valuationSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator;
+    let familySource :=
+      quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource productOperator;
+    familySource.familyUnion = valuationSource.possibleImageUnion := by
+  intro quotientSource productOperator familySource
+  ext point
+  constructor
+  · intro hpoint
+    rcases Set.mem_iUnion.mp hpoint with ⟨q, hq⟩
+    refine
+      Set.mem_iUnion.mpr
+        ⟨indexedSource.quotientIndexEquiv q, ?_⟩
+    have hregion := indexedSource.possibleRegion_eq_valuationRegion q
+    rw [← hregion]
+    exact hq
+  · intro hpoint
+    rcases Set.mem_iUnion.mp hpoint with ⟨i, hi⟩
+    let q : ConcreteHodgeTheaterLogThetaQuotientIndex (coric := coric)
+        (l := l) indData :=
+      indexedSource.quotientIndexEquiv.symm i
+    refine Set.mem_iUnion.mpr ⟨q, ?_⟩
+    have hregion := indexedSource.possibleRegion_eq_valuationRegion q
+    have hindex : indexedSource.quotientIndexEquiv q = i := by
+      dsimp [q]
+      exact indexedSource.quotientIndexEquiv.apply_symm_apply i
+    rw [hregion, hindex]
+    exact hi
+
+end ConcreteValuationBallIndexedFamilyUnionSource
+
+set_option linter.style.longLine false in
+/--
 Principal valuation-ball provenance for the product-hull exact-`Xi(P_B)`
 source.
 
@@ -25110,6 +25231,43 @@ structure ConcretePrincipalValuationBallFamilyUnionExactXiSource
   valuationUnion_eq_selectedPrincipalHull :
     valuationSource.possibleImageUnion =
       valuationSource.selectedPrincipalHull
+
+set_option linter.style.longLine false in
+def ConcreteValuationBallIndexedFamilyUnionSource.toPrincipalValuationBallFamilyUnionExactXiSource
+    {sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData}
+    {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+    {selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    {hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target)}
+    {ι : Type y} {η : Type z} {K : Type x}
+    {β : Type v} {γ : Type w} {Λ : Type max v w x y z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    {valuationSource :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        (Point target) ι η K β γ Λ}
+    (indexedSource :
+      ConcreteValuationBallIndexedFamilyUnionSource
+        sourceData gluingTorsor selectedQChoice valuationSource)
+    (hullOperator_eq_principalProductHullOperator :
+      hullOperator =
+        valuationSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator)
+    (valuationUnion_eq_selectedPrincipalHull :
+      valuationSource.possibleImageUnion =
+        valuationSource.selectedPrincipalHull) :
+    ConcretePrincipalValuationBallFamilyUnionExactXiSource
+      sourceData gluingTorsor selectedQChoice hullOperator
+      valuationSource where
+  hullOperator_eq_principalProductHullOperator :=
+    hullOperator_eq_principalProductHullOperator
+  familyUnion_eq_valuationUnion :=
+    indexedSource.familyUnion_eq_valuationUnion
+  valuationUnion_eq_selectedPrincipalHull :=
+    valuationUnion_eq_selectedPrincipalHull
 
 set_option linter.style.longLine false in
 def ConcretePrincipalValuationBallFamilyUnionExactXiSource.toProductHullFamilyUnionExactXiSource
@@ -25822,6 +25980,114 @@ theorem sourceLevelTransportPrincipalValuationBallFamilyExactXiSelectedQRemark39
     measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
     q_pilot_positive normalization cTheta canonicalCThetaScale_le_cTheta
     principalSource.toClosedFamilyUnionExactXiSource t
+
+set_option linter.style.longLine false in
+/--
+Indexed principal valuation-ball exact-`Xi` selected-q global `C_Theta` audit.
+
+This is the stricter valuation-ball endpoint: the equality between the
+Theorem 3.11 quotient-family union and the valuation-cover union is not supplied
+as a primitive field.  It is derived from an equivalence between quotient
+possible-image indices and valuation-cover indices, together with pointwise
+equality of the corresponding regions.
+-/
+theorem sourceLevelTransportPrincipalValuationBallIndexedFamilyExactXiSelectedQRemark395GlobalCThetaAudit
+    {β : Type v} [Fintype β]
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (recordThetaPossibleImageUnion recordConcrete))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      packageConcrete.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          hullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        packageConcrete.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      packageConcrete.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordConcrete)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (ofFiberInd2ActionPacketTransportSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion.toSet
+          (ofFiberInd2ActionPacketTransportSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion_subset_recordUnion
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -packageConcrete.preLedger.qSigned)
+    (normalization : packageConcrete.preLedger.normalization)
+    (cTheta : Real)
+    (canonicalCThetaScale_le_cTheta :
+      ((ofFiberInd2ActionPacketTransportSource
+          (record := recordConcrete) (indData := indData)
+          sourceData gluingTorsor selectedQChoice)
+        |>.toRemark395ConstructedHolomorphicHullDeterminantSource
+          operation hullOperation determinantOperation hullOperator
+          ob3ob4Source compatibility measure_eq_hullLogVolume
+          tensorPower_bound hullDetBridge_eq q_pilot_positive
+          normalization).canonicalCThetaScale <= cTheta)
+    {ι : Type y} {η : Type z} {K : Type x}
+    {βv : Type v} {γv : Type w} {Λ : Type max v w x y z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype βv] [Fintype γv]
+    {valuationSource :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        (Point target) ι η K βv γv Λ}
+    (indexedSource :
+      ConcreteValuationBallIndexedFamilyUnionSource
+        sourceData gluingTorsor selectedQChoice valuationSource)
+    (hullOperator_eq_principalProductHullOperator :
+      hullOperator =
+        valuationSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator)
+    (valuationUnion_eq_selectedPrincipalHull :
+      valuationSource.possibleImageUnion =
+        valuationSource.selectedPrincipalHull)
+    (t : ZMod l.value) :
+    let principalSource :=
+      indexedSource.toPrincipalValuationBallFamilyUnionExactXiSource
+        hullOperator_eq_principalProductHullOperator
+        valuationUnion_eq_selectedPrincipalHull;
+    SourceLevelTransportCanonicalExactXiSelectedQRemark395GlobalCThetaAudit
+      sourceData gluingTorsor selectedQChoice operation hullOperation
+      determinantOperation hullOperator ob3ob4Source compatibility
+      measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+      q_pilot_positive normalization cTheta canonicalCThetaScale_le_cTheta
+      principalSource.toClosedFamilyUnionExactXiSource.toCalibrationSource.toExactXiFamilySource t :=
+  by
+    intro principalSource
+    exact
+      sourceLevelTransportPrincipalValuationBallFamilyExactXiSelectedQRemark395GlobalCThetaAudit
+        (recordConcrete := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice operation hullOperation
+        determinantOperation hullOperator ob3ob4Source compatibility
+        measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+        q_pilot_positive normalization cTheta canonicalCThetaScale_le_cTheta
+        principalSource t
 
 end ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
 

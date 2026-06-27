@@ -3395,11 +3395,17 @@ the corridor operator.  From this product-hull witness, \Lean{} constructs the
 closed-family exact-\(\Xi(P_B)\) source and enters the same global
 \(C_\Theta\) audit.  This has a principal valuation-ball refinement:
 \texttt{ConcretePrincipalValuationBallFamilyUnionExactXiSource} starts from a
-Remark~3.9.5 valuation-ball product-hull cover, identifies the quotient-family
-union with the valuation-cover union, and identifies that union with the
-selected principal hull \(\lambda\cdot O\).  The remaining mathematical payload
-is now the source-paper construction of these exact union identifications from
-the nonarchimedean theta data.
+Remark~3.9.5 valuation-ball product-hull cover and identifies the resulting
+valuation-cover union with the selected principal hull \(\lambda\cdot O\).
+The sharper source
+\texttt{ConcreteValuationBallIndexedFamilyUnionSource} no longer takes the
+quotient-family/valuation-cover union equality as primitive: it requires an
+equivalence between the Theorem~3.11 quotient index and the valuation-cover
+index, plus pointwise equality of the corresponding possible regions, and
+\Lean{} derives the union equality.  The remaining mathematical payload at
+this boundary is the source-paper construction of this indexed valuation-ball
+comparison and the selected-principal-hull equality from the nonarchimedean
+theta data.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -11981,8 +11987,9 @@ The practical priority order is now:
   than accepting them as source-facing packet-boundary fields.
 \item Construct the remaining Step~(xi) holomorphic-hull/determinant fields
   from Remark~3.9.5 and Step~(xi): genuine hulls, determinant lines,
-  possible-image quotient comparison, Ob5/Ob7 compatibility, and the
-  \(\theta_{\mathrm{signed}}\) log-volume identification.
+  the source-paper data behind the indexed possible-image/valuation-cover
+  comparison, Ob5/Ob7 compatibility, and the \(\theta_{\mathrm{signed}}\)
+  log-volume identification.
 \item Instantiate the valuation-ball local analytic construction from actual
   local fields, log-shell maps, compact-open Haar normalizations, and
   archimedean lattice metrics, proving the remaining Proposition~1.4
