@@ -3546,9 +3546,9 @@ two inclusions
 and the analogous two inclusions between a transported theta-class region and
 the valuation-cover possible-image region.  \Lean{} reconstructs both
 equalities by antisymmetry and then enters the same valuation-norm-gauge
-endpoint.  The preferred boundary is now the pointwise source
+endpoint.  The next boundary is the pointwise source
 \texttt{ConcreteValuationBallThetaClassFiberTransportValuationBallPointwiseSource}.
-It asks instead for the local lifting law
+It replaces the set containments by the local lifting law
 \[
   y\in P_{\Theta,\beta}\Longrightarrow
   \exists x,\ \|x\|_v\le r_\beta\ \wedge\ \mathrm{realization}(x)=y,
@@ -3560,9 +3560,18 @@ the reverse realization law
 \]
 and pointwise membership compatibility with the valuation-cover possible
 regions.  The set containments and equalities are now projections from these
-local transport laws, so the remaining paper-side payload is genuinely
-pointwise Step~(xi) transport and class-region membership, not set equality
-fields.
+local transport laws.  This lifting law has now been lowered once more by
+\texttt{ConcreteValuationBallThetaClassFiberTransportValuationBallLocalChartSource}:
+for each transported theta point \(y\), the source names its local coordinate
+\(x_\beta(y)\), proves
+\[
+  \|x_\beta(y)\|_v\le r_\beta,\qquad
+  \mathrm{realization}(x_\beta(y))=y.
+\]
+Thus the remaining paper-side payload is no longer an existential lift or set
+equality field, but the construction of the local log-shell/valuation-ball
+coordinate, its norm bound, its realization identity, and the pointwise
+class-region membership laws.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -12144,9 +12153,9 @@ The practical priority order is now:
   than accepting them as source-facing packet-boundary fields.
 \item Construct the remaining Step~(xi) holomorphic-hull/determinant fields
   from Remark~3.9.5 and Step~(xi): genuine hulls, determinant lines,
-  pointwise local transport between transported theta regions and valuation
-  balls, pointwise class-region membership compatibility with the
-  valuation-cover regions, Ob5/Ob7 compatibility, and the
+  the local log-shell/valuation-ball coordinate for transported theta points,
+  its norm/realization laws, pointwise class-region membership compatibility
+  with the valuation-cover regions, Ob5/Ob7 compatibility, and the
   \(\theta_{\mathrm{signed}}\) log-volume identification.
 \item Instantiate the valuation-ball local analytic construction from actual
   local fields, log-shell maps, compact-open Haar normalizations, and
