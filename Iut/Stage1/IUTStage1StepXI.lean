@@ -15383,6 +15383,125 @@ def postProcessionInd2ActionPacketTransportSourceAudit
           transport).logVolumeCompatible_eq }
 
 set_option linter.style.longLine false in
+/--
+The lower source payload retained by the strict post-procession `(Ind2)`
+transport audit: procession transport plus the non-column upper-semi transport
+and all of their field equalities.
+-/
+def LowerTransportPayload
+    (_sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        record indData) : Prop :=
+  (∀ {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+    ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂ ->
+      IUTStage1ProcessionState.ProcessionTransport
+        (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+          (l := l) choice₁ choice₂).procession_state
+        choice₂.procession_state) ∧
+  (∀ {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (_transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂),
+      (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+        (l := l) choice₁ choice₂).procession_state.procession =
+        choice₂.procession_state.procession) ∧
+  (∀ {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (_transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂),
+      (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+        (l := l) choice₁ choice₂).procession_state.representative =
+        choice₂.procession_state.representative) ∧
+  (∀ {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+    ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂ ->
+      IUTStage1UpperSemiCompatibilityState.UpperSemiTransport
+        (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+          (l := l) choice₁ choice₂).upper_semi_state
+        choice₂.upper_semi_state) ∧
+  (∀ {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (_transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂),
+      (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+        (l := l) choice₁ choice₂).upper_semi_state.compatibility =
+        choice₂.upper_semi_state.compatibility) ∧
+  (∀ {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (_transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂),
+      (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+        (l := l) choice₁ choice₂).upper_semi_state.nonarchimedeanInclusions =
+        choice₂.upper_semi_state.nonarchimedeanInclusions) ∧
+  (∀ {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (_transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂),
+      (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+        (l := l) choice₁ choice₂).upper_semi_state.archimedeanSurjections =
+        choice₂.upper_semi_state.archimedeanSurjections) ∧
+  (∀ {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (_transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂),
+      (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+        (l := l) choice₁ choice₂).upper_semi_state.logVolumeCompatibility =
+        choice₂.upper_semi_state.logVolumeCompatibility) ∧
+  (∀ {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (_transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂),
+      (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+        (l := l) choice₁ choice₂).upper_semi_state.hasNonarchimedeanInclusions =
+        choice₂.upper_semi_state.hasNonarchimedeanInclusions) ∧
+  (∀ {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (_transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂),
+      (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+        (l := l) choice₁ choice₂).upper_semi_state.hasArchimedeanSurjections =
+        choice₂.upper_semi_state.hasArchimedeanSurjections) ∧
+  (∀ {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (_transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂),
+      (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+        (l := l) choice₁ choice₂).upper_semi_state.logVolumeCompatible =
+        choice₂.upper_semi_state.logVolumeCompatible)
+
+set_option linter.style.longLine false in
+theorem lowerTransportPayload
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        record indData) :
+    sourceData.LowerTransportPayload := by
+  let transportAudit := sourceData.postProcessionInd2ActionPacketTransportSourceAudit
+  exact
+    ⟨transportAudit.source_level_procession_transport,
+      transportAudit.procession_transport_procession_eq,
+      transportAudit.procession_transport_representative_eq,
+      transportAudit.source_level_upperSemi_transport,
+      transportAudit.upperSemi_transport_compatibility_eq,
+      transportAudit.upperSemi_transport_nonarchimedeanInclusions_eq,
+      transportAudit.upperSemi_transport_archimedeanSurjections_eq,
+      transportAudit.upperSemi_transport_logVolumeCompatibility_eq,
+      transportAudit.upperSemi_transport_hasNonarchimedeanInclusions_eq,
+      transportAudit.upperSemi_transport_hasArchimedeanSurjections_eq,
+      transportAudit.upperSemi_transport_logVolumeCompatible_eq⟩
+
+set_option linter.style.longLine false in
 theorem endpoint
     (sourceData :
       ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
@@ -22955,6 +23074,7 @@ theorem ofFiberInd2ActionPacketTransportSource_toRemark395SelectedQHullLogVolume
         tensorPower_bound hullDetBridge_eq q_pilot_positive normalization;
     let hullCompatibility := quotientSource.toHullCompatibility hullOperator;
     Nonempty sourceData.PostProcessionInd2ActionPacketTransportSourceAudit ∧
+      sourceData.LowerTransportPayload ∧
       (∀ choice₁ choice₂ :
           IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
         IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind1ProcessionTransportSource.Audit
@@ -23031,6 +23151,7 @@ theorem ofFiberInd2ActionPacketTransportSource_toRemark395SelectedQHullLogVolume
   let transportAudit := sourceData.postProcessionInd2ActionPacketTransportSourceAudit
   exact
     ⟨⟨transportAudit⟩,
+      sourceData.lowerTransportPayload,
       transportAudit.typed_core_transport_audit.procession_shift_ind1_transport_source_audit,
       transportAudit.source_level_ind2_action_packet_audit,
       transportAudit.typed_core_transport_audit.fiberTransport_logVolume_eq,
@@ -23126,6 +23247,7 @@ theorem ofFiberInd2ActionPacketTransportSource_toRemark395ConstructedGlobalCThet
         ob3ob4Source compatibility measure_eq_hullLogVolume
         tensorPower_bound hullDetBridge_eq q_pilot_positive normalization;
     Nonempty sourceData.PostProcessionInd2ActionPacketTransportSourceAudit ∧
+      sourceData.LowerTransportPayload ∧
       (∀ choice₁ choice₂ :
           IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
         IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind1ProcessionTransportSource.Audit
@@ -23207,6 +23329,7 @@ theorem ofFiberInd2ActionPacketTransportSource_toRemark395ConstructedGlobalCThet
   let transportAudit := sourceData.postProcessionInd2ActionPacketTransportSourceAudit
   exact
     ⟨⟨transportAudit⟩,
+      sourceData.lowerTransportPayload,
       transportAudit.typed_core_transport_audit.procession_shift_ind1_transport_source_audit,
       transportAudit.source_level_ind2_action_packet_audit,
       transportAudit.typed_core_transport_audit.fiberTransport_logVolume_eq,

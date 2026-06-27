@@ -9966,16 +9966,17 @@ keeps the finite procession shift and post-shift \((\Ind_2)\) packet symmetry
 visible at the final handoff, rather than hiding them behind an intermediate
 quotient-source argument.
 The stricter source-level packet/action transport source now has the same two
-handoff endpoints, retaining nonempty construction of the post-procession
-transport audit while exposing the selected q-region and the global
-\(C_\Theta\) dichotomy.  These endpoints also carry the typed-core consequences
-used by the quotient construction: fiber-transport log-volume preservation,
-equality-quotient compatibility, direct-summand-count preservation, and the
-explicit exclusion of \((\Ind_3)\) as an equality generator.  The handoff now
-audits the full equality/equality/upper-semi pattern: the canonical
-finite-label \((\Ind_1)\) procession shift, the source branch for the
-post-shift \((\Ind_2)\) packet transport, and the separate \((\Ind_3)\)
-upper-semi relation audit rather than an \((\Ind_3)\) equality generator.
+handoff endpoints.  They no longer merely assert nonemptiness of the
+post-procession transport audit: both endpoints return the named payload
+\texttt{LowerTransportPayload}, which contains the procession transport, the
+upper-semi transport, and the field equalities needed to compare the shifted
+choice with the target choice.  The same handoff still exposes the selected
+q-region, the global \(C_\Theta\) dichotomy, fiber-transport log-volume
+preservation, equality-quotient compatibility, direct-summand-count
+preservation, and the exclusion of \((\Ind_3)\) from the equality quotient.
+Thus the final strict boundary now shows the full equality/equality/upper-semi
+pattern: \((\Ind_1)\) and \((\Ind_2)\) provide equality transport, while
+\((\Ind_3)\) remains only one-sided upper-semi data.
 
 The bridge to the constructed Remark~3.9.5 source is now named as
 \[
