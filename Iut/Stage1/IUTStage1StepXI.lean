@@ -14250,6 +14250,112 @@ theorem fiberTransport_ind2AfterProcession
 
 set_option linter.style.longLine false in
 /--
+Construct the concrete `(Ind1)` procession-transport source for the canonical
+finite `F_l` shift of a theta-pilot fiber transport.
+
+This is the source-record form of the first leg of the fiber decomposition:
+only the finite label is changed, while the Hodge-theater history, log-theta
+lattice node, coric datum, procession state, local tensor state, and upper-semi
+state are fixed by the concrete `flProcessionTranslate` construction.
+-/
+def processionShift_ind1TransportSource
+    (choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind1ProcessionTransportSource
+      choice₁
+      (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+        (l := l) choice₁ choice₂) :=
+  { hodgeTheater_eq := by
+      simp [
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate],
+    historyLabel_eq := by
+      simp [
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate],
+    column_eq := by
+      simp [
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate,
+        IUTStage1Theorem311LogThetaLatticeCoordinate.translateFLLabel],
+    row_eq := by
+      simp [
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate,
+        IUTStage1Theorem311LogThetaLatticeCoordinate.translateFLLabel],
+    logThetaColumn_eq := by
+      simp [
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate,
+        IUTStage1Theorem311LogThetaLatticeCoordinate.translateFLLabel],
+    coric_eq := by
+      simp [
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate],
+    processionTransport :=
+      IUTStage1ProcessionState.ProcessionTransport.ofEq
+        (by
+          simp [
+            ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate]),
+    local_tensor_eq := by
+      simp [
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate],
+    upper_semi_eq := by
+      simp [
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate] }
+
+set_option linter.style.longLine false in
+/--
+Construct the concrete post-procession `(Ind2)` local tensor transport source.
+
+After the canonical finite-label shift aligns the theta-pilot coordinate, the
+remaining local tensor comparison is reconstructed from the typed procession
+transport, upper-semi transport, and direct-summand count equality induced by
+the `(Ind2)` action-packet symmetry.
+-/
+def fiberTransport_ind2LocalTensorTransportSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSource
+        record indData)
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂) :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind2LocalTensorTransportSource
+      (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+        (l := l) choice₁ choice₂)
+      choice₂ :=
+  { hodgeTheater_eq := by
+      simpa [
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate]
+        using transport.hodgeTheater_eq,
+    historyLabel_eq := by
+      simpa [
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate]
+        using transport.historyLabel_eq,
+    coordinate_eq :=
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberLocalTensorDataSource.fiberTransport_processionShifted_coordinate_eq
+        (l := l) transport,
+    processionTransport :=
+      sourceData.fiberTransport_processionTransport transport,
+    direct_summand_count_eq :=
+      (sourceData.fiberTransport_directSummandSymmetry transport).directSummandCount_eq,
+    upperSemiTransport :=
+      sourceData.fiberTransport_upperSemiTransport transport,
+    coric_eq := by
+      simpa [
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate]
+        using transport.coric_eq }
+
+set_option linter.style.longLine false in
+/--
 Audit for the typed `(Ind2)` action-packet boundary after the canonical
 `F_l` procession shift.
 
@@ -14376,6 +14482,22 @@ structure PostProcessionTypedCoreTransportAudit
     (sourceData :
       ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSource
         record indData) : Prop where
+  procession_shift_ind1_transport_source :
+    ∀ choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      let shifted :=
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+          (l := l) choice₁ choice₂;
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind1ProcessionTransportSource
+        choice₁ shifted
+  post_procession_ind2_transport_source :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+        let shifted :=
+          ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂;
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind2LocalTensorTransportSource
+          shifted choice₂
   procession_shift_ind1_typed_audit :
     ∀ choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
       let shifted :=
@@ -14455,49 +14577,12 @@ theorem postProcessionTypedCoreTransportAudit
               IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁ =
                 IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass shifted := by
     intro choice₁ choice₂
+    let source :=
+      processionShift_ind1TransportSource
+        (l := l) choice₁ choice₂
     exact
-      IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedInd1ProcessionTransportAudit
-        indData
-        (by
-          simp [
-            ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
-            IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate])
-        (by
-          simp [
-            ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
-            IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate])
-        (by
-          simp [
-            ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
-            IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate,
-            IUTStage1Theorem311LogThetaLatticeCoordinate.translateFLLabel])
-        (by
-          simp [
-            ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
-            IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate,
-            IUTStage1Theorem311LogThetaLatticeCoordinate.translateFLLabel])
-        (by
-          simp [
-            ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
-            IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate,
-            IUTStage1Theorem311LogThetaLatticeCoordinate.translateFLLabel])
-        (by
-          simp [
-            ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
-            IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate])
-        (IUTStage1ProcessionState.ProcessionTransport.ofEq
-          (by
-            simp [
-              ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
-              IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate]))
-        (by
-          simp [
-            ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
-            IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate])
-        (by
-          simp [
-            ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
-            IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate])
+      IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedInd1ProcessionTransportSourceAudit
+        indData source
   let ind2Audit :
       ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
         ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
@@ -14514,31 +14599,24 @@ theorem postProcessionTypedCoreTransportAudit
                 IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass shifted =
                   IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₂ := by
     intro choice₁ choice₂ transport
+    let source :=
+      sourceData.fiberTransport_ind2LocalTensorTransportSource
+        (l := l) transport
     exact
-      IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedInd2LocalTransportAudit
-        indData
-        (by
-          simpa [
-            ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
-            IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate]
-            using transport.hodgeTheater_eq)
-        (by
-          simpa [
-            ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
-            IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate]
-            using transport.historyLabel_eq)
-        (ConcreteHodgeTheaterLogThetaThetaPilotFiberLocalTensorDataSource.fiberTransport_processionShifted_coordinate_eq
-          (l := l) transport)
-        (sourceData.fiberTransport_processionTransport transport)
-        ((sourceData.fiberTransport_directSummandSymmetry transport).directSummandCount_eq)
-        (sourceData.fiberTransport_upperSemiTransport transport)
-        (by
-          simpa [
-            ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
-            IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate]
-            using transport.coric_eq)
+      IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedInd2LocalTensorTransportSourceAudit
+        indData source
   exact
-    { procession_shift_ind1_typed_audit := ind1Audit,
+    { procession_shift_ind1_transport_source := by
+        intro choice₁ choice₂
+        exact
+          processionShift_ind1TransportSource
+            (l := l) choice₁ choice₂,
+      post_procession_ind2_transport_source := by
+        intro choice₁ choice₂ transport
+        exact
+          sourceData.fiberTransport_ind2LocalTensorTransportSource
+            (l := l) transport,
+      procession_shift_ind1_typed_audit := ind1Audit,
       post_procession_ind2_typed_audit := by
         intro choice₁ choice₂ transport
         exact ind2Audit transport,
