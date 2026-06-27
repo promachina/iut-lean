@@ -194,8 +194,12 @@ input.
 The current Theorem 3.11 source record now bundles structured
 \(\IPL/\SHE/\APT\) input, coric multiradial output, possible theta-pilot images,
 the 0-column/1-column pilot distinction, distinct log-shell treatments, and the
-Hodge-theater history guard.  This is still a source interface, not a
-construction of Theorem 3.11.
+Hodge-theater history guard.  This is still not a full construction of
+Theorem~3.11, but the indeterminacy/log-volume boundary is no longer a single
+raw record: the finite \(F_l\)-averaged procession source now constructs the
+typed \((\Ind1),(\Ind2),(\Ind3)\) core, deriving \((\Ind1)\) and \((\Ind2)\)
+log-volume invariance from theta-pilot-class invariance and retaining
+\((\Ind3)\) as a one-sided upper-semi inequality.
 The \(\IPL\) layer has been separated into a typed log-volume transport datum:
 it carries the source and target Hodge-theater sides, identifies the prime-strip
 link endpoints with the input and output prime strips, records equality of the
@@ -3459,6 +3463,17 @@ fiber-transport invariant possible-image family, and \Lean{} derives the
 lattice image law from that fiber-transport invariance.  The valuation-side
 payload at this point is therefore the identification of the derived
 theta-pilot class regions with the corresponding valuation-ball regions.
+The log-volume side of this same concrete choice space has now been lowered by
+\texttt{ProcessionNormalizedLogVolumeSource}.  Instead of accepting an
+arbitrary \texttt{IndeterminacyData} record, the source assigns to each
+theta-pilot class an actual averaged \(Z/\ell Z\)-label procession log-volume.
+\Lean{} defines the log-volume of a concrete Hodge-theater/log-theta choice as
+this class average, proves the displayed average formula with
+\(|Z/\ell Z|=\ell\), derives the old \texttt{IndeterminacyData} record, and
+constructs the typed core used by the quotient possible-image machinery.  Thus
+the equality side of the indeterminacy layer is now built from finite
+procession averages; only the \((\Ind3)\) upper-semi comparison remains a
+one-sided source input at this boundary.
 The selected-principal-hull equality has also been lowered:
 \texttt{ConcreteValuationBallSelectedPrincipalHullSource}
 requires the valuation-cover possible-image union to be a hull for its
@@ -12172,6 +12187,11 @@ are migrated or retired.
 
 The practical priority order is now:
 \begin{enumerate}
+\item Push the finite \(F_l\)-averaged
+  \texttt{ProcessionNormalizedLogVolumeSource} through the remaining public
+  Theorem~3.11 endpoint wrappers, and derive its \((\Ind3)\) upper-semi average
+  from the paper's vertical log-Kummer/log-link comparison rather than leaving
+  it as the only one-sided source field at this boundary.
 \item Migrate or retire older certificate-pinned \(\IPL\) review aliases that
   are no longer preferred source surfaces.
 \item Extend the recovered finite-divisor packet-local source from the
