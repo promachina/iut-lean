@@ -679,6 +679,129 @@ theorem fullLabelProcessionAudit
 end IUTStage1FLLabelProcessionSource
 
 /--
+Naked index set of the mono-analytic `±`-procession component labeled by `j`.
+
+IUT III, Remark 3.11.2 says that these index sets are not arithmetic
+holomorphic data: they are determined, up to isomorphism, only by cardinality.
+For the component labeled `j`, the cardinality is `j + 1`.
+-/
+abbrev IUTStage1PlusMinusProcessionIndexSet
+    (j : Nat) : Type :=
+  Fin (j + 1)
+
+namespace IUTStage1PlusMinusProcessionIndexSet
+
+/-- The index set labeled by `j` has exactly `j + 1` elements. -/
+theorem cardinality
+    (j : Nat) :
+    Fintype.card (IUTStage1PlusMinusProcessionIndexSet j) = j + 1 := by
+  simp [IUTStage1PlusMinusProcessionIndexSet]
+
+/--
+Any finite type of cardinality `j + 1` is a valid naked model of the same
+`±`-procession index set.
+-/
+noncomputable def nakedEquiv
+    (j : Nat) (α : Type u) [Fintype α]
+    (hcard : Fintype.card α = j + 1) :
+    α ≃ IUTStage1PlusMinusProcessionIndexSet j :=
+  Fintype.equivFinOfCardEq hcard
+
+theorem naked_equiv_nonempty
+    (j : Nat) (α : Type u) [Fintype α]
+    (hcard : Fintype.card α = j + 1) :
+    Nonempty (α ≃ IUTStage1PlusMinusProcessionIndexSet j) :=
+  ⟨nakedEquiv j α hcard⟩
+
+end IUTStage1PlusMinusProcessionIndexSet
+
+/--
+The type of all label-identification choices for mono-analytic
+`±`-procession index sets over `j = 0, ..., l`.
+
+For each `j`, one chooses an element of a naked index set of cardinality
+`j + 1`; the total number of choices is `(l + 1)!`.
+-/
+abbrev IUTStage1PlusMinusProcessionLabelIdentification
+    (l : PrimeGeFive) : Type :=
+  (j : Fin (l.value + 1)) ->
+    IUTStage1PlusMinusProcessionIndexSet j.1
+
+namespace IUTStage1PlusMinusProcessionLabelIdentification
+
+variable {l : PrimeGeFive}
+
+theorem component_cardinality
+    (j : Fin (l.value + 1)) :
+    Fintype.card (IUTStage1PlusMinusProcessionIndexSet j.1) = j.1 + 1 :=
+  IUTStage1PlusMinusProcessionIndexSet.cardinality j.1
+
+theorem range_product_cardinality
+    (l : PrimeGeFive) :
+    (∏ j ∈ Finset.range (l.value + 1),
+        Fintype.card (IUTStage1PlusMinusProcessionIndexSet j)) =
+      Nat.factorial (l.value + 1) := by
+  simp [IUTStage1PlusMinusProcessionIndexSet,
+    Finset.prod_range_add_one_eq_factorial]
+
+theorem total_cardinality
+    (l : PrimeGeFive) :
+    Fintype.card (IUTStage1PlusMinusProcessionLabelIdentification l) =
+      Nat.factorial (l.value + 1) := by
+  rw [Fintype.card_pi]
+  calc
+    (∏ j : Fin (l.value + 1),
+        Fintype.card (IUTStage1PlusMinusProcessionIndexSet j.1)) =
+        ∏ j ∈ Finset.range (l.value + 1),
+          Fintype.card (IUTStage1PlusMinusProcessionIndexSet j) := by
+      exact Fin.prod_univ_eq_prod_range
+        (fun j => Fintype.card (IUTStage1PlusMinusProcessionIndexSet j))
+        (l.value + 1)
+    _ = Nat.factorial (l.value + 1) :=
+      range_product_cardinality l
+
+set_option linter.style.longLine false in
+/--
+Audit for the naked mono-analytic `±`-procession index sets of Remark 3.11.2.
+
+It records the per-label cardinality `j + 1`, the fact that any finite set of
+that cardinality is equivalent to the chosen model, and the total
+`(l + 1)! = l^{±}!` count of label-identification choices.
+-/
+structure Audit
+    (l : PrimeGeFive) : Prop where
+  component_cardinality :
+    ∀ j : Fin (l.value + 1),
+      Fintype.card (IUTStage1PlusMinusProcessionIndexSet j.1) = j.1 + 1
+  naked_by_cardinality :
+    ∀ (j : Fin (l.value + 1)) (α : Type u) [Fintype α],
+      Fintype.card α = j.1 + 1 ->
+        Nonempty (α ≃ IUTStage1PlusMinusProcessionIndexSet j.1)
+  total_label_identification_cardinality :
+    Fintype.card (IUTStage1PlusMinusProcessionLabelIdentification l) =
+      Nat.factorial (l.value + 1)
+  range_product_cardinality :
+    (∏ j ∈ Finset.range (l.value + 1),
+        Fintype.card (IUTStage1PlusMinusProcessionIndexSet j)) =
+      Nat.factorial (l.value + 1)
+
+theorem audit
+    (l : PrimeGeFive) :
+    Audit l :=
+  { component_cardinality := by
+      intro j
+      exact component_cardinality j,
+    naked_by_cardinality := by
+      intro j α _ hcard
+      exact
+        IUTStage1PlusMinusProcessionIndexSet.naked_equiv_nonempty
+          j.1 α hcard,
+    total_label_identification_cardinality := total_cardinality l,
+    range_product_cardinality := range_product_cardinality l }
+
+end IUTStage1PlusMinusProcessionLabelIdentification
+
+/--
 Plus-minus/absolute label procession source over a fixed log-theta lattice node.
 
 Remark 3.11.2 distinguishes the full arithmetic-holomorphic `F_l` labels from
@@ -793,6 +916,8 @@ ordinary processions are compatible with `±`-processions.
 structure AbsoluteLabelProcessionAudit
     (source : IUTStage1AbsoluteFLLabelProcessionSource l) : Prop where
   full_label_audit : source.fullLabelSource.FullLabelProcessionAudit
+  plus_minus_index_audit :
+    IUTStage1PlusMinusProcessionLabelIdentification.Audit.{u} l
   all_absolute_labels_present :
     ∀ absLabel : IUTStage1ZModCuspFullLabel l,
       ∃ label : ZMod l.value, source.absoluteLabel label = absLabel
@@ -820,6 +945,8 @@ theorem absoluteLabelProcessionAudit
     (source : IUTStage1AbsoluteFLLabelProcessionSource l) :
     source.AbsoluteLabelProcessionAudit :=
   { full_label_audit := source.fullLabelSource.fullLabelProcessionAudit,
+    plus_minus_index_audit :=
+      IUTStage1PlusMinusProcessionLabelIdentification.audit l,
     all_absolute_labels_present := source.all_absolute_labels_present,
     zero_label := source.absoluteLabel_zero,
     nonzero_label := by
@@ -1385,7 +1512,8 @@ structure AbsoluteLabelProcessionChoiceAudit
     {choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
     (source : FLLabelProcessionChoiceSource choice) : Prop where
   source_audit :
-    source.toAbsoluteLabelProcessionSource.AbsoluteLabelProcessionAudit
+    IUTStage1AbsoluteFLLabelProcessionSource.AbsoluteLabelProcessionAudit.{u}
+      source.toAbsoluteLabelProcessionSource
   all_absolute_labels_present :
     ∀ absLabel : IUTStage1ZModCuspFullLabel l,
       ∃ label : ZMod l.value,

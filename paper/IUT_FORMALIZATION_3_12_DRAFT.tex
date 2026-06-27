@@ -9434,6 +9434,19 @@ F_l\text{-labels}\longrightarrow |F_l|\text{-labels}\longrightarrow
 \]
 instead of stopping at the ordinary \(F_l\)-procession action.
 
+Remark~3.11.2 also treats the mono-analytic \(\pm\)-procession index sets as
+naked finite sets, not as further arithmetic holomorphic data.  Lean now models
+the component indexed by \(j\) as \(\mathrm{Fin}(j+1)\), proves that any finite
+type of cardinality \(j+1\) is equivalent to this chosen model, and packages the
+family of choices
+\[
+\prod_{j=0}^{l} \mathrm{Fin}(j+1).
+\]
+The total cardinality is proved to be \((l+1)!\), matching the paper's
+\(l^{\pm}!\) count.  This audit is attached to the absolute-label procession
+source, so the formal passage to \(\pm\)-processions now records both the
+quotient of labels and the naked mono-analytic counting data.
+
 This source is canonical: \texttt{ofCoordinate} builds the full-label family from
 a log-theta coordinate, \texttt{ofChoice} attaches it to a concrete
 Hodge-theater/log-theta choice, and
