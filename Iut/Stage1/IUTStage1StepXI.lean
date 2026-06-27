@@ -20221,6 +20221,125 @@ theorem toRemark395ConstructedHolomorphicHullDeterminantSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Selected-q quotient hull/log-volume audit for the constructed Remark 3.9.5
+source attached to a concrete Hodge-theater/log-theta quotient theta-pilot
+source.
+
+This is the quotient-source version of `OneSidedSelectedQHullLogVolumeAudit`:
+the constructed Remark 3.9.5 q-pilot region is definitionally the selected
+Theorem 3.11 quotient possible image.  The theorem exposes the resulting
+canonical-hull containment, q-region log-volume bound by `thetaSigned`, and the
+separate `(Ind1)/(Ind2)` equality versus `(Ind3)` upper-semi behavior at the
+same boundary.
+-/
+theorem toRemark395SelectedQHullLogVolumeAudit_endpoint
+    {β : Type v} [Fintype β]
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
+        recordConcrete indData)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (recordThetaPossibleImageUnion recordConcrete))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      packageConcrete.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          hullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        packageConcrete.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      packageConcrete.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordConcrete)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          sourceData.toConstruction.selectedQRegion.toSet
+          sourceData.toConstruction.selectedQRegion_subset_recordUnion
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -packageConcrete.preLedger.qSigned)
+    (normalization : packageConcrete.preLedger.normalization) :
+    let constructedSource :=
+      sourceData.toRemark395ConstructedHolomorphicHullDeterminantSource
+        operation hullOperation determinantOperation hullOperator
+        ob3ob4Source compatibility measure_eq_hullLogVolume
+        tensorPower_bound hullDetBridge_eq q_pilot_positive normalization;
+    let hullCompatibility :=
+      sourceData.toHullCompatibility hullOperator;
+    OneSidedSelectedQHullLogVolumeAudit
+        sourceData.toConstruction constructedSource hullCompatibility rfl ∧
+      constructedSource.qPilotRegion =
+        (sourceData.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap sourceData.selectedQChoice)).toSet ∧
+      constructedSource.qPilotRegion ⊆
+        hullCompatibility.familySource.canonicalHull ∧
+      constructedSource.hullOperator.logVolume constructedSource.qPilotRegion <=
+        packageConcrete.preLedger.thetaSigned ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).ind1.step choice₁ choice₂ ->
+          constructedSource.hullOperator.logVolume
+              (hullCompatibility.familySource.possibleRegion
+                ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+                  indData).equalityQuotientMap choice₁)) =
+            constructedSource.hullOperator.logVolume
+              (hullCompatibility.familySource.possibleRegion
+                ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+                  indData).equalityQuotientMap choice₂))) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).ind2.step choice₁ choice₂ ->
+          constructedSource.hullOperator.logVolume
+              (hullCompatibility.familySource.possibleRegion
+                ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+                  indData).equalityQuotientMap choice₁)) =
+            constructedSource.hullOperator.logVolume
+              (hullCompatibility.familySource.possibleRegion
+                ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+                  indData).equalityQuotientMap choice₂))) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).ind3.step choice₁ choice₂ ->
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).logVolume choice₁ <=
+            (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).logVolume choice₂) ∧
+      packageConcrete.preLedger.qSigned <= packageConcrete.preLedger.thetaSigned :=
+  by
+    intro constructedSource hullCompatibility
+    let selectedAudit :=
+      sourceData.remark395SelectedQHullEndpoint constructedSource rfl
+    exact
+      ⟨selectedAudit.1,
+        selectedAudit.2.1,
+        selectedAudit.1.qPilotRegion_subset_quotientCanonicalHull,
+        selectedAudit.1.qPilotRegion_logVolume_le_thetaSigned,
+        selectedAudit.1.ind1_hull_logVolume_eq,
+        selectedAudit.1.ind2_hull_logVolume_eq,
+        selectedAudit.1.ind3_upper_semi_core_logVolume,
+        constructedSource.qSigned_le_thetaSigned⟩
+
+set_option linter.style.longLine false in
+/--
 Concrete quotient theta-pilot endpoint for the global \(C_\Theta\) dichotomy.
 
 This composes the concrete Theorem 3.11 quotient source, the selected q-region
