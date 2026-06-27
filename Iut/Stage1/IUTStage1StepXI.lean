@@ -12720,6 +12720,42 @@ def processionShiftedChoice
     (processionShift (l := l) choice₁ choice₂) choice₁
 
 set_option linter.style.longLine false in
+/--
+The procession shift is the unique finite `F_l` label translation that aligns
+the coordinates of two choices in the same theta-pilot fiber.
+-/
+theorem fiberTransport_existsUnique_processionShift
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂) :
+    ∃! t : ZMod l.value,
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate
+        t choice₁).coordinate = choice₂.coordinate := by
+  simpa [IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate,
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate]
+    using
+      IUTStage1Theorem311LogThetaLatticeCoordinate.existsUnique_translateFLLabel_eq_of_toThetaPilotLatticeCoordinate_eq
+        (l := l) transport.thetaPilotLatticeCoordinate_eq
+
+set_option linter.style.longLine false in
+theorem fiberTransport_processionShifted_coordinate_eq
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂) :
+    (processionShiftedChoice (l := l) choice₁ choice₂).coordinate =
+      choice₂.coordinate := by
+  simpa [processionShiftedChoice, processionShift,
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate,
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate]
+    using
+      IUTStage1Theorem311LogThetaLatticeCoordinate.translateFLLabel_sub_eq_of_toThetaPilotLatticeCoordinate_eq
+        (l := l) transport.thetaPilotLatticeCoordinate_eq
+
+set_option linter.style.longLine false in
 theorem processionShift_ind1Step
     (choice₁ choice₂ :
       IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
@@ -12777,6 +12813,19 @@ theorem endpoint
           IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
         ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
           (l := l) choice₁ choice₂ ->
+          ∃! t : ZMod l.value,
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate
+              t choice₁).coordinate = choice₂.coordinate) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          (processionShiftedChoice (l := l) choice₁ choice₂).coordinate =
+            choice₂.coordinate) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
           IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind2LocalTensorStep
             (processionShiftedChoice (l := l) choice₁ choice₂) choice₂) ∧
       (∀ {choice₁ choice₂ :
@@ -12813,6 +12862,8 @@ theorem endpoint
   let chainEndpoint := sourceData.toFiberInd12ChainSource.endpoint
   ⟨sourceData.quotientImages.pullback_region_eq,
     processionShift_ind1Step (l := l),
+    fiberTransport_existsUnique_processionShift,
+    fiberTransport_processionShifted_coordinate_eq,
     sourceData.fiberTransport_ind2AfterProcession,
     sourceData.fiberTransport_ind12Chain,
     chainEndpoint.2.2.1,
@@ -12893,32 +12944,9 @@ theorem fiberTransport_processionShifted_coordinate_eq
         (l := l) choice₁ choice₂) :
     (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
       (l := l) choice₁ choice₂).coordinate =
-      choice₂.coordinate := by
-  rcases choice₁ with
-    ⟨hodge1, history1, coordinate1, coric1, procession1, local1, upper1,
-      hprocession1, hupper1⟩
-  rcases choice₂ with
-    ⟨hodge2, history2, coordinate2, coric2, procession2, local2, upper2,
-      hprocession2, hupper2⟩
-  rcases coordinate1 with ⟨column1, row1, flLabel1, logThetaColumn1⟩
-  rcases coordinate2 with ⟨column2, row2, flLabel2, logThetaColumn2⟩
-  have hlatticeFields :
-      column1 = column2 ∧ row1 = row2 ∧
-        logThetaColumn1 = logThetaColumn2 := by
-    simpa [
-      IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate,
-      IUTStage1Theorem311LogThetaLatticeCoordinate.toThetaPilotLatticeCoordinate]
-      using transport.thetaPilotLatticeCoordinate_eq
-  rcases hlatticeFields with ⟨hcolumn, hrow, hlogThetaColumn⟩
-  subst column2
-  subst row2
-  subst logThetaColumn2
-  simp [
-    ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice,
-    ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShift,
-    IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate,
-    IUTStage1Theorem311LogThetaLatticeCoordinate.translateFLLabel,
-    zmodLabelTranslate_eq_add, sub_eq_add_neg, add_assoc]
+      choice₂.coordinate :=
+  ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.fiberTransport_processionShifted_coordinate_eq
+    (l := l) transport
 
 set_option linter.style.longLine false in
 theorem fiberTransport_ind2AfterProcession
@@ -13021,8 +13049,8 @@ theorem endpoint
   ⟨sourceData.quotientImages.pullback_region_eq,
     fiberTransport_processionShifted_coordinate_eq,
     sourceData.fiberTransport_ind2AfterProcession,
-    processionTensorEndpoint.2.2.2.1,
-    processionTensorEndpoint.2.2.2.2.2.2.1⟩
+    processionTensorEndpoint.2.2.2.2.2.1,
+    processionTensorEndpoint.2.2.2.2.2.2.2.2.1⟩
 
 end ConcreteHodgeTheaterLogThetaThetaPilotFiberLocalTensorDataSource
 
@@ -16398,6 +16426,20 @@ theorem ofFiberProcessionTensorSource_endpoint
           IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
         ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
           (l := l) choice₁ choice₂ ->
+          ∃! t : ZMod l.value,
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate
+              t choice₁).coordinate = choice₂.coordinate) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂).coordinate =
+            choice₂.coordinate) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
           IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind2LocalTensorStep
             (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
               (l := l) choice₁ choice₂) choice₂) ∧
@@ -16448,11 +16490,13 @@ theorem ofFiberProcessionTensorSource_endpoint
   exact
     ⟨sourceData.quotientImages.pullback_region_eq,
       sourceEndpoint.2.1,
+      sourceEndpoint.2.2.1,
+      sourceEndpoint.2.2.2.1,
       sourceData.fiberTransport_ind2AfterProcession,
       sourceData.fiberTransport_ind12Chain,
-      sourceEndpoint.2.2.2.2.1,
-      sourceEndpoint.2.2.2.2.2.1,
       sourceEndpoint.2.2.2.2.2.2.1,
+      sourceEndpoint.2.2.2.2.2.2.2.1,
+      sourceEndpoint.2.2.2.2.2.2.2.2.1,
       quotientSource.pullback_region_eq,
       quotientSource.selectedQRegion_eq_suppliedQuotientImage,
       quotientSource.toConstruction.selectedQRegion_subset_recordUnion,

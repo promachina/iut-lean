@@ -9703,12 +9703,16 @@ the one-sided upper-semi audit and the no-\((\Ind_3)\)-equality guard.  The
 Step~(xi) fiber source now composes these checks as
 \texttt{PostProcessionTypedCoreTransportAudit}: a theta-pilot fiber transport
 is first the canonical \(F_l\)-procession \((\Ind_1)\)-shift and then the
-post-shift typed \((\Ind_2)\) local-tensor equality.  This proves preservation
-of the typed-core log-volume and equality-quotient class for the whole fiber
-transport, and the quotient constructor exposes the same evidence at the
-selected-q boundary.  The remaining source payload is therefore sharper:
-construct these transport records and the single label-transport source from
-the underlying Hodge-theater and log-theta-lattice data.
+post-shift typed \((\Ind_2)\) local-tensor equality.  The finite label
+correction is now justified by the \(Z/l\mathbb{Z}\)-torsor law itself:
+\texttt{existsUnique\_translateFLLabel\_eq\_of\_toThetaPilotLatticeCoordinate\_eq}
+proves that two representatives over the same theta-pilot lattice node are
+connected by a unique \(F_l\)-translation, and the Step~(xi) source exposes this
+as \texttt{fiberTransport\_existsUnique\_processionShift}.  Thus the whole
+fiber transport preserves typed-core log-volume and equality-quotient class,
+with the same evidence visible at the selected-\(q\) boundary.  The remaining
+source payload is now the construction of the typed procession, upper-semi, and
+\((\Ind_2)\) packet-transport records from the underlying Hodge-theater data.
 
 The experiment surface has been lowered to this boundary as well.  The endpoint
 \[

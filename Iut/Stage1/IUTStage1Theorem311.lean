@@ -423,6 +423,58 @@ theorem toThetaPilotLatticeCoordinate_translateFLLabel
       coordinate.toThetaPilotLatticeCoordinate := by
   rfl
 
+set_option linter.style.longLine false in
+/--
+The finite `F_l` label correction between two coordinates over the same
+theta-pilot lattice node is the additive torsor difference of their labels.
+-/
+theorem translateFLLabel_sub_eq_of_toThetaPilotLatticeCoordinate_eq
+    {coordinate₁ coordinate₂ : IUTStage1Theorem311LogThetaLatticeCoordinate l}
+    (hlattice :
+      coordinate₁.toThetaPilotLatticeCoordinate =
+        coordinate₂.toThetaPilotLatticeCoordinate) :
+    coordinate₁.translateFLLabel
+        (coordinate₂.flLabel - coordinate₁.flLabel) =
+      coordinate₂ := by
+  rcases coordinate₁ with ⟨column₁, row₁, flLabel₁, logThetaColumn₁⟩
+  rcases coordinate₂ with ⟨column₂, row₂, flLabel₂, logThetaColumn₂⟩
+  have hfields :
+      column₁ = column₂ ∧ row₁ = row₂ ∧
+        logThetaColumn₁ = logThetaColumn₂ := by
+    simpa [toThetaPilotLatticeCoordinate] using hlattice
+  rcases hfields with ⟨hcolumn, hrow, hlogThetaColumn⟩
+  subst column₂
+  subst row₂
+  subst logThetaColumn₂
+  simp [translateFLLabel, zmodLabelTranslate_eq_add, sub_eq_add_neg, add_assoc]
+
+set_option linter.style.longLine false in
+/--
+Unique finite `F_l` translation aligning two concrete log-theta coordinates
+over the same theta-pilot lattice node.
+
+This is the coordinate-level form of the finite torsor assertion used in the
+Theorem 3.11 procession layer: once the `F_l` label is forgotten, there is a
+unique label correction that restores any chosen representative.
+-/
+theorem existsUnique_translateFLLabel_eq_of_toThetaPilotLatticeCoordinate_eq
+    {coordinate₁ coordinate₂ : IUTStage1Theorem311LogThetaLatticeCoordinate l}
+    (hlattice :
+      coordinate₁.toThetaPilotLatticeCoordinate =
+        coordinate₂.toThetaPilotLatticeCoordinate) :
+    ∃! t : ZMod l.value, coordinate₁.translateFLLabel t = coordinate₂ := by
+  refine ⟨coordinate₂.flLabel - coordinate₁.flLabel, ?_, ?_⟩
+  · exact translateFLLabel_sub_eq_of_toThetaPilotLatticeCoordinate_eq hlattice
+  · intro t ht
+    have hlabel :
+        zmodLabelTranslate l t coordinate₁.flLabel = coordinate₂.flLabel := by
+      simpa [translateFLLabel] using
+        congrArg IUTStage1Theorem311LogThetaLatticeCoordinate.flLabel ht
+    exact
+      (zmodLabelTranslate_existsUnique l coordinate₁.flLabel coordinate₂.flLabel).unique
+        hlabel
+        (by simp [zmodLabelTranslate_eq_add, sub_eq_add_neg, add_assoc])
+
 end IUTStage1Theorem311LogThetaLatticeCoordinate
 
 /--
