@@ -198,8 +198,13 @@ Hodge-theater history guard.  This is still not a full construction of
 Theorem~3.11, but the indeterminacy/log-volume boundary is no longer a single
 raw record: the finite \(F_l\)-averaged procession source now constructs the
 typed \((\Ind1),(\Ind2),(\Ind3)\) core, deriving \((\Ind1)\) and \((\Ind2)\)
-log-volume invariance from theta-pilot-class invariance and retaining
-\((\Ind3)\) as a one-sided upper-semi inequality.
+log-volume invariance from theta-pilot-class invariance.  A stronger
+upper-semi comparison source now derives the \((\Ind3)\) average inequality
+from two alignments with the source and target log-volume coordinates of the
+upper-semi compatibility state, together with the existing one-sided
+upper-semi bound.  The remaining mathematical payload is to construct these
+alignments from the vertical log-Kummer/log-link data throughout the public
+endpoint surface.
 The \(\IPL\) layer has been separated into a typed log-volume transport datum:
 it carries the source and target Hodge-theater sides, identifies the prime-strip
 link endpoints with the input and output prime strips, records equality of the
@@ -697,8 +702,12 @@ average under label translation.
 At this finite-label boundary, the \((\Ind1)\)/\((\Ind2)\) preservation step no
 longer has to be represented as pointwise equality of labelled summands:
 \Lean{} proves preservation of the normalized average by reindexing the
-\(ZMod(\ell)\)-sum, after which a pointwise upper bound on the twice-translated
-family gives the one-sided \((\Ind3)\) bound for the original average.
+\(ZMod(\ell)\)-sum.  The next lowering replaces the old direct \((\Ind3)\)
+average inequality by an upper-semi comparison source: the source average is
+identified with the upper-semi source log-volume, the target average with the
+upper-semi target log-volume, and the inequality is then the
+\(\mathrm{source}\le\mathrm{target}\) law of the upper-semi compatibility
+datum.
 The target-side packet calibration can now consume this labelled Step (x)
 average directly: the equality
 \(\theta_{\mathrm{avg}}=\mathrm{packetNormalized}\) is derived by composing
@@ -12187,11 +12196,11 @@ are migrated or retired.
 
 The practical priority order is now:
 \begin{enumerate}
-\item Push the finite \(F_l\)-averaged
-  \texttt{ProcessionNormalizedLogVolumeSource} through the remaining public
-  Theorem~3.11 endpoint wrappers, and derive its \((\Ind3)\) upper-semi average
-  from the paper's vertical log-Kummer/log-link comparison rather than leaving
-  it as the only one-sided source field at this boundary.
+\item Push the upper-semi-derived
+  \texttt{ProcessionNormalizedUpperSemiComparisonSource} through the remaining
+  public Theorem~3.11 endpoint wrappers, and construct its source/target
+  average alignments from the paper's vertical log-Kummer/log-link comparison
+  rather than accepting them as finite-procession boundary fields.
 \item Migrate or retire older certificate-pinned \(\IPL\) review aliases that
   are no longer preferred source surfaces.
 \item Extend the recovered finite-divisor packet-local source from the
