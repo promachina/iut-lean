@@ -9397,7 +9397,18 @@ builds the one-sided multiradial source from concrete \((\Ind_1)\),
 the finite \(F_l\)-procession action itself: it translates the \(F_l\) label by
 the canonical \(\mathbb Z/l\mathbb Z\) action, proves the zero and addition
 laws, proves \(|F_l|=l\), and derives equality-quotient compatibility from the
-concrete \((\Ind_1)\) step.  A stricter constructor,
+concrete \((\Ind_1)\) step.  This has been lowered one step further at the
+source-choice boundary.  The new
+\texttt{IUTStage1FLLabelProcessionSource} fixes one forgotten
+theta-pilot lattice node and constructs the full \(Z/lZ\)-indexed family of
+finite-label representatives over it.  Its audit proves \(|F_l|=l\), that every
+label occurs, that a coordinate over the same forgotten lattice node has a
+unique full label, and that label translation agrees with coordinate
+translation.  The choice-level source
+\texttt{FLLabelProcessionChoiceSource} then turns every full-label
+representative into a concrete \((\Ind_1)\) step from the base choice; with
+the Theorem~3.11 indeterminacy law, Lean derives preservation of the
+procession-normalized log-volume for every such label.  A stricter constructor,
 \[
 \begin{array}{l}
 \texttt{IUTStage1Theorem311OneSidedMultiradialConstructionSource.}\\

@@ -475,7 +475,196 @@ theorem existsUnique_translateFLLabel_eq_of_toThetaPilotLatticeCoordinate_eq
         hlabel
         (by simp [zmodLabelTranslate_eq_add, sub_eq_add_neg, add_assoc])
 
+/-- Replace the finite `F_l` label while leaving the log-theta lattice node fixed. -/
+def withFLLabel
+    (coordinate : IUTStage1Theorem311LogThetaLatticeCoordinate l)
+    (label : ZMod l.value) :
+    IUTStage1Theorem311LogThetaLatticeCoordinate l :=
+  { column := coordinate.column,
+    row := coordinate.row,
+    flLabel := label,
+    logThetaColumn := coordinate.logThetaColumn }
+
+theorem withFLLabel_flLabel
+    (coordinate : IUTStage1Theorem311LogThetaLatticeCoordinate l)
+    (label : ZMod l.value) :
+    (coordinate.withFLLabel label).flLabel = label :=
+  rfl
+
+theorem withFLLabel_toThetaPilotLatticeCoordinate
+    (coordinate : IUTStage1Theorem311LogThetaLatticeCoordinate l)
+    (label : ZMod l.value) :
+    (coordinate.withFLLabel label).toThetaPilotLatticeCoordinate =
+      coordinate.toThetaPilotLatticeCoordinate :=
+  rfl
+
+theorem withFLLabel_self
+    (coordinate : IUTStage1Theorem311LogThetaLatticeCoordinate l) :
+    coordinate.withFLLabel coordinate.flLabel = coordinate := by
+  cases coordinate
+  rfl
+
+set_option linter.style.longLine false in
+theorem withFLLabel_eq_iff
+    {base coordinate : IUTStage1Theorem311LogThetaLatticeCoordinate l}
+    {label : ZMod l.value} :
+    base.withFLLabel label = coordinate ↔
+      base.toThetaPilotLatticeCoordinate =
+          coordinate.toThetaPilotLatticeCoordinate ∧
+        label = coordinate.flLabel := by
+  rcases base with ⟨baseColumn, baseRow, baseLabel, baseLogThetaColumn⟩
+  rcases coordinate with
+    ⟨coordinateColumn, coordinateRow, coordinateLabel,
+      coordinateLogThetaColumn⟩
+  simp [withFLLabel, toThetaPilotLatticeCoordinate]
+  tauto
+
 end IUTStage1Theorem311LogThetaLatticeCoordinate
+
+/--
+Full `F_l` label procession source over a fixed log-theta lattice node.
+
+Remark 3.11.2 emphasizes that the transition from labels to processions uses
+all labels in `F_l`; no label may be omitted.  This source object records the
+full `ZMod l` label family over one theta-pilot lattice node.  The finite labels
+are arithmetic-holomorphic representatives, while the forgotten lattice node is
+the naked procession index data used by the multiradial quotient.
+-/
+structure IUTStage1FLLabelProcessionSource
+    (l : PrimeGeFive) where
+  baseCoordinate : IUTStage1Theorem311LogThetaLatticeCoordinate l
+
+namespace IUTStage1FLLabelProcessionSource
+
+variable {l : PrimeGeFive}
+
+/-- The coordinate obtained by choosing a particular full `F_l` label. -/
+def coordinate
+    (source : IUTStage1FLLabelProcessionSource l)
+    (label : ZMod l.value) :
+    IUTStage1Theorem311LogThetaLatticeCoordinate l :=
+  source.baseCoordinate.withFLLabel label
+
+theorem coordinate_flLabel
+    (source : IUTStage1FLLabelProcessionSource l)
+    (label : ZMod l.value) :
+    (source.coordinate label).flLabel = label :=
+  rfl
+
+theorem coordinate_toThetaPilotLatticeCoordinate
+    (source : IUTStage1FLLabelProcessionSource l)
+    (label : ZMod l.value) :
+    (source.coordinate label).toThetaPilotLatticeCoordinate =
+      source.baseCoordinate.toThetaPilotLatticeCoordinate :=
+  rfl
+
+theorem coordinate_column
+    (source : IUTStage1FLLabelProcessionSource l)
+    (label : ZMod l.value) :
+    (source.coordinate label).column = source.baseCoordinate.column :=
+  rfl
+
+theorem coordinate_row
+    (source : IUTStage1FLLabelProcessionSource l)
+    (label : ZMod l.value) :
+    (source.coordinate label).row = source.baseCoordinate.row :=
+  rfl
+
+theorem coordinate_logThetaColumn
+    (source : IUTStage1FLLabelProcessionSource l)
+    (label : ZMod l.value) :
+    (source.coordinate label).logThetaColumn =
+      source.baseCoordinate.logThetaColumn :=
+  rfl
+
+/-- The full `F_l` label family has exactly `l` labels. -/
+theorem label_cardinality
+    (_source : IUTStage1FLLabelProcessionSource l) :
+    Fintype.card (ZMod l.value) = l.value := by
+  exact ZMod.card l.value
+
+/-- Translation of labels agrees with translation of the coordinate representative. -/
+theorem coordinate_translate
+    (source : IUTStage1FLLabelProcessionSource l)
+    (t label : ZMod l.value) :
+    source.coordinate (zmodLabelTranslate l t label) =
+      (source.coordinate label).translateFLLabel t := by
+  cases source
+  rfl
+
+/-- Every label of `F_l` occurs in the source family. -/
+theorem label_present
+    (source : IUTStage1FLLabelProcessionSource l)
+    (label : ZMod l.value) :
+    ∃ coordinate,
+      coordinate = source.coordinate label ∧
+        coordinate.flLabel = label ∧
+          coordinate.toThetaPilotLatticeCoordinate =
+            source.baseCoordinate.toThetaPilotLatticeCoordinate :=
+  ⟨source.coordinate label, rfl, rfl, rfl⟩
+
+set_option linter.style.longLine false in
+/--
+Any coordinate over the same forgotten theta-pilot lattice node occurs with a
+unique full `F_l` label.
+-/
+theorem existsUnique_label_of_toThetaPilotLatticeCoordinate_eq
+    (source : IUTStage1FLLabelProcessionSource l)
+    {coordinate : IUTStage1Theorem311LogThetaLatticeCoordinate l}
+    (hlattice :
+      source.baseCoordinate.toThetaPilotLatticeCoordinate =
+        coordinate.toThetaPilotLatticeCoordinate) :
+    ∃! label : ZMod l.value, source.coordinate label = coordinate := by
+  refine ⟨coordinate.flLabel, ?_, ?_⟩
+  · exact
+      (IUTStage1Theorem311LogThetaLatticeCoordinate.withFLLabel_eq_iff).2
+        ⟨hlattice, rfl⟩
+  · intro label hlabel
+    simpa [IUTStage1FLLabelProcessionSource.coordinate] using
+      congrArg IUTStage1Theorem311LogThetaLatticeCoordinate.flLabel hlabel
+
+/--
+Audit for the full-label procession source used in Remark 3.11.2.
+
+The fields record cardinality, no omission, uniqueness of the label over the
+forgotten lattice node, and compatibility of the finite torsor action with
+coordinate translation.
+-/
+structure FullLabelProcessionAudit
+    (source : IUTStage1FLLabelProcessionSource l) : Prop where
+  label_cardinality : Fintype.card (ZMod l.value) = l.value
+  all_labels_present :
+    ∀ label : ZMod l.value,
+      ∃ coordinate,
+        coordinate = source.coordinate label ∧
+          coordinate.flLabel = label ∧
+            coordinate.toThetaPilotLatticeCoordinate =
+              source.baseCoordinate.toThetaPilotLatticeCoordinate
+  unique_label_over_lattice :
+    ∀ coordinate,
+      source.baseCoordinate.toThetaPilotLatticeCoordinate =
+          coordinate.toThetaPilotLatticeCoordinate ->
+        ∃! label : ZMod l.value, source.coordinate label = coordinate
+  translation_action :
+    ∀ t label : ZMod l.value,
+      source.coordinate (zmodLabelTranslate l t label) =
+        (source.coordinate label).translateFLLabel t
+
+theorem fullLabelProcessionAudit
+    (source : IUTStage1FLLabelProcessionSource l) :
+    source.FullLabelProcessionAudit :=
+  { label_cardinality := source.label_cardinality,
+    all_labels_present := by
+      intro label
+      exact source.label_present label,
+    unique_label_over_lattice := by
+      intro coordinate hlattice
+      exact source.existsUnique_label_of_toThetaPilotLatticeCoordinate_eq hlattice,
+    translation_action := by
+      intro t label
+      exact source.coordinate_translate t label }
+
+end IUTStage1FLLabelProcessionSource
 
 /--
 Concrete Hodge-theater/log-theta choice for Theorem 3.11.
@@ -824,6 +1013,188 @@ theorem ind1_thetaPilotClass_eq
     simpa [toStructuredChoice] using hstep.structured_step.coric_eq
   simp [thetaPilotClass, hstep.hodgeTheater_eq, hstep.historyLabel_eq,
     hstep.column_eq, hstep.row_eq, hstep.logThetaColumn_eq, hcoric]
+
+set_option linter.style.longLine false in
+/--
+Full `F_l` label procession source attached to a concrete Hodge-theater choice.
+
+The source varies only the finite `F_l` label of the log-theta coordinate.  The
+procession state, local tensor state, upper-semi state, Hodge-theater history,
+and coric datum are fixed.  This is the concrete choice-level form of the
+Remark 3.11.2 transition from all labels in `F_l` to the naked procession
+representatives used by `(Ind1)`.
+-/
+structure FLLabelProcessionChoiceSource
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) where
+  labelSource : IUTStage1FLLabelProcessionSource l
+  base_coordinate_eq : labelSource.baseCoordinate = choice.coordinate
+
+namespace FLLabelProcessionChoiceSource
+
+set_option linter.style.longLine false in
+/-- The concrete choice with its finite `F_l` label replaced by `label`. -/
+def choiceAt
+    {choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : FLLabelProcessionChoiceSource choice)
+    (label : ZMod l.value) :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l :=
+  { hodgeTheater := choice.hodgeTheater,
+    historyLabel := choice.historyLabel,
+    coordinate := source.labelSource.coordinate label,
+    coric := choice.coric,
+    procession_state := choice.procession_state,
+    local_tensor_state := choice.local_tensor_state,
+    upper_semi_state := choice.upper_semi_state,
+    procession_column_eq := by
+      calc
+        choice.procession_state.column = choice.coordinate.column :=
+          choice.procession_column_eq
+        _ = source.labelSource.baseCoordinate.column := by
+          simpa using
+            congrArg IUTStage1Theorem311LogThetaLatticeCoordinate.column
+              source.base_coordinate_eq.symm
+        _ = (source.labelSource.coordinate label).column := by
+          rfl,
+    upper_semi_logThetaColumn_eq := by
+      calc
+        choice.upper_semi_state.logThetaColumn =
+            choice.coordinate.logThetaColumn :=
+          choice.upper_semi_logThetaColumn_eq
+        _ = source.labelSource.baseCoordinate.logThetaColumn := by
+          simpa using
+            congrArg IUTStage1Theorem311LogThetaLatticeCoordinate.logThetaColumn
+              source.base_coordinate_eq.symm
+        _ = (source.labelSource.coordinate label).logThetaColumn := by
+          rfl }
+
+theorem choiceAt_flLabel
+    {choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : FLLabelProcessionChoiceSource choice)
+    (label : ZMod l.value) :
+    (source.choiceAt label).coordinate.flLabel = label :=
+  rfl
+
+theorem choiceAt_thetaPilotLatticeCoordinate
+    {choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : FLLabelProcessionChoiceSource choice)
+    (label : ZMod l.value) :
+    thetaPilotLatticeCoordinate (source.choiceAt label) =
+      thetaPilotLatticeCoordinate choice := by
+  simp [thetaPilotLatticeCoordinate, choiceAt,
+    IUTStage1FLLabelProcessionSource.coordinate_toThetaPilotLatticeCoordinate,
+    source.base_coordinate_eq]
+
+set_option linter.style.longLine false in
+/--
+Every full-label representative is an `(Ind1)` procession step from the base
+choice.
+-/
+theorem ind1Step_choiceAt
+    {choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : FLLabelProcessionChoiceSource choice)
+    (label : ZMod l.value) :
+    Ind1ProcessionStep choice (source.choiceAt label) :=
+  { hodgeTheater_eq := rfl,
+    historyLabel_eq := rfl,
+    column_eq := by
+      calc
+        choice.coordinate.column = source.labelSource.baseCoordinate.column := by
+          simpa using
+            congrArg IUTStage1Theorem311LogThetaLatticeCoordinate.column
+              source.base_coordinate_eq.symm
+        _ = (source.labelSource.coordinate label).column := by
+          rfl,
+    row_eq := by
+      calc
+        choice.coordinate.row = source.labelSource.baseCoordinate.row := by
+          simpa using
+            congrArg IUTStage1Theorem311LogThetaLatticeCoordinate.row
+              source.base_coordinate_eq.symm
+        _ = (source.labelSource.coordinate label).row := by
+          rfl,
+    logThetaColumn_eq := by
+      calc
+        choice.coordinate.logThetaColumn =
+            source.labelSource.baseCoordinate.logThetaColumn := by
+          simpa using
+            congrArg IUTStage1Theorem311LogThetaLatticeCoordinate.logThetaColumn
+              source.base_coordinate_eq.symm
+        _ = (source.labelSource.coordinate label).logThetaColumn := by
+          rfl,
+    structured_step :=
+      { column_eq := by
+          calc
+            choice.coordinate.column =
+                source.labelSource.baseCoordinate.column := by
+              simpa [toStructuredChoice] using
+                congrArg IUTStage1Theorem311LogThetaLatticeCoordinate.column
+                  source.base_coordinate_eq.symm
+            _ = (source.labelSource.coordinate label).column := by
+              rfl,
+        row_eq := by
+          calc
+            choice.coordinate.row = source.labelSource.baseCoordinate.row := by
+              simpa [toStructuredChoice] using
+                congrArg IUTStage1Theorem311LogThetaLatticeCoordinate.row
+                  source.base_coordinate_eq.symm
+            _ = (source.labelSource.coordinate label).row := by
+              rfl,
+        coric_eq := rfl,
+        procession_eq := rfl,
+        procession_column_eq := rfl,
+        local_tensor_eq := rfl,
+        upper_semi_eq := rfl } }
+
+theorem thetaPilotClass_choiceAt
+    {choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : FLLabelProcessionChoiceSource choice)
+    (label : ZMod l.value) :
+    thetaPilotClass (source.choiceAt label) = thetaPilotClass choice :=
+  (ind1_thetaPilotClass_eq (source.ind1Step_choiceAt label)).symm
+
+set_option linter.style.longLine false in
+/--
+Audit for the choice-level full-label procession source.
+
+It combines the source-level no-omission/cardinality facts with the concrete
+Theorem 3.11 consequence: every full-label representative lies in the `(Ind1)`
+equality side and hence preserves the theta-pilot class.  The normalized
+log-volume consequence is added below once `IndeterminacyData` is available.
+-/
+structure FullLabelProcessionChoiceAudit
+    {choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : FLLabelProcessionChoiceSource choice) : Prop where
+  source_audit : source.labelSource.FullLabelProcessionAudit
+  label_cardinality : Fintype.card (ZMod l.value) = l.value
+  all_labels_present :
+    ∀ label : ZMod l.value,
+      ∃ labelledChoice,
+        labelledChoice = source.choiceAt label ∧
+          labelledChoice.coordinate.flLabel = label
+  all_labels_ind1 :
+    ∀ label : ZMod l.value,
+      Ind1ProcessionStep choice (source.choiceAt label)
+  all_labels_thetaPilotClass_eq :
+    ∀ label : ZMod l.value,
+      thetaPilotClass (source.choiceAt label) = thetaPilotClass choice
+
+theorem fullLabelProcessionChoiceAudit
+    {choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : FLLabelProcessionChoiceSource choice) :
+    FullLabelProcessionChoiceAudit source :=
+  { source_audit := source.labelSource.fullLabelProcessionAudit,
+    label_cardinality := source.labelSource.label_cardinality,
+    all_labels_present := by
+      intro label
+      exact ⟨source.choiceAt label, rfl, rfl⟩,
+    all_labels_ind1 := by
+      intro label
+      exact source.ind1Step_choiceAt label,
+    all_labels_thetaPilotClass_eq := by
+      intro label
+      exact source.thetaPilotClass_choiceAt label }
+
+end FLLabelProcessionChoiceSource
 
 set_option linter.style.longLine false in
 /--
@@ -1186,6 +1557,48 @@ structure IndeterminacyData
     ∀ {choice₁ choice₂},
       Ind3UpperSemiStep choice₁ choice₂ ->
         logVolume choice₁ <= logVolume choice₂
+
+namespace FLLabelProcessionChoiceSource
+
+theorem logVolume_choiceAt_eq
+    {choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (indData : IndeterminacyData coric l)
+    (source : FLLabelProcessionChoiceSource choice)
+    (label : ZMod l.value) :
+    indData.logVolume (source.choiceAt label) =
+      indData.logVolume choice :=
+  (indData.ind1_preserves_processionNormalizedLogVolume
+    (source.ind1Step_choiceAt label)).symm
+
+set_option linter.style.longLine false in
+/--
+Log-volume audit for a choice-level full-label procession source.
+
+Once the Theorem 3.11 indeterminacy law is supplied, the pure full-label
+procession audit upgrades to the source-paper equality statement: every full
+`F_l` representative preserves the procession-normalized log-volume because it
+is an `(Ind1)` procession step.
+-/
+structure FullLabelProcessionChoiceLogVolumeAudit
+    (indData : IndeterminacyData coric l)
+    {choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : FLLabelProcessionChoiceSource choice) : Prop where
+  choice_audit : source.FullLabelProcessionChoiceAudit
+  all_labels_logVolume_eq :
+    ∀ label : ZMod l.value,
+      indData.logVolume (source.choiceAt label) = indData.logVolume choice
+
+theorem fullLabelProcessionChoiceLogVolumeAudit
+    (indData : IndeterminacyData coric l)
+    {choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : FLLabelProcessionChoiceSource choice) :
+    FullLabelProcessionChoiceLogVolumeAudit indData source :=
+  { choice_audit := source.fullLabelProcessionChoiceAudit,
+    all_labels_logVolume_eq := by
+      intro label
+      exact source.logVolume_choiceAt_eq indData label }
+
+end FLLabelProcessionChoiceSource
 
 end IUTStage1ConcreteHodgeTheaterLogThetaChoice
 
