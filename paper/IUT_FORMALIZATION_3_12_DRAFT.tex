@@ -871,8 +871,16 @@ The labelled log-link input is no longer merely the equality of the underlying
 base objects; it is the equality of the finite local log-volume objects after
 the common log-shell normalization.  \Lean{} projects the older object equality
 from this local-object equality and threads the result through the same
-Theorem~3.11 and Step~(xi) constructors.  The remaining payload is therefore
-more specific: construct the component equalities, the compatible-copy column,
+Theorem~3.11 and Step~(xi) constructors.  The compatible-copy package has now
+also been split by
+\texttt{SplitCopiesLocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource}.
+Instead of receiving one opaque ordinary/theta/log-shell copy column, the source
+receives the ordinary divisor column, theta divisor column, and log-shell
+divisor column separately, plus the Example~3.5 base-identification and
+normalization laws.  \Lean{} constructs the compatible-copy package at each
+column and derives the theta/log-shell log-volume equalities with the ordinary
+realified divisor volume.  The remaining payload is therefore sharper:
+construct these split divisor columns, their Example~3.5 compatibility laws,
 the full labelled local-object log-link equality, and the \((\Ind3)\)
 source/target comparisons directly from the paper's vertical
 log-Kummer/log-link geometry.
