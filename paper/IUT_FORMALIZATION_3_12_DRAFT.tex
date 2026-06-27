@@ -9663,8 +9663,8 @@ to the generic packet-action interface, derives the capsule-index equivalence,
 and then reconstructs the direct-summand symmetry required by the \((\Ind_2)\)
 step.  It now also reconstructs the post-procession concrete \((\Ind_2)\)
 step itself from the typed packet symmetry, the procession transport, and the
-upper-semi transport.  At the place-audited boundary, the action-entry steps now project to
-this typed packet symmetry through explicit local tensor symmetry-label
+upper-semi transport.  At the place-audited boundary, the action-entry steps
+now project to this typed packet symmetry through explicit local tensor symmetry-label
 certificates.  The matching action, target capsule family, and equality of the
 two local tensor symmetry labels are no longer separate generic inputs.  The
 certificates have also been lowered one step: they may now be derived from a
@@ -9677,7 +9677,10 @@ region invariance and fiber membership can be proved at this stricter
 \((\Ind_2)\) boundary.  The packet-label and target-kind data have now been
 combined into one \texttt{SymmetryLabelTransportSource}: both tensor labels are
 read against the source packet's typed summand kind, and the target summand
-kind is transported from the source.  The concrete choice layer now has
+kind is transported from the source.  Its checked audit packages the whole
+projection chain from label transport to transported packet labels, typed
+\((\Ind_2)\) packet symmetry, direct-summand symmetry, and summand-count
+equality.  The concrete choice layer now has
 matching constructors for the typed transports: \((\Ind_1)\) is built from
 \texttt{ProcessionTransport}, \((\Ind_2)\) from procession and upper-semi
 transports plus the local summand-count equality, and \((\Ind_3)\) from

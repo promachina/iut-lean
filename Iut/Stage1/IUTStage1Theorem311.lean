@@ -2987,6 +2987,81 @@ theorem toInd2ActionPacketSymmetry
       audited₂.choice.local_tensor_state.packetState.tensorState :=
   hstep.toTransportedPacketLabelStep.toInd2ActionPacketSymmetry
 
+set_option linter.style.longLine false in
+/--
+Audit package for the source-derived nonarchimedean `(Ind2)` label transport.
+
+A single `SymmetryLabelTransportSource` now supplies the transported packet
+labels, the target symmetry-kind equality, the action-entry symmetry, the typed
+`(Ind2)` packet symmetry, and the resulting direct-summand-count equality.
+-/
+structure Ind2ActionPacketAudit
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      NonarchimedeanIsmActionEntryLabelTransportStep audited₁ audited₂) where
+  transported_step :
+    NonarchimedeanIsmActionEntryTransportedPacketLabelStep audited₁ audited₂
+  packet_label_step :
+    NonarchimedeanIsmActionEntryPacketLabelStep audited₁ audited₂
+  action_entry_symmetry_step :
+    NonarchimedeanIsmActionEntrySymmetryStep audited₁ audited₂
+  source_symmetry_kind_eq :
+    audited₁.choice.local_tensor_state.summandFamily.symmetryKind =
+      IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm
+  target_symmetry_kind_eq :
+    audited₂.choice.local_tensor_state.summandFamily.symmetryKind =
+      IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm
+  ind2_action_packet_symmetry :
+    IUTStage1LocalTensorState.Ind2ActionPacketSymmetry
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState
+  direct_summand_action_packet_symmetry :
+    IUTStage1LocalTensorState.DirectSummandActionPacketSymmetry
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState
+  direct_summand_packet_symmetry :
+    IUTStage1LocalTensorState.DirectSummandPacketSymmetry
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState
+  direct_summand_symmetry :
+    IUTStage1LocalTensorState.DirectSummandSymmetry
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState
+  direct_summand_count_eq :
+    audited₁.choice.local_tensor_state.packetState.tensorState.directSummandCount =
+      audited₂.choice.local_tensor_state.packetState.tensorState.directSummandCount
+
+set_option linter.style.longLine false in
+def ind2ActionPacketAudit
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (hstep :
+      NonarchimedeanIsmActionEntryLabelTransportStep audited₁ audited₂) :
+    Ind2ActionPacketAudit hstep := by
+  let ind2Symmetry := hstep.toInd2ActionPacketSymmetry
+  let directActionSymmetry :=
+    ind2Symmetry.toDirectSummandActionPacketSymmetry
+  let directPacketSymmetry :=
+    ind2Symmetry.toDirectSummandPacketSymmetry
+  let directSymmetry :=
+    ind2Symmetry.toDirectSummandSymmetry
+  exact
+    { transported_step := hstep.toTransportedPacketLabelStep,
+      packet_label_step := hstep.toPacketLabelStep,
+      action_entry_symmetry_step := hstep.toActionEntrySymmetryStep,
+      source_symmetry_kind_eq :=
+        hstep.toTransportedPacketLabelStep.source_symmetry_kind_eq,
+      target_symmetry_kind_eq :=
+        hstep.toTransportedPacketLabelStep.target_symmetry_kind_eq,
+      ind2_action_packet_symmetry := ind2Symmetry,
+      direct_summand_action_packet_symmetry := directActionSymmetry,
+      direct_summand_packet_symmetry := directPacketSymmetry,
+      direct_summand_symmetry := directSymmetry,
+      direct_summand_count_eq := directSymmetry.directSummandCount_eq }
+
 end NonarchimedeanIsmActionEntryLabelTransportStep
 
 namespace ArchimedeanOrderTwoActionEntryLabelTransportStep
@@ -3035,6 +3110,81 @@ theorem toInd2ActionPacketSymmetry
       audited₁.choice.local_tensor_state.packetState.tensorState
       audited₂.choice.local_tensor_state.packetState.tensorState :=
   hstep.toTransportedPacketLabelStep.toInd2ActionPacketSymmetry
+
+set_option linter.style.longLine false in
+/--
+Audit package for the source-derived archimedean `(Ind2)` label transport.
+
+A single `SymmetryLabelTransportSource` now supplies the transported packet
+labels, the target symmetry-kind equality, the action-entry symmetry, the typed
+`(Ind2)` packet symmetry, and the resulting direct-summand-count equality.
+-/
+structure Ind2ActionPacketAudit
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      ArchimedeanOrderTwoActionEntryLabelTransportStep audited₁ audited₂) where
+  transported_step :
+    ArchimedeanOrderTwoActionEntryTransportedPacketLabelStep audited₁ audited₂
+  packet_label_step :
+    ArchimedeanOrderTwoActionEntryPacketLabelStep audited₁ audited₂
+  action_entry_symmetry_step :
+    ArchimedeanOrderTwoActionEntrySymmetryStep audited₁ audited₂
+  source_symmetry_kind_eq :
+    audited₁.choice.local_tensor_state.summandFamily.symmetryKind =
+      IUTStage1TensorSummandSymmetryKind.archimedeanOrderTwo
+  target_symmetry_kind_eq :
+    audited₂.choice.local_tensor_state.summandFamily.symmetryKind =
+      IUTStage1TensorSummandSymmetryKind.archimedeanOrderTwo
+  ind2_action_packet_symmetry :
+    IUTStage1LocalTensorState.Ind2ActionPacketSymmetry
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState
+  direct_summand_action_packet_symmetry :
+    IUTStage1LocalTensorState.DirectSummandActionPacketSymmetry
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState
+  direct_summand_packet_symmetry :
+    IUTStage1LocalTensorState.DirectSummandPacketSymmetry
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState
+  direct_summand_symmetry :
+    IUTStage1LocalTensorState.DirectSummandSymmetry
+      audited₁.choice.local_tensor_state.packetState.tensorState
+      audited₂.choice.local_tensor_state.packetState.tensorState
+  direct_summand_count_eq :
+    audited₁.choice.local_tensor_state.packetState.tensorState.directSummandCount =
+      audited₂.choice.local_tensor_state.packetState.tensorState.directSummandCount
+
+set_option linter.style.longLine false in
+def ind2ActionPacketAudit
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (hstep :
+      ArchimedeanOrderTwoActionEntryLabelTransportStep audited₁ audited₂) :
+    Ind2ActionPacketAudit hstep := by
+  let ind2Symmetry := hstep.toInd2ActionPacketSymmetry
+  let directActionSymmetry :=
+    ind2Symmetry.toDirectSummandActionPacketSymmetry
+  let directPacketSymmetry :=
+    ind2Symmetry.toDirectSummandPacketSymmetry
+  let directSymmetry :=
+    ind2Symmetry.toDirectSummandSymmetry
+  exact
+    { transported_step := hstep.toTransportedPacketLabelStep,
+      packet_label_step := hstep.toPacketLabelStep,
+      action_entry_symmetry_step := hstep.toActionEntrySymmetryStep,
+      source_symmetry_kind_eq :=
+        hstep.toTransportedPacketLabelStep.source_symmetry_kind_eq,
+      target_symmetry_kind_eq :=
+        hstep.toTransportedPacketLabelStep.target_symmetry_kind_eq,
+      ind2_action_packet_symmetry := ind2Symmetry,
+      direct_summand_action_packet_symmetry := directActionSymmetry,
+      direct_summand_packet_symmetry := directPacketSymmetry,
+      direct_summand_symmetry := directSymmetry,
+      direct_summand_count_eq := directSymmetry.directSummandCount_eq }
 
 end ArchimedeanOrderTwoActionEntryLabelTransportStep
 
