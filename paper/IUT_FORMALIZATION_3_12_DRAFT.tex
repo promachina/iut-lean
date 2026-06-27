@@ -9601,6 +9601,15 @@ formula itself: Lean derives the same-class image law, the
 in the Theorem~3.11 possible-image union, and the exclusion of \((\Ind_3)\)
 from equality.  This is the source-level quotient possible-image construction
 used before entering Remark~3.9.5.
+The same construction is now also available at the typed-core level, before the
+larger endpoint wrappers enter.  The source
+\texttt{ThetaPilotClassPossibleImageSource} takes a possible-image family on
+the concrete theta-pilot class itself and pulls it back along the forgetting
+map from concrete Hodge-theater/log-theta choices.  Lean derives the
+\((\Ind_1)\) and \((\Ind_2)\) region equalities from preservation of this class,
+constructs the \((\Ind_1,\Ind_2)\)-equality-quotient possible-image family, and
+records that \((\Ind_3)\) remains only the typed upper-semi log-volume
+inequality.
 The same quotient source now has a direct class-law route,
 \[
 \begin{array}{l}
