@@ -1472,6 +1472,12 @@ def toColumnRealifiedLogShellLocalObjectFamilySource
     label_normalized := source.label_normalized,
     label_localObject_eq_base := source.label_localObject_eq_base }
 
+theorem base_finiteLogVolume_eq_base_realified
+    (source : IUTStage1RawColumnRealifiedLogShellDivisorFamilySource π l) :
+    source.toColumnRealifiedLogShellLocalObjectFamilySource.baseFiniteLocalObject.finiteLogVolume =
+      (source.columnLogShell source.baseColumn).base.realifiedLogVolume :=
+  source.toColumnRealifiedLogShellLocalObjectFamilySource.base_finiteLogVolume_eq_realified
+
 set_option linter.style.longLine false in
 /-- Audit endpoint for the raw divisor-column source. -/
 structure Audit
@@ -1494,6 +1500,9 @@ structure Audit
   constructed_column_family :
     source.toColumnRealifiedLogShellLocalObjectFamilySource.columnSource =
       source.columnLocalObjectSource
+  base_finiteLogVolume_eq_base_realified :
+    source.toColumnRealifiedLogShellLocalObjectFamilySource.baseFiniteLocalObject.finiteLogVolume =
+      (source.columnLogShell source.baseColumn).base.realifiedLogVolume
 
 theorem audit
     (source : IUTStage1RawColumnRealifiedLogShellDivisorFamilySource π l) :
@@ -1504,7 +1513,9 @@ theorem audit
       source.label_logShellDivisorLogVolume_eq_base,
     label_localObject_eq_base :=
       source.label_localObject_eq_base,
-    constructed_column_family := rfl }
+    constructed_column_family := rfl,
+    base_finiteLogVolume_eq_base_realified :=
+      source.base_finiteLogVolume_eq_base_realified }
 
 end IUTStage1RawColumnRealifiedLogShellDivisorFamilySource
 
