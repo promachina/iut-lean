@@ -15216,6 +15216,105 @@ structure PostProcessionInd2ActionPacketTransportSourceAudit
         (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
           (l := l) choice₁ choice₂).local_tensor_state.directSummandCount =
           choice₂.local_tensor_state.directSummandCount
+  source_level_procession_transport :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+        IUTStage1ProcessionState.ProcessionTransport
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂).procession_state
+          choice₂.procession_state
+  procession_transport_procession_eq :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+      (_transport :
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂),
+        (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+          (l := l) choice₁ choice₂).procession_state.procession =
+          choice₂.procession_state.procession
+  procession_transport_representative_eq :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+      (_transport :
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂),
+        (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+          (l := l) choice₁ choice₂).procession_state.representative =
+          choice₂.procession_state.representative
+  source_level_upperSemi_transport :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+        IUTStage1UpperSemiCompatibilityState.UpperSemiTransport
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂).upper_semi_state
+          choice₂.upper_semi_state
+  upperSemi_transport_compatibility_eq :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+      (_transport :
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂),
+        (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+          (l := l) choice₁ choice₂).upper_semi_state.compatibility =
+          choice₂.upper_semi_state.compatibility
+  upperSemi_transport_nonarchimedeanInclusions_eq :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+      (_transport :
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂),
+        (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+          (l := l) choice₁ choice₂).upper_semi_state.nonarchimedeanInclusions =
+          choice₂.upper_semi_state.nonarchimedeanInclusions
+  upperSemi_transport_archimedeanSurjections_eq :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+      (_transport :
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂),
+        (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+          (l := l) choice₁ choice₂).upper_semi_state.archimedeanSurjections =
+          choice₂.upper_semi_state.archimedeanSurjections
+  upperSemi_transport_logVolumeCompatibility_eq :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+      (_transport :
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂),
+        (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+          (l := l) choice₁ choice₂).upper_semi_state.logVolumeCompatibility =
+          choice₂.upper_semi_state.logVolumeCompatibility
+  upperSemi_transport_hasNonarchimedeanInclusions_eq :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+      (_transport :
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂),
+        (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+          (l := l) choice₁ choice₂).upper_semi_state.hasNonarchimedeanInclusions =
+          choice₂.upper_semi_state.hasNonarchimedeanInclusions
+  upperSemi_transport_hasArchimedeanSurjections_eq :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+      (_transport :
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂),
+        (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+          (l := l) choice₁ choice₂).upper_semi_state.hasArchimedeanSurjections =
+          choice₂.upper_semi_state.hasArchimedeanSurjections
+  upperSemi_transport_logVolumeCompatible_eq :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+      (_transport :
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂),
+        (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+          (l := l) choice₁ choice₂).upper_semi_state.logVolumeCompatible =
+          choice₂.upper_semi_state.logVolumeCompatible
 
 set_option linter.style.longLine false in
 def postProcessionInd2ActionPacketTransportSourceAudit
@@ -15238,7 +15337,50 @@ def postProcessionInd2ActionPacketTransportSourceAudit
       intro choice₁ choice₂ transport
       exact
         (sourceData.fiberTransport_directSummandSymmetry
-          transport).directSummandCount_eq }
+          transport).directSummandCount_eq,
+    source_level_procession_transport :=
+      sourceData.fiberTransport_processionTransport,
+    procession_transport_procession_eq := by
+      intro choice₁ choice₂ transport
+      exact (sourceData.fiberTransport_processionTransport transport).procession_eq,
+    procession_transport_representative_eq := by
+      intro choice₁ choice₂ transport
+      exact (sourceData.fiberTransport_processionTransport transport).representative_eq,
+    source_level_upperSemi_transport :=
+      sourceData.fiberTransport_upperSemiTransport,
+    upperSemi_transport_compatibility_eq := by
+      intro choice₁ choice₂ transport
+      exact (sourceData.fiberTransport_upperSemiTransport transport).compatibility_eq,
+    upperSemi_transport_nonarchimedeanInclusions_eq := by
+      intro choice₁ choice₂ transport
+      exact
+        (sourceData.fiberTransport_upperSemiTransport
+          transport).nonarchimedeanInclusions_eq,
+    upperSemi_transport_archimedeanSurjections_eq := by
+      intro choice₁ choice₂ transport
+      exact
+        (sourceData.fiberTransport_upperSemiTransport
+          transport).archimedeanSurjections_eq,
+    upperSemi_transport_logVolumeCompatibility_eq := by
+      intro choice₁ choice₂ transport
+      exact
+        (sourceData.fiberTransport_upperSemiTransport
+          transport).logVolumeCompatibility_eq,
+    upperSemi_transport_hasNonarchimedeanInclusions_eq := by
+      intro choice₁ choice₂ transport
+      exact
+        (sourceData.fiberTransport_upperSemiTransport
+          transport).hasNonarchimedeanInclusions_eq,
+    upperSemi_transport_hasArchimedeanSurjections_eq := by
+      intro choice₁ choice₂ transport
+      exact
+        (sourceData.fiberTransport_upperSemiTransport
+          transport).hasArchimedeanSurjections_eq,
+    upperSemi_transport_logVolumeCompatible_eq := by
+      intro choice₁ choice₂ transport
+      exact
+        (sourceData.fiberTransport_upperSemiTransport
+          transport).logVolumeCompatible_eq }
 
 set_option linter.style.longLine false in
 theorem endpoint
