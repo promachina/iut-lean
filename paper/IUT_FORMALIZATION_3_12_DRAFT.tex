@@ -798,6 +798,17 @@ entering the public one-sided constructor.  Thus the packet-normalized equality
 is no longer primitive at this Theorem~3.11 boundary; the remaining source
 payload is to construct the local-object equalities themselves from the
 log-link/vertical log-Kummer data.
+The theta-pilot possible-image boundary has also been tightened.  The
+class-indexed and lattice-key image-law constructors now have
+procession-normalized entry points: instead of receiving an arbitrary
+\texttt{IndeterminacyData} record, they consume the finite
+\(F_\ell\)-averaged procession log-volume source.  Lean then derives the old
+typed indeterminacy package, including \((\Ind1)\) and \((\Ind2)\)
+log-volume preservation and the \((\Ind3)\) upper-semi inequality, before
+constructing the quotient possible-image family and the selected \(q\)-region.
+The remaining mathematical payload at this boundary is therefore the source of
+the finite averaged label family and its upper-semi comparison, not an
+unstructured indeterminacy record.
 The Remark~3.9.5 hull boundary has also been lowered from an abstract
 intersection-closed predicate to a product-hull source that matches the
 paper's \(\lambda\cdot O\) description.  The declaration
@@ -12243,6 +12254,10 @@ are migrated or retired.
 
 The practical priority order is now:
 \begin{enumerate}
+\item Construct the finite averaged label family and upper-semi comparison from
+  the paper's log-theta procession and vertical log-Kummer data, so the
+  procession-normalized theta-pilot constructors no longer depend on supplied
+  average data.
 \item Construct the local-object source/target equalities consumed by
   \texttt{ProcessionNormalizedVerticalLogKummerClassifiedPacketLocalObjectSource}
   from the paper's vertical log-Kummer/log-link comparison.  The packet-normalized
