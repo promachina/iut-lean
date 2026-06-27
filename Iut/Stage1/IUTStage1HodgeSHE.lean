@@ -4120,6 +4120,231 @@ end SymmetryLabelTransportSource
 
 end IUTStage1LocalTensorDirectSummandPacketState
 
+namespace IUTStage1LocalTensorState
+
+set_option linter.style.longLine false in
+/--
+Nonarchimedean source for a typed `(Ind2)` action-packet symmetry.
+
+This is lower than the existential `Ind2ActionPacketSymmetry`: the two packet
+states, the single source-to-target tensor-label transport, and the concrete
+`Ism` direct-summand action are retained as inspectable data.  The symmetry
+label equality used by `Ind2ActionPacketSymmetry` is derived from the
+`SymmetryLabelTransportSource`.
+-/
+structure NonarchimedeanInd2ActionPacketSymmetrySource
+    (state₁ state₂ : IUTStage1LocalTensorState) where
+  sourcePacket :
+    IUTStage1LocalTensorDirectSummandPacketState
+      IUTStage1PlaceKind.nonarchimedean
+  targetPacket :
+    IUTStage1LocalTensorDirectSummandPacketState
+      IUTStage1PlaceKind.nonarchimedean
+  source_tensor_eq : sourcePacket.packetState.tensorState = state₁
+  target_tensor_eq : targetPacket.packetState.tensorState = state₂
+  label_transport :
+    IUTStage1LocalTensorDirectSummandPacketState.SymmetryLabelTransportSource
+      sourcePacket targetPacket
+  action :
+    IUTStage1NonarchimedeanIsmDirectSummandAction sourcePacket.summandFamily
+  target_capsule_eq :
+    targetPacket.packetState.capsuleFamily =
+      action.toDirectSummandAction.toCapsuleAction.transformedFamily
+
+namespace NonarchimedeanInd2ActionPacketSymmetrySource
+
+set_option linter.style.longLine false in
+theorem tensorState_symmetry_eq
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (source : NonarchimedeanInd2ActionPacketSymmetrySource state₁ state₂) :
+    state₁.symmetry = state₂.symmetry := by
+  calc
+    state₁.symmetry =
+        source.sourcePacket.packetState.tensorState.symmetry := by
+          exact (congrArg IUTStage1LocalTensorState.symmetry
+            source.source_tensor_eq).symm
+    _ = source.targetPacket.packetState.tensorState.symmetry :=
+          source.label_transport.tensorState_symmetry_eq
+    _ = state₂.symmetry := by
+          exact congrArg IUTStage1LocalTensorState.symmetry
+            source.target_tensor_eq
+
+set_option linter.style.longLine false in
+theorem toInd2ActionPacketSymmetry
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (source : NonarchimedeanInd2ActionPacketSymmetrySource state₁ state₂) :
+    Ind2ActionPacketSymmetry state₁ state₂ :=
+  Or.inl
+    ⟨source.sourcePacket, source.targetPacket, source.source_tensor_eq,
+      source.target_tensor_eq, source.tensorState_symmetry_eq,
+      source.action, source.target_capsule_eq⟩
+
+set_option linter.style.longLine false in
+structure Audit
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (source : NonarchimedeanInd2ActionPacketSymmetrySource state₁ state₂) :
+    Prop where
+  label_transport_audit :
+    IUTStage1LocalTensorDirectSummandPacketState.SymmetryLabelTransportSource.TransportAudit
+      source.label_transport
+  tensorState_symmetry_eq : state₁.symmetry = state₂.symmetry
+  ind2_action_packet_symmetry : Ind2ActionPacketSymmetry state₁ state₂
+  direct_summand_action_packet_symmetry :
+    DirectSummandActionPacketSymmetry state₁ state₂
+  direct_summand_symmetry : DirectSummandSymmetry state₁ state₂
+  direct_summand_count_eq : state₁.directSummandCount = state₂.directSummandCount
+
+set_option linter.style.longLine false in
+theorem audit
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (source : NonarchimedeanInd2ActionPacketSymmetrySource state₁ state₂) :
+    Audit source := by
+  let ind2Symmetry := source.toInd2ActionPacketSymmetry
+  let directActionSymmetry :=
+    ind2Symmetry.toDirectSummandActionPacketSymmetry
+  let directSymmetry :=
+    ind2Symmetry.toDirectSummandSymmetry
+  exact
+    { label_transport_audit := source.label_transport.transportAudit,
+      tensorState_symmetry_eq := source.tensorState_symmetry_eq,
+      ind2_action_packet_symmetry := ind2Symmetry,
+      direct_summand_action_packet_symmetry := directActionSymmetry,
+      direct_summand_symmetry := directSymmetry,
+      direct_summand_count_eq := directSymmetry.directSummandCount_eq }
+
+end NonarchimedeanInd2ActionPacketSymmetrySource
+
+set_option linter.style.longLine false in
+/--
+Archimedean source for a typed `(Ind2)` action-packet symmetry.
+
+This is the order-two analogue of
+`NonarchimedeanInd2ActionPacketSymmetrySource`.
+-/
+structure ArchimedeanInd2ActionPacketSymmetrySource
+    (state₁ state₂ : IUTStage1LocalTensorState) where
+  sourcePacket :
+    IUTStage1LocalTensorDirectSummandPacketState
+      IUTStage1PlaceKind.archimedean
+  targetPacket :
+    IUTStage1LocalTensorDirectSummandPacketState
+      IUTStage1PlaceKind.archimedean
+  source_tensor_eq : sourcePacket.packetState.tensorState = state₁
+  target_tensor_eq : targetPacket.packetState.tensorState = state₂
+  label_transport :
+    IUTStage1LocalTensorDirectSummandPacketState.SymmetryLabelTransportSource
+      sourcePacket targetPacket
+  action :
+    IUTStage1ArchimedeanOrderTwoDirectSummandAction sourcePacket.summandFamily
+  target_capsule_eq :
+    targetPacket.packetState.capsuleFamily =
+      action.toDirectSummandAction.toCapsuleAction.transformedFamily
+
+namespace ArchimedeanInd2ActionPacketSymmetrySource
+
+set_option linter.style.longLine false in
+theorem tensorState_symmetry_eq
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (source : ArchimedeanInd2ActionPacketSymmetrySource state₁ state₂) :
+    state₁.symmetry = state₂.symmetry := by
+  calc
+    state₁.symmetry =
+        source.sourcePacket.packetState.tensorState.symmetry := by
+          exact (congrArg IUTStage1LocalTensorState.symmetry
+            source.source_tensor_eq).symm
+    _ = source.targetPacket.packetState.tensorState.symmetry :=
+          source.label_transport.tensorState_symmetry_eq
+    _ = state₂.symmetry := by
+          exact congrArg IUTStage1LocalTensorState.symmetry
+            source.target_tensor_eq
+
+set_option linter.style.longLine false in
+theorem toInd2ActionPacketSymmetry
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (source : ArchimedeanInd2ActionPacketSymmetrySource state₁ state₂) :
+    Ind2ActionPacketSymmetry state₁ state₂ :=
+  Or.inr
+    ⟨source.sourcePacket, source.targetPacket, source.source_tensor_eq,
+      source.target_tensor_eq, source.tensorState_symmetry_eq,
+      source.action, source.target_capsule_eq⟩
+
+set_option linter.style.longLine false in
+structure Audit
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (source : ArchimedeanInd2ActionPacketSymmetrySource state₁ state₂) :
+    Prop where
+  label_transport_audit :
+    IUTStage1LocalTensorDirectSummandPacketState.SymmetryLabelTransportSource.TransportAudit
+      source.label_transport
+  tensorState_symmetry_eq : state₁.symmetry = state₂.symmetry
+  ind2_action_packet_symmetry : Ind2ActionPacketSymmetry state₁ state₂
+  direct_summand_action_packet_symmetry :
+    DirectSummandActionPacketSymmetry state₁ state₂
+  direct_summand_symmetry : DirectSummandSymmetry state₁ state₂
+  direct_summand_count_eq : state₁.directSummandCount = state₂.directSummandCount
+
+set_option linter.style.longLine false in
+theorem audit
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (source : ArchimedeanInd2ActionPacketSymmetrySource state₁ state₂) :
+    Audit source := by
+  let ind2Symmetry := source.toInd2ActionPacketSymmetry
+  let directActionSymmetry :=
+    ind2Symmetry.toDirectSummandActionPacketSymmetry
+  let directSymmetry :=
+    ind2Symmetry.toDirectSummandSymmetry
+  exact
+    { label_transport_audit := source.label_transport.transportAudit,
+      tensorState_symmetry_eq := source.tensorState_symmetry_eq,
+      ind2_action_packet_symmetry := ind2Symmetry,
+      direct_summand_action_packet_symmetry := directActionSymmetry,
+      direct_summand_symmetry := directSymmetry,
+      direct_summand_count_eq := directSymmetry.directSummandCount_eq }
+
+end ArchimedeanInd2ActionPacketSymmetrySource
+
+/-- Source-level typed `(Ind2)` action-packet symmetry. -/
+def Ind2ActionPacketSymmetrySource
+    (state₁ state₂ : IUTStage1LocalTensorState) : Type :=
+  NonarchimedeanInd2ActionPacketSymmetrySource state₁ state₂ ⊕
+    ArchimedeanInd2ActionPacketSymmetrySource state₁ state₂
+
+namespace Ind2ActionPacketSymmetrySource
+
+set_option linter.style.longLine false in
+theorem toInd2ActionPacketSymmetry
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (source : Ind2ActionPacketSymmetrySource state₁ state₂) :
+    Ind2ActionPacketSymmetry state₁ state₂ :=
+  source.elim
+    NonarchimedeanInd2ActionPacketSymmetrySource.toInd2ActionPacketSymmetry
+    ArchimedeanInd2ActionPacketSymmetrySource.toInd2ActionPacketSymmetry
+
+set_option linter.style.longLine false in
+theorem toDirectSummandActionPacketSymmetry
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (source : Ind2ActionPacketSymmetrySource state₁ state₂) :
+    DirectSummandActionPacketSymmetry state₁ state₂ :=
+  source.toInd2ActionPacketSymmetry.toDirectSummandActionPacketSymmetry
+
+set_option linter.style.longLine false in
+theorem toDirectSummandSymmetry
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (source : Ind2ActionPacketSymmetrySource state₁ state₂) :
+    DirectSummandSymmetry state₁ state₂ :=
+  source.toInd2ActionPacketSymmetry.toDirectSummandSymmetry
+
+set_option linter.style.longLine false in
+theorem directSummandCount_eq
+    {state₁ state₂ : IUTStage1LocalTensorState}
+    (source : Ind2ActionPacketSymmetrySource state₁ state₂) :
+    state₁.directSummandCount = state₂.directSummandCount :=
+  source.toDirectSummandSymmetry.directSummandCount_eq
+
+end Ind2ActionPacketSymmetrySource
+
+end IUTStage1LocalTensorState
+
 /--
 Container estimate for a real that is identified with the normalized
 capsule-family log-volume of a local tensor packet.

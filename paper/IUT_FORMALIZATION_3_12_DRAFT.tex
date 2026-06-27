@@ -9710,7 +9710,16 @@ label-transport source it derives the source and target label certificates, the
 target-kind transport, and equality of the two local tensor symmetry labels.
 Thus the place-audited \((\Ind_2)\) packet audit records the label transport as
 one source datum, rather than as separate source-label, target-label, and
-target-kind assumptions.  The possible-image layer now packages the next step as a quotient
+target-kind assumptions.  The local tensor layer now retains this same datum in
+\texttt{Ind2ActionPacketSymmetrySource}: a nonarchimedean case consists of two
+packet states, one \texttt{SymmetryLabelTransportSource}, and an \(\mathrm{Ism}\)
+direct-summand action; the archimedean case is the order-two analogue.  Its
+projection derives the old \texttt{Ind2ActionPacketSymmetry}, the generic
+direct-summand action-packet symmetry, and the summand-count equality.  Step~(xi)
+uses this stricter source as
+\texttt{ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource},
+then forgets it to the previous typed action-packet source before entering the
+selected-\(q\) quotient constructor.  The possible-image layer now packages the next step as a quotient
 audit: the same source-labelled transport is a generator of the
 \((\Ind_1,\Ind_2)\) equality quotient, so the corresponding theta-pilot
 possible-image regions agree and the acting place remains in its finite fiber.
@@ -9752,8 +9761,9 @@ with the same evidence visible at the selected-\(q\) boundary.  That boundary
 now also exports preservation of the concrete theta-pilot class and the
 one-sided \((\Ind_3)\) upper-semi relation audit; \((\Ind_3)\) is therefore
 visible at the endpoint as upper-semi data, not as an equality-quotient
-transport.  The remaining source payload is now lower: constructing the typed
-procession, upper-semi, and action-packet transports from the underlying
+transport.  The remaining source payload is now lower and sharper: construct the
+actual packet states, label transports, \(\mathrm{Ism}\)/order-two actions,
+procession transports, and upper-semi transports from the underlying
 Hodge-theater arithmetic, log-theta lattice, and Frobenioid packet data.
 
 The experiment surface has been lowered to this boundary as well.  The endpoint
