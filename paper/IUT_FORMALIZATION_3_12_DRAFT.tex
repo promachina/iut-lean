@@ -9967,16 +9967,17 @@ visible at the final handoff, rather than hiding them behind an intermediate
 quotient-source argument.
 The stricter source-level packet/action transport source now has the same two
 handoff endpoints.  They no longer merely assert nonemptiness of the
-post-procession transport audit: both endpoints return the named payload
-\texttt{LowerTransportPayload}, which contains the procession transport, the
-upper-semi transport, and the field equalities needed to compare the shifted
+post-procession transport audit: the quotient-constructor endpoint and both
+Remark~3.9.5 endpoints return the named payload
+\texttt{LowerTransportPayload}.  This payload contains the procession transport,
+the upper-semi transport, and the field equalities needed to compare the shifted
 choice with the target choice.  The same handoff still exposes the selected
 q-region, the global \(C_\Theta\) dichotomy, fiber-transport log-volume
 preservation, equality-quotient compatibility, direct-summand-count
 preservation, and the exclusion of \((\Ind_3)\) from the equality quotient.
-Thus the final strict boundary now shows the full equality/equality/upper-semi
-pattern: \((\Ind_1)\) and \((\Ind_2)\) provide equality transport, while
-\((\Ind_3)\) remains only one-sided upper-semi data.
+Thus the strict quotient boundary already shows the full
+equality/equality/upper-semi pattern: \((\Ind_1)\) and \((\Ind_2)\) provide
+equality transport, while \((\Ind_3)\) remains only one-sided upper-semi data.
 
 The bridge to the constructed Remark~3.9.5 source is now named as
 \[

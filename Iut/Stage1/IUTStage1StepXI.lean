@@ -18611,6 +18611,7 @@ theorem ofFiberInd2ActionPacketTransportSource_typedCoreTransportAudit
         (record := record) (indData := indData)
         sourceData gluingTorsor selectedQChoice;
     Nonempty sourceData.PostProcessionInd2ActionPacketTransportSourceAudit ∧
+      sourceData.LowerTransportPayload ∧
       (∀ {choice₁ choice₂ :
           IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
         ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
@@ -18658,6 +18659,7 @@ theorem ofFiberInd2ActionPacketTransportSource_typedCoreTransportAudit
     sourceData.toFiberInd2ActionPacketSource.postProcessionTypedCoreTransportAudit
   exact
     ⟨⟨sourceAudit⟩,
+      sourceData.lowerTransportPayload,
       by
         intro choice₁ choice₂ transport
         exact ⟨sourceData.fiberTransport_ind2ActionPacketSymmetrySource transport⟩,
