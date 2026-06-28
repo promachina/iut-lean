@@ -11249,9 +11249,15 @@ structure Audit
         (coric := coric) (π := π) (l := l)
         (package := package) record) :
     Prop where
+  generated_kernel_audit :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.Audit
+      sourceData.generatedSource
   generated_quotient_audit :
     sourceData.generatedSource.GeneratedFullLabelQuotientPossibleImageAudit
       sourceData.thetaClassImages sourceData.selectedQChoice
+  action_law_audit :
+    IUTStage1Theorem311TypedIndeterminacyCore.ActionLawAudit
+      sourceData.toConstruction.typedIndeterminacyCore
   construction_endpoint :
     sourceData.toConstruction.multiradialImages.quotient =
         sourceData.toConstruction.typedIndeterminacyCore.equalityQuotient ∧
@@ -11305,7 +11311,11 @@ theorem audit
       record sourceData.generatedSource sourceData.thetaClassImages
       sourceData.record_images_eq sourceData.gluingTorsor
       sourceData.selectedQChoice
-  { generated_quotient_audit := endpoint.1,
+  { generated_kernel_audit := sourceData.generatedSource.audit,
+    generated_quotient_audit := endpoint.1,
+    action_law_audit :=
+      IUTStage1Theorem311TypedIndeterminacyCore.actionLawAudit
+        sourceData.toConstruction.typedIndeterminacyCore,
     construction_endpoint := endpoint.2.1,
     selected_region_projects_to_thetaClass := endpoint.2.2.1,
     action_projects_to_concrete := endpoint.2.2.2 }
