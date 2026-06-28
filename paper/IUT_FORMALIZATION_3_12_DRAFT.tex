@@ -907,10 +907,17 @@ itself has now also been constructed from finite divisor components: the source
 supplies the local object, prime multiplicities, prime degrees, and unit
 log-volume in each vertical column, and \Lean{} builds the corresponding
 realified Frobenioid degree object.  Its divisor degree is definitionally the
-finite sum over the prime components.  The remaining payload is therefore
-sharper: construct these component columns and vertical object-transport
-records, together with the \((\Ind3)\) source/target comparisons, from the
-paper's actual vertical log-Kummer/log-link geometry.
+finite sum over the prime components.  The upper-semi comparison boundary has
+also been tightened by
+\texttt{FrobenioidDivisorColumnUpperSemiCalibratedBaseVolume}: the source now
+calibrates the upper-semi source and target coordinates choice-wise against the
+constructed Frobenioid base volumes.  \Lean{} derives the older
+\((\Ind3)\)-indexed source/target equalities and proves the one-sided
+\((\Ind3)\) base-volume inequality from the upper-semi log-volume
+compatibility.  The remaining payload is therefore sharper: construct these
+component columns, vertical object-transport records, and choice-wise
+upper-semi calibrations from the paper's actual vertical log-Kummer/log-link
+geometry.
 The theta-pilot possible-image boundary has also been tightened.  The
 class-indexed and lattice-key image-law constructors now have
 procession-normalized entry points: instead of receiving an arbitrary
@@ -12391,13 +12398,16 @@ The practical priority order is now:
   log-shell normalization and divisor realization, proves raw vertical
   translation, and upgrades object transport to full labelled local-object
   identity.
-\item Construct the source/target base-realified \((\Ind3)\) comparisons at
-  the column compatibility degree object from the same log-Kummer/log-link
-  geometry.  Once these are available, \Lean{} derives the ordinary-copy
-  comparison, constructs the finite local log-shell objects, derives the base
-  finite-log-volume equalities, builds the column log-link transport family,
-  and recovers the transported \(ZMod(\ell)\), capsule, classified, and direct
-  bridges.
+\item Construct the source/target upper-semi calibrations at the column
+  compatibility degree object from the same log-Kummer/log-link geometry.  The
+  current \Lean{} boundary no longer needs separate \((\Ind3)\)-indexed
+  source/target equalities: after the upper-semi coordinates are calibrated
+  choice-wise to the constructed base Frobenioid volumes, \Lean{} derives the
+  old equalities and the one-sided base-volume inequality.  From there it
+  derives the ordinary-copy comparison, constructs the finite local log-shell
+  objects, derives the base finite-log-volume equalities, builds the column
+  log-link transport family, and recovers the transported \(ZMod(\ell)\),
+  capsule, classified, and direct bridges.
 \item Migrate or retire older certificate-pinned \(\IPL\) review aliases that
   are no longer preferred source surfaces.
 \item Extend the recovered finite-divisor packet-local source from the
