@@ -15489,6 +15489,74 @@ theorem generatedFullLabelEqualityQuotient_pullback
 
 set_option linter.style.longLine false in
 /--
+The generated full-label equality relation preserves the forgotten
+theta-pilot class.
+
+This is the source-level quotient calculation behind the possible-image
+construction: generated `(Ind1)` changes only the finite `F_l` label, generated
+`(Ind2)` is precisely equality of theta-pilot classes, and generated `(Ind3)`
+has no equality generator.
+-/
+theorem generatedFullLabelEqualityRelation_thetaClass_eq
+    {choice₁ choice₂ : FullLabelGeneratedChoice (coric := coric) (l := l)}
+    (hrel :
+      (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotient.relation
+        choice₁ choice₂) :
+    choice₁.thetaClass = choice₂.thetaClass := by
+  induction hrel with
+  | refl choice =>
+      rfl
+  | ind1 hstep =>
+      exact generatedFullLabelInd1_thetaClass_eq (l := l) hstep
+  | ind2 hstep =>
+      exact generatedFullLabelInd2_thetaClass_eq (l := l) hstep
+  | ind3 hfalse =>
+      cases hfalse
+  | symm _ ih =>
+      exact ih.symm
+  | trans _ _ ih₁₂ ih₂₃ =>
+      exact ih₁₂.trans ih₂₃
+
+set_option linter.style.longLine false in
+/--
+Conversely, equality of forgotten theta-pilot classes is one generated
+`(Ind2)` equality step, hence lies in the generated `(Ind1,Ind2)` quotient.
+-/
+theorem generatedFullLabelThetaClass_eq_equalityRelation
+    {choice₁ choice₂ : FullLabelGeneratedChoice (coric := coric) (l := l)}
+    (hclass : choice₁.thetaClass = choice₂.thetaClass) :
+    (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotient.relation
+      choice₁ choice₂ :=
+  IUTStage1GeneratedIndeterminacyRelation.ind2 hclass
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelEqualityQuotientMap_eq_of_thetaClass_eq
+    {choice₁ choice₂ : FullLabelGeneratedChoice (coric := coric) (l := l)}
+    (hclass : choice₁.thetaClass = choice₂.thetaClass) :
+    (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotientMap choice₁ =
+      (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotientMap choice₂ :=
+  Quot.sound (source.generatedFullLabelThetaClass_eq_equalityRelation hclass)
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelInd1_equalityQuotientMap_eq
+    {choice₁ choice₂ : FullLabelGeneratedChoice (coric := coric) (l := l)}
+    (hstep : generatedFullLabelInd1Step (l := l) choice₁ choice₂) :
+    (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotientMap choice₁ =
+      (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotientMap choice₂ :=
+  source.generatedFullLabelEqualityQuotientMap_eq_of_thetaClass_eq
+    (generatedFullLabelInd1_thetaClass_eq (l := l) hstep)
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelInd2_equalityQuotientMap_eq
+    {choice₁ choice₂ : FullLabelGeneratedChoice (coric := coric) (l := l)}
+    (hstep : generatedFullLabelInd2Step (l := l) choice₁ choice₂) :
+    (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotientMap choice₁ =
+      (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotientMap choice₂ :=
+  source.generatedFullLabelEqualityQuotientMap_eq_of_thetaClass_eq
+    (generatedFullLabelInd2_thetaClass_eq (l := l) hstep)
+
+set_option linter.style.longLine false in
+/--
 Audit for the generated full-label Theorem 3.11 source layer.
 
 This is the kernel-level replacement for the old ambient
@@ -15530,6 +15598,30 @@ structure GeneratedFullLabelQuotientPossibleImageAudit
       (source.generatedFullLabelTypedIndeterminacyCore).equalityGenerators.ind3_step
         choice₁ choice₂ ->
         False
+  equality_relation_thetaClass_eq :
+    ∀ {choice₁ choice₂ :
+        FullLabelGeneratedChoice (coric := coric) (l := l)},
+      (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotient.relation
+        choice₁ choice₂ ->
+        choice₁.thetaClass = choice₂.thetaClass
+  thetaClass_eq_equality_relation :
+    ∀ {choice₁ choice₂ :
+        FullLabelGeneratedChoice (coric := coric) (l := l)},
+      choice₁.thetaClass = choice₂.thetaClass ->
+        (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotient.relation
+          choice₁ choice₂
+  ind1_equalityQuotientMap_eq :
+    ∀ {choice₁ choice₂ :
+        FullLabelGeneratedChoice (coric := coric) (l := l)},
+      generatedFullLabelInd1Step (l := l) choice₁ choice₂ ->
+        (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotientMap choice₁ =
+          (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotientMap choice₂
+  ind2_equalityQuotientMap_eq :
+    ∀ {choice₁ choice₂ :
+        FullLabelGeneratedChoice (coric := coric) (l := l)},
+      generatedFullLabelInd2Step (l := l) choice₁ choice₂ ->
+        (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotientMap choice₁ =
+          (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotientMap choice₂
   possible_image_compatibility :
     (source.generatedFullLabelTypedIndeterminacyCore).PossibleImageQuotientCompatibility
       (generatedFullLabelChoiceImages (l := l) thetaClassImages)
@@ -15537,6 +15629,13 @@ structure GeneratedFullLabelQuotientPossibleImageAudit
     Nonempty
       ((source.generatedFullLabelTypedIndeterminacyCore).EqualityQuotientPossibleImages
         (generatedFullLabelChoiceImages (l := l) thetaClassImages))
+  all_choices_region_pullback :
+    ∀ choice : FullLabelGeneratedChoice (coric := coric) (l := l),
+      (source.generatedFullLabelEqualityQuotientPossibleImages
+          thetaClassImages).quotientImages.region
+          ((source.generatedFullLabelTypedIndeterminacyCore).equalityQuotientMap
+            choice) =
+        thetaClassImages.region choice.thetaClass
   selected_region_pullback :
     (source.generatedFullLabelEqualityQuotientPossibleImages
         thetaClassImages).quotientImages.region
@@ -15579,10 +15678,27 @@ theorem generatedFullLabelQuotientPossibleImageAudit
       exact
         (source.generatedFullLabelTypedIndeterminacyCore).equalityGenerators_ind3_false
           hstep,
+    equality_relation_thetaClass_eq := by
+      intro choice₁ choice₂ hrel
+      exact source.generatedFullLabelEqualityRelation_thetaClass_eq hrel,
+    thetaClass_eq_equality_relation := by
+      intro choice₁ choice₂ hclass
+      exact source.generatedFullLabelThetaClass_eq_equalityRelation hclass,
+    ind1_equalityQuotientMap_eq := by
+      intro choice₁ choice₂ hstep
+      exact source.generatedFullLabelInd1_equalityQuotientMap_eq hstep,
+    ind2_equalityQuotientMap_eq := by
+      intro choice₁ choice₂ hstep
+      exact source.generatedFullLabelInd2_equalityQuotientMap_eq hstep,
     possible_image_compatibility :=
       source.generatedFullLabelPossibleImageCompatibility thetaClassImages,
     equality_quotient_images :=
       ⟨source.generatedFullLabelEqualityQuotientPossibleImages thetaClassImages⟩,
+    all_choices_region_pullback := by
+      intro choice
+      exact
+        source.generatedFullLabelEqualityQuotient_pullback
+          thetaClassImages choice,
     selected_region_pullback :=
       source.generatedFullLabelEqualityQuotient_pullback
         thetaClassImages selected,

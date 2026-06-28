@@ -11255,6 +11255,29 @@ structure Audit
   generated_quotient_audit :
     sourceData.generatedSource.GeneratedFullLabelQuotientPossibleImageAudit
       sourceData.thetaClassImages sourceData.selectedQChoice
+  equality_relation_preserves_thetaClass :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.FullLabelGeneratedChoice
+          (coric := coric) (l := l)},
+      (sourceData.generatedSource.generatedFullLabelTypedIndeterminacyCore).equalityQuotient.relation
+        choice₁ choice₂ ->
+        choice₁.thetaClass = choice₂.thetaClass
+  thetaClass_eq_enters_equality_relation :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.FullLabelGeneratedChoice
+          (coric := coric) (l := l)},
+      choice₁.thetaClass = choice₂.thetaClass ->
+        (sourceData.generatedSource.generatedFullLabelTypedIndeterminacyCore).equalityQuotient.relation
+          choice₁ choice₂
+  all_generated_regions_pullback_to_thetaClass :
+    ∀ choice :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.FullLabelGeneratedChoice
+          (coric := coric) (l := l),
+      (sourceData.generatedSource.generatedFullLabelEqualityQuotientPossibleImages
+          sourceData.thetaClassImages).quotientImages.region
+          ((sourceData.generatedSource.generatedFullLabelTypedIndeterminacyCore).equalityQuotientMap
+            choice) =
+        sourceData.thetaClassImages.region choice.thetaClass
   action_law_audit :
     IUTStage1Theorem311TypedIndeterminacyCore.ActionLawAudit
       sourceData.toConstruction.typedIndeterminacyCore
@@ -11313,6 +11336,15 @@ theorem audit
       sourceData.selectedQChoice
   { generated_kernel_audit := sourceData.generatedSource.audit,
     generated_quotient_audit := endpoint.1,
+    equality_relation_preserves_thetaClass := by
+      intro choice₁ choice₂ hrel
+      exact endpoint.1.equality_relation_thetaClass_eq hrel,
+    thetaClass_eq_enters_equality_relation := by
+      intro choice₁ choice₂ hclass
+      exact endpoint.1.thetaClass_eq_equality_relation hclass,
+    all_generated_regions_pullback_to_thetaClass := by
+      intro choice
+      exact endpoint.1.all_choices_region_pullback choice,
     action_law_audit :=
       IUTStage1Theorem311TypedIndeterminacyCore.actionLawAudit
         sourceData.toConstruction.typedIndeterminacyCore,
