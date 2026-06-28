@@ -1014,19 +1014,19 @@ to the target packet.  This step retains the matching direct-summand action,
 capsule equality data, and the local tensor label data.  The label-transport
 source is now constructed from three lower components: the source packet-label
 certificate, the target packet-label certificate, and transport of the target
-direct-summand symmetry kind back to the source kind.  A still lower
-constructor now derives those packet-label certificates from the concrete
-local tensor \(\mathrm{Ism}\) labels, the matching action's source summand
-kind, and the same kind-transport law; the archimedean order-two case has the
-parallel constructor.  At the finite vertical-\(IQ\) boundary this lowering is
-now exposed pointwise by
-\texttt{FiniteDivisorVerticalIQProcessionNonarchimedeanIsmTensorLabelTransportSourceData}:
-from midpoint/procession data, the retained \(\mathrm{Ism}\) action-source
-step, the two concrete tensor labels, and the summand-kind transport, \Lean{}
-constructs the completed label-transport source step.  It records the local
-tensor label-transport audit and the corresponding source-level \((\Ind2)\)
-packet/action audit before forgetting to the older source-action and generic
-local direct-summand interfaces.  It then packages the ordered
+direct-summand symmetry kind back to the source kind.  The finite
+vertical-\(IQ\) boundary now has a pointwise packet-label form,
+\texttt{FiniteDivisorVerticalIQProcessionNonarchimedeanIsmPacketLabelTransportSourceData}.
+From midpoint/procession data, the retained \(\mathrm{Ism}\) action-source
+step, source and target packet-label certificates, and the target
+\(\mathrm{Ism}\) packet-kind certificate, \Lean{} reads the source kind from
+the matching action, derives the summand-kind transport, derives the concrete
+tensor labels, and constructs the completed label-transport source step.  The
+older tensor-label source remains as a forgetful projection.  Both projections
+record the local tensor label-transport audit and the corresponding
+source-level \((\Ind2)\) packet/action audit before forgetting to the older
+source-action and generic local direct-summand interfaces.  It then packages
+the ordered
 \((\Ind1)\)-then-\((\Ind2)\) datum as the previous two-step transport, derives
 the generated \((\Ind1),(\Ind2)\) relation, embeds it into the place-audited
 quotient, derives record-image invariance from quotient invariance, and
@@ -12702,11 +12702,13 @@ This has now been sharpened once more at the component boundary.  The preferred
 source supplies an explicit midpoint finite packet, an ordered \((\Ind1)\)
 procession leg, and a source-level nonarchimedean \(\mathrm{Ism}\)
 label-transport step for the post-procession \((\Ind2)\) leg.  This has now
-been lowered pointwise to a tensor-label transport source: it retains the
-matching direct-summand action-source data, the concrete midpoint and target
-\(\mathrm{Ism}\) tensor labels, and direct-summand kind transport, from which
-\Lean{} constructs the local tensor label transport.  The endpoint records the
-resulting local tensor label-transport audit and the
+been lowered pointwise to packet-label geometry: the midpoint and target
+packets carry direct-summand packet-label sources, the target carries its
+\(\mathrm{Ism}\) packet-kind certificate, and the source kind is read from the
+retained matching \(\mathrm{Ism}\) action.  \Lean{} then derives the
+summand-kind transport, the concrete tensor-label source, and the completed
+local tensor label transport.  The endpoint records the resulting local tensor
+label-transport audit and the
 source-level \((\Ind2)\) packet/action audit, then derives the two-step
 transport, generated \((\Ind1,\Ind2)\) relation, quotient relation,
 record-image equality, selected q-region equalities, and
