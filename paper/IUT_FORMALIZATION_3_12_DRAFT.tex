@@ -940,9 +940,7 @@ space whose elements are exactly the constructed representatives.  On this
 generated space, the identification with the representative section, the
 direct-summand cardinality, and the Frobenioid base-volume upper-semi
 compatibility are theorems rather than global assumptions about all arbitrary
-concrete choices.  The next Step~(xi) task is to route this generated choice
-space through the public constructor, replacing the present ambient
-choice-identification hypothesis.
+concrete choices.
 This generated-choice layer has now been refined to keep the full finite
 label procession.  The kernel constructs, for each theta-pilot class and each
 label \(j\in Z/\ell Z\), a concrete Hodge-theater/log-theta choice with the
@@ -953,6 +951,19 @@ concrete choice space is exactly the existing \texttt{flProcessionTranslate}
 operation.  Thus the generated boundary no longer trades the full \(F_\ell\)
 procession for a single representative; the representative choice is now only
 the distinguished label inside a larger generated procession space.
+The generated full-label space now also has its own typed
+\((\Ind1),(\Ind2),(\Ind3)\) core and quotient possible-image audit.  On this
+generated space, \((\Ind1)\) is finite-label translation, \((\Ind2)\) is
+same-theta-pilot-class transport at the lowered component boundary, and
+\((\Ind3)\) is retained only as the Frobenioid base-volume upper-semi
+inequality.  Possible images are pulled back from theta-pilot-class images,
+the equality quotient collapses only the generated \((\Ind1)\) and
+\((\Ind2)\) relations, and the audit records the selected generated region
+together with its projection to the ambient concrete choice.  This replaces
+the previous ambient ``every concrete choice is a representative'' assertion
+at the generated-choice quotient layer; the remaining Step~(xi) task is to
+thread this generated quotient through the public ambient corridor without
+reintroducing that global assumption.
 The theta-pilot possible-image boundary has also been tightened.  The
 class-indexed and lattice-key image-law constructors now have
 procession-normalized entry points: instead of receiving an arbitrary
@@ -12422,6 +12433,9 @@ are migrated or retired.
 
 The practical priority order is now:
 \begin{enumerate}
+\item Thread the generated full-label quotient source through the public
+  Step~(xi) constructor and downstream endpoint, so the public route consumes
+  generated choices rather than the ambient choice-identification hypothesis.
 \item Construct the finite divisor-component columns--local object, prime
   multiplicities, prime degrees, and unit log-volume--and construct the
   labelled vertical object-transport records from the paper-native vertical
