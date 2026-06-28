@@ -44264,6 +44264,159 @@ def toHullCompatibility
 
 set_option linter.style.longLine false in
 /--
+Audit for the generated quotient after passing to the Remark 3.9.5 possible
+image family.
+
+The hull family is still indexed by the generated `(Ind1,Ind2)` equality
+quotient.  This audit exposes the quotient characterization from the generated
+source at the hull boundary: possible regions pull back to theta-pilot-class
+regions, equality-quotient related choices have identical possible regions and
+hull log-volumes, and `(Ind3)` contributes only the core upper-semi inequality.
+-/
+structure HullCompatibilityAudit
+    (sourceData :
+      GeneratedFullLabelQuotientCorridorSource
+        (coric := coric) (π := π) (l := l)
+        (package := packageGenerated) recordGenerated)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target)) :
+    Prop where
+  corridor_audit : sourceData.Audit
+  equality_relation_preserves_thetaClass :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.FullLabelGeneratedChoice
+          (coric := coric) (l := l)},
+      sourceData.toConstruction.typedIndeterminacyCore.equalityQuotient.relation
+        choice₁ choice₂ ->
+        choice₁.thetaClass = choice₂.thetaClass
+  thetaClass_eq_enters_equality_relation :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.FullLabelGeneratedChoice
+          (coric := coric) (l := l)},
+      choice₁.thetaClass = choice₂.thetaClass ->
+        sourceData.toConstruction.typedIndeterminacyCore.equalityQuotient.relation
+          choice₁ choice₂
+  possibleRegion_pullback_to_thetaClass :
+    ∀ choice :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.FullLabelGeneratedChoice
+          (coric := coric) (l := l),
+      (sourceData.toHullCompatibility hullOperator).familySource.possibleRegion
+          (sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+            choice) =
+        (sourceData.thetaClassImages.region choice.thetaClass).toSet
+  equality_relation_possibleRegion_eq :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.FullLabelGeneratedChoice
+          (coric := coric) (l := l)},
+      sourceData.toConstruction.typedIndeterminacyCore.equalityQuotient.relation
+        choice₁ choice₂ ->
+        (sourceData.toHullCompatibility hullOperator).familySource.possibleRegion
+            (sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+              choice₁) =
+          (sourceData.toHullCompatibility hullOperator).familySource.possibleRegion
+            (sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+              choice₂)
+  equality_relation_hullLogVolume_eq :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.FullLabelGeneratedChoice
+          (coric := coric) (l := l)},
+      sourceData.toConstruction.typedIndeterminacyCore.equalityQuotient.relation
+        choice₁ choice₂ ->
+        hullOperator.logVolume
+            ((sourceData.toHullCompatibility hullOperator).familySource.possibleRegion
+              (sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+                choice₁)) =
+          hullOperator.logVolume
+            ((sourceData.toHullCompatibility hullOperator).familySource.possibleRegion
+              (sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+                choice₂))
+  ind3_upper_semi_logVolume :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.FullLabelGeneratedChoice
+          (coric := coric) (l := l)},
+      sourceData.toConstruction.typedIndeterminacyCore.ind3.step choice₁ choice₂ ->
+        sourceData.toConstruction.typedIndeterminacyCore.logVolume choice₁ <=
+          sourceData.toConstruction.typedIndeterminacyCore.logVolume choice₂
+  selected_possibleRegion_eq_selectedQRegion :
+    (sourceData.toHullCompatibility hullOperator).familySource.possibleRegion
+        (sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+          sourceData.selectedQChoice) =
+      sourceData.toConstruction.selectedQRegion.toSet
+  selected_possibleRegion_subset_canonicalHull :
+    (sourceData.toHullCompatibility hullOperator).familySource.possibleRegion
+        (sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+          sourceData.selectedQChoice) ⊆
+      (sourceData.toHullCompatibility hullOperator).familySource.canonicalHull
+  familyUnion_subset_canonicalHull :
+    (sourceData.toHullCompatibility hullOperator).familySource.familyUnion ⊆
+      (sourceData.toHullCompatibility hullOperator).familySource.canonicalHull
+
+set_option linter.style.longLine false in
+theorem hullCompatibilityAudit
+    (sourceData :
+      GeneratedFullLabelQuotientCorridorSource
+        (coric := coric) (π := π) (l := l)
+        (package := packageGenerated) recordGenerated)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target)) :
+    HullCompatibilityAudit sourceData hullOperator :=
+  { corridor_audit := sourceData.audit,
+    equality_relation_preserves_thetaClass := by
+      intro choice₁ choice₂ hrel
+      exact sourceData.audit.equality_relation_preserves_thetaClass hrel,
+    thetaClass_eq_enters_equality_relation := by
+      intro choice₁ choice₂ hclass
+      exact sourceData.audit.thetaClass_eq_enters_equality_relation hclass,
+    possibleRegion_pullback_to_thetaClass := by
+      intro choice
+      calc
+        (sourceData.toHullCompatibility hullOperator).familySource.possibleRegion
+            (sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+              choice) =
+            (recordGenerated.thetaPossibleImages.images.region choice).toSet := by
+          exact
+            (sourceData.toHullCompatibility hullOperator).possibleRegion_pullback_eq
+              choice
+        _ = (sourceData.thetaClassImages.region choice.thetaClass).toSet := by
+          rw [sourceData.record_images_eq]
+          rfl,
+    equality_relation_possibleRegion_eq := by
+      intro choice₁ choice₂ hrel
+      exact
+        (sourceData.toHullCompatibility hullOperator).possibleRegion_eq_of_equalityOrbit
+          hrel,
+    equality_relation_hullLogVolume_eq := by
+      intro choice₁ choice₂ hrel
+      exact
+        (sourceData.toHullCompatibility hullOperator).logVolume_eq_of_equalityOrbit
+          hrel,
+    ind3_upper_semi_logVolume := by
+      intro choice₁ choice₂ hstep
+      exact
+        (sourceData.toHullCompatibility hullOperator).ind3_upper_semi_logVolume
+          hstep,
+    selected_possibleRegion_eq_selectedQRegion := by
+      calc
+        (sourceData.toHullCompatibility hullOperator).familySource.possibleRegion
+            (sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+              sourceData.selectedQChoice) =
+            (sourceData.toConstruction.equalityQuotientPossibleImages.quotientImages.region
+              (sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+                sourceData.selectedQChoice)).toSet := by
+          rfl
+        _ = sourceData.toConstruction.selectedQRegion.toSet := by
+          exact
+            (congrArg Region.toSet
+              sourceData.toConstruction.selectedQRegion_eq_quotientPossibleImage).symm,
+    selected_possibleRegion_subset_canonicalHull :=
+      (sourceData.toHullCompatibility hullOperator).familySource.possibleRegion_subset_phi
+        (sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+          sourceData.selectedQChoice),
+    familyUnion_subset_canonicalHull :=
+      (sourceData.toHullCompatibility hullOperator).familySource.familyUnion_subset_phi }
+
+set_option linter.style.longLine false in
+/--
 Selected-q Remark 3.9.5 hull/log-volume audit for the generated full-label
 source.
 
