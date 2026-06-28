@@ -38945,6 +38945,215 @@ end ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValu
 
 set_option linter.style.longLine false in
 /--
+Principal theta-region-defined realized valuation-ball source.
+
+This lowers the pointwise boundary by no longer accepting the local lift and
+realization laws as fields.  Instead, for each selected local factor it records
+the paper-native statement that the transported theta region is exactly the
+realized image of the compact-open valuation ball.  Since the valuation-ball
+local analytic source already identifies realized regions with images of the
+realization map, Lean derives both the pointwise lift and the converse
+realization law.
+-/
+structure ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallRealizedExactSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    {η : Type z} {K : Type x}
+    {β : Type v} {γ : Type w} {Λ : Type max u v w x z}
+    [PseudoMetricSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ] :
+    Type (max u v w x z) where
+  principalSource :
+    ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource
+      sourceData (η := η) (K := K) (β := β) (γ := γ)
+      (Λ := Λ)
+  cellThetaClass :
+    β ->
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric)
+  coverPlace : β -> γ
+  valuationNorm_eq_dist :
+    ∀ index : β,
+      let valuationSource :=
+        principalSource.toPrincipalValuationBallProductHullCoverSource;
+      let factor :=
+        valuationSource.valuationCover.valuationBallFactor
+          index (coverPlace index);
+      factor.valuationNorm = fun point : K => dist point 0
+  thetaRegion_toSet_eq_realizedValuationBall :
+    ∀ index : β,
+      let valuationSource :=
+        principalSource.toPrincipalValuationBallProductHullCoverSource;
+      let factor :=
+        valuationSource.valuationCover.valuationBallFactor
+          index (coverPlace index);
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        (cellThetaClass index)).toSet =
+        factor.realizedRegion
+          (factor.valuationBall factor.compactOpenRadius)
+
+namespace ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallRealizedExactSource
+
+variable
+  {sourceData :
+    ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+      (source := source) (target := target) (l := l)
+      recordConcrete indData}
+  {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+  {selectedQChoice :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+  {η : Type z} {K : Type x}
+  {β : Type v} {γ : Type w} {Λ : Type max u v w x z}
+  [PseudoMetricSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+  [Fintype β] [Fintype γ]
+
+set_option linter.style.longLine false in
+theorem thetaRegion_point_lifts_to_valuationBall
+    (realizedSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallRealizedExactSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ))
+    (index : β) :
+    let valuationSource :=
+      realizedSource.principalSource.toPrincipalValuationBallProductHullCoverSource;
+    let factor :=
+      valuationSource.valuationCover.valuationBallFactor
+        index (realizedSource.coverPlace index);
+    ∀ point : Point target,
+      point ∈
+        (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+          (realizedSource.cellThetaClass index)).toSet ->
+      ∃ localPoint : K,
+        factor.valuationNorm localPoint <= factor.compactOpenRadius ∧
+          factor.realization localPoint = point := by
+  intro valuationSource factor point hpoint
+  have hrealized :
+      point ∈
+        factor.realizedRegion
+          (factor.valuationBall factor.compactOpenRadius) := by
+    rw [← realizedSource.thetaRegion_toSet_eq_realizedValuationBall index]
+    exact hpoint
+  have himage :
+      point ∈ factor.realization ''
+        factor.valuationBall factor.compactOpenRadius := by
+    rw [← factor.realizedRegion_eq_image
+      (factor.valuationBall factor.compactOpenRadius)]
+    exact hrealized
+  rcases himage with ⟨localPoint, hlocal, hrealize⟩
+  refine ⟨localPoint, ?_, hrealize⟩
+  simpa [IUTStage1ValuationBallAdditiveHaarNormalizationSource.valuationBall]
+    using hlocal
+
+set_option linter.style.longLine false in
+theorem valuationBall_point_realizes_in_thetaRegion
+    (realizedSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallRealizedExactSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ))
+    (index : β) :
+    let valuationSource :=
+      realizedSource.principalSource.toPrincipalValuationBallProductHullCoverSource;
+    let factor :=
+      valuationSource.valuationCover.valuationBallFactor
+        index (realizedSource.coverPlace index);
+    ∀ localPoint : K,
+      factor.valuationNorm localPoint <= factor.compactOpenRadius ->
+      factor.realization localPoint ∈
+        (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+          (realizedSource.cellThetaClass index)).toSet := by
+  intro valuationSource factor localPoint hnorm
+  have hlocal :
+      localPoint ∈ factor.valuationBall factor.compactOpenRadius := by
+    simpa [IUTStage1ValuationBallAdditiveHaarNormalizationSource.valuationBall]
+      using hnorm
+  have himage :
+      factor.realization localPoint ∈ factor.realization ''
+        factor.valuationBall factor.compactOpenRadius :=
+    ⟨localPoint, hlocal, rfl⟩
+  have hrealized :
+      factor.realization localPoint ∈
+        factor.realizedRegion
+          (factor.valuationBall factor.compactOpenRadius) := by
+    rwa [← factor.realizedRegion_eq_image
+      (factor.valuationBall factor.compactOpenRadius)] at himage
+  rw [realizedSource.thetaRegion_toSet_eq_realizedValuationBall index]
+  exact hrealized
+
+set_option linter.style.longLine false in
+noncomputable def toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource
+    (realizedSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallRealizedExactSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallPointwiseConstructedLogShellMetricZeroValuationBallExactSource
+      sourceData gluingTorsor selectedQChoice
+      (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ) where
+  principalSource := realizedSource.principalSource
+  cellThetaClass := realizedSource.cellThetaClass
+  coverPlace := realizedSource.coverPlace
+  valuationNorm_eq_dist := realizedSource.valuationNorm_eq_dist
+  thetaRegion_point_lifts_to_valuationBall :=
+    realizedSource.thetaRegion_point_lifts_to_valuationBall
+  valuationBall_point_realizes_in_thetaRegion :=
+    realizedSource.valuationBall_point_realizes_in_thetaRegion
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (realizedSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallRealizedExactSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    let valuationSource :=
+      realizedSource.principalSource.toPrincipalValuationBallProductHullCoverSource;
+    (∀ index : β,
+      let factor :=
+        valuationSource.valuationCover.valuationBallFactor
+          index (realizedSource.coverPlace index);
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        (realizedSource.cellThetaClass index)).toSet =
+        factor.realizedRegion
+          (factor.valuationBall factor.compactOpenRadius)) ∧
+      (∀ index : β,
+        let factor :=
+          valuationSource.valuationCover.valuationBallFactor
+            index (realizedSource.coverPlace index);
+        ∀ point : Point target,
+          point ∈
+            (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+              (realizedSource.cellThetaClass index)).toSet ->
+          ∃ localPoint : K,
+            factor.valuationNorm localPoint <= factor.compactOpenRadius ∧
+              factor.realization localPoint = point) ∧
+      (∀ index : β,
+        let factor :=
+          valuationSource.valuationCover.valuationBallFactor
+            index (realizedSource.coverPlace index);
+        ∀ localPoint : K,
+          factor.valuationNorm localPoint <= factor.compactOpenRadius ->
+          factor.realization localPoint ∈
+            (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+              (realizedSource.cellThetaClass index)).toSet) ∧
+      valuationSource.possibleImageUnion =
+        valuationSource.selectedPrincipalHull :=
+  by
+    intro valuationSource
+    let pointwiseSource :=
+      realizedSource.toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource
+    exact
+      ⟨realizedSource.thetaRegion_toSet_eq_realizedValuationBall,
+        realizedSource.thetaRegion_point_lifts_to_valuationBall,
+        realizedSource.valuationBall_point_realizes_in_thetaRegion,
+        pointwiseSource.endpoint.2.2.2.2.2.2⟩
+
+end ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallRealizedExactSource
+
+set_option linter.style.longLine false in
+/--
 Principal local-chart metric-zero valuation-ball source.
 
 This lowers the principal pointwise boundary by replacing the theta-region
