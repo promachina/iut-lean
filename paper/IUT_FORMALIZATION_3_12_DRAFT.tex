@@ -6599,14 +6599,17 @@ log-volumes.  Instead, both sides supply
 q-values are read from q-pilot upper-ray log-volumes and the signed theta
 values are read from theta-hull log-volumes, with the determinant
 log-volume equalities retained in the audit.  The remaining source payload is
-therefore sharply localized.  The generated side is now constructor-backed by
-\texttt{GeneratedFullLabelConstructedStepXUpperRaySource}: the generated
-quotient source and constructed Remark~3.9.5 hull/determinant source build the
-canonical hull approximant, and a procession-normalized Step (x) corridor turns
-it into the generated \texttt{IUTStage1StepXToHullUpperRayLogVolume}.  What
-remains at this boundary is the finite-side construction and the
+therefore sharply localized.  Both sides are now constructor-backed: the
+generated side uses
+\texttt{GeneratedFullLabelConstructedStepXUpperRaySource}, while the finite
+nonarchimedean side uses
+\texttt{FiniteDivisorVerticalIQConstructedStepXUpperRaySource}.  In each case a
+constructed Remark~3.9.5 hull/determinant source builds the canonical hull
+approximant, and a procession-normalized Step (x) corridor turns it into an
+\texttt{IUTStage1StepXToHullUpperRayLogVolume}.  The remaining boundary is the
 cross-package equality of the finite and generated q-pilot and theta-hull
-log-volume readings.
+log-volume readings, together with a compile-friendly final endpoint that
+feeds this fully constructed handoff through the existing \(C_\Theta\) corridor.
 The same audit now exposes the finite \(\SHE\) preservation facts used by that
 transport: the allowed forgetting predicate is the history-separated permission
 attached to the record's Hodge-theater descent bridge, and the transported
