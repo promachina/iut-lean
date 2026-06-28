@@ -961,9 +961,17 @@ the equality quotient collapses only the generated \((\Ind1)\) and
 \((\Ind2)\) relations, and the audit records the selected generated region
 together with its projection to the ambient concrete choice.  This replaces
 the previous ambient ``every concrete choice is a representative'' assertion
-at the generated-choice quotient layer; the remaining Step~(xi) task is to
-thread this generated quotient through the public ambient corridor without
-reintroducing that global assumption.
+at the generated-choice quotient layer.
+This generated quotient has now entered the public Step~(xi) constructor layer:
+\texttt{ofGeneratedFullLabelQuotientSource} constructs a one-sided
+Theorem~3.11 multiradial source whose index is
+\texttt{FullLabelGeneratedChoice}.  Its \(F_\ell\)-procession action is the
+generated label translation, its possible-image family is the theta-pilot
+class family pulled back to generated choices, and its endpoint proves both
+selected-region containment in the record union and projection compatibility
+with the ambient \texttt{flProcessionTranslate}.  Thus the public constructor
+now consumes the generated quotient itself, rather than reintroducing a global
+ambient representative assumption.
 The theta-pilot possible-image boundary has also been tightened.  The
 class-indexed and lattice-key image-law constructors now have
 procession-normalized entry points: instead of receiving an arbitrary
@@ -9653,6 +9661,11 @@ choices; the \((\Ind_3)\) contribution is still precisely the separate
 one-sided log-volume inequality.
 The finite toy witness has been upgraded accordingly to
 \(\texttt{finiteToyEqualityQuotientPossibleImages}\).
+The same equality-quotient discipline is now available at the generated
+full-label Step~(xi) boundary: the public generated constructor keeps
+\((\Ind_3)\) outside the equality quotient and exposes the selected
+q-region as both a quotient possible image and the pullback of the corresponding
+theta-pilot-class image.
 The current nonvacuity audit is packaged as
 \[
 \begin{array}{l}
@@ -12433,9 +12446,9 @@ are migrated or retired.
 
 The practical priority order is now:
 \begin{enumerate}
-\item Thread the generated full-label quotient source through the public
-  Step~(xi) constructor and downstream endpoint, so the public route consumes
-  generated choices rather than the ambient choice-identification hypothesis.
+\item Thread the generated full-label Step~(xi) constructor through the
+  downstream Remark~3.9.5 and \(C_\Theta\) endpoints, so the endpoint corridor
+  consumes generated choices all the way to the current dichotomy surface.
 \item Construct the finite divisor-component columns--local object, prime
   multiplicities, prime degrees, and unit log-volume--and construct the
   labelled vertical object-transport records from the paper-native vertical

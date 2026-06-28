@@ -11011,6 +11011,309 @@ theorem concreteHodgeTheaterLogThetaFLProcessionAction_endpoint
 
 set_option linter.style.longLine false in
 /--
+Canonical `F_l` procession action on the generated full-label choice space.
+
+The index is the generated full-label space produced by the lowered
+log-theta-procession/vertical-log-Kummer/Frobenioid divisor-column kernel.
+Thus the equality quotient relation is generated directly by generated
+`(Ind1)`, i.e. finite label translation.
+-/
+def generatedFullLabelEqualityFLProcessionAction
+    {coric : Type u} {π : Type v} [Fintype π]
+    (generatedSource :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel
+        coric l π)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l) :
+    IUTStage1Theorem311EqualityFLProcessionAction
+      (generatedSource.generatedFullLabelTypedIndeterminacyCore) l :=
+  { gluingTorsor := gluingTorsor,
+    transition :=
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.fullLabelTransition
+        (l := l),
+    transition_zero :=
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.fullLabelTransition_zero
+        (l := l),
+    transition_add :=
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.fullLabelTransition_add
+        (l := l),
+    transition_related := by
+      intro t choice
+      exact IUTStage1GeneratedIndeterminacyRelation.ind1 ⟨t, rfl⟩ }
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelEqualityFLProcessionAction_projects_to_concrete
+    {coric : Type u} {π : Type v} [Fintype π]
+    (generatedSource :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel
+        coric l π)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (t : ZMod l.value)
+    (choice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.FullLabelGeneratedChoice
+        (coric := coric) (l := l)) :
+    generatedSource.fullLabelToConcreteChoice
+        ((generatedFullLabelEqualityFLProcessionAction generatedSource gluingTorsor).transition
+          t choice) =
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate t
+        (generatedSource.fullLabelToConcreteChoice choice) :=
+  generatedSource.fullLabelToConcreteChoice_transition t choice
+
+set_option linter.style.longLine false in
+/--
+One-sided Theorem 3.11 constructor from the generated full-label quotient
+source.
+
+The record images are theta-pilot-class images pulled back to the generated
+full-label choices.  This threads the generated quotient into the public Step
+(xi) corridor without assuming that every ambient concrete choice is globally
+identified with its theta-pilot-class representative.
+-/
+def ofGeneratedFullLabelQuotientSource
+    {coric : Type u} {π : Type v} [Fintype π]
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.FullLabelGeneratedChoice
+          (coric := coric) (l := l))}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (generatedSource :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel
+        coric l π)
+    (thetaClassImages :
+      RegionFamily target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric)))
+    (record_images_eq :
+      record.thetaPossibleImages.images =
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.generatedFullLabelChoiceImages
+          (l := l) thetaClassImages)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.FullLabelGeneratedChoice
+        (coric := coric) (l := l)) :
+    IUTStage1Theorem311OneSidedMultiradialConstructionSource
+      (package := package) record l :=
+  { typedIndeterminacyCore :=
+      generatedSource.generatedFullLabelTypedIndeterminacyCore,
+    possibleImageCompatibility := by
+      rw [record_images_eq]
+      exact
+        generatedSource.generatedFullLabelPossibleImageCompatibility
+          thetaClassImages,
+    flProcessionAction :=
+      generatedFullLabelEqualityFLProcessionAction
+        generatedSource gluingTorsor,
+    selectedQChoice := selectedQChoice }
+
+set_option linter.style.longLine false in
+theorem ofGeneratedFullLabelQuotientSource_endpoint
+    {coric : Type u} {π : Type v} [Fintype π]
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.FullLabelGeneratedChoice
+          (coric := coric) (l := l))}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (generatedSource :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel
+        coric l π)
+    (thetaClassImages :
+      RegionFamily target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric)))
+    (record_images_eq :
+      record.thetaPossibleImages.images =
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.generatedFullLabelChoiceImages
+          (l := l) thetaClassImages)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.FullLabelGeneratedChoice
+        (coric := coric) (l := l)) :
+    generatedSource.GeneratedFullLabelQuotientPossibleImageAudit
+        thetaClassImages selectedQChoice ∧
+      let construction :=
+        ofGeneratedFullLabelQuotientSource
+          record generatedSource thetaClassImages record_images_eq
+          gluingTorsor selectedQChoice;
+      (construction.multiradialImages.quotient =
+          construction.typedIndeterminacyCore.equalityQuotient ∧
+        construction.multiradialImages.possibleImages =
+          record.thetaPossibleImages ∧
+        Fintype.card (ZMod l.value) = l.value ∧
+        (∀ t choice,
+          construction.typedIndeterminacyCore.equalityQuotientMap choice =
+            construction.typedIndeterminacyCore.equalityQuotientMap
+              (construction.flProcessionAction.transition t choice)) ∧
+        (∀ {choice₁ choice₂ :
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.FullLabelGeneratedChoice
+              (coric := coric) (l := l)},
+          construction.typedIndeterminacyCore.ind3.step choice₁ choice₂ ->
+          construction.typedIndeterminacyCore.logVolume choice₁ <=
+            construction.typedIndeterminacyCore.logVolume choice₂) ∧
+        (∀ choice,
+          construction.equalityQuotientPossibleImages.quotientImages.region
+              (construction.typedIndeterminacyCore.equalityQuotientMap choice) =
+            record.thetaPossibleImages.images.region choice) ∧
+        construction.selectedQRegion =
+          construction.equalityQuotientPossibleImages.quotientImages.region
+            (construction.typedIndeterminacyCore.equalityQuotientMap
+              construction.selectedQChoice) ∧
+        construction.selectedQRegion.toSet =
+          recordThetaPossibleImage record construction.selectedQChoice ∧
+        construction.selectedQRegion.toSet ⊆
+          recordThetaPossibleImageUnion record) ∧
+        construction.selectedQRegion =
+          thetaClassImages.region
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+              (generatedSource.fullLabelToConcreteChoice selectedQChoice)) ∧
+        (∀ t choice,
+          generatedSource.fullLabelToConcreteChoice
+              (construction.flProcessionAction.transition t choice) =
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate t
+              (generatedSource.fullLabelToConcreteChoice choice)) := by
+  refine
+    ⟨generatedSource.generatedFullLabelQuotientPossibleImageAudit
+        thetaClassImages selectedQChoice, ?_⟩
+  let construction :=
+    ofGeneratedFullLabelQuotientSource
+      record generatedSource thetaClassImages record_images_eq
+      gluingTorsor selectedQChoice
+  refine ⟨construction.endpoint, ?_, ?_⟩
+  · dsimp [construction, ofGeneratedFullLabelQuotientSource,
+      IUTStage1Theorem311OneSidedMultiradialConstructionSource.selectedQRegion]
+    rw [record_images_eq]
+    exact
+      generatedSource.generatedFullLabelChoiceImages_projection_region
+        thetaClassImages selectedQChoice
+  · intro t choice
+    exact
+      generatedFullLabelEqualityFLProcessionAction_projects_to_concrete
+        generatedSource gluingTorsor t choice
+
+set_option linter.style.longLine false in
+/--
+Public package for the generated full-label quotient constructor.
+
+The source fields are the generated component kernel, theta-pilot-class image
+family, record/image identification, gluing torsor, and selected generated
+q-choice.
+-/
+structure GeneratedFullLabelQuotientCorridorSource
+    {coric : Type u} {π : Type v} [Fintype π]
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.FullLabelGeneratedChoice
+          (coric := coric) (l := l))}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package) where
+  generatedSource :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel
+      coric l π
+  thetaClassImages :
+    RegionFamily target
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric))
+  record_images_eq :
+    record.thetaPossibleImages.images =
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.generatedFullLabelChoiceImages
+        (l := l) thetaClassImages
+  gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l
+  selectedQChoice :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.FullLabelGeneratedChoice
+      (coric := coric) (l := l)
+
+namespace GeneratedFullLabelQuotientCorridorSource
+
+variable {coric : Type u} {π : Type v} [Fintype π]
+set_option linter.style.longLine false
+variable
+  {package :
+    IUTStage1SourcePackage source target
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.FullLabelGeneratedChoice
+        (coric := coric) (l := l))}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+
+def toConstruction
+    (sourceData :
+      GeneratedFullLabelQuotientCorridorSource
+        (coric := coric) (π := π) (l := l)
+        (package := package) record) :
+    IUTStage1Theorem311OneSidedMultiradialConstructionSource
+      (package := package) record l :=
+  ofGeneratedFullLabelQuotientSource
+    record sourceData.generatedSource sourceData.thetaClassImages
+    sourceData.record_images_eq sourceData.gluingTorsor
+    sourceData.selectedQChoice
+
+set_option linter.style.longLine false in
+structure Audit
+    (sourceData :
+      GeneratedFullLabelQuotientCorridorSource
+        (coric := coric) (π := π) (l := l)
+        (package := package) record) :
+    Prop where
+  generated_quotient_audit :
+    sourceData.generatedSource.GeneratedFullLabelQuotientPossibleImageAudit
+      sourceData.thetaClassImages sourceData.selectedQChoice
+  construction_endpoint :
+    sourceData.toConstruction.multiradialImages.quotient =
+        sourceData.toConstruction.typedIndeterminacyCore.equalityQuotient ∧
+      sourceData.toConstruction.multiradialImages.possibleImages =
+        record.thetaPossibleImages ∧
+      Fintype.card (ZMod l.value) = l.value ∧
+      (∀ t choice,
+        sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap choice =
+          sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+            (sourceData.toConstruction.flProcessionAction.transition t choice)) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.FullLabelGeneratedChoice
+            (coric := coric) (l := l)},
+        sourceData.toConstruction.typedIndeterminacyCore.ind3.step choice₁ choice₂ ->
+        sourceData.toConstruction.typedIndeterminacyCore.logVolume choice₁ <=
+          sourceData.toConstruction.typedIndeterminacyCore.logVolume choice₂) ∧
+      (∀ choice,
+        sourceData.toConstruction.equalityQuotientPossibleImages.quotientImages.region
+            (sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap choice) =
+          record.thetaPossibleImages.images.region choice) ∧
+      sourceData.toConstruction.selectedQRegion =
+        sourceData.toConstruction.equalityQuotientPossibleImages.quotientImages.region
+          (sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+            sourceData.toConstruction.selectedQChoice) ∧
+      sourceData.toConstruction.selectedQRegion.toSet =
+        recordThetaPossibleImage record sourceData.toConstruction.selectedQChoice ∧
+      sourceData.toConstruction.selectedQRegion.toSet ⊆
+        recordThetaPossibleImageUnion record
+  selected_region_projects_to_thetaClass :
+    sourceData.toConstruction.selectedQRegion =
+      sourceData.thetaClassImages.region
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+          (sourceData.generatedSource.fullLabelToConcreteChoice
+            sourceData.selectedQChoice))
+  action_projects_to_concrete :
+    ∀ t choice,
+      sourceData.generatedSource.fullLabelToConcreteChoice
+          (sourceData.toConstruction.flProcessionAction.transition t choice) =
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate t
+          (sourceData.generatedSource.fullLabelToConcreteChoice choice)
+
+set_option linter.style.longLine false in
+theorem audit
+    (sourceData :
+      GeneratedFullLabelQuotientCorridorSource
+        (coric := coric) (π := π) (l := l)
+        (package := package) record) :
+    GeneratedFullLabelQuotientCorridorSource.Audit sourceData :=
+  let endpoint :=
+    ofGeneratedFullLabelQuotientSource_endpoint
+      record sourceData.generatedSource sourceData.thetaClassImages
+      sourceData.record_images_eq sourceData.gluingTorsor
+      sourceData.selectedQChoice
+  { generated_quotient_audit := endpoint.1,
+    construction_endpoint := endpoint.2.1,
+    selected_region_projects_to_thetaClass := endpoint.2.2.1,
+    action_projects_to_concrete := endpoint.2.2.2 }
+
+end GeneratedFullLabelQuotientCorridorSource
+
+set_option linter.style.longLine false in
+/--
 Full-label source backing the concrete `F_l` procession action.
 
 The canonical action above is not merely a formal `ZMod` action: for every
