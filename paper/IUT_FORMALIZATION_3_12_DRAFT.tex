@@ -12613,9 +12613,22 @@ that fiber Lean constructs representative finite packets from the procession
 state, local direct-summand packet state, upper-semi state, and place-family
 compatibility witness; the universal finite image law follows by applying this
 fiber representative to the theta class reconstructed from an arbitrary finite
-packet.  The remaining payload is to derive these component functions,
-same-class record-image invariance, and the signed pre-ledger equalities from
-the paper-native vertical log-Kummer/Frobenioid geometry.
+packet.  The component source is now itself obtained from
+\[
+\begin{gathered}
+\texttt{GeneratedFullLabelFiniteDivisorVerticalIQ}\\
+\texttt{FiniteThetaClassFiberAuditedPacketImageLawSource},
+\end{gathered}
+\]
+which supplies one place-audited nonarchimedean direct-summand packet on each
+fiber theta class.  Lean extracts the procession, local packet, upper-semi, and
+place-family data from that audited packet, derives the log-theta column
+compatibility from the reconstructed theta-class equality, and uses
+same-theta-class record-image invariance to pass from the rebuilt component
+packet back to the audited packet.  The remaining payload is to construct the
+audited packet representatives, same-class record-image invariance, and the
+signed pre-ledger equalities from the paper-native vertical
+log-Kummer/Frobenioid geometry.
 
 The practical priority order is now:
 \begin{enumerate}
@@ -12624,11 +12637,11 @@ The practical priority order is now:
   theta-class, finite-packet projection, and constructed finite-packet
   theta-class sources are now implemented.  The target-region realization is
   derived from the finite Theorem~3.11 record image, and the selected
-  record-image witness is derived from a fiberwise component representative
-  finite theta-class image law.  What remains is to construct the component
-  functions, same-class record-image invariance, and signed q/theta pre-ledger
-  equalities from paper-native finite divisors, local objects, and log-volume
-  comparison data.
+  record-image witness is derived from a fiberwise audited-packet
+  representative finite theta-class image law.  What remains is to construct
+  the audited packet representatives, same-class record-image invariance, and
+  signed q/theta pre-ledger equalities from paper-native finite divisors, local
+  objects, and log-volume comparison data.
 \item Construct the finite divisor-component columns--local object, prime
   multiplicities, prime degrees, and unit log-volume--and construct the
   labelled vertical object-transport records from the paper-native vertical
