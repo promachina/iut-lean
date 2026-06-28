@@ -12597,14 +12597,25 @@ packet image law.  This law is now itself derived from
 \texttt{FiniteThetaClassRepresentativeImageLawSource}.
 \end{gathered}
 \]
-The representative source supplies a finite packet for each reconstructed theta
-class, proves finite record-image invariance under equality of that class, and
-identifies representative record images with the class-indexed
-Theorem~3.11 possible-image regions.  Lean derives the universal finite image
-law from this quotient-style data and then enters the finite-divisor
-\(C_\Theta\) corridor.  The remaining payload is to construct the representative
-section and invariance law from the paper-native vertical
-log-Kummer/Frobenioid packet geometry.
+The representative source supplies finite packets, proves finite record-image
+invariance under equality of the reconstructed theta class, and identifies
+representative record images with the class-indexed Theorem~3.11
+possible-image regions.  This has now been lowered to the fiber/component
+source
+\[
+\begin{gathered}
+\texttt{GeneratedFullLabelFiniteDivisorVerticalIQ}\\
+\texttt{FiniteThetaClassFiberComponentImageLawSource}.
+\end{gathered}
+\]
+The fiber is determined by the fixed finite Hodge-theater/history labels.  On
+that fiber Lean constructs representative finite packets from the procession
+state, local direct-summand packet state, upper-semi state, and place-family
+compatibility witness; the universal finite image law follows by applying this
+fiber representative to the theta class reconstructed from an arbitrary finite
+packet.  The remaining payload is to derive these component functions,
+same-class record-image invariance, and the signed pre-ledger equalities from
+the paper-native vertical log-Kummer/Frobenioid geometry.
 
 The practical priority order is now:
 \begin{enumerate}
@@ -12613,9 +12624,9 @@ The practical priority order is now:
   theta-class, finite-packet projection, and constructed finite-packet
   theta-class sources are now implemented.  The target-region realization is
   derived from the finite Theorem~3.11 record image, and the selected
-  record-image witness is derived from a representative-and-invariance finite
-  theta-class image law.  What remains is to construct the representative
-  section, same-class record-image invariance, and signed q/theta pre-ledger
+  record-image witness is derived from a fiberwise component representative
+  finite theta-class image law.  What remains is to construct the component
+  functions, same-class record-image invariance, and signed q/theta pre-ledger
   equalities from paper-native finite divisors, local objects, and log-volume
   comparison data.
 \item Construct the finite divisor-component columns--local object, prime
