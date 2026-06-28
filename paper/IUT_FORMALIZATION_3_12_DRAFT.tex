@@ -6590,6 +6590,19 @@ constructed from the history-separated Hodge--Arakelov evaluations, its
 \(\IPL\) transport is the one obtained from the Theorem 3.11 construction
 source, and its hull constructor is the one induced by the possible-image
 obligations-backed Step (xi) source.
+The generated full-label to finite-divisor handoff has now been lowered one
+more step.  The public experiment endpoint
+\texttt{generatedFullLabelFiniteDivisorVerticalIQStepXUpperRayRealization\_cThetaDichotomy}
+no longer accepts independent real witnesses for the q-region and theta-hull
+log-volumes.  Instead, both sides supply
+\texttt{IUTStage1StepXToHullUpperRayLogVolume} computations, so the signed
+q-values are read from q-pilot upper-ray log-volumes and the signed theta
+values are read from theta-hull log-volumes, with the determinant
+log-volume equalities retained in the audit.  The remaining source payload is
+therefore sharply localized: construct those finite and generated Step
+(x)-to-hull upper-ray computations from the paper-native procession,
+log-Kummer, Frobenioid, and Theorem 3.11 indeterminacy data, and prove the
+cross-package equality of their q-pilot and theta-hull log-volume readings.
 The same audit now exposes the finite \(\SHE\) preservation facts used by that
 transport: the allowed forgetting predicate is the history-separated permission
 attached to the record's Hodge-theater descent bridge, and the transported
