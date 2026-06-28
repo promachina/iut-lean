@@ -10711,6 +10711,40 @@ def toLabelTransportStep
     label_transport := source.label_transport }
 
 set_option linter.style.longLine false in
+/-- Project the retained source-level label transport to the transported packet-label step. -/
+def toTransportedPacketLabelStep
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (source :
+      NonarchimedeanIsmActionEntryLabelTransportSourceStep audited₁ audited₂) :
+    NonarchimedeanIsmActionEntryTransportedPacketLabelStep audited₁ audited₂ :=
+  source.toLabelTransportStep.toTransportedPacketLabelStep
+
+set_option linter.style.longLine false in
+/-- The transported packet-label projection uses exactly the retained source action. -/
+theorem transported_action_step_eq
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (source :
+      NonarchimedeanIsmActionEntryLabelTransportSourceStep audited₁ audited₂) :
+    source.toTransportedPacketLabelStep.action_step =
+      source.action_source_step.toActionEntryStep :=
+  rfl
+
+set_option linter.style.longLine false in
+/-- Project the retained source-level label transport to the packet-label step. -/
+def toPacketLabelStep
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (source :
+      NonarchimedeanIsmActionEntryLabelTransportSourceStep audited₁ audited₂) :
+    NonarchimedeanIsmActionEntryPacketLabelStep audited₁ audited₂ :=
+  source.toTransportedPacketLabelStep.toPacketLabelStep
+
+set_option linter.style.longLine false in
 def toInd2ActionPacketSymmetrySource
     {audited₁ audited₂ :
       IUTStage1PlaceAuditedDirectSummandPacketChoice
@@ -10904,6 +10938,40 @@ def toLabelTransportStep
     ArchimedeanOrderTwoActionEntryLabelTransportStep audited₁ audited₂ :=
   { action_step := source.action_source_step.toActionEntryStep,
     label_transport := source.label_transport }
+
+set_option linter.style.longLine false in
+/-- Project the retained source-level label transport to the transported packet-label step. -/
+def toTransportedPacketLabelStep
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (source :
+      ArchimedeanOrderTwoActionEntryLabelTransportSourceStep audited₁ audited₂) :
+    ArchimedeanOrderTwoActionEntryTransportedPacketLabelStep audited₁ audited₂ :=
+  source.toLabelTransportStep.toTransportedPacketLabelStep
+
+set_option linter.style.longLine false in
+/-- The transported packet-label projection uses exactly the retained source action. -/
+theorem transported_action_step_eq
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (source :
+      ArchimedeanOrderTwoActionEntryLabelTransportSourceStep audited₁ audited₂) :
+    source.toTransportedPacketLabelStep.action_step =
+      source.action_source_step.toActionEntryStep :=
+  rfl
+
+set_option linter.style.longLine false in
+/-- Project the retained source-level label transport to the packet-label step. -/
+def toPacketLabelStep
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (source :
+      ArchimedeanOrderTwoActionEntryLabelTransportSourceStep audited₁ audited₂) :
+    ArchimedeanOrderTwoActionEntryPacketLabelStep audited₁ audited₂ :=
+  source.toTransportedPacketLabelStep.toPacketLabelStep
 
 set_option linter.style.longLine false in
 def toInd2ActionPacketSymmetrySource
