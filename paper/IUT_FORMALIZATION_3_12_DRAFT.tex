@@ -4112,10 +4112,30 @@ replaces the forward existential lifting law by a named map
 reverse statement that each selected valuation-ball point realizes back into
 the transported theta region.  \Lean{} derives the pointwise lift, recovers the
 previous principal pointwise source, and hence recovers the exact realized
-valuation-ball identity and selected-principal-hull conclusion.  This records
-the current frontier precisely: the next source-paper construction must build
-these local coordinates from the nonarchimedean log-shell/valuation-ball
-normalization rather than supply them as chart data.
+valuation-ball identity and selected-principal-hull conclusion.  This boundary
+has now been lowered to an image-backed log-shell source:
+\[
+\begin{array}{l}
+\texttt{ConcreteValuationBallThetaClassFiberTransportThetaRegionDefined}\\
+\texttt{PrincipalValuationBallLogShellImageMetricZeroValuationBallExactSource}.
+\end{array}
+\]
+Instead of supplying \(x_\beta(y)\) as chart data, it records the two
+containments
+\[
+  P_{\Theta,\beta}\subseteq \operatorname{real}_\beta(I_\beta),
+  \qquad
+  \operatorname{real}_\beta(I_\beta)\subseteq P_{\Theta,\beta},
+\]
+and the two containments identifying \(I_\beta\) with the compact-open
+valuation ball.  \Lean{} chooses \(x_\beta(y)\) from the first image
+containment, proves \(\operatorname{real}_\beta(x_\beta(y))=y\), derives the
+radius bound from \(I_\beta\subseteq\{x:\|x\|_v\le r_\beta\}\), and derives the
+reverse realization law from
+\(\{x:\|x\|_v\le r_\beta\}\subseteq I_\beta\) together with the second image
+containment.  The current frontier is therefore no longer a supplied coordinate
+map; it is the construction of these local image containments and log-shell
+containments from the nonarchimedean log-shell/valuation-ball normalization.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -13443,14 +13463,16 @@ The practical priority order is now:
 \item Construct the remaining Step~(xi) holomorphic-hull/determinant fields
   from Remark~3.9.5 and Step~(xi): genuine hulls, determinant lines,
   Ob5/Ob7 compatibility, and the \(\theta_{\mathrm{signed}}\) log-volume
-  identification.  The preferred principal local boundary is now a log-shell
-  exact statement: each transported theta region is realized from a selected
-  local log-shell, and that log-shell is the compact-open valuation ball.
-  \Lean{} derives realized valuation-ball equality, pointwise lift/converse
-  realization, the exact \(\Xi(P_B)\) source, and the source-derived global
-  \(C_\Theta\) audit.  What remains is to construct these two local identities
-  from the paper-native holomorphic hull, log-Kummer, and local log-shell
-  geometry.
+  identification.  The preferred principal local boundary is now image-backed:
+  the transported theta region and the realized local log-shell are related by
+  two containments, and the selected local log-shell and compact-open
+  valuation ball are related by two containments.  \Lean{} chooses local
+  representatives from the image containment, derives the valuation bound and
+  converse realization law, then recovers realized valuation-ball equality,
+  the exact \(\Xi(P_B)\) source, and the source-derived global \(C_\Theta\)
+  audit.  What remains is to construct these local image/log-shell
+  containments from the paper-native holomorphic hull, log-Kummer, and local
+  log-shell geometry.
 \item Instantiate the valuation-ball local analytic construction from actual
   local fields, log-shell maps, compact-open Haar normalizations, and
   archimedean lattice metrics, proving the remaining Proposition~1.4
