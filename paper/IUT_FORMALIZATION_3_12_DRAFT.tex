@@ -3959,11 +3959,26 @@ Here the center is fixed to \(0\).  The source supplies only
 \[
   \|0\|_v \le r_\beta,
 \]
-and \Lean{} constructs the centered source with \(x_\beta=0\).  The remaining
-paper-side payload is therefore narrower: construct the actual local log-shell
-region, identify it with the compact-open valuation ball, derive
-\(\|0\|_v\le r_\beta\) from the local-field valuation normalization and
-radius positivity, and prove the pointwise class-region membership laws.
+and \Lean{} constructs the centered source with \(x_\beta=0\).  The next
+boundary is metric-normalized:
+\[
+\begin{array}{l}
+\texttt{ConcreteValuationBallThetaClassFiberTransportMetricZeroValuationBall}\\
+\texttt{ExactSource}.
+\end{array}
+\]
+It no longer supplies the zero inequality.  Instead it records, for each
+local factor, the normalization
+\[
+  \|x\|_v=\operatorname{dist}(x,0).
+\]
+Together with the already available positivity \(0<r_\beta\), \Lean{} proves
+\(\|0\|_v\le r_\beta\) using \(\operatorname{dist}(0,0)=0\), then projects to
+the zero-centered endpoint.  The remaining paper-side payload is therefore
+narrower: construct the actual local log-shell region, identify it with the
+compact-open valuation ball, connect each valuation-cover factor to the
+existing ultrametric/Haar normalization source that supplies this metric
+valuation law, and prove the pointwise class-region membership laws.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
