@@ -922,10 +922,17 @@ the Frobenioid base volume.  A further representative-section layer,
 now uses the theta-pilot representative section to recover the choice-level
 upper-semi identification: the representative's upper-semi state is transported
 to the constructed Frobenioid base-volume state, and each concrete choice is
-identified with its selected theta-pilot representative.  The remaining payload
-has moved below this section: construct the representative section itself from
-the paper-native log-link and local Frobenioid geometry, rather than providing
-it as source data.
+identified with its selected theta-pilot representative.  This has now been
+lowered to component data by
+\texttt{FrobenioidDivisorColumnComponentRepresentativeConstructedUpperSemiBaseVolume}:
+the finite \(F_\ell\)-label, procession state, local tensor state, and
+non-volume upper-semi data are supplied class-wise, while \Lean{} constructs
+the representative section, inserts the Frobenioid base volume into the
+upper-semi log-volume compatibility datum, derives the direct-summand
+cardinality, and enters the same Step~(xi) source.  The remaining payload has
+moved below these component functions: construct them from the paper-native
+log-link and local Frobenioid geometry and prove the concrete choice
+identification.
 The theta-pilot possible-image boundary has also been tightened.  The
 class-indexed and lattice-key image-law constructors now have
 procession-normalized entry points: instead of receiving an arbitrary
@@ -12406,15 +12413,15 @@ The practical priority order is now:
   log-shell normalization and divisor realization, proves raw vertical
   translation, and upgrades object transport to full labelled local-object
   identity.
-\item Construct the theta-pilot representative section from the same
-  log-Kummer/log-link geometry.  The current \Lean{} boundary no longer takes
-  the choice-level upper-semi equality directly: it derives it from a
-  representative section whose upper-semi representative carries the Frobenioid
-  base-volume compatibility datum.  From there it derives the old calibration
-  equalities, the one-sided \((\Ind3)\) base-volume inequality, the ordinary-copy
-  comparison, finite local log-shell objects, base finite-log-volume
-  equalities, column log-link transport family, and the transported
-  \(ZMod(\ell)\), capsule, classified, and direct bridges.
+\item Construct the component functions below the theta-pilot representative
+  section from the same log-Kummer/log-link geometry.  The current \Lean{}
+  boundary builds the representative section from class-wise finite labels,
+  procession states, local tensor states, and upper-semi non-volume data, then
+  inserts the Frobenioid base-volume compatibility datum and derives the old
+  calibration equalities, the one-sided \((\Ind3)\) base-volume inequality, the
+  ordinary-copy comparison, finite local log-shell objects, base
+  finite-log-volume equalities, column log-link transport family, and the
+  transported \(ZMod(\ell)\), capsule, classified, and direct bridges.
 \item Migrate or retire older certificate-pinned \(\IPL\) review aliases that
   are no longer preferred source surfaces.
 \item Extend the recovered finite-divisor packet-local source from the
