@@ -13082,10 +13082,21 @@ also been factored by
 \]
 Instead of asserting equality of the two selected q-regions directly, Lean now
 derives it from a common theta-pilot-class image family and equality of the
-selected concrete/generated theta-pilot classes.  The remaining source-facing
-obligation is therefore sharper: construct this theta-class calibration and
-the cross-side localized direct-summand, structure-sheaf, and multiplicity
-comparisons from the local log-Kummer/Frobenioid geometry.
+selected concrete/generated theta-pilot classes.  The localized Ob3/Ob4
+comparison has also been factored by
+\[
+\begin{gathered}
+\texttt{IUTStage1Remark395LocalizedVectorBundle}\\
+\texttt{ComponentTransportCalibration}.
+\end{gathered}
+\]
+This common-component transport carries the shared tensor power, determinant
+weights, \(O(-)\) log-volumes, and direct-summand log-volumes after the
+determinant and local-place reindexings; Lean derives the bundle, adjusted
+raw, and weighted adjusted log-volume equalities from these fields.  The
+remaining source-facing obligation is therefore sharper: construct the
+theta-class calibration and the common localized component transport from the
+local log-Kummer/Frobenioid geometry.
 
 The practical priority order is now:
 \begin{enumerate}
