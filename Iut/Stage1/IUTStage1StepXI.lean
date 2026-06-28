@@ -13396,6 +13396,65 @@ theorem fiberTransport_processionShifted_coordinate_eq
         (l := l) transport.thetaPilotLatticeCoordinate_eq
 
 set_option linter.style.longLine false in
+theorem fiberTransport_processionShifted_flLabel_eq
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂) :
+    (processionShiftedChoice (l := l) choice₁ choice₂).coordinate.flLabel =
+      choice₂.coordinate.flLabel :=
+  congrArg (fun coordinate => coordinate.flLabel)
+    (fiberTransport_processionShifted_coordinate_eq (l := l) transport)
+
+set_option linter.style.longLine false in
+theorem fiberTransport_processionShift_translate_flLabel_eq
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂) :
+    zmodLabelTranslate l (processionShift (l := l) choice₁ choice₂)
+        choice₁.coordinate.flLabel =
+      choice₂.coordinate.flLabel := by
+  calc
+    zmodLabelTranslate l (processionShift (l := l) choice₁ choice₂)
+        choice₁.coordinate.flLabel =
+        (processionShiftedChoice (l := l) choice₁ choice₂).coordinate.flLabel := by
+      symm
+      simpa [processionShiftedChoice] using
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate_flLabel
+          (processionShift (l := l) choice₁ choice₂) choice₁
+    _ = choice₂.coordinate.flLabel :=
+      fiberTransport_processionShifted_flLabel_eq (l := l) transport
+
+set_option linter.style.longLine false in
+/--
+Audit form of the finite `F_l` procession shift in a theta-pilot fiber.
+
+It packages the uniqueness of the shift with the explicit label equation
+`j₁ ↦ j₂`.  This is the paper-native finite-label content behind the
+coordinate equality used by the Step (xi) fiber source.
+-/
+theorem fiberTransport_processionShiftLabelAudit
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂) :
+    (∃! t : ZMod l.value,
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate
+        t choice₁).coordinate = choice₂.coordinate) ∧
+      zmodLabelTranslate l (processionShift (l := l) choice₁ choice₂)
+          choice₁.coordinate.flLabel =
+        choice₂.coordinate.flLabel ∧
+      (processionShiftedChoice (l := l) choice₁ choice₂).coordinate.flLabel =
+        choice₂.coordinate.flLabel :=
+  ⟨fiberTransport_existsUnique_processionShift (l := l) transport,
+    fiberTransport_processionShift_translate_flLabel_eq (l := l) transport,
+    fiberTransport_processionShifted_flLabel_eq (l := l) transport⟩
+
+set_option linter.style.longLine false in
 theorem processionShift_ind1Step
     (choice₁ choice₂ :
       IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
