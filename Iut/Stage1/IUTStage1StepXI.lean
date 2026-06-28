@@ -39477,6 +39477,433 @@ theorem sourceLevelTransportPrincipalValuationBallThetaClassFiberTransportValuat
 
 end ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
 
+namespace GeneratedFullLabelQuotientCorridorSource
+
+set_option linter.style.longLine false
+
+variable {coric : Type u} {π : Type v} [Fintype π]
+variable
+  {packageGenerated :
+    IUTStage1SourcePackage source target
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.FullLabelGeneratedChoice
+        (coric := coric) (l := l))}
+variable {recordGenerated : IUTStage1Theorem311MultiradialSourceRecord packageGenerated}
+
+set_option linter.style.longLine false in
+/--
+Generated full-label quotient hull compatibility for Remark 3.9.5.
+
+The quotient images are the equality-quotient possible images constructed by
+the public generated full-label one-sided source.  Thus the Remark 3.9.5 hull
+bridge consumes the generated quotient directly, without returning to the
+ambient concrete-choice representative hypothesis.
+-/
+def toHullCompatibility
+    (sourceData :
+      GeneratedFullLabelQuotientCorridorSource
+        (coric := coric) (π := π) (l := l)
+        (package := packageGenerated) recordGenerated)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target)) :
+    sourceData.toConstruction.typedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+      recordGenerated.thetaPossibleImages.images hullOperator :=
+  { quotientImages := sourceData.toConstruction.equalityQuotientPossibleImages }
+
+set_option linter.style.longLine false in
+/--
+Selected-q Remark 3.9.5 hull/log-volume audit for the generated full-label
+source.
+
+The selected q-region is simultaneously the selected generated quotient
+possible image and the pullback of the corresponding theta-pilot-class image
+along the generated projection to concrete Hodge-theater/log-theta choices.
+-/
+theorem remark395SelectedQHullEndpoint
+    {β : Type v} [Fintype β]
+    (sourceData :
+      GeneratedFullLabelQuotientCorridorSource
+        (coric := coric) (π := π) (l := l)
+        (package := packageGenerated) recordGenerated)
+    (constructedSource :
+      IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) recordGenerated)
+    (qPilotRegion_eq_selectedQRegion :
+      constructedSource.qPilotRegion =
+        sourceData.toConstruction.selectedQRegion.toSet) :
+    let hullCompatibility :=
+      sourceData.toHullCompatibility constructedSource.hullOperator;
+    OneSidedSelectedQHullLogVolumeAudit
+        sourceData.toConstruction constructedSource hullCompatibility
+        qPilotRegion_eq_selectedQRegion ∧
+      constructedSource.qPilotRegion =
+        (sourceData.toConstruction.equalityQuotientPossibleImages.quotientImages.region
+          (sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+            sourceData.selectedQChoice)).toSet ∧
+      constructedSource.qPilotRegion =
+        (sourceData.thetaClassImages.region
+          (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+            (sourceData.generatedSource.fullLabelToConcreteChoice
+              sourceData.selectedQChoice))).toSet ∧
+      constructedSource.qPilotRegion ⊆
+        hullCompatibility.familySource.canonicalHull ∧
+      constructedSource.hullOperator.logVolume constructedSource.qPilotRegion <=
+        packageGenerated.preLedger.thetaSigned := by
+  intro hullCompatibility
+  let audit :=
+    sourceData.toConstruction.oneSidedSelectedQHullLogVolumeAudit
+      constructedSource hullCompatibility qPilotRegion_eq_selectedQRegion
+  have hquot :
+      constructedSource.qPilotRegion =
+        (sourceData.toConstruction.equalityQuotientPossibleImages.quotientImages.region
+          (sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+            sourceData.selectedQChoice)).toSet :=
+    audit.remark395CompatibilityAudit.qPilotRegion_eq_quotient_possibleImage
+  have hclass :
+      constructedSource.qPilotRegion =
+        (sourceData.thetaClassImages.region
+          (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+            (sourceData.generatedSource.fullLabelToConcreteChoice
+              sourceData.selectedQChoice))).toSet := by
+    calc
+      constructedSource.qPilotRegion =
+          sourceData.toConstruction.selectedQRegion.toSet :=
+        qPilotRegion_eq_selectedQRegion
+      _ =
+          (sourceData.thetaClassImages.region
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+              (sourceData.generatedSource.fullLabelToConcreteChoice
+                sourceData.selectedQChoice))).toSet :=
+        congrArg Region.toSet
+          sourceData.audit.selected_region_projects_to_thetaClass
+  exact
+    ⟨audit,
+      hquot,
+      hclass,
+      audit.qPilotRegion_subset_quotientCanonicalHull,
+      audit.qPilotRegion_logVolume_le_thetaSigned⟩
+
+set_option linter.style.longLine false in
+/--
+Constructed Remark 3.9.5 hull/determinant source from the generated full-label
+Theorem 3.11 quotient source.
+
+The q-pilot region is the generated source's selected quotient possible image.
+All record-union containment needed by the hull/determinant constructor is
+therefore supplied by the generated one-sided construction.
+-/
+noncomputable def toRemark395ConstructedHolomorphicHullDeterminantSource
+    {β : Type v} [Fintype β]
+    (sourceData :
+      GeneratedFullLabelQuotientCorridorSource
+        (coric := coric) (π := π) (l := l)
+        (package := packageGenerated) recordGenerated)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (recordThetaPossibleImageUnion recordGenerated))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      packageGenerated.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          hullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        packageGenerated.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      packageGenerated.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordGenerated)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          sourceData.toConstruction.selectedQRegion.toSet
+          sourceData.toConstruction.selectedQRegion_subset_recordUnion
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -packageGenerated.preLedger.qSigned)
+    (normalization : packageGenerated.preLedger.normalization) :
+    IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+      (β := β) recordGenerated :=
+  IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.ofOb3Ob4AdjustedDeterminantSource
+    (record := recordGenerated)
+    operation hullOperation determinantOperation hullOperator
+    sourceData.toConstruction.selectedQRegion.toSet
+    sourceData.toConstruction.selectedQRegion_subset_recordUnion
+    ob3ob4Source compatibility measure_eq_hullLogVolume tensorPower_bound
+    hullDetBridge_eq q_pilot_positive normalization
+
+set_option linter.style.longLine false in
+theorem toRemark395ConstructedHolomorphicHullDeterminantSource_endpoint
+    {β : Type v} [Fintype β]
+    (sourceData :
+      GeneratedFullLabelQuotientCorridorSource
+        (coric := coric) (π := π) (l := l)
+        (package := packageGenerated) recordGenerated)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (recordThetaPossibleImageUnion recordGenerated))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      packageGenerated.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          hullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        packageGenerated.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      packageGenerated.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordGenerated)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          sourceData.toConstruction.selectedQRegion.toSet
+          sourceData.toConstruction.selectedQRegion_subset_recordUnion
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -packageGenerated.preLedger.qSigned)
+    (normalization : packageGenerated.preLedger.normalization) :
+    let constructedSource :=
+      sourceData.toRemark395ConstructedHolomorphicHullDeterminantSource
+        operation hullOperation determinantOperation hullOperator
+        ob3ob4Source compatibility measure_eq_hullLogVolume
+        tensorPower_bound hullDetBridge_eq q_pilot_positive normalization;
+    let hullCompatibility :=
+      sourceData.toHullCompatibility hullOperator;
+    constructedSource.qPilotRegion =
+        sourceData.toConstruction.selectedQRegion.toSet ∧
+      constructedSource.qPilotRegion =
+        (sourceData.toConstruction.equalityQuotientPossibleImages.quotientImages.region
+          (sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+            sourceData.selectedQChoice)).toSet ∧
+      constructedSource.qPilotRegion =
+        (sourceData.thetaClassImages.region
+          (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+            (sourceData.generatedSource.fullLabelToConcreteChoice
+              sourceData.selectedQChoice))).toSet ∧
+      constructedSource.qPilotRegion ⊆
+        recordThetaPossibleImageUnion recordGenerated ∧
+      constructedSource.qPilotRegion ⊆
+        hullCompatibility.familySource.canonicalHull ∧
+      constructedSource.hullOperator.logVolume constructedSource.qPilotRegion <=
+        packageGenerated.preLedger.thetaSigned ∧
+      packageGenerated.preLedger.qSigned <= packageGenerated.preLedger.thetaSigned :=
+  by
+    intro constructedSource hullCompatibility
+    have hselected :
+        constructedSource.qPilotRegion =
+          sourceData.toConstruction.selectedQRegion.toSet := by
+      rfl
+    let selectedAudit :=
+      sourceData.remark395SelectedQHullEndpoint
+        constructedSource hselected
+    exact
+      ⟨hselected,
+        selectedAudit.2.1,
+        selectedAudit.2.2.1,
+        constructedSource.q_subset_recordUnion,
+        selectedAudit.2.2.2.1,
+        selectedAudit.2.2.2.2,
+        constructedSource.qSigned_le_thetaSigned⟩
+
+set_option linter.style.longLine false in
+/--
+Generated full-label endpoint for the global \(C_\Theta\) comparison.
+
+This composes the generated Theorem 3.11 quotient source with the constructed
+Remark 3.9.5 hull/determinant source and the existing global-\(C_\Theta\)
+audit.  The endpoint keeps the generated q-region, quotient possible image,
+and theta-pilot-class pullback visible at the same boundary as the dichotomy.
+-/
+noncomputable def toRemark395ConstructedGlobalCThetaScaleComparisonAudit
+    {β : Type v} [Fintype β]
+    (sourceData :
+      GeneratedFullLabelQuotientCorridorSource
+        (coric := coric) (π := π) (l := l)
+        (package := packageGenerated) recordGenerated)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (recordThetaPossibleImageUnion recordGenerated))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      packageGenerated.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          hullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        packageGenerated.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      packageGenerated.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordGenerated)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          sourceData.toConstruction.selectedQRegion.toSet
+          sourceData.toConstruction.selectedQRegion_subset_recordUnion
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -packageGenerated.preLedger.qSigned)
+    (normalization : packageGenerated.preLedger.normalization)
+    (cTheta : Real)
+    (canonicalCThetaScale_le_cTheta :
+      (sourceData.toRemark395ConstructedHolomorphicHullDeterminantSource
+        operation hullOperation determinantOperation hullOperator
+        ob3ob4Source compatibility measure_eq_hullLogVolume
+        tensorPower_bound hullDetBridge_eq q_pilot_positive
+        normalization).canonicalCThetaScale <= cTheta) :
+    IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.ConstructedGlobalCThetaScaleComparisonAudit
+        (sourceData.toRemark395ConstructedHolomorphicHullDeterminantSource
+          operation hullOperation determinantOperation hullOperator
+          ob3ob4Source compatibility measure_eq_hullLogVolume
+          tensorPower_bound hullDetBridge_eq q_pilot_positive
+          normalization)
+        cTheta :=
+  (sourceData.toRemark395ConstructedHolomorphicHullDeterminantSource
+      operation hullOperation determinantOperation hullOperator
+      ob3ob4Source compatibility measure_eq_hullLogVolume
+      tensorPower_bound hullDetBridge_eq q_pilot_positive
+      normalization)
+    |>.constructedGlobalCThetaScaleComparisonAudit
+      cTheta canonicalCThetaScale_le_cTheta
+
+set_option linter.style.longLine false in
+theorem toRemark395ConstructedGlobalCThetaScaleComparisonAudit_endpoint
+    {β : Type v} [Fintype β]
+    (sourceData :
+      GeneratedFullLabelQuotientCorridorSource
+        (coric := coric) (π := π) (l := l)
+        (package := packageGenerated) recordGenerated)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (recordThetaPossibleImageUnion recordGenerated))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      packageGenerated.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          hullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        packageGenerated.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      packageGenerated.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordGenerated)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          sourceData.toConstruction.selectedQRegion.toSet
+          sourceData.toConstruction.selectedQRegion_subset_recordUnion
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -packageGenerated.preLedger.qSigned)
+    (normalization : packageGenerated.preLedger.normalization)
+    (cTheta : Real)
+    (canonicalCThetaScale_le_cTheta :
+      (sourceData.toRemark395ConstructedHolomorphicHullDeterminantSource
+        operation hullOperation determinantOperation hullOperator
+        ob3ob4Source compatibility measure_eq_hullLogVolume
+        tensorPower_bound hullDetBridge_eq q_pilot_positive
+        normalization).canonicalCThetaScale <= cTheta) :
+    let constructedSource :=
+      sourceData.toRemark395ConstructedHolomorphicHullDeterminantSource
+        operation hullOperation determinantOperation hullOperator
+        ob3ob4Source compatibility measure_eq_hullLogVolume
+        tensorPower_bound hullDetBridge_eq q_pilot_positive normalization;
+    constructedSource.qPilotRegion =
+        sourceData.toConstruction.selectedQRegion.toSet ∧
+      constructedSource.qPilotRegion =
+        (sourceData.toConstruction.equalityQuotientPossibleImages.quotientImages.region
+          (sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+            sourceData.selectedQChoice)).toSet ∧
+      constructedSource.qPilotRegion =
+        (sourceData.thetaClassImages.region
+          (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+            (sourceData.generatedSource.fullLabelToConcreteChoice
+              sourceData.selectedQChoice))).toSet ∧
+      packageGenerated.preLedger.qSigned <= packageGenerated.preLedger.thetaSigned ∧
+      packageGenerated.preLedger.thetaSigned <=
+        cTheta * (-packageGenerated.preLedger.qSigned) ∧
+      constructedSource.hullOperator.logVolume constructedSource.qPilotRegion <=
+        cTheta * (-packageGenerated.preLedger.qSigned) ∧
+      ((packageGenerated.preLedger.qSigned =
+          packageGenerated.preLedger.thetaSigned ∧
+          packageGenerated.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < cTheta) := by
+  intro constructedSource
+  let audit :=
+    sourceData.toRemark395ConstructedGlobalCThetaScaleComparisonAudit
+      operation hullOperation determinantOperation hullOperator
+      ob3ob4Source compatibility measure_eq_hullLogVolume
+      tensorPower_bound hullDetBridge_eq q_pilot_positive normalization
+      cTheta canonicalCThetaScale_le_cTheta
+  let sourceEndpoint :=
+    sourceData.toRemark395ConstructedHolomorphicHullDeterminantSource_endpoint
+      operation hullOperation determinantOperation hullOperator
+      ob3ob4Source compatibility measure_eq_hullLogVolume
+      tensorPower_bound hullDetBridge_eq q_pilot_positive normalization
+  exact
+    ⟨sourceEndpoint.1,
+      sourceEndpoint.2.1,
+      sourceEndpoint.2.2.1,
+      audit.qSigned_le_thetaSigned,
+      audit.thetaSigned_le_globalCTheta_absLogQ,
+      audit.sourceBridge_to_globalCTheta_chain,
+      audit.dichotomy⟩
+
+end GeneratedFullLabelQuotientCorridorSource
+
 set_option linter.style.longLine false in
 /--
 `F_l` procession transition through the typed equality quotient and
