@@ -3896,11 +3896,8 @@ and the two valuation-ball containments
 \(y\in P_{\Theta,\beta}\), proves \(x_\beta(y)\in I_\beta\) and
 \(\mathrm{realization}(x_\beta(y))=y\), derives the valuation-radius inequality
 from \(I_\beta\subseteq \{x:\|x\|_v\le r_\beta\}\), and then reuses the
-local-chart, pointwise, exact, and valuation-norm-gauge routes.  Thus the
-remaining paper-side payload is no longer an existential lift, a supplied
-coordinate, a set equality field, or a raw norm-bound field.
-The preferred lower boundary now replaces these four containments by the two
-equalities
+local-chart, pointwise, exact, and valuation-norm-gauge routes.
+The next boundary replaces these four containments by the two equalities
 \[
 \begin{array}{l}
 \texttt{ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellExactSource}.
@@ -3914,9 +3911,18 @@ It requires
 \]
 and \Lean{} derives the previous log-shell image source, the chosen local
 coordinate, the valuation-radius bound, and the same exact-\(\Xi(P_B)\)/global
-\(C_\Theta\) audit.  The remaining paper-side payload is therefore the
-construction of the actual local log-shell region, these two identifications,
-and the pointwise class-region membership laws.
+\(C_\Theta\) audit.  The preferred lower boundary is now
+\[
+\begin{array}{l}
+\texttt{ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellNonemptyExactSource}.
+\end{array}
+\]
+It replaces the supplied totalizing coordinate by the nonemptiness statement
+\(I_\beta\ne\varnothing\); \Lean{} chooses the auxiliary coordinate from this
+nonemptiness and then projects to the equality-backed exact source.  The
+remaining paper-side payload is therefore the construction of the actual local
+log-shell region, its nonemptiness, the two identifications above, and the
+pointwise class-region membership laws.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
