@@ -33021,6 +33021,260 @@ end ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedFamilyUnionSo
 
 set_option linter.style.longLine false in
 /--
+Constructed theta-region-defined valuation-ball cover.
+
+This is the construction form of the previous theta-region-defined family
+source.  Instead of receiving a valuation cover and a proof that its
+`possibleRegion` field is the transported theta-region family, this source
+builds the valuation-ball/Haar tensor-packet cover with that
+`possibleRegion` field fixed by construction.  The only remaining hull input
+is the Remark 3.9.5 statement for the corresponding theta-region family:
+the holomorphic hull of the theta-region union is the valuation-ball
+direct-product-cell union.
+-/
+structure ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedValuationCoverSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    {η : Type z} {K : Type x}
+    {β : Type v} {γ : Type w}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ] where
+  hullSystem : IUTStage1Remark395HolomorphicHullSystem (Point target)
+  localizedCalibration :
+    β -> IUTStage1LocalizedHullRegionVectorBundleCalibrationSource
+      hullSystem η γ
+  anchor : β
+  positiveTensorPower : Nat
+  tensor_power_pos : 0 < positiveTensorPower
+  factorValuationCalibration :
+    ∀ index : β, ∀ place : γ,
+      IUTStage1ValuationBallVectorBundleFactorCalibrationSource
+        (Point target) η K γ hullSystem (localizedCalibration index) place
+  localizedRegion_eq_valuationBallDirectProductCell :
+    ∀ index : β,
+      (localizedCalibration index).localizedRegion =
+        { point : Point target |
+          ∀ place : γ,
+            point ∈ (factorValuationCalibration index place).region }
+  localFactor_separates_index :
+    ∀ ⦃index₁ index₂ : β⦄,
+      index₁ ≠ index₂ ->
+        ∃ place : γ,
+          Disjoint ((factorValuationCalibration index₁ place).region)
+            ((factorValuationCalibration index₂ place).region)
+  familyHull_eq_thetaRegionDirectProductCellUnion :
+    hullSystem.phi
+        (⋃ thetaClass :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+            (coric := coric),
+          (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+            thetaClass).toSet) =
+      ⋃ index,
+        { point : Point target |
+          ∀ place : γ,
+            point ∈ (factorValuationCalibration index place).region }
+  cellValuationBallTensor :
+    β -> IUTStage1ValuationBallTensorProductDirectSumSource
+      (Point target) η K γ hullSystem
+  cellValuationBall_factor_eq_calibration :
+    ∀ index : β, ∀ place : γ,
+      (cellValuationBallTensor index).valuationBallFactor place =
+        (factorValuationCalibration index place).valuationBallFactor
+  finiteAdditive :
+    IUTStage1FiniteAdditiveHullLogVolumeSource hullSystem β
+
+namespace ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedValuationCoverSource
+
+variable
+  {sourceData :
+    ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+      (source := source) (target := target) (l := l)
+      recordConcrete indData}
+  {η : Type z} {K : Type x}
+  {β : Type v} {γ : Type w}
+  [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+  [Fintype β] [Fintype γ]
+
+set_option linter.style.longLine false in
+noncomputable def toValuationCover
+    (coverSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedValuationCoverSource
+        sourceData (η := η) (K := K) (β := β) (γ := γ)) :
+    IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+      (Point target)
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric))
+      η K β γ where
+  hullSystem := coverSource.hullSystem
+  possibleRegion := fun thetaClass =>
+    (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+      thetaClass).toSet
+  localizedCalibration := coverSource.localizedCalibration
+  anchor := coverSource.anchor
+  positiveTensorPower := coverSource.positiveTensorPower
+  tensor_power_pos := coverSource.tensor_power_pos
+  factorValuationCalibration := coverSource.factorValuationCalibration
+  localizedRegion_eq_valuationBallDirectProductCell :=
+    coverSource.localizedRegion_eq_valuationBallDirectProductCell
+  localFactor_separates_index :=
+    coverSource.localFactor_separates_index
+  familyHull_eq_valuationBallDirectProductCellUnion := by
+    simpa using coverSource.familyHull_eq_thetaRegionDirectProductCellUnion
+  cellValuationBallTensor := coverSource.cellValuationBallTensor
+  cellValuationBall_factor_eq_calibration :=
+    coverSource.cellValuationBall_factor_eq_calibration
+  finiteAdditive := coverSource.finiteAdditive
+
+set_option linter.style.longLine false in
+theorem possibleRegion_eq_fiberTransportThetaRegion
+    (coverSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedValuationCoverSource
+        sourceData (η := η) (K := K) (β := β) (γ := γ)) :
+    coverSource.toValuationCover.possibleRegion =
+      fun thetaClass =>
+        (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+          thetaClass).toSet :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (coverSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedValuationCoverSource
+        sourceData (η := η) (K := K) (β := β) (γ := γ)) :
+    coverSource.toValuationCover.possibleRegion =
+        (fun thetaClass =>
+          (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+            thetaClass).toSet) ∧
+      coverSource.toValuationCover.familyHull_eq_valuationBallDirectProductCellUnion =
+        coverSource.familyHull_eq_thetaRegionDirectProductCellUnion ∧
+      (∀ index : β, ∀ place : γ,
+        (coverSource.toValuationCover.valuationBallFactor index place).realizedRegion
+            (coverSource.toValuationCover.valuationBallFactor index place).compactOpenSubset =
+          coverSource.toValuationCover.localFactorRegion index place) ∧
+      coverSource.toValuationCover.hullSystem.logVolume
+          coverSource.toValuationCover.directProductCellUnion =
+        coverSource.toValuationCover.calibratedCellLogVolumeSum :=
+  ⟨rfl,
+    rfl,
+    by
+      intro index place
+      exact
+        coverSource.toValuationCover.valuationBallFactor_region_eq_localFactorRegion
+          index place,
+    coverSource.toValuationCover.directProductCoverLogVolume_eq_calibratedCellSum⟩
+
+end ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedValuationCoverSource
+
+set_option linter.style.longLine false in
+/--
+Principal product-hull version of the theta-region-defined valuation cover.
+
+This packages the constructed theta-region-defined valuation cover together
+with the principal product-hull system of Remark 3.9.5.  Projection constructs
+the ordinary `IUTStage1Remark395PrincipalValuationBallProductHullCoverSource`,
+whose valuation cover now has the transported theta-region family as its
+`possibleRegion` field by `rfl`.
+-/
+structure ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    {η : Type z} {K : Type x}
+    {β : Type v} {γ : Type w} {Λ : Type max u v w x z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ] where
+  valuationCoverSource :
+    ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedValuationCoverSource
+      sourceData (η := η) (K := K) (β := β) (γ := γ)
+  principalHullSource :
+    IUTStage1Remark395PrincipalProductHullSystemSource (Point target) Λ
+  hullSystem_eq_principal :
+    valuationCoverSource.hullSystem =
+      principalHullSource.toHolomorphicHullSystem
+  localIntegerRegion_eq_anchorCell :
+    principalHullSource.localIntegerRegion =
+      { point : Point target |
+        ∀ place : γ,
+          point ∈
+            (valuationCoverSource.factorValuationCalibration
+              valuationCoverSource.anchor place).region }
+
+set_option linter.style.longLine false
+
+namespace ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource
+
+variable
+  {sourceData :
+    ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+      (source := source) (target := target) (l := l)
+      recordConcrete indData}
+  {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+  {selectedQChoice :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+  {η : Type z} {K : Type x}
+  {β : Type v} {γ : Type w} {Λ : Type max u v w x z}
+  [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+  [Fintype β] [Fintype γ]
+
+set_option linter.style.longLine false in
+noncomputable def toPrincipalValuationBallProductHullCoverSource
+    (principalSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource
+        sourceData (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+      (Point target)
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric))
+      η K β γ Λ where
+  valuationCover := principalSource.valuationCoverSource.toValuationCover
+  principalHullSource := principalSource.principalHullSource
+  hullSystem_eq_principal := principalSource.hullSystem_eq_principal
+  localIntegerRegion_eq_anchorCell := by
+    simpa [
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedValuationCoverSource.toValuationCover,
+      IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource.directProductCell,
+      IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource.localFactorRegion]
+      using principalSource.localIntegerRegion_eq_anchorCell
+
+set_option linter.style.longLine false in
+def toThetaRegionDefinedFamilyUnionSource
+    (principalSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource
+        sourceData (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedFamilyUnionSource
+      sourceData gluingTorsor selectedQChoice
+      principalSource.toPrincipalValuationBallProductHullCoverSource where
+  possibleRegion_eq_fiberTransportThetaRegion := rfl
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (principalSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource
+        sourceData (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    principalSource.toPrincipalValuationBallProductHullCoverSource.valuationCover.possibleRegion =
+        (fun thetaClass =>
+          (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+            thetaClass).toSet) ∧
+      principalSource.toPrincipalValuationBallProductHullCoverSource.valuationCover.hullSystem =
+        principalSource.principalHullSource.toHolomorphicHullSystem ∧
+      (∀ thetaClass :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric),
+        (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+          thetaClass).toSet =
+          principalSource.toPrincipalValuationBallProductHullCoverSource.valuationCover.possibleRegion
+            thetaClass) :=
+  ⟨rfl, principalSource.hullSystem_eq_principal, by
+    intro thetaClass
+    rfl⟩
+
+end ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource
+
+set_option linter.style.longLine false in
+/--
 Hull-fixed provenance for the selected principal valuation-ball hull.
 
 The principal hull selected by the Remark 3.9.5 valuation-ball source is the

@@ -4027,11 +4027,23 @@ There the valuation-cover possible-region family is identified once with the
 transported theta-region family; evaluating this family equality at a
 theta-pilot class gives the previous classwise comparison.  The corresponding
 pointwise source then reuses this family-level construction when deriving
-valuation-cover membership.  The remaining paper-side payload is therefore
-more precise: construct the valuation cover with this theta-region-defined
-possible-image family from the concrete log-theta lattice and
-Remark~3.9.5 local valuation-ball data, and keep the compact-open
-ultrametric/Haar normalization attached to each local factor.
+valuation-cover membership.  The construction boundary has now moved inside
+the valuation cover:
+\[
+\begin{array}{l}
+\texttt{ConcreteValuationBallThetaClassFiberTransportThetaRegionDefined}\\
+\texttt{ValuationCoverSource}
+\end{array}
+\]
+builds the Remark~3.9.5 valuation-ball/Haar tensor-packet cover with
+\(P_\beta\) fixed definitionally to the transported theta-region family.  Its
+principal product-hull wrapper projects to the ordinary principal
+valuation-ball source, and the previous family-level equality is then
+\texttt{rfl}.  The remaining paper-side payload is the actual
+Remark~3.9.5 hull statement for this theta-region family: the holomorphic hull
+of the transported theta-region union must be identified with the valuation
+direct-product-cell union, while the compact-open ultrametric/Haar
+normalization stays attached to each local factor.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
