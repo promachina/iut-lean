@@ -6699,6 +6699,29 @@ variable
   {state₁ state₂ : IUTStage1LocalTensorDirectSummandPacketState kind}
 
 set_option linter.style.longLine false in
+/--
+Construct the source-side symmetry-label transport from its three paper-side
+components: the source packet label, the target packet label, and transport of
+the target packet's direct-summand symmetry kind back to the source kind.
+-/
+def ofLabelSources
+    (sourceLabel : SymmetryLabelSource state₁)
+    (targetLabel : SymmetryLabelSource state₂)
+    (kindTransport : SymmetryKindTransport state₁ state₂) :
+    SymmetryLabelTransportSource state₁ state₂ :=
+  { source_symmetry_eq_sourceKind := sourceLabel.symmetry_eq,
+    target_symmetry_eq_sourceKind := by
+      calc
+        state₂.packetState.tensorState.symmetry =
+            state₂.summandFamily.symmetryKind.toLocalTensorSymmetryId :=
+          targetLabel.symmetry_eq
+        _ = state₁.summandFamily.symmetryKind.toLocalTensorSymmetryId :=
+          congrArg IUTStage1TensorSummandSymmetryKind.toLocalTensorSymmetryId
+            kindTransport.target_symmetryKind_eq_source,
+    target_symmetryKind_eq_source :=
+      kindTransport.target_symmetryKind_eq_source }
+
+set_option linter.style.longLine false in
 theorem target_symmetry_eq_targetKind
     (source : SymmetryLabelTransportSource state₁ state₂) :
     state₂.packetState.tensorState.symmetry =
