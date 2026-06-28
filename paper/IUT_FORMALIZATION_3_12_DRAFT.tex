@@ -13228,9 +13228,21 @@ direct-summand part has now been lowered by
 \]
 This source starts from concrete and generated valuation-ball factor-calibrated
 Haar tensor-packet covers.  It identifies tensor powers, determinant weights,
-structure-sheaf log-volumes, and matched normalized Haar log-volumes of the
-valuation balls; the direct-summand equality is then derived from the
-valuation-ball factor calibration rather than supplied as a bare real equality.
+structure-sheaf log-volumes, and a common normalized Haar log-volume family for
+the matched valuation balls; the direct-summand equality is then derived from
+the valuation-ball factor calibration rather than supplied as a bare real
+equality.  The preferred boundary is now one step sharper:
+\[
+\begin{gathered}
+\texttt{IUTStage1Remark395MatchedValuationBall}\\
+\texttt{LocalizedVectorBundleComponentTransportSource}.
+\end{gathered}
+\]
+Here the common normalized-Haar family is not supplied.  The source states
+equality of each concrete normalized Haar log-volume with the generated
+normalized Haar log-volume obtained by determinant and local-place reindexing;
+Lean chooses the concrete value as the common value and constructs the older
+valuation-ball component transport source internally.
 The older factored localized hull-cover source
 \[
 \begin{gathered}
