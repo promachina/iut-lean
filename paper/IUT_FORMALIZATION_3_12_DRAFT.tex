@@ -13094,8 +13094,18 @@ This common-component transport carries the shared tensor power, determinant
 weights, \(O(-)\) log-volumes, and direct-summand log-volumes after the
 determinant and local-place reindexings; Lean derives the bundle, adjusted
 raw, and weighted adjusted log-volume equalities from these fields.  The
-remaining source-facing obligation is therefore sharper: construct the
-theta-class calibration and the common localized component transport from the
+preferred boundary is now the factored localized hull-cover source
+\[
+\begin{gathered}
+\texttt{ConcreteHodgeTheaterLogThetaGeneratedFullLabel}\\
+\texttt{FactoredLocalizedHullCoverUpperRayCalibrationSource}.
+\end{gathered}
+\]
+It retains the concrete/generated hull-cover objects, common hull system,
+determinant-source identifications, and index transports, but reconstructs the
+older localized hull-cover calibration from the theta-class q-region
+calibration and the component transport.  The remaining source-facing
+obligation is therefore sharper: construct those two factored inputs from the
 local log-Kummer/Frobenioid geometry.
 
 The practical priority order is now:
