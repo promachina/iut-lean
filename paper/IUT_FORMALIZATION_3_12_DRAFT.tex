@@ -996,40 +996,28 @@ The experiment surface now exposes this generated route as
 This audit keeps the generated full-label quotient evidence next to the
 Remark~3.9.5 q-region equalities and the global \(C_\Theta\) dichotomy.  It does
 not by itself identify the generated-choice package with the finite-divisor
-vertical-\(IQ\) package; that handoff is now treated separately at the finite
-theta-class fiber.  The strongest review-facing fiber endpoint is now
+vertical-\(IQ\) package; that handoff is treated at the finite theta-class
+fiber.  At this fiber boundary, the raw tensor-label endpoint is now only an
+intermediate audit.  The stronger public route passes through the transported
+packet-label and retained label-transport endpoints, culminating in
 \[
 \begin{array}{l}
 \texttt{generatedFullLabelFiniteDivisorVerticalIQFiniteThetaClassFiber}\\
-\quad\texttt{ComponentProcessionNonarchimedeanIsmRawTensorLabelSourceImageLawSource}\\
-\quad\texttt{\_calibratedLocalTensor\_identifiedInd2ActionPacket\_compact\_cThetaDichotomy}.
+\quad\texttt{ComponentProcessionNonarchimedeanIsmLabelTransportSourceImageLawSource}\\
+\quad\texttt{\_transportedPacketLabel\_cThetaDichotomy}.
 \end{array}
 \]
-It constructs finite packet representatives from component Hodge/log-theta
-data, but no longer assumes same-theta-class record-image equality or an
-ambient generated relation.  Instead, same-theta-class finite packets must
-produce an explicit intermediate finite packet, a finite procession
-automorphism from the source packet to that midpoint, a retained
-source-level nonarchimedean \(\mathrm{Ism}\) action step, raw midpoint/target
-local tensor \(\mathrm{Ism}\) labels, and the target packet's
-nonarchimedean \(\mathrm{Ism}\) summand kind.  \Lean{} constructs the
-midpoint/target calibrated local tensor packets from these raw tensor-label
-laws, then projects packet-label data, constructs the Theorem~3.11
-label-transport source step, builds the source-level \(\Ind2\) packet-action
-source, and identifies the retained source action with the resulting
-packet-action witness.  The endpoint exposes the raw tensor-label, calibrated,
-packet-label, and identified packet-action witnesses before forgetting to the
-older packet-action, transported-packet-label, source-action, and generic local
-direct-summand interfaces.  It then packages the ordered
-\((\Ind1)\)-then-\((\Ind2)\) datum as the previous two-step transport, derives
-the generated \((\Ind1),(\Ind2)\) relation, embeds it into the place-audited
-quotient, derives record-image invariance from quotient invariance, and
-transports the existing \(C_\Theta\) dichotomy to the finite package.  Thus the
-remaining payload at this boundary is now the paper-native construction of the
-component representatives, midpoint packet, procession leg, source-level
-nonarchimedean \(\mathrm{Ism}\) action step, raw local tensor
-\(\mathrm{Ism}\)-label equalities, target summand-kind law, and signed
-pre-ledger equalities from local Frobenioid/log-link geometry.
+Thus same-theta-class finite packets are no longer compared by a primitive
+record-image equality or by an ambient quotient hypothesis.  Lean builds the
+comparison through an explicit midpoint packet, a procession leg, a retained
+nonarchimedean \(\mathrm{Ism}\) label-transport source step, the corresponding
+transported packet-label datum, the generated \((\Ind1,\Ind2)\) relation, the
+place-audited quotient relation, record-image invariance, selected q-region
+equalities, and finally the finite \(C_\Theta\) dichotomy.  The remaining
+payload at this boundary is the paper-native construction of these midpoint,
+procession, and nonarchimedean \(\mathrm{Ism}\) label-transport witnesses,
+together with the signed pre-ledger equalities from local
+Frobenioid/log-Kummer geometry.
 The theta-pilot possible-image boundary has also been tightened.  The
 class-indexed and lattice-key image-law constructors now have
 procession-normalized entry points: instead of receiving an arbitrary
@@ -12692,28 +12680,19 @@ is a relation generated only by finite \((\Ind1)\) procession transports and
 \((\Ind2)\) local direct-summand actions.  Lean embeds this
 \((\Ind1,\Ind2)\)-relation into the existing place-audited quotient and
 explicitly discharges the impossible \((\Ind3)\) equality-generator case.
-This has now been sharpened once more at the component boundary.  The preferred
-source supplies an explicit midpoint finite packet, an ordered \((\Ind1)\)
-procession leg, the retained nonarchimedean \(\mathrm{Ism}\) action source for
-the post-procession \((\Ind2)\) leg, raw midpoint/target local tensor
-\(\mathrm{Ism}\) labels, and the target packet's nonarchimedean
-\(\mathrm{Ism}\) summand-kind law.  \Lean{} constructs the midpoint and target
-calibrated local tensor packets from these raw tensor-label laws, projects
-packet-label data, derives the label-transport source step, constructs the
-source-level nonarchimedean \(\Ind2\) packet-action source, and identifies the
-retained action source with that packet-action witness.  It then derives the
-transported packet-label step, direct-summand kind transport, tensor-label
-source, label-transport audit, and source-level \((\Ind2)\) packet/action audit
-before deriving the two-step transport, generated \((\Ind1,\Ind2)\) relation,
-quotient relation, record-image equality, selected q-region equalities, and
-Corollary~3.12 dichotomy.  The compact endpoint records the raw tensor-label
-source together with the derived calibrated, packet-label, and identified
-packet-action witnesses.
-The remaining payload is to construct the audited packet representatives, midpoint
-packets, procession legs, source-level nonarchimedean \(\mathrm{Ism}\) action
-steps, raw local tensor \(\mathrm{Ism}\)-label equalities, target summand-kind
-laws, and signed pre-ledger equalities from the paper-native vertical
-log-Kummer/Frobenioid geometry.
+This has now been sharpened once more at the component boundary.  The raw
+tensor-label and calibrated-packet endpoints remain as audit projections, but
+the preferred fiber route consumes the retained nonarchimedean
+\(\mathrm{Ism}\) label-transport source step and derives the transported
+packet-label datum before entering the two-step \((\Ind1,\Ind2)\) quotient
+argument.  Thus the same endpoint exposes the midpoint/procession witness, the
+label transport, the transported packet-label witness, the generated
+\((\Ind1,\Ind2)\) relation, quotient relation, record-image equality, selected
+q-region equalities, and Corollary~3.12 dichotomy.  The remaining payload is to
+construct the audited packet representatives, midpoint packets, procession
+legs, nonarchimedean \(\mathrm{Ism}\) label-transport witnesses, and signed
+pre-ledger equalities from the paper-native vertical log-Kummer/Frobenioid
+geometry.
 
 The practical priority order is now:
 \begin{enumerate}
@@ -12725,12 +12704,11 @@ The practical priority order is now:
   record-image witness is derived from an \((\Ind1,\Ind2)\)-backed fiberwise
   audited-packet representative finite theta-class image law.  What remains is
   to construct the audited packet representatives, the same-theta-class
-  midpoint packet, the ordered \((\Ind1)\) procession leg, the source-level
-  nonarchimedean \(\mathrm{Ism}\) action, the raw local tensor
-  \(\mathrm{Ism}\)-label equalities and target summand-kind laws that generate
-  the calibrated, packet-label, and \((\Ind2)\) packet-action witnesses, and
-  signed q/theta pre-ledger equalities from paper-native finite divisors, local
-  objects, and log-volume comparison data.
+  midpoint packet, the ordered \((\Ind1)\) procession leg, the
+  nonarchimedean \(\mathrm{Ism}\) label-transport witness for the
+  post-procession \((\Ind2)\) leg, and signed q/theta pre-ledger equalities
+  from paper-native finite divisors, local objects, and log-volume comparison
+  data.
 \item Construct the finite divisor-component columns--local object, prime
   multiplicities, prime degrees, and unit log-volume--and construct the
   labelled vertical object-transport records from the paper-native vertical
