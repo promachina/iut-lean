@@ -12488,13 +12488,35 @@ pre-ledger variables.  Thus the package-identification step has been made a
 kernel-checked boundary; what remains is to construct its equality witnesses
 from the paper-native local log-Kummer/Frobenioid data.
 
+This boundary has now been sharpened once more.  The finite target-region
+equality is no longer a separate handoff witness: Lean proves
+\[
+\texttt{recordThetaPossibleImage\_eq\_targetRegion\_toSet}
+\]
+from the definition of a Theorem~3.11 source record.  The smaller source object
+\[
+\texttt{GeneratedFullLabelFiniteDivisorVerticalIQRecordImageRealization}
+\]
+therefore asks only for equality of the signed q/theta pre-ledger quantities and
+for equality between the finite selected record image and the generated selected
+record image.  Its projection
+\[
+\texttt{GeneratedFullLabelFiniteDivisorVerticalIQRecordImageRealization.toHandoff}
+\]
+constructs the full package handoff, and
+\[
+\texttt{generatedFullLabelFiniteDivisorVerticalIQRecordImageRealization\_cThetaDichotomy}
+\]
+derives the finite-divisor dichotomy from this smaller realization source.
+
 The practical priority order is now:
 \begin{enumerate}
 \item Construct the source-side witnesses for the generated-full-label to
-  finite-divisor vertical-\(IQ\) handoff.  The handoff record and dichotomy
-  transport are now implemented; what remains is to prove, from the finite
-  divisor packet choice data, the exact q-region, log-volume, and pre-ledger
-  comparison equalities consumed by the handoff.
+  finite-divisor vertical-\(IQ\) handoff.  The handoff record, record-image
+  realization source, and dichotomy transport are now implemented; what remains
+  is to prove, from the finite-divisor packet choice data, equality of the
+  finite selected Theorem~3.11 record image with the generated selected record
+  image and equality of the signed q/theta pre-ledger quantities.
 \item Construct the finite divisor-component columns--local object, prime
   multiplicities, prime degrees, and unit log-volume--and construct the
   labelled vertical object-transport records from the paper-native vertical
