@@ -888,8 +888,17 @@ transport.  \Lean{} constructs the theta copy by normalizing the
 local Frobenius reading equal to the extension degree, proves the normalized
 log-shell reading is \(1\), and derives the full labelled local-object equality
 from object transport plus the column realified-log-volume translation.  The
-remaining payload is therefore sharper: construct the ordinary divisor column,
-the object-level labelled log-link transport, and the \((\Ind3)\) source/target
+ordinary column has now also been lowered by
+\texttt{FiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource}.
+Instead of receiving a realified divisor column and three realization laws, the
+source receives finite divisor-monoid data in each vertical column--prime
+multiplicities, prime degrees, and the finite degree-sum identity against the
+column Frobenioid/log-Kummer degree object.  \Lean{} constructs the ordinary
+divisor column using the compatibility object's local object and unit
+log-volume; the object and unit realization laws become definitional, and the
+divisor-degree realization is exactly the finite sum formula.  The remaining
+payload is therefore sharper: construct the finite divisor-monoid columns, the
+object-level labelled log-link transport, and the \((\Ind3)\) source/target
 comparisons directly from the paper's vertical log-Kummer/log-link geometry.
 The theta-pilot possible-image boundary has also been tightened.  The
 class-indexed and lattice-key image-law constructors now have
@@ -12360,12 +12369,12 @@ are migrated or retired.
 
 The practical priority order is now:
 \begin{enumerate}
-\item Construct the ordinary divisor column, its component realization
-  equalities--local object, divisor degree, and unit log-volume--and the
-  object-level labelled log-link transport from the paper-native vertical
-  log-Kummer correspondences.  The current Lean boundary now constructs the
-  normalized theta and log-shell Example~3.5 copies from this ordinary column,
-  derives log-shell normalization, derives log-shell divisor realization,
+\item Construct the finite divisor-monoid columns--prime multiplicities, prime
+  degrees, and the finite degree-sum law--together with object-level labelled
+  log-link transport from the paper-native vertical log-Kummer correspondences.
+  The current Lean boundary constructs the ordinary realified divisor column
+  from these finite data, then constructs the normalized theta and log-shell
+  Example~3.5 copies, derives log-shell normalization and divisor realization,
   proves raw vertical translation, and upgrades object transport to full
   labelled local-object identity.
 \item Construct the source/target base-realified \((\Ind3)\) comparisons at

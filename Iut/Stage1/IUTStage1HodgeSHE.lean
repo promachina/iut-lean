@@ -2648,6 +2648,173 @@ theorem audit
 
 end IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource
 
+set_option linter.style.longLine false in
+/--
+Finite-divisor realized normalized Example 3.5 column log-Kummer source.
+
+This lowers
+`IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource`
+at the ordinary divisor-column boundary.  The source no longer supplies an
+ordinary realified divisor column together with its object/degree/unit
+realization laws.  Instead it supplies the finite divisor-monoid data in each
+vertical column--prime multiplicities and prime degrees--plus the degree-sum
+law identifying that divisor with the column Frobenioid/log-Kummer degree
+object.  Lean constructs the ordinary divisor column using the compatibility
+object and unit log-volume, so the local object and unit realization laws are
+definitional, and the divisor-degree law is the supplied finite sum formula.
+-/
+structure IUTStage1FiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource
+    (π : Type u) [Fintype π] (l : PrimeGeFive) where
+  compatibility : IUTStage1ColumnFrobenioidLogKummerCompatibility
+  primeMultiplicityColumn : Int -> π -> Nat
+  primeDegreeColumn : Int -> π -> Int
+  divisorDegree_eq_compat :
+    ∀ m : Int,
+      (∑ p : π,
+          (primeMultiplicityColumn m p : Int) * primeDegreeColumn m p) =
+        (compatibility.frobenioidObject m).divisorDegree
+  logShellExtensionDegree : Int -> Nat
+  logShellExtensionDegree_pos :
+    ∀ m : Int, 0 < logShellExtensionDegree m
+  normalization : IUTStage1LogVolumeNormalization
+  baseColumn : Int
+  labelColumnShift : ZMod l.value -> Int
+  label_compat_object_eq_base :
+    ∀ label : ZMod l.value,
+      (compatibility.frobenioidObject
+        (baseColumn + labelColumnShift label)).object =
+      (compatibility.frobenioidObject baseColumn).object
+
+namespace IUTStage1FiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource
+
+variable {π : Type u} [Fintype π] {l : PrimeGeFive}
+
+def ordinaryColumn
+    (source :
+      IUTStage1FiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource π l)
+    (m : Int) :
+    IUTStage1FiniteRealifiedFrobenioidDivisorSource π :=
+  { object := (source.compatibility.frobenioidObject m).object,
+    primeMultiplicity := source.primeMultiplicityColumn m,
+    primeDegree := source.primeDegreeColumn m,
+    unitLogVolume := (source.compatibility.frobenioidObject m).unitLogVolume }
+
+theorem ordinary_object_eq_compat
+    (source :
+      IUTStage1FiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource π l)
+    (m : Int) :
+    (source.ordinaryColumn m).object =
+      (source.compatibility.frobenioidObject m).object :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem ordinary_divisorDegree_eq_compat
+    (source :
+      IUTStage1FiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource π l)
+    (m : Int) :
+    (source.ordinaryColumn m).divisorDegree =
+      (source.compatibility.frobenioidObject m).divisorDegree := by
+  simpa [ordinaryColumn,
+    IUTStage1FiniteRealifiedFrobenioidDivisorSource.divisorDegree] using
+    source.divisorDegree_eq_compat m
+
+theorem ordinary_unitLogVolume_eq_compat
+    (source :
+      IUTStage1FiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource π l)
+    (m : Int) :
+    (source.ordinaryColumn m).unitLogVolume =
+      (source.compatibility.frobenioidObject m).unitLogVolume :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem label_logLink_object_eq_base
+    (source :
+      IUTStage1FiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource π l)
+    (label : ZMod l.value) :
+    (source.ordinaryColumn
+        (source.baseColumn + source.labelColumnShift label)).object =
+      (source.ordinaryColumn source.baseColumn).object := by
+  simpa [ordinaryColumn] using source.label_compat_object_eq_base label
+
+set_option linter.style.longLine false in
+def toNormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource
+    (source :
+      IUTStage1FiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource π l) :
+    IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l :=
+  { compatibility := source.compatibility,
+    ordinaryColumn := source.ordinaryColumn,
+    logShellExtensionDegree := source.logShellExtensionDegree,
+    logShellExtensionDegree_pos := source.logShellExtensionDegree_pos,
+    normalization := source.normalization,
+    baseColumn := source.baseColumn,
+    labelColumnShift := source.labelColumnShift,
+    ordinary_object_eq_compat := source.ordinary_object_eq_compat,
+    ordinary_divisorDegree_eq_compat := source.ordinary_divisorDegree_eq_compat,
+    ordinary_unitLogVolume_eq_compat := source.ordinary_unitLogVolume_eq_compat,
+    label_logLink_object_eq_base := source.label_logLink_object_eq_base }
+
+set_option linter.style.longLine false in
+noncomputable def toSplitCopiesLocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource
+    (source :
+      IUTStage1FiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource π l) :
+    IUTStage1SplitCopiesLocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l :=
+  source.toNormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource
+    |>.toSplitCopiesLocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource
+
+set_option linter.style.longLine false in
+/--
+Audit endpoint for constructing the ordinary divisor column from finite divisor
+monoid data before applying the normalized Example 3.5 copy construction.
+-/
+structure Audit
+    (source :
+      IUTStage1FiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource π l) :
+    Prop where
+  normalized_example35_audit :
+    IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource.Audit
+      source.toNormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource
+  ordinary_object_eq_compat :
+    ∀ m : Int,
+      (source.ordinaryColumn m).object =
+        (source.compatibility.frobenioidObject m).object
+  ordinary_divisorDegree_eq_compat :
+    ∀ m : Int,
+      (source.ordinaryColumn m).divisorDegree =
+        (source.compatibility.frobenioidObject m).divisorDegree
+  ordinary_unitLogVolume_eq_compat :
+    ∀ m : Int,
+      (source.ordinaryColumn m).unitLogVolume =
+        (source.compatibility.frobenioidObject m).unitLogVolume
+  label_logLink_object_eq_base :
+    ∀ label : ZMod l.value,
+      (source.ordinaryColumn
+          (source.baseColumn + source.labelColumnShift label)).object =
+        (source.ordinaryColumn source.baseColumn).object
+  ordinary_column_eq_constructed :
+    ∀ m : Int,
+      source.ordinaryColumn m =
+        { object := (source.compatibility.frobenioidObject m).object,
+          primeMultiplicity := source.primeMultiplicityColumn m,
+          primeDegree := source.primeDegreeColumn m,
+          unitLogVolume :=
+            (source.compatibility.frobenioidObject m).unitLogVolume }
+
+theorem audit
+    (source :
+      IUTStage1FiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource π l) :
+    Audit source :=
+  { normalized_example35_audit :=
+      source.toNormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource.audit,
+    ordinary_object_eq_compat := source.ordinary_object_eq_compat,
+    ordinary_divisorDegree_eq_compat := source.ordinary_divisorDegree_eq_compat,
+    ordinary_unitLogVolume_eq_compat := source.ordinary_unitLogVolume_eq_compat,
+    label_logLink_object_eq_base := source.label_logLink_object_eq_base,
+    ordinary_column_eq_constructed := by
+      intro m
+      rfl }
+
+end IUTStage1FiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource
+
 /--
 Container estimate for one capsule log-volume entry.
 

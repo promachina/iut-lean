@@ -20092,6 +20092,211 @@ set_option linter.style.longLine true
 
 set_option linter.style.longLine false in
 /--
+Concrete one-sided constructor from finite divisor-monoid data realizing the
+ordinary column of the normalized Example 3.5 source.
+-/
+noncomputable def ofConcreteHodgeTheaterLogThetaLogThetaLabelProcessionVerticalLogKummerFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObject
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {π : Type v} [Fintype π]
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (possibleImageSource :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource
+        (target := target) coric l)
+    (record_images_eq :
+      record.thetaPossibleImages.images = possibleImageSource.choiceImages)
+    (volumeSource :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+        coric l π)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    IUTStage1Theorem311OneSidedMultiradialConstructionSource
+      (package := package) record l :=
+  ofConcreteHodgeTheaterLogThetaLogThetaLabelProcessionVerticalLogKummerNormalizedExample35LocalObjectDegreeRealizedColumnLogKummerBaseVolumeZModLogShellPacketLocalObject
+    record possibleImageSource record_images_eq
+    volumeSource.toNormalizedExample35LocalObjectDegreeRealizedColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+    gluingTorsor selectedQChoice
+
+set_option linter.style.longLine false in
+theorem ofConcreteHodgeTheaterLogThetaLogThetaLabelProcessionVerticalLogKummerFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObject_endpoint
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {π : Type v} [Fintype π]
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (possibleImageSource :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource
+        (target := target) coric l)
+    (record_images_eq :
+      record.thetaPossibleImages.images = possibleImageSource.choiceImages)
+    (volumeSource :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+        coric l π)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    volumeSource.Audit ∧
+      possibleImageSource.VerticalLogKummerPacketAlignmentAudit
+        volumeSource.toColumnRealifiedLogShellZModLogShellPacketLocalObjectSource.toTransportedZModLogShellPacketLocalObjectSource.toConstructedZModCapsulePacketLocalObjectSource.toCapsulePacketLocalObjectSource.toProcessionNormalizedVerticalLogKummerPacketAlignmentSource ∧
+      (ConcreteHodgeTheaterLogThetaFullLabelProcessionSource.canonical
+        volumeSource.toProcessionNormalizedLogVolumeSource.toIndeterminacyData).ActionAudit
+          gluingTorsor ∧
+      let construction :=
+        ofConcreteHodgeTheaterLogThetaLogThetaLabelProcessionVerticalLogKummerFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObject
+          record possibleImageSource record_images_eq volumeSource
+          gluingTorsor selectedQChoice;
+      construction.multiradialImages.quotient =
+          construction.typedIndeterminacyCore.equalityQuotient ∧
+        construction.multiradialImages.possibleImages =
+          record.thetaPossibleImages ∧
+        Fintype.card (ZMod l.value) = l.value ∧
+        (∀ t choice,
+          construction.typedIndeterminacyCore.equalityQuotientMap choice =
+            construction.typedIndeterminacyCore.equalityQuotientMap
+              (construction.flProcessionAction.transition t choice)) ∧
+        (∀ {choice₁ choice₂ :
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+          construction.typedIndeterminacyCore.ind3.step choice₁ choice₂ ->
+          construction.typedIndeterminacyCore.logVolume choice₁ <=
+            construction.typedIndeterminacyCore.logVolume choice₂) ∧
+        (∀ choice,
+          construction.equalityQuotientPossibleImages.quotientImages.region
+              (construction.typedIndeterminacyCore.equalityQuotientMap choice) =
+            record.thetaPossibleImages.images.region choice) ∧
+        construction.selectedQRegion =
+          construction.equalityQuotientPossibleImages.quotientImages.region
+            (construction.typedIndeterminacyCore.equalityQuotientMap
+              construction.selectedQChoice) ∧
+        construction.selectedQRegion.toSet =
+          recordThetaPossibleImage record construction.selectedQChoice ∧
+        construction.selectedQRegion.toSet ⊆
+          recordThetaPossibleImageUnion record := by
+  exact
+    ⟨volumeSource.audit,
+      (ofConcreteHodgeTheaterLogThetaLogThetaLabelProcessionVerticalLogKummerNormalizedExample35LocalObjectDegreeRealizedColumnLogKummerBaseVolumeZModLogShellPacketLocalObject_endpoint
+        record possibleImageSource record_images_eq
+        volumeSource.toNormalizedExample35LocalObjectDegreeRealizedColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+        gluingTorsor selectedQChoice).2⟩
+
+set_option linter.style.longLine false in
+/--
+Public source package for the finite-divisor realized normalized Example 3.5
+column log-Kummer base-volume packet-local-object one-sided construction.
+-/
+structure ConcreteHodgeTheaterLogThetaLogThetaLabelProcessionVerticalLogKummerFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (π : Type v) [Fintype π] where
+  possibleImageSource :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource
+      (target := target) coric l
+  record_images_eq :
+    record.thetaPossibleImages.images = possibleImageSource.choiceImages
+  volumeSource :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+      coric l π
+  gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l
+  selectedQChoice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l
+
+set_option linter.style.longLine false
+namespace ConcreteHodgeTheaterLogThetaLogThetaLabelProcessionVerticalLogKummerFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+
+variable {coric : Type u}
+variable
+  {package :
+    IUTStage1SourcePackage source target
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {π : Type v} [Fintype π]
+
+set_option linter.style.longLine false in
+noncomputable def toConstruction
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaLogThetaLabelProcessionVerticalLogKummerFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+        record π) :
+    IUTStage1Theorem311OneSidedMultiradialConstructionSource
+      (package := package) record l :=
+  ofConcreteHodgeTheaterLogThetaLogThetaLabelProcessionVerticalLogKummerFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObject
+    record sourceData.possibleImageSource sourceData.record_images_eq
+    sourceData.volumeSource sourceData.gluingTorsor sourceData.selectedQChoice
+
+set_option linter.style.longLine false in
+structure Audit
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaLogThetaLabelProcessionVerticalLogKummerFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+        record π) :
+    Prop where
+  finite_divisor_realized_base_volume_audit : sourceData.volumeSource.Audit
+  normalized_example35_base_volume_audit :
+    sourceData.volumeSource.toNormalizedExample35LocalObjectDegreeRealizedColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource.Audit
+  packet_possible_image_audit :
+    sourceData.possibleImageSource.VerticalLogKummerPacketAlignmentAudit
+      sourceData.volumeSource.toColumnRealifiedLogShellZModLogShellPacketLocalObjectSource.toTransportedZModLogShellPacketLocalObjectSource.toConstructedZModCapsulePacketLocalObjectSource.toCapsulePacketLocalObjectSource.toProcessionNormalizedVerticalLogKummerPacketAlignmentSource
+  construction_endpoint :
+    sourceData.toConstruction.multiradialImages.quotient =
+        sourceData.toConstruction.typedIndeterminacyCore.equalityQuotient ∧
+      sourceData.toConstruction.multiradialImages.possibleImages =
+        record.thetaPossibleImages ∧
+      Fintype.card (ZMod l.value) = l.value ∧
+      (∀ t choice,
+        sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap choice =
+          sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+            (sourceData.toConstruction.flProcessionAction.transition t choice)) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        sourceData.toConstruction.typedIndeterminacyCore.ind3.step choice₁ choice₂ ->
+        sourceData.toConstruction.typedIndeterminacyCore.logVolume choice₁ <=
+          sourceData.toConstruction.typedIndeterminacyCore.logVolume choice₂) ∧
+      (∀ choice,
+        sourceData.toConstruction.equalityQuotientPossibleImages.quotientImages.region
+            (sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap choice) =
+          record.thetaPossibleImages.images.region choice) ∧
+      sourceData.toConstruction.selectedQRegion =
+        sourceData.toConstruction.equalityQuotientPossibleImages.quotientImages.region
+          (sourceData.toConstruction.typedIndeterminacyCore.equalityQuotientMap
+            sourceData.toConstruction.selectedQChoice) ∧
+      sourceData.toConstruction.selectedQRegion.toSet =
+        recordThetaPossibleImage record sourceData.toConstruction.selectedQChoice ∧
+      sourceData.toConstruction.selectedQRegion.toSet ⊆
+        recordThetaPossibleImageUnion record
+  finite_divisor_realized_family_audit :
+    ∀ thetaClass :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric),
+      IUTStage1FiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource.Audit
+        (sourceData.volumeSource.finiteDivisorRealizedDivisorFamily thetaClass)
+
+set_option linter.style.longLine false in
+theorem audit
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaLogThetaLabelProcessionVerticalLogKummerFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+        record π) :
+    Audit sourceData :=
+  let endpoint :=
+    ofConcreteHodgeTheaterLogThetaLogThetaLabelProcessionVerticalLogKummerFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObject_endpoint
+      record sourceData.possibleImageSource sourceData.record_images_eq
+      sourceData.volumeSource sourceData.gluingTorsor sourceData.selectedQChoice
+  { finite_divisor_realized_base_volume_audit := endpoint.1,
+    normalized_example35_base_volume_audit :=
+      sourceData.volumeSource.toNormalizedExample35LocalObjectDegreeRealizedColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource.audit,
+    packet_possible_image_audit := endpoint.2.1,
+    construction_endpoint := endpoint.2.2.2,
+    finite_divisor_realized_family_audit := by
+      intro thetaClass
+      exact endpoint.1.finite_divisor_realized_family_audit thetaClass }
+
+end ConcreteHodgeTheaterLogThetaLogThetaLabelProcessionVerticalLogKummerFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+set_option linter.style.longLine true
+
+set_option linter.style.longLine false in
+/--
 Concrete one-sided constructor from direct finite-capsule packet-normalization
 data.
 -/
