@@ -12980,9 +12980,29 @@ finite signed theta-values.  The endpoint
 \]
 runs the generated/finite matched Step~(x) theorem and transports the resulting
 finite \(C_\Theta\) dichotomy back to the concrete Hodge-theater/log-theta
-package.  This closes the formal transport step between the current concrete
-and finite routes, while leaving the construction of these bridge equalities
-from local log-Kummer/Frobenioid data as the next source-facing obligation.
+package.  This bridge has now been lowered by
+\[
+\begin{gathered}
+\texttt{ConcreteHodgeTheaterLogThetaGeneratedFullLabel}\\
+\texttt{StepXILogVolumeComparisonSource}.
+\end{gathered}
+\]
+The new source no longer asks for concrete/finite signed equalities.  It
+records equality of the concrete and generated selected q-regions and derives
+the concrete/generated signed q/theta equalities from common Step~(xi)
+q-region and theta-hull log-volume readings.  Lean then composes this with the
+matched generated/finite Step~(x) gluing to construct the older bridge
+internally, and the endpoint
+\[
+\begin{gathered}
+\texttt{concreteHodgeTheaterLogThetaGeneratedFullLabel}\\
+\texttt{StepXILogVolumeComparisonSource\_cThetaDichotomy}
+\end{gathered}
+\]
+reaches the same concrete \(C_\Theta\) dichotomy.  Thus the remaining
+source-facing obligation is sharper: construct the concrete/generated
+Step~(xi) q-region and theta-hull log-volume comparisons from the local
+log-Kummer/Frobenioid data.
 
 The practical priority order is now:
 \begin{enumerate}
