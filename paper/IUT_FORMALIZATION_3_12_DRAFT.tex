@@ -9542,19 +9542,18 @@ the product-hull witness constructs closedness, and the local-to-global source
 supplies the \(C_\Theta\) comparison in both cases.  The construction of the
 arithmetic-gap source itself remains part of the local
 \(\IUT{}\,\mathrm{IV}\) payload.
-This source-derived form now also reaches the principal valuation-ball
-local boundary, and that boundary has been lowered through log-shell chart and
-pointwise lifting data to realized-region equality.  Starting from a principal
-cover whose possible regions are transported theta regions, \Lean{} now accepts
-the statement that each transported theta region is exactly the realized image
-of the selected compact-open valuation ball.  The local analytic law
-identifying realized regions with images of the realization map then derives
-the pointwise lift and converse realization statements.  From there \Lean{}
-chooses local log-shell coordinates, defines the local log-shell to be the
-compact-open valuation ball, builds the exact \(\Xi(P_B)\) family, and uses the
-same local-to-global arithmetic source for the global \(C_\Theta\) comparison.
-Thus the principal local boundary no longer reintroduces a caller-supplied
-scalar domination after the product-hull lowering.
+This source-derived form now also reaches the principal valuation-ball local
+boundary, and that boundary has been lowered through realized-region equality
+to a local log-shell exact statement.  Starting from a principal cover whose
+possible regions are transported theta regions, \Lean{} now accepts the two
+local identities that a transported theta region is the realized image of its
+selected log-shell and that this log-shell is the compact-open valuation ball.
+It composes these identities to recover the realized valuation-ball equality,
+then derives the pointwise lift and converse realization from the local
+realization-image law.  The same construction builds the exact \(\Xi(P_B)\)
+family and uses the local-to-global arithmetic source for the global
+\(C_\Theta\) comparison, without reintroducing a caller-supplied scalar
+domination after the product-hull lowering.
 The same specialization now propagates through the synchronized Ob5--Ob7
 review object and the canonical-scale audit: the product-hull route can run
 with canonical \(\Phi(P_B)\) and source-constructed exact \(\Xi(P_B)\) while
@@ -13444,14 +13443,14 @@ The practical priority order is now:
 \item Construct the remaining Step~(xi) holomorphic-hull/determinant fields
   from Remark~3.9.5 and Step~(xi): genuine hulls, determinant lines,
   Ob5/Ob7 compatibility, and the \(\theta_{\mathrm{signed}}\) log-volume
-  identification.  The preferred principal local boundary is now
-  realized-region equality: for each selected local valuation factor, the
-  transported theta region is the realized image of the compact-open valuation
-  ball.  \Lean{} derives the pointwise lift and converse realization from the
-  local analytic realized-region law, then derives the log-shell chart source,
-  the exact \(\Xi(P_B)\) source, and the source-derived global \(C_\Theta\)
-  audit.  What remains is to construct this realized-region equality from the
-  paper-native holomorphic hull, log-Kummer, and local log-shell geometry.
+  identification.  The preferred principal local boundary is now a log-shell
+  exact statement: each transported theta region is realized from a selected
+  local log-shell, and that log-shell is the compact-open valuation ball.
+  \Lean{} derives realized valuation-ball equality, pointwise lift/converse
+  realization, the exact \(\Xi(P_B)\) source, and the source-derived global
+  \(C_\Theta\) audit.  What remains is to construct these two local identities
+  from the paper-native holomorphic hull, log-Kummer, and local log-shell
+  geometry.
 \item Instantiate the valuation-ball local analytic construction from actual
   local fields, log-shell maps, compact-open Haar normalizations, and
   archimedean lattice metrics, proving the remaining Proposition~1.4
