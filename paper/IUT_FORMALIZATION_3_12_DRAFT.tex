@@ -4055,9 +4055,26 @@ possible-region family is fixed definitionally by the principal source.  \Lean{}
 derives the realized valuation-ball equality, projects it to the
 theta-region-defined radius-cover source, obtains direct-product-cell exactness,
 and then feeds the principal exact-\(\Xi\) source.  Thus the remaining
-paper-side payload is concentrated in the actual Remark~3.9.5 hull statement
-for the theta-region family and in the source-paper proof of these pointwise
-local transport laws.
+paper-side payload has been narrowed to the actual construction of the local
+analytic coordinate and the reverse valuation-ball realization law.  The newest
+declaration
+\[
+\begin{array}{l}
+\texttt{ConcreteValuationBallThetaClassFiberTransportThetaRegionDefined}\\
+\texttt{PrincipalValuationBallLocalChartMetricZeroValuationBallExactSource}
+\end{array}
+\]
+replaces the forward existential lifting law by a named map
+\(x_\beta(y)\in K_v\).  Its fields assert the valuation-radius bound
+\(\|x_\beta(y)\|_v\le r_\beta\), the realization identity
+\(\operatorname{real}_\beta(x_\beta(y))=y\), the metric normalization, and the
+reverse statement that each selected valuation-ball point realizes back into
+the transported theta region.  \Lean{} derives the pointwise lift, recovers the
+previous principal pointwise source, and hence recovers the exact realized
+valuation-ball identity and selected-principal-hull conclusion.  This records
+the current frontier precisely: the next source-paper construction must build
+these local coordinates from the nonarchimedean log-shell/valuation-ball
+normalization rather than supply them as chart data.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
