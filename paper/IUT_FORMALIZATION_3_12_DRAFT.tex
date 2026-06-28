@@ -13041,11 +13041,23 @@ Remark~3.9.5 hull-operator equality.  The theta equality is derived from a
 finite equivalence between the concrete and generated determinant index sets,
 matching adjusted localization summands, and the existing theorem that
 normalization of the positive tensor power recovers the determinant sum.  Thus
-the remaining source-facing obligation is sharper: construct the
-concrete/generated selected q-region identification, hull-operator
-identification, and finite adjusted-summand matching from the local
-log-Kummer/Frobenioid geometry, rather than supplying q/theta upper-ray
-coordinates or normalized determinant equality as independent real fields.
+the determinant side no longer compares normalized real fields directly.  This
+boundary has now been lowered again by
+\[
+\begin{gathered}
+\texttt{ConcreteHodgeTheaterLogThetaGeneratedFullLabel}\\
+\texttt{Ob3Ob4LocalizationUpperRayCalibrationSource}.
+\end{gathered}
+\]
+Here the finite adjusted-summand matching is itself derived from
+Remark~3.9.5 Ob3/Ob4 adjusted-localization sources: Lean rewrites the
+constructed determinants to their weighted determinant projections and proves
+the summand comparison from equality of the weighted adjusted localization
+log-volumes after the determinant-index equivalence.  The remaining
+source-facing obligation is now sharper: construct the concrete/generated
+selected q-region identification, the common hull operator, and the Ob3/Ob4
+weighted adjusted-localization matching from local log-Kummer/Frobenioid
+geometry.
 
 The practical priority order is now:
 \begin{enumerate}
