@@ -4168,9 +4168,24 @@ Using the local analytic identity
   \operatorname{real}_\beta(U_\beta)\subseteq P_{\Theta,\beta}
 \]
 and then enters the source-derived global \(C_\Theta\) audit.  The remaining
-frontier is to construct these compact-open coordinates and the converse
-realization law from the paper-native holomorphic hull, log-Kummer, and local
-log-shell geometry.
+frontier has now been lowered to the exact compact-open realized-region source
+\[
+\begin{array}{l}
+\texttt{ConcreteValuationBallThetaClassFiberTransportThetaRegionDefined}\\
+\texttt{PrincipalValuationBallCompactOpenRealizedExactSource}.
+\end{array}
+\]
+Its local payload is the single identity
+\[
+  P_{\Theta,\beta}=\operatorname{real}_\beta(U_\beta).
+\]
+From this equality and
+\(\operatorname{realizedRegion}(U_\beta)=\operatorname{real}_\beta''U_\beta\),
+\Lean{} chooses compact-open coordinates, proves the converse realization law,
+recovers the compact-open local-chart source, and enters the same global
+\(C_\Theta\) audit.  The remaining frontier is to construct this exact
+compact-open realized-region identity from the paper-native holomorphic hull,
+log-Kummer, and local log-shell geometry.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -13499,11 +13514,12 @@ The practical priority order is now:
   from Remark~3.9.5 and Step~(xi): genuine hulls, determinant lines,
   Ob5/Ob7 compatibility, and the \(\theta_{\mathrm{signed}}\) log-volume
   identification.  The preferred principal local boundary now defines the
-  local log-shell as the selected compact-open factor and uses compact-open
-  local coordinates to derive the image containments, realized valuation-ball
-  equality, the exact \(\Xi(P_B)\) source, and the source-derived global
-  \(C_\Theta\) audit.  What remains is to construct those compact-open
-  coordinates and the converse realization law from the paper-native
+  local log-shell as the selected compact-open factor and has a realized-exact
+  boundary \(P_{\Theta,\beta}=\operatorname{real}_\beta(U_\beta)\) from which
+  \Lean{} derives compact-open coordinates, image containments, realized
+  valuation-ball equality, the exact \(\Xi(P_B)\) source, and the
+  source-derived global \(C_\Theta\) audit.  What remains is to construct this
+  exact compact-open realized-region identity from the paper-native
   holomorphic hull, log-Kummer, and local log-shell geometry.
 \item Instantiate the valuation-ball local analytic construction from actual
   local fields, log-shell maps, compact-open Haar normalizations, and
