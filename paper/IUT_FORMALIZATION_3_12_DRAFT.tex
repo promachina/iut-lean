@@ -4039,15 +4039,25 @@ builds the Remark~3.9.5 valuation-ball/Haar tensor-packet cover with
 \(P_\beta\) fixed definitionally to the transported theta-region family.  Its
 principal product-hull wrapper projects to the ordinary principal
 valuation-ball source, and the previous family-level equality is then
-\texttt{rfl}.  The local-cover handoff has now been lowered to the same
-constructed boundary: a theta-region-defined principal valuation-ball radius
-source supplies only the local containment of each selected compact-open
-valuation ball in its transported theta region.  \Lean{} projects this to the
-older fiber-transport cover, derives direct-product-cell exactness, and then
-feeds the principal exact-\(\Xi\) source.  Thus the remaining paper-side payload
-is concentrated in the actual Remark~3.9.5 hull statement for the
-theta-region family and in the local analytic proof of these compact-open
-containments.
+\texttt{rfl}.  The local analytic boundary is now connected directly to this
+constructed principal cover:
+\[
+\begin{array}{l}
+\texttt{ConcreteValuationBallThetaClassFiberTransportThetaRegionDefined}\\
+\texttt{PrincipalValuationBallPointwiseConstructedLogShellMetricZero}\\
+\texttt{ValuationBallExactSource}.
+\end{array}
+\]
+This source carries the metric normalization \(\|x\|_v=\operatorname{dist}(x,0)\)
+and the two pointwise local transport laws between transported theta-region
+points and compact-open valuation balls, while the valuation-cover
+possible-region family is fixed definitionally by the principal source.  \Lean{}
+derives the realized valuation-ball equality, projects it to the
+theta-region-defined radius-cover source, obtains direct-product-cell exactness,
+and then feeds the principal exact-\(\Xi\) source.  Thus the remaining
+paper-side payload is concentrated in the actual Remark~3.9.5 hull statement
+for the theta-region family and in the source-paper proof of these pointwise
+local transport laws.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
