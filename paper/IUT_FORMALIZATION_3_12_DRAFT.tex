@@ -13246,11 +13246,23 @@ valuation-ball component transport source internally.
 This has been lowered again by
 \[
 \begin{gathered}
+\texttt{IUTStage1Remark395LocalNormalizationMatched}\\
+\texttt{ValuationBallLocalizedVectorBundleComponent}\\
+\texttt{TransportSource}.
+\end{gathered}
+\]
+This component source records common transported local invariants for each
+matched valuation-ball factor: the finite-extension degree and the
+compact-open Haar mass of the selected local ball.  Lean derives the raw
+concrete/generated finite-degree and Haar-mass equalities from those common
+local-normalization invariants.  Its projection is
+\[
+\begin{gathered}
 \texttt{IUTStage1Remark395RawHaarDegreeMatched}\\
 \texttt{ValuationBallLocalizedVectorBundleComponentTransportSource}.
 \end{gathered}
 \]
-At this boundary the matched normalized-Haar equality is derived from equality
+At the raw boundary the matched normalized-Haar equality is derived from equality
 of the matched compact-open Haar masses and equality of the corresponding
 finite-extension degrees.
 This raw Haar/degree boundary is now threaded into the packet-transport
