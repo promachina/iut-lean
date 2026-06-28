@@ -15557,6 +15557,200 @@ theorem generatedFullLabelInd2_equalityQuotientMap_eq
 
 set_option linter.style.longLine false in
 /--
+Finite `F_l` procession orbit of a generated full-label choice.
+
+This is the generated-choice version of the Remark 3.11.2 procession: the
+theta-pilot class is fixed and the finite label is translated by `ZMod l`.
+-/
+def generatedFullLabelProcessionOrbit
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    Set (FullLabelGeneratedChoice (coric := coric) (l := l)) :=
+  { choice' | ∃ t : ZMod l.value, choice' = fullLabelTransition (l := l) t choice }
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelProcessionOrbit_self
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    choice ∈ generatedFullLabelProcessionOrbit (l := l) choice := by
+  exact ⟨0, by rw [fullLabelTransition_zero]⟩
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelTransition_ind1Step
+    (t : ZMod l.value)
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    generatedFullLabelInd1Step (l := l) choice
+      (fullLabelTransition (l := l) t choice) :=
+  ⟨t, rfl⟩
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelProcessionOrbit_ind1Step
+    {choice choice' :
+      FullLabelGeneratedChoice (coric := coric) (l := l)}
+    (hmem : choice' ∈ generatedFullLabelProcessionOrbit (l := l) choice) :
+    generatedFullLabelInd1Step (l := l) choice choice' := by
+  rcases hmem with ⟨t, rfl⟩
+  exact generatedFullLabelTransition_ind1Step (l := l) t choice
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelProcessionOrbit_thetaClass_eq
+    {choice choice' :
+      FullLabelGeneratedChoice (coric := coric) (l := l)}
+    (hmem : choice' ∈ generatedFullLabelProcessionOrbit (l := l) choice) :
+    choice'.thetaClass = choice.thetaClass := by
+  rcases hmem with ⟨t, rfl⟩
+  exact fullLabelTransition_thetaClass (l := l) t choice
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelProcessionOrbit_allLabelsPresent
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l))
+    (label : ZMod l.value) :
+    ∃ choice' :
+        FullLabelGeneratedChoice (coric := coric) (l := l),
+      choice' ∈ generatedFullLabelProcessionOrbit (l := l) choice ∧
+        choice'.thetaClass = choice.thetaClass ∧
+          choice'.flLabel = label := by
+  refine
+    ⟨fullLabelTransition (l := l) (label - choice.flLabel) choice,
+      ?_, ?_, ?_⟩
+  · exact ⟨label - choice.flLabel, rfl⟩
+  · exact fullLabelTransition_thetaClass (l := l)
+      (label - choice.flLabel) choice
+  · simpa [fullLabelTransition, zmodLabelTranslate_eq_add] using
+      sub_add_cancel label choice.flLabel
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelProcessionOrbit_equalityRelation
+    {choice choice' :
+      FullLabelGeneratedChoice (coric := coric) (l := l)}
+    (hmem : choice' ∈ generatedFullLabelProcessionOrbit (l := l) choice) :
+    (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotient.relation
+      choice choice' :=
+  IUTStage1GeneratedIndeterminacyRelation.ind1
+    (generatedFullLabelProcessionOrbit_ind1Step (l := l) hmem)
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelProcessionOrbit_equalityQuotientMap_eq
+    {choice choice' :
+      FullLabelGeneratedChoice (coric := coric) (l := l)}
+    (hmem : choice' ∈ generatedFullLabelProcessionOrbit (l := l) choice) :
+    (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotientMap choice =
+      (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotientMap choice' :=
+  Quot.sound (source.generatedFullLabelProcessionOrbit_equalityRelation hmem)
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelProcessionOrbit_logVolume_eq
+    {choice choice' :
+      FullLabelGeneratedChoice (coric := coric) (l := l)}
+    (hmem : choice' ∈ generatedFullLabelProcessionOrbit (l := l) choice) :
+    source.generatedFullLabelLogVolume choice =
+      source.generatedFullLabelLogVolume choice' :=
+  source.generatedFullLabelInd1_logVolume_eq
+    (generatedFullLabelProcessionOrbit_ind1Step (l := l) hmem)
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelProcessionOrbit_region_eq
+    {target : Copy}
+    (thetaClassImages :
+      RegionFamily target (ThetaPilotClass (coric := coric)))
+    {choice choice' :
+      FullLabelGeneratedChoice (coric := coric) (l := l)}
+    (hmem : choice' ∈ generatedFullLabelProcessionOrbit (l := l) choice) :
+    (generatedFullLabelChoiceImages (l := l) thetaClassImages).region choice =
+      (generatedFullLabelChoiceImages (l := l) thetaClassImages).region choice' := by
+  rw [generatedFullLabelChoiceImages_region,
+    generatedFullLabelChoiceImages_region,
+    generatedFullLabelProcessionOrbit_thetaClass_eq (l := l) hmem]
+
+set_option linter.style.longLine false in
+/--
+Audit for the generated full-label procession orbit.
+
+The audit packages the finite `ZMod l` no-omission statement together with the
+typed-core consequence needed by possible images: every orbit member is an
+`(Ind1)` equality move, hence has the same equality-quotient index, the same
+procession-normalized log-volume, and the same pulled-back theta-pilot
+possible image.  `(Ind3)` is not used in this orbit.
+-/
+structure GeneratedFullLabelProcessionOrbitAudit
+    {target : Copy}
+    (thetaClassImages :
+      RegionFamily target (ThetaPilotClass (coric := coric)))
+    (choice :
+      FullLabelGeneratedChoice (coric := coric) (l := l)) : Prop where
+  zmod_label_cardinality :
+    Fintype.card (ZMod l.value) = l.value
+  orbit_self :
+    choice ∈ generatedFullLabelProcessionOrbit (l := l) choice
+  all_labels_present :
+    ∀ label : ZMod l.value,
+      ∃ choice' :
+          FullLabelGeneratedChoice (coric := coric) (l := l),
+        choice' ∈ generatedFullLabelProcessionOrbit (l := l) choice ∧
+          choice'.thetaClass = choice.thetaClass ∧
+            choice'.flLabel = label
+  orbit_ind1 :
+    ∀ {choice' :
+        FullLabelGeneratedChoice (coric := coric) (l := l)},
+      choice' ∈ generatedFullLabelProcessionOrbit (l := l) choice ->
+        generatedFullLabelInd1Step (l := l) choice choice'
+  orbit_equality_relation :
+    ∀ {choice' :
+        FullLabelGeneratedChoice (coric := coric) (l := l)},
+      choice' ∈ generatedFullLabelProcessionOrbit (l := l) choice ->
+        (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotient.relation
+          choice choice'
+  orbit_equalityQuotientMap_eq :
+    ∀ {choice' :
+        FullLabelGeneratedChoice (coric := coric) (l := l)},
+      choice' ∈ generatedFullLabelProcessionOrbit (l := l) choice ->
+        (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotientMap choice =
+          (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotientMap choice'
+  orbit_logVolume_eq :
+    ∀ {choice' :
+        FullLabelGeneratedChoice (coric := coric) (l := l)},
+      choice' ∈ generatedFullLabelProcessionOrbit (l := l) choice ->
+        source.generatedFullLabelLogVolume choice =
+          source.generatedFullLabelLogVolume choice'
+  orbit_region_eq :
+    ∀ {choice' :
+        FullLabelGeneratedChoice (coric := coric) (l := l)},
+      choice' ∈ generatedFullLabelProcessionOrbit (l := l) choice ->
+        (generatedFullLabelChoiceImages (l := l) thetaClassImages).region choice =
+          (generatedFullLabelChoiceImages (l := l) thetaClassImages).region choice'
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelProcessionOrbitAudit
+    {target : Copy}
+    (thetaClassImages :
+      RegionFamily target (ThetaPilotClass (coric := coric)))
+    (choice :
+      FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    source.GeneratedFullLabelProcessionOrbitAudit thetaClassImages choice :=
+  { zmod_label_cardinality := ZMod.card l.value,
+    orbit_self := generatedFullLabelProcessionOrbit_self (l := l) choice,
+    all_labels_present := by
+      intro label
+      exact generatedFullLabelProcessionOrbit_allLabelsPresent (l := l) choice label,
+    orbit_ind1 := by
+      intro choice' hmem
+      exact generatedFullLabelProcessionOrbit_ind1Step (l := l) hmem,
+    orbit_equality_relation := by
+      intro choice' hmem
+      exact source.generatedFullLabelProcessionOrbit_equalityRelation hmem,
+    orbit_equalityQuotientMap_eq := by
+      intro choice' hmem
+      exact source.generatedFullLabelProcessionOrbit_equalityQuotientMap_eq hmem,
+    orbit_logVolume_eq := by
+      intro choice' hmem
+      exact source.generatedFullLabelProcessionOrbit_logVolume_eq hmem,
+    orbit_region_eq := by
+      intro choice' hmem
+      exact
+        generatedFullLabelProcessionOrbit_region_eq
+          (l := l)
+          thetaClassImages hmem }
+
+set_option linter.style.longLine false in
+/--
 Audit for the generated full-label Theorem 3.11 source layer.
 
 This is the kernel-level replacement for the old ambient
