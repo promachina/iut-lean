@@ -1018,10 +1018,15 @@ direct-summand symmetry kind back to the source kind.  A still lower
 constructor now derives those packet-label certificates from the concrete
 local tensor \(\mathrm{Ism}\) labels, the matching action's source summand
 kind, and the same kind-transport law; the archimedean order-two case has the
-parallel constructor.  \Lean{} records the local tensor label-transport audit
-and the corresponding source-level \((\Ind2)\) packet/action audit before
-forgetting to the older source-action and generic local direct-summand
-interfaces.  It then packages the ordered
+parallel constructor.  At the finite vertical-\(IQ\) boundary this lowering is
+now exposed pointwise by
+\texttt{FiniteDivisorVerticalIQProcessionNonarchimedeanIsmTensorLabelTransportSourceData}:
+from midpoint/procession data, the retained \(\mathrm{Ism}\) action-source
+step, the two concrete tensor labels, and the summand-kind transport, \Lean{}
+constructs the completed label-transport source step.  It records the local
+tensor label-transport audit and the corresponding source-level \((\Ind2)\)
+packet/action audit before forgetting to the older source-action and generic
+local direct-summand interfaces.  It then packages the ordered
 \((\Ind1)\)-then-\((\Ind2)\) datum as the previous two-step transport, derives
 the generated \((\Ind1),(\Ind2)\) relation, embeds it into the place-audited
 quotient, derives record-image invariance from quotient invariance, and
@@ -12696,11 +12701,12 @@ explicitly discharges the impossible \((\Ind3)\) equality-generator case.
 This has now been sharpened once more at the component boundary.  The preferred
 source supplies an explicit midpoint finite packet, an ordered \((\Ind1)\)
 procession leg, and a source-level nonarchimedean \(\mathrm{Ism}\)
-label-transport step for the post-procession \((\Ind2)\) leg.  This source step
-retains the matching direct-summand action, place match, transformed-family
-equality, target capsule equality, and local tensor label transport as data
-before Lean forgets it to the older source-action and action-entry transports.
-The endpoint also records the local tensor label-transport audit and the
+label-transport step for the post-procession \((\Ind2)\) leg.  This has now
+been lowered pointwise to a tensor-label transport source: it retains the
+matching direct-summand action-source data, the concrete midpoint and target
+\(\mathrm{Ism}\) tensor labels, and direct-summand kind transport, from which
+\Lean{} constructs the local tensor label transport.  The endpoint records the
+resulting local tensor label-transport audit and the
 source-level \((\Ind2)\) packet/action audit, then derives the two-step
 transport, generated \((\Ind1,\Ind2)\) relation, quotient relation,
 record-image equality, selected q-region equalities, and
