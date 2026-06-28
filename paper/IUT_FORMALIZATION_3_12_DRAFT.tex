@@ -12469,13 +12469,32 @@ history-separated record-hull finite-divisor surfaces; any remaining
 certificate-pinned declarations are retained only as review aliases until they
 are migrated or retired.
 
+The generated full-label quotient route now has a typed package handoff to the
+finite-divisor vertical-\(IQ\) layer.  The new handoff record
+\[
+\texttt{GeneratedFullLabelFiniteDivisorVerticalIQPackageHandoff}
+\]
+does not identify these packages by convention: it requires equality of the
+signed q/theta pre-ledger data and requires both the finite-divisor
+record-theta possible image and the finite-divisor target region for the chosen
+packet to be exactly the generated selected q-region.  Given these source-side
+realization fields, the theorem
+\[
+\texttt{generatedFullLabelFiniteDivisorVerticalIQPackageHandoff\_cThetaDichotomy}
+\]
+transports the generated full-label \(C_\Theta\) dichotomy to the
+finite-divisor package, with the conclusion stated in finite-divisor
+pre-ledger variables.  Thus the package-identification step has been made a
+kernel-checked boundary; what remains is to construct its equality witnesses
+from the paper-native local log-Kummer/Frobenioid data.
+
 The practical priority order is now:
 \begin{enumerate}
-\item Construct the package-identification handoff from generated full-label
-  choices to the finite-divisor vertical-\(IQ\) source package.  The generated
-  Remark~3.9.5/\(C_\Theta\) route is now experiment-facing; what remains is to
-  prove that the finite-divisor packet choice data realizes the same generated
-  q-region, log-volume, and pre-ledger comparison data.
+\item Construct the source-side witnesses for the generated-full-label to
+  finite-divisor vertical-\(IQ\) handoff.  The handoff record and dichotomy
+  transport are now implemented; what remains is to prove, from the finite
+  divisor packet choice data, the exact q-region, log-volume, and pre-ledger
+  comparison equalities consumed by the handoff.
 \item Construct the finite divisor-component columns--local object, prime
   multiplicities, prime degrees, and unit log-volume--and construct the
   labelled vertical object-transport records from the paper-native vertical
