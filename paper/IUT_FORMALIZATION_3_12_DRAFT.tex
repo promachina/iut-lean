@@ -1038,8 +1038,12 @@ action-entry step.  From this matched boundary Lean derives the generated
 \((\Ind1,\Ind2)\) relation, the place-audited quotient relation, record-image
 invariance, selected q-region equalities, and finally the finite \(C_\Theta\)
 dichotomy.  The remaining payload at this boundary is the paper-native
-construction of the raw tensor-label witnesses and the signed pre-ledger
-equalities from local Frobenioid/log-Kummer geometry.
+construction of the raw tensor-label witnesses from local
+Frobenioid/log-Kummer geometry.  The signed pre-ledger transfer has been
+factored through a Step~(xi) log-volume source: finite and generated q-values
+are compared by their q-region log-volumes, and finite and generated
+\(\theta\)-values by their theta-hull log-volumes, before Lean derives the old
+q/theta signed equalities.
 The finite handoff audit has now been lowered to this matched identified source.
 Its audit records the finite signed equalities, the finite possible-image
 identification, the raw tensor-label witness, the induced matched packet-action
@@ -12760,9 +12764,18 @@ quantities.  Its projection to the record-image realization and the endpoint
 \texttt{ThetaClassRecordImageRealization\_cThetaDichotomy}
 \end{gathered}
 \]
-derive the generated-record match, the package handoff, and the finite-divisor
-\(C_\Theta\) dichotomy.  The finite-packet boundary has now been lowered once
-more.  The earlier source
+are now fed by
+\[
+\texttt{GeneratedFullLabelFiniteDivisorVerticalIQStepXILogVolumeRealization}.
+\]
+This new source records the Step~(xi-d)--(xi-f) comparison: the q-pilot
+log-volume is read as a q-region log-volume on both the finite and generated
+sides, while the theta-pilot bound is read as the corresponding theta-hull
+log-volume.  Lean proves the old signed q/theta package equalities from these
+four log-volume identifications and then invokes the theta-class realization
+endpoint, which derives the generated-record match, the package handoff, and
+the finite-divisor \(C_\Theta\) dichotomy.  The finite-packet boundary has now
+been lowered once more.  The earlier source
 \[
 \texttt{GeneratedFullLabelFiniteDivisorVerticalIQThetaClassPacketProjection}
 \]
@@ -12892,8 +12905,9 @@ matched local \((\Ind2)\) packet-action source, the older identified handoff,
 local transport audit, generated \((\Ind1,\Ind2)\) relation, quotient relation,
 record-image equality, selected q-region equalities, and finally the
 Corollary~3.12 dichotomy.  Thus the remaining payload is narrower: construct
-these raw tensor-label witnesses and signed pre-ledger equalities from the
-paper-native vertical log-Kummer/Frobenioid geometry.
+these raw tensor-label witnesses and the Step~(xi) q-region/theta-hull
+log-volume identifications from the paper-native vertical
+log-Kummer/Frobenioid geometry.
 
 The practical priority order is now:
 \begin{enumerate}
@@ -12903,13 +12917,16 @@ The practical priority order is now:
   theta-class sources are now implemented.  The target-region realization is
   derived from the finite Theorem~3.11 record image, and the selected
   record-image witness is derived from an \((\Ind1,\Ind2)\)-backed fiberwise
-  audited-packet representative finite theta-class image law.  What remains is
-  to construct the audited packet representatives, the same-theta-class
+  audited-packet representative finite theta-class image law.  The signed
+  package transfer is no longer a bare equality field at the review boundary:
+  it is derived from Step~(xi) q-region and theta-hull log-volume
+  identifications.  What remains is to construct the audited packet
+  representatives, the same-theta-class
   midpoint packet, the ordered \((\Ind1)\) procession leg, the source-level
   nonarchimedean \(\mathrm{Ism}\) action leg, the raw tensor-label equations,
-  the target summand-kind certificate, and signed q/theta pre-ledger equalities
-  from paper-native finite divisors, local objects, and log-volume comparison
-  data.
+  the target summand-kind certificate, and those Step~(xi) log-volume
+  identifications from paper-native finite divisors, local objects, and
+  log-volume comparison data.
 \item Construct the finite divisor-component columns--local object, prime
   multiplicities, prime degrees, and unit log-volume--and construct the
   labelled vertical object-transport records from the paper-native vertical
