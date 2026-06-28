@@ -6056,6 +6056,172 @@ theorem audit :
 end LogThetaLabelProcessionVerticalLogKummerFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
 set_option linter.style.longLine true
 
+set_option linter.style.longLine false
+/--
+Object-transport finite-divisor realized normalized Example 3.5 source.
+
+This lowers the finite-divisor realized Theorem 3.11 source at the labelled
+log-link boundary: each theta-pilot class supplies explicit vertical object
+transports, and Lean derives the object equality needed by the finite-divisor
+ordinary-column construction.
+-/
+structure LogThetaLabelProcessionVerticalLogKummerObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+    (coric : Type u) (l : PrimeGeFive) (π : Type v) [Fintype π] where
+  objectTransportFiniteDivisorRealizedDivisorFamily :
+    ThetaPilotClass (coric := coric) ->
+      IUTStage1ObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource π l
+  direct_summand_count_eq_zmodCard :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      choice.local_tensor_state.directSummandCount = Fintype.card (ZMod l.value)
+  ind3_source_baseCompatRealified_eq_upperSemiSource :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        let family := objectTransportFiniteDivisorRealizedDivisorFamily (thetaPilotClass choice₁)
+        (family.compatibility.frobenioidObject family.baseColumn).realifiedLogVolume =
+          choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  ind3_target_baseCompatRealified_eq_upperSemiTarget :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        let family := objectTransportFiniteDivisorRealizedDivisorFamily (thetaPilotClass choice₂)
+        (family.compatibility.frobenioidObject family.baseColumn).realifiedLogVolume =
+          choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume
+
+namespace LogThetaLabelProcessionVerticalLogKummerObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+
+variable {π : Type v} [Fintype π]
+variable
+  (source :
+    LogThetaLabelProcessionVerticalLogKummerObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+      coric l π)
+
+set_option linter.style.longLine false in
+def finiteDivisorRealizedDivisorFamily
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    IUTStage1FiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource π l :=
+  (source.objectTransportFiniteDivisorRealizedDivisorFamily thetaClass)
+    |>.toFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource
+
+set_option linter.style.longLine false in
+def toFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource :
+    LogThetaLabelProcessionVerticalLogKummerFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+      coric l π :=
+  { finiteDivisorRealizedDivisorFamily :=
+      source.finiteDivisorRealizedDivisorFamily,
+    direct_summand_count_eq_zmodCard := source.direct_summand_count_eq_zmodCard,
+    ind3_source_baseCompatRealified_eq_upperSemiSource := by
+      intro choice₁ choice₂ hstep
+      let family :=
+        source.objectTransportFiniteDivisorRealizedDivisorFamily
+          (thetaPilotClass choice₁)
+      simpa [
+        IUTStage1ObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource.toFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource,
+        family] using
+        source.ind3_source_baseCompatRealified_eq_upperSemiSource hstep,
+    ind3_target_baseCompatRealified_eq_upperSemiTarget := by
+      intro choice₁ choice₂ hstep
+      let family :=
+        source.objectTransportFiniteDivisorRealizedDivisorFamily
+          (thetaPilotClass choice₂)
+      simpa [
+        IUTStage1ObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource.toFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource,
+        family] using
+        source.ind3_target_baseCompatRealified_eq_upperSemiTarget hstep }
+
+set_option linter.style.longLine false in
+def normalizedExample35DivisorFamily
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l :=
+  (source.objectTransportFiniteDivisorRealizedDivisorFamily thetaClass)
+    |>.toNormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource
+
+set_option linter.style.longLine false in
+def toNormalizedExample35LocalObjectDegreeRealizedColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource :
+    LogThetaLabelProcessionVerticalLogKummerNormalizedExample35LocalObjectDegreeRealizedColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+      coric l π :=
+  source.toFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+    |>.toNormalizedExample35LocalObjectDegreeRealizedColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+
+set_option linter.style.longLine false in
+noncomputable def toSplitCopiesLocalObjectDegreeRealizedColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource :
+    LogThetaLabelProcessionVerticalLogKummerSplitCopiesLocalObjectDegreeRealizedColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+      coric l π :=
+  source.toFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+    |>.toSplitCopiesLocalObjectDegreeRealizedColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+
+set_option linter.style.longLine false in
+noncomputable def toColumnRealifiedLogShellZModLogShellPacketLocalObjectSource :
+    LogThetaLabelProcessionVerticalLogKummerColumnRealifiedLogShellZModLogShellPacketLocalObjectSource
+      coric l π :=
+  source.toFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+    |>.toColumnRealifiedLogShellZModLogShellPacketLocalObjectSource
+
+set_option linter.style.longLine false in
+noncomputable def toProcessionNormalizedLogVolumeSource :
+    ProcessionNormalizedLogVolumeSource coric l :=
+  source.toFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+    |>.toProcessionNormalizedLogVolumeSource
+
+set_option linter.style.longLine false in
+/-- Audit for the object-transport finite-divisor realized corridor. -/
+structure Audit : Prop where
+  finite_divisor_realized_base_volume_audit :
+    LogThetaLabelProcessionVerticalLogKummerFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource.Audit
+      source.toFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+  object_transport_family_audit :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      IUTStage1ObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource.Audit
+        (source.objectTransportFiniteDivisorRealizedDivisorFamily thetaClass)
+  finite_divisor_family_eq_constructed :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      source.finiteDivisorRealizedDivisorFamily thetaClass =
+        IUTStage1ObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource.toFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource
+          (source.objectTransportFiniteDivisorRealizedDivisorFamily thetaClass)
+  label_compat_object_eq_base :
+    ∀ (thetaClass : ThetaPilotClass (coric := coric))
+      (label : ZMod l.value),
+      let family := source.objectTransportFiniteDivisorRealizedDivisorFamily thetaClass
+      (family.compatibility.frobenioidObject
+        (family.baseColumn + family.labelColumnShift label)).object =
+        (family.compatibility.frobenioidObject family.baseColumn).object
+  ind3_source_baseCompatRealified_eq_upperSemiSource :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        let family := source.objectTransportFiniteDivisorRealizedDivisorFamily (thetaPilotClass choice₁)
+        (family.compatibility.frobenioidObject family.baseColumn).realifiedLogVolume =
+          choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume
+  ind3_target_baseCompatRealified_eq_upperSemiTarget :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        let family := source.objectTransportFiniteDivisorRealizedDivisorFamily (thetaPilotClass choice₂)
+        (family.compatibility.frobenioidObject family.baseColumn).realifiedLogVolume =
+          choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume
+
+theorem audit :
+    Audit source :=
+  { finite_divisor_realized_base_volume_audit :=
+      source.toFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource.audit,
+    object_transport_family_audit := by
+      intro thetaClass
+      exact
+        (source.objectTransportFiniteDivisorRealizedDivisorFamily thetaClass).audit,
+    finite_divisor_family_eq_constructed := by
+      intro thetaClass
+      rfl,
+    label_compat_object_eq_base := by
+      intro thetaClass label
+      exact
+        (source.objectTransportFiniteDivisorRealizedDivisorFamily thetaClass)
+          |>.label_compat_object_eq_base label,
+    ind3_source_baseCompatRealified_eq_upperSemiSource := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_source_baseCompatRealified_eq_upperSemiSource hstep,
+    ind3_target_baseCompatRealified_eq_upperSemiTarget := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_target_baseCompatRealified_eq_upperSemiTarget hstep }
+
+end LogThetaLabelProcessionVerticalLogKummerObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerBaseVolumeZModLogShellPacketLocalObjectSource
+set_option linter.style.longLine true
+
 namespace ProcessionNormalizedLogVolumeSource
 
 variable

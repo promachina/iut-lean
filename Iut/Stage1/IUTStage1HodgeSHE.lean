@@ -2815,6 +2815,199 @@ theorem audit
 
 end IUTStage1FiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource
 
+set_option linter.style.longLine false
+/--
+Object-level vertical log-Kummer/log-link transport between two labelled
+Frobenioid degree objects in the same vertical column.
+
+This is the finite shadow of the object part of the vertical log-Kummer
+correspondence used in IUT III, Theorem 3.11 and Remarks 3.11.2--3.11.4: the
+source names the object on the base line and the object on the labelled line,
+identifies them with the corresponding column Frobenioid objects, and records
+the log-link transport equality between those objects.
+-/
+structure IUTStage1VerticalLogKummerFrobenioidObjectTransport
+    (compatibility : IUTStage1ColumnFrobenioidLogKummerCompatibility)
+    (baseColumn labelColumn : Int) where
+  baseTransportObject : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean
+  labelTransportObject : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean
+  baseTransportObject_eq_base :
+    baseTransportObject =
+      (compatibility.frobenioidObject baseColumn).object
+  labelTransportObject_eq_label :
+    labelTransportObject =
+      (compatibility.frobenioidObject labelColumn).object
+  labelTransportObject_eq_baseTransportObject :
+    labelTransportObject = baseTransportObject
+
+namespace IUTStage1VerticalLogKummerFrobenioidObjectTransport
+
+variable
+  {compatibility : IUTStage1ColumnFrobenioidLogKummerCompatibility}
+  {baseColumn labelColumn : Int}
+
+theorem label_object_eq_base
+    (transport :
+      IUTStage1VerticalLogKummerFrobenioidObjectTransport
+        compatibility baseColumn labelColumn) :
+    (compatibility.frobenioidObject labelColumn).object =
+      (compatibility.frobenioidObject baseColumn).object := by
+  calc
+    (compatibility.frobenioidObject labelColumn).object =
+        transport.labelTransportObject :=
+      transport.labelTransportObject_eq_label.symm
+    _ = transport.baseTransportObject :=
+      transport.labelTransportObject_eq_baseTransportObject
+    _ = (compatibility.frobenioidObject baseColumn).object :=
+      transport.baseTransportObject_eq_base
+
+set_option linter.style.longLine false in
+structure Audit
+    (transport :
+      IUTStage1VerticalLogKummerFrobenioidObjectTransport
+        compatibility baseColumn labelColumn) :
+    Prop where
+  base_object_realized :
+    transport.baseTransportObject =
+      (compatibility.frobenioidObject baseColumn).object
+  label_object_realized :
+    transport.labelTransportObject =
+      (compatibility.frobenioidObject labelColumn).object
+  logLink_transports_label_to_base :
+    transport.labelTransportObject = transport.baseTransportObject
+  label_object_eq_base :
+    (compatibility.frobenioidObject labelColumn).object =
+      (compatibility.frobenioidObject baseColumn).object
+
+theorem audit
+    (transport :
+      IUTStage1VerticalLogKummerFrobenioidObjectTransport
+        compatibility baseColumn labelColumn) :
+    Audit transport :=
+  { base_object_realized := transport.baseTransportObject_eq_base,
+    label_object_realized := transport.labelTransportObject_eq_label,
+    logLink_transports_label_to_base :=
+      transport.labelTransportObject_eq_baseTransportObject,
+    label_object_eq_base := transport.label_object_eq_base }
+
+end IUTStage1VerticalLogKummerFrobenioidObjectTransport
+
+set_option linter.style.longLine false in
+/--
+Finite-divisor realized normalized Example 3.5 source whose labelled object
+compatibility is constructed from explicit vertical object transports.
+
+This lowers
+`IUTStage1FiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource`
+at the labelled log-link boundary: instead of supplying the equality of
+compatibility objects at `baseColumn + labelColumnShift label` and `baseColumn`,
+the source supplies a labelled vertical log-Kummer/log-link object transport.
+Lean derives the equality consumed by the finite-divisor ordinary-column
+constructor.
+-/
+structure IUTStage1ObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource
+    (π : Type u) [Fintype π] (l : PrimeGeFive) where
+  compatibility : IUTStage1ColumnFrobenioidLogKummerCompatibility
+  primeMultiplicityColumn : Int -> π -> Nat
+  primeDegreeColumn : Int -> π -> Int
+  divisorDegree_eq_compat :
+    ∀ m : Int,
+      (∑ p : π,
+          (primeMultiplicityColumn m p : Int) * primeDegreeColumn m p) =
+        (compatibility.frobenioidObject m).divisorDegree
+  logShellExtensionDegree : Int -> Nat
+  logShellExtensionDegree_pos :
+    ∀ m : Int, 0 < logShellExtensionDegree m
+  normalization : IUTStage1LogVolumeNormalization
+  baseColumn : Int
+  labelColumnShift : ZMod l.value -> Int
+  labelObjectTransport :
+    ∀ label : ZMod l.value,
+      IUTStage1VerticalLogKummerFrobenioidObjectTransport
+        compatibility baseColumn (baseColumn + labelColumnShift label)
+
+namespace IUTStage1ObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource
+
+variable {π : Type u} [Fintype π] {l : PrimeGeFive}
+
+set_option linter.style.longLine false in
+theorem label_compat_object_eq_base
+    (source :
+      IUTStage1ObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource π l)
+    (label : ZMod l.value) :
+    (source.compatibility.frobenioidObject
+      (source.baseColumn + source.labelColumnShift label)).object =
+      (source.compatibility.frobenioidObject source.baseColumn).object :=
+  (source.labelObjectTransport label).label_object_eq_base
+
+set_option linter.style.longLine false in
+def toFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource
+    (source :
+      IUTStage1ObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource π l) :
+    IUTStage1FiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource π l :=
+  { compatibility := source.compatibility,
+    primeMultiplicityColumn := source.primeMultiplicityColumn,
+    primeDegreeColumn := source.primeDegreeColumn,
+    divisorDegree_eq_compat := source.divisorDegree_eq_compat,
+    logShellExtensionDegree := source.logShellExtensionDegree,
+    logShellExtensionDegree_pos := source.logShellExtensionDegree_pos,
+    normalization := source.normalization,
+    baseColumn := source.baseColumn,
+    labelColumnShift := source.labelColumnShift,
+    label_compat_object_eq_base := source.label_compat_object_eq_base }
+
+set_option linter.style.longLine false in
+def toNormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource
+    (source :
+      IUTStage1ObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource π l) :
+    IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l :=
+  source.toFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource
+    |>.toNormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource
+
+set_option linter.style.longLine false in
+noncomputable def toSplitCopiesLocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource
+    (source :
+      IUTStage1ObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource π l) :
+    IUTStage1SplitCopiesLocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l :=
+  source.toFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource
+    |>.toSplitCopiesLocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource
+
+set_option linter.style.longLine false in
+structure Audit
+    (source :
+      IUTStage1ObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource π l) :
+    Prop where
+  finite_divisor_realized_audit :
+    IUTStage1FiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource.Audit
+      source.toFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource
+  label_object_transport_audit :
+    ∀ label : ZMod l.value,
+      IUTStage1VerticalLogKummerFrobenioidObjectTransport.Audit
+        (source.labelObjectTransport label)
+  label_compat_object_eq_base :
+    ∀ label : ZMod l.value,
+      (source.compatibility.frobenioidObject
+        (source.baseColumn + source.labelColumnShift label)).object =
+        (source.compatibility.frobenioidObject source.baseColumn).object
+  finite_divisor_source_from_object_transport :
+    source.toFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource.label_compat_object_eq_base =
+      source.label_compat_object_eq_base
+
+theorem audit
+    (source :
+      IUTStage1ObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource π l) :
+    Audit source :=
+  { finite_divisor_realized_audit :=
+      source.toFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource.audit,
+    label_object_transport_audit := by
+      intro label
+      exact (source.labelObjectTransport label).audit,
+    label_compat_object_eq_base := source.label_compat_object_eq_base,
+    finite_divisor_source_from_object_transport := rfl }
+
+end IUTStage1ObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource
+set_option linter.style.longLine true
+
 /--
 Container estimate for one capsule log-volume entry.
 
