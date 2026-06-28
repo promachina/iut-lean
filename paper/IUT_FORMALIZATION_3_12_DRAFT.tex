@@ -3974,11 +3974,26 @@ local factor, the normalization
 \]
 Together with the already available positivity \(0<r_\beta\), \Lean{} proves
 \(\|0\|_v\le r_\beta\) using \(\operatorname{dist}(0,0)=0\), then projects to
-the zero-centered endpoint.  The remaining paper-side payload is therefore
-narrower: construct the actual local log-shell region, identify it with the
-compact-open valuation ball, connect each valuation-cover factor to the
-existing ultrametric/Haar normalization source that supplies this metric
-valuation law, and prove the pointwise class-region membership laws.
+the zero-centered endpoint.  The log-shell boundary has also been lowered:
+\[
+\begin{array}{l}
+\texttt{ConcreteValuationBallThetaClassFiberTransportConstructedLogShell}\\
+\texttt{MetricZeroValuationBallExactSource}.
+\end{array}
+\]
+Here the local log-shell attached to a factor is no longer an independent
+set.  It is defined to be the compact-open valuation ball
+\[
+  \{x:\|x\|_v\le r_\beta\},
+\]
+so the log-shell/valuation-ball equality is definitional.  The remaining
+paper-side payload is now concentrated in two genuinely source-facing
+identifications: prove that the transported theta region is the realization
+of this constructed valuation ball, and prove the pointwise membership
+equivalences between theta-class regions and valuation-cover regions.  A
+further local-field refinement should connect each valuation-cover factor to
+the existing ultrametric/Haar normalization source that supplies the metric
+valuation law.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
