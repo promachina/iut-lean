@@ -4016,11 +4016,22 @@ uses the fiber-transport-backed equality
 \]
 between the transported theta-class region and the valuation-cover possible
 region, and \Lean{} derives the two membership directions by rewriting.  The
-remaining paper-side payload has therefore moved below this interface: one must
-construct that fiber-transport/valuation-region equality from the concrete
-theta-lattice and Remark~3.9.5 valuation data, and connect each valuation-cover
-factor to the existing ultrametric/Haar normalization source that supplies the
-metric valuation law.
+classwise equality is now itself derived from the sharper source
+\[
+\begin{array}{l}
+\texttt{ConcreteValuationBallThetaClassFiberTransportThetaRegionDefined}\\
+\texttt{FamilyUnionSource}.
+\end{array}
+\]
+There the valuation-cover possible-region family is identified once with the
+transported theta-region family; evaluating this family equality at a
+theta-pilot class gives the previous classwise comparison.  The corresponding
+pointwise source then reuses this family-level construction when deriving
+valuation-cover membership.  The remaining paper-side payload is therefore
+more precise: construct the valuation cover with this theta-region-defined
+possible-image family from the concrete log-theta lattice and
+Remark~3.9.5 local valuation-ball data, and keep the compact-open
+ultrametric/Haar normalization attached to each local factor.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
