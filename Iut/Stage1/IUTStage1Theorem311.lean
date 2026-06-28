@@ -6823,6 +6823,246 @@ theorem audit :
 end LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnConstructedUpperSemiBaseVolumeZModLogShellPacketLocalObjectSource
 set_option linter.style.longLine true
 
+set_option linter.style.longLine false
+/--
+Frobenioid divisor-column source with representative-constructed upper-semi
+states.
+
+This lowers the previous constructed upper-semi boundary.  Instead of assuming
+directly that each concrete choice's upper-semi state is the constructed
+Frobenioid state, the source provides a theta-pilot representative section.
+The section's upper-semi representative is calibrated at the Frobenioid
+base-volume level, and each concrete choice is identified with its selected
+representative.
+-/
+structure LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnRepresentativeConstructedUpperSemiBaseVolumeZModLogShellPacketLocalObjectSource
+    (coric : Type u) (l : PrimeGeFive) (π : Type v) [Fintype π] where
+  frobenioidDivisorColumnFamily :
+    ThetaPilotClass (coric := coric) ->
+      IUTStage1FrobenioidDivisorColumnObjectTransportNormalizedExample35Source π l
+  representativeData : ThetaPilotClassRepresentativeData coric l
+  direct_summand_count_eq_zmodCard :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      choice.local_tensor_state.directSummandCount = Fintype.card (ZMod l.value)
+  choice_eq_representative :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      choice = representativeData.representative (thetaPilotClass choice)
+  representative_upperSemi_logVolumeCompatibility_eq_base :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      (representativeData.upper_semi_state thetaClass).logVolumeCompatibility =
+        { sourceLogVolume :=
+            let family := frobenioidDivisorColumnFamily thetaClass
+            (family.frobenioidObject family.baseColumn).realifiedLogVolume,
+          targetLogVolume :=
+            let family := frobenioidDivisorColumnFamily thetaClass
+            (family.frobenioidObject family.baseColumn).realifiedLogVolume,
+          source_le_target := le_rfl }
+
+namespace LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnRepresentativeConstructedUpperSemiBaseVolumeZModLogShellPacketLocalObjectSource
+
+variable {π : Type v} [Fintype π]
+variable
+  (source :
+    LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnRepresentativeConstructedUpperSemiBaseVolumeZModLogShellPacketLocalObjectSource
+      coric l π)
+
+set_option linter.style.longLine false in
+def baseConstructedRealifiedVolume
+    (thetaClass : ThetaPilotClass (coric := coric)) : Real :=
+  let family := source.frobenioidDivisorColumnFamily thetaClass
+  (family.frobenioidObject family.baseColumn).realifiedLogVolume
+
+set_option linter.style.longLine false in
+def representativeConstructedUpperSemiState
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    IUTStage1UpperSemiCompatibilityState :=
+  { logThetaColumn := thetaClass.logThetaColumn,
+    compatibility :=
+      (source.representativeData.upper_semi_state thetaClass).compatibility,
+    nonarchimedeanInclusions :=
+      (source.representativeData.upper_semi_state thetaClass).nonarchimedeanInclusions,
+    archimedeanSurjections :=
+      (source.representativeData.upper_semi_state thetaClass).archimedeanSurjections,
+    logVolumeCompatibility :=
+      { sourceLogVolume := source.baseConstructedRealifiedVolume thetaClass,
+        targetLogVolume := source.baseConstructedRealifiedVolume thetaClass,
+        source_le_target := le_rfl },
+    hasNonarchimedeanInclusions :=
+      (source.representativeData.upper_semi_state thetaClass).hasNonarchimedeanInclusions,
+    hasArchimedeanSurjections :=
+      (source.representativeData.upper_semi_state thetaClass).hasArchimedeanSurjections,
+    logVolumeCompatible :=
+      (source.representativeData.upper_semi_state thetaClass).logVolumeCompatible,
+    log_volume_compatible :=
+      (source.representativeData.upper_semi_state thetaClass).log_volume_compatible }
+
+set_option linter.style.longLine false in
+theorem representative_upperSemi_state_eq_constructed
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    source.representativeData.upper_semi_state thetaClass =
+      source.representativeConstructedUpperSemiState thetaClass := by
+  have hcolumn :=
+    source.representativeData.upper_semi_logThetaColumn_eq thetaClass
+  have hlog :=
+    source.representative_upperSemi_logVolumeCompatibility_eq_base thetaClass
+  exact
+    IUTStage1UpperSemiCompatibilityState.UpperSemiTransport.eq_of_logThetaColumn_eq
+      { compatibility_eq := by
+          simp [representativeConstructedUpperSemiState],
+        nonarchimedeanInclusions_eq := by
+          simp [representativeConstructedUpperSemiState],
+        archimedeanSurjections_eq := by
+          simp [representativeConstructedUpperSemiState],
+        logVolumeCompatibility_eq := by
+          simpa [representativeConstructedUpperSemiState,
+            baseConstructedRealifiedVolume] using hlog,
+        hasNonarchimedeanInclusions_eq := by
+          simp [representativeConstructedUpperSemiState],
+        hasArchimedeanSurjections_eq := by
+          simp [representativeConstructedUpperSemiState],
+        logVolumeCompatible_eq := by
+          simp [representativeConstructedUpperSemiState] }
+      (by
+        simpa [representativeConstructedUpperSemiState] using hcolumn)
+
+set_option linter.style.longLine false in
+theorem upper_semi_state_eq_representativeConstructed
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    choice.upper_semi_state =
+      source.representativeConstructedUpperSemiState (thetaPilotClass choice) := by
+  calc
+    choice.upper_semi_state =
+        (source.representativeData.representative
+          (thetaPilotClass choice)).upper_semi_state := by
+      exact congrArg IUTStage1ConcreteHodgeTheaterLogThetaChoice.upper_semi_state
+        (source.choice_eq_representative choice)
+    _ = source.representativeData.upper_semi_state (thetaPilotClass choice) := rfl
+    _ = source.representativeConstructedUpperSemiState
+          (thetaPilotClass choice) :=
+      source.representative_upperSemi_state_eq_constructed
+        (thetaPilotClass choice)
+
+set_option linter.style.longLine false in
+def toFrobenioidDivisorColumnConstructedUpperSemiBaseVolumeZModLogShellPacketLocalObjectSource :
+    LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnConstructedUpperSemiBaseVolumeZModLogShellPacketLocalObjectSource
+      coric l π :=
+  { frobenioidDivisorColumnFamily := source.frobenioidDivisorColumnFamily,
+    direct_summand_count_eq_zmodCard := source.direct_summand_count_eq_zmodCard,
+    upperSemiCompatibility := fun thetaClass =>
+      (source.representativeData.upper_semi_state thetaClass).compatibility,
+    upperSemiNonarchimedeanInclusions := fun thetaClass =>
+      (source.representativeData.upper_semi_state thetaClass).nonarchimedeanInclusions,
+    upperSemiArchimedeanSurjections := fun thetaClass =>
+      (source.representativeData.upper_semi_state thetaClass).archimedeanSurjections,
+    upperSemiHasNonarchimedeanInclusions := fun thetaClass =>
+      (source.representativeData.upper_semi_state thetaClass).hasNonarchimedeanInclusions,
+    upperSemiHasArchimedeanSurjections := fun thetaClass =>
+      (source.representativeData.upper_semi_state thetaClass).hasArchimedeanSurjections,
+    upperSemiLogVolumeCompatible := fun thetaClass =>
+      (source.representativeData.upper_semi_state thetaClass).logVolumeCompatible,
+    upperSemi_log_volume_compatible := fun thetaClass =>
+      (source.representativeData.upper_semi_state thetaClass).log_volume_compatible,
+    upper_semi_state_eq_constructed := by
+      intro choice
+      exact source.upper_semi_state_eq_representativeConstructed choice }
+
+set_option linter.style.longLine false in
+def finiteDivisorRealizedDivisorFamily
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    IUTStage1FiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource π l :=
+  (source.frobenioidDivisorColumnFamily thetaClass)
+    |>.toFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource
+
+set_option linter.style.longLine false in
+noncomputable def toColumnRealifiedLogShellZModLogShellPacketLocalObjectSource :
+    LogThetaLabelProcessionVerticalLogKummerColumnRealifiedLogShellZModLogShellPacketLocalObjectSource
+      coric l π :=
+  source.toFrobenioidDivisorColumnConstructedUpperSemiBaseVolumeZModLogShellPacketLocalObjectSource
+    |>.toColumnRealifiedLogShellZModLogShellPacketLocalObjectSource
+
+set_option linter.style.longLine false in
+noncomputable def toProcessionNormalizedLogVolumeSource :
+    ProcessionNormalizedLogVolumeSource coric l :=
+  source.toFrobenioidDivisorColumnConstructedUpperSemiBaseVolumeZModLogShellPacketLocalObjectSource
+    |>.toProcessionNormalizedLogVolumeSource
+
+set_option linter.style.longLine false in
+theorem ind3_baseConstructedRealified_le
+    {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hstep : Ind3UpperSemiStep choice₁ choice₂) :
+    let sourceFamily :=
+      source.frobenioidDivisorColumnFamily (thetaPilotClass choice₁)
+    let targetFamily :=
+      source.frobenioidDivisorColumnFamily (thetaPilotClass choice₂)
+    (sourceFamily.frobenioidObject sourceFamily.baseColumn).realifiedLogVolume <=
+      (targetFamily.frobenioidObject targetFamily.baseColumn).realifiedLogVolume :=
+  source.toFrobenioidDivisorColumnConstructedUpperSemiBaseVolumeZModLogShellPacketLocalObjectSource
+    |>.ind3_baseConstructedRealified_le hstep
+
+set_option linter.style.longLine false in
+/-- Audit for deriving constructed upper-semi states from a representative section. -/
+structure Audit : Prop where
+  constructed_upperSemi_base_volume_audit :
+    LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnConstructedUpperSemiBaseVolumeZModLogShellPacketLocalObjectSource.Audit
+      source.toFrobenioidDivisorColumnConstructedUpperSemiBaseVolumeZModLogShellPacketLocalObjectSource
+  frobenioid_divisor_column_family_audit :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      IUTStage1FrobenioidDivisorColumnObjectTransportNormalizedExample35Source.Audit
+        (source.frobenioidDivisorColumnFamily thetaClass)
+  choice_eq_representative :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      choice = source.representativeData.representative (thetaPilotClass choice)
+  representative_upperSemi_state_eq_constructed :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      source.representativeData.upper_semi_state thetaClass =
+        source.representativeConstructedUpperSemiState thetaClass
+  upper_semi_state_eq_representativeConstructed :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      choice.upper_semi_state =
+        source.representativeConstructedUpperSemiState (thetaPilotClass choice)
+  representative_upperSemi_logVolumeCompatibility_eq_base :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      (source.representativeData.upper_semi_state thetaClass).logVolumeCompatibility =
+        { sourceLogVolume := source.baseConstructedRealifiedVolume thetaClass,
+          targetLogVolume := source.baseConstructedRealifiedVolume thetaClass,
+          source_le_target := le_rfl }
+  ind3_baseConstructedRealified_le :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
+        let sourceFamily :=
+          source.frobenioidDivisorColumnFamily (thetaPilotClass choice₁)
+        let targetFamily :=
+          source.frobenioidDivisorColumnFamily (thetaPilotClass choice₂)
+        (sourceFamily.frobenioidObject sourceFamily.baseColumn).realifiedLogVolume <=
+          (targetFamily.frobenioidObject targetFamily.baseColumn).realifiedLogVolume
+
+set_option linter.style.longLine false in
+theorem audit :
+    Audit source :=
+  { constructed_upperSemi_base_volume_audit :=
+      source.toFrobenioidDivisorColumnConstructedUpperSemiBaseVolumeZModLogShellPacketLocalObjectSource.audit,
+    frobenioid_divisor_column_family_audit := by
+      intro thetaClass
+      exact (source.frobenioidDivisorColumnFamily thetaClass).audit,
+    choice_eq_representative := by
+      intro choice
+      exact source.choice_eq_representative choice,
+    representative_upperSemi_state_eq_constructed := by
+      intro thetaClass
+      exact source.representative_upperSemi_state_eq_constructed thetaClass,
+    upper_semi_state_eq_representativeConstructed := by
+      intro choice
+      exact source.upper_semi_state_eq_representativeConstructed choice,
+    representative_upperSemi_logVolumeCompatibility_eq_base := by
+      intro thetaClass
+      exact source.representative_upperSemi_logVolumeCompatibility_eq_base thetaClass,
+    ind3_baseConstructedRealified_le := by
+      intro choice₁ choice₂ hstep
+      exact source.ind3_baseConstructedRealified_le hstep }
+
+end LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnRepresentativeConstructedUpperSemiBaseVolumeZModLogShellPacketLocalObjectSource
+set_option linter.style.longLine true
+
 namespace ProcessionNormalizedLogVolumeSource
 
 variable
