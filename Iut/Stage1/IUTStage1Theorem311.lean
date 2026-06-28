@@ -10621,6 +10621,64 @@ def ofLabelSources
         sourceLabel targetLabel kindTransport }
 
 set_option linter.style.longLine false in
+/--
+Construct the nonarchimedean label-transport source step from the concrete
+local tensor `Ism` labels and transport of the direct-summand symmetry kind.
+
+The source packet's `Ism` summand kind is read from the retained matching
+action.  The target kind is then obtained by transporting that source kind.
+-/
+def ofTensorSymmetryLabels
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (actionSource :
+      NonarchimedeanIsmActionEntrySourceStep audited₁ audited₂)
+    (source_tensor_symmetry_eq :
+      audited₁.choice.local_tensor_state.packetState.tensorState.symmetry =
+        IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm.toLocalTensorSymmetryId)
+    (target_tensor_symmetry_eq :
+      audited₂.choice.local_tensor_state.packetState.tensorState.symmetry =
+        IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm.toLocalTensorSymmetryId)
+    (kindTransport :
+      IUTStage1LocalTensorDirectSummandPacketState.SymmetryKindTransport
+        audited₁.choice.local_tensor_state
+        audited₂.choice.local_tensor_state) :
+    NonarchimedeanIsmActionEntryLabelTransportSourceStep audited₁ audited₂ :=
+  let sourceKindEq := actionSource.matching_action.symmetryKind_eq
+  let sourceLabel :=
+    IUTStage1LocalTensorDirectSummandPacketState.SymmetryLabelSource.ofNonarchimedeanIsm
+      sourceKindEq source_tensor_symmetry_eq
+  let targetKindEq := kindTransport.target_symmetryKind_eq sourceKindEq
+  let targetLabel :=
+    IUTStage1LocalTensorDirectSummandPacketState.SymmetryLabelSource.ofNonarchimedeanIsm
+      targetKindEq target_tensor_symmetry_eq
+  ofLabelSources actionSource sourceLabel targetLabel kindTransport
+
+set_option linter.style.longLine false in
+theorem ofTensorSymmetryLabels_labelTransportAudit
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (actionSource :
+      NonarchimedeanIsmActionEntrySourceStep audited₁ audited₂)
+    (source_tensor_symmetry_eq :
+      audited₁.choice.local_tensor_state.packetState.tensorState.symmetry =
+        IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm.toLocalTensorSymmetryId)
+    (target_tensor_symmetry_eq :
+      audited₂.choice.local_tensor_state.packetState.tensorState.symmetry =
+        IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm.toLocalTensorSymmetryId)
+    (kindTransport :
+      IUTStage1LocalTensorDirectSummandPacketState.SymmetryKindTransport
+        audited₁.choice.local_tensor_state
+        audited₂.choice.local_tensor_state) :
+    IUTStage1LocalTensorDirectSummandPacketState.SymmetryLabelTransportSource.TransportAudit
+      (ofTensorSymmetryLabels actionSource source_tensor_symmetry_eq
+        target_tensor_symmetry_eq kindTransport).label_transport :=
+  (ofTensorSymmetryLabels actionSource source_tensor_symmetry_eq
+    target_tensor_symmetry_eq kindTransport).label_transport.transportAudit
+
+set_option linter.style.longLine false in
 theorem ofLabelSources_labelTransportAudit
     {audited₁ audited₂ :
       IUTStage1PlaceAuditedDirectSummandPacketChoice
@@ -10758,6 +10816,62 @@ def ofLabelSources
     label_transport :=
       IUTStage1LocalTensorDirectSummandPacketState.SymmetryLabelTransportSource.ofLabelSources
         sourceLabel targetLabel kindTransport }
+
+set_option linter.style.longLine false in
+/--
+Construct the archimedean order-two label-transport source step from the
+concrete local tensor order-two labels and transport of the direct-summand
+symmetry kind.
+-/
+def ofTensorSymmetryLabels
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (actionSource :
+      ArchimedeanOrderTwoActionEntrySourceStep audited₁ audited₂)
+    (source_tensor_symmetry_eq :
+      audited₁.choice.local_tensor_state.packetState.tensorState.symmetry =
+        IUTStage1TensorSummandSymmetryKind.archimedeanOrderTwo.toLocalTensorSymmetryId)
+    (target_tensor_symmetry_eq :
+      audited₂.choice.local_tensor_state.packetState.tensorState.symmetry =
+        IUTStage1TensorSummandSymmetryKind.archimedeanOrderTwo.toLocalTensorSymmetryId)
+    (kindTransport :
+      IUTStage1LocalTensorDirectSummandPacketState.SymmetryKindTransport
+        audited₁.choice.local_tensor_state
+        audited₂.choice.local_tensor_state) :
+    ArchimedeanOrderTwoActionEntryLabelTransportSourceStep audited₁ audited₂ :=
+  let sourceKindEq := actionSource.matching_action.symmetryKind_eq
+  let sourceLabel :=
+    IUTStage1LocalTensorDirectSummandPacketState.SymmetryLabelSource.ofArchimedeanOrderTwo
+      sourceKindEq source_tensor_symmetry_eq
+  let targetKindEq := kindTransport.target_symmetryKind_eq sourceKindEq
+  let targetLabel :=
+    IUTStage1LocalTensorDirectSummandPacketState.SymmetryLabelSource.ofArchimedeanOrderTwo
+      targetKindEq target_tensor_symmetry_eq
+  ofLabelSources actionSource sourceLabel targetLabel kindTransport
+
+set_option linter.style.longLine false in
+theorem ofTensorSymmetryLabels_labelTransportAudit
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (actionSource :
+      ArchimedeanOrderTwoActionEntrySourceStep audited₁ audited₂)
+    (source_tensor_symmetry_eq :
+      audited₁.choice.local_tensor_state.packetState.tensorState.symmetry =
+        IUTStage1TensorSummandSymmetryKind.archimedeanOrderTwo.toLocalTensorSymmetryId)
+    (target_tensor_symmetry_eq :
+      audited₂.choice.local_tensor_state.packetState.tensorState.symmetry =
+        IUTStage1TensorSummandSymmetryKind.archimedeanOrderTwo.toLocalTensorSymmetryId)
+    (kindTransport :
+      IUTStage1LocalTensorDirectSummandPacketState.SymmetryKindTransport
+        audited₁.choice.local_tensor_state
+        audited₂.choice.local_tensor_state) :
+    IUTStage1LocalTensorDirectSummandPacketState.SymmetryLabelTransportSource.TransportAudit
+      (ofTensorSymmetryLabels actionSource source_tensor_symmetry_eq
+        target_tensor_symmetry_eq kindTransport).label_transport :=
+  (ofTensorSymmetryLabels actionSource source_tensor_symmetry_eq
+    target_tensor_symmetry_eq kindTransport).label_transport.transportAudit
 
 set_option linter.style.longLine false in
 theorem ofLabelSources_labelTransportAudit

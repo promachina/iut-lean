@@ -6628,6 +6628,49 @@ theorem SymmetryKindTransport.target_symmetryKind_eq
     state₂.summandFamily.symmetryKind = symmetryKind :=
   transport.target_symmetryKind_eq_source.trans source_symmetryKind_eq
 
+namespace SymmetryKindTransport
+
+variable
+  {state₁ state₂ : IUTStage1LocalTensorDirectSummandPacketState kind}
+
+def ofEq
+    (target_symmetryKind_eq_source :
+      state₂.summandFamily.symmetryKind = state₁.summandFamily.symmetryKind) :
+    SymmetryKindTransport state₁ state₂ :=
+  { target_symmetryKind_eq_source := target_symmetryKind_eq_source }
+
+set_option linter.style.longLine false in
+def ofSameNonarchimedeanIsm
+    {state₁ state₂ :
+      IUTStage1LocalTensorDirectSummandPacketState
+        IUTStage1PlaceKind.nonarchimedean}
+    (source_symmetryKind_eq :
+      state₁.summandFamily.symmetryKind =
+        IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm)
+    (target_symmetryKind_eq :
+      state₂.summandFamily.symmetryKind =
+        IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm) :
+    SymmetryKindTransport state₁ state₂ :=
+  { target_symmetryKind_eq_source :=
+      target_symmetryKind_eq.trans source_symmetryKind_eq.symm }
+
+set_option linter.style.longLine false in
+def ofSameArchimedeanOrderTwo
+    {state₁ state₂ :
+      IUTStage1LocalTensorDirectSummandPacketState
+        IUTStage1PlaceKind.archimedean}
+    (source_symmetryKind_eq :
+      state₁.summandFamily.symmetryKind =
+        IUTStage1TensorSummandSymmetryKind.archimedeanOrderTwo)
+    (target_symmetryKind_eq :
+      state₂.summandFamily.symmetryKind =
+        IUTStage1TensorSummandSymmetryKind.archimedeanOrderTwo) :
+    SymmetryKindTransport state₁ state₂ :=
+  { target_symmetryKind_eq_source :=
+      target_symmetryKind_eq.trans source_symmetryKind_eq.symm }
+
+end SymmetryKindTransport
+
 set_option linter.style.longLine false in
 /--
 Source certificate tying a direct-summand packet's local tensor label to the
@@ -6641,6 +6684,51 @@ structure SymmetryLabelSource
   symmetry_eq :
     state.packetState.tensorState.symmetry =
       state.summandFamily.symmetryKind.toLocalTensorSymmetryId
+
+namespace SymmetryLabelSource
+
+variable {state : IUTStage1LocalTensorDirectSummandPacketState kind}
+
+def ofTensorSymmetryKindEq
+    (symmetry_eq :
+      state.packetState.tensorState.symmetry =
+        state.summandFamily.symmetryKind.toLocalTensorSymmetryId) :
+    SymmetryLabelSource state :=
+  { symmetry_eq := symmetry_eq }
+
+set_option linter.style.longLine false in
+def ofNonarchimedeanIsm
+    {state :
+      IUTStage1LocalTensorDirectSummandPacketState
+        IUTStage1PlaceKind.nonarchimedean}
+    (symmetry_kind_eq :
+      state.summandFamily.symmetryKind =
+        IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm)
+    (tensor_symmetry_eq :
+      state.packetState.tensorState.symmetry =
+        IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm.toLocalTensorSymmetryId) :
+    SymmetryLabelSource state :=
+  { symmetry_eq := by
+      rw [symmetry_kind_eq]
+      exact tensor_symmetry_eq }
+
+set_option linter.style.longLine false in
+def ofArchimedeanOrderTwo
+    {state :
+      IUTStage1LocalTensorDirectSummandPacketState
+        IUTStage1PlaceKind.archimedean}
+    (symmetry_kind_eq :
+      state.summandFamily.symmetryKind =
+        IUTStage1TensorSummandSymmetryKind.archimedeanOrderTwo)
+    (tensor_symmetry_eq :
+      state.packetState.tensorState.symmetry =
+        IUTStage1TensorSummandSymmetryKind.archimedeanOrderTwo.toLocalTensorSymmetryId) :
+    SymmetryLabelSource state :=
+  { symmetry_eq := by
+      rw [symmetry_kind_eq]
+      exact tensor_symmetry_eq }
+
+end SymmetryLabelSource
 
 set_option linter.style.longLine false in
 theorem SymmetryLabelSource.toNonarchimedeanIsmSymmetrySource
