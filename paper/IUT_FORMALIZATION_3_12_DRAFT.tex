@@ -12571,16 +12571,37 @@ derives the constructed packet source, and
 \]
 returns the constructed-class equality, the finite record-image realization, the
 derived target-region realization, the selected-region identifications, and the
-finite-divisor \(C_\Theta\) dichotomy.
+finite-divisor \(C_\Theta\) dichotomy.  The next source boundary is no longer
+selected-only.  The finite image-law source
+\[
+\begin{gathered}
+\texttt{GeneratedFullLabelFiniteDivisorVerticalIQ}\\
+\texttt{FiniteThetaClassImageLawSource}
+\end{gathered}
+\]
+states one finite Theorem~3.11 theta-class image law for all nonarchimedean
+finite packets.  Lean specializes this law at the selected packet, constructs
+the record-backed packet source, and the endpoint
+\[
+\begin{gathered}
+\texttt{generatedFullLabelFiniteDivisorVerticalIQ}\\
+\texttt{FiniteThetaClassImageLawSource\_cThetaDichotomy}
+\end{gathered}
+\]
+derives the same selected-region and \(C_\Theta\) conclusions.  Thus the
+remaining record-image payload has moved from a single selected equality to a
+finite packet image law that should be constructed from the paper-native
+log-Kummer/Frobenioid packet geometry.
 
 The practical priority order is now:
 \begin{enumerate}
 \item Construct the source-side witnesses for the generated-full-label to
   finite-divisor vertical-\(IQ\) handoff.  The handoff record, record-image,
   theta-class, finite-packet projection, and constructed finite-packet
-  theta-class sources are now implemented, and the target-region realization is
-  now derived from the finite Theorem~3.11 record image.  What remains is to
-  derive the finite record-image realization and signed q/theta pre-ledger
+  theta-class sources are now implemented.  The target-region realization is
+  derived from the finite Theorem~3.11 record image, and the selected
+  record-image witness is derived from a finite-wide theta-class image law.  What
+  remains is to construct that image law and the signed q/theta pre-ledger
   equalities from paper-native finite divisors, local objects, and log-volume
   comparison data.
 \item Construct the finite divisor-component columns--local object, prime
