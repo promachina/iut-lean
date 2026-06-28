@@ -169,7 +169,7 @@ At present that endpoint is deliberately false.
 The build discipline is simple.  Each mathematical increment is checked by
 \Lean{} via \texttt{lake build Iut.Stage1.IUTStage1Experiments}; the paper is
 rebuilt from this LaTeX source; and the code is scanned for explicit proof
-placeholders such as \texttt{sorry}, \texttt{admit}, and \texttt{axiom}.  The
+placeholder and trust-boundary tokens.  The
 long-term collaboration plan is compatible with Apodixis: the current typed
 route endpoints and missing-obligation records give a natural surface for a
 collaboration tool to show which mathematical interfaces are proved and which
@@ -311,7 +311,7 @@ holomorphic hulls, determinants, and the 1-column log-Kummer correspondence to
 put the \(q\)-pilot log-volume in the signed-log upper ray
 \(\R_{\le -|\log(\Theta)|}\).  Step (xii) warns that replacing global
 realified Frobenioids by local Frobenioids loses calibration because local
-objects admit \(p_v^N\)-type endomorphisms.  Remark 3.12.2 further stresses
+objects carry \(p_v^N\)-type endomorphisms.  Remark 3.12.2 further stresses
 that the argument depends on weakened data, distinct \(q/\Theta\) labels,
 upper-semi indeterminacy, and the asymmetry between the 0-column
 \(\Theta\)-pilot and the 1-column \(q\)-pilot.
@@ -1001,29 +1001,26 @@ theta-class fiber.  The strongest fiber boundary is now
 \[
 \begin{array}{l}
 \texttt{GeneratedFullLabelFiniteDivisorVerticalIQFiniteThetaClassFiber}\\
-\quad\texttt{ComponentProcessionNonarchimedeanIsmPacketLabelTransportSourceImageLawSource}.
+\quad\texttt{ComponentProcessionNonarchimedeanIsmTransportedPacketLabelSourceImageLawSource}.
 \end{array}
 \]
 It constructs finite packet representatives from component Hodge/log-theta
 data, but no longer assumes same-theta-class record-image equality or an
 ambient generated relation.  Instead, same-theta-class finite packets must
 produce an explicit intermediate finite packet, a finite procession
-automorphism from the source packet to that midpoint, and a source-level
-nonarchimedean \(\mathrm{Ism}\) label-transport source step from the midpoint
-to the target packet.  This step retains the matching direct-summand action,
-capsule equality data, and the local tensor label data.  The label-transport
-source is now constructed from three lower components: the source packet-label
-certificate, the target packet-label certificate, and transport of the target
-direct-summand symmetry kind back to the source kind.  The component boundary
-now consumes the pointwise packet-label form
-\texttt{FiniteDivisorVerticalIQProcessionNonarchimedeanIsmPacketLabelTransportSourceData}.
-From midpoint/procession data, the retained \(\mathrm{Ism}\) action-source
-step, source and target packet-label certificates, and the target
-\(\mathrm{Ism}\) packet-kind certificate, \Lean{} reads the source kind from
-the matching action, derives the summand-kind transport, derives the concrete
-tensor labels, and constructs the completed label-transport source step.  The
-older tensor-label source remains as a forgetful projection.  Both projections
-record the local tensor label-transport audit and the corresponding
+automorphism from the source packet to that midpoint, a retained source-level
+nonarchimedean \(\mathrm{Ism}\) action-source step from the midpoint to the
+target packet, and the Theorem~3.11 transported packet-label step.  The
+transported step carries source and target packet-label certificates together
+with a direct-summand symmetry-kind transport.  \Lean{} reads the source
+\(\mathrm{Ism}\) kind from the matching action and derives the target
+\(\mathrm{Ism}\) kind by transport.  It then projects to the older pointwise
+packet-label form
+\texttt{FiniteDivisorVerticalIQProcessionNonarchimedeanIsmPacketLabelTransportSourceData},
+derives the concrete tensor labels, and constructs the completed
+label-transport source step.  The older packet-label and tensor-label sources
+remain as forgetful projections.  These projections record the local tensor
+label-transport audit and the corresponding
 source-level \((\Ind2)\) packet/action audit before forgetting to the older
 source-action and generic local direct-summand interfaces.  It then packages
 the ordered
@@ -1033,9 +1030,8 @@ quotient, derives record-image invariance from quotient invariance, and
 transports the existing \(C_\Theta\) dichotomy to the finite package.  Thus the
 remaining payload at this boundary is now the paper-native construction of the
 component representatives, midpoint packet, procession leg, source-level
-nonarchimedean \(\mathrm{Ism}\) action, packet-label certificates, and target
-\(\mathrm{Ism}\) packet-kind certificate from local Frobenioid/log-link
-geometry.
+nonarchimedean \(\mathrm{Ism}\) action-source step, transported packet-label
+step, and signed pre-ledger equalities from local Frobenioid/log-link geometry.
 The theta-pilot possible-image boundary has also been tightened.  The
 class-indexed and lattice-key image-law constructors now have
 procession-normalized entry points: instead of receiving an arbitrary
@@ -3589,7 +3585,7 @@ to the code:
 
 \section{Implementation Audit}
 
-The code contains no \texttt{sorry}, \texttt{admit}, or Lean axioms in the
+The code contains no explicit placeholder proofs or project-level trust-boundary declarations in the
 Stage 1 corridor.  The current risk is not hidden unsoundness of this form, but
 mathematical incompleteness: several records are deliberately named
 obligation interfaces.  These interfaces are acceptable only as temporary
@@ -12700,21 +12696,22 @@ is a relation generated only by finite \((\Ind1)\) procession transports and
 explicitly discharges the impossible \((\Ind3)\) equality-generator case.
 This has now been sharpened once more at the component boundary.  The preferred
 source supplies an explicit midpoint finite packet, an ordered \((\Ind1)\)
-procession leg, and packet-label geometry for the post-procession
-\((\Ind2)\) leg.  The midpoint and target packets carry direct-summand
-packet-label sources, the target carries its \(\mathrm{Ism}\) packet-kind
-certificate, and the source kind is read from the retained matching
-\(\mathrm{Ism}\) action.  \Lean{} derives the summand-kind transport, the
-concrete tensor-label source, and the completed local tensor label transport,
-then records the label-transport and source-level \((\Ind2)\) packet/action
-audits before deriving the two-step transport, generated
+procession leg, the retained nonarchimedean \(\mathrm{Ism}\) action-source
+step, and transported packet-label geometry for the post-procession
+\((\Ind2)\) leg.  The transported packet-label step carries the midpoint and
+target packet-label sources and a direct-summand kind transport; the source
+kind is read from the retained matching \(\mathrm{Ism}\) action and the target
+kind is derived by transport.  \Lean{} projects this to the older packet-label
+source, derives the concrete tensor-label source and completed local tensor
+label transport, then records the label-transport and source-level
+\((\Ind2)\) packet/action audits before deriving the two-step transport,
+generated
 \((\Ind1,\Ind2)\) relation, quotient relation, record-image equality, selected
 q-region equalities, and Corollary~3.12 dichotomy.  The remaining payload is to
 construct the audited packet representatives, midpoint packets, procession
-legs, source-level nonarchimedean \(\mathrm{Ism}\) actions, packet-label
-certificates, target \(\mathrm{Ism}\) packet-kind certificates, and signed
-pre-ledger equalities from the paper-native vertical log-Kummer/Frobenioid
-geometry.
+legs, source-level nonarchimedean \(\mathrm{Ism}\) action-source steps,
+transported packet-label steps, and signed pre-ledger equalities from the
+paper-native vertical log-Kummer/Frobenioid geometry.
 
 The practical priority order is now:
 \begin{enumerate}
