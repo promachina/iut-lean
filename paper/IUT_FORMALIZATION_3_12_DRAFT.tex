@@ -13130,8 +13130,18 @@ the lattice level by
 \]
 The lattice-backed source uses the concrete lattice-formula record source; the
 common class formula is obtained from Hodge-theater id, history label, the
-finite-label-forgotten log-theta lattice coordinate, and the coric datum.  The
-localized Ob3/Ob4 comparison has also been factored by
+finite-label-forgotten log-theta lattice coordinate, and the coric datum.  This
+has been lowered once more by
+\[
+\begin{gathered}
+\texttt{ConcreteHodgeTheaterLogThetaGeneratedFullLabel}\\
+\texttt{LatticeImageLawRepresentativeSelectedThetaClassQRegionSource}.
+\end{gathered}
+\]
+Here Lean constructs the lattice formula from representative concrete choices;
+the concrete source-paper input is the invariance of possible-image regions
+under equality of the Hodge-theater/history/lattice/coric key.  The localized
+Ob3/Ob4 comparison has also been factored by
 \[
 \begin{gathered}
 \texttt{IUTStage1Remark395LocalizedVectorBundle}\\
@@ -13173,8 +13183,9 @@ theta-class q-region calibration, the common hull system, and the
 hull/determinant identifications, but obtains both localized hull-cover sources
 and their component transport from valuation-ball Haar covers.  The remaining
 source-facing obligation is therefore sharper: construct the common
-lattice-formula compatibility and the valuation-ball/Haar transport source
-from the local log-Kummer/Frobenioid geometry.
+lattice-image-law compatibility with the generated full-label side, together
+with the valuation-ball/Haar transport source, from the local
+log-Kummer/Frobenioid geometry.
 
 The practical priority order is now:
 \begin{enumerate}
