@@ -1001,7 +1001,7 @@ theta-class fiber.  The strongest fiber boundary is now
 \[
 \begin{array}{l}
 \texttt{GeneratedFullLabelFiniteDivisorVerticalIQFiniteThetaClassFiber}\\
-\quad\texttt{ComponentProcessionNonarchimedeanIsmCalibratedLocalTensorSourceImageLawSource}.
+\quad\texttt{ComponentProcessionNonarchimedeanIsmLabelTransportSourceImageLawSource}.
 \end{array}
 \]
 It constructs finite packet representatives from component Hodge/log-theta
@@ -1009,13 +1009,15 @@ data, but no longer assumes same-theta-class record-image equality or an
 ambient generated relation.  Instead, same-theta-class finite packets must
 produce an explicit intermediate finite packet, a finite procession
 automorphism from the source packet to that midpoint, a retained
-source-level nonarchimedean \(\mathrm{Ism}\) action step, and calibrated
-nonarchimedean local tensor packets for the midpoint and target.  \Lean{}
-derives the raw tensor labels, packet-label certificates, the direct-summand
-kind transport, the tensor-label source, the completed label-transport source,
-and the transported packet-label step.  The compact endpoint exposes the
-calibrated source and all derived witnesses before forgetting to the older
-source-action and generic local direct-summand interfaces.  It then packages
+source-level nonarchimedean \(\mathrm{Ism}\) action step, and a single
+source-level local tensor label-transport datum.  The matching action supplies
+the source \(\mathrm{Ism}\) summand kind; the label-transport datum supplies
+the source and target packet labels plus target-kind transport.  \Lean{}
+derives the calibrated local tensor packets, raw tensor labels, packet-label
+certificates, tensor-label source, completed label-transport source, and the
+transported packet-label step.  The compact endpoint exposes the label-transport
+source and all derived witnesses before forgetting to the older source-action
+and generic local direct-summand interfaces.  It then packages
 the ordered
 \((\Ind1)\)-then-\((\Ind2)\) datum as the previous two-step transport, derives
 the generated \((\Ind1),(\Ind2)\) relation, embeds it into the place-audited
@@ -1023,9 +1025,8 @@ quotient, derives record-image invariance from quotient invariance, and
 transports the existing \(C_\Theta\) dichotomy to the finite package.  Thus the
 remaining payload at this boundary is now the paper-native construction of the
 component representatives, midpoint packet, procession leg, local tensor
-\(\mathrm{Ism}\) calibrations, source-level nonarchimedean \(\mathrm{Ism}\)
-action step, and signed pre-ledger equalities from local Frobenioid/log-link
-geometry.
+label-transport source, source-level nonarchimedean \(\mathrm{Ism}\) action
+step, and signed pre-ledger equalities from local Frobenioid/log-link geometry.
 The theta-pilot possible-image boundary has also been tightened.  The
 class-indexed and lattice-key image-law constructors now have
 procession-normalized entry points: instead of receiving an arbitrary
@@ -12691,21 +12692,22 @@ explicitly discharges the impossible \((\Ind3)\) equality-generator case.
 This has now been sharpened once more at the component boundary.  The preferred
 source supplies an explicit midpoint finite packet, an ordered \((\Ind1)\)
 procession leg, the retained nonarchimedean \(\mathrm{Ism}\) action source for
-the post-procession \((\Ind2)\) leg, and calibrated nonarchimedean local tensor
-packets for the midpoint and target.  Each calibration identifies the
-direct-summand symmetry kind as \(\mathrm{Ism}\) and reads the tensor label from
-that typed kind.  \Lean{} derives the raw tensor labels, packet-label
-certificates, direct-summand kind transport, tensor-label source, completed
-label-transport source, transported packet-label source, label-transport audit,
-and source-level \((\Ind2)\) packet/action audit before deriving the two-step
-transport, generated
+the post-procession \((\Ind2)\) leg, and one source-level local tensor
+label-transport datum.  The matching action supplies the source
+\(\mathrm{Ism}\) summand kind; the label-transport datum supplies both packet
+labels and transports the target summand kind from the source.  \Lean{} derives
+the midpoint and target calibrated local tensor packets, raw tensor labels,
+packet-label certificates, direct-summand kind transport, tensor-label source,
+completed label-transport source, transported packet-label source,
+label-transport audit, and source-level \((\Ind2)\) packet/action audit before
+deriving the two-step transport, generated
 \((\Ind1,\Ind2)\) relation, quotient relation, record-image equality, selected
 q-region equalities, and Corollary~3.12 dichotomy.  The compact endpoint records
-the calibrated local tensor source together with the derived raw tensor-label,
-packet-label, tensor-label, label-transport, and transported packet-label
+the label-transport source together with the derived calibrated local tensor,
+raw tensor-label, packet-label, tensor-label, and transported packet-label
 witnesses.  The remaining payload is to
 construct the audited packet representatives, midpoint packets, procession
-legs, local tensor \(\mathrm{Ism}\) calibrations, source-level nonarchimedean
+legs, local tensor label-transport sources, source-level nonarchimedean
 \(\mathrm{Ism}\) action steps, and signed pre-ledger equalities from the
 paper-native vertical
 log-Kummer/Frobenioid geometry.
@@ -12721,8 +12723,8 @@ The practical priority order is now:
   audited-packet representative finite theta-class image law.  What remains is
   to construct the audited packet representatives, the same-theta-class
   midpoint packet, the ordered \((\Ind1)\) procession leg, the source-level
-  nonarchimedean \(\mathrm{Ism}\) action, the midpoint/target local tensor
-  \(\mathrm{Ism}\) calibrations for the \((\Ind2)\) leg, and signed q/theta
+  nonarchimedean \(\mathrm{Ism}\) action, the local tensor label-transport
+  source for the \((\Ind2)\) leg, and signed q/theta
   pre-ledger equalities from
   paper-native finite divisors, local objects, and log-volume comparison data.
 \item Construct the finite divisor-component columns--local object, prime

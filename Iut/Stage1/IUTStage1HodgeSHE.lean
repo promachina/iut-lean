@@ -6969,6 +6969,33 @@ theorem transportAudit
     target_symmetryKind_eq_source := source.target_symmetryKind_eq_source,
     tensorState_symmetry_eq := source.tensorState_symmetry_eq }
 
+set_option linter.style.longLine false in
+def sourceNonarchimedeanIsmCalibration
+    {state₁ state₂ :
+      IUTStage1LocalTensorDirectSummandPacketState
+        IUTStage1PlaceKind.nonarchimedean}
+    (source : SymmetryLabelTransportSource state₁ state₂)
+    (source_symmetryKind_eq :
+      state₁.summandFamily.symmetryKind =
+        IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm) :
+    NonarchimedeanIsmSymmetryCalibration state₁ :=
+  { symmetry_kind_eq := source_symmetryKind_eq,
+    label_source := source.sourceLabelSource }
+
+set_option linter.style.longLine false in
+def targetNonarchimedeanIsmCalibration
+    {state₁ state₂ :
+      IUTStage1LocalTensorDirectSummandPacketState
+        IUTStage1PlaceKind.nonarchimedean}
+    (source : SymmetryLabelTransportSource state₁ state₂)
+    (source_symmetryKind_eq :
+      state₁.summandFamily.symmetryKind =
+        IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm) :
+    NonarchimedeanIsmSymmetryCalibration state₂ :=
+  { symmetry_kind_eq :=
+      source.target_symmetryKind_eq_source.trans source_symmetryKind_eq,
+    label_source := source.targetLabelSource }
+
 end SymmetryLabelTransportSource
 
 end IUTStage1LocalTensorDirectSummandPacketState
