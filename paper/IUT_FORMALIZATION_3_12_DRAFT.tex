@@ -3872,7 +3872,7 @@ for each transported theta point \(y\), the source names its local coordinate
 \]
 This removes the existential lift, but at this stage the valuation-radius bound
 is still a raw source field.
-The preferred lower boundary has now been pushed one step further to
+The image boundary is now an intermediate layer:
 \[
 \begin{array}{l}
 \texttt{ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellImageSource}.
@@ -3898,10 +3898,25 @@ and the two valuation-ball containments
 from \(I_\beta\subseteq \{x:\|x\|_v\le r_\beta\}\), and then reuses the
 local-chart, pointwise, exact, and valuation-norm-gauge routes.  Thus the
 remaining paper-side payload is no longer an existential lift, a supplied
-coordinate, a set equality field, or a raw norm-bound field.  It is the
-construction of the actual local log-shell region and its realized-image
-equality, the two log-shell/valuation-ball containments, and the pointwise
-class-region membership laws.
+coordinate, a set equality field, or a raw norm-bound field.
+The preferred lower boundary now replaces these four containments by the two
+equalities
+\[
+\begin{array}{l}
+\texttt{ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellExactSource}.
+\end{array}
+\]
+It requires
+\[
+  P_{\Theta,\beta}=\mathrm{realization}(I_\beta),
+  \qquad
+  I_\beta=\{x:\|x\|_v\le r_\beta\},
+\]
+and \Lean{} derives the previous log-shell image source, the chosen local
+coordinate, the valuation-radius bound, and the same exact-\(\Xi(P_B)\)/global
+\(C_\Theta\) audit.  The remaining paper-side payload is therefore the
+construction of the actual local log-shell region, these two identifications,
+and the pointwise class-region membership laws.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
