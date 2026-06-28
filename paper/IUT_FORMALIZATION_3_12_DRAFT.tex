@@ -13028,11 +13028,24 @@ upper-ray coordinates directly.  The q equality is obtained from equality of
 the hull-approximant q-pilot log-volume readings, while the theta equality is
 obtained from equality of the normalized weighted-determinant log-volumes.
 Lean proves the promotion to the constructed Step~(xi) comparison source and
-then runs the same concrete \(C_\Theta\) endpoint.  Thus the remaining
-source-facing obligation is sharper: construct the concrete/generated selected
-q-region identification, hull q-log-volume calibration, and normalized
-determinant calibration from the local log-Kummer/Frobenioid geometry, rather
-than supplying q/theta upper-ray coordinates as independent real fields.
+then runs the same concrete \(C_\Theta\) endpoint.  This boundary has now been
+lowered once more by
+\[
+\begin{gathered}
+\texttt{ConcreteHodgeTheaterLogThetaGeneratedFullLabel}\\
+\texttt{FiniteSummandUpperRayCalibrationSource}.
+\end{gathered}
+\]
+There the q equality is derived from the selected q-region equality and the
+Remark~3.9.5 hull-operator equality.  The theta equality is derived from a
+finite equivalence between the concrete and generated determinant index sets,
+matching adjusted localization summands, and the existing theorem that
+normalization of the positive tensor power recovers the determinant sum.  Thus
+the remaining source-facing obligation is sharper: construct the
+concrete/generated selected q-region identification, hull-operator
+identification, and finite adjusted-summand matching from the local
+log-Kummer/Frobenioid geometry, rather than supplying q/theta upper-ray
+coordinates or normalized determinant equality as independent real fields.
 
 The practical priority order is now:
 \begin{enumerate}
@@ -13046,13 +13059,14 @@ The practical priority order is now:
   package transfer is no longer a bare equality field at the review boundary:
   it is derived from constructed Step~(xi) upper-ray q-region, q-pilot, and
   theta-hull comparisons; on the concrete/generated side, those q/theta
-  comparisons have now been factored through hull q-log-volume and normalized
-  determinant calibration.  What remains is to construct the audited packet
+  comparisons have now been factored through q-region plus hull-operator
+  calibration and finite adjusted determinant summand matching.  What remains
+  is to construct the audited packet
   representatives, the same-theta-class
   midpoint packet, the ordered \((\Ind1)\) procession leg, the source-level
   nonarchimedean \(\mathrm{Ism}\) action leg, the raw tensor-label equations,
-  the target summand-kind certificate, and the remaining q-region, hull
-  q-log-volume, and normalized-determinant calibration witnesses from
+  the target summand-kind certificate, and the remaining q-region,
+  hull-operator, and adjusted determinant-summand matching witnesses from
   paper-native finite divisors, local objects, and log-volume comparison data.
 \item Construct the finite divisor-component columns--local object, prime
   multiplicities, prime degrees, and unit log-volume--and construct the
