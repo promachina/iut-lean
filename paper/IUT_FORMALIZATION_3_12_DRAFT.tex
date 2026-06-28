@@ -3932,10 +3932,27 @@ It moves nonemptiness to the valuation-ball side:
 \]
 Using \(I_\beta=\{x:\|x\|_v\le r_\beta\}\), \Lean{} derives
 \(I_\beta\ne\varnothing\), then derives the previous nonempty log-shell
-boundary and the same exact-\(\Xi(P_B)\)/global \(C_\Theta\) audit.  The
-remaining paper-side payload is therefore the construction of the actual local
-log-shell region, nonemptiness of the compact-open valuation ball, the two
-identifications above, and the pointwise class-region membership laws.
+boundary and the same exact-\(\Xi(P_B)\)/global \(C_\Theta\) audit.  This
+nonemptiness hypothesis has now itself been lowered to a centered valuation
+ball source:
+\[
+\begin{array}{l}
+\texttt{ConcreteValuationBallThetaClassFiberTransportCenteredValuationBall}\\
+\texttt{ExactSource}.
+\end{array}
+\]
+For each local factor it supplies a point \(x_\beta\) and proves
+\[
+  \|x_\beta\|_v \le r_\beta.
+\]
+After unfolding the valuation-ball definition, \Lean{} obtains
+\(x_\beta\in\{x:\|x\|_v\le r_\beta\}\), hence valuation-ball nonemptiness,
+log-shell nonemptiness, and the same exact-\(\Xi(P_B)\)/global \(C_\Theta\)
+audit.  The remaining paper-side payload is therefore narrower: construct the
+actual local log-shell region, identify it with the compact-open valuation
+ball, derive the center and valuation bound from the local field data
+(eventually the zero-center case), and prove the pointwise class-region
+membership laws.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
