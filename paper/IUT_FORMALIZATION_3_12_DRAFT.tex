@@ -4183,9 +4183,17 @@ From this equality and
 \(\operatorname{realizedRegion}(U_\beta)=\operatorname{real}_\beta''U_\beta\),
 \Lean{} chooses compact-open coordinates, proves the converse realization law,
 recovers the compact-open local-chart source, and enters the same global
-\(C_\Theta\) audit.  The remaining frontier is to construct this exact
-compact-open realized-region identity from the paper-native holomorphic hull,
-log-Kummer, and local log-shell geometry.
+\(C_\Theta\) audit.  This compact-open boundary is now itself a projection from
+the valuation-ball realized-exact source: if
+\[
+  P_{\Theta,\beta}
+    =\operatorname{realizedRegion}\{x:\|x\|_v\le r_\beta\},
+\]
+then the valuation-ball additive Haar audit identifies the selected
+compact-open subset \(U_\beta\) with this closed ball, and \Lean{} derives the
+compact-open realized source.  Thus the remaining frontier is lower and more
+arithmetic: construct the valuation-ball realized-region identity from the
+paper-native holomorphic hull, log-Kummer, and local log-shell geometry.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -13518,9 +13526,12 @@ The practical priority order is now:
   boundary \(P_{\Theta,\beta}=\operatorname{real}_\beta(U_\beta)\) from which
   \Lean{} derives compact-open coordinates, image containments, realized
   valuation-ball equality, the exact \(\Xi(P_B)\) source, and the
-  source-derived global \(C_\Theta\) audit.  What remains is to construct this
-  exact compact-open realized-region identity from the paper-native
-  holomorphic hull, log-Kummer, and local log-shell geometry.
+  source-derived global \(C_\Theta\) audit.  This has now been pushed one step
+  lower: valuation-ball realized exactness plus the valuation-ball additive
+  Haar audit recovers the compact-open realized-exact source used by the
+  preferred audit.  What remains is to construct the valuation-ball
+  realized-region identity from the paper-native holomorphic hull,
+  log-Kummer, and local log-shell geometry.
 \item Instantiate the valuation-ball local analytic construction from actual
   local fields, log-shell maps, compact-open Haar normalizations, and
   archimedean lattice metrics, proving the remaining Proposition~1.4
