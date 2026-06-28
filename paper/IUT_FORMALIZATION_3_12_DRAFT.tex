@@ -3911,7 +3911,7 @@ It requires
 \]
 and \Lean{} derives the previous log-shell image source, the chosen local
 coordinate, the valuation-radius bound, and the same exact-\(\Xi(P_B)\)/global
-\(C_\Theta\) audit.  The preferred lower boundary is now
+\(C_\Theta\) audit.  The next boundary is
 \[
 \begin{array}{l}
 \texttt{ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellNonemptyExactSource}.
@@ -3920,9 +3920,22 @@ coordinate, the valuation-radius bound, and the same exact-\(\Xi(P_B)\)/global
 It replaces the supplied totalizing coordinate by the nonemptiness statement
 \(I_\beta\ne\varnothing\); \Lean{} chooses the auxiliary coordinate from this
 nonemptiness and then projects to the equality-backed exact source.  The
+preferred lower boundary is now
+\[
+\begin{array}{l}
+\texttt{ConcreteValuationBallThetaClassFiberTransportValuationBallNonemptyExactSource}.
+\end{array}
+\]
+It moves nonemptiness to the valuation-ball side:
+\[
+  \{x:\|x\|_v\le r_\beta\}\ne\varnothing.
+\]
+Using \(I_\beta=\{x:\|x\|_v\le r_\beta\}\), \Lean{} derives
+\(I_\beta\ne\varnothing\), then derives the previous nonempty log-shell
+boundary and the same exact-\(\Xi(P_B)\)/global \(C_\Theta\) audit.  The
 remaining paper-side payload is therefore the construction of the actual local
-log-shell region, its nonemptiness, the two identifications above, and the
-pointwise class-region membership laws.
+log-shell region, nonemptiness of the compact-open valuation ball, the two
+identifications above, and the pointwise class-region membership laws.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
