@@ -12638,8 +12638,20 @@ Theorem~3.11 multiradial possible images and replaces the raw same-theta-class
 record-image equality by the quotient statement that two finite packets with
 the same reconstructed theta class are related in the place-audited
 multiradial quotient.  Lean derives record-image equality from quotient
-invariance.  The remaining payload is to construct the audited packet
-representatives, the same-theta-class quotient relation, and the signed
+invariance.  This has now been sharpened to the source
+\[
+\begin{gathered}
+\texttt{GeneratedFullLabelFiniteDivisorVerticalIQ}\\
+\texttt{FiniteThetaClassFiberInd12AuditedPacketImageLawSource}.
+\end{gathered}
+\]
+Here the same-theta-class relation is no longer an ambient quotient input: it
+is a relation generated only by finite \((\Ind1)\) procession transports and
+\((\Ind2)\) local direct-summand actions.  Lean embeds this
+\((\Ind1,\Ind2)\)-relation into the existing place-audited quotient and
+explicitly discharges the impossible \((\Ind3)\) equality-generator case.
+The remaining payload is to construct the audited packet representatives, the
+same-theta-class \((\Ind1,\Ind2)\) transport relation, and the signed
 pre-ledger equalities from the paper-native vertical log-Kummer/Frobenioid
 geometry.
 
@@ -12650,12 +12662,12 @@ The practical priority order is now:
   theta-class, finite-packet projection, and constructed finite-packet
   theta-class sources are now implemented.  The target-region realization is
   derived from the finite Theorem~3.11 record image, and the selected
-  record-image witness is derived from a quotient-backed fiberwise
+  record-image witness is derived from an \((\Ind1,\Ind2)\)-backed fiberwise
   audited-packet representative finite theta-class image law.  What remains is
-  to construct the audited packet representatives, the quotient relation for
-  same reconstructed theta classes, and signed q/theta pre-ledger equalities
-  from paper-native finite divisors, local objects, and log-volume comparison
-  data.
+  to construct the audited packet representatives, the same-theta-class
+  \((\Ind1,\Ind2)\) transport relation, and signed q/theta pre-ledger
+  equalities from paper-native finite divisors, local objects, and log-volume
+  comparison data.
 \item Construct the finite divisor-component columns--local object, prime
   multiplicities, prime degrees, and unit log-volume--and construct the
   labelled vertical object-transport records from the paper-native vertical
