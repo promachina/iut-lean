@@ -3008,6 +3008,223 @@ theorem audit
 end IUTStage1ObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource
 set_option linter.style.longLine true
 
+set_option linter.style.longLine false
+/--
+Finite Frobenioid divisor-column source with constructed degree objects.
+
+This lowers the object-transport finite-divisor source by constructing the
+column Frobenioid/log-Kummer compatibility from explicit divisor-monoid data:
+an object in each vertical column, prime multiplicities, prime degrees, and a
+unit log-volume.  The divisor degree of the constructed Frobenioid object is
+definitionally the finite sum over prime components, so the degree-sum law
+consumed by the finite-divisor ordinary-column layer is derived by `rfl`.
+-/
+structure IUTStage1FrobenioidDivisorColumnObjectTransportNormalizedExample35Source
+    (π : Type u) [Fintype π] (l : PrimeGeFive) where
+  objectColumn : Int -> IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean
+  primeMultiplicityColumn : Int -> π -> Nat
+  primeDegreeColumn : Int -> π -> Int
+  unitLogVolumeColumn : Int -> Real
+  translate_realifiedLogVolume_eq :
+    ∀ shift m : Int,
+      ((∑ p : π,
+          (primeMultiplicityColumn (m + shift) p : Int) *
+            primeDegreeColumn (m + shift) p : Int) : Real) +
+          unitLogVolumeColumn (m + shift) =
+        ((∑ p : π,
+          (primeMultiplicityColumn m p : Int) *
+            primeDegreeColumn m p : Int) : Real) +
+          unitLogVolumeColumn m
+  logShellExtensionDegree : Int -> Nat
+  logShellExtensionDegree_pos :
+    ∀ m : Int, 0 < logShellExtensionDegree m
+  normalization : IUTStage1LogVolumeNormalization
+  baseColumn : Int
+  labelColumnShift : ZMod l.value -> Int
+  baseTransportObject : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean
+  labelTransportObject :
+    ZMod l.value -> IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean
+  baseTransportObject_eq_base :
+    baseTransportObject = objectColumn baseColumn
+  labelTransportObject_eq_label :
+    ∀ label : ZMod l.value,
+      labelTransportObject label =
+        objectColumn (baseColumn + labelColumnShift label)
+  labelTransportObject_eq_baseTransportObject :
+    ∀ label : ZMod l.value,
+      labelTransportObject label = baseTransportObject
+
+namespace IUTStage1FrobenioidDivisorColumnObjectTransportNormalizedExample35Source
+
+variable {π : Type u} [Fintype π] {l : PrimeGeFive}
+
+def divisorDegreeColumn
+    (source :
+      IUTStage1FrobenioidDivisorColumnObjectTransportNormalizedExample35Source π l)
+    (m : Int) : Int :=
+  ∑ p : π, (source.primeMultiplicityColumn m p : Int) *
+    source.primeDegreeColumn m p
+
+def realifiedLogVolumeColumn
+    (source :
+      IUTStage1FrobenioidDivisorColumnObjectTransportNormalizedExample35Source π l)
+    (m : Int) : Real :=
+  (source.divisorDegreeColumn m : Real) + source.unitLogVolumeColumn m
+
+def frobenioidObject
+    (source :
+      IUTStage1FrobenioidDivisorColumnObjectTransportNormalizedExample35Source π l)
+    (m : Int) :
+    IUTStage1RealifiedFrobenioidDegreeObject :=
+  { object := source.objectColumn m,
+    divisorDegree := source.divisorDegreeColumn m,
+    unitLogVolume := source.unitLogVolumeColumn m,
+    realifiedLogVolume := source.realifiedLogVolumeColumn m,
+    realified_logVolume_eq := rfl }
+
+set_option linter.style.longLine false in
+def toColumnFrobenioidLogKummerCompatibility
+    (source :
+      IUTStage1FrobenioidDivisorColumnObjectTransportNormalizedExample35Source π l) :
+    IUTStage1ColumnFrobenioidLogKummerCompatibility :=
+  { frobenioidObject := source.frobenioidObject,
+    translate_realifiedLogVolume_eq := by
+      intro shift m
+      simpa [frobenioidObject, realifiedLogVolumeColumn, divisorDegreeColumn]
+        using source.translate_realifiedLogVolume_eq shift m }
+
+set_option linter.style.longLine false in
+theorem divisorDegree_eq_compat
+    (source :
+      IUTStage1FrobenioidDivisorColumnObjectTransportNormalizedExample35Source π l)
+    (m : Int) :
+    (∑ p : π,
+        (source.primeMultiplicityColumn m p : Int) *
+          source.primeDegreeColumn m p) =
+      (source.toColumnFrobenioidLogKummerCompatibility.frobenioidObject m).divisorDegree :=
+  rfl
+
+set_option linter.style.longLine false in
+def labelObjectTransport
+    (source :
+      IUTStage1FrobenioidDivisorColumnObjectTransportNormalizedExample35Source π l)
+    (label : ZMod l.value) :
+    IUTStage1VerticalLogKummerFrobenioidObjectTransport
+      source.toColumnFrobenioidLogKummerCompatibility
+      source.baseColumn (source.baseColumn + source.labelColumnShift label) :=
+  { baseTransportObject := source.baseTransportObject,
+    labelTransportObject := source.labelTransportObject label,
+    baseTransportObject_eq_base := by
+      simpa [toColumnFrobenioidLogKummerCompatibility, frobenioidObject] using
+        source.baseTransportObject_eq_base,
+    labelTransportObject_eq_label := by
+      simpa [toColumnFrobenioidLogKummerCompatibility, frobenioidObject] using
+        source.labelTransportObject_eq_label label,
+    labelTransportObject_eq_baseTransportObject :=
+      source.labelTransportObject_eq_baseTransportObject label }
+
+set_option linter.style.longLine false in
+theorem label_compat_object_eq_base
+    (source :
+      IUTStage1FrobenioidDivisorColumnObjectTransportNormalizedExample35Source π l)
+    (label : ZMod l.value) :
+    (source.toColumnFrobenioidLogKummerCompatibility.frobenioidObject
+      (source.baseColumn + source.labelColumnShift label)).object =
+      (source.toColumnFrobenioidLogKummerCompatibility.frobenioidObject
+        source.baseColumn).object :=
+  (source.labelObjectTransport label).label_object_eq_base
+
+set_option linter.style.longLine false in
+def toObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource
+    (source :
+      IUTStage1FrobenioidDivisorColumnObjectTransportNormalizedExample35Source π l) :
+    IUTStage1ObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource π l :=
+  { compatibility := source.toColumnFrobenioidLogKummerCompatibility,
+    primeMultiplicityColumn := source.primeMultiplicityColumn,
+    primeDegreeColumn := source.primeDegreeColumn,
+    divisorDegree_eq_compat := source.divisorDegree_eq_compat,
+    logShellExtensionDegree := source.logShellExtensionDegree,
+    logShellExtensionDegree_pos := source.logShellExtensionDegree_pos,
+    normalization := source.normalization,
+    baseColumn := source.baseColumn,
+    labelColumnShift := source.labelColumnShift,
+    labelObjectTransport := source.labelObjectTransport }
+
+set_option linter.style.longLine false in
+def toFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource
+    (source :
+      IUTStage1FrobenioidDivisorColumnObjectTransportNormalizedExample35Source π l) :
+    IUTStage1FiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource π l :=
+  source.toObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource
+    |>.toFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource
+
+set_option linter.style.longLine false in
+def toNormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource
+    (source :
+      IUTStage1FrobenioidDivisorColumnObjectTransportNormalizedExample35Source π l) :
+    IUTStage1NormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource π l :=
+  source.toObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource
+    |>.toNormalizedExample35LocalObjectDegreeRealizedColumnLogKummerDivisorFamilySource
+
+set_option linter.style.longLine false in
+structure Audit
+    (source :
+      IUTStage1FrobenioidDivisorColumnObjectTransportNormalizedExample35Source π l) :
+    Prop where
+  object_transport_finite_divisor_audit :
+    IUTStage1ObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource.Audit
+      source.toObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource
+  compatibility_object_eq_constructed :
+    ∀ m : Int,
+      source.toColumnFrobenioidLogKummerCompatibility.frobenioidObject m =
+        source.frobenioidObject m
+  divisorDegree_eq_sum :
+    ∀ m : Int,
+      (source.toColumnFrobenioidLogKummerCompatibility.frobenioidObject m).divisorDegree =
+        ∑ p : π,
+          (source.primeMultiplicityColumn m p : Int) *
+            source.primeDegreeColumn m p
+  realifiedLogVolume_eq_sum_plus_unit :
+    ∀ m : Int,
+      (source.toColumnFrobenioidLogKummerCompatibility.frobenioidObject m).realifiedLogVolume =
+        ((∑ p : π,
+          (source.primeMultiplicityColumn m p : Int) *
+            source.primeDegreeColumn m p : Int) : Real) +
+          source.unitLogVolumeColumn m
+  label_object_transport_audit :
+    ∀ label : ZMod l.value,
+      IUTStage1VerticalLogKummerFrobenioidObjectTransport.Audit
+        (source.labelObjectTransport label)
+  label_compat_object_eq_base :
+    ∀ label : ZMod l.value,
+      (source.toColumnFrobenioidLogKummerCompatibility.frobenioidObject
+        (source.baseColumn + source.labelColumnShift label)).object =
+        (source.toColumnFrobenioidLogKummerCompatibility.frobenioidObject
+          source.baseColumn).object
+
+theorem audit
+    (source :
+      IUTStage1FrobenioidDivisorColumnObjectTransportNormalizedExample35Source π l) :
+    Audit source :=
+  { object_transport_finite_divisor_audit :=
+      source.toObjectTransportFiniteDivisorRealizedNormalizedExample35ColumnLogKummerDivisorFamilySource.audit,
+    compatibility_object_eq_constructed := by
+      intro m
+      rfl,
+    divisorDegree_eq_sum := by
+      intro m
+      rfl,
+    realifiedLogVolume_eq_sum_plus_unit := by
+      intro m
+      rfl,
+    label_object_transport_audit := by
+      intro label
+      exact (source.labelObjectTransport label).audit,
+    label_compat_object_eq_base := source.label_compat_object_eq_base }
+
+end IUTStage1FrobenioidDivisorColumnObjectTransportNormalizedExample35Source
+set_option linter.style.longLine true
+
 /--
 Container estimate for one capsule log-volume entry.
 

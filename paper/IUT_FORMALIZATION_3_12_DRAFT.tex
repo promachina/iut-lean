@@ -902,10 +902,15 @@ supplying the equality of the base and labelled compatibility objects directly,
 one supplies a vertical log-Kummer/log-link object transport whose source and
 target are realized as the corresponding Frobenioid degree objects.  \Lean{}
 derives the labelled compatibility equality from this transport and then enters
-the finite-divisor ordinary-column construction.  The remaining payload is
-therefore sharper: construct these finite divisor-monoid columns and vertical
-object-transport records, together with the \((\Ind3)\) source/target
-comparisons, from the paper's actual vertical log-Kummer/log-link geometry.
+the finite-divisor ordinary-column construction.  The Frobenioid degree column
+itself has now also been constructed from finite divisor components: the source
+supplies the local object, prime multiplicities, prime degrees, and unit
+log-volume in each vertical column, and \Lean{} builds the corresponding
+realified Frobenioid degree object.  Its divisor degree is definitionally the
+finite sum over the prime components.  The remaining payload is therefore
+sharper: construct these component columns and vertical object-transport
+records, together with the \((\Ind3)\) source/target comparisons, from the
+paper's actual vertical log-Kummer/log-link geometry.
 The theta-pilot possible-image boundary has also been tightened.  The
 class-indexed and lattice-key image-law constructors now have
 procession-normalized entry points: instead of receiving an arbitrary
@@ -12375,15 +12380,17 @@ are migrated or retired.
 
 The practical priority order is now:
 \begin{enumerate}
-\item Construct the finite divisor-monoid columns--prime multiplicities, prime
-  degrees, and the finite degree-sum law--and construct the new labelled
-  vertical object-transport records from the paper-native vertical log-Kummer
-  correspondences.  The current Lean boundary derives the labelled compatibility
-  equality from those transports, constructs the ordinary realified divisor
-  column from the finite data, then constructs the normalized theta and
-  log-shell Example~3.5 copies, derives log-shell normalization and divisor
-  realization, proves raw vertical translation, and upgrades object transport to
-  full labelled local-object identity.
+\item Construct the finite divisor-component columns--local object, prime
+  multiplicities, prime degrees, and unit log-volume--and construct the
+  labelled vertical object-transport records from the paper-native vertical
+  log-Kummer correspondences.  The current Lean boundary constructs the
+  Frobenioid degree object from these components, derives the finite degree-sum
+  law definitionally, derives the labelled compatibility equality from the
+  object transports, constructs the ordinary realified divisor column, then
+  constructs the normalized theta and log-shell Example~3.5 copies, derives
+  log-shell normalization and divisor realization, proves raw vertical
+  translation, and upgrades object transport to full labelled local-object
+  identity.
 \item Construct the source/target base-realified \((\Ind3)\) comparisons at
   the column compatibility degree object from the same log-Kummer/log-link
   geometry.  Once these are available, \Lean{} derives the ordinary-copy
