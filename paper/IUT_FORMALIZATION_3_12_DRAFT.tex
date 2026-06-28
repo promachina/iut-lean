@@ -12523,34 +12523,51 @@ It requires the finite selected Theorem~3.11 record image to realize this
 theta-class region directly, plus equality of the signed q/theta pre-ledger
 quantities.  Its projection to the record-image realization and the endpoint
 \[
-\texttt{generatedFullLabelFiniteDivisorVerticalIQThetaClassRecordImageRealization\_cThetaDichotomy}
+\begin{gathered}
+\texttt{generatedFullLabelFiniteDivisorVerticalIQ}\\
+\texttt{ThetaClassRecordImageRealization\_cThetaDichotomy}
+\end{gathered}
 \]
 derive the generated-record match, the package handoff, and the finite-divisor
-\(C_\Theta\) dichotomy.  The preferred finite-packet boundary is now one step
-lower.  The source
+\(C_\Theta\) dichotomy.  The finite-packet boundary has now been lowered once
+more.  The earlier source
 \[
 \texttt{GeneratedFullLabelFiniteDivisorVerticalIQThetaClassPacketProjection}
 \]
-reconstructs a finite theta-pilot class from the nonarchimedean
-direct-summand packet, records the column, row, log-theta-column, and coric
-checks against the packet, realizes the finite target region as that class
-image, and identifies the class with the selected generated full-label theta
-class.  Its promotion theorem derives the theta-class realization source, and
+is retained as a projection layer, while the preferred source is now
 \[
-\texttt{generatedFullLabelFiniteDivisorVerticalIQThetaClassPacketProjection\_cThetaDichotomy}
+\texttt{GeneratedFullLabelFiniteDivisorVerticalIQConstructedThetaClassPacketSource}.
 \]
-returns the packet coordinate checks together with the finite-divisor
-\(C_\Theta\) dichotomy.
+It constructs the finite theta-pilot class from the nonarchimedean packet
+coordinates, the upper-semi log-theta column, the coric datum, and explicit
+Hodge-theater/history labels.  Its componentwise theorem
+\[
+\texttt{constructedThetaClass\_eq\_generatedSelected}
+\]
+then identifies this constructed class with the selected generated full-label
+theta class.  The projection
+\[
+\texttt{toPacketProjection}
+\]
+derives the older packet-projection source, and
+\[
+\begin{gathered}
+\texttt{generatedFullLabelFiniteDivisorVerticalIQ}\\
+\texttt{ConstructedThetaClassPacketSource\_cThetaDichotomy}
+\end{gathered}
+\]
+returns the constructed-class equality, the finite target-region realization,
+the selected-region identifications, and the finite-divisor \(C_\Theta\)
+dichotomy.
 
 The practical priority order is now:
 \begin{enumerate}
 \item Construct the source-side witnesses for the generated-full-label to
   finite-divisor vertical-\(IQ\) handoff.  The handoff record, record-image,
-  theta-class, and finite-packet projection sources are now implemented; what
-  remains is to construct the reconstructed finite theta class from the
-  paper-native packet data, prove its coordinate checks and target-region
-  realization, identify it with the selected generated theta class, and prove
-  equality of the signed q/theta pre-ledger quantities.
+  theta-class, finite-packet projection, and constructed finite-packet
+  theta-class sources are now implemented.  What remains is to derive the
+  target-region realization and signed q/theta pre-ledger equalities from
+  paper-native finite divisors, local objects, and log-volume comparison data.
 \item Construct the finite divisor-component columns--local object, prime
   multiplicities, prime degrees, and unit log-volume--and construct the
   labelled vertical object-transport records from the paper-native vertical
