@@ -12488,8 +12488,8 @@ pre-ledger variables.  Thus the package-identification step has been made a
 kernel-checked boundary; what remains is to construct its equality witnesses
 from the paper-native local log-Kummer/Frobenioid data.
 
-This boundary has now been sharpened once more.  The finite target-region
-equality is no longer a separate handoff witness: Lean proves
+This boundary was first sharpened by removing a redundant finite target-region
+witness: Lean proves
 \[
 \texttt{recordThetaPossibleImage\_eq\_targetRegion\_toSet}
 \]
@@ -12508,15 +12508,35 @@ constructs the full package handoff, and
 \texttt{generatedFullLabelFiniteDivisorVerticalIQRecordImageRealization\_cThetaDichotomy}
 \]
 derives the finite-divisor dichotomy from this smaller realization source.
+The current boundary sharpens the image witness again.  The generated quotient
+source now exposes
+\[
+\texttt{generatedFullLabelSelectedRecordThetaPossibleImage\_eq\_thetaClassRegion\_toSet},
+\]
+which identifies its selected record image with the theta-pilot-class region
+obtained from the selected generated full-label choice.  Thus the finite packet
+source can be stated as
+\[
+\texttt{GeneratedFullLabelFiniteDivisorVerticalIQThetaClassRecordImageRealization}.
+\]
+It requires the finite selected Theorem~3.11 record image to realize this
+theta-class region directly, plus equality of the signed q/theta pre-ledger
+quantities.  Its projection to the record-image realization and the endpoint
+\[
+\texttt{generatedFullLabelFiniteDivisorVerticalIQThetaClassRecordImageRealization\_cThetaDichotomy}
+\]
+derive the generated-record match, the package handoff, and the finite-divisor
+\(C_\Theta\) dichotomy.
 
 The practical priority order is now:
 \begin{enumerate}
 \item Construct the source-side witnesses for the generated-full-label to
-  finite-divisor vertical-\(IQ\) handoff.  The handoff record, record-image
-  realization source, and dichotomy transport are now implemented; what remains
-  is to prove, from the finite-divisor packet choice data, equality of the
-  finite selected Theorem~3.11 record image with the generated selected record
-  image and equality of the signed q/theta pre-ledger quantities.
+  finite-divisor vertical-\(IQ\) handoff.  The handoff record, record-image and
+  theta-class realization sources, and dichotomy transports are now
+  implemented; what remains is to prove, from the finite-divisor packet choice
+  data, equality of the finite selected Theorem~3.11 record image with the
+  selected generated theta-pilot-class region and equality of the signed q/theta
+  pre-ledger quantities.
 \item Construct the finite divisor-component columns--local object, prime
   multiplicities, prime degrees, and unit log-volume--and construct the
   labelled vertical object-transport records from the paper-native vertical
