@@ -6731,6 +6731,74 @@ def ofArchimedeanOrderTwo
 end SymmetryLabelSource
 
 set_option linter.style.longLine false in
+/--
+Nonarchimedean local tensor-packet calibration.
+
+This is the packet-local form of the `(Ind2)` nonarchimedean `Ism` label:
+the direct-summand family carries the `Ism` symmetry kind, and the tensor
+state's raw symmetry label is read from that typed summand kind.
+-/
+structure NonarchimedeanIsmSymmetryCalibration
+    (state :
+      IUTStage1LocalTensorDirectSummandPacketState
+        IUTStage1PlaceKind.nonarchimedean) :
+    Prop where
+  symmetry_kind_eq :
+    state.summandFamily.symmetryKind =
+      IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm
+  label_source : SymmetryLabelSource state
+
+namespace NonarchimedeanIsmSymmetryCalibration
+
+variable
+  {state :
+    IUTStage1LocalTensorDirectSummandPacketState
+      IUTStage1PlaceKind.nonarchimedean}
+
+set_option linter.style.longLine false in
+def ofTensorSymmetry
+    (symmetry_kind_eq :
+      state.summandFamily.symmetryKind =
+        IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm)
+    (tensor_symmetry_eq :
+      state.packetState.tensorState.symmetry =
+        IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm.toLocalTensorSymmetryId) :
+    NonarchimedeanIsmSymmetryCalibration state :=
+  { symmetry_kind_eq := symmetry_kind_eq,
+    label_source :=
+      SymmetryLabelSource.ofNonarchimedeanIsm
+        symmetry_kind_eq tensor_symmetry_eq }
+
+set_option linter.style.longLine false in
+theorem tensor_symmetry_eq
+    (calibration : NonarchimedeanIsmSymmetryCalibration state) :
+    state.packetState.tensorState.symmetry =
+      IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm.toLocalTensorSymmetryId := by
+  calc
+    state.packetState.tensorState.symmetry =
+        state.summandFamily.symmetryKind.toLocalTensorSymmetryId :=
+      calibration.label_source.symmetry_eq
+    _ =
+        IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm.toLocalTensorSymmetryId :=
+      congrArg IUTStage1TensorSummandSymmetryKind.toLocalTensorSymmetryId
+        calibration.symmetry_kind_eq
+
+set_option linter.style.longLine false in
+def toSymmetryLabelSource
+    (calibration : NonarchimedeanIsmSymmetryCalibration state) :
+    SymmetryLabelSource state :=
+  calibration.label_source
+
+set_option linter.style.longLine false in
+def toNonarchimedeanIsmSymmetrySource
+    (calibration : NonarchimedeanIsmSymmetryCalibration state) :
+    IUTStage1LocalTensorState.NonarchimedeanIsmSymmetrySource
+      state.packetState.tensorState :=
+  { symmetry_eq := calibration.tensor_symmetry_eq }
+
+end NonarchimedeanIsmSymmetryCalibration
+
+set_option linter.style.longLine false in
 theorem SymmetryLabelSource.toNonarchimedeanIsmSymmetrySource
     {state :
       IUTStage1LocalTensorDirectSummandPacketState
