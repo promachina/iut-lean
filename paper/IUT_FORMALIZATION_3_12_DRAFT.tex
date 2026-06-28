@@ -10533,9 +10533,11 @@ keeps the finite procession shift and post-shift \((\Ind_2)\) packet symmetry
 visible at the final handoff, rather than hiding them behind an intermediate
 quotient-source argument.
 The stricter source-level packet/action transport source now has the same two
-handoff endpoints.  They no longer merely assert nonemptiness of the
-post-procession transport audit: the quotient-constructor endpoint and both
-Remark~3.9.5 endpoints return the named payload
+handoff endpoints.  Its strict fiber endpoint exposes an audit of the retained
+\texttt{Ind2ActionPacketSymmetrySource}, so the packet states, label transport,
+and typed \(\mathrm{Ism}\)/order-two action are checked before being forgotten to
+the projected \((\Ind_2)\) symmetry.  The quotient-constructor endpoint and both
+Remark~3.9.5 endpoints also return the named payload
 \texttt{LowerTransportPayload}.  This payload contains the procession transport,
 the upper-semi transport, and the field equalities needed to compare the shifted
 choice with the target choice.  The same handoff still exposes the selected

@@ -15423,6 +15423,29 @@ theorem fiberTransport_ind2ActionPacketSymmetry
   (sourceData.fiberTransport_ind2ActionPacketSymmetrySource transport).toInd2ActionPacketSymmetry
 
 set_option linter.style.longLine false in
+/--
+Audit the retained source-level `(Ind2)` action-packet object for a
+theta-pilot fiber transport.
+
+This is lower than the projected typed symmetry: the proof checks the actual
+source object built from packet states, label transport, and the
+nonarchimedean `Ism`/archimedean order-two action before forgetting it to the
+generic Theorem 3.11 local tensor comparison.
+-/
+theorem fiberTransport_ind2ActionPacketSymmetrySourceAudit
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        record indData)
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂) :
+    IUTStage1LocalTensorState.Ind2ActionPacketSymmetrySource.Audit
+      (sourceData.fiberTransport_ind2ActionPacketSymmetrySource transport) :=
+  (sourceData.fiberTransport_ind2ActionPacketSymmetrySource transport).audit
+
+set_option linter.style.longLine false in
 theorem fiberTransport_directSummandActionPacketSymmetry
     (sourceData :
       ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
@@ -15853,6 +15876,13 @@ theorem endpoint
                 (l := l) choice₁ choice₂).local_tensor_state
               choice₂.local_tensor_state)) ∧
       (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+        (transport :
+          ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+            (l := l) choice₁ choice₂),
+        IUTStage1LocalTensorState.Ind2ActionPacketSymmetrySource.Audit
+          (sourceData.fiberTransport_ind2ActionPacketSymmetrySource transport)) ∧
+      (∀ {choice₁ choice₂ :
           IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
         ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
           (l := l) choice₁ choice₂ ->
@@ -15865,6 +15895,7 @@ theorem endpoint
     by
       intro choice₁ choice₂ transport
       exact ⟨sourceData.fiberTransport_ind2ActionPacketSymmetrySource transport⟩,
+    sourceData.fiberTransport_ind2ActionPacketSymmetrySourceAudit,
     sourceData.fiberTransport_ind2ActionPacketSymmetry,
     sourceData.toFiberInd2ActionPacketSource.postProcessionTypedCoreTransportAudit⟩
 
