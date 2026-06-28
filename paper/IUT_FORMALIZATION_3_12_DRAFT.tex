@@ -13082,8 +13082,23 @@ also been factored by
 \]
 Instead of asserting equality of the two selected q-regions directly, Lean now
 derives it from a common theta-pilot-class image family and equality of the
-selected concrete/generated theta-pilot classes.  The localized Ob3/Ob4
-comparison has also been factored by
+selected concrete/generated theta-pilot classes.  This boundary has now been
+lowered by
+\[
+\begin{gathered}
+\texttt{ConcreteHodgeTheaterLogThetaGeneratedFullLabel}\\
+\texttt{SelectedThetaClassQRegionSource}.
+\end{gathered}
+\]
+The new source constructs the concrete quotient theta-pilot source from the
+concrete class-region formula
+\texttt{ConcreteHodgeTheaterLogThetaThetaPilotClassRegionSource}, identifies
+that class-region formula with the generated full-label theta-class image
+family, and then projects to the older selected-q calibration.  Thus the
+selected q-region equality is no longer a bare input; the remaining cross-side
+choice datum is the explicit equality of the selected concrete theta-pilot
+class with the theta-pilot class obtained by projecting the generated selected
+full-label choice.  The localized Ob3/Ob4 comparison has also been factored by
 \[
 \begin{gathered}
 \texttt{IUTStage1Remark395LocalizedVectorBundle}\\
@@ -13124,8 +13139,8 @@ This preferred boundary retains the concrete/generated upper-ray objects, the
 theta-class q-region calibration, the common hull system, and the
 hull/determinant identifications, but obtains both localized hull-cover sources
 and their component transport from valuation-ball Haar covers.  The remaining
-source-facing obligation is therefore sharper: construct the theta-class
-q-region calibration and the valuation-ball/Haar transport source from the
+source-facing obligation is therefore sharper: construct the selected
+theta-pilot class match and the valuation-ball/Haar transport source from the
 local log-Kummer/Frobenioid geometry.
 
 The practical priority order is now:
