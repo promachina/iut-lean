@@ -932,7 +932,17 @@ upper-semi log-volume compatibility datum, derives the direct-summand
 cardinality, and enters the same Step~(xi) source.  The remaining payload has
 moved below these component functions: construct them from the paper-native
 log-link and local Frobenioid geometry and prove the concrete choice
-identification.
+identification.  The component boundary has also been separated from the
+ambient concrete choice space by
+\texttt{FrobenioidDivisorColumnComponentRepresentativeKernel}: from the same
+class-wise component data, \Lean{} generates a canonical theta-pilot choice
+space whose elements are exactly the constructed representatives.  On this
+generated space, the identification with the representative section, the
+direct-summand cardinality, and the Frobenioid base-volume upper-semi
+compatibility are theorems rather than global assumptions about all arbitrary
+concrete choices.  The next Step~(xi) task is to route this generated choice
+space through the public constructor, replacing the present ambient
+choice-identification hypothesis.
 The theta-pilot possible-image boundary has also been tightened.  The
 class-indexed and lattice-key image-law constructors now have
 procession-normalized entry points: instead of receiving an arbitrary
@@ -12421,7 +12431,12 @@ The practical priority order is now:
   calibration equalities, the one-sided \((\Ind3)\) base-volume inequality, the
   ordinary-copy comparison, finite local log-shell objects, base
   finite-log-volume equalities, column log-link transport family, and the
-  transported \(ZMod(\ell)\), capsule, classified, and direct bridges.
+  transported \(ZMod(\ell)\), capsule, classified, and direct bridges.  The
+  newest kernel separates this from the ambient choice-space assumption by
+  generating the canonical theta-pilot choices themselves; the remaining
+  public-constructor work is to route that generated choice space through
+  Step~(xi), and then to derive the component functions from the paper-native
+  local geometry.
 \item Migrate or retire older certificate-pinned \(\IPL\) review aliases that
   are no longer preferred source surfaces.
 \item Extend the recovered finite-divisor packet-local source from the
