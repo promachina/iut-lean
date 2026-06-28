@@ -943,6 +943,16 @@ compatibility are theorems rather than global assumptions about all arbitrary
 concrete choices.  The next Step~(xi) task is to route this generated choice
 space through the public constructor, replacing the present ambient
 choice-identification hypothesis.
+This generated-choice layer has now been refined to keep the full finite
+label procession.  The kernel constructs, for each theta-pilot class and each
+label \(j\in Z/\ell Z\), a concrete Hodge-theater/log-theta choice with the
+same generated procession, local tensor, and upper-semi data.  The resulting
+\texttt{FullLabelGeneratedChoice} space is closed under the \(Z/\ell Z\)
+translation action, and \Lean{} proves that its projection to the ambient
+concrete choice space is exactly the existing \texttt{flProcessionTranslate}
+operation.  Thus the generated boundary no longer trades the full \(F_\ell\)
+procession for a single representative; the representative choice is now only
+the distinguished label inside a larger generated procession space.
 The theta-pilot possible-image boundary has also been tightened.  The
 class-indexed and lattice-key image-law constructors now have
 procession-normalized entry points: instead of receiving an arbitrary
@@ -12433,10 +12443,13 @@ The practical priority order is now:
   finite-log-volume equalities, column log-link transport family, and the
   transported \(ZMod(\ell)\), capsule, classified, and direct bridges.  The
   newest kernel separates this from the ambient choice-space assumption by
-  generating the canonical theta-pilot choices themselves; the remaining
-  public-constructor work is to route that generated choice space through
-  Step~(xi), and then to derive the component functions from the paper-native
-  local geometry.
+  generating the canonical theta-pilot choices themselves.  It has now been
+  strengthened to generate the entire finite \(F_\ell\)-label procession over
+  each theta-pilot class, with the \(Z/\ell Z\)-action closed internally and
+  projected to the ambient \texttt{flProcessionTranslate}.  The remaining
+  public-constructor work is to route this full-label generated choice space
+  through Step~(xi), and then to derive the component functions from the
+  paper-native local geometry.
 \item Migrate or retire older certificate-pinned \(\IPL\) review aliases that
   are no longer preferred source surfaces.
 \item Extend the recovered finite-divisor packet-local source from the

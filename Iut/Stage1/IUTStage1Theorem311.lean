@@ -7641,6 +7641,202 @@ theorem constructedUpperSemi_logVolumeCompatibility_eq_base
   rfl
 
 set_option linter.style.longLine false in
+def constructedChoiceAtLabel
+    (thetaClass : ThetaPilotClass (coric := coric))
+    (label : ZMod l.value) :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l :=
+  { hodgeTheater := thetaClass.hodgeTheater,
+    historyLabel := thetaClass.historyLabel,
+    coordinate :=
+      { column := thetaClass.column,
+        row := thetaClass.row,
+        flLabel := label,
+        logThetaColumn := thetaClass.logThetaColumn },
+    coric := thetaClass.coric,
+    procession_state := source.representativeProcessionState thetaClass,
+    local_tensor_state := source.representativeLocalTensorState thetaClass,
+    upper_semi_state := source.constructedUpperSemiState thetaClass,
+    procession_column_eq :=
+      source.representative_procession_column_eq thetaClass,
+    upper_semi_logThetaColumn_eq := rfl }
+
+set_option linter.style.longLine false in
+theorem constructedChoiceAtLabel_representativeFLLabel
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    source.constructedChoiceAtLabel thetaClass
+        (source.representativeFLLabel thetaClass) =
+      source.constructedRepresentative thetaClass := by
+  rfl
+
+set_option linter.style.longLine false in
+theorem thetaPilotClass_constructedChoiceAtLabel
+    (thetaClass : ThetaPilotClass (coric := coric))
+    (label : ZMod l.value) :
+    thetaPilotClass (source.constructedChoiceAtLabel thetaClass label) =
+      thetaClass := by
+  cases thetaClass
+  rfl
+
+set_option linter.style.longLine false in
+theorem constructedChoiceAtLabel_direct_summand_count_eq_zmodCard
+    (thetaClass : ThetaPilotClass (coric := coric))
+    (label : ZMod l.value) :
+    (source.constructedChoiceAtLabel thetaClass label).local_tensor_state.directSummandCount =
+      Fintype.card (ZMod l.value) :=
+  source.representative_local_tensor_directSummandCount_eq_zmodCard thetaClass
+
+/--
+Generated full-label choice space over the theta-pilot classes.
+
+Unlike `CanonicalChoice`, this space keeps the full finite `F_l` label.  It is
+therefore closed under the procession action while still projecting to concrete
+choices whose procession, tensor, and upper-semi data are generated from the
+same source kernel.
+-/
+structure FullLabelGeneratedChoice where
+  thetaClass : ThetaPilotClass (coric := coric)
+  flLabel : ZMod l.value
+
+set_option linter.style.longLine false in
+def fullLabelGeneratedChoice
+    (thetaClass : ThetaPilotClass (coric := coric))
+    (label : ZMod l.value) :
+    FullLabelGeneratedChoice (coric := coric) (l := l) :=
+  { thetaClass := thetaClass,
+    flLabel := label }
+
+set_option linter.style.longLine false in
+def representativeFullLabelGeneratedChoice
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    FullLabelGeneratedChoice (coric := coric) (l := l) :=
+  fullLabelGeneratedChoice thetaClass (source.representativeFLLabel thetaClass)
+
+set_option linter.style.longLine false in
+def fullLabelToConcreteChoice
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l :=
+  source.constructedChoiceAtLabel choice.thetaClass choice.flLabel
+
+set_option linter.style.longLine false in
+@[simp]
+theorem fullLabelToConcreteChoice_thetaPilotClass
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    thetaPilotClass (source.fullLabelToConcreteChoice choice) =
+      choice.thetaClass :=
+  source.thetaPilotClass_constructedChoiceAtLabel choice.thetaClass choice.flLabel
+
+set_option linter.style.longLine false in
+@[simp]
+theorem fullLabelToConcreteChoice_flLabel
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    (source.fullLabelToConcreteChoice choice).coordinate.flLabel =
+      choice.flLabel :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem representativeFullLabel_toConcrete_eq_constructedRepresentative
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    source.fullLabelToConcreteChoice
+        (source.representativeFullLabelGeneratedChoice thetaClass) =
+      source.constructedRepresentative thetaClass := by
+  rfl
+
+set_option linter.style.longLine false in
+theorem representativeFullLabel_toCanonical
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    source.fullLabelToConcreteChoice
+        (source.representativeFullLabelGeneratedChoice thetaClass) =
+      (source.canonicalChoice thetaClass).val := by
+  rfl
+
+set_option linter.style.longLine false in
+def fullLabelTransition
+    (t : ZMod l.value)
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    FullLabelGeneratedChoice (coric := coric) (l := l) :=
+  { thetaClass := choice.thetaClass,
+    flLabel := zmodLabelTranslate l t choice.flLabel }
+
+set_option linter.style.longLine false in
+theorem fullLabelTransition_zero
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    fullLabelTransition (l := l) 0 choice = choice := by
+  cases choice
+  simp [fullLabelTransition, zmodLabelTranslate_zero]
+
+set_option linter.style.longLine false in
+theorem fullLabelTransition_add
+    (t u : ZMod l.value)
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    fullLabelTransition (l := l) (t + u) choice =
+      fullLabelTransition (l := l) t
+        (fullLabelTransition (l := l) u choice) := by
+  cases choice
+  simp [fullLabelTransition, zmodLabelTranslate_add]
+
+set_option linter.style.longLine false in
+theorem fullLabelTransition_thetaClass
+    (t : ZMod l.value)
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    (fullLabelTransition (l := l) t choice).thetaClass =
+      choice.thetaClass :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem fullLabelTransition_flLabel
+    (t : ZMod l.value)
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    (fullLabelTransition (l := l) t choice).flLabel =
+      zmodLabelTranslate l t choice.flLabel :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem fullLabelToConcreteChoice_transition
+    (t : ZMod l.value)
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    source.fullLabelToConcreteChoice
+        (fullLabelTransition (l := l) t choice) =
+      flProcessionTranslate t (source.fullLabelToConcreteChoice choice) := by
+  cases choice
+  rfl
+
+set_option linter.style.longLine false in
+theorem fullLabelTransition_preserves_thetaPilotClass
+    (t : ZMod l.value)
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    thetaPilotClass
+        (source.fullLabelToConcreteChoice
+          (fullLabelTransition (l := l) t choice)) =
+      thetaPilotClass (source.fullLabelToConcreteChoice choice) := by
+  calc
+    thetaPilotClass
+        (source.fullLabelToConcreteChoice
+          (fullLabelTransition (l := l) t choice)) =
+        (fullLabelTransition (l := l) t choice).thetaClass :=
+      source.fullLabelToConcreteChoice_thetaPilotClass
+        (fullLabelTransition (l := l) t choice)
+    _ = choice.thetaClass := rfl
+    _ = thetaPilotClass (source.fullLabelToConcreteChoice choice) :=
+      (source.fullLabelToConcreteChoice_thetaPilotClass choice).symm
+
+set_option linter.style.longLine false in
+theorem fullLabelToConcreteChoice_direct_summand_count_eq_zmodCard
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    (source.fullLabelToConcreteChoice choice).local_tensor_state.directSummandCount =
+      Fintype.card (ZMod l.value) :=
+  source.constructedChoiceAtLabel_direct_summand_count_eq_zmodCard
+    choice.thetaClass choice.flLabel
+
+set_option linter.style.longLine false in
+theorem fullLabelToConcreteChoice_upperSemi_logVolumeCompatibility_eq_base
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    (source.fullLabelToConcreteChoice choice).upper_semi_state.logVolumeCompatibility =
+      { sourceLogVolume := source.baseConstructedRealifiedVolume choice.thetaClass,
+        targetLogVolume := source.baseConstructedRealifiedVolume choice.thetaClass,
+        source_le_target := le_rfl } := by
+  rfl
+
+set_option linter.style.longLine false in
 /-- Audit for the generated theta-pilot representative choice space. -/
 structure Audit : Prop where
   frobenioid_divisor_column_family_audit :
@@ -7670,6 +7866,37 @@ structure Audit : Prop where
         { sourceLogVolume := source.baseConstructedRealifiedVolume thetaClass,
           targetLogVolume := source.baseConstructedRealifiedVolume thetaClass,
           source_le_target := le_rfl }
+  fullLabel_transition_zero :
+    ∀ choice : FullLabelGeneratedChoice (coric := coric) (l := l),
+      fullLabelTransition (l := l) 0 choice = choice
+  fullLabel_transition_add :
+    ∀ (t u : ZMod l.value)
+      (choice : FullLabelGeneratedChoice (coric := coric) (l := l)),
+      fullLabelTransition (l := l) (t + u) choice =
+        fullLabelTransition (l := l) t
+          (fullLabelTransition (l := l) u choice)
+  fullLabel_toConcrete_transition :
+    ∀ (t : ZMod l.value)
+      (choice : FullLabelGeneratedChoice (coric := coric) (l := l)),
+      source.fullLabelToConcreteChoice
+          (fullLabelTransition (l := l) t choice) =
+        flProcessionTranslate t (source.fullLabelToConcreteChoice choice)
+  fullLabel_transition_preserves_thetaPilotClass :
+    ∀ (t : ZMod l.value)
+      (choice : FullLabelGeneratedChoice (coric := coric) (l := l)),
+      thetaPilotClass
+          (source.fullLabelToConcreteChoice
+            (fullLabelTransition (l := l) t choice)) =
+        thetaPilotClass (source.fullLabelToConcreteChoice choice)
+  fullLabel_direct_summand_count_eq_zmodCard :
+    ∀ choice : FullLabelGeneratedChoice (coric := coric) (l := l),
+      (source.fullLabelToConcreteChoice choice).local_tensor_state.directSummandCount =
+        Fintype.card (ZMod l.value)
+  representative_fullLabel_to_canonical :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      source.fullLabelToConcreteChoice
+          (source.representativeFullLabelGeneratedChoice thetaClass) =
+        (source.canonicalChoice thetaClass).val
 
 set_option linter.style.longLine false in
 theorem audit :
@@ -7690,7 +7917,25 @@ theorem audit :
       exact source.canonicalChoice_direct_summand_count_eq_zmodCard choice,
     constructedUpperSemi_logVolumeCompatibility_eq_base := by
       intro thetaClass
-      exact source.constructedUpperSemi_logVolumeCompatibility_eq_base thetaClass }
+      exact source.constructedUpperSemi_logVolumeCompatibility_eq_base thetaClass,
+    fullLabel_transition_zero := by
+      intro choice
+      exact fullLabelTransition_zero choice,
+    fullLabel_transition_add := by
+      intro t u choice
+      exact fullLabelTransition_add t u choice,
+    fullLabel_toConcrete_transition := by
+      intro t choice
+      exact source.fullLabelToConcreteChoice_transition t choice,
+    fullLabel_transition_preserves_thetaPilotClass := by
+      intro t choice
+      exact source.fullLabelTransition_preserves_thetaPilotClass t choice,
+    fullLabel_direct_summand_count_eq_zmodCard := by
+      intro choice
+      exact source.fullLabelToConcreteChoice_direct_summand_count_eq_zmodCard choice,
+    representative_fullLabel_to_canonical := by
+      intro thetaClass
+      exact source.representativeFullLabel_toCanonical thetaClass }
 
 end LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel
 set_option linter.style.longLine true
