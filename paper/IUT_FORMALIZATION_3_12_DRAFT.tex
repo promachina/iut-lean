@@ -995,8 +995,25 @@ The experiment surface now exposes this generated route as
 \]
 This audit keeps the generated full-label quotient evidence next to the
 Remark~3.9.5 q-region equalities and the global \(C_\Theta\) dichotomy.  It does
-not identify the generated-choice package with the finite-divisor vertical-\(IQ\)
-package; that package-identification/handoff is the next source construction.
+not by itself identify the generated-choice package with the finite-divisor
+vertical-\(IQ\) package; that handoff is now treated separately at the finite
+theta-class fiber.  The strongest fiber boundary is
+\[
+\begin{array}{l}
+\texttt{GeneratedFullLabelFiniteDivisorVerticalIQFiniteThetaClassFiber}\\
+\quad\texttt{ComponentInd12ImageLawSource}.
+\end{array}
+\]
+It constructs finite packet representatives from component Hodge/log-theta
+data, but no longer assumes same-theta-class record-image equality.  Instead,
+same-theta-class finite packets must be connected by the generated
+\((\Ind1),(\Ind2)\) relation; \Lean{} embeds this relation into the
+place-audited quotient, derives record-image invariance from quotient
+invariance, and then transports the existing \(C_\Theta\) dichotomy to the
+finite package.  Thus the remaining payload at this boundary is not a raw
+finite image law, but the paper-native construction of the component
+representatives and their \((\Ind1),(\Ind2)\) transport from local
+Frobenioid/log-link geometry.
 The theta-pilot possible-image boundary has also been tightened.  The
 class-indexed and lattice-key image-law constructors now have
 procession-normalized entry points: instead of receiving an arbitrary
