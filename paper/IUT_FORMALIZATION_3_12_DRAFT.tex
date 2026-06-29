@@ -4191,9 +4191,18 @@ the valuation-ball realized-exact source: if
 \]
 then the valuation-ball additive Haar audit identifies the selected
 compact-open subset \(U_\beta\) with this closed ball, and \Lean{} derives the
-compact-open realized source.  Thus the remaining frontier is lower and more
-arithmetic: construct the valuation-ball realized-region identity from the
-paper-native holomorphic hull, log-Kummer, and local log-shell geometry.
+compact-open realized source.  The equality-backed log-shell package is also
+now recovered from the four local containments
+\[
+  P_{\Theta,\beta}\subseteq \operatorname{realizedRegion}(I_\beta),\quad
+  \operatorname{realizedRegion}(I_\beta)\subseteq P_{\Theta,\beta},\quad
+  I_\beta\subseteq B_\beta(r_\beta),\quad
+  B_\beta(r_\beta)\subseteq I_\beta,
+\]
+so the source need not assert the two set equalities at the first boundary.
+Thus the remaining frontier is lower and more arithmetic: construct these
+local containments from the paper-native holomorphic hull, log-Kummer, and
+local log-shell geometry.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -13529,9 +13538,10 @@ The practical priority order is now:
   source-derived global \(C_\Theta\) audit.  This has now been pushed one step
   lower: valuation-ball realized exactness plus the valuation-ball additive
   Haar audit recovers the compact-open realized-exact source used by the
-  preferred audit.  What remains is to construct the valuation-ball
-  realized-region identity from the paper-native holomorphic hull,
-  log-Kummer, and local log-shell geometry.
+  preferred audit, and the equality-backed log-shell source is recovered from
+  four local image/valuation-ball containments.  What remains is to construct
+  those containments from the paper-native holomorphic hull, log-Kummer, and
+  local log-shell geometry.
 \item Instantiate the valuation-ball local analytic construction from actual
   local fields, log-shell maps, compact-open Haar normalizations, and
   archimedean lattice metrics, proving the remaining Proposition~1.4

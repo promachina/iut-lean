@@ -40057,6 +40057,25 @@ theorem logShell_eq_valuationBall
     (imageSource.valuationBall_subset_logShell index)
 
 set_option linter.style.longLine false in
+def toPrincipalLogShellExactSource
+    (imageSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallLogShellImageMetricZeroValuationBallExactSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallLogShellExactSource
+      sourceData gluingTorsor selectedQChoice
+      (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ) where
+  principalSource := imageSource.principalSource
+  cellThetaClass := imageSource.cellThetaClass
+  coverPlace := imageSource.coverPlace
+  logShellRegion := imageSource.logShellRegion
+  valuationNorm_eq_dist := imageSource.valuationNorm_eq_dist
+  thetaRegion_toSet_eq_realizedLogShell :=
+    imageSource.thetaRegion_toSet_eq_realizedLogShell
+  logShell_eq_valuationBall :=
+    imageSource.logShell_eq_valuationBall
+
+set_option linter.style.longLine false in
 noncomputable def toPrincipalLogShellChartMetricZeroValuationBallExactSource
     (imageSource :
       ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallLogShellImageMetricZeroValuationBallExactSource
