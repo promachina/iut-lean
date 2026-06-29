@@ -4221,8 +4221,8 @@ defines this relation to be the graph of the selected realization map
 \]
 The two image containments then prove the graph laws.  Thus the local
 log-Kummer graph is no longer an independent payload at this boundary.  The
-containments themselves have also been lowered to the valuation-cover side.
-The new cover-level source states the single equality
+containments themselves were first lowered to the valuation-cover side by the
+single equality
 \[
   P_{\mathrm{cover}}(\Theta_\beta)
     =\operatorname{realizedRegion}(U_\beta),
@@ -4231,9 +4231,13 @@ where \(P_{\mathrm{cover}}\) is the Remark~3.9.5 valuation-cover possible
 region.  Since the principal cover is constructed with
 \(P_{\mathrm{cover}}(\Theta)=P_\Theta\), \Lean{} rewrites this equality to
 derive both compact-open image containments, the realized-exact source, and the
-canonical graph route.  The remaining frontier is now sharper: construct this
-cover/factor exactness from the paper-native holomorphic hull, log-Kummer, and
-local log-shell geometry.
+canonical graph route.  This equality is now itself derived from a local
+log-Kummer image source: every point of
+\(P_{\mathrm{cover}}(\Theta_\beta)\) has a lift in \(U_\beta\), and every
+point of \(U_\beta\) realizes back into
+\(P_{\mathrm{cover}}(\Theta_\beta)\).  The remaining frontier is now the
+construction of these lift and soundness laws from the paper-native
+holomorphic hull, log-Kummer, and local log-shell geometry.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -13576,8 +13580,10 @@ The practical priority order is now:
   log-Kummer graph as the graph of the realization map.  The image containments
   are now themselves derived from a cover-level exactness statement identifying
   the selected Remark~3.9.5 possible region with the realized compact-open
-  local factor.  What remains is to construct that cover/factor exactness from
-  the paper-native holomorphic hull, log-Kummer, and local log-shell geometry.
+  local factor; this equality is now derived in turn from local log-Kummer
+  lift and soundness laws for the compact-open factor.  What remains is to
+  construct those local image laws from the paper-native holomorphic hull,
+  log-Kummer, and local log-shell geometry.
 \item Instantiate the valuation-ball local analytic construction from actual
   local fields, log-shell maps, compact-open Haar normalizations, and
   archimedean lattice metrics, proving the remaining Proposition~1.4
