@@ -13795,22 +13795,24 @@ endpoints now remove the generated-corridor source from the public boundary:
 \]
 At this boundary Lean derives the generated-corridor q-region source from the
 lattice-image-law generated quotient attached to the concrete fiber transport.
-The current lowest packet-level \(C_\Theta\) boundary is
+This has now been lowered once more.  The current lowest packet-level
+\(C_\Theta\) boundary is
 \[
 \begin{gathered}
 \texttt{concreteHodgeTheaterLogThetaGeneratedFullLabel}\\
-\texttt{FiberInd2ActionPacketTransportPointwiseGeneratedPullback}\\
+\texttt{FiberInd2ActionPacketTransportGeneratedRecordPullback}\\
 \texttt{LocalNormalizationMatchedValuationBallFactoredLocalized}\\
 \texttt{HullCoverUpperRayCalibrationSource\_}\\
 \texttt{cThetaDichotomy}.
 \end{gathered}
 \]
-Here the lattice-image-law generated quotient is no longer a public input:
-Lean reconstructs it from the source-level \((\Ind2)\) packet-transport
-pointwise generated-pullback law, then runs the local-normalization
-valuation-ball/Haar \(C_\Theta\) corridor.  The endpoint exposes the pointwise
-pullback audit, generated-corridor kernel audit, target-region quotient audit,
-and local-normalization hull-cover audit.
+Here even the pointwise generated-pullback q-region source is no longer a
+public argument.  The source stores the generated full-label record-pullback law,
+Lean constructs the source-level \((\Ind2)\) packet-transport pointwise source,
+reconstructs the lattice-image-law generated quotient, and then runs the
+local-normalization valuation-ball/Haar \(C_\Theta\) corridor.  The endpoint
+exposes the generated-record pullback audit, the derived pointwise source audit,
+the target-region quotient audit, and the local-normalization hull-cover audit.
 The older factored localized hull-cover source
 \[
 \begin{gathered}
@@ -13830,10 +13832,10 @@ theta-class q-region calibration, the common hull system, and the
 hull/determinant identifications, but obtains both localized hull-cover sources
 and their component transport from matched valuation-ball Haar covers.  The
 remaining source-facing obligation is therefore sharper: construct the
-pointwise generated-pullback law and the matched valuation-ball/Haar transport
-source from the same local log-Kummer/Frobenioid geometry.  The
-lattice-quotient and generated-corridor handoffs are now derived inside the
-endpoint.
+generated full-label record-pullback law and the matched valuation-ball/Haar
+transport source from the same local log-Kummer/Frobenioid geometry.  The
+pointwise q-region source, lattice-quotient handoff, and generated-corridor
+handoff are now derived inside the endpoint.
 
 The practical priority order is now:
 \begin{enumerate}
