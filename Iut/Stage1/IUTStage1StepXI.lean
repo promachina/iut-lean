@@ -41527,6 +41527,178 @@ theorem compactOpenRealizedEndpoint
         compactOpenSource.thetaRegion_toSet_eq_realizedCompactOpenSubset,
         realizedSource.endpoint.2.2.2.2⟩
 
+set_option linter.style.longLine false in
+def canonicalLocalLogKummerGraph
+    (compactOpenSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogShellImageMetricZeroValuationBallExactSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ))
+    (index : β) (localPoint : K) (point : Point target) :
+    Prop :=
+  let valuationSource :=
+    compactOpenSource.principalSource.toPrincipalValuationBallProductHullCoverSource;
+  let factor :=
+    valuationSource.valuationCover.valuationBallFactor
+      index (compactOpenSource.coverPlace index);
+  factor.realization localPoint = point
+
+set_option linter.style.longLine false in
+theorem canonicalLogKummerGraph_left_total
+    (compactOpenSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogShellImageMetricZeroValuationBallExactSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ))
+    (index : β) :
+    let valuationSource :=
+      compactOpenSource.principalSource.toPrincipalValuationBallProductHullCoverSource;
+    let factor :=
+      valuationSource.valuationCover.valuationBallFactor
+        index (compactOpenSource.coverPlace index);
+    ∀ point : Point target,
+      point ∈
+        (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+          (compactOpenSource.cellThetaClass index)).toSet ->
+      ∃ localPoint : K,
+        localPoint ∈ factor.compactOpenSubset ∧
+          compactOpenSource.canonicalLocalLogKummerGraph
+            index localPoint point := by
+  intro valuationSource factor point hpoint
+  have hrealized :
+      point ∈ factor.realizedRegion factor.compactOpenSubset :=
+    compactOpenSource.thetaRegion_subset_realizedCompactOpenLogShell
+      index hpoint
+  have himage :
+      point ∈ factor.realization '' factor.compactOpenSubset := by
+    rwa [factor.realizedRegion_eq_image factor.compactOpenSubset] at hrealized
+  rcases himage with ⟨localPoint, hlocal, hrealize⟩
+  exact ⟨localPoint, hlocal, hrealize⟩
+
+set_option linter.style.longLine false in
+theorem canonicalLogKummerGraph_realization
+    (compactOpenSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogShellImageMetricZeroValuationBallExactSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ))
+    (index : β) :
+    let valuationSource :=
+      compactOpenSource.principalSource.toPrincipalValuationBallProductHullCoverSource;
+    let factor :=
+      valuationSource.valuationCover.valuationBallFactor
+        index (compactOpenSource.coverPlace index);
+    ∀ localPoint : K,
+      ∀ point : Point target,
+        compactOpenSource.canonicalLocalLogKummerGraph
+            index localPoint point ->
+          factor.realization localPoint = point := by
+  intro valuationSource factor localPoint point hgraph
+  exact hgraph
+
+set_option linter.style.longLine false in
+theorem compactOpenSubset_canonicalLogKummerGraph_sound
+    (compactOpenSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogShellImageMetricZeroValuationBallExactSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ))
+    (index : β) :
+    let valuationSource :=
+      compactOpenSource.principalSource.toPrincipalValuationBallProductHullCoverSource;
+    let factor :=
+      valuationSource.valuationCover.valuationBallFactor
+        index (compactOpenSource.coverPlace index);
+    ∀ localPoint : K,
+      localPoint ∈ factor.compactOpenSubset ->
+      compactOpenSource.canonicalLocalLogKummerGraph
+          index localPoint (factor.realization localPoint) ∧
+        factor.realization localPoint ∈
+          (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+            (compactOpenSource.cellThetaClass index)).toSet := by
+  intro valuationSource factor localPoint hlocal
+  have himage :
+      factor.realization localPoint ∈
+        factor.realization '' factor.compactOpenSubset :=
+    ⟨localPoint, hlocal, rfl⟩
+  have hrealized :
+      factor.realization localPoint ∈
+        factor.realizedRegion factor.compactOpenSubset := by
+    rwa [← factor.realizedRegion_eq_image factor.compactOpenSubset] at himage
+  exact
+    ⟨rfl,
+      compactOpenSource.realizedCompactOpenLogShell_subset_thetaRegion
+        index hrealized⟩
+
+set_option linter.style.longLine false in
+def toCompactOpenLogKummerGraphMetricZeroValuationBallExactSource
+    (compactOpenSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogShellImageMetricZeroValuationBallExactSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerGraphMetricZeroValuationBallExactSource
+      sourceData gluingTorsor selectedQChoice
+      (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ) where
+  principalSource := compactOpenSource.principalSource
+  cellThetaClass := compactOpenSource.cellThetaClass
+  coverPlace := compactOpenSource.coverPlace
+  valuationNorm_eq_dist := compactOpenSource.valuationNorm_eq_dist
+  localLogKummerGraph := compactOpenSource.canonicalLocalLogKummerGraph
+  logKummerGraph_left_total :=
+    compactOpenSource.canonicalLogKummerGraph_left_total
+  logKummerGraph_realization :=
+    compactOpenSource.canonicalLogKummerGraph_realization
+  compactOpenSubset_logKummerGraph_sound :=
+    compactOpenSource.compactOpenSubset_canonicalLogKummerGraph_sound
+
+set_option linter.style.longLine false in
+theorem canonicalLogKummerGraphEndpoint
+    (compactOpenSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogShellImageMetricZeroValuationBallExactSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    let valuationSource :=
+      compactOpenSource.principalSource.toPrincipalValuationBallProductHullCoverSource;
+    (∀ index : β,
+      let factor :=
+        valuationSource.valuationCover.valuationBallFactor
+          index (compactOpenSource.coverPlace index);
+      ∀ point : Point target,
+        point ∈
+          (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+            (compactOpenSource.cellThetaClass index)).toSet ->
+        ∃ localPoint : K,
+          localPoint ∈ factor.compactOpenSubset ∧
+            compactOpenSource.canonicalLocalLogKummerGraph
+              index localPoint point) ∧
+      (∀ index : β,
+        let factor :=
+          valuationSource.valuationCover.valuationBallFactor
+            index (compactOpenSource.coverPlace index);
+        ∀ localPoint : K,
+          ∀ point : Point target,
+            compactOpenSource.canonicalLocalLogKummerGraph
+                index localPoint point ->
+              factor.realization localPoint = point) ∧
+      (∀ index : β,
+        let factor :=
+          valuationSource.valuationCover.valuationBallFactor
+            index (compactOpenSource.coverPlace index);
+        ∀ localPoint : K,
+          localPoint ∈ factor.compactOpenSubset ->
+            compactOpenSource.canonicalLocalLogKummerGraph
+                index localPoint (factor.realization localPoint) ∧
+              factor.realization localPoint ∈
+                (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+                  (compactOpenSource.cellThetaClass index)).toSet) ∧
+      valuationSource.possibleImageUnion =
+        valuationSource.selectedPrincipalHull :=
+  by
+    intro valuationSource
+    let graphSource :=
+      compactOpenSource.toCompactOpenLogKummerGraphMetricZeroValuationBallExactSource
+    exact
+      ⟨compactOpenSource.canonicalLogKummerGraph_left_total,
+        compactOpenSource.canonicalLogKummerGraph_realization,
+        compactOpenSource.compactOpenSubset_canonicalLogKummerGraph_sound,
+        graphSource.endpoint.2.2.2.2.2.2⟩
+
 end ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogShellImageMetricZeroValuationBallExactSource
 
 namespace ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallRealizedExactSource
