@@ -4235,20 +4235,19 @@ canonical graph route.  This equality is now itself derived from a local
 log-Kummer image source: every point of
 \(P_{\mathrm{cover}}(\Theta_\beta)\) has a lift in \(U_\beta\), and every
 point of \(U_\beta\) realizes back into
-\(P_{\mathrm{cover}}(\Theta_\beta)\).  That image source has now been lowered
-again to a map-level local log-Kummer source.  It supplies a local Kummer
-realization map
+\(P_{\mathrm{cover}}(\Theta_\beta)\).  That image source now constructs the
+map-level local log-Kummer source.  \Lean{} takes the local Kummer realization
+map to be the selected valuation-factor realization
 \[
   \kappa_\beta:K_\beta\longrightarrow\operatorname{Pt}(\mathbb L_\Theta),
 \]
-identifies \(\kappa_\beta\) with the selected valuation-factor realization,
-and supplies a section of \(\kappa_\beta\) over the selected
-Remark~3.9.5 possible region.  \Lean{} defines the local correspondence as
-the graph of \(\kappa_\beta\), then derives left-totality, realization
-compatibility, compact-open soundness, the image source, cover exactness, and
-the global \(C_\Theta\) audit.  The remaining frontier is now the construction
-of this map and section from the paper-native holomorphic hull, log-Kummer,
-and local log-shell geometry.
+and chooses a section of \(\kappa_\beta\) over the selected
+Remark~3.9.5 possible region from canonical graph left-totality.  It then
+defines the local correspondence as the graph of \(\kappa_\beta\), derives
+realization compatibility, compact-open soundness, the image source, cover
+exactness, and the global \(C_\Theta\) audit.  The remaining frontier is now
+the construction of the compact-open log-shell image laws themselves from the
+paper-native holomorphic hull, log-Kummer, and local log-shell geometry.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -13587,16 +13586,15 @@ The practical priority order is now:
   the preferred audit.  Equivalently, the two compact-open image containments
   construct the compact-open realized-exact source directly, recover the
   broader equality-backed log-shell source from four local
-  image/valuation-ball containments, and define the canonical local
-  log-Kummer graph as the graph of the realization map.  The image containments
-  are now themselves derived from a cover-level exactness statement identifying
-  the selected Remark~3.9.5 possible region with the realized compact-open
-  local factor; this equality is now derived in turn from local log-Kummer
-  lift and soundness laws for the compact-open factor, which are now extracted
-  from a correspondence relation defined as the graph of a local Kummer
-  realization map with a section over the selected possible region.  What
-  remains is to construct that map and section from the paper-native
-  holomorphic hull, log-Kummer, and local log-shell geometry.
+  image/valuation-ball containments, define the canonical local log-Kummer
+  graph as the graph of the realization map, and now construct the map-level
+  possible-region source by taking the Kummer map to be the valuation-factor
+  realization and choosing its section from canonical graph left-totality.  The
+  image containments are also derived from a cover-level exactness statement
+  identifying the selected Remark~3.9.5 possible region with the realized
+  compact-open local factor.  What remains is to construct the compact-open
+  image laws from the paper-native holomorphic hull, log-Kummer, and local
+  log-shell geometry.
 \item Instantiate the valuation-ball local analytic construction from actual
   local fields, log-shell maps, compact-open Haar normalizations, and
   archimedean lattice metrics, proving the remaining Proposition~1.4
