@@ -13782,8 +13782,8 @@ local-normalization valuation-ball source before invoking the finite-divisor
 This endpoint consumes the generated-corridor-backed q-region source directly,
 derives the pointwise q-region route internally, and retains both the
 generated-corridor audit and the target-region quotient audit at the
-local-normalization valuation-ball \(C_\Theta\) boundary.  This has now been
-lowered one step further by
+local-normalization valuation-ball \(C_\Theta\) boundary.  Two further lowered
+endpoints now remove the generated-corridor source from the public boundary:
 \[
 \begin{gathered}
 \texttt{concreteHodgeTheaterLogThetaGeneratedFullLabel}\\
@@ -13793,13 +13793,24 @@ lowered one step further by
 \texttt{cThetaDichotomy}.
 \end{gathered}
 \]
-At this boundary the generated-corridor q-region source is not a public input.
-Lean derives it from the lattice-image-law generated quotient attached to the
-concrete fiber transport, keeps the generated-corridor kernel audit visible, and
-then runs the local-normalization valuation-ball/Haar \(C_\Theta\) corridor.
-Thus the current lowest packet-level \(C_\Theta\) boundary no longer consumes
-the older pointwise, kernel-image, or generated-corridor q-region source
-directly.
+At this boundary Lean derives the generated-corridor q-region source from the
+lattice-image-law generated quotient attached to the concrete fiber transport.
+The current lowest packet-level \(C_\Theta\) boundary is
+\[
+\begin{gathered}
+\texttt{concreteHodgeTheaterLogThetaGeneratedFullLabel}\\
+\texttt{FiberInd2ActionPacketTransportPointwiseGeneratedPullback}\\
+\texttt{LocalNormalizationMatchedValuationBallFactoredLocalized}\\
+\texttt{HullCoverUpperRayCalibrationSource\_}\\
+\texttt{cThetaDichotomy}.
+\end{gathered}
+\]
+Here the lattice-image-law generated quotient is no longer a public input:
+Lean reconstructs it from the source-level \((\Ind2)\) packet-transport
+pointwise generated-pullback law, then runs the local-normalization
+valuation-ball/Haar \(C_\Theta\) corridor.  The endpoint exposes the pointwise
+pullback audit, generated-corridor kernel audit, target-region quotient audit,
+and local-normalization hull-cover audit.
 The older factored localized hull-cover source
 \[
 \begin{gathered}
@@ -13819,9 +13830,10 @@ theta-class q-region calibration, the common hull system, and the
 hull/determinant identifications, but obtains both localized hull-cover sources
 and their component transport from matched valuation-ball Haar covers.  The
 remaining source-facing obligation is therefore sharper: construct the
-lattice-image-law generated quotient and the matched valuation-ball/Haar
-transport source from the same local log-Kummer/Frobenioid geometry; the
-generated-corridor handoff itself is now derived inside the endpoint.
+pointwise generated-pullback law and the matched valuation-ball/Haar transport
+source from the same local log-Kummer/Frobenioid geometry.  The
+lattice-quotient and generated-corridor handoffs are now derived inside the
+endpoint.
 
 The practical priority order is now:
 \begin{enumerate}
