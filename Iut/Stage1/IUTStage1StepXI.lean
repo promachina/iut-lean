@@ -42358,6 +42358,129 @@ theorem pointwiseConstructedEndpoint
 
 end ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerGraphMetricZeroValuationBallExactSource
 
+namespace ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+
+variable
+  {sourceData :
+    ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+      (source := source) (target := target) (l := l)
+      recordConcrete indData}
+  {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+  {selectedQChoice :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+  {η : Type z} {K : Type x}
+  {β : Type v} {γ : Type w} {Λ : Type max u v w x z}
+  [PseudoMetricSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+  [Fintype β] [Fintype γ]
+
+set_option linter.style.longLine false in
+def toCompactOpenLogKummerGraphMetricZeroValuationBallExactSource
+    (mapSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerGraphMetricZeroValuationBallExactSource
+      sourceData gluingTorsor selectedQChoice
+      (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ) where
+  principalSource := mapSource.principalSource
+  cellThetaClass := mapSource.cellThetaClass
+  coverPlace := mapSource.coverPlace
+  valuationNorm_eq_dist := mapSource.valuationNorm_eq_dist
+  localLogKummerGraph :=
+    mapSource.localLogKummerCorrespondence
+  logKummerGraph_left_total := by
+    intro index valuationSource factor point hpoint
+    exact
+      mapSource.possibleRegion_correspondence_left_total
+        index point (by simpa using hpoint)
+  logKummerGraph_realization :=
+    mapSource.correspondence_realization
+  compactOpenSubset_logKummerGraph_sound := by
+    intro index valuationSource factor localPoint hlocal
+    have hsound :=
+      mapSource.compactOpen_correspondence_sound
+        index localPoint hlocal
+    exact ⟨hsound.1, by simpa using hsound.2⟩
+
+set_option linter.style.longLine false in
+noncomputable def toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource
+    (mapSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallPointwiseConstructedLogShellMetricZeroValuationBallExactSource
+      sourceData gluingTorsor selectedQChoice
+      (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ) :=
+  mapSource.toCompactOpenLogKummerGraphMetricZeroValuationBallExactSource
+    |>.toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource
+
+set_option linter.style.longLine false in
+theorem graphPointwiseConstructedEndpoint
+    (mapSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    let graphSource :=
+      mapSource.toCompactOpenLogKummerGraphMetricZeroValuationBallExactSource;
+    let valuationSource :=
+      mapSource.principalSource.toPrincipalValuationBallProductHullCoverSource;
+    (∀ index : β,
+      let factor :=
+        valuationSource.valuationCover.valuationBallFactor
+          index (mapSource.coverPlace index);
+      ∀ point : Point target,
+        point ∈
+          (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+            (mapSource.cellThetaClass index)).toSet ->
+          ∃ localPoint : K,
+            localPoint ∈ factor.compactOpenSubset ∧
+              graphSource.localLogKummerGraph index localPoint point) ∧
+      (∀ index : β,
+        let factor :=
+          valuationSource.valuationCover.valuationBallFactor
+            index (mapSource.coverPlace index);
+        ∀ localPoint : K,
+          localPoint ∈ factor.compactOpenSubset ->
+            graphSource.localLogKummerGraph
+                index localPoint (factor.realization localPoint) ∧
+              factor.realization localPoint ∈
+                (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+                  (mapSource.cellThetaClass index)).toSet) ∧
+      (∀ index : β,
+        let factor :=
+          valuationSource.valuationCover.valuationBallFactor
+            index (mapSource.coverPlace index);
+        ∀ point : Point target,
+          point ∈
+            (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+              (mapSource.cellThetaClass index)).toSet ->
+          ∃ localPoint : K,
+            factor.valuationNorm localPoint <= factor.compactOpenRadius ∧
+              factor.realization localPoint = point) ∧
+      (∀ index : β,
+        let factor :=
+          valuationSource.valuationCover.valuationBallFactor
+            index (mapSource.coverPlace index);
+        ∀ localPoint : K,
+          factor.valuationNorm localPoint <= factor.compactOpenRadius ->
+          factor.realization localPoint ∈
+            (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+              (mapSource.cellThetaClass index)).toSet) ∧
+      valuationSource.possibleImageUnion =
+        valuationSource.selectedPrincipalHull :=
+  by
+    intro graphSource valuationSource
+    have hpointwise :=
+      graphSource.pointwiseConstructedEndpoint
+    exact
+      ⟨graphSource.logKummerGraph_left_total,
+        graphSource.compactOpenSubset_logKummerGraph_sound,
+        hpointwise.1,
+        hpointwise.2.1,
+        hpointwise.2.2⟩
+
+end ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+
 set_option linter.style.longLine false in
 /--
 Principal compact-open realized-exact valuation-ball source.
