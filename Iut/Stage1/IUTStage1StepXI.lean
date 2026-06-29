@@ -25451,6 +25451,180 @@ theorem oneSidedQuotientAudit
     selectedQRegion_subset_recordUnion :=
       construction.selectedQRegion_subset_recordUnion }
 
+set_option linter.style.longLine false in
+/--
+Audit for the concrete Hodge-theater/log-theta constructor.
+
+This packages the exact milestone-facing payload of
+`ofConcreteHodgeTheaterLogTheta`: the constructor produces the one-sided
+equality-quotient multiradial source, the finite `F_l` procession action stays
+inside the `(Ind1, Ind2)` equality quotient, the selected q-region is the
+selected quotient possible image, and `(Ind3)` remains an upper-semi relation
+with no equality generator.
+-/
+structure ConcreteHodgeTheaterLogThetaConstructorAudit
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l)
+    (possibleImageCompatibility :
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).PossibleImageQuotientCompatibility
+        record.thetaPossibleImages.images)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) : Prop where
+  construction_endpoint :
+    let construction :=
+      ofConcreteHodgeTheaterLogTheta
+        record indData possibleImageCompatibility gluingTorsor selectedQChoice
+    construction.multiradialImages.quotient =
+        construction.typedIndeterminacyCore.equalityQuotient ∧
+      construction.multiradialImages.possibleImages =
+        record.thetaPossibleImages ∧
+      Fintype.card (ZMod l.value) = l.value ∧
+      (∀ t choice,
+        construction.typedIndeterminacyCore.equalityQuotientMap choice =
+          construction.typedIndeterminacyCore.equalityQuotientMap
+            (construction.flProcessionAction.transition t choice)) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        construction.typedIndeterminacyCore.ind3.step choice₁ choice₂ ->
+          construction.typedIndeterminacyCore.logVolume choice₁ <=
+            construction.typedIndeterminacyCore.logVolume choice₂) ∧
+      (∀ choice,
+        construction.equalityQuotientPossibleImages.quotientImages.region
+            (construction.typedIndeterminacyCore.equalityQuotientMap choice) =
+          record.thetaPossibleImages.images.region choice) ∧
+      construction.selectedQRegion =
+        construction.equalityQuotientPossibleImages.quotientImages.region
+          (construction.typedIndeterminacyCore.equalityQuotientMap
+            construction.selectedQChoice) ∧
+      construction.selectedQRegion.toSet =
+        recordThetaPossibleImage record construction.selectedQChoice ∧
+      construction.selectedQRegion.toSet ⊆ recordThetaPossibleImageUnion record
+  oneSidedQuotientAudit :
+    let construction :=
+      ofConcreteHodgeTheaterLogTheta
+        record indData possibleImageCompatibility gluingTorsor selectedQChoice
+    OneSidedQuotientAudit construction
+  typedCoreActionLawAudit :
+    (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+      indData).ActionLawAudit
+  equalityQuotientSetoidAudit :
+    (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+      indData).EqualityQuotientSetoidAudit
+  equalityQuotient_no_ind3_generator :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).equalityGenerators.ind3_step choice₁ choice₂ ->
+        False
+  ind1_preserves_processionNormalizedLogVolume :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).ind1.step choice₁ choice₂ ->
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).logVolume choice₁ =
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).logVolume choice₂
+  ind2_preserves_processionNormalizedLogVolume :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).ind2.step choice₁ choice₂ ->
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).logVolume choice₁ =
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).logVolume choice₂
+  ind3_upper_semi_logVolume :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).ind3.step choice₁ choice₂ ->
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).logVolume choice₁ <=
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).logVolume choice₂
+  fl_cardinality :
+    Fintype.card (ZMod l.value) = l.value
+  fl_procession_stays_in_equalityQuotient :
+    let construction :=
+      ofConcreteHodgeTheaterLogTheta
+        record indData possibleImageCompatibility gluingTorsor selectedQChoice
+    ∀ t choice,
+      construction.typedIndeterminacyCore.equalityQuotientMap choice =
+        construction.typedIndeterminacyCore.equalityQuotientMap
+          (construction.flProcessionAction.transition t choice)
+  selectedQRegion_is_quotient_possibleImage :
+    let construction :=
+      ofConcreteHodgeTheaterLogTheta
+        record indData possibleImageCompatibility gluingTorsor selectedQChoice
+    construction.selectedQRegion =
+      construction.equalityQuotientPossibleImages.quotientImages.region
+        (construction.typedIndeterminacyCore.equalityQuotientMap
+          construction.selectedQChoice)
+  selectedQRegion_is_record_possibleImage :
+    let construction :=
+      ofConcreteHodgeTheaterLogTheta
+        record indData possibleImageCompatibility gluingTorsor selectedQChoice
+    construction.selectedQRegion.toSet =
+      recordThetaPossibleImage record construction.selectedQChoice
+  selectedQRegion_subset_recordUnion :
+    let construction :=
+      ofConcreteHodgeTheaterLogTheta
+        record indData possibleImageCompatibility gluingTorsor selectedQChoice
+    construction.selectedQRegion.toSet ⊆ recordThetaPossibleImageUnion record
+
+set_option linter.style.longLine false in
+theorem ofConcreteHodgeTheaterLogTheta_constructorAudit
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l)
+    (possibleImageCompatibility :
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).PossibleImageQuotientCompatibility
+        record.thetaPossibleImages.images)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    ConcreteHodgeTheaterLogThetaConstructorAudit
+      record indData possibleImageCompatibility gluingTorsor selectedQChoice :=
+  let construction :=
+    ofConcreteHodgeTheaterLogTheta
+      record indData possibleImageCompatibility gluingTorsor selectedQChoice
+  let quotientAudit := construction.oneSidedQuotientAudit
+  { construction_endpoint :=
+      ofConcreteHodgeTheaterLogTheta_endpoint
+        record indData possibleImageCompatibility gluingTorsor selectedQChoice,
+    oneSidedQuotientAudit := quotientAudit,
+    typedCoreActionLawAudit := quotientAudit.typedCoreActionLawAudit,
+    equalityQuotientSetoidAudit := quotientAudit.equalityQuotientSetoidAudit,
+    equalityQuotient_no_ind3_generator :=
+      quotientAudit.equalityQuotient_no_ind3_generator,
+    ind1_preserves_processionNormalizedLogVolume :=
+      quotientAudit.ind1_preserves_processionNormalizedLogVolume,
+    ind2_preserves_processionNormalizedLogVolume :=
+      quotientAudit.ind2_preserves_processionNormalizedLogVolume,
+    ind3_upper_semi_logVolume :=
+      quotientAudit.ind3_upper_semi_logVolume,
+    fl_cardinality :=
+      (ofConcreteHodgeTheaterLogTheta_endpoint
+        record indData possibleImageCompatibility gluingTorsor
+        selectedQChoice).2.2.1,
+    fl_procession_stays_in_equalityQuotient :=
+      quotientAudit.fl_procession_stays_in_equalityQuotient,
+    selectedQRegion_is_quotient_possibleImage :=
+      quotientAudit.selectedQRegion_is_quotient_possibleImage,
+    selectedQRegion_is_record_possibleImage :=
+      quotientAudit.selectedQRegion_is_record_possibleImage,
+    selectedQRegion_subset_recordUnion :=
+      quotientAudit.selectedQRegion_subset_recordUnion }
+
 namespace ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
 
 variable {coric : Type u}
