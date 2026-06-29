@@ -33700,6 +33700,73 @@ theorem thetaRegionDefinedPrincipalValuationBallEndpoint
         principalSource.toPrincipalValuationBallProductHullCoverSource
           |>.selectedPrincipalHull_coverLogVolume_eq_calibratedCellSum⟩
 
+set_option linter.style.longLine false in
+/--
+The lattice-image-law source obtained from a fiber-transport-backed valuation
+comparison is definitionally the lattice-image law produced by the concrete
+fiber-transport source.
+
+This names the equality used by the lattice-image-law-backed
+theta-region-defined constructor; no extra source-paper payload is present when
+the lattice law has actually been derived from fiber transport.
+-/
+theorem latticeImageLawSource_eq_fiberTransport
+    (fiberBackedSource :
+      ConcreteValuationBallThetaClassFiberTransportBackedFamilyUnionSource
+        sourceData gluingTorsor selectedQChoice valuationSource) :
+    fiberBackedSource.toThetaClassLatticeImageLawBackedFamilyUnionSource.latticeImageLawSource =
+      sourceData.toFiberTransportSource.toLatticeImageLawSource :=
+  rfl
+
+set_option linter.style.longLine false in
+/--
+Route the fiber-transport-backed source through the lattice-image-law-backed
+theta-region-defined principal valuation-ball constructor.
+
+This is the same mathematical endpoint as
+`thetaRegionDefinedPrincipalValuationBallEndpoint`, but it verifies that the
+new lattice-image-law constructor is not an isolated interface: the needed law
+identification is derived by `rfl` from the fiber-transport provenance.
+-/
+theorem thetaRegionDefinedPrincipalValuationBallViaLatticeImageLawEndpoint
+    (fiberBackedSource :
+      ConcreteValuationBallThetaClassFiberTransportBackedFamilyUnionSource
+        sourceData gluingTorsor selectedQChoice valuationSource) :
+    let imageLawBackedSource :=
+      fiberBackedSource.toThetaClassLatticeImageLawBackedFamilyUnionSource;
+    let principalSource :=
+      imageLawBackedSource.toThetaRegionDefinedPrincipalValuationBallSource
+        (fiberBackedSource.latticeImageLawSource_eq_fiberTransport);
+    imageLawBackedSource.latticeImageLawSource =
+        sourceData.toFiberTransportSource.toLatticeImageLawSource ∧
+      principalSource.toPrincipalValuationBallProductHullCoverSource.valuationCover.possibleRegion =
+        valuationSource.valuationCover.possibleRegion ∧
+      principalSource.toPrincipalValuationBallProductHullCoverSource.valuationCover.possibleRegion =
+        (fun thetaClass =>
+          (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+            thetaClass).toSet) ∧
+      (∀ thetaClass :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric),
+        (imageLawBackedSource.latticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+          thetaClass).toSet =
+          valuationSource.valuationCover.possibleRegion thetaClass) ∧
+      principalSource.toPrincipalValuationBallProductHullCoverSource.valuationCover.hullSystem.logVolume
+          principalSource.toPrincipalValuationBallProductHullCoverSource.selectedPrincipalHull =
+        principalSource.toPrincipalValuationBallProductHullCoverSource.valuationCover.calibratedCellLogVolumeSum :=
+  by
+    intro imageLawBackedSource principalSource
+    exact
+      ⟨fiberBackedSource.latticeImageLawSource_eq_fiberTransport,
+        imageLawBackedSource.thetaRegionDefinedPrincipalValuationBallEndpoint
+          (fiberBackedSource.latticeImageLawSource_eq_fiberTransport) |>.1,
+        imageLawBackedSource.thetaRegionDefinedPrincipalValuationBallEndpoint
+          (fiberBackedSource.latticeImageLawSource_eq_fiberTransport) |>.2.1,
+        imageLawBackedSource.thetaRegionDefinedPrincipalValuationBallEndpoint
+          (fiberBackedSource.latticeImageLawSource_eq_fiberTransport) |>.2.2.1,
+        imageLawBackedSource.thetaRegionDefinedPrincipalValuationBallEndpoint
+          (fiberBackedSource.latticeImageLawSource_eq_fiberTransport) |>.2.2.2⟩
+
 end ConcreteValuationBallThetaClassFiberTransportBackedFamilyUnionSource
 
 set_option linter.style.longLine false in
