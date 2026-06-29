@@ -33488,6 +33488,107 @@ theorem ofPrincipalValuationBallProductHullCoverSource_endpoint
 
 end ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource
 
+namespace ConcreteValuationBallThetaClassFiberTransportBackedFamilyUnionSource
+
+variable
+  {sourceData :
+    ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+      (source := source) (target := target) (l := l)
+      recordConcrete indData}
+  {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+  {selectedQChoice :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+  {η : Type z} {K : Type x}
+  {β : Type v} {γ : Type w} {Λ : Type max u v w x z}
+  [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+  [Fintype β] [Fintype γ]
+  {valuationSource :
+    IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+      (Point target)
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric))
+      η K β γ Λ}
+
+set_option linter.style.longLine false in
+/--
+Promote the fiber-transport-backed pointwise region comparison to the
+theta-region-defined family source.
+
+The fiber-transport-backed source already proves, for each theta-pilot class,
+that the transported theta-region equals the corresponding valuation-cover
+possible region.  This constructor packages the same information as the
+family-level equality required by the theta-region-defined source.
+-/
+def toThetaRegionDefinedFamilyUnionSource
+    (fiberBackedSource :
+      ConcreteValuationBallThetaClassFiberTransportBackedFamilyUnionSource
+        sourceData gluingTorsor selectedQChoice valuationSource) :
+    ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedFamilyUnionSource
+      sourceData gluingTorsor selectedQChoice valuationSource where
+  possibleRegion_eq_fiberTransportThetaRegion := by
+    funext thetaClass
+    exact
+      (fiberBackedSource.fiberTransportRegion_toSet_eq_valuationRegion
+        thetaClass).symm
+
+set_option linter.style.longLine false in
+/--
+Construct the theta-region-defined principal valuation-ball source from the
+source-core principal valuation-ball cover plus the fiber-transport-backed
+Theorem 3.11 region comparison.
+
+This removes the raw family-equality payload from the source-core constructor:
+the equality is derived by function extensionality from the pointwise
+fiber-transport law.
+-/
+noncomputable def toThetaRegionDefinedPrincipalValuationBallSource
+    (fiberBackedSource :
+      ConcreteValuationBallThetaClassFiberTransportBackedFamilyUnionSource
+        sourceData gluingTorsor selectedQChoice valuationSource) :
+    ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource
+      sourceData (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ) :=
+  ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource.ofPrincipalValuationBallProductHullCoverSource
+      (sourceData := sourceData) valuationSource
+      (fiberBackedSource.toThetaRegionDefinedFamilyUnionSource
+        |>.possibleRegion_eq_fiberTransportThetaRegion)
+
+set_option linter.style.longLine false in
+theorem thetaRegionDefinedPrincipalValuationBallEndpoint
+    (fiberBackedSource :
+      ConcreteValuationBallThetaClassFiberTransportBackedFamilyUnionSource
+        sourceData gluingTorsor selectedQChoice valuationSource) :
+    let principalSource :=
+      fiberBackedSource.toThetaRegionDefinedPrincipalValuationBallSource;
+    principalSource.toPrincipalValuationBallProductHullCoverSource.valuationCover.possibleRegion =
+        valuationSource.valuationCover.possibleRegion ∧
+      principalSource.toPrincipalValuationBallProductHullCoverSource.valuationCover.possibleRegion =
+        (fun thetaClass =>
+          (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+            thetaClass).toSet) ∧
+      (∀ thetaClass :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric),
+        (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+          thetaClass).toSet =
+          valuationSource.valuationCover.possibleRegion thetaClass) ∧
+      principalSource.toPrincipalValuationBallProductHullCoverSource.valuationCover.hullSystem.logVolume
+          principalSource.toPrincipalValuationBallProductHullCoverSource.selectedPrincipalHull =
+        principalSource.toPrincipalValuationBallProductHullCoverSource.valuationCover.calibratedCellLogVolumeSum :=
+  by
+    intro principalSource
+    exact
+      ⟨by
+          funext thetaClass
+          exact
+            fiberBackedSource.fiberTransportRegion_toSet_eq_valuationRegion
+              thetaClass,
+        rfl,
+        fiberBackedSource.fiberTransportRegion_toSet_eq_valuationRegion,
+        principalSource.toPrincipalValuationBallProductHullCoverSource
+          |>.selectedPrincipalHull_coverLogVolume_eq_calibratedCellSum⟩
+
+end ConcreteValuationBallThetaClassFiberTransportBackedFamilyUnionSource
+
 set_option linter.style.longLine false in
 /--
 Hull-fixed provenance for the selected principal valuation-ball hull.
