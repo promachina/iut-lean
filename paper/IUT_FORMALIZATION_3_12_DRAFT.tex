@@ -4252,9 +4252,12 @@ now also downstream of a log-shell exact source: the two equalities
   \qquad L_\beta=U_\beta
 \]
 construct the compact-open route using the valuation-ball Haar normalization.
-The remaining frontier is the construction of these log-shell exact equalities
-from the paper-native holomorphic hull, log-Kummer, and local log-shell
-geometry.
+These equalities are no longer only accepted as an exact source: the pointwise
+local construction, which supplies a local representative of each theta-region
+point and the converse realization law for the compact-open valuation ball,
+constructs the exact source.  The remaining frontier is the construction of
+those pointwise local realization laws from the paper-native holomorphic hull,
+log-Kummer, and local log-shell geometry.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -9687,12 +9690,13 @@ to a local log-shell exact statement.  Starting from a principal cover whose
 possible regions are transported theta regions, \Lean{} now accepts the two
 local identities that a transported theta region is the realized image of its
 selected log-shell and that this log-shell is the compact-open valuation ball.
-It composes these identities to recover the realized valuation-ball equality,
-then derives the pointwise lift and converse realization from the local
-realization-image law.  The same construction builds the exact \(\Xi(P_B)\)
-family and uses the local-to-global arithmetic source for the global
-\(C_\Theta\) comparison, without reintroducing a caller-supplied scalar
-domination after the product-hull lowering.
+It can also derive these identities from the pointwise local construction:
+theta-region points have chosen compact-open valuation-ball representatives,
+and compact-open valuation-ball points realize back into the transported theta
+region.  This construction builds the exact \(\Xi(P_B)\) family and uses the
+local-to-global arithmetic source for the global \(C_\Theta\) comparison,
+without reintroducing a caller-supplied scalar domination after the product-hull
+lowering.
 The same specialization now propagates through the synchronized Ob5--Ob7
 review object and the canonical-scale audit: the product-hull route can run
 with canonical \(\Phi(P_B)\) and source-constructed exact \(\Xi(P_B)\) while
@@ -13601,8 +13605,9 @@ The practical priority order is now:
   identifying the selected Remark~3.9.5 possible region with the realized
   compact-open local factor, and now from the lower log-shell exact source
   \(P_{\Theta,\beta}=\operatorname{real}_\beta(L_\beta)\),
-  \(L_\beta=U_\beta\).  What remains is to construct these log-shell exact
-  equalities from the paper-native holomorphic hull, log-Kummer, and local
+  \(L_\beta=U_\beta\).  These exact equalities are themselves derived from the
+  pointwise local realization source.  What remains is to construct those
+  pointwise laws from the paper-native holomorphic hull, log-Kummer, and local
   log-shell geometry.
 \item Instantiate the valuation-ball local analytic construction from actual
   local fields, log-shell maps, compact-open Haar normalizations, and
