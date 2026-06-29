@@ -13800,22 +13800,22 @@ This has now been lowered further.  The current lowest packet-level
 \[
 \begin{gathered}
 \texttt{concreteHodgeTheaterLogThetaGeneratedFullLabel}\\
-\texttt{FiberInd2ActionPacketTransportGeneratedRecordPullback}\\
+\texttt{FiberInd2ActionPacketTransportKernelImagePullback}\\
 \texttt{DirectLocalNormalizationValuationBallFactoredLocalized}\\
 \texttt{HullCoverUpperRayCalibrationSource\_}\\
 \texttt{cThetaDichotomy}.
 \end{gathered}
 \]
 Here even the pointwise generated-pullback q-region source is no longer a
-public argument.  The source stores the generated full-label record-pullback law,
-Lean constructs the source-level \((\Ind2)\) packet-transport pointwise source,
-reconstructs the lattice-image-law generated quotient, and now takes the
-Remark~3.9.5 local-normalization valuation-ball/Haar hull-cover source directly,
-rather than a bundled pointwise/local-normalization wrapper.  Lean rebuilds that
-older wrapper internally before applying the established \(C_\Theta\) corridor.
-The endpoint exposes the generated-record pullback audit, the direct
-local-normalization hull-cover audit, the rebuilt wrapper audit, and the
-target-region quotient audit.
+public argument, and neither is the generated full-label record-pullback law.
+The source stores the kernel-image full-label q-region source; Lean derives the
+generated record pullback from the kernel's generated choice-image family and
+the concrete fiber-lattice image law, reconstructs the source-level
+\((\Ind2)\) packet-transport pointwise source and lattice-image-law generated
+quotient, and then takes the Remark~3.9.5 local-normalization
+valuation-ball/Haar hull-cover source directly.  The endpoint exposes the
+kernel-image audit, the derived generated-record pullback, the direct
+local-normalization hull-cover audit, and the target-region quotient audit.
 The older factored localized hull-cover source
 \[
 \begin{gathered}
@@ -13834,11 +13834,12 @@ This preferred boundary retains the concrete/generated upper-ray objects, the
 theta-class q-region calibration, the common hull system, and the
 hull/determinant identifications, but obtains both localized hull-cover sources
 and their component transport from matched valuation-ball Haar covers.  The
-remaining source-facing obligation is therefore sharper: construct the generated
-full-label record-pullback law and the direct local-normalization hull-cover
-source from the same local log-Kummer/Frobenioid geometry.  The pointwise
-q-region source, lattice-quotient handoff, generated-corridor handoff, and
-pointwise/local-normalization wrapper are now derived inside the endpoint.
+remaining source-facing obligation is therefore sharper: construct the
+kernel-image full-label q-region source and the direct local-normalization
+hull-cover source from the same local log-Kummer/Frobenioid geometry.  The
+generated record pullback, pointwise q-region source, lattice-quotient handoff,
+generated-corridor handoff, and pointwise/local-normalization wrapper are now
+derived inside the endpoint.
 
 The practical priority order is now:
 \begin{enumerate}
