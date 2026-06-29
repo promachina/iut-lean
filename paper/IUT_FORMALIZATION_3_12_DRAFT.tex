@@ -13605,11 +13605,17 @@ same-theta-class invariance field by factorization of the generated package
 target-region family through the generated \((\Ind_1,\Ind_2)\) equality
 quotient.  Since equality of theta-pilot classes is a generated \((\Ind_2)\)
 equality step, Lean derives same-theta-class target-region invariance from the
-quotient possible-image interface.  Thus the remaining q-region obligation is
-no longer an arbitrary full-label equality, nor a primitive same-theta-class
-invariance assumption, but the construction of the quotient target-region
-factorization and representative calibration from local log-Kummer/Frobenioid
-geometry.
+quotient possible-image interface.  The quotient factorization has now also
+been constructed from the all-choice target-region pullback law itself: Lean
+builds the generated target-region
+\texttt{EqualityQuotientPossibleImages} object by proving \((\Ind_1)\) and
+\((\Ind_2)\) target-region invariance from the concrete theta-class
+fiber-lattice image law, while keeping \((\Ind_3)\) as the generated upper-semi
+log-volume relation.  Thus the remaining q-region obligation is no longer an
+arbitrary full-label equality, a primitive same-theta-class invariance
+assumption, or an independently supplied quotient image object, but the
+construction of the generated target-region pullback law and representative
+calibration from local log-Kummer/Frobenioid geometry.
 
 This q-region source is now threaded into the valuation-ball localized
 hull-cover boundary by
