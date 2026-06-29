@@ -41218,6 +41218,288 @@ end ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValu
 
 set_option linter.style.longLine false in
 /--
+Principal compact-open log-Kummer map source for possible regions.
+
+This lowers the correspondence boundary by constructing the local
+log-Kummer correspondence as the graph of a named local Kummer realization
+map.  A section over the selected Remark 3.9.5 possible region gives
+left-totality, compatibility with the valuation-factor realization gives the
+realization law, and the compact-open image law gives soundness back into the
+possible region.
+-/
+structure ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    {η : Type z} {K : Type x}
+    {β : Type v} {γ : Type w} {Λ : Type max u v w x z}
+    [PseudoMetricSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ] :
+    Type (max u v w x z) where
+  principalSource :
+    ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource
+      sourceData (η := η) (K := K) (β := β) (γ := γ)
+      (Λ := Λ)
+  cellThetaClass :
+    β ->
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric)
+  coverPlace : β -> γ
+  valuationNorm_eq_dist :
+    ∀ index : β,
+      let valuationSource :=
+        principalSource.toPrincipalValuationBallProductHullCoverSource;
+      let factor :=
+        valuationSource.valuationCover.valuationBallFactor
+          index (coverPlace index);
+      factor.valuationNorm = fun point : K => dist point 0
+  localKummerRealization : β -> K -> Point target
+  localKummerRealization_eq_factor_realization :
+    ∀ index : β,
+      let valuationSource :=
+        principalSource.toPrincipalValuationBallProductHullCoverSource;
+      let factor :=
+        valuationSource.valuationCover.valuationBallFactor
+          index (coverPlace index);
+      ∀ localPoint : K,
+        localKummerRealization index localPoint =
+          factor.realization localPoint
+  possibleRegionLocalKummerSection : β -> Point target -> K
+  possibleRegionLocalKummerSection_mem_compactOpen :
+    ∀ index : β,
+      let valuationSource :=
+        principalSource.toPrincipalValuationBallProductHullCoverSource;
+      let factor :=
+        valuationSource.valuationCover.valuationBallFactor
+          index (coverPlace index);
+      ∀ point : Point target,
+        point ∈
+          valuationSource.valuationCover.possibleRegion (cellThetaClass index) ->
+        possibleRegionLocalKummerSection index point ∈
+          factor.compactOpenSubset
+  possibleRegionLocalKummerSection_realization :
+    ∀ index : β,
+      let valuationSource :=
+        principalSource.toPrincipalValuationBallProductHullCoverSource;
+      ∀ point : Point target,
+        point ∈
+          valuationSource.valuationCover.possibleRegion (cellThetaClass index) ->
+        localKummerRealization
+            index (possibleRegionLocalKummerSection index point) =
+          point
+  compactOpen_localKummerRealization_mem_possibleRegion :
+    ∀ index : β,
+      let valuationSource :=
+        principalSource.toPrincipalValuationBallProductHullCoverSource;
+      let factor :=
+        valuationSource.valuationCover.valuationBallFactor
+          index (coverPlace index);
+      ∀ localPoint : K,
+        localPoint ∈ factor.compactOpenSubset ->
+          localKummerRealization index localPoint ∈
+            valuationSource.valuationCover.possibleRegion (cellThetaClass index)
+
+namespace ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+
+variable
+  {sourceData :
+    ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+      (source := source) (target := target) (l := l)
+      recordConcrete indData}
+  {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+  {selectedQChoice :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+  {η : Type z} {K : Type x}
+  {β : Type v} {γ : Type w} {Λ : Type max u v w x z}
+  [PseudoMetricSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+  [Fintype β] [Fintype γ]
+
+set_option linter.style.longLine false in
+def localLogKummerCorrespondence
+    (mapSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ))
+    (index : β) (localPoint : K) (point : Point target) : Prop :=
+  mapSource.localKummerRealization index localPoint = point
+
+set_option linter.style.longLine false in
+theorem possibleRegion_correspondence_left_total
+    (mapSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ))
+    (index : β) :
+    let valuationSource :=
+      mapSource.principalSource.toPrincipalValuationBallProductHullCoverSource;
+    let factor :=
+      valuationSource.valuationCover.valuationBallFactor
+        index (mapSource.coverPlace index);
+    ∀ point : Point target,
+      point ∈
+        valuationSource.valuationCover.possibleRegion
+          (mapSource.cellThetaClass index) ->
+      ∃ localPoint : K,
+        localPoint ∈ factor.compactOpenSubset ∧
+          mapSource.localLogKummerCorrespondence index localPoint point := by
+  intro valuationSource factor point hpoint
+  exact
+    ⟨mapSource.possibleRegionLocalKummerSection index point,
+      mapSource.possibleRegionLocalKummerSection_mem_compactOpen
+        index point hpoint,
+      mapSource.possibleRegionLocalKummerSection_realization
+        index point hpoint⟩
+
+set_option linter.style.longLine false in
+theorem correspondence_realization
+    (mapSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ))
+    (index : β) :
+    let valuationSource :=
+      mapSource.principalSource.toPrincipalValuationBallProductHullCoverSource;
+    let factor :=
+      valuationSource.valuationCover.valuationBallFactor
+        index (mapSource.coverPlace index);
+    ∀ localPoint : K,
+      ∀ point : Point target,
+        mapSource.localLogKummerCorrespondence index localPoint point ->
+          factor.realization localPoint = point := by
+  intro valuationSource factor localPoint point hcorr
+  rw [← mapSource.localKummerRealization_eq_factor_realization index localPoint]
+  exact hcorr
+
+set_option linter.style.longLine false in
+theorem compactOpen_correspondence_sound
+    (mapSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ))
+    (index : β) :
+    let valuationSource :=
+      mapSource.principalSource.toPrincipalValuationBallProductHullCoverSource;
+    let factor :=
+      valuationSource.valuationCover.valuationBallFactor
+        index (mapSource.coverPlace index);
+    ∀ localPoint : K,
+      localPoint ∈ factor.compactOpenSubset ->
+        mapSource.localLogKummerCorrespondence
+            index localPoint (factor.realization localPoint) ∧
+          factor.realization localPoint ∈
+            valuationSource.valuationCover.possibleRegion
+              (mapSource.cellThetaClass index) := by
+  intro valuationSource factor localPoint hlocal
+  have hkummer :
+      mapSource.localKummerRealization index localPoint =
+        factor.realization localPoint :=
+    mapSource.localKummerRealization_eq_factor_realization
+      index localPoint
+  have hpossible :
+      mapSource.localKummerRealization index localPoint ∈
+        valuationSource.valuationCover.possibleRegion
+          (mapSource.cellThetaClass index) :=
+    mapSource.compactOpen_localKummerRealization_mem_possibleRegion
+      index localPoint hlocal
+  exact ⟨hkummer, by simpa [hkummer] using hpossible⟩
+
+set_option linter.style.longLine false in
+def toCompactOpenLogKummerCorrespondencePossibleRegionSource
+    (mapSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerCorrespondencePossibleRegionSource
+      sourceData gluingTorsor selectedQChoice
+      (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ) where
+  principalSource := mapSource.principalSource
+  cellThetaClass := mapSource.cellThetaClass
+  coverPlace := mapSource.coverPlace
+  valuationNorm_eq_dist := mapSource.valuationNorm_eq_dist
+  localLogKummerCorrespondence :=
+    mapSource.localLogKummerCorrespondence
+  possibleRegion_correspondence_left_total :=
+    mapSource.possibleRegion_correspondence_left_total
+  correspondence_realization :=
+    mapSource.correspondence_realization
+  compactOpen_correspondence_sound :=
+    mapSource.compactOpen_correspondence_sound
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (mapSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    let valuationSource :=
+      mapSource.principalSource.toPrincipalValuationBallProductHullCoverSource;
+    (∀ index : β,
+      let factor :=
+        valuationSource.valuationCover.valuationBallFactor
+          index (mapSource.coverPlace index);
+      ∀ localPoint : K,
+        mapSource.localKummerRealization index localPoint =
+          factor.realization localPoint) ∧
+      (∀ index : β,
+        let factor :=
+          valuationSource.valuationCover.valuationBallFactor
+            index (mapSource.coverPlace index);
+        ∀ point : Point target,
+          point ∈
+            valuationSource.valuationCover.possibleRegion
+              (mapSource.cellThetaClass index) ->
+          mapSource.possibleRegionLocalKummerSection index point ∈
+            factor.compactOpenSubset) ∧
+      (∀ index : β,
+        ∀ point : Point target,
+          point ∈
+            valuationSource.valuationCover.possibleRegion
+              (mapSource.cellThetaClass index) ->
+          mapSource.localKummerRealization
+              index (mapSource.possibleRegionLocalKummerSection index point) =
+            point) ∧
+      (∀ index : β,
+        let factor :=
+          valuationSource.valuationCover.valuationBallFactor
+            index (mapSource.coverPlace index);
+        ∀ localPoint : K,
+          localPoint ∈ factor.compactOpenSubset ->
+            mapSource.localKummerRealization index localPoint ∈
+              valuationSource.valuationCover.possibleRegion
+                (mapSource.cellThetaClass index)) ∧
+      (∀ index : β,
+        let factor :=
+          valuationSource.valuationCover.valuationBallFactor
+            index (mapSource.coverPlace index);
+        ∀ point : Point target,
+          point ∈
+            valuationSource.valuationCover.possibleRegion
+              (mapSource.cellThetaClass index) ->
+          ∃ localPoint : K,
+            localPoint ∈ factor.compactOpenSubset ∧
+              mapSource.localLogKummerCorrespondence index localPoint point) ∧
+      valuationSource.possibleImageUnion =
+        valuationSource.selectedPrincipalHull :=
+  by
+    intro valuationSource
+    let correspondenceSource :=
+      mapSource.toCompactOpenLogKummerCorrespondencePossibleRegionSource
+    exact
+      ⟨mapSource.localKummerRealization_eq_factor_realization,
+        mapSource.possibleRegionLocalKummerSection_mem_compactOpen,
+        mapSource.possibleRegionLocalKummerSection_realization,
+        mapSource.compactOpen_localKummerRealization_mem_possibleRegion,
+        mapSource.possibleRegion_correspondence_left_total,
+        correspondenceSource.endpoint.2.2.2.2.2⟩
+
+end ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+
+set_option linter.style.longLine false in
+/--
 Principal compact-open local-chart valuation-ball source.
 
 This lowers the compact-open image boundary.  Instead of supplying the two
