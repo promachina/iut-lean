@@ -11753,7 +11753,24 @@ arithmetic-degree/\(p\)-adic formula source by
 Its synchronization field identifies the calibrated formula-matching source
 with the projection of the \(p\)-adic/arithmetic-degree formula source, so the
 calibrated comparison data cannot be attached to a different Step~(xi)
-local package.  This calibrated comparison has now been lowered once more by
+local package.  The same synchronization is now available before forgetting
+valuation-ball provenance:
+\[
+\begin{array}{l}
+\texttt{ConstructedTheorem311OneSidedIUTIVTheorem110}\\
+\texttt{ValuationBallHaarCalibratedFormulaGapMatched}\\
+\texttt{ArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource}
+\end{array}
+\]
+keeps the valuation-ball Theorem~1.10 formula-gap source, the calibrated
+Proposition~1.4/1.5 arithmetic-degree comparison, and the
+\(p\)-adic formula-matching core in one source object.  Its audit projects the
+valuation-ball definition-of-done audit and the local formula-gap estimate
+while checking that the calibrated formula-matching source is the same
+formula-matching core used by the downstream \(p\)-adic route.  The remaining
+local payload is therefore not a synchronization issue; it is the construction
+of the paper-native valuation-ball/log-shell comparison records themselves.
+This calibrated comparison has now been lowered once more by
 \[
 \begin{array}{l}
 \texttt{IUTStage1AdditiveHaarTheorem110StepXIDerived}\\
