@@ -4192,14 +4192,23 @@ the valuation-ball realized-exact source: if
 then the valuation-ball additive Haar audit identifies the selected
 compact-open subset \(U_\beta\) with this closed ball, and \Lean{} derives the
 compact-open realized source.  The equality-backed log-shell package is also
-now recovered from the four local containments
+now recovered from local containments.  On the compact-open branch, the two
+image containments
+\[
+  P_{\Theta,\beta}\subseteq \operatorname{realizedRegion}(U_\beta),\quad
+  \operatorname{realizedRegion}(U_\beta)\subseteq P_{\Theta,\beta}
+\]
+already construct the compact-open realized-exact source by antisymmetry, so
+the preferred \(C_\Theta\) audit no longer has to pass through an arbitrary
+log-shell equality package.  The more general log-shell source is still
+recovered from the four containments
 \[
   P_{\Theta,\beta}\subseteq \operatorname{realizedRegion}(I_\beta),\quad
   \operatorname{realizedRegion}(I_\beta)\subseteq P_{\Theta,\beta},\quad
   I_\beta\subseteq B_\beta(r_\beta),\quad
   B_\beta(r_\beta)\subseteq I_\beta,
 \]
-so the source need not assert the two set equalities at the first boundary.
+so the source need not assert these set equalities at the first boundary.
 Thus the remaining frontier is lower and more arithmetic: construct these
 local containments from the paper-native holomorphic hull, log-Kummer, and
 local log-shell geometry.
@@ -13538,10 +13547,12 @@ The practical priority order is now:
   source-derived global \(C_\Theta\) audit.  This has now been pushed one step
   lower: valuation-ball realized exactness plus the valuation-ball additive
   Haar audit recovers the compact-open realized-exact source used by the
-  preferred audit, and the equality-backed log-shell source is recovered from
-  four local image/valuation-ball containments.  What remains is to construct
-  those containments from the paper-native holomorphic hull, log-Kummer, and
-  local log-shell geometry.
+  preferred audit.  Equivalently, the two compact-open image containments
+  construct the compact-open realized-exact source directly, while the broader
+  equality-backed log-shell source is recovered from four local
+  image/valuation-ball containments.  What remains is to construct these
+  containments from the paper-native holomorphic hull, log-Kummer, and local
+  log-shell geometry.
 \item Instantiate the valuation-ball local analytic construction from actual
   local fields, log-shell maps, compact-open Haar normalizations, and
   archimedean lattice metrics, proving the remaining Proposition~1.4
