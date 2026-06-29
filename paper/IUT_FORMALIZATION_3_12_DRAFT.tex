@@ -13595,15 +13595,21 @@ Instead of assuming the generated Theorem~3.11 record-image family directly,
 this source identifies the generated package target region of each full-label
 choice with the full-label pullback of the common concrete fiber-lattice image
 family.  Lean then reconstructs the record-image equality from the record's
-target-region realization theorem.  The generated side has now been lowered one
-step further by a representative target-region source: target regions are
-proved invariant under equality of the forgotten theta-pilot class, and only
-the generated representative of each theta class is calibrated against the
-common concrete fiber-lattice image law.  Lean derives the all-choice
-target-region law from these two statements.  Thus the remaining q-region
-obligation is no longer an arbitrary full-label equality, but the construction
-of this same-theta-class target-region invariance and representative
-calibration from local log-Kummer/Frobenioid geometry.
+target-region realization theorem.  The generated side has now been lowered in
+two further steps.  First, the representative target-region source proves that
+target regions are invariant under equality of the forgotten theta-pilot class
+and calibrates only the generated representative of each theta class against
+the common concrete fiber-lattice image law; Lean then derives the all-choice
+target-region law.  Second, the quotient target-region source replaces this
+same-theta-class invariance field by factorization of the generated package
+target-region family through the generated \((\Ind_1,\Ind_2)\) equality
+quotient.  Since equality of theta-pilot classes is a generated \((\Ind_2)\)
+equality step, Lean derives same-theta-class target-region invariance from the
+quotient possible-image interface.  Thus the remaining q-region obligation is
+no longer an arbitrary full-label equality, nor a primitive same-theta-class
+invariance assumption, but the construction of the quotient target-region
+factorization and representative calibration from local log-Kummer/Frobenioid
+geometry.
 
 This q-region source is now threaded into the valuation-ball localized
 hull-cover boundary by
