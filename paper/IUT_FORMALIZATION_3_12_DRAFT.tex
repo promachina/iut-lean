@@ -13571,16 +13571,15 @@ fiber-lattice image law; the same selected-orbit Remark~3.9.5 endpoint is
 available at this kernel-image boundary.  Thus the no-omission finite-label
 statement survives the concrete/source handoff, not only the abstract generated
 quotient.
-choice image family constructed by the generated component kernel, then
-identifies that theta-class family with the concrete fiber-lattice image law.
 Lean derives the previous pointwise generated pullback from these two
 paper-facing facts and reuses the existing q-region calibration.  The remaining
 source obligation at this q-region boundary is therefore narrower: construct
 the kernel-image record law and its theta-class match to the concrete
-fiber-lattice law from local log-Kummer/Frobenioid geometry, and construct the
-valuation-ball/Haar transport data, rather than assume a raw generated
-record-region equality.  This q-region source is now threaded into the
-valuation-ball localized hull-cover boundary by
+fiber-lattice law from local log-Kummer/Frobenioid geometry, rather than assume
+a raw generated record-region equality.
+
+This q-region source is now threaded into the valuation-ball localized
+hull-cover boundary by
 \[
 \begin{gathered}
 \texttt{ConcreteHodgeTheaterLogThetaGeneratedFullLabel}\\
@@ -13698,8 +13697,21 @@ mass, finite-degree matching obligations, and the concrete
 \texttt{FiberTransportQuotientComparisonAudit} inherited from the q-region
 source.  Thus the sharpest packet-level \(C_\Theta\) endpoint still records
 the source-level packet audit, \((\Ind_1,\Ind_2)\) quotient preservation,
-possible-image invariance, lattice-image law, and no-\((\Ind_3)\)-equality
-guard at its review boundary.
+the kernel-image generated possible-image law, and the local
+finite-degree/Haar-mass normalization.  In particular, the lowered endpoint
+\[
+\begin{gathered}
+\texttt{concreteHodgeTheaterLogThetaGeneratedFullLabel}\\
+\texttt{FiberInd2ActionPacketTransportKernelImagePullback}\\
+\texttt{LocalNormalizationMatchedValuationBallFactored}\\
+\texttt{LocalizedHullCoverUpperRayCalibrationSource\_}\\
+\texttt{cThetaDichotomy}
+\end{gathered}
+\]
+passes from the generated full-label kernel-image q-region source to the
+local-normalization valuation-ball source before invoking the finite-divisor
+\(C_\Theta\) corridor.  Thus the current lowest packet-level \(C_\Theta\)
+boundary no longer consumes the older pointwise q-region source directly.
 The older factored localized hull-cover source
 \[
 \begin{gathered}
@@ -13719,9 +13731,9 @@ theta-class q-region calibration, the common hull system, and the
 hull/determinant identifications, but obtains both localized hull-cover sources
 and their component transport from matched valuation-ball Haar covers.  The
 remaining source-facing obligation is therefore sharper: prove the generated
-full-label pointwise pullback law for the concrete lattice-image-law family,
-together with the matched valuation-ball/Haar transport source, from the local
-log-Kummer/Frobenioid geometry.
+full-label kernel-image record law and its theta-class match with the concrete
+lattice-image-law family, together with the matched valuation-ball/Haar
+transport source, from the local log-Kummer/Frobenioid geometry.
 
 The practical priority order is now:
 \begin{enumerate}
