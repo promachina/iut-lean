@@ -13782,9 +13782,24 @@ local-normalization valuation-ball source before invoking the finite-divisor
 This endpoint consumes the generated-corridor-backed q-region source directly,
 derives the pointwise q-region route internally, and retains both the
 generated-corridor audit and the target-region quotient audit at the
-local-normalization valuation-ball \(C_\Theta\) boundary.  Thus the current
-lowest packet-level \(C_\Theta\) boundary no longer consumes the older
-pointwise or kernel-image q-region source directly.
+local-normalization valuation-ball \(C_\Theta\) boundary.  This has now been
+lowered one step further by
+\[
+\begin{gathered}
+\texttt{concreteHodgeTheaterLogThetaGeneratedFullLabel}\\
+\texttt{LatticeImageLawGeneratedQuotientLocalNormalization}\\
+\texttt{MatchedValuationBallFactoredLocalized}\\
+\texttt{HullCoverUpperRayCalibrationSource\_}\\
+\texttt{cThetaDichotomy}.
+\end{gathered}
+\]
+At this boundary the generated-corridor q-region source is not a public input.
+Lean derives it from the lattice-image-law generated quotient attached to the
+concrete fiber transport, keeps the generated-corridor kernel audit visible, and
+then runs the local-normalization valuation-ball/Haar \(C_\Theta\) corridor.
+Thus the current lowest packet-level \(C_\Theta\) boundary no longer consumes
+the older pointwise, kernel-image, or generated-corridor q-region source
+directly.
 The older factored localized hull-cover source
 \[
 \begin{gathered}
@@ -13804,10 +13819,9 @@ theta-class q-region calibration, the common hull system, and the
 hull/determinant identifications, but obtains both localized hull-cover sources
 and their component transport from matched valuation-ball Haar covers.  The
 remaining source-facing obligation is therefore sharper: construct the
-lattice-image-law generated quotient, whose pointwise record-region pullback
-feeds the generated-corridor record-image carrier, together with the matched
-valuation-ball/Haar transport source, from the local log-Kummer/Frobenioid
-geometry.
+lattice-image-law generated quotient and the matched valuation-ball/Haar
+transport source from the same local log-Kummer/Frobenioid geometry; the
+generated-corridor handoff itself is now derived inside the endpoint.
 
 The practical priority order is now:
 \begin{enumerate}
