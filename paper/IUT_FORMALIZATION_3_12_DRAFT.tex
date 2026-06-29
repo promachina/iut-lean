@@ -4245,9 +4245,16 @@ and chooses a section of \(\kappa_\beta\) over the selected
 Remark~3.9.5 possible region from canonical graph left-totality.  It then
 defines the local correspondence as the graph of \(\kappa_\beta\), derives
 realization compatibility, compact-open soundness, the image source, cover
-exactness, and the global \(C_\Theta\) audit.  The remaining frontier is now
-the construction of the compact-open log-shell image laws themselves from the
-paper-native holomorphic hull, log-Kummer, and local log-shell geometry.
+exactness, and the global \(C_\Theta\) audit.  The compact-open image laws are
+now also downstream of a log-shell exact source: the two equalities
+\[
+  P_{\Theta,\beta}=\operatorname{real}_\beta(L_\beta),
+  \qquad L_\beta=U_\beta
+\]
+construct the compact-open route using the valuation-ball Haar normalization.
+The remaining frontier is the construction of these log-shell exact equalities
+from the paper-native holomorphic hull, log-Kummer, and local log-shell
+geometry.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -13592,8 +13599,10 @@ The practical priority order is now:
   realization and choosing its section from canonical graph left-totality.  The
   image containments are also derived from a cover-level exactness statement
   identifying the selected Remark~3.9.5 possible region with the realized
-  compact-open local factor.  What remains is to construct the compact-open
-  image laws from the paper-native holomorphic hull, log-Kummer, and local
+  compact-open local factor, and now from the lower log-shell exact source
+  \(P_{\Theta,\beta}=\operatorname{real}_\beta(L_\beta)\),
+  \(L_\beta=U_\beta\).  What remains is to construct these log-shell exact
+  equalities from the paper-native holomorphic hull, log-Kummer, and local
   log-shell geometry.
 \item Instantiate the valuation-ball local analytic construction from actual
   local fields, log-shell maps, compact-open Haar normalizations, and

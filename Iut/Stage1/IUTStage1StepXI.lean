@@ -42963,6 +42963,76 @@ def toPrincipalLogShellImageMetricZeroValuationBallExactSource
     rw [logShellExactSource.logShell_eq_valuationBall index]
     exact hlocal
 
+set_option linter.style.longLine false in
+/--
+Construct the compact-open log-shell image source from log-shell exactness.
+
+The log-shell exact source supplies the paper-facing equalities
+`thetaRegion = realized(logShell)` and `logShell = valuationBall`.  The
+realized valuation-ball constructor converts these equalities into the
+compact-open form using the local valuation-ball Haar normalization
+`compactOpenSubset = valuationBall(compactOpenRadius)`.
+-/
+def toCompactOpenLogShellImageMetricZeroValuationBallExactSource
+    (logShellExactSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallLogShellExactSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogShellImageMetricZeroValuationBallExactSource
+      sourceData gluingTorsor selectedQChoice
+      (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ) :=
+  logShellExactSource.toPrincipalRealizedExactSource
+    |>.toCompactOpenRealizedExactSource
+    |>.toCompactOpenLogShellImageMetricZeroValuationBallExactSource
+
+set_option linter.style.longLine false in
+theorem compactOpenLogShellImageEndpoint
+    (logShellExactSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallLogShellExactSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    let valuationSource :=
+      logShellExactSource.principalSource.toPrincipalValuationBallProductHullCoverSource;
+    (∀ index : β,
+      let factor :=
+        valuationSource.valuationCover.valuationBallFactor
+          index (logShellExactSource.coverPlace index);
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        (logShellExactSource.cellThetaClass index)).toSet =
+        factor.realizedRegion (logShellExactSource.logShellRegion index)) ∧
+      (∀ index : β,
+        let factor :=
+          valuationSource.valuationCover.valuationBallFactor
+            index (logShellExactSource.coverPlace index);
+        logShellExactSource.logShellRegion index =
+          factor.valuationBall factor.compactOpenRadius) ∧
+      (∀ index : β,
+        let factor :=
+          valuationSource.valuationCover.valuationBallFactor
+            index (logShellExactSource.coverPlace index);
+        (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+          (logShellExactSource.cellThetaClass index)).toSet ⊆
+          factor.realizedRegion factor.compactOpenSubset) ∧
+      (∀ index : β,
+        let factor :=
+          valuationSource.valuationCover.valuationBallFactor
+            index (logShellExactSource.coverPlace index);
+        factor.realizedRegion factor.compactOpenSubset ⊆
+          (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+            (logShellExactSource.cellThetaClass index)).toSet) ∧
+      valuationSource.possibleImageUnion =
+        valuationSource.selectedPrincipalHull :=
+  by
+    intro valuationSource
+    let compactOpenSource :=
+      logShellExactSource.toCompactOpenLogShellImageMetricZeroValuationBallExactSource
+    exact
+      ⟨logShellExactSource.thetaRegion_toSet_eq_realizedLogShell,
+        logShellExactSource.logShell_eq_valuationBall,
+        compactOpenSource.thetaRegion_subset_realizedCompactOpenLogShell,
+        compactOpenSource.realizedCompactOpenLogShell_subset_thetaRegion,
+        compactOpenSource.endpoint.2.2.2.2.2⟩
+
 end ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallLogShellExactSource
 
 namespace ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallPointwiseConstructedLogShellMetricZeroValuationBallExactSource
