@@ -33488,6 +33488,119 @@ theorem ofPrincipalValuationBallProductHullCoverSource_endpoint
 
 end ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource
 
+namespace ConcreteValuationBallThetaClassLatticeImageLawBackedFamilyUnionSource
+
+variable
+  {sourceData :
+    ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+      (source := source) (target := target) (l := l)
+      recordConcrete indData}
+  {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+  {selectedQChoice :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+  {η : Type z} {K : Type x}
+  {β : Type v} {γ : Type w} {Λ : Type max u v w x z}
+  [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+  [Fintype β] [Fintype γ]
+  {valuationSource :
+    IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+      (Point target)
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric))
+      η K β γ Λ}
+
+set_option linter.style.longLine false in
+/--
+Promote the lattice-image-law-backed class-region comparison to the
+theta-region-defined family source.
+
+The remaining bridge is explicit: the lattice image law carried by the
+valuation comparison is identified with the lattice image law obtained from
+the concrete fiber-transport source.  After this identification, the pointwise
+lattice-image valuation comparison is exactly the family-level
+theta-region-defined equality.
+-/
+def toThetaRegionDefinedFamilyUnionSource
+    (imageLawBackedSource :
+      ConcreteValuationBallThetaClassLatticeImageLawBackedFamilyUnionSource
+        sourceData gluingTorsor selectedQChoice valuationSource)
+    (latticeImageLawSource_eq :
+      imageLawBackedSource.latticeImageLawSource =
+        sourceData.toFiberTransportSource.toLatticeImageLawSource) :
+    ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedFamilyUnionSource
+      sourceData gluingTorsor selectedQChoice valuationSource where
+  possibleRegion_eq_fiberTransportThetaRegion := by
+    funext thetaClass
+    simpa [latticeImageLawSource_eq] using
+      (imageLawBackedSource.latticeImageRegion_toSet_eq_valuationRegion
+        thetaClass).symm
+
+set_option linter.style.longLine false in
+/--
+Construct the theta-region-defined principal valuation-ball source from a
+lattice-image-law-backed comparison.
+
+Compared with the fiber-transport-backed constructor, this exposes the exact
+remaining theorem-payload as the equality between the independently supplied
+lattice-image-law source and the one produced by the concrete fiber-transport
+chain.
+-/
+noncomputable def toThetaRegionDefinedPrincipalValuationBallSource
+    (imageLawBackedSource :
+      ConcreteValuationBallThetaClassLatticeImageLawBackedFamilyUnionSource
+        sourceData gluingTorsor selectedQChoice valuationSource)
+    (latticeImageLawSource_eq :
+      imageLawBackedSource.latticeImageLawSource =
+        sourceData.toFiberTransportSource.toLatticeImageLawSource) :
+    ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource
+      sourceData (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ) :=
+  ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource.ofPrincipalValuationBallProductHullCoverSource
+      (sourceData := sourceData) valuationSource
+      (imageLawBackedSource.toThetaRegionDefinedFamilyUnionSource
+        latticeImageLawSource_eq
+        |>.possibleRegion_eq_fiberTransportThetaRegion)
+
+set_option linter.style.longLine false in
+theorem thetaRegionDefinedPrincipalValuationBallEndpoint
+    (imageLawBackedSource :
+      ConcreteValuationBallThetaClassLatticeImageLawBackedFamilyUnionSource
+        sourceData gluingTorsor selectedQChoice valuationSource)
+    (latticeImageLawSource_eq :
+      imageLawBackedSource.latticeImageLawSource =
+        sourceData.toFiberTransportSource.toLatticeImageLawSource) :
+    let principalSource :=
+      imageLawBackedSource.toThetaRegionDefinedPrincipalValuationBallSource
+        latticeImageLawSource_eq;
+    principalSource.toPrincipalValuationBallProductHullCoverSource.valuationCover.possibleRegion =
+        valuationSource.valuationCover.possibleRegion ∧
+      principalSource.toPrincipalValuationBallProductHullCoverSource.valuationCover.possibleRegion =
+        (fun thetaClass =>
+          (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+            thetaClass).toSet) ∧
+      (∀ thetaClass :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric),
+        (imageLawBackedSource.latticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+          thetaClass).toSet =
+          valuationSource.valuationCover.possibleRegion thetaClass) ∧
+      principalSource.toPrincipalValuationBallProductHullCoverSource.valuationCover.hullSystem.logVolume
+          principalSource.toPrincipalValuationBallProductHullCoverSource.selectedPrincipalHull =
+        principalSource.toPrincipalValuationBallProductHullCoverSource.valuationCover.calibratedCellLogVolumeSum :=
+  by
+    intro principalSource
+    exact
+      ⟨by
+          funext thetaClass
+          simpa [latticeImageLawSource_eq] using
+            imageLawBackedSource.latticeImageRegion_toSet_eq_valuationRegion
+              thetaClass,
+        rfl,
+        imageLawBackedSource.latticeImageRegion_toSet_eq_valuationRegion,
+        principalSource.toPrincipalValuationBallProductHullCoverSource
+          |>.selectedPrincipalHull_coverLogVolume_eq_calibratedCellSum⟩
+
+end ConcreteValuationBallThetaClassLatticeImageLawBackedFamilyUnionSource
+
 namespace ConcreteValuationBallThetaClassFiberTransportBackedFamilyUnionSource
 
 variable
