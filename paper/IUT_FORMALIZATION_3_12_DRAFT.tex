@@ -13795,13 +13795,13 @@ endpoints now remove the generated-corridor source from the public boundary:
 \]
 At this boundary Lean derives the generated-corridor q-region source from the
 lattice-image-law generated quotient attached to the concrete fiber transport.
-This has now been lowered once more.  The current lowest packet-level
+This has now been lowered further.  The current lowest packet-level
 \(C_\Theta\) boundary is
 \[
 \begin{gathered}
 \texttt{concreteHodgeTheaterLogThetaGeneratedFullLabel}\\
 \texttt{FiberInd2ActionPacketTransportGeneratedRecordPullback}\\
-\texttt{LocalNormalizationMatchedValuationBallFactoredLocalized}\\
+\texttt{DirectLocalNormalizationValuationBallFactoredLocalized}\\
 \texttt{HullCoverUpperRayCalibrationSource\_}\\
 \texttt{cThetaDichotomy}.
 \end{gathered}
@@ -13809,10 +13809,13 @@ This has now been lowered once more.  The current lowest packet-level
 Here even the pointwise generated-pullback q-region source is no longer a
 public argument.  The source stores the generated full-label record-pullback law,
 Lean constructs the source-level \((\Ind2)\) packet-transport pointwise source,
-reconstructs the lattice-image-law generated quotient, and then runs the
-local-normalization valuation-ball/Haar \(C_\Theta\) corridor.  The endpoint
-exposes the generated-record pullback audit, the derived pointwise source audit,
-the target-region quotient audit, and the local-normalization hull-cover audit.
+reconstructs the lattice-image-law generated quotient, and now takes the
+Remark~3.9.5 local-normalization valuation-ball/Haar hull-cover source directly,
+rather than a bundled pointwise/local-normalization wrapper.  Lean rebuilds that
+older wrapper internally before applying the established \(C_\Theta\) corridor.
+The endpoint exposes the generated-record pullback audit, the direct
+local-normalization hull-cover audit, the rebuilt wrapper audit, and the
+target-region quotient audit.
 The older factored localized hull-cover source
 \[
 \begin{gathered}
@@ -13831,11 +13834,11 @@ This preferred boundary retains the concrete/generated upper-ray objects, the
 theta-class q-region calibration, the common hull system, and the
 hull/determinant identifications, but obtains both localized hull-cover sources
 and their component transport from matched valuation-ball Haar covers.  The
-remaining source-facing obligation is therefore sharper: construct the
-generated full-label record-pullback law and the matched valuation-ball/Haar
-transport source from the same local log-Kummer/Frobenioid geometry.  The
-pointwise q-region source, lattice-quotient handoff, and generated-corridor
-handoff are now derived inside the endpoint.
+remaining source-facing obligation is therefore sharper: construct the generated
+full-label record-pullback law and the direct local-normalization hull-cover
+source from the same local log-Kummer/Frobenioid geometry.  The pointwise
+q-region source, lattice-quotient handoff, generated-corridor handoff, and
+pointwise/local-normalization wrapper are now derived inside the endpoint.
 
 The practical priority order is now:
 \begin{enumerate}
