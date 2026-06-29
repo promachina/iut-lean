@@ -15964,6 +15964,97 @@ theorem lowerTransportPayload
       transportAudit.upperSemi_transport_logVolumeCompatible_eq⟩
 
 set_option linter.style.longLine false in
+/--
+End-to-end local comparison audit for the retained fiber action-packet
+transport source.
+
+This is the explicit local Theorem 3.11 handoff used by the downstream
+Remark 3.9.5 and `C_Theta` corridor: the source-level packet/action object is
+audited, then forgotten through the typed post-procession `(Ind1),(Ind2)`
+transport audit, then through the equality quotient to obtain fiber-invariant
+possible images and the induced lattice-image law.  The audit also records that
+`(Ind3)` is only an upper-semi relation and supplies no equality generator.
+-/
+structure FiberTransportQuotientComparisonAudit
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        record indData) : Prop where
+  source_level_action_packet_audit :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+      (transport :
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂),
+      IUTStage1LocalTensorState.Ind2ActionPacketSymmetrySource.Audit
+        (sourceData.fiberTransport_ind2ActionPacketSymmetrySource transport)
+  typed_core_transport_audit :
+    sourceData.toFiberInd2ActionPacketSource.PostProcessionTypedCoreTransportAudit
+  quotient_pullback :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      sourceData.quotientImages.quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+              indData).equalityQuotientMap choice) =
+        record.thetaPossibleImages.images.region choice
+  fiberTransport_equalityQuotientMap_eq :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityQuotientMap choice₁ =
+          (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityQuotientMap choice₂
+  fiberTransport_thetaPilotClass_eq :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁ =
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₂
+  fiberTransport_region_eq :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+        record.thetaPossibleImages.images.region choice₁ =
+          record.thetaPossibleImages.images.region choice₂
+  lattice_image_law :
+    record.thetaPossibleImages.images =
+      sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toChoiceImages
+  equalityQuotient_no_ind3_generator :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).equalityGenerators.ind3_step choice₁ choice₂ ->
+        False
+
+set_option linter.style.longLine false in
+theorem fiberTransportQuotientComparisonAudit
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        record indData) :
+    FiberTransportQuotientComparisonAudit sourceData :=
+  { source_level_action_packet_audit :=
+      sourceData.fiberTransport_ind2ActionPacketSymmetrySourceAudit,
+    typed_core_transport_audit :=
+      sourceData.toFiberInd2ActionPacketSource.postProcessionTypedCoreTransportAudit,
+    quotient_pullback :=
+      sourceData.quotientImages.pullback_region_eq,
+    fiberTransport_equalityQuotientMap_eq :=
+      sourceData.toFiberInd2ActionPacketSource.postProcessionTypedCoreTransportAudit
+        |>.fiberTransport_equalityQuotientMap_eq,
+    fiberTransport_thetaPilotClass_eq :=
+      sourceData.toFiberInd2ActionPacketSource.postProcessionTypedCoreTransportAudit
+        |>.fiberTransport_thetaPilotClass_eq,
+    fiberTransport_region_eq :=
+      sourceData.toFiberTransportSource.fiberTransport_region_eq,
+    lattice_image_law :=
+      (sourceData.toFiberTransportSource.endpoint).2.2.2.2.2,
+    equalityQuotient_no_ind3_generator :=
+      sourceData.toFiberInd2ActionPacketSource.postProcessionTypedCoreTransportAudit
+        |>.equalityQuotient_no_ind3_generator }
+
+set_option linter.style.longLine false in
 theorem endpoint
     (sourceData :
       ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource

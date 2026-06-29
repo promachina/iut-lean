@@ -11016,10 +11016,18 @@ the projected \((\Ind_2)\) symmetry.  The quotient-constructor endpoint and both
 Remark~3.9.5 endpoints also return the named payload
 \texttt{LowerTransportPayload}.  This payload contains the procession transport,
 the upper-semi transport, and the field equalities needed to compare the shifted
-choice with the target choice.  The same handoff still exposes the selected
-q-region, the global \(C_\Theta\) dichotomy, fiber-transport log-volume
-preservation, equality-quotient compatibility, direct-summand-count
-preservation, and the exclusion of \((\Ind_3)\) from the equality quotient.
+choice with the target choice.  The local comparison handoff is now summarized
+by \texttt{FiberTransportQuotientComparisonAudit}.  This audit starts with the
+retained source-level \((\Ind_2)\) packet/action transport object, checks its
+packet-source audit, then records the typed post-procession
+\((\Ind_1,\Ind_2)\) transport audit, equality-quotient-map preservation,
+theta-pilot-class preservation, possible-image region invariance, and the
+induced lattice-image law.  It also records explicitly that \((\Ind_3)\)
+contributes only the upper-semi relation and no equality-quotient generator.
+The same handoff still exposes the selected q-region, the global
+\(C_\Theta\) dichotomy, fiber-transport log-volume preservation,
+direct-summand-count preservation, and the exclusion of \((\Ind_3)\) from the
+equality quotient.
 The named audit \texttt{SourceLevelTransportQuotientAudit} now packages this
 same lower payload with the one-sided quotient audit before the
 Remark~3.9.5 hull/determinant source is introduced.
