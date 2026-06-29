@@ -4235,9 +4235,13 @@ canonical graph route.  This equality is now itself derived from a local
 log-Kummer image source: every point of
 \(P_{\mathrm{cover}}(\Theta_\beta)\) has a lift in \(U_\beta\), and every
 point of \(U_\beta\) realizes back into
-\(P_{\mathrm{cover}}(\Theta_\beta)\).  The remaining frontier is now the
-construction of these lift and soundness laws from the paper-native
-holomorphic hull, log-Kummer, and local log-shell geometry.
+\(P_{\mathrm{cover}}(\Theta_\beta)\).  That image source has now been lowered
+again to an explicit local log-Kummer correspondence relation on
+\(U_\beta\times P_{\mathrm{cover}}(\Theta_\beta)\): left-totality on the
+possible region, realization compatibility, and compact-open soundness imply
+the lift/soundness laws.  The remaining frontier is now the construction of
+this correspondence relation from the paper-native holomorphic hull,
+log-Kummer, and local log-shell geometry.
 There is now also an \texttt{ofHullSystem} constructor and experiment endpoint:
 starting from the intersection-defined hull system and a family
 \(\{P_\beta\}\), \Lean{} constructs the possible-image source and proves that
@@ -13581,9 +13585,10 @@ The practical priority order is now:
   are now themselves derived from a cover-level exactness statement identifying
   the selected Remark~3.9.5 possible region with the realized compact-open
   local factor; this equality is now derived in turn from local log-Kummer
-  lift and soundness laws for the compact-open factor.  What remains is to
-  construct those local image laws from the paper-native holomorphic hull,
-  log-Kummer, and local log-shell geometry.
+  lift and soundness laws for the compact-open factor, which are now extracted
+  from an explicit local log-Kummer correspondence relation.  What remains is
+  to construct that correspondence relation from the paper-native holomorphic
+  hull, log-Kummer, and local log-shell geometry.
 \item Instantiate the valuation-ball local analytic construction from actual
   local fields, log-shell maps, compact-open Haar normalizations, and
   archimedean lattice metrics, proving the remaining Proposition~1.4
