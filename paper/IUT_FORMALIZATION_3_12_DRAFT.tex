@@ -13620,9 +13620,14 @@ pullback itself has now been rederived from the pointwise generated
 record-region pullback: Lean combines the record image/fiber-lattice equality
 with the source record's target-region realization theorem, and then reuses the
 constructed target-region quotient.  Consequently the remaining generated-side
-payload is pushed below package target regions, to the construction of the
-record/kernel fiber-lattice pullback and its representative calibration from
-the local log-Kummer and Frobenioid data.
+payload is pushed below package target regions.  This has been split again by
+the generated-corridor-backed source: the public generated full-label quotient
+corridor supplies the record-image equality, and Lean derives the common-kernel
+record pullback from the single comparison between generated theta-class
+regions and the concrete fiber-lattice image law.  The remaining mathematical
+payload is therefore the construction of that theta-class region comparison
+and its representative calibration from the local log-Kummer and Frobenioid
+data.
 
 This q-region source is now threaded into the valuation-ball localized
 hull-cover boundary by
