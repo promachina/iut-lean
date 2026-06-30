@@ -12064,8 +12064,9 @@ and then builds
 \texttt{LocalArithmeticSource} threads this derived formula-gap source into the
 \(p\)-adic defect/main split.  Thus the current valuation-ball boundary no
 longer needs the formula-gap-matched record as primitive data; its remaining
-payload is the concrete proof of the per-place procession bounds
-\(\mathrm{formula}_v\leq S_v\) and the local prime-error identity from
+payload is sharper: prove the per-place procession bounds against the
+arithmetic-degree term \(a_l(D_v+C_v)\), prove the Step~(xi) calibration
+\(S_v=a_l(D_v+C_v)\), and prove the local prime-error identity from
 paper-native valuation-ball/log-shell constructions.
 The local arithmetic equality itself has also been lowered by
 \texttt{IUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource}.
@@ -12085,6 +12086,19 @@ Prop.~1.4/1.5 comparison
 into the Step~(xi)-controlled comparison
 \(\mathrm{formula}_v\leq S_v\), and then projects to the formula-gap-matched
 arithmetic-divisor evaluation source.
+The valuation-ball version now has the same preferred boundary:
+\[
+\begin{array}{l}
+\texttt{IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegree}\\
+\texttt{ControlledLocalArithmeticSource}.
+\end{array}
+\]
+This source keeps the valuation-ball Theorem~1.10 local analytic object, the
+IUT~IV local defect source, the Step~(xi) arithmetic-degree calibration, the
+prime-error/main split, and the two Proposition~1.4/1.5 comparisons with
+\(a_l(D_v+C_v)\).  \Lean{} derives the older controlled local-arithmetic source
+by identifying \(a_l(D_v+C_v)\) with the same localized Step~(xi) determinant
+used in the final determinant and \(C_\Theta\)-scale handoff.
 This comparison is now backed by named Proposition~1.4/1.5 construction
 records.  The algebra layer adds single-place distinguished and archimedean
 arithmetic-degree comparison sources; the experiment layer combines them as
@@ -13388,14 +13402,19 @@ local-arithmetic constructor: the distinguished and archimedean
 formula-to-gap comparisons are derived from Step~(xi)-controlled local
 arithmetic, then combined with the \(p\)-adic prime-error/defect/main split
 and the Step~(xi) arithmetic-degree calibration before projecting to the
-closed local-to-global \(C_\Theta\) handoff.  After projection, these routes
+closed local-to-global \(C_\Theta\) handoff.  It now also has an
+arithmetic-degree-controlled constructor that derives this Step~(xi)-controlled
+source from the calibrated comparison with \(a_l(D_v+C_v)\), so the
+formula-gap proof and the determinant handoff share the same localized Step~(xi)
+source.  After projection, these routes
 recover the proposition, formula, finite local-to-global \(C_\Theta\), and
 Corollary~3.12 outputs.  Thus
 the concrete Hodge/log-theta route no longer stops at a proposition-level
 estimate package, nor at an abstract additive-Haar normalization.  The
-remaining payload at this boundary is the construction of the controlled
-local-arithmetic source and Step~(xi) arithmetic-degree calibration from
-paper-native local fields, log-shells, and divisor terms, not a raw global
+remaining payload at this boundary is now the paper-native construction of the
+local Proposition~1.4/1.5 comparison sources, the Step~(xi) determinant
+multiplicity/raw-log-volume calibration, and the prime-error/main split from
+local fields, log-shells, and divisor terms; it is not a raw global
 \(C_{\Theta,\mathrm{can}}\leq C_\Theta\) hypothesis or a raw total Haar-defect
 inequality.
 The preferred certificate now also carries the IUT~IV local formula audit
