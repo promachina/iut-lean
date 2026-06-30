@@ -11837,10 +11837,13 @@ read from the corresponding compact-open source.  The normalized-Haar version
 has now been lowered through these same three compact-open boundaries: the
 finite Haar-defect certificate supplies both the local defect function and the
 global Haar lower bound, while the displayed Ob3/Ob4 determinant is still fixed
-by the valuation-cover datum.  The arithmetic-formula-matched variant performs
-the analogous map-facing specialization, so the public interface retains the
-Theorem~1.10 formula data without reintroducing a separate Ob3/Ob4
-weighted-determinant handoff.
+by the valuation-cover datum.  The arithmetic-formula-matched version has now
+been lowered through these same three compact-open boundaries.  At this level
+Lean reads the local main term, the finite Haar-defect source, and the two
+global summation identities from the valuation-ball Theorem~1.10 formula
+source before entering the normalized-Haar endpoint, so the public interface
+retains the source-paper formula data without reintroducing separate Haar-sum
+or Ob3/Ob4 weighted-determinant handoffs.
 The Record Ob3/Ob5-backed variant
 \texttt{...PrincipalProductHullFormulaLocalizedRecordOb3Ob5ArithmeticFormulaMatched}
 removes precisely these three displayed synchronization hypotheses from the
