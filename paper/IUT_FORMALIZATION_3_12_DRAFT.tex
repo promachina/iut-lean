@@ -9762,21 +9762,17 @@ supplies the \(C_\Theta\) comparison in both cases.  The construction of the
 arithmetic-gap source itself remains part of the local
 \(\IUT{}\,\mathrm{IV}\) payload.
 This source-derived form now also reaches the principal valuation-ball local
-boundary, and that boundary has been lowered through realized-region equality
-to a local log-shell exact statement.  Starting from a principal cover whose
-possible regions are transported theta regions, \Lean{} now accepts the two
-local identities that a transported theta region is the realized image of its
-selected log-shell and that this log-shell is the compact-open valuation ball.
-It can also derive these identities from the pointwise local construction:
-theta-region points have chosen compact-open valuation-ball representatives,
-and compact-open valuation-ball points realize back into the transported theta
-region.  This pointwise source is now constructed from compact-open
-local-chart data, from the compact-open log-Kummer graph source, and from the
-possible-region log-Kummer map source after rewriting the cover possible
-region as the transported theta region.  The resulting construction builds the
-exact \(\Xi(P_B)\) family and uses the local-to-global arithmetic source for
-the global \(C_\Theta\) comparison, without reintroducing a caller-supplied
-scalar domination after the product-hull lowering.
+boundary through realized-region and log-shell exactness.  Starting from a
+principal cover whose possible regions are transported theta regions,
+\Lean{} accepts either the valuation-ball realization equality or the two
+log-shell identities
+\(P_{\Theta,\beta}=\operatorname{real}_\beta(L_\beta)\) and
+\(L_\beta=U_\beta\).  It converts these statements into compact-open
+log-shell image data, constructs the canonical graph and possible-region
+log-Kummer map, and then builds the pointwise local source, radius cover, and
+exact \(\Xi(P_B)\) family internally.  The same route can still start from
+local-chart, graph, or map data, but those are no longer the only public local
+Kummer-realization surfaces for the global \(C_\Theta\) audit.
 The same specialization now propagates through the synchronized Ob5--Ob7
 review object and the canonical-scale audit: the product-hull route can run
 with canonical \(\Phi(P_B)\) and source-constructed exact \(\Xi(P_B)\) while
@@ -13862,13 +13858,14 @@ comparison is derived from the theta-region-defined cover.  Consequently the
 hull-fixed exact-\(\Xi\) audit can consume the theta-region-defined principal
 valuation-ball source directly, rather than a separately supplied
 fiber-backed family-union source.  The global endpoint has now been sharpened
-past the radius cover and pointwise layer: the local-coordinate source, the
-compact-open log-Kummer graph source, and the compact-open log-Kummer map source
-all feed the selected-\(q\) Remark~3.9.5 \(C_\Theta\) audit by constructing the
-pointwise source, theta-region-defined radius cover, and principal
-exact-\(\Xi\) family internally.  Thus the older valuation-radius, local-factor,
-radius-cover, and chosen-pointwise objects remain derivable intermediate
-projections, not public payload for this route.
+past the radius cover and pointwise layer.  Realized valuation-ball exactness,
+log-shell exactness, compact-open log-shell image data, local-coordinate data,
+compact-open log-Kummer graph data, and compact-open log-Kummer map data all
+feed the selected-\(q\) Remark~3.9.5 \(C_\Theta\) audit by constructing the
+intervening pointwise source, theta-region-defined radius cover, and principal
+exact-\(\Xi\) family internally.  Thus the older valuation-radius,
+local-factor, radius-cover, and chosen-pointwise objects remain derivable
+intermediate projections, not public payload for this route.
 
 This q-region source is now threaded into the valuation-ball localized
 hull-cover boundary by
@@ -14292,11 +14289,12 @@ The practical priority order is now:
   valuation-ball exactness and log-shell exactness.  The
   image containments are also derived from a cover-level exactness statement
   identifying the selected Remark~3.9.5 possible region with the realized
-  compact-open local factor, and now from the lower log-shell exact source
+  compact-open local factor, from the lower log-shell exact source
   \(P_{\Theta,\beta}=\operatorname{real}_\beta(L_\beta)\),
-  \(L_\beta=U_\beta\).  These exact equalities are themselves derived from the
-  pointwise local realization source, which is now derived from compact-open
-  local-chart data and from the compact-open log-Kummer graph source.  The
+  \(L_\beta=U_\beta\), and from realized valuation-ball exactness.  These exact
+  equalities are themselves derivable from the pointwise local realization
+  source, which is now derived from compact-open local-chart data, compact-open
+  log-Kummer graph data, or possible-region log-Kummer map data.  The
   theta-region-defined Step~(xi) valuation cover is now also constructed from
   the source-core Remark~3.9.5 valuation-ball/Haar cover using the
   fiber-transport-backed pointwise comparison, and from the lattice-image law
