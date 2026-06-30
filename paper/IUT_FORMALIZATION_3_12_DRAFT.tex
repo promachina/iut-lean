@@ -4166,8 +4166,11 @@ replaces the forward existential lifting law by a named map
 reverse statement that each selected valuation-ball point realizes back into
 the transported theta region.  \Lean{} derives the pointwise lift, recovers the
 previous principal pointwise source, and hence recovers the exact realized
-valuation-ball identity and selected-principal-hull conclusion.  This boundary
-has now been lowered to an image-backed log-shell source:
+valuation-ball identity and selected-principal-hull conclusion.  The
+corresponding global \(C_\Theta\) audit now also consumes this local-coordinate
+source directly, constructing the pointwise source, radius cover, and principal
+exact-\(\Xi\) family internally.  This boundary has now been lowered to an
+image-backed log-shell source:
 \[
 \begin{array}{l}
 \texttt{ConcreteValuationBallThetaClassFiberTransportThetaRegionDefined}\\
@@ -4283,7 +4286,12 @@ compact-open graph lifts are converted to valuation-radius lifts by the
 additive Haar normalization, and right-soundness gives the converse
 valuation-ball realization law.  Thus the graph route can now pass through
 pointwise local construction, log-shell exactness, compact-open image
-compatibility, and finally the global \(C_\Theta\) audit.
+compatibility, and finally the global \(C_\Theta\) audit.  The global endpoint
+has now been lowered to this graph level and to the corresponding map level:
+the map source constructs the graph, the graph constructs compact-open
+coordinates, and \Lean{} then derives the pointwise log-shell source and
+principal exact-\(\Xi\) family before applying the selected-\(q\)
+Remark~3.9.5 comparison.
 The containments themselves were first lowered to the valuation-cover side by the
 single equality
 \[
@@ -13854,12 +13862,13 @@ comparison is derived from the theta-region-defined cover.  Consequently the
 hull-fixed exact-\(\Xi\) audit can consume the theta-region-defined principal
 valuation-ball source directly, rather than a separately supplied
 fiber-backed family-union source.  The global endpoint has now been sharpened
-past the radius cover: the pointwise log-shell metric-zero principal source is
-the public input, and Lean constructs the theta-region-defined radius cover and
-principal exact-\(\Xi\) family before feeding the selected-\(q\) Remark~3.9.5
-\(C_\Theta\) audit.  Thus the older valuation-radius, local-factor, and
-radius-cover objects remain derivable intermediate projections, not public
-payload for this route.
+past the radius cover and pointwise layer: the local-coordinate source, the
+compact-open log-Kummer graph source, and the compact-open log-Kummer map source
+all feed the selected-\(q\) Remark~3.9.5 \(C_\Theta\) audit by constructing the
+pointwise source, theta-region-defined radius cover, and principal
+exact-\(\Xi\) family internally.  Thus the older valuation-radius, local-factor,
+radius-cover, and chosen-pointwise objects remain derivable intermediate
+projections, not public payload for this route.
 
 This q-region source is now threaded into the valuation-ball localized
 hull-cover boundary by
