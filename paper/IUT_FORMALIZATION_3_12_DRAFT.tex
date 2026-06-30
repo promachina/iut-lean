@@ -4286,10 +4286,27 @@ The two image containments then prove the graph laws.  Thus the local
 log-Kummer graph is no longer an independent payload at this boundary.  The
 graph source also constructs the pointwise local valuation-ball source:
 compact-open graph lifts are converted to valuation-radius lifts by the
-additive Haar normalization, and right-soundness gives the converse
-valuation-ball realization law.  Thus the graph route can now pass through
-pointwise local construction, log-shell exactness, compact-open image
-compatibility, and finally the global \(C_\Theta\) audit.  The global endpoint
+additive Haar identity and additive Haar normalization, with right-soundness
+giving the converse valuation-ball realization law.  Thus the graph route can now
+pass through pointwise local construction, log-shell exactness, compact-open
+image compatibility, and finally the global \(C_\Theta\) audit.
+
+The same route is now exposed one step earlier at the
+Remark~3.9.5 valuation-cover possible-region boundary.  Instead of beginning
+with containments for the transported theta region itself, the source may state
+\[
+  \operatorname{possibleRegion}(P_{\Theta,\beta})
+    = \operatorname{realizedRegion}(U_\beta),
+\]
+or, still more locally, the two Kummer image laws: possible-region points lift
+to compact-open local points and compact-open local points realize back into
+the possible region.  A correspondence formulation is also available: a
+relation \(U_\beta\times \operatorname{possibleRegion}(P_{\Theta,\beta})\)
+with left-totality, realization compatibility, and compact-open soundness
+constructs the image laws.  The global \(C_\Theta\) audit now consumes all
+three of these possible-region forms directly, while \Lean{} performs the
+rewriting from possible regions to transported theta regions internally.
+The global endpoint
 has now been lowered to this graph level and to the corresponding map level:
 the map source constructs the graph, the graph constructs compact-open
 coordinates, and \Lean{} then derives the pointwise log-shell source and

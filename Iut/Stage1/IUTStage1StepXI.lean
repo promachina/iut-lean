@@ -50473,6 +50473,362 @@ theorem sourceLevelTransportPrincipalValuationBallThetaRegionDefinedPrincipalCom
 
 set_option linter.style.longLine false in
 /--
+Principal theta-region-defined compact-open possible-region exact global
+`C_Theta` audit.
+
+This lowers the compact-open log-shell image global boundary to the
+Remark 3.9.5 valuation-cover possible-region equality.  The source identifies
+each selected possible region with the realized compact-open local factor;
+Lean rewrites the theta region to that possible region and constructs the
+compact-open log-shell image source internally.
+-/
+theorem sourceLevelTransportPrincipalValuationBallThetaRegionDefinedPrincipalCompactOpenPossibleRegionExactFamilyExactXiSelectedQRemark395GlobalCThetaAudit
+    {source target : Copy} {coric : Type u}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    {η : Type z} {K : Type x}
+    {βv : Type v} {γv : Type w} {Λ : Type max u v w x z}
+    [PseudoMetricSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype βv] [Fintype γv]
+    (possibleRegionSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenPossibleRegionExactSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := βv) (γ := γv) (Λ := Λ))
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            possibleRegionSource.principalSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator)
+          (recordThetaPossibleImageUnion recordConcrete))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      packageConcrete.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          possibleRegionSource.principalSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        packageConcrete.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      packageConcrete.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordConcrete)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            possibleRegionSource.principalSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator)
+          (ofFiberInd2ActionPacketTransportSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion.toSet
+          (ofFiberInd2ActionPacketTransportSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion_subset_recordUnion
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -packageConcrete.preLedger.qSigned)
+    (normalization : packageConcrete.preLedger.normalization)
+    (cTheta : Real)
+    (canonicalCThetaScale_le_cTheta :
+      ((ofFiberInd2ActionPacketTransportSource
+          (record := recordConcrete) (indData := indData)
+          sourceData gluingTorsor selectedQChoice)
+        |>.toRemark395ConstructedHolomorphicHullDeterminantSource
+          operation hullOperation determinantOperation
+          possibleRegionSource.principalSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator
+          ob3ob4Source compatibility measure_eq_hullLogVolume
+          tensorPower_bound hullDetBridge_eq q_pilot_positive
+          normalization).canonicalCThetaScale <= cTheta)
+    (t : ZMod l.value) :
+    let compactOpenSource :=
+      possibleRegionSource.toCompactOpenLogShellImageMetricZeroValuationBallExactSource;
+    let mapSource :=
+      compactOpenSource.toCompactOpenLogKummerMapPossibleRegionSource;
+    let graphSource :=
+      mapSource.toCompactOpenLogKummerGraphMetricZeroValuationBallExactSource;
+    let principalPointwiseSource :=
+      graphSource.toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource;
+    let radiusSource :=
+      principalPointwiseSource.toThetaRegionDefinedPrincipalValuationBallRadiusCoverSource;
+    let principalXiSource := radiusSource.toPrincipalValuationBallFamilyUnionExactXiSource;
+    SourceLevelTransportCanonicalExactXiSelectedQRemark395GlobalCThetaAudit
+      sourceData gluingTorsor selectedQChoice operation hullOperation
+      determinantOperation
+      possibleRegionSource.principalSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator
+      ob3ob4Source compatibility
+      measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+      q_pilot_positive normalization cTheta canonicalCThetaScale_le_cTheta
+      principalXiSource.toClosedFamilyUnionExactXiSource.toCalibrationSource.toExactXiFamilySource t :=
+  by
+    intro compactOpenSource mapSource graphSource principalPointwiseSource
+      radiusSource principalXiSource
+    exact
+      sourceLevelTransportPrincipalValuationBallThetaRegionDefinedPrincipalCompactOpenLogKummerMapPossibleRegionFamilyExactXiSelectedQRemark395GlobalCThetaAudit
+        (recordConcrete := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice mapSource
+        operation hullOperation determinantOperation ob3ob4Source compatibility
+        measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+        q_pilot_positive normalization cTheta canonicalCThetaScale_le_cTheta t
+
+set_option linter.style.longLine false in
+/--
+Principal theta-region-defined compact-open log-Kummer image global
+`C_Theta` audit.
+
+This lowers the possible-region equality boundary to the two local image laws:
+possible-region points have compact-open Kummer lifts, and compact-open local
+points realize back into the selected possible region.  The set equality is
+then derived by image extensionality before entering the same global audit.
+-/
+theorem sourceLevelTransportPrincipalValuationBallThetaRegionDefinedPrincipalCompactOpenLogKummerImagePossibleRegionFamilyExactXiSelectedQRemark395GlobalCThetaAudit
+    {source target : Copy} {coric : Type u}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    {η : Type z} {K : Type x}
+    {βv : Type v} {γv : Type w} {Λ : Type max u v w x z}
+    [PseudoMetricSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype βv] [Fintype γv]
+    (logKummerImageSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerImagePossibleRegionSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := βv) (γ := γv) (Λ := Λ))
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            logKummerImageSource.principalSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator)
+          (recordThetaPossibleImageUnion recordConcrete))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      packageConcrete.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          logKummerImageSource.principalSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        packageConcrete.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      packageConcrete.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordConcrete)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            logKummerImageSource.principalSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator)
+          (ofFiberInd2ActionPacketTransportSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion.toSet
+          (ofFiberInd2ActionPacketTransportSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion_subset_recordUnion
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -packageConcrete.preLedger.qSigned)
+    (normalization : packageConcrete.preLedger.normalization)
+    (cTheta : Real)
+    (canonicalCThetaScale_le_cTheta :
+      ((ofFiberInd2ActionPacketTransportSource
+          (record := recordConcrete) (indData := indData)
+          sourceData gluingTorsor selectedQChoice)
+        |>.toRemark395ConstructedHolomorphicHullDeterminantSource
+          operation hullOperation determinantOperation
+          logKummerImageSource.principalSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator
+          ob3ob4Source compatibility measure_eq_hullLogVolume
+          tensorPower_bound hullDetBridge_eq q_pilot_positive
+          normalization).canonicalCThetaScale <= cTheta)
+    (t : ZMod l.value) :
+    let possibleRegionSource :=
+      logKummerImageSource.toCompactOpenPossibleRegionExactSource;
+    let compactOpenSource :=
+      possibleRegionSource.toCompactOpenLogShellImageMetricZeroValuationBallExactSource;
+    let mapSource :=
+      compactOpenSource.toCompactOpenLogKummerMapPossibleRegionSource;
+    let graphSource :=
+      mapSource.toCompactOpenLogKummerGraphMetricZeroValuationBallExactSource;
+    let principalPointwiseSource :=
+      graphSource.toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource;
+    let radiusSource :=
+      principalPointwiseSource.toThetaRegionDefinedPrincipalValuationBallRadiusCoverSource;
+    let principalXiSource := radiusSource.toPrincipalValuationBallFamilyUnionExactXiSource;
+    SourceLevelTransportCanonicalExactXiSelectedQRemark395GlobalCThetaAudit
+      sourceData gluingTorsor selectedQChoice operation hullOperation
+      determinantOperation
+      logKummerImageSource.principalSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator
+      ob3ob4Source compatibility
+      measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+      q_pilot_positive normalization cTheta canonicalCThetaScale_le_cTheta
+      principalXiSource.toClosedFamilyUnionExactXiSource.toCalibrationSource.toExactXiFamilySource t :=
+  by
+    intro possibleRegionSource compactOpenSource mapSource graphSource
+      principalPointwiseSource radiusSource principalXiSource
+    exact
+      sourceLevelTransportPrincipalValuationBallThetaRegionDefinedPrincipalCompactOpenPossibleRegionExactFamilyExactXiSelectedQRemark395GlobalCThetaAudit
+        (recordConcrete := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice possibleRegionSource
+        operation hullOperation determinantOperation ob3ob4Source compatibility
+        measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+        q_pilot_positive normalization cTheta canonicalCThetaScale_le_cTheta t
+
+set_option linter.style.longLine false in
+/--
+Principal theta-region-defined compact-open log-Kummer correspondence global
+`C_Theta` audit.
+
+This exposes the explicit correspondence form of the local Kummer bridge at
+the global boundary.  The source supplies a relation between compact-open local
+points and possible-region points, left-totality over the possible region,
+realization compatibility, and compact-open soundness.  Lean extracts the
+image laws and then proceeds through the possible-region route.
+-/
+theorem sourceLevelTransportPrincipalValuationBallThetaRegionDefinedPrincipalCompactOpenLogKummerCorrespondencePossibleRegionFamilyExactXiSelectedQRemark395GlobalCThetaAudit
+    {source target : Copy} {coric : Type u}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {β : Type v} [Fintype β]
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (source := source) (target := target) (l := l)
+        recordConcrete indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    {η : Type z} {K : Type x}
+    {βv : Type v} {γv : Type w} {Λ : Type max u v w x z}
+    [PseudoMetricSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype βv] [Fintype γv]
+    (correspondenceSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerCorrespondencePossibleRegionSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := βv) (γ := γv) (Λ := Λ))
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            correspondenceSource.principalSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator)
+          (recordThetaPossibleImageUnion recordConcrete))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      packageConcrete.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          correspondenceSource.principalSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        packageConcrete.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      packageConcrete.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordConcrete)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            correspondenceSource.principalSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator)
+          (ofFiberInd2ActionPacketTransportSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion.toSet
+          (ofFiberInd2ActionPacketTransportSource
+            (record := recordConcrete) (indData := indData)
+            sourceData gluingTorsor selectedQChoice).toConstruction.selectedQRegion_subset_recordUnion
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -packageConcrete.preLedger.qSigned)
+    (normalization : packageConcrete.preLedger.normalization)
+    (cTheta : Real)
+    (canonicalCThetaScale_le_cTheta :
+      ((ofFiberInd2ActionPacketTransportSource
+          (record := recordConcrete) (indData := indData)
+          sourceData gluingTorsor selectedQChoice)
+        |>.toRemark395ConstructedHolomorphicHullDeterminantSource
+          operation hullOperation determinantOperation
+          correspondenceSource.principalSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator
+          ob3ob4Source compatibility measure_eq_hullLogVolume
+          tensorPower_bound hullDetBridge_eq q_pilot_positive
+          normalization).canonicalCThetaScale <= cTheta)
+    (t : ZMod l.value) :
+    let logKummerImageSource :=
+      correspondenceSource.toCompactOpenLogKummerImagePossibleRegionSource;
+    let possibleRegionSource :=
+      logKummerImageSource.toCompactOpenPossibleRegionExactSource;
+    let compactOpenSource :=
+      possibleRegionSource.toCompactOpenLogShellImageMetricZeroValuationBallExactSource;
+    let mapSource :=
+      compactOpenSource.toCompactOpenLogKummerMapPossibleRegionSource;
+    let graphSource :=
+      mapSource.toCompactOpenLogKummerGraphMetricZeroValuationBallExactSource;
+    let principalPointwiseSource :=
+      graphSource.toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource;
+    let radiusSource :=
+      principalPointwiseSource.toThetaRegionDefinedPrincipalValuationBallRadiusCoverSource;
+    let principalXiSource := radiusSource.toPrincipalValuationBallFamilyUnionExactXiSource;
+    SourceLevelTransportCanonicalExactXiSelectedQRemark395GlobalCThetaAudit
+      sourceData gluingTorsor selectedQChoice operation hullOperation
+      determinantOperation
+      correspondenceSource.principalSource.principalHullSource.toHolomorphicHullSystem.toHolomorphicHullOperator
+      ob3ob4Source compatibility
+      measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+      q_pilot_positive normalization cTheta canonicalCThetaScale_le_cTheta
+      principalXiSource.toClosedFamilyUnionExactXiSource.toCalibrationSource.toExactXiFamilySource t :=
+  by
+    intro logKummerImageSource possibleRegionSource compactOpenSource
+      mapSource graphSource principalPointwiseSource radiusSource principalXiSource
+    exact
+      sourceLevelTransportPrincipalValuationBallThetaRegionDefinedPrincipalCompactOpenLogKummerImagePossibleRegionFamilyExactXiSelectedQRemark395GlobalCThetaAudit
+        (recordConcrete := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice logKummerImageSource
+        operation hullOperation determinantOperation ob3ob4Source compatibility
+        measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+        q_pilot_positive normalization cTheta canonicalCThetaScale_le_cTheta t
+
+set_option linter.style.longLine false in
+/--
 Principal theta-region-defined compact-open log-shell image exact-`Xi`
 global `C_Theta` audit.
 
