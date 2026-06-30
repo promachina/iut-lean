@@ -18259,6 +18259,104 @@ theorem closedEndpointRemovesRawCanonicalCThetaScaleLeCThetaHypothesis
   dsimp [RemainingPayloadAudit] at audit
   tauto
 
+/--
+Goal-facing completion audit for the concrete Hodge-theater/log-theta
+Theorem 3.11 source layer.
+
+This is a projection of the assembled paper-trace `RemainingPayloadAudit`, not
+a new mathematical assumption.  Its fields are organized by the ten active
+milestone bullets: paper trace, concrete choice space, typed
+`(Ind1),(Ind2),(Ind3)` core, procession/`F_l` layer, quotient possible images,
+selected q-region, Remark 3.9.5 bridge, constructor into the current corridor,
+lowered endpoint, and audit/paper payload.
+-/
+structure MilestoneCompletionAudit
+    (obligations : Obligations core images) : Prop where
+  paper_trace :
+    Theorem311AndRemarksObligations.RemainingPayloadAudit
+      obligations.theorem311_and_remarks
+  concrete_choice_space :
+    obligations.theorem311_and_remarks.typed_indeterminacy_nonvacuity_witness_constructed ∧
+      obligations.theorem311_and_remarks.theorem311_multiradial_representation_constructed
+  typed_ind_core :
+    core.ActionLawAudit
+  procession_fl_layer :
+    obligations.theorem311_and_remarks.remark3114_log_theta_lattice_procession_constructed ∧
+      obligations.theorem311_and_remarks.fl_cardinality_and_procession_label_transitions_constructed
+  quotient_possible_images :
+    IUTStage1Theorem311TypedIndeterminacyCore.PossibleImageQuotientCompatibility
+        core images ∧
+      (∀ {choice₁ choice₂ : choice},
+        core.ind1.step choice₁ choice₂ ->
+          images.region choice₁ = images.region choice₂) ∧
+      (∀ {choice₁ choice₂ : choice},
+        core.ind2.step choice₁ choice₂ ->
+          images.region choice₁ = images.region choice₂) ∧
+      (∀ {choice₁ choice₂ : choice},
+        core.ind3.step choice₁ choice₂ ->
+          core.logVolume choice₁ <= core.logVolume choice₂)
+  selected_q_region :
+    obligations.theorem311_and_remarks.selected_q_region_is_theorem311_possible_image ∧
+      obligations.stepXI_hull_determinant.selected_q_region_contained_in_possible_image_union
+  remark395_bridge :
+    obligations.stepXI_hull_determinant.remark395_holomorphic_hull_operator_constructed ∧
+      obligations.stepXI_hull_determinant.theorem311_possible_image_family_matches_hull_source ∧
+      obligations.stepXI_hull_determinant.ob3_ob4_adjusted_determinant_normalization_constructed ∧
+      obligations.stepXI_hull_determinant.ob5_quotient_determinant_compatibility_constructed ∧
+      obligations.stepXI_hull_determinant.weighted_determinant_tensor_power_bound_constructed ∧
+      obligations.stepXI_hull_determinant.q_region_logVolume_le_thetaSigned_constructed
+  constructor_into_current_corridor :
+    obligations.theorem311_and_remarks.theorem311_hodge_she_ipl_apt_source_bridge_constructed ∧
+      obligations.stepX_finite_divisor.finite_divisor_packet_source_constructed ∧
+      obligations.stepX_finite_divisor.realified_frobenioid_log_kummer_source_constructed ∧
+      obligations.stepX_finite_divisor.kummer_forgetting_compatibility_constructed ∧
+      obligations.stepX_finite_divisor.vertical_iq_target_source_constructed
+  lowered_endpoint :
+    AdditiveHaarArithmeticDegreePadicObligations.RemainingPayloadAudit
+        obligations.additive_haar_arithmetic_degree_padic ∧
+      obligations.closed_endpoint_removes_thetaSigned_le_cTheta_absLogQ_hypothesis ∧
+      obligations.closed_endpoint_removes_raw_canonicalCThetaScale_le_cTheta_hypothesis
+  audit_and_paper :
+    RemainingPayloadAudit obligations
+
+set_option linter.style.longLine false in
+theorem milestoneCompletionAudit
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    MilestoneCompletionAudit obligations :=
+  { paper_trace := by
+      dsimp [Theorem311AndRemarksObligations.RemainingPayloadAudit,
+        RemainingPayloadAudit] at audit ⊢
+      tauto
+    concrete_choice_space := by
+      dsimp [RemainingPayloadAudit] at audit
+      tauto
+    typed_ind_core :=
+      core.actionLawAudit
+    procession_fl_layer := by
+      dsimp [RemainingPayloadAudit] at audit
+      tauto
+    quotient_possible_images := by
+      refine ⟨obligations.theorem311PossibleImagesDependOnEqualityQuotient audit,
+        obligations.theorem311PossibleImagesInd1RegionEq audit,
+        obligations.theorem311PossibleImagesInd2RegionEq audit,
+        obligations.theorem311PossibleImagesInd3UpperSemiLogVolume audit⟩
+    selected_q_region := by
+      dsimp [RemainingPayloadAudit] at audit
+      tauto
+    remark395_bridge := by
+      dsimp [RemainingPayloadAudit] at audit
+      tauto
+    constructor_into_current_corridor := by
+      dsimp [RemainingPayloadAudit] at audit
+      tauto
+    lowered_endpoint := by
+      exact
+        ⟨obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit,
+          obligations.closedEndpointRemovesThetaSignedLeCThetaAbsLogQHypothesis audit,
+          obligations.closedEndpointRemovesRawCanonicalCThetaScaleLeCThetaHypothesis audit⟩
+    audit_and_paper := audit }
+
 end Obligations
 
 end IUTStage1Theorem311ToCorollary312PaperTrace
