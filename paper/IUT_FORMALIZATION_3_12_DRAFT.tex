@@ -4306,12 +4306,13 @@ with left-totality, realization compatibility, and compact-open soundness
 constructs the image laws.  The global \(C_\Theta\) audit now consumes all
 three of these possible-region forms directly, while \Lean{} performs the
 rewriting from possible regions to transported theta regions internally.
-The global endpoint
-has now been lowered to this graph level and to the corresponding map level:
-the map source constructs the graph, the graph constructs compact-open
-coordinates, and \Lean{} then derives the pointwise log-shell source and
-principal exact-\(\Xi\) family before applying the selected-\(q\)
-Remark~3.9.5 comparison.
+The closed Corollary~3.12 endpoint now exposes the same three forms as public
+source boundaries: possible-region exactness, the two local Kummer image laws,
+and the relation-level Kummer correspondence.  Internally these construct the
+compact-open log-Kummer map source, which constructs the graph; the graph
+constructs compact-open coordinates, and \Lean{} then derives the pointwise
+log-shell source and principal exact-\(\Xi\) family before applying the
+selected-\(q\) Remark~3.9.5 comparison.
 The containments themselves were first lowered to the valuation-cover side by the
 single equality
 \[
@@ -11138,7 +11139,7 @@ selected-q evidence through to the final dichotomy.
 An exact-\(\Xi\) specialization now constructs the \(\Phi\)-family canonically
 and obtains \(\Xi\) from the Remark~3.9.5 exact log-volume source, rather than
 accepting arbitrary approximant families at this boundary.
-At the strongest current local boundary, the endpoint
+At the strongest current closed local boundary, the endpoint
 \texttt{ConcreteHodgeTheaterLogThetaCompactOpenLogKummerMapClosedCorollary312Endpoint}
 starts from compact-open log-Kummer map data over the transported theta-region
 family.  It constructs the log-Kummer graph, pointwise log-shell source,
@@ -11146,7 +11147,12 @@ exact-\(\Xi(P_B)\) family, Remark~3.9.5 hull/determinant source, and
 source-derived \(\IUT{}\) IV \(C_\Theta\) comparison before exposing the final
 Corollary~3.12 dichotomy.  The endpoint also records the derived signed bound
 \(\theta_{\rm signed}\leq C_\Theta(-q_{\rm signed})\) and the guard that
-\((\Ind_3)\) contributes no equality-quotient generator.  Its finite-place
+\((\Ind_3)\) contributes no equality-quotient generator.  The same closed
+surface now has source-facing wrappers whose public local input is only the
+possible-region exactness law, the two log-Kummer image laws, or the
+relation-level log-Kummer correspondence; each wrapper constructs the
+compact-open log-Kummer map internally before entering the closed endpoint.
+The finite-place
 variant,
 \texttt{ConcreteHodgeTheaterLogThetaCompactOpenLogKummerMapFinitePlaceClosedCorollary312Endpoint},
 constructs the local-global source from finite local Step~(xi)/Haar summation
