@@ -13858,18 +13858,28 @@ the equality-quotient possible images, and derives the representative
 target-region, common-kernel, kernel-image, generated-record, q-region, and
 generated-corridor handoffs internally.  The endpoint still takes the
 Remark~3.9.5 local-normalization valuation-ball/Haar hull-cover source directly.
-At this boundary the generated quotient evidence is now exposed by the endpoint
+The generated quotient evidence is now exposed at two adjacent boundaries.  At
+the generated-corridor/local-normalization boundary it is recorded by
+\[
+\begin{gathered}
+\texttt{generatedCorridorLocalNormalization}\\
+\texttt{ValuationCoverQuotientHullAudit}.
+\end{gathered}
+\]
+This uses the generated full-label quotient corridor itself, before the
+finite-divisor \(C_\Theta\) handoff, to identify the selected q-region as a
+selected \((\Ind1,\Ind2)\)-quotient possible image and to prove its containment
+in the Remark~3.9.5 canonical hull.  At the pointwise/direct boundary the same
+evidence is recovered after reconstructing the generated corridor, via
 \[
 \begin{gathered}
 \texttt{generatedFullLabelValuationCoverQuotientHullAudit}.
 \end{gathered}
 \]
-It records the reconstructed generated quotient audit, the Remark~3.9.5
-hull-compatibility audit, the selected generated q-region as the selected
-quotient possible image, and its containment in the canonical hull.  The
-remaining source-facing obligation is correspondingly sharper: construct the
-pointwise record-image pullback law and the direct local-normalization hull-cover
-source from the same local log-Kummer/Frobenioid geometry.
+The remaining source-facing obligation is correspondingly sharper: construct the
+generated-corridor theta-class image comparison, or equivalently the pointwise
+record-image pullback law, together with the direct local-normalization
+hull-cover source from the same local log-Kummer/Frobenioid geometry.
 The older factored localized hull-cover source
 \[
 \begin{gathered}
