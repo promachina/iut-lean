@@ -16054,6 +16054,117 @@ theorem generatedFullLabelQuotientPossibleImageAudit
       intro t choice
       exact source.fullLabelToConcreteChoice_transition t choice }
 
+set_option linter.style.longLine false in
+/--
+Audit joining the concrete full-label procession with the generated quotient
+possible-image construction.
+
+For the selected generated choice, every concrete `F_l` representative over the
+same theta-pilot lattice node lies in the selected `(Ind1)` orbit, has the same
+equality-quotient index, and pulls back to the same theta-pilot possible image.
+This is the finite-label form of the Theorem 3.11 selected-region assertion:
+the selected region is not merely supplied on an abstract quotient, but is
+obtained uniformly from the concrete full-label procession used at the
+Remark 3.11.2 boundary.
+-/
+structure GeneratedFullLabelConcreteProcessionQuotientImageAudit
+    {target : Copy}
+    (thetaClassImages :
+      RegionFamily target (ThetaPilotClass (coric := coric)))
+    (selected :
+      FullLabelGeneratedChoice (coric := coric) (l := l)) : Prop where
+  concrete_procession_source_audit :
+    source.GeneratedFullLabelConcreteProcessionSourceAudit
+      thetaClassImages selected
+  quotient_possible_image_audit :
+    source.GeneratedFullLabelQuotientPossibleImageAudit
+      thetaClassImages selected
+  concrete_projection_thetaClass :
+    thetaPilotClass (source.fullLabelToConcreteChoice selected) =
+      selected.thetaClass
+  all_concrete_labels_in_selected_orbit :
+    ∀ label : ZMod l.value,
+      fullLabelGeneratedChoice (l := l) selected.thetaClass label ∈
+        generatedFullLabelProcessionOrbit (l := l) selected
+  all_concrete_labels_same_quotient :
+    ∀ label : ZMod l.value,
+      (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotientMap
+          selected =
+        (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotientMap
+          (fullLabelGeneratedChoice (l := l) selected.thetaClass label)
+  all_concrete_labels_region_pullback :
+    ∀ label : ZMod l.value,
+      (source.generatedFullLabelEqualityQuotientPossibleImages
+          thetaClassImages).quotientImages.region
+          ((source.generatedFullLabelTypedIndeterminacyCore).equalityQuotientMap
+            (fullLabelGeneratedChoice (l := l) selected.thetaClass label)) =
+        thetaClassImages.region selected.thetaClass
+  selected_region_eq_every_concrete_label_region :
+    ∀ label : ZMod l.value,
+      (generatedFullLabelChoiceImages (l := l) thetaClassImages).region
+          selected =
+        (generatedFullLabelChoiceImages (l := l) thetaClassImages).region
+          (fullLabelGeneratedChoice (l := l) selected.thetaClass label)
+  concrete_label_projection_thetaClass :
+    ∀ label : ZMod l.value,
+      thetaPilotClass
+          (source.fullLabelToConcreteChoice
+            (fullLabelGeneratedChoice (l := l) selected.thetaClass label)) =
+        selected.thetaClass
+  concrete_label_projection_coordinate :
+    ∀ label : ZMod l.value,
+      (source.fullLabelToConcreteChoice
+          (fullLabelGeneratedChoice (l := l) selected.thetaClass label)).coordinate =
+        (source.generatedFullLabelConcreteProcessionSource selected).coordinate label
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelConcreteProcessionQuotientImageAudit
+    {target : Copy}
+    (thetaClassImages :
+      RegionFamily target (ThetaPilotClass (coric := coric)))
+    (selected :
+      FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    source.GeneratedFullLabelConcreteProcessionQuotientImageAudit
+      thetaClassImages selected :=
+  { concrete_procession_source_audit :=
+      source.generatedFullLabelConcreteProcessionSourceAudit
+        thetaClassImages selected,
+    quotient_possible_image_audit :=
+      source.generatedFullLabelQuotientPossibleImageAudit
+        thetaClassImages selected,
+    concrete_projection_thetaClass :=
+      source.fullLabelToConcreteChoice_thetaPilotClass selected,
+    all_concrete_labels_in_selected_orbit := by
+      intro label
+      refine ⟨label - selected.flLabel, ?_⟩
+      cases selected
+      simp [fullLabelTransition, fullLabelGeneratedChoice, zmodLabelTranslate_eq_add,
+        sub_eq_add_neg, add_assoc]
+    all_concrete_labels_same_quotient := by
+      intro label
+      exact
+        source.generatedFullLabelEqualityQuotientMap_eq_of_thetaClass_eq
+          rfl
+    all_concrete_labels_region_pullback := by
+      intro label
+      simpa using
+        source.generatedFullLabelEqualityQuotient_pullback
+          thetaClassImages
+          (fullLabelGeneratedChoice (l := l) selected.thetaClass label)
+    selected_region_eq_every_concrete_label_region := by
+      intro label
+      simp [generatedFullLabelChoiceImages, fullLabelGeneratedChoice]
+    concrete_label_projection_thetaClass := by
+      intro label
+      exact
+        source.fullLabelToConcreteChoice_thetaPilotClass
+          (fullLabelGeneratedChoice (l := l) selected.thetaClass label)
+    concrete_label_projection_coordinate := by
+      intro label
+      exact
+        (source.generatedFullLabelConcreteProcessionSource_coordinate_eq_fullLabel
+          selected label).symm }
+
 end LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel
 end IUTStage1ConcreteHodgeTheaterLogThetaChoice
 
