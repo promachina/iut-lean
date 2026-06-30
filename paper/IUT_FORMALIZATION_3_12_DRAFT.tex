@@ -11833,10 +11833,14 @@ Ob3/Ob5 source and derives the weighted Step~(xi) determinant handoff from the
 valuation-cover Ob3/Ob4 equality.  This valuation-cover Ob3/Ob4 specialization
 has also been lowered to the exact possible-region, log-Kummer image, and
 log-Kummer correspondence boundaries, where the principal product hull is still
-read from the corresponding compact-open source.  The same specialization now persists through
-the normalized-Haar and arithmetic-formula-matched variants, so their public
-interfaces retain the finite Haar-defect and Theorem~1.10 formula data without
-reintroducing a separate Ob3/Ob4 weighted-determinant handoff.
+read from the corresponding compact-open source.  The normalized-Haar version
+has now been lowered through these same three compact-open boundaries: the
+finite Haar-defect certificate supplies both the local defect function and the
+global Haar lower bound, while the displayed Ob3/Ob4 determinant is still fixed
+by the valuation-cover datum.  The arithmetic-formula-matched variant performs
+the analogous map-facing specialization, so the public interface retains the
+Theorem~1.10 formula data without reintroducing a separate Ob3/Ob4
+weighted-determinant handoff.
 The Record Ob3/Ob5-backed variant
 \texttt{...PrincipalProductHullFormulaLocalizedRecordOb3Ob5ArithmeticFormulaMatched}
 removes precisely these three displayed synchronization hypotheses from the
