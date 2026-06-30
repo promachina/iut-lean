@@ -33897,6 +33897,121 @@ theorem endpoint
 
 set_option linter.style.longLine false in
 /--
+Pull back the theta-class-indexed principal valuation-ball cover to the
+concrete Hodge-theater/log-theta choice space.
+
+The possible-region family is pulled back along `thetaPilotClass`.  The only
+nontrivial point is the Remark 3.9.5 family-hull identity: the union over
+concrete choices is the same as the union over theta-pilot classes, because the
+fiber-transport source carries representative data for every theta-pilot
+class.
+-/
+noncomputable def toChoiceIndexedValuationCover
+    (principalSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource
+        sourceData (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+      (Point target)
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+      η K β γ :=
+  let valuationCover :=
+    principalSource.toPrincipalValuationBallProductHullCoverSource.valuationCover
+  { hullSystem := valuationCover.hullSystem,
+    possibleRegion := fun choice =>
+      valuationCover.possibleRegion
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice),
+    localizedCalibration := valuationCover.localizedCalibration,
+    anchor := valuationCover.anchor,
+    positiveTensorPower := valuationCover.positiveTensorPower,
+    tensor_power_pos := valuationCover.tensor_power_pos,
+    factorValuationCalibration := valuationCover.factorValuationCalibration,
+    localizedRegion_eq_valuationBallDirectProductCell :=
+      valuationCover.localizedRegion_eq_valuationBallDirectProductCell,
+    localFactor_separates_index := valuationCover.localFactor_separates_index,
+    familyHull_eq_valuationBallDirectProductCellUnion := by
+      have hUnion :
+          (⋃ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+              valuationCover.possibleRegion
+                (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+                  choice)) =
+            (⋃ thetaClass :
+              IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+                (coric := coric),
+              valuationCover.possibleRegion thetaClass) := by
+        ext point
+        constructor
+        · intro hpoint
+          rcases Set.mem_iUnion.mp hpoint with ⟨choice, hchoice⟩
+          exact
+            Set.mem_iUnion.mpr
+              ⟨IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+                  choice,
+                hchoice⟩
+        · intro hpoint
+          rcases Set.mem_iUnion.mp hpoint with ⟨thetaClass, htheta⟩
+          refine Set.mem_iUnion.mpr ?_
+          refine
+            ⟨sourceData.toFiberTransportSource.representativeData.representative
+                thetaClass, ?_⟩
+          have hrep :=
+            sourceData.toFiberTransportSource.representativeData.thetaPilotClass_representative
+              thetaClass
+          simpa [hrep] using htheta
+      simpa [hUnion] using
+        valuationCover.familyHull_eq_valuationBallDirectProductCellUnion,
+    cellValuationBallTensor := valuationCover.cellValuationBallTensor,
+    cellValuationBall_factor_eq_calibration :=
+      valuationCover.cellValuationBall_factor_eq_calibration,
+    finiteAdditive := valuationCover.finiteAdditive }
+
+set_option linter.style.longLine false in
+theorem toChoiceIndexedValuationCover_possibleRegion_eq_fiberThetaRegion
+    (principalSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource
+        sourceData (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    (principalSource.toChoiceIndexedValuationCover
+      |>.toOb3Ob5AdjustedDeterminantLogVolumeSource).possibleRegion =
+      fun choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l =>
+        (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+          (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+            choice)).toSet :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem toChoiceIndexedValuationCover_possibleRegion_eq_recordThetaPossibleImage
+    (principalSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource
+        sourceData (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    (principalSource.toChoiceIndexedValuationCover
+      |>.toOb3Ob5AdjustedDeterminantLogVolumeSource).possibleRegion =
+      recordThetaPossibleImage recordConcrete :=
+  sourceData.valuationCoverAdjustedPossibleRegion_eq_recordThetaPossibleImage_of_fiberThetaRegion
+    principalSource.toChoiceIndexedValuationCover
+    principalSource.toChoiceIndexedValuationCover_possibleRegion_eq_fiberThetaRegion
+
+set_option linter.style.longLine false in
+theorem toChoiceIndexedValuationCover_endpoint
+    (principalSource :
+      ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource
+        sourceData (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    ((principalSource.toChoiceIndexedValuationCover
+      |>.toOb3Ob5AdjustedDeterminantLogVolumeSource).possibleRegion =
+        fun choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l =>
+          (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+              choice)).toSet) ∧
+      ((principalSource.toChoiceIndexedValuationCover
+        |>.toOb3Ob5AdjustedDeterminantLogVolumeSource).possibleRegion =
+        recordThetaPossibleImage recordConcrete) ∧
+      ((principalSource.toChoiceIndexedValuationCover
+        |>.toOb3Ob5AdjustedDeterminantLogVolumeSource).ob3ob4Source =
+        principalSource.toPrincipalValuationBallProductHullCoverSource.valuationCover.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source) :=
+  ⟨principalSource.toChoiceIndexedValuationCover_possibleRegion_eq_fiberThetaRegion,
+    principalSource.toChoiceIndexedValuationCover_possibleRegion_eq_recordThetaPossibleImage,
+    rfl⟩
+
+set_option linter.style.longLine false in
+/--
 Construct the theta-region-defined principal valuation-ball Step XI source
 from a source-core principal valuation-ball product-hull cover.
 
