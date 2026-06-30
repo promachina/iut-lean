@@ -4146,12 +4146,12 @@ points and compact-open valuation balls, while the valuation-cover
 possible-region family is fixed definitionally by the principal source.  \Lean{}
 derives the realized valuation-ball equality, projects it to the
 theta-region-defined radius-cover source, obtains direct-product-cell exactness,
-and then feeds the principal exact-\(\Xi\) source.  This principal radius-cover
-source is now also the public input for the corresponding global \(C_\Theta\)
-audit; the older valuation-radius and local-factor sources are reconstructed
-inside the proof.  Thus the remaining paper-side payload has been narrowed to
-the actual construction of the local analytic coordinate and the reverse
-valuation-ball realization law.  The newest
+and then feeds the principal exact-\(\Xi\) source.  The same pointwise source is
+now also the public input for the corresponding global \(C_\Theta\) audit: Lean
+constructs the radius cover and principal exact-\(\Xi\) family internally before
+entering the selected-\(q\) Remark~3.9.5 comparison.  Thus the remaining
+paper-side payload has been narrowed to the actual construction of the local
+analytic coordinate and the reverse valuation-ball realization law.  The newest
 declaration
 \[
 \begin{array}{l}
@@ -13854,11 +13854,12 @@ comparison is derived from the theta-region-defined cover.  Consequently the
 hull-fixed exact-\(\Xi\) audit can consume the theta-region-defined principal
 valuation-ball source directly, rather than a separately supplied
 fiber-backed family-union source.  The global endpoint has now been sharpened
-one step further: the theta-region-defined principal radius-cover source itself
-constructs the principal exact-\(\Xi\) family and feeds the selected-\(q\)
-Remark~3.9.5 \(C_\Theta\) audit.  Thus the older valuation-radius and
-local-factor cover objects remain derivable intermediate projections, not
-public payload for this route.
+past the radius cover: the pointwise log-shell metric-zero principal source is
+the public input, and Lean constructs the theta-region-defined radius cover and
+principal exact-\(\Xi\) family before feeding the selected-\(q\) Remark~3.9.5
+\(C_\Theta\) audit.  Thus the older valuation-radius, local-factor, and
+radius-cover objects remain derivable intermediate projections, not public
+payload for this route.
 
 This q-region source is now threaded into the valuation-ball localized
 hull-cover boundary by
