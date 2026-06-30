@@ -12109,6 +12109,16 @@ prime-error/main split, and the two Proposition~1.4/1.5 comparisons with
 \(a_l(D_v+C_v)\).  \Lean{} derives the older controlled local-arithmetic source
 by identifying \(a_l(D_v+C_v)\) with the same localized Step~(xi) determinant
 used in the final determinant and \(C_\Theta\)-scale handoff.
+The constructed local-to-global \(C_\Theta\) source has now been lowered to
+this same boundary.  Its direct
+\texttt{ofPadicUnitBallHaarIndex} constructor starts from the valuation-ball
+Theorem~1.10 local analytic source, the p-adic unit-ball Haar-index defect
+source, the Step~(xi) arithmetic-degree calibration, the prime-error split
+written with \(h_v\), and the two comparisons with \(a_l(D_v+C_v)\).  It builds
+the IUT~IV local arithmetic defect internally and then constructs the closed
+Theorem~3.11 local-to-global \(C_\Theta\) source, so the assembled
+formula-gap/arithmetic-degree \(p\)-adic matching source is no longer a
+primitive public input at this boundary.
 This comparison is now backed by named Proposition~1.4/1.5 construction
 records.  The algebra layer adds single-place distinguished and archimedean
 arithmetic-degree comparison sources; the experiment layer combines them as
