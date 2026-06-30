@@ -13775,7 +13775,19 @@ This component source records common transported local invariants for each
 matched valuation-ball factor: the finite-extension degree and the
 compact-open Haar mass of the selected local ball.  Lean derives the raw
 concrete/generated finite-degree and Haar-mass equalities from those common
-local-normalization invariants.  Its projection is
+local-normalization invariants.  The common local invariants are now themselves
+optional derived data: the direct source
+\[
+\begin{gathered}
+\texttt{IUTStage1Remark395DirectLocalNormalizationMatched}\\
+\texttt{ValuationBallLocalizedVectorBundleComponent}\\
+\texttt{TransportSource}
+\end{gathered}
+\]
+starts from the matched concrete/generated finite-degree and compact-open
+Haar-mass identities, chooses the concrete local degree and Haar mass as the
+common values, and reconstructs the common-invariant local-normalization
+component source internally.  Its projection is
 \[
 \begin{gathered}
 \texttt{IUTStage1Remark395RawHaarDegreeMatched}\\
