@@ -13932,16 +13932,19 @@ The direct boundary now also retains the concrete finite-label procession:
 For every \(F_\ell\)-label over the selected theta class, Lean proves the
 generated choice has the selected Remark~3.9.5 possible region, the same hull
 log-volume as the selected \(q\)-choice, and the same theta-class pullback
-region.  Thus the no-omission full-label check is still visible at the current
-pointwise/direct local-normalization boundary.  This boundary has now been
-lowered once more: the packet local-normalization hull-cover source is
-reconstructed from concrete and generated valuation-ball covers, determinant
-and local reindexings, and the component source carrying common
-finite-extension degrees and compact-open Haar masses.  Thus the remaining
-source-facing obligation is sharper: construct the generated-corridor
-theta-class image comparison, or equivalently the pointwise record-image
-pullback law, together with those valuation-cover local-normalization
-witnesses from the same local log-Kummer/Frobenioid geometry.
+region.  Thus the no-omission full-label check remains visible after the
+pointwise/direct local-normalization step.  The current boundary has now moved
+one layer lower.  On the local side, the packet local-normalization hull-cover
+source is reconstructed from concrete and generated valuation-ball covers,
+determinant and local reindexings, and the component source carrying common
+finite-extension degrees and compact-open Haar masses.  On the \(q\)-region
+side, the pointwise record-image pullback is no longer the preferred exposed
+input at this level: Lean reconstructs it from the target-region/common-kernel
+comparison and then feeds the same valuation-cover reconstruction into the
+existing \(C_\Theta\) corridor.  The remaining source-facing obligation is
+therefore sharper: construct the target-region/common-kernel comparison and
+the valuation-cover local-normalization witnesses from the same local
+log-Kummer/Frobenioid geometry.
 The older factored localized hull-cover source
 \[
 \begin{gathered}
