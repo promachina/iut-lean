@@ -11769,9 +11769,12 @@ by
 \end{array}
 \]
 The first record keeps the valuation-ball formula-gap Theorem~1.10 source
-together with the \(p\)-adic Haar defect/main split; the second adds the
-Step~(xi) arithmetic-degree calibration and projects to the additive
-formula-matching core.  This valuation-ball payload now reaches the
+together with the \(p\)-adic Haar defect/main split.  When the unit-ball
+Haar-index source is available, Lean now constructs the IUT~IV
+arithmetic-defect object at this boundary instead of requiring it as a
+separate hand-assembled input.  The second source adds the Step~(xi)
+arithmetic-degree calibration and projects to the additive formula-matching
+core.  This valuation-ball payload now reaches the
 local-to-global \(C_\Theta\) boundary as
 \[
 \begin{array}{l}
@@ -12907,7 +12910,12 @@ uses the local \(p\)-adic Haar-index split
   E_v=h_v+M_v
 \]
 together with the IUT~IV defect identification \(\delta_v=h_v\) to derive
-\(E_v=\delta_v+M_v\).  The wrapper
+\(E_v=\delta_v+M_v\).  This identification is now canonical at the source
+boundary: \texttt{IUTStage1FinitePlaceIUTIVLocalArithmeticDefectSource}
+has an \texttt{ofPadicUnitBallHaarIndex} constructor, and the prime-error,
+formula-gap-matched, and valuation-ball formula-gap-matched sources have
+matching constructors that build the IUT~IV local arithmetic-defect source
+from the \(p\)-adic unit-ball Haar-index data.  The wrapper
 \texttt{IUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource}
 handled the prime-error side while still exposing the Step~(xi)
 arithmetic-degree identification \(S_v=a_l(D_v+C_v)\).  That last local
