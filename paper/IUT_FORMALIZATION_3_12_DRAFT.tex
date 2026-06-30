@@ -11772,7 +11772,14 @@ The first record keeps the valuation-ball formula-gap Theorem~1.10 source
 together with the \(p\)-adic Haar defect/main split.  When the unit-ball
 Haar-index source is available, Lean now constructs the IUT~IV
 arithmetic-defect object at this boundary instead of requiring it as a
-separate hand-assembled input.  The second source adds the Step~(xi)
+separate hand-assembled input.  The same lowering is now available one step
+earlier, at the Step~(xi) local-arithmetic matching and valuation-ball
+formula-gap controlled boundaries: those constructors take the unit-ball
+Haar-index source and the local equality written with \(h_v\), then build the
+IUT~IV arithmetic-defect source internally.  The arithmetic-degree controlled
+valuation-ball source has the parallel constructor, combining the
+Step~(xi) calibration \(S_v=a_l(D_v+C_v)\) with the same p-adic Haar
+prime-error split.  The second source adds the Step~(xi)
 arithmetic-degree calibration and projects to the additive formula-matching
 core.  This valuation-ball payload now reaches the
 local-to-global \(C_\Theta\) boundary as
