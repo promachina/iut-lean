@@ -16145,6 +16145,69 @@ theorem endpoint
     sourceData.fiberTransport_ind2ActionPacketSymmetry,
     sourceData.toFiberInd2ActionPacketSource.postProcessionTypedCoreTransportAudit⟩
 
+set_option linter.style.longLine false in
+/--
+The concrete Theorem 3.11 record possible-image family is the pullback of the
+fiber-transport lattice theta-region formula.
+
+This is the source-level synchronization used by the compact-open
+log-Kummer/valuation-cover endpoints: callers may calibrate a local cover to
+the transported theta-region formula, and Lean recovers the record
+possible-image family from the packet-transport source.
+-/
+theorem recordThetaPossibleImage_eq_fiberThetaRegion
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        record indData) :
+    recordThetaPossibleImage record =
+      fun choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l =>
+        (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+          (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice)).toSet := by
+  funext choice
+  have himages := sourceData.toFiberTransportSource.endpoint.2.2.2.2.2
+  simp [recordThetaPossibleImage, himages,
+    ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormula.toChoiceImages,
+    ConcreteHodgeTheaterLogThetaThetaPilotClassFormula.toChoiceImages,
+    ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormula.toClassFormula,
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass]
+
+set_option linter.style.longLine false in
+/--
+Valuation-cover calibration to the fiber theta-region formula recovers the
+Theorem 3.11 record possible-image family.
+
+This is the local-cover form of the previous theorem.  It converts the
+compact-open/log-Kummer calibration
+`possibleRegion = thetaRegion ∘ thetaPilotClass` into the record-facing
+obligation used by the Ob3/Ob5 valuation-cover corridor.
+-/
+theorem valuationCoverAdjustedPossibleRegion_eq_recordThetaPossibleImage_of_fiberThetaRegion
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        record indData)
+    {β : Type v} [Fintype β] {γ : Type w} [Fintype γ]
+    {η : Type y} {K : Type z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    (valuationCover :
+      IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        (Point target) (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+        η K β γ)
+    (possibleRegion_eq_fiberThetaRegion :
+      valuationCover.toOb3Ob5AdjustedDeterminantLogVolumeSource.possibleRegion =
+        fun choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l =>
+          (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice)).toSet) :
+    valuationCover.toOb3Ob5AdjustedDeterminantLogVolumeSource.possibleRegion =
+      recordThetaPossibleImage record := by
+  calc
+    valuationCover.toOb3Ob5AdjustedDeterminantLogVolumeSource.possibleRegion =
+        (fun choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l =>
+          (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice)).toSet) :=
+      possibleRegion_eq_fiberThetaRegion
+    _ = recordThetaPossibleImage record :=
+      (sourceData.recordThetaPossibleImage_eq_fiberThetaRegion).symm
+
 end ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
 
 namespace ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource
