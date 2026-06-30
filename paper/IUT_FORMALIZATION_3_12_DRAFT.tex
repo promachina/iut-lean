@@ -11238,9 +11238,11 @@ local-arithmetic valuation-cover endpoint.  The preferred form now anchors both
 the displayed weighted determinant source and the valuation-cover adjusted
 Ob3/Ob4 source directly to the localized Step~(xi) determinant source.  The
 Record-Ob3/Ob4-to-Step~(xi) equality is therefore also derived inside Lean from
-the valuation-cover constructor, leaving the canonical \(C_\Theta\)-scale
-identification with the record adjusted summand as the remaining explicit
-handoff at this boundary.
+the valuation-cover constructor.  The strongest local-arithmetic form now
+exposes the concrete Step~(xi) finite-sum identity for the constructed
+canonical \(C_\Theta\)-scale; Lean derives the corresponding record
+adjusted-summand equality from the same valuation-cover Ob3/Ob4
+synchronization.
 Thus the strict quotient boundary already shows the full
 equality/equality/upper-semi pattern: \((\Ind_1)\) and \((\Ind_2)\) provide
 equality transport, while \((\Ind_3)\) remains only one-sided upper-semi data.
