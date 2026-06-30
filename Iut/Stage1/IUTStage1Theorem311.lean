@@ -15751,6 +15751,157 @@ theorem generatedFullLabelProcessionOrbitAudit
 
 set_option linter.style.longLine false in
 /--
+Concrete full-label procession source carried by a generated full-label choice.
+
+The generated choice projects to a concrete Hodge-theater/log-theta choice; its
+coordinate is a full `F_l` representative over the same forgotten theta-pilot
+lattice node.  Replacing its finite label gives the concrete procession source
+used in Remark 3.11.2.
+-/
+def generatedFullLabelConcreteProcessionSource
+    (choice :
+      FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    IUTStage1FLLabelProcessionSource l :=
+  IUTStage1FLLabelProcessionSource.ofCoordinate
+    (source.fullLabelToConcreteChoice choice).coordinate
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelConcreteProcessionSource_latticeCoordinate
+    (choice :
+      FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    (source.generatedFullLabelConcreteProcessionSource choice).baseCoordinate.toThetaPilotLatticeCoordinate =
+      choice.thetaClass.latticeCoordinate := by
+  calc
+    (source.generatedFullLabelConcreteProcessionSource choice).baseCoordinate.toThetaPilotLatticeCoordinate =
+        thetaPilotLatticeCoordinate (source.fullLabelToConcreteChoice choice) := rfl
+    _ = (thetaPilotClass (source.fullLabelToConcreteChoice choice)).latticeCoordinate := by
+          rw [← thetaPilotClass_latticeCoordinate]
+    _ = choice.thetaClass.latticeCoordinate := by
+          rw [source.fullLabelToConcreteChoice_thetaPilotClass choice]
+
+set_option linter.style.longLine false in
+/--
+The concrete full-label procession source over a generated choice agrees with
+the generated full-label choice at the same `F_l` label.
+-/
+theorem generatedFullLabelConcreteProcessionSource_coordinate_eq_fullLabel
+    (choice :
+      FullLabelGeneratedChoice (coric := coric) (l := l))
+    (label : ZMod l.value) :
+    (source.generatedFullLabelConcreteProcessionSource choice).coordinate label =
+      (source.fullLabelToConcreteChoice
+        (fullLabelGeneratedChoice (l := l) choice.thetaClass label)).coordinate := by
+  cases choice
+  rfl
+
+set_option linter.style.longLine false in
+/--
+Generated `F_l` translation projects to the same coordinate as the concrete
+full-label procession source.
+-/
+theorem generatedFullLabelTransition_coordinate_eq_concreteProcession
+    (t : ZMod l.value)
+    (choice :
+      FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    (source.fullLabelToConcreteChoice
+        (fullLabelTransition (l := l) t choice)).coordinate =
+      (source.generatedFullLabelConcreteProcessionSource choice).coordinate
+        (zmodLabelTranslate l t choice.flLabel) := by
+  cases choice
+  rfl
+
+set_option linter.style.longLine false in
+/--
+Audit connecting the generated full-label procession orbit to the concrete
+full-label procession source.
+
+This packages the Remark 3.11.2 no-label-omission statement at the generated
+Theorem 3.11 source boundary: the generated orbit is an `(Ind1)` equality
+orbit, and its concrete projections are exactly the full `F_l` label family over
+the forgotten theta-pilot lattice coordinate.
+-/
+structure GeneratedFullLabelConcreteProcessionSourceAudit
+    {target : Copy}
+    (thetaClassImages :
+      RegionFamily target (ThetaPilotClass (coric := coric)))
+    (choice :
+      FullLabelGeneratedChoice (coric := coric) (l := l)) : Prop where
+  concrete_procession_source_audit :
+    (source.generatedFullLabelConcreteProcessionSource choice).FullLabelProcessionAudit
+  generated_orbit_audit :
+    source.GeneratedFullLabelProcessionOrbitAudit thetaClassImages choice
+  base_lattice_eq_thetaClass :
+    (source.generatedFullLabelConcreteProcessionSource choice).baseCoordinate.toThetaPilotLatticeCoordinate =
+      choice.thetaClass.latticeCoordinate
+  all_concrete_labels_present :
+    ∀ label : ZMod l.value,
+      ∃ choice' :
+          FullLabelGeneratedChoice (coric := coric) (l := l),
+        choice' ∈ generatedFullLabelProcessionOrbit (l := l) choice ∧
+          choice'.flLabel = label ∧
+            (source.fullLabelToConcreteChoice choice').coordinate =
+              (source.generatedFullLabelConcreteProcessionSource choice).coordinate label
+  orbit_transition_projects_to_concrete_procession :
+    ∀ t : ZMod l.value,
+      (source.fullLabelToConcreteChoice
+          (fullLabelTransition (l := l) t choice)).coordinate =
+        (source.generatedFullLabelConcreteProcessionSource choice).coordinate
+          (zmodLabelTranslate l t choice.flLabel)
+  unique_concrete_label_over_lattice :
+    ∀ coordinate,
+      (source.generatedFullLabelConcreteProcessionSource choice).baseCoordinate.toThetaPilotLatticeCoordinate =
+          coordinate.toThetaPilotLatticeCoordinate ->
+        ∃! label : ZMod l.value,
+          (source.generatedFullLabelConcreteProcessionSource choice).coordinate label =
+            coordinate
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelConcreteProcessionSourceAudit
+    {target : Copy}
+    (thetaClassImages :
+      RegionFamily target (ThetaPilotClass (coric := coric)))
+    (choice :
+      FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    source.GeneratedFullLabelConcreteProcessionSourceAudit
+      thetaClassImages choice :=
+  { concrete_procession_source_audit :=
+      (source.generatedFullLabelConcreteProcessionSource choice).fullLabelProcessionAudit,
+    generated_orbit_audit :=
+      source.generatedFullLabelProcessionOrbitAudit thetaClassImages choice,
+    base_lattice_eq_thetaClass :=
+      source.generatedFullLabelConcreteProcessionSource_latticeCoordinate choice,
+    all_concrete_labels_present := by
+      intro label
+      refine
+        ⟨fullLabelTransition (l := l) (label - choice.flLabel) choice,
+          ?_, ?_, ?_⟩
+      · exact ⟨label - choice.flLabel, rfl⟩
+      · simp [fullLabelTransition, zmodLabelTranslate_eq_add,
+          sub_eq_add_neg, add_assoc]
+      · calc
+          (source.fullLabelToConcreteChoice
+              (fullLabelTransition (l := l) (label - choice.flLabel) choice)).coordinate =
+              (source.generatedFullLabelConcreteProcessionSource choice).coordinate
+                (zmodLabelTranslate l (label - choice.flLabel) choice.flLabel) :=
+            source.generatedFullLabelTransition_coordinate_eq_concreteProcession
+              (label - choice.flLabel) choice
+          _ = (source.generatedFullLabelConcreteProcessionSource choice).coordinate
+                label := by
+            congr
+            simp [zmodLabelTranslate_eq_add, sub_eq_add_neg, add_assoc]
+    orbit_transition_projects_to_concrete_procession := by
+      intro t
+      exact
+        source.generatedFullLabelTransition_coordinate_eq_concreteProcession
+          t choice,
+    unique_concrete_label_over_lattice := by
+      intro coordinate hlattice
+      exact
+        (source.generatedFullLabelConcreteProcessionSource choice)
+          |>.existsUnique_label_of_toThetaPilotLatticeCoordinate_eq hlattice }
+
+set_option linter.style.longLine false in
+/--
 Audit for the generated full-label Theorem 3.11 source layer.
 
 This is the kernel-level replacement for the old ambient
