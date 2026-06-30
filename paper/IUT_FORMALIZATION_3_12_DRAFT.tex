@@ -13933,8 +13933,13 @@ For every \(F_\ell\)-label over the selected theta class, Lean proves the
 generated choice has the selected Remark~3.9.5 possible region, the same hull
 log-volume as the selected \(q\)-choice, and the same theta-class pullback
 region.  Thus the no-omission full-label check remains visible after the
-pointwise/direct local-normalization step.  The current boundary has now moved
-one layer lower.  On the local side, the packet local-normalization hull-cover
+pointwise/direct local-normalization step.  A generated-record valuation-cover
+boundary now removes the pointwise q-region source from the exposed data at
+this level: it stores the generated record pullback law, reconstructs the
+pointwise q-region source internally, and then threads the same
+local-normalization valuation-cover witnesses through the \(C_\Theta\) corridor.
+The quotient target-region boundary has also moved one layer lower.  On the
+local side, the packet local-normalization hull-cover
 source is reconstructed from concrete and generated valuation-ball covers,
 determinant and local reindexings, and the component source carrying common
 finite-extension degrees and compact-open Haar masses.  On the \(q\)-region
