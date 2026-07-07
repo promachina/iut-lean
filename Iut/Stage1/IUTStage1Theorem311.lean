@@ -18888,6 +18888,259 @@ theorem q_region_logVolume_le_thetaSigned_constructed_proof
 
 end StepXIHullDeterminantObligations
 
+set_option linter.style.longLine false in
+/--
+Paper trace for IUT III, Corollary 3.12, Step (xi), together with
+Remark 3.9.5 Ob1--Ob9.
+
+This record is deliberately source-facing: its fields name the mathematical
+checkpoints in Mochizuki's Step (xi) discussion before they are consumed by the
+formal hull/determinant source below.  It is not the endpoint inequality.  It is
+the paper-derived ledger that says the selected q-pilot comparison is obtained
+by passing from Theorem 3.11 possible images to a holomorphic hull, then to
+determinants/log-volumes, while retaining the same prime-strip/log-Kummer link.
+-/
+structure StepXIPaperTrace where
+  step_xi_a_gluing_q_pilot_to_theta_pilot : Prop
+  step_xi_a_gluing_q_pilot_to_theta_pilot_proof :
+    step_xi_a_gluing_q_pilot_to_theta_pilot
+  step_xi_b_theorem311_possible_outputs_with_ipl_she_apt : Prop
+  step_xi_b_theorem311_possible_outputs_with_ipl_she_apt_proof :
+    step_xi_b_theorem311_possible_outputs_with_ipl_she_apt
+  step_xi_c_one_column_possible_images_linked_to_q_pilot : Prop
+  step_xi_c_one_column_possible_images_linked_to_q_pilot_proof :
+    step_xi_c_one_column_possible_images_linked_to_q_pilot
+  step_xi_d_hull_and_determinant_make_objects_comparable : Prop
+  step_xi_d_hull_and_determinant_make_objects_comparable_proof :
+    step_xi_d_hull_and_determinant_make_objects_comparable
+  step_xi_e_log_volume_set_linked_to_fixed_q_volume : Prop
+  step_xi_e_log_volume_set_linked_to_fixed_q_volume_proof :
+    step_xi_e_log_volume_set_linked_to_fixed_q_volume
+  step_xi_f_q_volume_lies_in_theta_upper_ray : Prop
+  step_xi_f_q_volume_lies_in_theta_upper_ray_proof :
+    step_xi_f_q_volume_lies_in_theta_upper_ray
+  step_xi_g_two_computations_of_q_pilot_log_volume : Prop
+  step_xi_g_two_computations_of_q_pilot_log_volume_proof :
+    step_xi_g_two_computations_of_q_pilot_log_volume
+  ob1_unit_indeterminacy_on_log_shell_packets : Prop
+  ob1_unit_indeterminacy_on_log_shell_packets_proof :
+    ob1_unit_indeterminacy_on_log_shell_packets
+  ob2_hull_turns_regions_into_arithmetic_vector_bundles : Prop
+  ob2_hull_turns_regions_into_arithmetic_vector_bundles_proof :
+    ob2_hull_turns_regions_into_arithmetic_vector_bundles
+  ob3_determinant_of_arithmetic_vector_bundle : Prop
+  ob3_determinant_of_arithmetic_vector_bundle_proof :
+    ob3_determinant_of_arithmetic_vector_bundle
+  ob4_positive_tensor_power_comparison_object : Prop
+  ob4_positive_tensor_power_comparison_object_proof :
+    ob4_positive_tensor_power_comparison_object
+  ob5_quotient_comparable_object_compatibility : Prop
+  ob5_quotient_comparable_object_compatibility_proof :
+    ob5_quotient_comparable_object_compatibility
+  ob6_log_volume_hull_approximant_comparison : Prop
+  ob6_log_volume_hull_approximant_comparison_proof :
+    ob6_log_volume_hull_approximant_comparison
+  ob7_log_kummer_prime_strip_compatibility : Prop
+  ob7_log_kummer_prime_strip_compatibility_proof :
+    ob7_log_kummer_prime_strip_compatibility
+  ob8_vertical_shift_adjusted_by_log_kummer : Prop
+  ob8_vertical_shift_adjusted_by_log_kummer_proof :
+    ob8_vertical_shift_adjusted_by_log_kummer
+  ob9_realified_semisimplification_log_volume_compatibility : Prop
+  ob9_realified_semisimplification_log_volume_compatibility_proof :
+    ob9_realified_semisimplification_log_volume_compatibility
+
+namespace StepXIPaperTrace
+
+def Audit (trace : StepXIPaperTrace) : Prop :=
+  trace.step_xi_a_gluing_q_pilot_to_theta_pilot ∧
+    trace.step_xi_b_theorem311_possible_outputs_with_ipl_she_apt ∧
+    trace.step_xi_c_one_column_possible_images_linked_to_q_pilot ∧
+    trace.step_xi_d_hull_and_determinant_make_objects_comparable ∧
+    trace.step_xi_e_log_volume_set_linked_to_fixed_q_volume ∧
+    trace.step_xi_f_q_volume_lies_in_theta_upper_ray ∧
+    trace.step_xi_g_two_computations_of_q_pilot_log_volume ∧
+    trace.ob1_unit_indeterminacy_on_log_shell_packets ∧
+    trace.ob2_hull_turns_regions_into_arithmetic_vector_bundles ∧
+    trace.ob3_determinant_of_arithmetic_vector_bundle ∧
+    trace.ob4_positive_tensor_power_comparison_object ∧
+    trace.ob5_quotient_comparable_object_compatibility ∧
+    trace.ob6_log_volume_hull_approximant_comparison ∧
+    trace.ob7_log_kummer_prime_strip_compatibility ∧
+    trace.ob8_vertical_shift_adjusted_by_log_kummer ∧
+    trace.ob9_realified_semisimplification_log_volume_compatibility
+
+theorem audit (trace : StepXIPaperTrace) : trace.Audit := by
+  dsimp [Audit]
+  exact
+    ⟨trace.step_xi_a_gluing_q_pilot_to_theta_pilot_proof,
+      trace.step_xi_b_theorem311_possible_outputs_with_ipl_she_apt_proof,
+      trace.step_xi_c_one_column_possible_images_linked_to_q_pilot_proof,
+      trace.step_xi_d_hull_and_determinant_make_objects_comparable_proof,
+      trace.step_xi_e_log_volume_set_linked_to_fixed_q_volume_proof,
+      trace.step_xi_f_q_volume_lies_in_theta_upper_ray_proof,
+      trace.step_xi_g_two_computations_of_q_pilot_log_volume_proof,
+      trace.ob1_unit_indeterminacy_on_log_shell_packets_proof,
+      trace.ob2_hull_turns_regions_into_arithmetic_vector_bundles_proof,
+      trace.ob3_determinant_of_arithmetic_vector_bundle_proof,
+      trace.ob4_positive_tensor_power_comparison_object_proof,
+      trace.ob5_quotient_comparable_object_compatibility_proof,
+      trace.ob6_log_volume_hull_approximant_comparison_proof,
+      trace.ob7_log_kummer_prime_strip_compatibility_proof,
+      trace.ob8_vertical_shift_adjusted_by_log_kummer_proof,
+      trace.ob9_realified_semisimplification_log_volume_compatibility_proof⟩
+
+end StepXIPaperTrace
+
+set_option linter.style.longLine false in
+/--
+Paper-derived Step (xi) source tied to the unified Theorem 3.11 source spine.
+
+The key point is that the selected q-region is no longer an anonymous Step (xi)
+region: it is required to be the selected Theorem 3.11 possible image, after the
+`(Ind1)/(Ind2)` equality quotient.  The Ob7 compatibility is also pinned to the
+same input/output prime strips and one-column log-Kummer coordinate carried by
+the source spine.
+-/
+structure StepXIPaperDerivedHullDeterminantSource
+    {target : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l) where
+  paperTrace : StepXIPaperTrace
+  thetaSigned : Real
+  hullData : StepXIHullFormationData sourceData.Core sourceData.Images
+  selectedQChoice_eq_source :
+    hullData.selectedQChoice = sourceData.selectedQChoice
+  determinantData :
+    StepXIDeterminantComparisonData.{u, v} hullData thetaSigned
+  ob7Compatibility : StepXIPrimeStripLogKummerCompatibilityData
+  ob7_sourcePrimeStrip_eq :
+    ob7Compatibility.sourcePrimeStrip = sourceData.inputPrimeStrip
+  ob7_targetPrimeStrip_eq :
+    ob7Compatibility.targetPrimeStrip = sourceData.outputPrimeStrip
+  ob7_logKummerColumn_eq_selected :
+    ob7Compatibility.logKummerColumn =
+      sourceData.selectedQChoice.coordinate.logThetaColumn
+
+namespace StepXIPaperDerivedHullDeterminantSource
+
+variable {target : Copy} {coric : Type u} {l : PrimeGeFive}
+variable
+  {sourceData :
+    Theorem311HodgeTheaterLogThetaLogKummerSource
+      (target := target) coric l}
+
+def toStepXIHullDeterminantSourceData
+    (stepXI :
+      StepXIPaperDerivedHullDeterminantSource sourceData) :
+    StepXIHullDeterminantSourceData.{u, v}
+      sourceData.Core sourceData.Images :=
+  { thetaSigned := stepXI.thetaSigned,
+    hullData := stepXI.hullData,
+    determinantData := stepXI.determinantData,
+    ob7Compatibility := stepXI.ob7Compatibility }
+
+def toStepXIHullDeterminantObligations
+    (stepXI :
+      StepXIPaperDerivedHullDeterminantSource sourceData) :
+    StepXIHullDeterminantObligations.{u, v}
+      sourceData.Core sourceData.Images :=
+  { sourceData := stepXI.toStepXIHullDeterminantSourceData }
+
+theorem selectedQRegion_eq_sourceSelectedPossibleImage
+    (stepXI :
+      StepXIPaperDerivedHullDeterminantSource sourceData) :
+    stepXI.hullData.selectedQRegion =
+      (sourceData.Images.region sourceData.selectedQChoice).toSet := by
+  calc
+    stepXI.hullData.selectedQRegion =
+        stepXI.hullData.quotientHullCompatibility.familySource.possibleRegion
+          (sourceData.Core.equalityQuotientMap
+            stepXI.hullData.selectedQChoice) :=
+      stepXI.hullData.selectedQRegion_eq_quotientRegion
+    _ = (sourceData.Images.region stepXI.hullData.selectedQChoice).toSet :=
+      stepXI.hullData.quotientHullCompatibility
+        |>.possibleRegion_pullback_eq stepXI.hullData.selectedQChoice
+    _ = (sourceData.Images.region sourceData.selectedQChoice).toSet := by
+      rw [stepXI.selectedQChoice_eq_source]
+
+set_option linter.style.longLine false in
+/--
+Audit for the source-spine Step (xi) construction boundary.
+
+This is the first goal-facing proof object for the new milestone: the source
+trace, Theorem 3.11 selected possible image, Remark 3.9.5 hull absorption,
+Ob3/Ob4 determinant normalization, Ob5/Ob6 log-volume compatibility, and Ob7
+prime-strip/log-Kummer pinning are all projections from one structured source.
+-/
+structure Audit
+    (stepXI :
+      StepXIPaperDerivedHullDeterminantSource sourceData) : Prop where
+  paper_trace : stepXI.paperTrace.Audit
+  selected_q_region_is_source_possible_image :
+    stepXI.hullData.selectedQRegion =
+      (sourceData.Images.region sourceData.selectedQChoice).toSet
+  selected_q_region_contained_in_possible_image_union :
+    stepXI.hullData.selectedQRegion ⊆
+      stepXI.hullData.quotientHullCompatibility.familySource.familyUnion
+  ob1_ob2_hull_absorption :
+    (stepXI.toStepXIHullDeterminantObligations)
+      |>.ob1_ob2_hull_absorption_constructed
+  ob3_ob4_determinant_normalization :
+    (stepXI.toStepXIHullDeterminantObligations)
+      |>.ob3_ob4_adjusted_determinant_normalization_constructed
+  ob5_quotient_compatibility :
+    (stepXI.toStepXIHullDeterminantObligations)
+      |>.ob5_quotient_determinant_compatibility_constructed
+  ob6_q_region_logVolume_le_normalized :
+    stepXI.hullData.hullOperator.logVolume stepXI.hullData.selectedQRegion <=
+      stepXI.determinantData.normalizedLogVolume
+  ob7_same_theta_lgp_link :
+    stepXI.ob7Compatibility.compatibilityRetained ∧
+      stepXI.ob7Compatibility.sourcePrimeStrip = sourceData.inputPrimeStrip ∧
+      stepXI.ob7Compatibility.targetPrimeStrip = sourceData.outputPrimeStrip ∧
+      stepXI.ob7Compatibility.logKummerColumn =
+        sourceData.selectedQChoice.coordinate.logThetaColumn
+  q_region_logVolume_le_thetaSigned :
+    stepXI.hullData.hullOperator.logVolume stepXI.hullData.selectedQRegion <=
+      stepXI.thetaSigned
+  obligations_projected :
+    (stepXI.toStepXIHullDeterminantObligations).sourceData =
+      stepXI.toStepXIHullDeterminantSourceData
+
+set_option linter.style.longLine false in
+theorem audit
+    (stepXI :
+      StepXIPaperDerivedHullDeterminantSource sourceData) :
+    Audit stepXI :=
+  { paper_trace := stepXI.paperTrace.audit,
+    selected_q_region_is_source_possible_image :=
+      stepXI.selectedQRegion_eq_sourceSelectedPossibleImage,
+    selected_q_region_contained_in_possible_image_union :=
+      stepXI.hullData.selectedQRegionContainedInPossibleImageUnion,
+    ob1_ob2_hull_absorption :=
+      stepXI.toStepXIHullDeterminantObligations
+        |>.ob1_ob2_hull_absorption_constructed_proof,
+    ob3_ob4_determinant_normalization :=
+      stepXI.toStepXIHullDeterminantObligations
+        |>.ob3_ob4_adjusted_determinant_normalization_constructed_proof,
+    ob5_quotient_compatibility :=
+      stepXI.toStepXIHullDeterminantObligations
+        |>.ob5_quotient_determinant_compatibility_constructed_proof,
+    ob6_q_region_logVolume_le_normalized :=
+      stepXI.determinantData.selectedQRegionLogVolume_le_normalized,
+    ob7_same_theta_lgp_link :=
+      ⟨stepXI.ob7Compatibility.retained,
+        stepXI.ob7_sourcePrimeStrip_eq,
+        stepXI.ob7_targetPrimeStrip_eq,
+        stepXI.ob7_logKummerColumn_eq_selected⟩,
+    q_region_logVolume_le_thetaSigned :=
+      stepXI.determinantData.qRegionLogVolume_le_thetaSigned,
+    obligations_projected := rfl }
+
+end StepXIPaperDerivedHullDeterminantSource
+
 /--
 Local analytic part of the IUT IV `C_Theta` source.
 
@@ -19537,7 +19790,7 @@ structure Obligations
     (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
     (images : RegionFamily targetCopy choice) where
   theorem311_and_remarks :
-    Theorem311AndRemarksObligations.{u, v} core images
+    Theorem311AndRemarksObligations.{u, 0} core images
   stepX_finite_divisor :
     StepXFiniteDivisorObligations core
   stepXI_hull_determinant :
@@ -19569,12 +19822,12 @@ def ofHodgeTheaterLogThetaLogKummerSource
       Theorem311HodgeTheaterLogThetaLogKummerSource
         (target := targetCopy) coric l)
     (stepXI_hull_determinant :
-      StepXIHullDeterminantObligations
+      StepXIHullDeterminantObligations.{u, v}
         sourceData.Core sourceData.Images)
     (iutIV_cTheta : IUTIVCThetaObligations)
     (additive_haar_arithmetic_degree_padic :
       AdditiveHaarArithmeticDegreePadicObligations) :
-    Obligations sourceData.Core sourceData.Images :=
+    Obligations.{u, v} sourceData.Core sourceData.Images :=
   { theorem311_and_remarks :=
       sourceData.theorem311Obligations,
     stepX_finite_divisor :=
@@ -19591,7 +19844,7 @@ theorem ofHodgeTheaterLogThetaLogKummerSource_sourceSpineAudit
       Theorem311HodgeTheaterLogThetaLogKummerSource
         (target := targetCopy) coric l)
     (stepXI_hull_determinant :
-      StepXIHullDeterminantObligations
+      StepXIHullDeterminantObligations.{u, v}
         sourceData.Core sourceData.Images)
     (iutIV_cTheta : IUTIVCThetaObligations)
     (additive_haar_arithmetic_degree_padic :
@@ -19607,6 +19860,65 @@ theorem ofHodgeTheaterLogThetaLogKummerSource_sourceSpineAudit
         sourceData.stepXFiniteDivisorObligations := by
   intro obligations
   exact ⟨sourceData.sourceSpineAudit, rfl, rfl⟩
+
+set_option linter.style.longLine false in
+/--
+Assemble the paper-trace obligations from the unified source spine and a
+paper-derived Step (xi) hull/determinant source.
+
+This is the first preferred assembly for the new Step (xi) milestone.  The route
+does not receive `StepXIHullDeterminantObligations` as an independent layer;
+it projects that obligation record from the structured Remark 3.9.5/Step (xi)
+source tied to the Theorem 3.11 possible-image data.
+-/
+def ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (stepXI :
+      StepXIPaperDerivedHullDeterminantSource.{u, v}
+        sourceData)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations) :
+    Obligations.{u, v} sourceData.Core sourceData.Images :=
+  ofHodgeTheaterLogThetaLogKummerSource
+    sourceData
+    stepXI.toStepXIHullDeterminantObligations
+    iutIV_cTheta
+    additive_haar_arithmetic_degree_padic
+
+set_option linter.style.longLine false in
+theorem ofHodgeTheaterLogThetaLogKummerStepXIPaperSource_audit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (stepXI :
+      StepXIPaperDerivedHullDeterminantSource.{u, v}
+        sourceData)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations) :
+    let obligations :=
+      ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+        sourceData stepXI iutIV_cTheta additive_haar_arithmetic_degree_padic
+    Theorem311HodgeTheaterLogThetaLogKummerSource.SourceSpineAudit
+      sourceData ∧
+      StepXIPaperDerivedHullDeterminantSource.Audit stepXI ∧
+      obligations.theorem311_and_remarks = sourceData.theorem311Obligations ∧
+      obligations.stepX_finite_divisor =
+        sourceData.stepXFiniteDivisorObligations ∧
+      obligations.stepXI_hull_determinant =
+        stepXI.toStepXIHullDeterminantObligations := by
+  intro obligations
+  exact
+    ⟨sourceData.sourceSpineAudit,
+      stepXI.audit,
+      rfl,
+      rfl,
+      rfl⟩
 
 def RemainingPayloadAudit
     (obligations : Obligations core images) : Prop :=
@@ -20141,7 +20453,7 @@ structure PreferredSourceSpineRouteAudit
       Theorem311HodgeTheaterLogThetaLogKummerSource
         (target := targetCopy) coric l)
     (stepXI_hull_determinant :
-      StepXIHullDeterminantObligations
+      StepXIHullDeterminantObligations.{u, v}
         sourceData.Core sourceData.Images)
     (iutIV_cTheta : IUTIVCThetaObligations)
     (additive_haar_arithmetic_degree_padic :
@@ -20201,7 +20513,7 @@ theorem preferredSourceSpineRouteAudit
       Theorem311HodgeTheaterLogThetaLogKummerSource
         (target := targetCopy) coric l)
     (stepXI_hull_determinant :
-      StepXIHullDeterminantObligations
+      StepXIHullDeterminantObligations.{u, v}
         sourceData.Core sourceData.Images)
     (iutIV_cTheta : IUTIVCThetaObligations)
     (additive_haar_arithmetic_degree_padic :
@@ -20227,6 +20539,134 @@ theorem preferredSourceSpineRouteAudit
       stepX_projected_from_source := rfl,
       constructor_into_current_corridor :=
         constructorIntoCurrentCorridorAudit obligations audit,
+      lowered_endpoint :=
+        loweredEndpointAudit obligations audit }
+
+set_option linter.style.longLine false in
+/--
+Preferred Step (xi)-constructed route audit for the 3.11-to-3.12 paper trace.
+
+This is the public route for the new milestone.  It consumes the unified
+Theorem 3.11/Step (x) source spine and a structured IUT III Step (xi) /
+Remark 3.9.5 source.  The old `StepXIHullDeterminantObligations` layer is
+projected internally from that Step (xi) source, rather than supplied as a
+separate argument.
+-/
+structure PreferredStepXIPaperSourceRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (stepXI :
+      StepXIPaperDerivedHullDeterminantSource.{u, v}
+        sourceData)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations) : Prop where
+  source_spine :
+    Theorem311HodgeTheaterLogThetaLogKummerSource.SourceSpineAudit
+      sourceData
+  step_xi_source :
+    StepXIPaperDerivedHullDeterminantSource.Audit stepXI
+  assembled_obligations :
+    let obligations :=
+      ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+        sourceData stepXI iutIV_cTheta additive_haar_arithmetic_degree_padic
+    RemainingPayloadAudit obligations
+  milestone_completion :
+    let obligations :=
+      ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+        sourceData stepXI iutIV_cTheta additive_haar_arithmetic_degree_padic
+    MilestoneCompletionAudit obligations
+  theorem311_projected_from_source :
+    let obligations :=
+      ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+        sourceData stepXI iutIV_cTheta additive_haar_arithmetic_degree_padic
+    obligations.theorem311_and_remarks =
+      sourceData.theorem311Obligations
+  stepX_projected_from_source :
+    let obligations :=
+      ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+        sourceData stepXI iutIV_cTheta additive_haar_arithmetic_degree_padic
+    obligations.stepX_finite_divisor =
+      sourceData.stepXFiniteDivisorObligations
+  stepXI_projected_from_source :
+    let obligations :=
+      ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+        sourceData stepXI iutIV_cTheta additive_haar_arithmetic_degree_padic
+    obligations.stepXI_hull_determinant =
+      stepXI.toStepXIHullDeterminantObligations
+  selected_q_region_from_theorem311_source :
+    stepXI.hullData.selectedQRegion =
+      (sourceData.Images.region sourceData.selectedQChoice).toSet
+  constructor_into_current_corridor :
+    let obligations :=
+      ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+        sourceData stepXI iutIV_cTheta additive_haar_arithmetic_degree_padic
+    obligations.theorem311_and_remarks.theorem311_hodge_she_ipl_apt_source_bridge_constructed ∧
+      obligations.stepX_finite_divisor.finite_divisor_packet_source_constructed ∧
+      obligations.stepX_finite_divisor.realified_frobenioid_log_kummer_source_constructed ∧
+      obligations.stepX_finite_divisor.kummer_forgetting_compatibility_constructed ∧
+      obligations.stepX_finite_divisor.vertical_iq_target_source_constructed ∧
+      obligations.stepXI_hull_determinant.q_region_logVolume_le_thetaSigned_constructed
+  lowered_endpoint :
+    let obligations :=
+      ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+        sourceData stepXI iutIV_cTheta additive_haar_arithmetic_degree_padic
+    AdditiveHaarArithmeticDegreePadicObligations.RemainingPayloadAudit
+        obligations.additive_haar_arithmetic_degree_padic ∧
+      obligations.iutIV_cTheta.local_to_global_canonicalCThetaScale_le_cTheta_constructed
+
+set_option linter.style.longLine false in
+theorem preferredStepXIPaperSourceRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (stepXI :
+      StepXIPaperDerivedHullDeterminantSource.{u, v}
+        sourceData)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations)
+    (audit :
+      RemainingPayloadAudit
+        (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+          sourceData stepXI iutIV_cTheta
+          additive_haar_arithmetic_degree_padic)) :
+    PreferredStepXIPaperSourceRouteAudit
+      sourceData stepXI iutIV_cTheta
+      additive_haar_arithmetic_degree_padic := by
+  let obligations :=
+    ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+      sourceData stepXI iutIV_cTheta
+      additive_haar_arithmetic_degree_padic
+  exact
+    { source_spine := sourceData.sourceSpineAudit,
+      step_xi_source := stepXI.audit,
+      assembled_obligations := audit,
+      milestone_completion :=
+        milestoneCompletionAudit obligations audit,
+      theorem311_projected_from_source := rfl,
+      stepX_projected_from_source := rfl,
+      stepXI_projected_from_source := rfl,
+      selected_q_region_from_theorem311_source :=
+        stepXI.selectedQRegion_eq_sourceSelectedPossibleImage,
+      constructor_into_current_corridor := by
+        refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
+        · exact
+            (constructorIntoCurrentCorridorAudit obligations audit).1
+        · exact
+            (constructorIntoCurrentCorridorAudit obligations audit).2.1
+        · exact
+            (constructorIntoCurrentCorridorAudit obligations audit).2.2.1
+        · exact
+            (constructorIntoCurrentCorridorAudit obligations audit).2.2.2.1
+        · exact
+            (constructorIntoCurrentCorridorAudit obligations audit).2.2.2.2
+        · exact
+            obligations.stepXI_hull_determinant
+              |>.q_region_logVolume_le_thetaSigned_constructed_proof,
       lowered_endpoint :=
         loweredEndpointAudit obligations audit }
 

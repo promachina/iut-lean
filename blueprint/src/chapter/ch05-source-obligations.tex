@@ -89,9 +89,54 @@
   layers to reach the current lowered endpoint audit.
 \end{proposition}
 
+\begin{definition}[Step (xi) paper trace]
+  \label{def:step-xi-paper-trace}
+  \uses{def:hodge-logtheta-logkummer-spine}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperTrace}
+  \leanok
+  The Step (xi) paper trace names the Corollary 3.12 substeps
+  (xi-a)--(xi-g) and the Remark 3.9.5 Ob1--Ob9 checkpoints.  It is the
+  source-facing ledger for passing from Theorem 3.11 possible images to
+  holomorphic hulls, determinants, log-volumes, and the retained
+  prime-strip/log-Kummer comparison.
+\end{definition}
+
+\begin{definition}[Paper-derived Step (xi) source]
+  \label{def:paper-derived-step-xi-source}
+  \uses{def:step-xi-paper-trace,def:hodge-logtheta-logkummer-spine}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource}
+  \leanok
+  This source object ties the Step (xi) hull/determinant data to the unified
+  Hodge/log-theta/log-Kummer spine.  Its selected \(q\)-region is required to
+  be the selected Theorem 3.11 possible image, and its Ob7 compatibility is
+  pinned to the same input and output prime strips and one-column log-Kummer
+  coordinate.
+\end{definition}
+
+\begin{proposition}[Step (xi) source assembles obligations]
+  \label{prop:step-xi-source-assembles-obligations}
+  \uses{def:paper-derived-step-xi-source}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.toStepXIHullDeterminantObligations}
+  \leanok
+  The structured Step (xi) source projects to the hull/determinant obligation
+  record consumed by the existing corridor.  The old Step (xi) proposition
+  fields are then recovered as theorems from this source data.
+\end{proposition}
+
+\begin{proposition}[Preferred Step (xi)-constructed route audit]
+  \label{prop:preferred-step-xi-paper-source-route-audit}
+  \uses{def:hodge-logtheta-logkummer-spine,def:paper-derived-step-xi-source,prop:step-xi-source-assembles-obligations}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredStepXIPaperSourceRouteAudit}
+  \leanok
+  The preferred paper-trace route can now consume the source spine together
+  with a paper-derived Step (xi) source.  The Step (xi) obligation package is
+  projected internally, so this route no longer takes a standalone
+  \texttt{StepXIHullDeterminantObligations} argument.
+\end{proposition}
+
 \begin{theorem}[Construct \(\SHE\) from source data]
   \label{thm:construct-she}
-  \uses{def:she,def:initial-theta-data,def:hodge-theater-histories,def:theorem-311-ipl-she-apt-bridge,def:hodge-logtheta-logkummer-spine,prop:preferred-source-spine-route-audit}
+  \uses{def:she,def:initial-theta-data,def:hodge-theater-histories,def:theorem-311-ipl-she-apt-bridge,def:hodge-logtheta-logkummer-spine,prop:preferred-source-spine-route-audit,prop:preferred-step-xi-paper-source-route-audit}
   \notready
   The simultaneous holomorphic expressibility data used in the current route
   should be constructed from the arithmetic holomorphic structure of the
@@ -134,9 +179,9 @@
 
 \begin{theorem}[Construct hull plus determinant]
   \label{thm:construct-hdd}
-  \uses{def:hdd,prop:step-xi-upper-ray-input}
+  \uses{def:hdd,prop:step-xi-upper-ray-input,def:paper-derived-step-xi-source,prop:preferred-step-xi-paper-source-route-audit}
   \notready
-  The current hull/determinant endpoint records should be replaced by actual
+  The paper-derived Step (xi) source should be lowered further to actual
   holomorphic-hull and determinant operations corresponding to Remark 3.9.5
   and Step (xi) of IUT III.
 \end{theorem}
