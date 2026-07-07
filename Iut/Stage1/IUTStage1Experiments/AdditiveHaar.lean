@@ -33138,13 +33138,17 @@ structure ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedCo
                       package.preLedger.certificate.ipl,
                 remark3112_input_prime_strip_link_constructed_proof :=
                   constructedHodgeIPLSource.iplConstructionSource.construction_choiceLink_endpoint,
-                remark3113_theta_pilot_possible_images_constructed :=
-                  ∀ choice,
-                    arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.equalityQuotientPossibleImages.quotientImages.region
-                        (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap choice) =
-                      record.thetaPossibleImages.images.region choice,
-                remark3113_theta_pilot_possible_images_constructed_proof :=
-                  arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.possibleImages_pullback_from_equalityQuotient,
+                possibleImageData :=
+                  { quotientImages :=
+                      arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.equalityQuotientPossibleImages,
+                    selectedQChoice :=
+                      arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice,
+                    selectedQRegion :=
+                      arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQRegion,
+                    selectedQRegion_eq_quotientRegion :=
+                      (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.remark395SelectedQRegion_quotientEndpoint
+                        remark395HullSource
+                        arithmeticDivisorBackedComponentSource.qPilotRegion_eq_selectedQRegion).2.2.1 },
                 remark3114_log_theta_lattice_procession_constructed :=
                   ∀ t choice,
                     arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
@@ -33154,27 +33158,6 @@ structure ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedCo
                           t choice),
                 remark3114_log_theta_lattice_procession_constructed_proof :=
                   arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.fl_procession_stays_in_equalityQuotient,
-                possible_images_depend_on_equality_quotient :=
-                  arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.possibleImageCompatibility,
-                selected_q_region_is_theorem311_possible_image :=
-                  remark395HullSource.qPilotRegion =
-                      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
-                        record arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice ∧
-                    remark395HullSource.qPilotRegion ⊆
-                      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
-                        record ∧
-                    arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQRegion =
-                      arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.equalityQuotientPossibleImages.quotientImages.region
-                        (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
-                          arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice) ∧
-                    (∀ choice,
-                      arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.equalityQuotientPossibleImages.quotientImages.region
-                          (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap choice) =
-                        record.thetaPossibleImages.images.region choice),
-                selected_q_region_is_theorem311_possible_image_proof :=
-                  arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.remark395SelectedQRegion_quotientEndpoint
-                    remark395HullSource
-                    arithmeticDivisorBackedComponentSource.qPilotRegion_eq_selectedQRegion,
                 fl_cardinality_and_procession_label_transitions_constructed :=
                   Fintype.card (ZMod l.value) = l.value ∧
                     ∀ t choice,
@@ -34198,9 +34181,19 @@ theorem boundarySignedEqualityOrStrictCTheta_from_constructedQualitativeHodgeSHE
             arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.possibleImageCompatibility.ind1_region_eq,
             arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.possibleImageCompatibility.ind2_region_eq,
             arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.possibleImageCompatibility.ind3_logVolume_upper,
-            arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.remark395SelectedQRegion_quotientEndpoint
-              remark395HullSource
-              arithmeticDivisorBackedComponentSource.qPilotRegion_eq_selectedQRegion,
+            by
+              calc
+                arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQRegion =
+                    arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.equalityQuotientPossibleImages.quotientImages.region
+                      (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
+                        arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice) :=
+                  (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.remark395SelectedQRegion_quotientEndpoint
+                    remark395HullSource
+                    arithmeticDivisorBackedComponentSource.qPilotRegion_eq_selectedQRegion).2.2.1
+                _ = record.thetaPossibleImages.images.region
+                      arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice :=
+                  arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.possibleImages_pullback_from_equalityQuotient
+                    arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice,
             ⟨by simp,
               arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.fl_procession_stays_in_equalityQuotient⟩,
             ⟨constructedBundle.hasStructuredIPL,

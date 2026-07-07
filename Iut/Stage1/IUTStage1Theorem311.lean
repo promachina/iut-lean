@@ -17372,6 +17372,68 @@ variable {package : IUTStage1SourcePackage source target index}
 variable {targetCopy : Copy}
 
 /--
+Data-level Theorem 3.11 possible-image source.
+
+This packages the part of Theorem 3.11/Remark 3.11.3 that is genuinely a
+possible-image construction: a family indexed by the `(Ind1)/(Ind2)` equality
+quotient, together with a selected q-choice whose region is one of the pulled
+back possible images.  The `(Ind3)` contribution remains the upper-semi
+log-volume field already built into `EqualityQuotientPossibleImages.toCompatibility`.
+-/
+structure Theorem311PossibleImageSourceData
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
+    (images : RegionFamily targetCopy choice) where
+  quotientImages :
+    IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientPossibleImages
+      core images
+  selectedQChoice : choice
+  selectedQRegion : Region targetCopy
+  selectedQRegion_eq_quotientRegion :
+    selectedQRegion =
+      quotientImages.quotientImages.region
+        (core.equalityQuotientMap selectedQChoice)
+
+namespace Theorem311PossibleImageSourceData
+
+variable {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
+variable {images : RegionFamily targetCopy choice}
+
+def thetaPilotPossibleImagesConstructed
+    (data : Theorem311PossibleImageSourceData core images) : Prop :=
+  ∀ choice₀ : choice,
+    data.quotientImages.quotientImages.region
+        (core.equalityQuotientMap choice₀) =
+      images.region choice₀
+
+theorem thetaPilotPossibleImagesConstructed_proof
+    (data : Theorem311PossibleImageSourceData core images) :
+    data.thetaPilotPossibleImagesConstructed :=
+  data.quotientImages.pullback_region_eq
+
+def possibleImagesDependOnEqualityQuotient
+    (data : Theorem311PossibleImageSourceData core images) :
+    IUTStage1Theorem311TypedIndeterminacyCore.PossibleImageQuotientCompatibility
+      core images :=
+  data.quotientImages.toCompatibility
+
+def selectedQRegionIsTheorem311PossibleImage
+    (data : Theorem311PossibleImageSourceData core images) : Prop :=
+  data.selectedQRegion = images.region data.selectedQChoice
+
+theorem selectedQRegionIsTheorem311PossibleImage_proof
+    (data : Theorem311PossibleImageSourceData core images) :
+    data.selectedQRegionIsTheorem311PossibleImage := by
+  calc
+    data.selectedQRegion =
+        data.quotientImages.quotientImages.region
+          (core.equalityQuotientMap data.selectedQChoice) :=
+      data.selectedQRegion_eq_quotientRegion
+    _ = images.region data.selectedQChoice :=
+      data.quotientImages.pullback_region_eq data.selectedQChoice
+
+end Theorem311PossibleImageSourceData
+
+/--
 Proof-carrying source data for IUT III, Theorem 3.11 and Remarks
 3.11.2--3.11.4.
 
@@ -17394,18 +17456,10 @@ structure Theorem311AndRemarksSourceData
   remark3112_input_prime_strip_link_constructed : Prop
   remark3112_input_prime_strip_link_constructed_proof :
     remark3112_input_prime_strip_link_constructed
-  remark3113_theta_pilot_possible_images_constructed : Prop
-  remark3113_theta_pilot_possible_images_constructed_proof :
-    remark3113_theta_pilot_possible_images_constructed
+  possibleImageData : Theorem311PossibleImageSourceData core images
   remark3114_log_theta_lattice_procession_constructed : Prop
   remark3114_log_theta_lattice_procession_constructed_proof :
     remark3114_log_theta_lattice_procession_constructed
-  possible_images_depend_on_equality_quotient :
-    IUTStage1Theorem311TypedIndeterminacyCore.PossibleImageQuotientCompatibility
-      core images
-  selected_q_region_is_theorem311_possible_image : Prop
-  selected_q_region_is_theorem311_possible_image_proof :
-    selected_q_region_is_theorem311_possible_image
   fl_cardinality_and_procession_label_transitions_constructed : Prop
   fl_cardinality_and_procession_label_transitions_constructed_proof :
     fl_cardinality_and_procession_label_transitions_constructed
@@ -17444,7 +17498,7 @@ def remark3112_input_prime_strip_link_constructed
 
 def remark3113_theta_pilot_possible_images_constructed
     (obligations : Theorem311AndRemarksObligations core images) : Prop :=
-  obligations.sourceData.remark3113_theta_pilot_possible_images_constructed
+  obligations.sourceData.possibleImageData.thetaPilotPossibleImagesConstructed
 
 def remark3114_log_theta_lattice_procession_constructed
     (obligations : Theorem311AndRemarksObligations core images) : Prop :=
@@ -17454,11 +17508,11 @@ def possible_images_depend_on_equality_quotient
     (obligations : Theorem311AndRemarksObligations core images) :
     IUTStage1Theorem311TypedIndeterminacyCore.PossibleImageQuotientCompatibility
       core images :=
-  obligations.sourceData.possible_images_depend_on_equality_quotient
+  obligations.sourceData.possibleImageData.possibleImagesDependOnEqualityQuotient
 
 def selected_q_region_is_theorem311_possible_image
     (obligations : Theorem311AndRemarksObligations core images) : Prop :=
-  obligations.sourceData.selected_q_region_is_theorem311_possible_image
+  obligations.sourceData.possibleImageData.selectedQRegionIsTheorem311PossibleImage
 
 def fl_cardinality_and_procession_label_transitions_constructed
     (obligations : Theorem311AndRemarksObligations core images) : Prop :=
@@ -17506,7 +17560,7 @@ theorem possibleImagesDependOnEqualityQuotient
     (_audit : RemainingPayloadAudit obligations) :
     IUTStage1Theorem311TypedIndeterminacyCore.PossibleImageQuotientCompatibility
       core images :=
-  obligations.sourceData.possible_images_depend_on_equality_quotient
+  obligations.sourceData.possibleImageData.possibleImagesDependOnEqualityQuotient
 
 theorem possibleImagesInd1RegionEq
     (obligations : Theorem311AndRemarksObligations core images)
@@ -17576,7 +17630,7 @@ theorem remark3112InputPrimeStripLinkConstructed
 theorem remark3113ThetaPilotPossibleImagesConstructed
     (obligations : Theorem311AndRemarksObligations core images) :
     obligations.remark3113_theta_pilot_possible_images_constructed :=
-  obligations.sourceData.remark3113_theta_pilot_possible_images_constructed_proof
+  obligations.sourceData.possibleImageData.thetaPilotPossibleImagesConstructed_proof
 
 theorem remark3114LogThetaLatticeProcessionConstructed
     (obligations : Theorem311AndRemarksObligations core images) :
@@ -17586,7 +17640,7 @@ theorem remark3114LogThetaLatticeProcessionConstructed
 theorem selectedQRegionIsTheorem311PossibleImage
     (obligations : Theorem311AndRemarksObligations core images) :
     obligations.selected_q_region_is_theorem311_possible_image :=
-  obligations.sourceData.selected_q_region_is_theorem311_possible_image_proof
+  obligations.sourceData.possibleImageData.selectedQRegionIsTheorem311PossibleImage_proof
 
 theorem flCardinalityAndProcessionLabelTransitionsConstructed
     (obligations : Theorem311AndRemarksObligations core images) :
