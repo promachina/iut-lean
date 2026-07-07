@@ -61261,6 +61261,169 @@ theorem ofQuotientHullCompatibilityConstructedBridge_audit
 
 set_option linter.style.longLine false in
 /--
+Construct the Step (xi) Ob7 source-link from a constructed Remark 3.9.5 bridge
+and the coric `Theta^{x mu}` prime-strip invariant.
+
+The only remaining comparison at this boundary is the mathematical alignment
+between the record possible-image union used by the constructed determinant
+bridge and the equality-quotient possible-image family used by the
+paper-derived Step (xi) hull.  Once that alignment is supplied, the bridge
+itself, the q-region containment, and the legacy Ob7 prime-strip/log-Kummer
+record are projections from the constructed source and the coric invariant.
+-/
+noncomputable def thetaLGPOb7CompatibilitySourceOfConstructedBridge
+    (constructedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        sourceData.Core sourceData.Images constructedSource.hullOperator)
+    (constructedQRegion_eq_sourceSelectedPossibleImage :
+      constructedSource.qPilotRegion =
+        (sourceData.Images.region sourceData.selectedQChoice).toSet)
+    (recordUnion_eq_quotientFamilyUnion :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record =
+        quotientHullCompatibility.familySource.familyUnion)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (coricInvariant :
+      IUTStage1CoricThetaMuPrimeStripInvariant Penv Pgau V μ)
+    (determinantLogVolume_eq_coricPrimeStripGlobal :
+      constructedSource.determinantSource.determinantLogVolume =
+        coricInvariant.lift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume) :
+    StepXIThetaLGPOb7CompatibilitySource
+      sourceData
+      (StepXIHullFormationData.ofQuotientHullCompatibility
+        constructedSource.hullOperator quotientHullCompatibility
+        sourceData.selectedQChoice)
+      β Penv Pgau V μ :=
+  let hullData :=
+    StepXIHullFormationData.ofQuotientHullCompatibility
+      constructedSource.hullOperator quotientHullCompatibility
+      sourceData.selectedQChoice
+  let q_subset_familyUnion :
+      constructedSource.qPilotRegion ⊆
+        quotientHullCompatibility.familySource.familyUnion := by
+    intro point hpoint
+    have hpoint_source :
+        point ∈ (sourceData.Images.region sourceData.selectedQChoice).toSet := by
+      simpa [constructedQRegion_eq_sourceSelectedPossibleImage] using hpoint
+    have hpoint_quotient :
+        point ∈ quotientHullCompatibility.familySource.possibleRegion
+          (sourceData.Core.equalityQuotientMap sourceData.selectedQChoice) := by
+      simpa [quotientHullCompatibility.possibleRegion_pullback_eq
+          sourceData.selectedQChoice] using hpoint_source
+    exact
+      quotientHullCompatibility.familySource.possibleRegion_subset_familyUnion
+        (sourceData.Core.equalityQuotientMap sourceData.selectedQChoice)
+        hpoint_quotient
+  let transportedCompatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            constructedSource.hullOperator)
+          quotientHullCompatibility.familySource.familyUnion)
+        constructedSource.determinantSource := by
+    rw [← recordUnion_eq_quotientFamilyUnion]
+    exact constructedSource.compatibility
+  let bridgeSource :
+      IUTStage1Remark395HullDeterminantBridgeSource
+        (Point target) (Quot sourceData.Core.equalityQuotient.relation) β :=
+    { hullOperator := constructedSource.hullOperator,
+      possibleRegion := quotientHullCompatibility.familySource.possibleRegion,
+      qRegion := constructedSource.qPilotRegion,
+      q_subset_familyUnion := q_subset_familyUnion,
+      determinantSource := constructedSource.determinantSource,
+      compatibility := transportedCompatibility,
+      thetaSigned := package.preLedger.thetaSigned,
+      tensorPower_bound := constructedSource.tensorPower_bound }
+  let ob7Source :
+      IUTStage1Remark395Ob7CoricLogKummerCompatibilitySource
+        (Point target) (Quot sourceData.Core.equalityQuotient.relation)
+        β Penv Pgau V μ :=
+    { bridgeSource := bridgeSource,
+      coricInvariant := coricInvariant,
+      determinantLogVolume_eq_coricPrimeStripGlobal :=
+        determinantLogVolume_eq_coricPrimeStripGlobal }
+  have hullData_selected_eq_source :
+      hullData.selectedQRegion =
+        (sourceData.Images.region sourceData.selectedQChoice).toSet := by
+    calc
+      hullData.selectedQRegion =
+          quotientHullCompatibility.familySource.possibleRegion
+            (sourceData.Core.equalityQuotientMap sourceData.selectedQChoice) :=
+        rfl
+      _ = (sourceData.Images.region sourceData.selectedQChoice).toSet :=
+        quotientHullCompatibility.possibleRegion_pullback_eq
+          sourceData.selectedQChoice
+  { ob7Source := ob7Source,
+    bridge_possibleRegion_eq_hullSource := rfl,
+    bridge_hullOperator_eq := rfl,
+    bridge_qRegion_eq_selected :=
+      constructedQRegion_eq_sourceSelectedPossibleImage.trans
+        hullData_selected_eq_source.symm }
+
+set_option linter.style.longLine false in
+theorem thetaLGPOb7CompatibilitySourceOfConstructedBridge_endpoint
+    (constructedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        sourceData.Core sourceData.Images constructedSource.hullOperator)
+    (constructedQRegion_eq_sourceSelectedPossibleImage :
+      constructedSource.qPilotRegion =
+        (sourceData.Images.region sourceData.selectedQChoice).toSet)
+    (recordUnion_eq_quotientFamilyUnion :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record =
+        quotientHullCompatibility.familySource.familyUnion)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (coricInvariant :
+      IUTStage1CoricThetaMuPrimeStripInvariant Penv Pgau V μ)
+    (determinantLogVolume_eq_coricPrimeStripGlobal :
+      constructedSource.determinantSource.determinantLogVolume =
+        coricInvariant.lift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume) :
+    let ob7Source :=
+      thetaLGPOb7CompatibilitySourceOfConstructedBridge
+        (sourceData := sourceData) (record := record) (β := β)
+        constructedSource quotientHullCompatibility
+        constructedQRegion_eq_sourceSelectedPossibleImage
+        recordUnion_eq_quotientFamilyUnion coricInvariant
+        determinantLogVolume_eq_coricPrimeStripGlobal;
+    ob7Source.toPrimeStripLogKummerCompatibilityData.compatibilityRetained ∧
+      ob7Source.ob7Source.bridgeSource.qRegion =
+        constructedSource.qPilotRegion ∧
+      ob7Source.ob7Source.bridgeSource.possibleRegion =
+        quotientHullCompatibility.familySource.possibleRegion ∧
+      ob7Source.ob7Source.bridgeSource.qRegion ⊆
+        quotientHullCompatibility.familySource.familyUnion ∧
+      ob7Source.ob7Source.bridgeSource.determinantSource =
+        constructedSource.determinantSource ∧
+      ob7Source.ob7Source.bridgeSource.thetaSigned =
+        package.preLedger.thetaSigned ∧
+      ob7Source.toPrimeStripLogKummerCompatibilityData.sourcePrimeStrip =
+        sourceData.inputPrimeStrip ∧
+      ob7Source.toPrimeStripLogKummerCompatibilityData.targetPrimeStrip =
+        sourceData.outputPrimeStrip ∧
+      ob7Source.toPrimeStripLogKummerCompatibilityData.logKummerColumn =
+        sourceData.selectedQChoice.coordinate.logThetaColumn := by
+  intro ob7Source
+  exact
+    ⟨ob7Source.toPrimeStripLogKummerCompatibilityData.retained,
+      rfl,
+      rfl,
+      ob7Source.ob7Source.bridgeSource.q_subset_familyUnion,
+      rfl,
+      rfl,
+      ob7Source.sourcePrimeStrip_eq,
+      ob7Source.targetPrimeStrip_eq,
+      ob7Source.logKummerColumn_eq_selected⟩
+
+set_option linter.style.longLine false in
+/--
 Construct the Remark 3.9.5 source whose q-pilot region is the selected
 Theorem 3.11 possible image from the source spine.
 
@@ -61539,6 +61702,99 @@ noncomputable def ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantThetaLGP
     ob7Source.sourcePrimeStrip_eq
     ob7Source.targetPrimeStrip_eq
     ob7Source.logKummerColumn_eq_selected
+
+set_option linter.style.longLine false in
+/--
+Selected-possible-image Step (xi) constructor with Ob7 built from the
+constructed bridge and coric `Theta^{x mu}` prime-strip invariant.
+
+Compared with
+`ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantThetaLGPOb7Source`,
+this route no longer receives a prebuilt Step XI Ob7 source-link.  It constructs
+that source-link from the same Remark 3.9.5 bridge used for the determinant
+comparison, after transporting the determinant compatibility across the
+record-union/equality-quotient-family alignment.
+-/
+noncomputable def ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantCoricOb7
+    (paperTrace : StepXIPaperTrace)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (selectedQRegion_subset_recordUnion :
+      (sourceData.Images.region sourceData.selectedQChoice).toSet ⊆
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record)
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      package.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          hullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (sourceData.Images.region sourceData.selectedQChoice).toSet
+          selectedQRegion_subset_recordUnion
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -package.preLedger.qSigned)
+    (normalization : package.preLedger.normalization)
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        sourceData.Core sourceData.Images hullOperator)
+    (recordUnion_eq_quotientFamilyUnion :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record =
+        quotientHullCompatibility.familySource.familyUnion)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (coricInvariant :
+      IUTStage1CoricThetaMuPrimeStripInvariant Penv Pgau V μ)
+    (determinantLogVolume_eq_coricPrimeStripGlobal :
+      ob3ob4Source.toWeightedDeterminantSource.determinantLogVolume =
+        coricInvariant.lift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume) :
+    StepXIPaperDerivedHullDeterminantSource.{u, v} sourceData :=
+  let constructedSource :=
+    sourceSelectedPossibleImageOb3Ob4ConstructedSource
+      (sourceData := sourceData) (record := record) (β := β)
+      operation hullOperation determinantOperation hullOperator
+      selectedQRegion_subset_recordUnion ob3ob4Source compatibility
+      measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+      q_pilot_positive normalization
+  let ob7Source :=
+    thetaLGPOb7CompatibilitySourceOfConstructedBridge
+      (sourceData := sourceData) (record := record) (β := β)
+      constructedSource quotientHullCompatibility rfl
+      recordUnion_eq_quotientFamilyUnion coricInvariant
+      (by
+        simpa [sourceSelectedPossibleImageOb3Ob4ConstructedSource]
+          using determinantLogVolume_eq_coricPrimeStripGlobal)
+  ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantThetaLGPOb7Source
+    (sourceData := sourceData) (record := record) (β := β)
+    paperTrace operation hullOperation determinantOperation hullOperator
+    selectedQRegion_subset_recordUnion ob3ob4Source compatibility
+    measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+    q_pilot_positive normalization quotientHullCompatibility ob7Source
 
 end StepXIPaperDerivedHullDeterminantSource
 end IUTStage1Theorem311ToCorollary312PaperTrace
