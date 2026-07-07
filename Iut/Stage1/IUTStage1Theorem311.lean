@@ -17655,15 +17655,15 @@ theorem theorem311HodgeSHEIPLAPTSourceBridgeConstructed
 end Theorem311AndRemarksObligations
 
 /--
-IUT III, Step (x) obligations on the finite-divisor/log-Kummer side.
+Data-level Step (x) finite-divisor/log-Kummer source.
 
-The critical distinction is recorded in the first three fields: `(Ind1)` and
-`(Ind2)` preserve procession-normalized log-volume, while `(Ind3)` supplies
-only an upper-semi inequality.  The remaining fields name the packet,
-Kummer/forgetting, and vertical-`IQ` constructions that feed the finite
-Corollary 3.12 boundary.
+The first four fields keep the typed `(Ind1),(Ind2),(Ind3)` comparison laws
+supplied by the local source.  The remaining fields package the finite divisor
+packet, realified Frobenioid/log-Kummer, Kummer-forgetting, vertical-`IQ`, and
+source-target calibration endpoints together with their proofs.  This removes
+the previous unstructured Step (x) proposition list from the obligation record.
 -/
-structure StepXFiniteDivisorObligations
+structure StepXFiniteDivisorSourceData
     (core : IUTStage1Theorem311TypedIndeterminacyCore choice) where
   ind1_procession_normalized_logVolume_preserved :
     ∀ {choice₁ choice₂ : choice},
@@ -17680,10 +17680,30 @@ structure StepXFiniteDivisorObligations
   ind3_upper_semi_relation_audit :
     core.Ind3UpperSemiRelationAudit
   finite_divisor_packet_source_constructed : Prop
+  finite_divisor_packet_source_constructed_proof :
+    finite_divisor_packet_source_constructed
   realified_frobenioid_log_kummer_source_constructed : Prop
+  realified_frobenioid_log_kummer_source_constructed_proof :
+    realified_frobenioid_log_kummer_source_constructed
   kummer_forgetting_compatibility_constructed : Prop
+  kummer_forgetting_compatibility_constructed_proof :
+    kummer_forgetting_compatibility_constructed
   vertical_iq_target_source_constructed : Prop
+  vertical_iq_target_source_constructed_proof :
+    vertical_iq_target_source_constructed
   packet_source_target_log_volume_calibration_constructed : Prop
+  packet_source_target_log_volume_calibration_constructed_proof :
+    packet_source_target_log_volume_calibration_constructed
+
+/--
+IUT III, Step (x) obligations on the finite-divisor/log-Kummer side.
+
+The obligation record now consumes proof-carrying source data.  The old
+paper-trace field names are exposed as derived projections below.
+-/
+structure StepXFiniteDivisorObligations
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice) where
+  sourceData : StepXFiniteDivisorSourceData core
 
 namespace StepXFiniteDivisorObligations
 
@@ -17691,32 +17711,124 @@ variable {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
 
 def fromTypedCore
     (finite_divisor_packet_source_constructed : Prop)
+    (finite_divisor_packet_source_constructed_proof :
+      finite_divisor_packet_source_constructed)
     (realified_frobenioid_log_kummer_source_constructed : Prop)
+    (realified_frobenioid_log_kummer_source_constructed_proof :
+      realified_frobenioid_log_kummer_source_constructed)
     (kummer_forgetting_compatibility_constructed : Prop)
+    (kummer_forgetting_compatibility_constructed_proof :
+      kummer_forgetting_compatibility_constructed)
     (vertical_iq_target_source_constructed : Prop)
-    (packet_source_target_log_volume_calibration_constructed : Prop) :
+    (vertical_iq_target_source_constructed_proof :
+      vertical_iq_target_source_constructed)
+    (packet_source_target_log_volume_calibration_constructed : Prop)
+    (packet_source_target_log_volume_calibration_constructed_proof :
+      packet_source_target_log_volume_calibration_constructed) :
     StepXFiniteDivisorObligations core :=
-  { ind1_procession_normalized_logVolume_preserved := by
-      intro choice₁ choice₂ hstep
-      exact core.ind1_preserves_logVolume hstep,
-    ind2_procession_normalized_logVolume_preserved := by
-      intro choice₁ choice₂ hstep
-      exact core.ind2_preserves_logVolume hstep,
-    ind3_upper_semi_logVolume_inequality := by
-      intro choice₁ choice₂ hstep
-      exact core.ind3_logVolume_le hstep,
-    ind3_upper_semi_relation_audit :=
-      core.ind3UpperSemiRelationAudit,
-    finite_divisor_packet_source_constructed :=
-      finite_divisor_packet_source_constructed,
-    realified_frobenioid_log_kummer_source_constructed :=
-      realified_frobenioid_log_kummer_source_constructed,
-    kummer_forgetting_compatibility_constructed :=
-      kummer_forgetting_compatibility_constructed,
-    vertical_iq_target_source_constructed :=
-      vertical_iq_target_source_constructed,
-    packet_source_target_log_volume_calibration_constructed :=
-      packet_source_target_log_volume_calibration_constructed }
+  { sourceData :=
+      { ind1_procession_normalized_logVolume_preserved := by
+          intro choice₁ choice₂ hstep
+          exact core.ind1_preserves_logVolume hstep,
+        ind2_procession_normalized_logVolume_preserved := by
+          intro choice₁ choice₂ hstep
+          exact core.ind2_preserves_logVolume hstep,
+        ind3_upper_semi_logVolume_inequality := by
+          intro choice₁ choice₂ hstep
+          exact core.ind3_logVolume_le hstep,
+        ind3_upper_semi_relation_audit :=
+          core.ind3UpperSemiRelationAudit,
+        finite_divisor_packet_source_constructed :=
+          finite_divisor_packet_source_constructed,
+        finite_divisor_packet_source_constructed_proof :=
+          finite_divisor_packet_source_constructed_proof,
+        realified_frobenioid_log_kummer_source_constructed :=
+          realified_frobenioid_log_kummer_source_constructed,
+        realified_frobenioid_log_kummer_source_constructed_proof :=
+          realified_frobenioid_log_kummer_source_constructed_proof,
+        kummer_forgetting_compatibility_constructed :=
+          kummer_forgetting_compatibility_constructed,
+        kummer_forgetting_compatibility_constructed_proof :=
+          kummer_forgetting_compatibility_constructed_proof,
+        vertical_iq_target_source_constructed :=
+          vertical_iq_target_source_constructed,
+        vertical_iq_target_source_constructed_proof :=
+          vertical_iq_target_source_constructed_proof,
+        packet_source_target_log_volume_calibration_constructed :=
+          packet_source_target_log_volume_calibration_constructed,
+        packet_source_target_log_volume_calibration_constructed_proof :=
+          packet_source_target_log_volume_calibration_constructed_proof } }
+
+def ind1_procession_normalized_logVolume_preserved
+    (obligations : StepXFiniteDivisorObligations core) :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind1.step choice₁ choice₂ ->
+        core.logVolume choice₁ = core.logVolume choice₂ :=
+  obligations.sourceData.ind1_procession_normalized_logVolume_preserved
+
+def ind2_procession_normalized_logVolume_preserved
+    (obligations : StepXFiniteDivisorObligations core) :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind2.step choice₁ choice₂ ->
+        core.logVolume choice₁ = core.logVolume choice₂ :=
+  obligations.sourceData.ind2_procession_normalized_logVolume_preserved
+
+def ind3_upper_semi_logVolume_inequality
+    (obligations : StepXFiniteDivisorObligations core) :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind3.step choice₁ choice₂ ->
+        core.logVolume choice₁ <= core.logVolume choice₂ :=
+  obligations.sourceData.ind3_upper_semi_logVolume_inequality
+
+def ind3_upper_semi_relation_audit
+    (obligations : StepXFiniteDivisorObligations core) :
+    core.Ind3UpperSemiRelationAudit :=
+  obligations.sourceData.ind3_upper_semi_relation_audit
+
+def finite_divisor_packet_source_constructed
+    (obligations : StepXFiniteDivisorObligations core) : Prop :=
+  obligations.sourceData.finite_divisor_packet_source_constructed
+
+def realified_frobenioid_log_kummer_source_constructed
+    (obligations : StepXFiniteDivisorObligations core) : Prop :=
+  obligations.sourceData.realified_frobenioid_log_kummer_source_constructed
+
+def kummer_forgetting_compatibility_constructed
+    (obligations : StepXFiniteDivisorObligations core) : Prop :=
+  obligations.sourceData.kummer_forgetting_compatibility_constructed
+
+def vertical_iq_target_source_constructed
+    (obligations : StepXFiniteDivisorObligations core) : Prop :=
+  obligations.sourceData.vertical_iq_target_source_constructed
+
+def packet_source_target_log_volume_calibration_constructed
+    (obligations : StepXFiniteDivisorObligations core) : Prop :=
+  obligations.sourceData.packet_source_target_log_volume_calibration_constructed
+
+theorem finiteDivisorPacketSourceConstructed
+    (obligations : StepXFiniteDivisorObligations core) :
+    obligations.finite_divisor_packet_source_constructed :=
+  obligations.sourceData.finite_divisor_packet_source_constructed_proof
+
+theorem realifiedFrobenioidLogKummerSourceConstructed
+    (obligations : StepXFiniteDivisorObligations core) :
+    obligations.realified_frobenioid_log_kummer_source_constructed :=
+  obligations.sourceData.realified_frobenioid_log_kummer_source_constructed_proof
+
+theorem kummerForgettingCompatibilityConstructed
+    (obligations : StepXFiniteDivisorObligations core) :
+    obligations.kummer_forgetting_compatibility_constructed :=
+  obligations.sourceData.kummer_forgetting_compatibility_constructed_proof
+
+theorem verticalIQTargetSourceConstructed
+    (obligations : StepXFiniteDivisorObligations core) :
+    obligations.vertical_iq_target_source_constructed :=
+  obligations.sourceData.vertical_iq_target_source_constructed_proof
+
+theorem packetSourceTargetLogVolumeCalibrationConstructed
+    (obligations : StepXFiniteDivisorObligations core) :
+    obligations.packet_source_target_log_volume_calibration_constructed :=
+  obligations.sourceData.packet_source_target_log_volume_calibration_constructed_proof
 
 end StepXFiniteDivisorObligations
 

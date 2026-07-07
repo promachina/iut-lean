@@ -33189,72 +33189,84 @@ structure ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedCo
                     constructedHodgeIPLSource.noAllowedSHEDomainToCodomain,
                     constructedHodgeIPLSource.aptTransport_not_forbidden,
                     constructedBundle.aptTransportAudit⟩ } },
-        stepX_finite_divisor :=
-          { ind1_procession_normalized_logVolume_preserved :=
-              arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.ind1_preserves_processionNormalizedLogVolume,
-            ind2_procession_normalized_logVolume_preserved :=
-              arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.ind2_preserves_processionNormalizedLogVolume,
-            ind3_upper_semi_logVolume_inequality :=
-              arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.ind3_upper_semi_logVolume,
-            ind3_upper_semi_relation_audit :=
-              arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.ind3_upper_semi_relation_audit,
-            finite_divisor_packet_source_constructed :=
-              let finiteSource :=
-                NonarchimedeanFiniteDivisorPacketLocalSource.ofRealifiedFrobenioidLogKummerPacketSource
-                  divisorPacket monoAnalyticTheater packetSource
-              finiteSource.divisorPacket = divisorPacket ∧
-                finiteSource.toMonoAnalyticD =
-                  divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
-                    IUTStage1TensorPacketRealizationKind.monoAnalyticD
-                    monoAnalyticTheater ∧
-                audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
-                  divisorPacket.divisor.realifiedLogVolume ∧
-                audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
-                  audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume,
-            realified_frobenioid_log_kummer_source_constructed :=
-              holomorphicD.toRealized.product.productLogVolume =
-                  holomorphicF.toRealized.product.productLogVolume ∧
-                (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
-                      IUTStage1TensorPacketRealizationKind.monoAnalyticD
-                      monoAnalyticTheater).toRealized.product.productLogVolume =
-                    holomorphicD.toRealized.product.productLogVolume ∧
-                  IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
-                      true ∧
-                    upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
-                        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+          stepX_finite_divisor :=
+            { sourceData :=
+                { ind1_procession_normalized_logVolume_preserved :=
+                    arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.ind1_preserves_processionNormalizedLogVolume,
+                  ind2_procession_normalized_logVolume_preserved :=
+                    arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.ind2_preserves_processionNormalizedLogVolume,
+                  ind3_upper_semi_logVolume_inequality :=
+                    arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.ind3_upper_semi_logVolume,
+                  ind3_upper_semi_relation_audit :=
+                    arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.ind3_upper_semi_relation_audit,
+                  finite_divisor_packet_source_constructed :=
+                    let finiteSource :=
+                      NonarchimedeanFiniteDivisorPacketLocalSource.ofRealifiedFrobenioidLogKummerPacketSource
+                        divisorPacket monoAnalyticTheater packetSource
+                    finiteSource.divisorPacket = divisorPacket ∧
+                      finiteSource.toMonoAnalyticD =
+                        divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+                          IUTStage1TensorPacketRealizationKind.monoAnalyticD
+                          monoAnalyticTheater ∧
+                      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+                        divisorPacket.divisor.realifiedLogVolume ∧
+                      audited.choice.local_tensor_state.packetState.localObject.finiteLogVolume =
+                        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume,
+                  finite_divisor_packet_source_constructed_proof :=
+                    NonarchimedeanFiniteDivisorPacketLocalSource.ofRealifiedFrobenioidLogKummerPacketSource_endpoint
+                      divisorPacket monoAnalyticTheater packetSource,
+                  realified_frobenioid_log_kummer_source_constructed :=
+                    holomorphicD.toRealized.product.productLogVolume =
+                        holomorphicF.toRealized.product.productLogVolume ∧
+                      (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+                            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+                            monoAnalyticTheater).toRealized.product.productLogVolume =
+                          holomorphicD.toRealized.product.productLogVolume ∧
+                        IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+                            true ∧
+                          upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+                              audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+                            thetaAverage = upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+                              upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+                                audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume,
+                  realified_frobenioid_log_kummer_source_constructed_proof :=
+                    packetSource.realifiedFrobenioidPacket_endpoint,
+                  kummer_forgetting_compatibility_constructed :=
+                    holomorphicD.toRealized.product.productLogVolume =
+                        holomorphicF.toRealized.product.productLogVolume ∧
+                      (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+                            IUTStage1TensorPacketRealizationKind.monoAnalyticD
+                            monoAnalyticTheater).toRealized.product.productLogVolume =
+                          holomorphicD.toRealized.product.productLogVolume ∧
+                        IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+                            true ∧
+                          upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+                              audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+                            thetaAverage = upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+                              upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+                                audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume,
+                  kummer_forgetting_compatibility_constructed_proof :=
+                    packetSource.realifiedFrobenioidPacket_endpoint,
+                  vertical_iq_target_source_constructed :=
+                    targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
+                        true ∧
+                      thetaAverage =
+                        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+                      audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume =
+                        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
+                      upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+                        audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
                       thetaAverage = upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
-                        upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
-                          audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume,
-            kummer_forgetting_compatibility_constructed :=
-              holomorphicD.toRealized.product.productLogVolume =
-                  holomorphicF.toRealized.product.productLogVolume ∧
-                (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
-                      IUTStage1TensorPacketRealizationKind.monoAnalyticD
-                      monoAnalyticTheater).toRealized.product.productLogVolume =
-                    holomorphicD.toRealized.product.productLogVolume ∧
-                  IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
-                      true ∧
-                    upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
-                        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
-                      thetaAverage = upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
-                        upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
-                          audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume,
-            vertical_iq_target_source_constructed :=
-              targetSource.frobenioidMode.hasPreciseFrobenioidIsomorphisms =
-                  true ∧
-                thetaAverage =
-                  audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
-                audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume =
-                  audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
-                upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
-                  audited.choice.local_tensor_state.packetState.capsuleFamily.normalizedLogVolume ∧
-                thetaAverage = upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
-                upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
-                  audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume,
-            packet_source_target_log_volume_calibration_constructed :=
-              IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
-                  sourceCalibration.hodgeLogVolume sourceCalibration.thetaLogVolume ∧
-                sourceCalibration.thetaLogVolume = sourceCalibration.hodgeLogVolume },
+                      upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+                        audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume,
+                  vertical_iq_target_source_constructed_proof :=
+                    targetSource.verticalIQTarget_endpoint,
+                  packet_source_target_log_volume_calibration_constructed :=
+                    IUTStage1ZModCuspLabelLogVolumeCompatibility.FullLabelLogVolumeValuePreserving
+                        sourceCalibration.hodgeLogVolume sourceCalibration.thetaLogVolume ∧
+                      sourceCalibration.thetaLogVolume = sourceCalibration.hodgeLogVolume,
+                  packet_source_target_log_volume_calibration_constructed_proof :=
+                    sourceCalibration.calibration_endpoint } },
         stepXI_hull_determinant :=
           { sourceData :=
               { thetaSigned := package.preLedger.thetaSigned,
