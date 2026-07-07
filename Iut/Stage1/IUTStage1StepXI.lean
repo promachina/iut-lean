@@ -61463,6 +61463,83 @@ noncomputable def ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminant
     ob7Compatibility ob7_sourcePrimeStrip_eq ob7_targetPrimeStrip_eq
     ob7_logKummerColumn_eq_selected
 
+set_option linter.style.longLine false in
+/--
+Preferred selected-possible-image Step (xi) constructor with Ob7 projected
+from the coric `Theta^{x mu}`/log-Kummer source link.
+
+This is the constructed-source route used by the Step (xi) milestone, but the
+Ob7 boundary is no longer a separately supplied compatibility record.  The
+legacy prime-strip/log-Kummer data and source-spine label equalities are
+derived from `StepXIThetaLGPOb7CompatibilitySource`.
+-/
+noncomputable def ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantThetaLGPOb7Source
+    (paperTrace : StepXIPaperTrace)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (selectedQRegion_subset_recordUnion :
+      (sourceData.Images.region sourceData.selectedQChoice).toSet ⊆
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record)
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      package.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          hullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (sourceData.Images.region sourceData.selectedQChoice).toSet
+          selectedQRegion_subset_recordUnion
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -package.preLedger.qSigned)
+    (normalization : package.preLedger.normalization)
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        sourceData.Core sourceData.Images hullOperator)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (StepXIHullFormationData.ofQuotientHullCompatibility
+          hullOperator quotientHullCompatibility sourceData.selectedQChoice)
+        β Penv Pgau V μ) :
+    StepXIPaperDerivedHullDeterminantSource.{u, v} sourceData :=
+  ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminant
+    (sourceData := sourceData) (record := record) (β := β)
+    paperTrace operation hullOperation determinantOperation hullOperator
+    selectedQRegion_subset_recordUnion ob3ob4Source compatibility
+    measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+    q_pilot_positive normalization quotientHullCompatibility
+    ob7Source.toPrimeStripLogKummerCompatibilityData
+    ob7Source.sourcePrimeStrip_eq
+    ob7Source.targetPrimeStrip_eq
+    ob7Source.logKummerColumn_eq_selected
+
 end StepXIPaperDerivedHullDeterminantSource
 end IUTStage1Theorem311ToCorollary312PaperTrace
 

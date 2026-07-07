@@ -18787,6 +18787,148 @@ theorem ob5QuotientCompatibility
 
 end StepXIHullFormationData
 
+set_option linter.style.longLine false in
+/--
+Source-derived Ob7 log-Kummer compatibility for Step (xi).
+
+IUT III, Remark 3.9.5(vii), does not supply an independent boolean saying
+that prime-strip/log-Kummer compatibility is retained.  The retained datum is
+the same `Theta^{x mu}`/coric prime-strip link that identifies the local
+Gaussian and environment readings, after the Step (xi) hull/determinant bridge
+has been attached to the Theorem 3.11 equality-quotient possible-image family.
+
+This source object keeps that lower coric Ob7 source together with the three
+bridge alignments needed to read it at the Step (xi) boundary.  The legacy
+`StepXIPrimeStripLogKummerCompatibilityData` is then a projection whose labels
+are the source-spine input/output prime strips and selected log-theta column.
+-/
+structure StepXIThetaLGPOb7CompatibilitySource
+    {target : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l)
+    (hullData : StepXIHullFormationData sourceData.Core sourceData.Images)
+    (β Penv Pgau V : Type v) (μ : Type w)
+    [Fintype β] [Fintype Penv] [Fintype Pgau] [Fintype V] where
+  ob7Source :
+    IUTStage1Remark395Ob7CoricLogKummerCompatibilitySource
+      (Point target) (Quot sourceData.Core.equalityQuotient.relation)
+      β Penv Pgau V μ
+  bridge_possibleRegion_eq_hullSource :
+    ob7Source.bridgeSource.possibleRegion =
+      hullData.quotientHullCompatibility.familySource.possibleRegion
+  bridge_hullOperator_eq :
+    ob7Source.bridgeSource.hullOperator = hullData.hullOperator
+  bridge_qRegion_eq_selected :
+    ob7Source.bridgeSource.qRegion = hullData.selectedQRegion
+
+namespace StepXIThetaLGPOb7CompatibilitySource
+
+variable {target : Copy} {coric : Type u} {l : PrimeGeFive}
+variable
+  {sourceData :
+    Theorem311HodgeTheaterLogThetaLogKummerSource
+      (target := target) coric l}
+variable {hullData : StepXIHullFormationData sourceData.Core sourceData.Images}
+variable {β Penv Pgau V : Type v} {μ : Type w}
+variable [Fintype β] [Fintype Penv] [Fintype Pgau] [Fintype V]
+
+set_option linter.style.longLine false in
+def retainedStatement
+    (source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData hullData β Penv Pgau V μ) : Prop :=
+  source.ob7Source.bridgeSource.qRegion ⊆
+      source.ob7Source.bridgeSource.familyHull ∧
+    (∀ p : Penv,
+      source.ob7Source.coricInvariant.lift.base.gaussianPrimeToPlace
+          (source.ob7Source.coricInvariant.lift.base.primeEvaluation p) =
+        source.ob7Source.coricInvariant.lift.base.environmentPrimeToPlace p ∧
+      (source.ob7Source.coricInvariant.lift.base.localEvaluation.gaussianLocal.localObject
+          (source.ob7Source.coricInvariant.lift.base.gaussianPrimeToPlace
+            (source.ob7Source.coricInvariant.lift.base.primeEvaluation p))).realifiedLogVolume =
+        (source.ob7Source.coricInvariant.lift.base.localEvaluation.environmentLocal.localObject
+          (source.ob7Source.coricInvariant.lift.base.environmentPrimeToPlace p)).realifiedLogVolume ∧
+      source.ob7Source.coricInvariant.lift.environmentUnitCharacter p =
+        source.ob7Source.coricInvariant.coricUnitCharacter
+          (source.ob7Source.coricInvariant.lift.base.environmentPrimeToPlace p) ∧
+      source.ob7Source.coricInvariant.lift.gaussianUnitCharacter
+          (source.ob7Source.coricInvariant.lift.base.primeEvaluation p) =
+        source.ob7Source.coricInvariant.coricUnitCharacter
+          (source.ob7Source.coricInvariant.lift.base.gaussianPrimeToPlace
+            (source.ob7Source.coricInvariant.lift.base.primeEvaluation p)) ∧
+      source.ob7Source.coricInvariant.lift.environmentUnitCharacter p =
+        source.ob7Source.coricInvariant.lift.gaussianUnitCharacter
+          (source.ob7Source.coricInvariant.lift.base.primeEvaluation p)) ∧
+    source.ob7Source.bridgeSource.possibleRegion =
+      hullData.quotientHullCompatibility.familySource.possibleRegion ∧
+    source.ob7Source.bridgeSource.hullOperator = hullData.hullOperator ∧
+    source.ob7Source.bridgeSource.qRegion = hullData.selectedQRegion
+
+theorem retainedStatement_proof
+    (source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData hullData β Penv Pgau V μ) :
+    source.retainedStatement :=
+  ⟨source.ob7Source.endpoint.1,
+    source.ob7Source.endpoint.2.2.2.2.2,
+    source.bridge_possibleRegion_eq_hullSource,
+    source.bridge_hullOperator_eq,
+    source.bridge_qRegion_eq_selected⟩
+
+def toPrimeStripLogKummerCompatibilityData
+    (source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData hullData β Penv Pgau V μ) :
+    StepXIPrimeStripLogKummerCompatibilityData :=
+  { sourcePrimeStrip := sourceData.inputPrimeStrip,
+    targetPrimeStrip := sourceData.outputPrimeStrip,
+    logKummerColumn := sourceData.selectedQChoice.coordinate.logThetaColumn,
+    compatibilityRetained := source.retainedStatement,
+    compatibility_retained := source.retainedStatement_proof }
+
+theorem sourcePrimeStrip_eq
+    (source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData hullData β Penv Pgau V μ) :
+    source.toPrimeStripLogKummerCompatibilityData.sourcePrimeStrip =
+      sourceData.inputPrimeStrip :=
+  rfl
+
+theorem targetPrimeStrip_eq
+    (source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData hullData β Penv Pgau V μ) :
+    source.toPrimeStripLogKummerCompatibilityData.targetPrimeStrip =
+      sourceData.outputPrimeStrip :=
+  rfl
+
+theorem logKummerColumn_eq_selected
+    (source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData hullData β Penv Pgau V μ) :
+    source.toPrimeStripLogKummerCompatibilityData.logKummerColumn =
+      sourceData.selectedQChoice.coordinate.logThetaColumn :=
+  rfl
+
+theorem endpoint
+    (source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData hullData β Penv Pgau V μ) :
+    source.toPrimeStripLogKummerCompatibilityData.compatibilityRetained ∧
+      source.toPrimeStripLogKummerCompatibilityData.sourcePrimeStrip =
+        sourceData.inputPrimeStrip ∧
+      source.toPrimeStripLogKummerCompatibilityData.targetPrimeStrip =
+        sourceData.outputPrimeStrip ∧
+      source.toPrimeStripLogKummerCompatibilityData.logKummerColumn =
+        sourceData.selectedQChoice.coordinate.logThetaColumn :=
+  ⟨source.toPrimeStripLogKummerCompatibilityData.retained,
+    source.sourcePrimeStrip_eq,
+    source.targetPrimeStrip_eq,
+    source.logKummerColumn_eq_selected⟩
+
+end StepXIThetaLGPOb7CompatibilitySource
+
 /--
 Determinant/log-volume comparison data for Step (xi).
 
@@ -19204,6 +19346,48 @@ def ofQuotientHullCompatibility
     ob7_sourcePrimeStrip_eq := ob7_sourcePrimeStrip_eq,
     ob7_targetPrimeStrip_eq := ob7_targetPrimeStrip_eq,
     ob7_logKummerColumn_eq_selected := ob7_logKummerColumn_eq_selected }
+
+set_option linter.style.longLine false in
+/--
+Build the paper-derived Step (xi) source with Ob7 projected from a coric
+`Theta^{x mu}`/log-Kummer source link.
+
+This removes the raw Ob7 compatibility record and its three label equalities
+from the constructor boundary.  They are read from
+`StepXIThetaLGPOb7CompatibilitySource`, whose retained statement is the coric
+Remark 3.9.5(vii) endpoint plus the bridge alignments to the selected
+Theorem 3.11 possible-image hull.
+-/
+def ofQuotientHullCompatibilityThetaLGPOb7Source
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        sourceData.Core sourceData.Images hullOperator)
+    (determinantData :
+      StepXIDeterminantComparisonData.{u, v}
+        (StepXIHullFormationData.ofQuotientHullCompatibility
+          hullOperator quotientHullCompatibility sourceData.selectedQChoice)
+        thetaSigned)
+    {β Penv Pgau V : Type v} {μ : Type w}
+    [Fintype β] [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (StepXIHullFormationData.ofQuotientHullCompatibility
+          hullOperator quotientHullCompatibility sourceData.selectedQChoice)
+        β Penv Pgau V μ) :
+    StepXIPaperDerivedHullDeterminantSource sourceData :=
+  ofQuotientHullCompatibility
+    (sourceData := sourceData)
+    paperTrace thetaSigned hullOperator quotientHullCompatibility
+    determinantData
+    ob7Source.toPrimeStripLogKummerCompatibilityData
+    ob7Source.sourcePrimeStrip_eq
+    ob7Source.targetPrimeStrip_eq
+    ob7Source.logKummerColumn_eq_selected
 
 def toStepXIHullDeterminantSourceData
     (stepXI :

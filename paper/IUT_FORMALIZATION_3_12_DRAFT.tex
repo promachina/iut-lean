@@ -289,9 +289,12 @@ and the Step (x) finite-divisor/log-Kummer obligation package are projected from
 one source object.  The first Step (xi) hard-math route has also been added:
 a paper-derived Remark 3.9.5/Step (xi) source records the substeps
 (xi-a)--(xi-g), ties the selected \(q\)-region to the actual Theorem 3.11
-possible image selected by the source spine, pins Ob7 to the same input/output
-prime strips and one-column log-Kummer coordinate, and projects the existing
-Step (xi) hull/determinant obligation record internally.  The selected
+possible image selected by the source spine, and projects the existing
+Step (xi) hull/determinant obligation record internally.  Ob7 is no longer
+only a raw compatibility flag on the newest route: the legacy
+prime-strip/log-Kummer record and its input/output strip and selected-column
+equalities are projected from a coric \(\Theta^{\times\mu}\)/log-Kummer source
+link aligned with the same quotient hull source.  The selected
 \(q\)-region containment is now derived from the equality-quotient
 possible-image family: it is the canonical inclusion of the selected possible
 region into the family union, followed by the constructed holomorphic hull
@@ -397,10 +400,14 @@ A further source-selected constructor forms the constructed Remark 3.9.5
 source with the source-spine selected possible image as its q-pilot region, so
 this identification is definitional on that route; the remaining explicit
 condition is containment of the selected possible image in the record
-possible-image union.  At the public paper-trace route boundary, the remaining
-payload audit has now been split so the caller supplies only the non-Step-(xi)
-payload; the legacy Step-(xi) audit fields are derived internally from the
-structured Step-(xi) source.
+possible-image union.  The Ob7 prime-strip/log-Kummer record can now be read
+from a single coric \(\Theta^{\times\mu}\)-style source link aligned with the
+same quotient-hull bridge; its retained statement includes the local
+Gaussian/environment equalities and unit-character equalities from the Ob7
+source endpoint.  At the public paper-trace route boundary, the remaining
+payload audit has now been split so the caller supplies only the
+non-Step-(xi) payload; the legacy Step-(xi) audit fields are derived
+internally from the structured Step-(xi) source.
 This is progress below a free-floating obligation bundle.  What remains is to
 construct, from the source papers, the actual lower operations corresponding to:
 \[
@@ -411,7 +418,7 @@ construct, from the source papers, the actual lower operations corresponding to:
 \text{Ob3/Ob4 adjusted determinant data from localizations},\\
 \text{Ob5 quotient determinant compatibility},\\
 \text{the source-spine/record alignment of hull operators and q-pilot regions},\\
-\text{Ob7 prime-strip/log-Kummer compatibility}.
+\text{the lower coric Ob7 source and its alignment with the constructed bridge}.
 \end{array}
 \]
 This is the next natural place to eliminate a family of \texttt{Prop}-level
