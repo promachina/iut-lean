@@ -33246,60 +33246,105 @@ structure ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedCo
                   sourceCalibration.hodgeLogVolume sourceCalibration.thetaLogVolume ∧
                 sourceCalibration.thetaLogVolume = sourceCalibration.hodgeLogVolume },
         stepXI_hull_determinant :=
-          { remark395_holomorphic_hull_operator_constructed :=
-              ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource.Endpoint
-                arithmeticDivisorBackedComponentSource.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource,
-            theorem311_possible_image_family_matches_hull_source :=
-              IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.OneSidedRemark395CompatibilityAudit
-                arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource
-                remark395HullSource
-                arithmeticDivisorBackedComponentSource.qPilotRegion_eq_selectedQRegion,
-            selected_q_region_contained_in_possible_image_union :=
-              remark395HullSource.qPilotRegion =
-                  IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
-                    record arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice ∧
-                remark395HullSource.qPilotRegion ⊆
-                  IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
-                    record ∧
-                arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQRegion =
-                  arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.equalityQuotientPossibleImages.quotientImages.region
-                    (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
-                      arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice) ∧
-                (∀ choice,
-                  arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.equalityQuotientPossibleImages.quotientImages.region
-                      (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap choice) =
-                    record.thetaPossibleImages.images.region choice),
-            ob1_ob2_hull_absorption_constructed :=
-              IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.OneSidedRemark395CompatibilityAudit
-                arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource
-                remark395HullSource
-                arithmeticDivisorBackedComponentSource.qPilotRegion_eq_selectedQRegion,
-            ob3_ob4_adjusted_determinant_normalization_constructed :=
-              Remark395ConstructedIUTIVCThetaHandoffAudit remark395HullSource estimate,
-            ob5_quotient_determinant_compatibility_constructed :=
-              IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.OneSidedQuotientAudit
-                arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource,
-            ob7_prime_strip_log_kummer_compatibility_retained :=
-              holomorphicD.toRealized.product.productLogVolume =
-                  holomorphicF.toRealized.product.productLogVolume ∧
-                (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
-                      IUTStage1TensorPacketRealizationKind.monoAnalyticD
-                      monoAnalyticTheater).toRealized.product.productLogVolume =
-                    holomorphicD.toRealized.product.productLogVolume ∧
-                  IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
-                      true ∧
-                    upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
-                        audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
-                      thetaAverage = upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
-                        upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
-                          audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume,
-            weighted_determinant_tensor_power_bound_constructed :=
-              remark395HullSource.determinantSource.normalizedLogVolume <=
-                package.preLedger.thetaSigned,
-            q_region_logVolume_le_thetaSigned_constructed :=
-              remark395HullSource.hullOperator.logVolume
-                  remark395HullSource.qPilotRegion <=
-                package.preLedger.thetaSigned },
+          { sourceData :=
+              { thetaSigned := package.preLedger.thetaSigned,
+                hullData :=
+                  { hullOperator := remark395HullSource.hullOperator,
+                    quotientHullCompatibility :=
+                      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility.ofCompatibility
+                        arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.possibleImageCompatibility
+                        remark395HullSource.hullOperator,
+                    selectedQChoice :=
+                      arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice,
+                    selectedQRegion := remark395HullSource.qPilotRegion,
+                    selectedQRegion_eq_quotientRegion := by
+                      calc
+                        remark395HullSource.qPilotRegion =
+                            arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQRegion.toSet :=
+                          arithmeticDivisorBackedComponentSource.qPilotRegion_eq_selectedQRegion
+                        _ =
+                            (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.equalityQuotientPossibleImages.quotientImages.region
+                              (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
+                                arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice)).toSet := by
+                          exact congrArg Region.toSet
+                            arithmeticDivisorBackedLocalGlobalCThetaAudit.selectedQRegionQuotientEndpoint.2.2.1,
+                    selectedQRegion_subset_possibleImageUnion := by
+                      intro x hx
+                      have hregion :
+                          remark395HullSource.qPilotRegion =
+                            (IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility.ofCompatibility
+                              arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.possibleImageCompatibility
+                              remark395HullSource.hullOperator).familySource.possibleRegion
+                                (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
+                                  arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice) := by
+                        calc
+                          remark395HullSource.qPilotRegion =
+                              arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQRegion.toSet :=
+                            arithmeticDivisorBackedComponentSource.qPilotRegion_eq_selectedQRegion
+                          _ =
+                              (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.equalityQuotientPossibleImages.quotientImages.region
+                                (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
+                                  arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice)).toSet := by
+                            exact congrArg Region.toSet
+                              arithmeticDivisorBackedLocalGlobalCThetaAudit.selectedQRegionQuotientEndpoint.2.2.1
+                      rw [hregion] at hx
+                      exact
+                        (IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility.ofCompatibility
+                          arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.possibleImageCompatibility
+                          remark395HullSource.hullOperator).familySource.possibleRegion_subset_familyUnion
+                            (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
+                              arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice) hx },
+                determinantData :=
+                  let localizedStepXISource :=
+                    arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.localizedStepXISource
+                  { determinantIndex := β,
+                    determinantIndexFintype := inferInstance,
+                    adjustedLogVolume :=
+                      localizedStepXISource.weightedAdjustedLogVolume,
+                    determinantLogVolume :=
+                      remark395HullSource.determinantSource.determinantLogVolume,
+                    determinantLogVolume_eq_adjustedSum := by
+                      rw [arithmeticDivisorBackedComponentSource.stepXIDeterminantCalibrationAudit.determinantSource_eq_stepXI]
+                      exact localizedStepXISource.determinantLogVolume_eq_sum_weightedAdjusted,
+                    familyHullLogVolume :=
+                      remark395HullSource.determinantSource.determinantLogVolume,
+                    familyHullLogVolume_eq_determinantLogVolume := rfl,
+                    normalizedLogVolume :=
+                      remark395HullSource.determinantSource.normalizedLogVolume,
+                    normalizedLogVolume_le_familyHullLogVolume :=
+                      le_of_eq
+                        remark395HullSource.determinantSource.normalizedLogVolume_eq_determinantLogVolume,
+                    tensorPower :=
+                      remark395HullSource.determinantSource.positiveTensorPower,
+                    tensorPower_pos :=
+                      remark395HullSource.determinantSource.tensor_power_pos,
+                    weightedDeterminantBound :=
+                      arithmeticDivisorBackedLocalGlobalCThetaAudit.normalizedRecordBridge.2,
+                    selectedQRegionLogVolume_le_normalized :=
+                      arithmeticDivisorBackedLocalGlobalCThetaAudit.normalizedRecordBridge.1 },
+                ob7Compatibility :=
+                  { sourcePrimeStrip :=
+                      constructedHodgeIPLSource.iplConstructionSource.iplDatum.inputPrimeStrip,
+                    targetPrimeStrip :=
+                      constructedHodgeIPLSource.iplConstructionSource.iplDatum.choicePrimeStrip
+                        arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice,
+                    logKummerColumn := { label := "1-q-pilot" },
+                    compatibilityRetained :=
+                      holomorphicD.toRealized.product.productLogVolume =
+                          holomorphicF.toRealized.product.productLogVolume ∧
+                        (divisorPacket.toRealifiedFrobenioidTensorPacketProductSource
+                              IUTStage1TensorPacketRealizationKind.monoAnalyticD
+                              monoAnalyticTheater).toRealized.product.productLogVolume =
+                            holomorphicD.toRealized.product.productLogVolume ∧
+                          IUTStage1LogThetaVerticalColumn.oneQPilot.hasLogKummerNonInterference =
+                              true ∧
+                            upperSemiEntry.toEntry.sourceLogVolume.finiteLogVolume =
+                                audited.choice.upper_semi_state.logVolumeCompatibility.sourceLogVolume ∧
+                              thetaAverage = upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume ∧
+                                upperSemiEntry.toEntry.targetLogVolume.finiteLogVolume =
+                                  audited.choice.upper_semi_state.logVolumeCompatibility.targetLogVolume,
+                    compatibility_retained :=
+                      packetSource.realifiedFrobenioidPacket_endpoint } } },
         iutIV_cTheta :=
           { proposition14_distinguished_log_shell_inclusions_constructed :=
               ∀ place : β,
@@ -34075,23 +34120,42 @@ theorem boundarySignedEqualityOrStrictCTheta_from_constructedQualitativeHodgeSHE
             packetSource.realifiedFrobenioidPacket_endpoint,
             targetSource.verticalIQTarget_endpoint,
             sourceCalibration.calibration_endpoint,
-            arithmeticDivisorBackedComponentSource.closedLocalGlobalEndpoint,
-            arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedRemark395CompatibilityAudit
-              remark395HullSource
-              arithmeticDivisorBackedComponentSource.qPilotRegion_eq_selectedQRegion,
-            arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.remark395SelectedQRegion_quotientEndpoint
-              remark395HullSource
-              arithmeticDivisorBackedComponentSource.qPilotRegion_eq_selectedQRegion,
-            arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedRemark395CompatibilityAudit
-              remark395HullSource
-              arithmeticDivisorBackedComponentSource.qPilotRegion_eq_selectedQRegion,
-            arithmeticDivisorBackedComponentSource.localGlobalHandoffAudit,
-            arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit,
-            packetSource.realifiedFrobenioidPacket_endpoint,
-            remark395HullSource.constructedRecordBridgeAudit.normalizedBridge_from_bridge.2,
-            le_trans
-              remark395HullSource.constructedRecordBridgeAudit.normalizedBridge_from_bridge.1
-              remark395HullSource.constructedRecordBridgeAudit.normalizedBridge_from_bridge.2,
+            by
+              exact
+                IUTStage1Theorem311ToCorollary312PaperTrace.StepXIHullDeterminantObligations.remark395_holomorphic_hull_operator_constructed_proof
+                  _,
+            by
+              exact
+                IUTStage1Theorem311ToCorollary312PaperTrace.StepXIHullDeterminantObligations.theorem311_possible_image_family_matches_hull_source_proof
+                  _,
+            by
+              exact
+                IUTStage1Theorem311ToCorollary312PaperTrace.StepXIHullDeterminantObligations.selected_q_region_contained_in_possible_image_union_proof
+                  _,
+            by
+              exact
+                IUTStage1Theorem311ToCorollary312PaperTrace.StepXIHullDeterminantObligations.ob1_ob2_hull_absorption_constructed_proof
+                  _,
+            by
+              exact
+                IUTStage1Theorem311ToCorollary312PaperTrace.StepXIHullDeterminantObligations.ob3_ob4_adjusted_determinant_normalization_constructed_proof
+                  _,
+            by
+              exact
+                IUTStage1Theorem311ToCorollary312PaperTrace.StepXIHullDeterminantObligations.ob5_quotient_determinant_compatibility_constructed_proof
+                  _,
+            by
+              exact
+                IUTStage1Theorem311ToCorollary312PaperTrace.StepXIHullDeterminantObligations.ob7_prime_strip_log_kummer_compatibility_retained_proof
+                  _,
+            by
+              exact
+                IUTStage1Theorem311ToCorollary312PaperTrace.StepXIHullDeterminantObligations.weighted_determinant_tensor_power_bound_constructed_proof
+                  _,
+            by
+              exact
+                IUTStage1Theorem311ToCorollary312PaperTrace.StepXIHullDeterminantObligations.q_region_logVolume_le_thetaSigned_constructed_proof
+                  _,
             arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource
               |>.arithmeticDivisorLocalDegreeAudit
               |>.distinguishedComponentEndpoint,

@@ -17565,23 +17565,354 @@ def fromTypedCore
 end StepXFiniteDivisorObligations
 
 /--
+Prime-strip/log-Kummer compatibility data retained through Step (xi).
+
+The previous paper-trace ledger stored the Ob7 assertion as a bare proposition.
+This record still records the source statement as a proposition, but it is now
+carried by a named source object with explicit source/target labels.  Downstream
+obligation projections read the proof from this data object instead of consuming
+an unstructured field.
+-/
+structure StepXIPrimeStripLogKummerCompatibilityData where
+  sourcePrimeStrip : QualitativeData.PrimeStripId
+  targetPrimeStrip : QualitativeData.PrimeStripId
+  logKummerColumn : LogThetaColumnId
+  compatibilityRetained : Prop
+  compatibility_retained : compatibilityRetained
+
+namespace StepXIPrimeStripLogKummerCompatibilityData
+
+theorem retained
+    (data : StepXIPrimeStripLogKummerCompatibilityData) :
+    data.compatibilityRetained :=
+  data.compatibility_retained
+
+end StepXIPrimeStripLogKummerCompatibilityData
+
+/--
+Holomorphic-hull and possible-image data for Step (xi).
+
+This is the data-level replacement for the first three Step (xi) source-paper
+obligations: a concrete Remark 3.9.5 hull operator, a possible-image family
+already factored through the `(Ind1)/(Ind2)` equality quotient, and a selected
+q-region whose membership in the possible-image union is proved from the
+quotient-indexed family.
+-/
+structure StepXIHullFormationData
+    {target : Copy}
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
+    (images : RegionFamily target choice) where
+  hullOperator :
+    IUTStage1Remark395HolomorphicHullOperator (Point target)
+  quotientHullCompatibility :
+    IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+      core images hullOperator
+  selectedQChoice : choice
+  selectedQRegion : Set (Point target)
+  selectedQRegion_eq_quotientRegion :
+    selectedQRegion =
+      quotientHullCompatibility.familySource.possibleRegion
+        (core.equalityQuotientMap selectedQChoice)
+  selectedQRegion_subset_possibleImageUnion :
+    selectedQRegion ⊆ quotientHullCompatibility.familySource.familyUnion
+
+namespace StepXIHullFormationData
+
+variable {target : Copy}
+variable {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
+variable {images : RegionFamily target choice}
+
+theorem hullOperatorConstructed
+    (data : StepXIHullFormationData core images) :
+    Nonempty (IUTStage1Remark395HolomorphicHullOperator (Point target)) :=
+  ⟨data.hullOperator⟩
+
+theorem possibleImageFamilyMatchesHullSource
+    (data : StepXIHullFormationData core images) :
+    ∀ choice₀,
+      data.quotientHullCompatibility.familySource.possibleRegion
+          (core.equalityQuotientMap choice₀) =
+        (images.region choice₀).toSet :=
+  data.quotientHullCompatibility.possibleRegion_pullback_eq
+
+theorem selectedQRegionContainedInPossibleImageUnion
+    (data : StepXIHullFormationData core images) :
+    data.selectedQRegion ⊆
+      data.quotientHullCompatibility.familySource.familyUnion :=
+  data.selectedQRegion_subset_possibleImageUnion
+
+theorem selectedQRegionContainedInCanonicalHull
+    (data : StepXIHullFormationData core images) :
+    data.selectedQRegion ⊆
+      data.quotientHullCompatibility.familySource.canonicalHull :=
+  Set.Subset.trans data.selectedQRegion_subset_possibleImageUnion
+    data.quotientHullCompatibility.familySource.familyUnion_subset_phi
+
+theorem ob1Ob2HullAbsorption
+    (data : StepXIHullFormationData core images) :
+    data.selectedQRegion ⊆
+        data.quotientHullCompatibility.familySource.canonicalHull ∧
+      data.quotientHullCompatibility.familySource.familyUnion ⊆
+        data.quotientHullCompatibility.familySource.canonicalHull ∧
+      data.quotientHullCompatibility.familySource.hullOperator.isClosed
+        data.quotientHullCompatibility.familySource.canonicalHull :=
+  ⟨data.selectedQRegionContainedInCanonicalHull,
+    data.quotientHullCompatibility.familySource.familyUnion_subset_phi,
+    data.quotientHullCompatibility.familySource.phi_closed⟩
+
+theorem ob5QuotientCompatibility
+    (data : StepXIHullFormationData core images) :
+    (∀ {choice₁ choice₂ : choice},
+        choice₂ ∈ core.equalityOrbit choice₁ ->
+          data.quotientHullCompatibility.familySource.possibleRegion
+              (core.equalityQuotientMap choice₁) =
+            data.quotientHullCompatibility.familySource.possibleRegion
+              (core.equalityQuotientMap choice₂)) ∧
+      (∀ {choice₁ choice₂ : choice},
+        choice₂ ∈ core.equalityOrbit choice₁ ->
+          data.hullOperator.logVolume
+              (data.quotientHullCompatibility.familySource.possibleRegion
+                (core.equalityQuotientMap choice₁)) =
+            data.hullOperator.logVolume
+              (data.quotientHullCompatibility.familySource.possibleRegion
+                (core.equalityQuotientMap choice₂))) :=
+  ⟨fun hmem =>
+      data.quotientHullCompatibility.possibleRegion_eq_of_equalityOrbit hmem,
+    fun hmem =>
+      data.quotientHullCompatibility.logVolume_eq_of_equalityOrbit hmem⟩
+
+end StepXIHullFormationData
+
+/--
+Determinant/log-volume comparison data for Step (xi).
+
+The determinant part is expressed as a finite adjusted-log-volume sum, together
+with the comparison chain that bounds the selected q-region log-volume by the
+Step (xi) theta signed value.  This packages the Ob3/Ob4 normalization,
+weighted determinant tensor-power bound, and final q-region comparison as
+source data.
+-/
+structure StepXIDeterminantComparisonData
+    {target : Copy}
+    {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
+    {images : RegionFamily target choice}
+    (hullData : StepXIHullFormationData core images)
+    (thetaSigned : Real) where
+  determinantIndex : Type v
+  determinantIndexFintype : Fintype determinantIndex
+  adjustedLogVolume : determinantIndex -> Real
+  determinantLogVolume : Real
+  determinantLogVolume_eq_adjustedSum :
+    letI : Fintype determinantIndex := determinantIndexFintype
+    determinantLogVolume =
+      Finset.univ.sum adjustedLogVolume
+  familyHullLogVolume : Real
+  familyHullLogVolume_eq_determinantLogVolume :
+    familyHullLogVolume = determinantLogVolume
+  normalizedLogVolume : Real
+  normalizedLogVolume_le_familyHullLogVolume :
+    normalizedLogVolume <= familyHullLogVolume
+  tensorPower : Nat
+  tensorPower_pos : 0 < tensorPower
+  weightedDeterminantBound :
+    normalizedLogVolume <= thetaSigned
+  selectedQRegionLogVolume_le_normalized :
+    hullData.hullOperator.logVolume hullData.selectedQRegion <=
+      normalizedLogVolume
+
+namespace StepXIDeterminantComparisonData
+
+variable {target : Copy}
+variable {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
+variable {images : RegionFamily target choice}
+variable {hullData : StepXIHullFormationData core images}
+variable {thetaSigned : Real}
+
+theorem ob3Ob4AdjustedDeterminantNormalization
+    (data : StepXIDeterminantComparisonData hullData thetaSigned) :
+    letI : Fintype data.determinantIndex := data.determinantIndexFintype
+    data.determinantLogVolume =
+        Finset.univ.sum data.adjustedLogVolume ∧
+      data.familyHullLogVolume = data.determinantLogVolume ∧
+      data.normalizedLogVolume <= data.familyHullLogVolume :=
+  ⟨data.determinantLogVolume_eq_adjustedSum,
+    data.familyHullLogVolume_eq_determinantLogVolume,
+    data.normalizedLogVolume_le_familyHullLogVolume⟩
+
+theorem weightedDeterminantTensorPowerBound
+    (data : StepXIDeterminantComparisonData hullData thetaSigned) :
+    0 < data.tensorPower ∧ data.normalizedLogVolume <= thetaSigned :=
+  ⟨data.tensorPower_pos, data.weightedDeterminantBound⟩
+
+theorem qRegionLogVolume_le_thetaSigned
+    (data : StepXIDeterminantComparisonData hullData thetaSigned) :
+    hullData.hullOperator.logVolume hullData.selectedQRegion <= thetaSigned :=
+  le_trans data.selectedQRegionLogVolume_le_normalized
+    data.weightedDeterminantBound
+
+end StepXIDeterminantComparisonData
+
+/--
+Data-level Step (xi) source package.
+
+This replaces the earlier list of bare Step (xi) propositions by named
+holomorphic-hull, determinant/log-volume, and Ob7 compatibility data.
+-/
+structure StepXIHullDeterminantSourceData
+    {target : Copy}
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
+    (images : RegionFamily target choice) where
+  thetaSigned : Real
+  hullData : StepXIHullFormationData core images
+  determinantData :
+    StepXIDeterminantComparisonData.{u, v} hullData thetaSigned
+  ob7Compatibility : StepXIPrimeStripLogKummerCompatibilityData
+
+/--
 IUT III, Step (xi) and Remark 3.9.5 hull/determinant obligations.
 
-This is the source-paper map underneath the constructed Remark 3.9.5 object
-used by the current finite-divisor endpoint.  It names the remaining
-holomorphic-hull, determinant, Ob3/Ob4, Ob5, Ob7, and q-to-theta log-volume
-chain obligations separately.
+The obligation record now consumes a proof-carrying source-data object rather
+than nine independent `Prop` fields.  The old field names are retained below as
+derived dot-projections, so existing paper-trace audits continue to expose the
+same mathematical checkpoints while no longer treating Step (xi) as an
+unstructured proposition bundle.
 -/
-structure StepXIHullDeterminantObligations where
-  remark395_holomorphic_hull_operator_constructed : Prop
-  theorem311_possible_image_family_matches_hull_source : Prop
-  selected_q_region_contained_in_possible_image_union : Prop
-  ob1_ob2_hull_absorption_constructed : Prop
-  ob3_ob4_adjusted_determinant_normalization_constructed : Prop
-  ob5_quotient_determinant_compatibility_constructed : Prop
-  ob7_prime_strip_log_kummer_compatibility_retained : Prop
-  weighted_determinant_tensor_power_bound_constructed : Prop
-  q_region_logVolume_le_thetaSigned_constructed : Prop
+structure StepXIHullDeterminantObligations
+    {target : Copy}
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
+    (images : RegionFamily target choice) where
+  sourceData : StepXIHullDeterminantSourceData.{u, v} core images
+
+namespace StepXIHullDeterminantObligations
+
+variable {target : Copy}
+variable {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
+variable {images : RegionFamily target choice}
+
+def remark395_holomorphic_hull_operator_constructed
+    (obligations : StepXIHullDeterminantObligations core images) :
+    Prop :=
+  Nonempty (IUTStage1Remark395HolomorphicHullOperator (Point target))
+
+def theorem311_possible_image_family_matches_hull_source
+    (obligations : StepXIHullDeterminantObligations core images) :
+    Prop :=
+    ∀ choice₀,
+      obligations.sourceData.hullData.quotientHullCompatibility.familySource.possibleRegion
+          (core.equalityQuotientMap choice₀) =
+        (images.region choice₀).toSet
+
+def selected_q_region_contained_in_possible_image_union
+    (obligations : StepXIHullDeterminantObligations core images) :
+    Prop :=
+    obligations.sourceData.hullData.selectedQRegion ⊆
+      obligations.sourceData.hullData.quotientHullCompatibility.familySource.familyUnion
+
+def ob1_ob2_hull_absorption_constructed
+    (obligations : StepXIHullDeterminantObligations core images) :
+    Prop :=
+    obligations.sourceData.hullData.selectedQRegion ⊆
+        obligations.sourceData.hullData.quotientHullCompatibility.familySource.canonicalHull ∧
+      obligations.sourceData.hullData.quotientHullCompatibility.familySource.familyUnion ⊆
+        obligations.sourceData.hullData.quotientHullCompatibility.familySource.canonicalHull ∧
+      obligations.sourceData.hullData.quotientHullCompatibility.familySource.hullOperator.isClosed
+        obligations.sourceData.hullData.quotientHullCompatibility.familySource.canonicalHull
+
+def ob3_ob4_adjusted_determinant_normalization_constructed
+    (obligations : StepXIHullDeterminantObligations core images) :
+    Prop :=
+    letI : Fintype obligations.sourceData.determinantData.determinantIndex :=
+      obligations.sourceData.determinantData.determinantIndexFintype
+    obligations.sourceData.determinantData.determinantLogVolume =
+        Finset.univ.sum obligations.sourceData.determinantData.adjustedLogVolume ∧
+      obligations.sourceData.determinantData.familyHullLogVolume =
+        obligations.sourceData.determinantData.determinantLogVolume ∧
+      obligations.sourceData.determinantData.normalizedLogVolume <=
+        obligations.sourceData.determinantData.familyHullLogVolume
+
+def ob5_quotient_determinant_compatibility_constructed
+    (obligations : StepXIHullDeterminantObligations core images) :
+    Prop :=
+  (∀ {choice₁ choice₂ : choice},
+      choice₂ ∈ core.equalityOrbit choice₁ ->
+        obligations.sourceData.hullData.quotientHullCompatibility.familySource.possibleRegion
+            (core.equalityQuotientMap choice₁) =
+          obligations.sourceData.hullData.quotientHullCompatibility.familySource.possibleRegion
+            (core.equalityQuotientMap choice₂)) ∧
+    (∀ {choice₁ choice₂ : choice},
+      choice₂ ∈ core.equalityOrbit choice₁ ->
+        obligations.sourceData.hullData.hullOperator.logVolume
+            (obligations.sourceData.hullData.quotientHullCompatibility.familySource.possibleRegion
+              (core.equalityQuotientMap choice₁)) =
+          obligations.sourceData.hullData.hullOperator.logVolume
+            (obligations.sourceData.hullData.quotientHullCompatibility.familySource.possibleRegion
+              (core.equalityQuotientMap choice₂)))
+
+def ob7_prime_strip_log_kummer_compatibility_retained
+    (obligations : StepXIHullDeterminantObligations core images) :
+    Prop :=
+  obligations.sourceData.ob7Compatibility.compatibilityRetained
+
+def weighted_determinant_tensor_power_bound_constructed
+    (obligations : StepXIHullDeterminantObligations core images) :
+    Prop :=
+    0 < obligations.sourceData.determinantData.tensorPower ∧
+      obligations.sourceData.determinantData.normalizedLogVolume <=
+        obligations.sourceData.thetaSigned
+
+def q_region_logVolume_le_thetaSigned_constructed
+    (obligations : StepXIHullDeterminantObligations core images) :
+    Prop :=
+    obligations.sourceData.hullData.hullOperator.logVolume
+        obligations.sourceData.hullData.selectedQRegion <=
+      obligations.sourceData.thetaSigned
+
+theorem remark395_holomorphic_hull_operator_constructed_proof
+    (obligations : StepXIHullDeterminantObligations core images) :
+    obligations.remark395_holomorphic_hull_operator_constructed :=
+  obligations.sourceData.hullData.hullOperatorConstructed
+
+theorem theorem311_possible_image_family_matches_hull_source_proof
+    (obligations : StepXIHullDeterminantObligations core images) :
+    obligations.theorem311_possible_image_family_matches_hull_source :=
+  obligations.sourceData.hullData.possibleImageFamilyMatchesHullSource
+
+theorem selected_q_region_contained_in_possible_image_union_proof
+    (obligations : StepXIHullDeterminantObligations core images) :
+    obligations.selected_q_region_contained_in_possible_image_union :=
+  obligations.sourceData.hullData.selectedQRegionContainedInPossibleImageUnion
+
+theorem ob1_ob2_hull_absorption_constructed_proof
+    (obligations : StepXIHullDeterminantObligations core images) :
+    obligations.ob1_ob2_hull_absorption_constructed :=
+  obligations.sourceData.hullData.ob1Ob2HullAbsorption
+
+theorem ob3_ob4_adjusted_determinant_normalization_constructed_proof
+    (obligations : StepXIHullDeterminantObligations core images) :
+    obligations.ob3_ob4_adjusted_determinant_normalization_constructed :=
+  obligations.sourceData.determinantData.ob3Ob4AdjustedDeterminantNormalization
+
+theorem ob5_quotient_determinant_compatibility_constructed_proof
+    (obligations : StepXIHullDeterminantObligations core images) :
+    obligations.ob5_quotient_determinant_compatibility_constructed :=
+  obligations.sourceData.hullData.ob5QuotientCompatibility
+
+theorem ob7_prime_strip_log_kummer_compatibility_retained_proof
+    (obligations : StepXIHullDeterminantObligations core images) :
+    obligations.ob7_prime_strip_log_kummer_compatibility_retained :=
+  obligations.sourceData.ob7Compatibility.retained
+
+theorem weighted_determinant_tensor_power_bound_constructed_proof
+    (obligations : StepXIHullDeterminantObligations core images) :
+    obligations.weighted_determinant_tensor_power_bound_constructed :=
+  obligations.sourceData.determinantData.weightedDeterminantTensorPowerBound
+
+theorem q_region_logVolume_le_thetaSigned_constructed_proof
+    (obligations : StepXIHullDeterminantObligations core images) :
+    obligations.q_region_logVolume_le_thetaSigned_constructed :=
+  obligations.sourceData.determinantData.qRegionLogVolume_le_thetaSigned
+
+end StepXIHullDeterminantObligations
 
 /--
 IUT IV local-to-global `C_Theta` obligations underneath the current
@@ -17914,7 +18245,7 @@ structure Obligations
   stepX_finite_divisor :
     StepXFiniteDivisorObligations core
   stepXI_hull_determinant :
-    StepXIHullDeterminantObligations
+    StepXIHullDeterminantObligations.{u, v} core images
   iutIV_cTheta :
     IUTIVCThetaObligations
   additive_haar_arithmetic_degree_padic :
