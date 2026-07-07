@@ -17313,6 +17313,49 @@ theorem hodgeTheaterSHEAlignment
 
 end IUTStage1Theorem311SHEAlignment
 
+namespace AuditConjunction
+
+/-!
+Reusable projections for proposition-valued audit ledgers.  They keep public
+audit statements as ordinary conjunctions while giving downstream code named
+projection points instead of long `.1/.2.2...` chains.
+-/
+
+theorem left {p q : Prop} (audit : p ∧ q) : p :=
+  audit.1
+
+theorem right {p q : Prop} (audit : p ∧ q) : q :=
+  audit.2
+
+theorem first3 {p q r : Prop} (audit : p ∧ q ∧ r) : p :=
+  audit.1
+
+theorem second3 {p q r : Prop} (audit : p ∧ q ∧ r) : q :=
+  audit.2.1
+
+theorem third3 {p q r : Prop} (audit : p ∧ q ∧ r) : r :=
+  audit.2.2
+
+theorem first4 {p q r s : Prop} (audit : p ∧ q ∧ r ∧ s) : p :=
+  audit.1
+
+theorem second4 {p q r s : Prop} (audit : p ∧ q ∧ r ∧ s) : q :=
+  audit.2.1
+
+theorem third4 {p q r s : Prop} (audit : p ∧ q ∧ r ∧ s) : r :=
+  audit.2.2.1
+
+theorem fourth4 {p q r s : Prop} (audit : p ∧ q ∧ r ∧ s) : s :=
+  audit.2.2.2
+
+theorem pairLeft {p q r : Prop} (audit : p ∧ q ∧ r) : p ∧ q :=
+  ⟨audit.1, audit.2.1⟩
+
+theorem pairRight {p q r : Prop} (audit : p ∧ q ∧ r) : q ∧ r :=
+  audit.2
+
+end AuditConjunction
+
 namespace IUTStage1Theorem311ToCorollary312PaperTrace
 
 /-!
@@ -18356,6 +18399,66 @@ theorem milestoneCompletionAudit
           obligations.closedEndpointRemovesThetaSignedLeCThetaAbsLogQHypothesis audit,
           obligations.closedEndpointRemovesRawCanonicalCThetaScaleLeCThetaHypothesis audit⟩
     audit_and_paper := audit }
+
+theorem paperTraceAudit
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    Theorem311AndRemarksObligations.RemainingPayloadAudit
+      obligations.theorem311_and_remarks :=
+  (obligations.milestoneCompletionAudit audit).paper_trace
+
+theorem selectedQRegionAudit
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.theorem311_and_remarks.selected_q_region_is_theorem311_possible_image ∧
+      obligations.stepXI_hull_determinant.selected_q_region_contained_in_possible_image_union :=
+  (obligations.milestoneCompletionAudit audit).selected_q_region
+
+theorem remark395BridgeAudit
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.stepXI_hull_determinant.remark395_holomorphic_hull_operator_constructed ∧
+      obligations.stepXI_hull_determinant.theorem311_possible_image_family_matches_hull_source ∧
+      obligations.stepXI_hull_determinant.ob3_ob4_adjusted_determinant_normalization_constructed ∧
+      obligations.stepXI_hull_determinant.ob5_quotient_determinant_compatibility_constructed ∧
+      obligations.stepXI_hull_determinant.weighted_determinant_tensor_power_bound_constructed ∧
+      obligations.stepXI_hull_determinant.q_region_logVolume_le_thetaSigned_constructed :=
+  (obligations.milestoneCompletionAudit audit).remark395_bridge
+
+theorem constructorIntoCurrentCorridorAudit
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    obligations.theorem311_and_remarks.theorem311_hodge_she_ipl_apt_source_bridge_constructed ∧
+      obligations.stepX_finite_divisor.finite_divisor_packet_source_constructed ∧
+      obligations.stepX_finite_divisor.realified_frobenioid_log_kummer_source_constructed ∧
+      obligations.stepX_finite_divisor.kummer_forgetting_compatibility_constructed ∧
+      obligations.stepX_finite_divisor.vertical_iq_target_source_constructed :=
+  (obligations.milestoneCompletionAudit audit).constructor_into_current_corridor
+
+theorem loweredEndpointAudit
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    AdditiveHaarArithmeticDegreePadicObligations.RemainingPayloadAudit
+        obligations.additive_haar_arithmetic_degree_padic ∧
+      obligations.closed_endpoint_removes_thetaSigned_le_cTheta_absLogQ_hypothesis ∧
+      obligations.closed_endpoint_removes_raw_canonicalCThetaScale_le_cTheta_hypothesis :=
+  (obligations.milestoneCompletionAudit audit).lowered_endpoint
+
+theorem quotientPossibleImagesAudit
+    (obligations : Obligations core images)
+    (audit : RemainingPayloadAudit obligations) :
+    IUTStage1Theorem311TypedIndeterminacyCore.PossibleImageQuotientCompatibility
+        core images ∧
+      (∀ {choice₁ choice₂ : choice},
+        core.ind1.step choice₁ choice₂ ->
+          images.region choice₁ = images.region choice₂) ∧
+      (∀ {choice₁ choice₂ : choice},
+        core.ind2.step choice₁ choice₂ ->
+          images.region choice₁ = images.region choice₂) ∧
+      (∀ {choice₁ choice₂ : choice},
+        core.ind3.step choice₁ choice₂ ->
+          core.logVolume choice₁ <= core.logVolume choice₂) :=
+  (obligations.milestoneCompletionAudit audit).quotient_possible_images
 
 end Obligations
 
