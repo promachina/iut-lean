@@ -17372,33 +17372,101 @@ variable {package : IUTStage1SourcePackage source target index}
 variable {targetCopy : Copy}
 
 /--
-IUT III, Theorem 3.11 source obligations before the Step (x)/(xi) handoff.
+Proof-carrying source data for IUT III, Theorem 3.11 and Remarks
+3.11.2--3.11.4.
 
-This groups the multiradial representation and the three remarks immediately
-following Theorem 3.11.  The fields are intentionally named at the granularity
-used by the paper trace: input-prime-strip construction, theta-pilot possible
-images, and the multiradial representation that survives the typed
-indeterminacy quotient.
+The fields name the data-level route before Step (x)/(xi): a nonempty typed
+indeterminacy source, the multiradial representation through the typed quotient,
+the input-prime-strip link, theta-pilot possible images, log-theta-lattice
+procession, and the selected q-region as one of the Theorem 3.11 possible
+images.  The actual quotient compatibility is a structured field rather than a
+bare proposition.
 -/
-structure Theorem311AndRemarksObligations
+structure Theorem311AndRemarksSourceData
     (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
     (images : RegionFamily targetCopy choice) where
   typed_indeterminacy_nonvacuity_witness_constructed : Prop
+  typed_indeterminacy_nonvacuity_witness_constructed_proof :
+    typed_indeterminacy_nonvacuity_witness_constructed
   theorem311_multiradial_representation_constructed : Prop
+  theorem311_multiradial_representation_constructed_proof :
+    theorem311_multiradial_representation_constructed
   remark3112_input_prime_strip_link_constructed : Prop
+  remark3112_input_prime_strip_link_constructed_proof :
+    remark3112_input_prime_strip_link_constructed
   remark3113_theta_pilot_possible_images_constructed : Prop
+  remark3113_theta_pilot_possible_images_constructed_proof :
+    remark3113_theta_pilot_possible_images_constructed
   remark3114_log_theta_lattice_procession_constructed : Prop
+  remark3114_log_theta_lattice_procession_constructed_proof :
+    remark3114_log_theta_lattice_procession_constructed
   possible_images_depend_on_equality_quotient :
     IUTStage1Theorem311TypedIndeterminacyCore.PossibleImageQuotientCompatibility
       core images
   selected_q_region_is_theorem311_possible_image : Prop
+  selected_q_region_is_theorem311_possible_image_proof :
+    selected_q_region_is_theorem311_possible_image
   fl_cardinality_and_procession_label_transitions_constructed : Prop
+  fl_cardinality_and_procession_label_transitions_constructed_proof :
+    fl_cardinality_and_procession_label_transitions_constructed
   theorem311_hodge_she_ipl_apt_source_bridge_constructed : Prop
+  theorem311_hodge_she_ipl_apt_source_bridge_constructed_proof :
+    theorem311_hodge_she_ipl_apt_source_bridge_constructed
+
+/--
+IUT III, Theorem 3.11 source obligations before the Step (x)/(xi) handoff.
+
+The obligation record now consumes a proof-carrying source-data object.  The
+old names are retained as derived projections below so the public audit shape
+continues to expose the same paper checkpoints.
+-/
+structure Theorem311AndRemarksObligations
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
+    (images : RegionFamily targetCopy choice) where
+  sourceData : Theorem311AndRemarksSourceData core images
 
 namespace Theorem311AndRemarksObligations
 
 variable {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
 variable {images : RegionFamily targetCopy choice}
+
+def typed_indeterminacy_nonvacuity_witness_constructed
+    (obligations : Theorem311AndRemarksObligations core images) : Prop :=
+  obligations.sourceData.typed_indeterminacy_nonvacuity_witness_constructed
+
+def theorem311_multiradial_representation_constructed
+    (obligations : Theorem311AndRemarksObligations core images) : Prop :=
+  obligations.sourceData.theorem311_multiradial_representation_constructed
+
+def remark3112_input_prime_strip_link_constructed
+    (obligations : Theorem311AndRemarksObligations core images) : Prop :=
+  obligations.sourceData.remark3112_input_prime_strip_link_constructed
+
+def remark3113_theta_pilot_possible_images_constructed
+    (obligations : Theorem311AndRemarksObligations core images) : Prop :=
+  obligations.sourceData.remark3113_theta_pilot_possible_images_constructed
+
+def remark3114_log_theta_lattice_procession_constructed
+    (obligations : Theorem311AndRemarksObligations core images) : Prop :=
+  obligations.sourceData.remark3114_log_theta_lattice_procession_constructed
+
+def possible_images_depend_on_equality_quotient
+    (obligations : Theorem311AndRemarksObligations core images) :
+    IUTStage1Theorem311TypedIndeterminacyCore.PossibleImageQuotientCompatibility
+      core images :=
+  obligations.sourceData.possible_images_depend_on_equality_quotient
+
+def selected_q_region_is_theorem311_possible_image
+    (obligations : Theorem311AndRemarksObligations core images) : Prop :=
+  obligations.sourceData.selected_q_region_is_theorem311_possible_image
+
+def fl_cardinality_and_procession_label_transitions_constructed
+    (obligations : Theorem311AndRemarksObligations core images) : Prop :=
+  obligations.sourceData.fl_cardinality_and_procession_label_transitions_constructed
+
+def theorem311_hodge_she_ipl_apt_source_bridge_constructed
+    (obligations : Theorem311AndRemarksObligations core images) : Prop :=
+  obligations.sourceData.theorem311_hodge_she_ipl_apt_source_bridge_constructed
 
 def RemainingPayloadAudit
     (obligations : Theorem311AndRemarksObligations core images) : Prop :=
@@ -17424,9 +17492,9 @@ def RemainingPayloadAudit
 
 theorem typedIndeterminacyNonvacuityWitnessConstructed
     (obligations : Theorem311AndRemarksObligations core images)
-    (audit : RemainingPayloadAudit obligations) :
+    (_audit : RemainingPayloadAudit obligations) :
     obligations.typed_indeterminacy_nonvacuity_witness_constructed :=
-  audit.1
+  obligations.sourceData.typed_indeterminacy_nonvacuity_witness_constructed_proof
 
 theorem typedIndeterminacyActionLawAudit
     (_obligations : Theorem311AndRemarksObligations core images) :
@@ -17435,11 +17503,10 @@ theorem typedIndeterminacyActionLawAudit
 
 theorem possibleImagesDependOnEqualityQuotient
     (obligations : Theorem311AndRemarksObligations core images)
-    (audit : RemainingPayloadAudit obligations) :
+    (_audit : RemainingPayloadAudit obligations) :
     IUTStage1Theorem311TypedIndeterminacyCore.PossibleImageQuotientCompatibility
-      core images := by
-  rcases audit with ⟨_, _, _, _, _, hcompat, _, _, _⟩
-  exact hcompat
+      core images :=
+  obligations.sourceData.possible_images_depend_on_equality_quotient
 
 theorem possibleImagesInd1RegionEq
     (obligations : Theorem311AndRemarksObligations core images)
@@ -17495,6 +17562,41 @@ theorem equalityQuotient_no_ind3_generator
       core.equalityGenerators.ind3_step choice₁ choice₂ -> False :=
   core.ind3UpperSemiRelationAudit
     |>.equalityQuotient_no_ind3_generator
+
+theorem theorem311MultiradialRepresentationConstructed
+    (obligations : Theorem311AndRemarksObligations core images) :
+    obligations.theorem311_multiradial_representation_constructed :=
+  obligations.sourceData.theorem311_multiradial_representation_constructed_proof
+
+theorem remark3112InputPrimeStripLinkConstructed
+    (obligations : Theorem311AndRemarksObligations core images) :
+    obligations.remark3112_input_prime_strip_link_constructed :=
+  obligations.sourceData.remark3112_input_prime_strip_link_constructed_proof
+
+theorem remark3113ThetaPilotPossibleImagesConstructed
+    (obligations : Theorem311AndRemarksObligations core images) :
+    obligations.remark3113_theta_pilot_possible_images_constructed :=
+  obligations.sourceData.remark3113_theta_pilot_possible_images_constructed_proof
+
+theorem remark3114LogThetaLatticeProcessionConstructed
+    (obligations : Theorem311AndRemarksObligations core images) :
+    obligations.remark3114_log_theta_lattice_procession_constructed :=
+  obligations.sourceData.remark3114_log_theta_lattice_procession_constructed_proof
+
+theorem selectedQRegionIsTheorem311PossibleImage
+    (obligations : Theorem311AndRemarksObligations core images) :
+    obligations.selected_q_region_is_theorem311_possible_image :=
+  obligations.sourceData.selected_q_region_is_theorem311_possible_image_proof
+
+theorem flCardinalityAndProcessionLabelTransitionsConstructed
+    (obligations : Theorem311AndRemarksObligations core images) :
+    obligations.fl_cardinality_and_procession_label_transitions_constructed :=
+  obligations.sourceData.fl_cardinality_and_procession_label_transitions_constructed_proof
+
+theorem theorem311HodgeSHEIPLAPTSourceBridgeConstructed
+    (obligations : Theorem311AndRemarksObligations core images) :
+    obligations.theorem311_hodge_she_ipl_apt_source_bridge_constructed :=
+  obligations.sourceData.theorem311_hodge_she_ipl_apt_source_bridge_constructed_proof
 
 end Theorem311AndRemarksObligations
 

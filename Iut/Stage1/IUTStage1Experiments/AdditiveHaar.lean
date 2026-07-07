@@ -33111,74 +33111,101 @@ structure ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedCo
   topLevelPaperTraceRemainingPayloadAudit :
     IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.RemainingPayloadAudit
       { theorem311_and_remarks :=
-          { typed_indeterminacy_nonvacuity_witness_constructed :=
-              Nonempty
-                (IUTStage1Theorem311TypedIndeterminacyCore.StrictFiniteToyTypedIndeterminacyNonvacuityAudit
-                  target),
-            theorem311_multiradial_representation_constructed :=
-              arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.multiradialImages.quotient =
-                  arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotient ∧
-                arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.ActionLawAudit,
-            remark3112_input_prime_strip_link_constructed :=
-              (∀ choice,
-                (constructedHodgeIPLSource.iplConstructionSource.choiceLink choice).source =
-                    constructedHodgeIPLSource.iplConstructionSource.iplDatum.inputPrimeStrip ∧
-                  (constructedHodgeIPLSource.iplConstructionSource.choiceLink choice).target =
-                    constructedHodgeIPLSource.iplConstructionSource.iplDatum.choicePrimeStrip choice) ∧
-                constructedHodgeIPLSource.iplConstructionSource.iplDatum =
-                  constructedHodgeIPLSource.iplConstructionSource.constructedDatum ∧
-                constructedHodgeIPLSource.iplConstructionSource.toIPLLinkSource.iplDatum =
-                  package.preLedger.certificate.ipl,
-            remark3113_theta_pilot_possible_images_constructed :=
-              ∀ choice,
-                arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.equalityQuotientPossibleImages.quotientImages.region
-                    (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap choice) =
-                  record.thetaPossibleImages.images.region choice,
-            remark3114_log_theta_lattice_procession_constructed :=
-              ∀ t choice,
-                arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
-                    choice =
-                  arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
-                    (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.flProcessionAction.transition
-                      t choice),
-            possible_images_depend_on_equality_quotient :=
-              arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.possibleImageCompatibility,
-            selected_q_region_is_theorem311_possible_image :=
-              remark395HullSource.qPilotRegion =
-                  IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
-                    record arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice ∧
-                remark395HullSource.qPilotRegion ⊆
-                  IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
-                    record ∧
-                arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQRegion =
-                  arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.equalityQuotientPossibleImages.quotientImages.region
-                    (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
-                      arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice) ∧
-                (∀ choice,
-                  arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.equalityQuotientPossibleImages.quotientImages.region
-                      (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap choice) =
-                    record.thetaPossibleImages.images.region choice),
-            fl_cardinality_and_procession_label_transitions_constructed :=
-              Fintype.card (ZMod l.value) = l.value ∧
-                ∀ t choice,
-                  arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
-                      choice =
+          { sourceData :=
+              { typed_indeterminacy_nonvacuity_witness_constructed :=
+                  Nonempty
+                    (IUTStage1Theorem311TypedIndeterminacyCore.StrictFiniteToyTypedIndeterminacyNonvacuityAudit
+                      target),
+                typed_indeterminacy_nonvacuity_witness_constructed_proof :=
+                  ⟨IUTStage1Theorem311TypedIndeterminacyCore.strictFiniteToyTypedIndeterminacyNonvacuityAudit
+                    target⟩,
+                theorem311_multiradial_representation_constructed :=
+                  arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.multiradialImages.quotient =
+                      arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotient ∧
+                    arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.ActionLawAudit,
+                theorem311_multiradial_representation_constructed_proof :=
+                  ⟨arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.quotient_is_equalityQuotient,
+                    arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.typedCoreActionLawAudit⟩,
+                remark3112_input_prime_strip_link_constructed :=
+                  (∀ choice,
+                    (constructedHodgeIPLSource.iplConstructionSource.choiceLink choice).source =
+                        constructedHodgeIPLSource.iplConstructionSource.iplDatum.inputPrimeStrip ∧
+                      (constructedHodgeIPLSource.iplConstructionSource.choiceLink choice).target =
+                        constructedHodgeIPLSource.iplConstructionSource.iplDatum.choicePrimeStrip choice) ∧
+                    constructedHodgeIPLSource.iplConstructionSource.iplDatum =
+                      constructedHodgeIPLSource.iplConstructionSource.constructedDatum ∧
+                    constructedHodgeIPLSource.iplConstructionSource.toIPLLinkSource.iplDatum =
+                      package.preLedger.certificate.ipl,
+                remark3112_input_prime_strip_link_constructed_proof :=
+                  constructedHodgeIPLSource.iplConstructionSource.construction_choiceLink_endpoint,
+                remark3113_theta_pilot_possible_images_constructed :=
+                  ∀ choice,
+                    arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.equalityQuotientPossibleImages.quotientImages.region
+                        (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap choice) =
+                      record.thetaPossibleImages.images.region choice,
+                remark3113_theta_pilot_possible_images_constructed_proof :=
+                  arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.possibleImages_pullback_from_equalityQuotient,
+                remark3114_log_theta_lattice_procession_constructed :=
+                  ∀ t choice,
                     arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
-                      (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.flProcessionAction.transition
-                        t choice),
-            theorem311_hodge_she_ipl_apt_source_bridge_constructed :=
-              QualitativeData.HasStructuredIPL package.preLedger.output.family ∧
-                QualitativeData.HasStructuredSHE package.preLedger.output.family ∧
-                QualitativeData.HasStructuredAPT package.preLedger.output.family ∧
-                (∀ mechanism : QualitativeData.TransportMechanismId,
-                  ¬ constructedBundle.sheTransportContext.transportSystem.Allows
-                    constructedBundle.sheTransportContext.baseContext.domainStructure.theater
-                    constructedBundle.sheTransportContext.baseContext.codomainStructure.theater
-                    mechanism) ∧
-                ¬ constructedBundle.aptConstruction.transportSystem.forbiddenIdentification
-                  constructedBundle.aptConstruction.arrow.source
-                  constructedBundle.aptConstruction.arrow.target ∧
-                constructedBundle.constructedInputs.qualitativeSource.APTTransportAudit },
+                        choice =
+                      arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
+                        (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.flProcessionAction.transition
+                          t choice),
+                remark3114_log_theta_lattice_procession_constructed_proof :=
+                  arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.fl_procession_stays_in_equalityQuotient,
+                possible_images_depend_on_equality_quotient :=
+                  arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.possibleImageCompatibility,
+                selected_q_region_is_theorem311_possible_image :=
+                  remark395HullSource.qPilotRegion =
+                      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+                        record arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice ∧
+                    remark395HullSource.qPilotRegion ⊆
+                      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+                        record ∧
+                    arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQRegion =
+                      arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.equalityQuotientPossibleImages.quotientImages.region
+                        (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
+                          arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice) ∧
+                    (∀ choice,
+                      arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.equalityQuotientPossibleImages.quotientImages.region
+                          (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap choice) =
+                        record.thetaPossibleImages.images.region choice),
+                selected_q_region_is_theorem311_possible_image_proof :=
+                  arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.remark395SelectedQRegion_quotientEndpoint
+                    remark395HullSource
+                    arithmeticDivisorBackedComponentSource.qPilotRegion_eq_selectedQRegion,
+                fl_cardinality_and_procession_label_transitions_constructed :=
+                  Fintype.card (ZMod l.value) = l.value ∧
+                    ∀ t choice,
+                      arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
+                          choice =
+                        arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
+                          (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.flProcessionAction.transition
+                            t choice),
+                fl_cardinality_and_procession_label_transitions_constructed_proof :=
+                  ⟨by simp,
+                    arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.fl_procession_stays_in_equalityQuotient⟩,
+                theorem311_hodge_she_ipl_apt_source_bridge_constructed :=
+                  QualitativeData.HasStructuredIPL package.preLedger.output.family ∧
+                    QualitativeData.HasStructuredSHE package.preLedger.output.family ∧
+                    QualitativeData.HasStructuredAPT package.preLedger.output.family ∧
+                    (∀ mechanism : QualitativeData.TransportMechanismId,
+                      ¬ constructedBundle.sheTransportContext.transportSystem.Allows
+                        constructedBundle.sheTransportContext.baseContext.domainStructure.theater
+                        constructedBundle.sheTransportContext.baseContext.codomainStructure.theater
+                        mechanism) ∧
+                    ¬ constructedBundle.aptConstruction.transportSystem.forbiddenIdentification
+                      constructedBundle.aptConstruction.arrow.source
+                      constructedBundle.aptConstruction.arrow.target ∧
+                    constructedBundle.constructedInputs.qualitativeSource.APTTransportAudit,
+                theorem311_hodge_she_ipl_apt_source_bridge_constructed_proof :=
+                  ⟨constructedBundle.hasStructuredIPL,
+                    constructedBundle.hasStructuredSHE_from_context,
+                    constructedBundle.hasStructuredAPT,
+                    constructedHodgeIPLSource.noAllowedSHEDomainToCodomain,
+                    constructedHodgeIPLSource.aptTransport_not_forbidden,
+                    constructedBundle.aptTransportAudit⟩ } },
         stepX_finite_divisor :=
           { ind1_procession_normalized_logVolume_preserved :=
               arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.ind1_preserves_processionNormalizedLogVolume,
