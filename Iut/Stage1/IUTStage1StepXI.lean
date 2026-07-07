@@ -61112,6 +61112,153 @@ theorem ofQuotientHullCompatibilityBridge_audit
             ob7Compatibility ob7_sourcePrimeStrip_eq ob7_targetPrimeStrip_eq
             ob7_logKummerColumn_eq_selected) }
 
+set_option linter.style.longLine false in
+/--
+Build the paper-derived Step (xi) source from a constructed Remark 3.9.5
+holomorphic-hull/determinant source.
+
+This refines `ofQuotientHullCompatibilityBridge`: the bridge source and hull
+operator are no longer supplied independently, but are projected from the
+constructed source.  The remaining alignment says that the constructed
+q-pilot region is the source-spine selected Theorem 3.11 possible image.
+-/
+noncomputable def ofQuotientHullCompatibilityConstructedBridge
+    (paperTrace : StepXIPaperTrace)
+    (constructedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        sourceData.Core sourceData.Images constructedSource.hullOperator)
+    (constructedQRegion_eq_sourceSelectedPossibleImage :
+      constructedSource.qPilotRegion =
+        (sourceData.Images.region sourceData.selectedQChoice).toSet)
+    (ob7Compatibility : StepXIPrimeStripLogKummerCompatibilityData)
+    (ob7_sourcePrimeStrip_eq :
+      ob7Compatibility.sourcePrimeStrip = sourceData.inputPrimeStrip)
+    (ob7_targetPrimeStrip_eq :
+      ob7Compatibility.targetPrimeStrip = sourceData.outputPrimeStrip)
+    (ob7_logKummerColumn_eq_selected :
+      ob7Compatibility.logKummerColumn =
+        sourceData.selectedQChoice.coordinate.logThetaColumn) :
+    StepXIPaperDerivedHullDeterminantSource.{u, v} sourceData :=
+  ofQuotientHullCompatibilityBridge
+    (sourceData := sourceData) (record := record) (β := β)
+    paperTrace constructedSource.hullOperator quotientHullCompatibility
+    constructedSource.toRecordHullDeterminantBridgeSource
+    rfl
+    (by
+      simpa
+        [IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.toRecordHullDeterminantBridgeSource]
+        using constructedQRegion_eq_sourceSelectedPossibleImage)
+    ob7Compatibility ob7_sourcePrimeStrip_eq ob7_targetPrimeStrip_eq
+    ob7_logKummerColumn_eq_selected
+
+set_option linter.style.longLine false in
+/--
+Audit for the constructed-source bridge constructor.
+-/
+structure ConstructedBridgeConstructorAudit
+    (paperTrace : StepXIPaperTrace)
+    (constructedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        sourceData.Core sourceData.Images constructedSource.hullOperator)
+    (constructedQRegion_eq_sourceSelectedPossibleImage :
+      constructedSource.qPilotRegion =
+        (sourceData.Images.region sourceData.selectedQChoice).toSet)
+    (ob7Compatibility : StepXIPrimeStripLogKummerCompatibilityData)
+    (ob7_sourcePrimeStrip_eq :
+      ob7Compatibility.sourcePrimeStrip = sourceData.inputPrimeStrip)
+    (ob7_targetPrimeStrip_eq :
+      ob7Compatibility.targetPrimeStrip = sourceData.outputPrimeStrip)
+    (ob7_logKummerColumn_eq_selected :
+      ob7Compatibility.logKummerColumn =
+        sourceData.selectedQChoice.coordinate.logThetaColumn) : Prop where
+  record_bridge_is_constructed_projection :
+    constructedSource.toRecordHullDeterminantBridgeSource.qPilotRegion =
+      constructedSource.qPilotRegion
+  record_bridge_hullOperator_is_constructed_projection :
+    constructedSource.toRecordHullDeterminantBridgeSource.hullOperator =
+      constructedSource.hullOperator
+  constructed_q_region_is_source_possible_image :
+    constructedSource.qPilotRegion =
+      (sourceData.Images.region sourceData.selectedQChoice).toSet
+  quotient_bridge_audit :
+    QuotientBridgeConstructorAudit
+      (sourceData := sourceData) (record := record) (β := β)
+      paperTrace constructedSource.hullOperator quotientHullCompatibility
+      constructedSource.toRecordHullDeterminantBridgeSource
+      rfl
+      (by
+        simpa
+          [IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.toRecordHullDeterminantBridgeSource]
+          using constructedQRegion_eq_sourceSelectedPossibleImage)
+      ob7Compatibility ob7_sourcePrimeStrip_eq ob7_targetPrimeStrip_eq
+      ob7_logKummerColumn_eq_selected
+  step_xi_source_audit :
+    Audit
+      (ofQuotientHullCompatibilityConstructedBridge
+        (sourceData := sourceData) (record := record) (β := β)
+        paperTrace constructedSource quotientHullCompatibility
+        constructedQRegion_eq_sourceSelectedPossibleImage
+        ob7Compatibility ob7_sourcePrimeStrip_eq ob7_targetPrimeStrip_eq
+        ob7_logKummerColumn_eq_selected)
+
+set_option linter.style.longLine false in
+theorem ofQuotientHullCompatibilityConstructedBridge_audit
+    (paperTrace : StepXIPaperTrace)
+    (constructedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        sourceData.Core sourceData.Images constructedSource.hullOperator)
+    (constructedQRegion_eq_sourceSelectedPossibleImage :
+      constructedSource.qPilotRegion =
+        (sourceData.Images.region sourceData.selectedQChoice).toSet)
+    (ob7Compatibility : StepXIPrimeStripLogKummerCompatibilityData)
+    (ob7_sourcePrimeStrip_eq :
+      ob7Compatibility.sourcePrimeStrip = sourceData.inputPrimeStrip)
+    (ob7_targetPrimeStrip_eq :
+      ob7Compatibility.targetPrimeStrip = sourceData.outputPrimeStrip)
+    (ob7_logKummerColumn_eq_selected :
+      ob7Compatibility.logKummerColumn =
+        sourceData.selectedQChoice.coordinate.logThetaColumn) :
+    ConstructedBridgeConstructorAudit
+      (sourceData := sourceData) (record := record) (β := β)
+      paperTrace constructedSource quotientHullCompatibility
+      constructedQRegion_eq_sourceSelectedPossibleImage
+      ob7Compatibility ob7_sourcePrimeStrip_eq ob7_targetPrimeStrip_eq
+      ob7_logKummerColumn_eq_selected := by
+  exact
+    { record_bridge_is_constructed_projection := rfl,
+      record_bridge_hullOperator_is_constructed_projection := rfl,
+      constructed_q_region_is_source_possible_image :=
+        constructedQRegion_eq_sourceSelectedPossibleImage,
+      quotient_bridge_audit :=
+        ofQuotientHullCompatibilityBridge_audit
+          (sourceData := sourceData) (record := record) (β := β)
+          paperTrace constructedSource.hullOperator quotientHullCompatibility
+          constructedSource.toRecordHullDeterminantBridgeSource
+          rfl
+          (by
+            simpa
+              [IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.toRecordHullDeterminantBridgeSource]
+              using constructedQRegion_eq_sourceSelectedPossibleImage)
+          ob7Compatibility ob7_sourcePrimeStrip_eq ob7_targetPrimeStrip_eq
+          ob7_logKummerColumn_eq_selected,
+      step_xi_source_audit :=
+        audit
+          (ofQuotientHullCompatibilityConstructedBridge
+            (sourceData := sourceData) (record := record) (β := β)
+            paperTrace constructedSource quotientHullCompatibility
+            constructedQRegion_eq_sourceSelectedPossibleImage
+            ob7Compatibility ob7_sourcePrimeStrip_eq ob7_targetPrimeStrip_eq
+            ob7_logKummerColumn_eq_selected) }
+
 end StepXIPaperDerivedHullDeterminantSource
 end IUTStage1Theorem311ToCorollary312PaperTrace
 
