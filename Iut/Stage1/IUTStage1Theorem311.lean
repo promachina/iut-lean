@@ -17434,6 +17434,119 @@ theorem selectedQRegionIsTheorem311PossibleImage_proof
 end Theorem311PossibleImageSourceData
 
 /--
+Data-level Theorem 3.11 multiradial representation source.
+
+This packages the equality/equality/upper-semi action laws that implement the
+paper's `(Ind1),(Ind2),(Ind3)` multiradial indeterminacies: `(Ind1)` and `(Ind2)`
+preserve procession-normalized log-volume and factor through the equality
+quotient, while `(Ind3)` is excluded from that quotient and contributes only the
+upper-semi relation.
+-/
+structure Theorem311MultiradialRepresentationSourceData
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice) where
+  actionLawAudit : core.ActionLawAudit
+  equalityQuotientSetoidAudit : core.EqualityQuotientSetoidAudit
+  ind3UpperSemiRelationAudit : core.Ind3UpperSemiRelationAudit
+
+namespace Theorem311MultiradialRepresentationSourceData
+
+variable {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
+
+def constructed
+    (_data : Theorem311MultiradialRepresentationSourceData core) : Prop :=
+  core.ActionLawAudit ∧
+    core.EqualityQuotientSetoidAudit ∧
+    core.Ind3UpperSemiRelationAudit
+
+theorem constructed_proof
+    (data : Theorem311MultiradialRepresentationSourceData core) :
+    data.constructed :=
+  ⟨data.actionLawAudit, data.equalityQuotientSetoidAudit,
+    data.ind3UpperSemiRelationAudit⟩
+
+theorem ind1_preserves_processionNormalizedLogVolume
+    (data : Theorem311MultiradialRepresentationSourceData core) :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind1.step choice₁ choice₂ ->
+        core.logVolume choice₁ = core.logVolume choice₂ :=
+  data.actionLawAudit.ind1_preserves_processionNormalizedLogVolume
+
+theorem ind2_preserves_processionNormalizedLogVolume
+    (data : Theorem311MultiradialRepresentationSourceData core) :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind2.step choice₁ choice₂ ->
+        core.logVolume choice₁ = core.logVolume choice₂ :=
+  data.actionLawAudit.ind2_preserves_processionNormalizedLogVolume
+
+theorem ind3_upper_semi_logVolume
+    (data : Theorem311MultiradialRepresentationSourceData core) :
+    ∀ {choice₁ choice₂ : choice},
+      core.ind3.step choice₁ choice₂ ->
+        core.logVolume choice₁ <= core.logVolume choice₂ :=
+  data.actionLawAudit.ind3_upper_semi_logVolume
+
+theorem equalityQuotient_no_ind3_generator
+    (data : Theorem311MultiradialRepresentationSourceData core) :
+    ∀ {choice₁ choice₂ : choice},
+      core.equalityGenerators.ind3_step choice₁ choice₂ -> False :=
+  data.actionLawAudit.equalityQuotient_no_ind3_generator
+
+end Theorem311MultiradialRepresentationSourceData
+
+/--
+Data-level log-theta-lattice procession source for Remark 3.11.4.
+
+The procession is represented by a finite transition index, a transition action on
+choices, and the proof that every transition stays in the `(Ind1)/(Ind2)` equality
+quotient.  The cardinality field records the finite `F_l` label count used by the
+procession-normalized averaging step.
+-/
+structure Theorem311LogThetaProcessionSourceData
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice) where
+  transitionIndex : Type v
+  transitionIndexFintype : Fintype transitionIndex
+  labelCardinality : Nat
+  transition : transitionIndex -> choice -> choice
+  labelCardinality_eq_transitionIndex_card :
+    letI : Fintype transitionIndex := transitionIndexFintype
+    Fintype.card transitionIndex = labelCardinality
+  transition_stays_in_equalityQuotient :
+    ∀ t choice₀,
+      core.equalityQuotientMap choice₀ =
+        core.equalityQuotientMap (transition t choice₀)
+
+namespace Theorem311LogThetaProcessionSourceData
+
+variable {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
+
+def logThetaLatticeProcessionConstructed
+    (data : Theorem311LogThetaProcessionSourceData.{u, v} core) : Prop :=
+  ∀ t choice₀,
+    core.equalityQuotientMap choice₀ =
+      core.equalityQuotientMap (data.transition t choice₀)
+
+theorem logThetaLatticeProcessionConstructed_proof
+    (data : Theorem311LogThetaProcessionSourceData.{u, v} core) :
+    data.logThetaLatticeProcessionConstructed :=
+  data.transition_stays_in_equalityQuotient
+
+def flCardinalityAndProcessionLabelTransitionsConstructed
+    (data : Theorem311LogThetaProcessionSourceData.{u, v} core) : Prop :=
+  letI : Fintype data.transitionIndex := data.transitionIndexFintype
+  Fintype.card data.transitionIndex = data.labelCardinality ∧
+    ∀ t choice₀,
+      core.equalityQuotientMap choice₀ =
+        core.equalityQuotientMap (data.transition t choice₀)
+
+theorem flCardinalityAndProcessionLabelTransitionsConstructed_proof
+    (data : Theorem311LogThetaProcessionSourceData.{u, v} core) :
+    data.flCardinalityAndProcessionLabelTransitionsConstructed :=
+  ⟨data.labelCardinality_eq_transitionIndex_card,
+    data.transition_stays_in_equalityQuotient⟩
+
+end Theorem311LogThetaProcessionSourceData
+
+/--
 Proof-carrying source data for IUT III, Theorem 3.11 and Remarks
 3.11.2--3.11.4.
 
@@ -17450,19 +17563,12 @@ structure Theorem311AndRemarksSourceData
   typed_indeterminacy_nonvacuity_witness_constructed : Prop
   typed_indeterminacy_nonvacuity_witness_constructed_proof :
     typed_indeterminacy_nonvacuity_witness_constructed
-  theorem311_multiradial_representation_constructed : Prop
-  theorem311_multiradial_representation_constructed_proof :
-    theorem311_multiradial_representation_constructed
+  multiradialData : Theorem311MultiradialRepresentationSourceData core
   remark3112_input_prime_strip_link_constructed : Prop
   remark3112_input_prime_strip_link_constructed_proof :
     remark3112_input_prime_strip_link_constructed
   possibleImageData : Theorem311PossibleImageSourceData core images
-  remark3114_log_theta_lattice_procession_constructed : Prop
-  remark3114_log_theta_lattice_procession_constructed_proof :
-    remark3114_log_theta_lattice_procession_constructed
-  fl_cardinality_and_procession_label_transitions_constructed : Prop
-  fl_cardinality_and_procession_label_transitions_constructed_proof :
-    fl_cardinality_and_procession_label_transitions_constructed
+  processionData : Theorem311LogThetaProcessionSourceData.{u, v} core
   theorem311_hodge_she_ipl_apt_source_bridge_constructed : Prop
   theorem311_hodge_she_ipl_apt_source_bridge_constructed_proof :
     theorem311_hodge_she_ipl_apt_source_bridge_constructed
@@ -17477,7 +17583,7 @@ continues to expose the same paper checkpoints.
 structure Theorem311AndRemarksObligations
     (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
     (images : RegionFamily targetCopy choice) where
-  sourceData : Theorem311AndRemarksSourceData core images
+  sourceData : Theorem311AndRemarksSourceData.{u, v} core images
 
 namespace Theorem311AndRemarksObligations
 
@@ -17490,7 +17596,7 @@ def typed_indeterminacy_nonvacuity_witness_constructed
 
 def theorem311_multiradial_representation_constructed
     (obligations : Theorem311AndRemarksObligations core images) : Prop :=
-  obligations.sourceData.theorem311_multiradial_representation_constructed
+  obligations.sourceData.multiradialData.constructed
 
 def remark3112_input_prime_strip_link_constructed
     (obligations : Theorem311AndRemarksObligations core images) : Prop :=
@@ -17502,7 +17608,7 @@ def remark3113_theta_pilot_possible_images_constructed
 
 def remark3114_log_theta_lattice_procession_constructed
     (obligations : Theorem311AndRemarksObligations core images) : Prop :=
-  obligations.sourceData.remark3114_log_theta_lattice_procession_constructed
+  obligations.sourceData.processionData.logThetaLatticeProcessionConstructed
 
 def possible_images_depend_on_equality_quotient
     (obligations : Theorem311AndRemarksObligations core images) :
@@ -17516,7 +17622,8 @@ def selected_q_region_is_theorem311_possible_image
 
 def fl_cardinality_and_procession_label_transitions_constructed
     (obligations : Theorem311AndRemarksObligations core images) : Prop :=
-  obligations.sourceData.fl_cardinality_and_procession_label_transitions_constructed
+  obligations.sourceData.processionData
+    |>.flCardinalityAndProcessionLabelTransitionsConstructed
 
 def theorem311_hodge_she_ipl_apt_source_bridge_constructed
     (obligations : Theorem311AndRemarksObligations core images) : Prop :=
@@ -17620,7 +17727,7 @@ theorem equalityQuotient_no_ind3_generator
 theorem theorem311MultiradialRepresentationConstructed
     (obligations : Theorem311AndRemarksObligations core images) :
     obligations.theorem311_multiradial_representation_constructed :=
-  obligations.sourceData.theorem311_multiradial_representation_constructed_proof
+  obligations.sourceData.multiradialData.constructed_proof
 
 theorem remark3112InputPrimeStripLinkConstructed
     (obligations : Theorem311AndRemarksObligations core images) :
@@ -17635,7 +17742,7 @@ theorem remark3113ThetaPilotPossibleImagesConstructed
 theorem remark3114LogThetaLatticeProcessionConstructed
     (obligations : Theorem311AndRemarksObligations core images) :
     obligations.remark3114_log_theta_lattice_procession_constructed :=
-  obligations.sourceData.remark3114_log_theta_lattice_procession_constructed_proof
+  obligations.sourceData.processionData.logThetaLatticeProcessionConstructed_proof
 
 theorem selectedQRegionIsTheorem311PossibleImage
     (obligations : Theorem311AndRemarksObligations core images) :
@@ -17645,7 +17752,8 @@ theorem selectedQRegionIsTheorem311PossibleImage
 theorem flCardinalityAndProcessionLabelTransitionsConstructed
     (obligations : Theorem311AndRemarksObligations core images) :
     obligations.fl_cardinality_and_procession_label_transitions_constructed :=
-  obligations.sourceData.fl_cardinality_and_procession_label_transitions_constructed_proof
+  obligations.sourceData.processionData
+    |>.flCardinalityAndProcessionLabelTransitionsConstructed_proof
 
 theorem theorem311HodgeSHEIPLAPTSourceBridgeConstructed
     (obligations : Theorem311AndRemarksObligations core images) :
@@ -18617,7 +18725,7 @@ structure Obligations
     (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
     (images : RegionFamily targetCopy choice) where
   theorem311_and_remarks :
-    Theorem311AndRemarksObligations core images
+    Theorem311AndRemarksObligations.{u, v} core images
   stepX_finite_divisor :
     StepXFiniteDivisorObligations core
   stepXI_hull_determinant :

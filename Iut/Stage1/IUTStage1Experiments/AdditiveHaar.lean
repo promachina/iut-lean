@@ -33109,7 +33109,10 @@ structure ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedCo
           ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.Endpoint
             arithmeticDivisorBackedComponentSource }
   topLevelPaperTraceRemainingPayloadAudit :
-    IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.RemainingPayloadAudit
+    let topLevelObligations :
+        IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.{u, v}
+          arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore
+          record.thetaPossibleImages.images :=
       { theorem311_and_remarks :=
           { sourceData :=
               { typed_indeterminacy_nonvacuity_witness_constructed :=
@@ -33119,13 +33122,13 @@ structure ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedCo
                 typed_indeterminacy_nonvacuity_witness_constructed_proof :=
                   ⟨IUTStage1Theorem311TypedIndeterminacyCore.strictFiniteToyTypedIndeterminacyNonvacuityAudit
                     target⟩,
-                theorem311_multiradial_representation_constructed :=
-                  arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.multiradialImages.quotient =
-                      arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotient ∧
-                    arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.ActionLawAudit,
-                theorem311_multiradial_representation_constructed_proof :=
-                  ⟨arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.quotient_is_equalityQuotient,
-                    arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.typedCoreActionLawAudit⟩,
+                multiradialData :=
+                  { actionLawAudit :=
+                      arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.typedCoreActionLawAudit,
+                    equalityQuotientSetoidAudit :=
+                      arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientSetoidAudit,
+                    ind3UpperSemiRelationAudit :=
+                      arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.ind3_upper_semi_relation_audit },
                 remark3112_input_prime_strip_link_constructed :=
                   (∀ choice,
                     (constructedHodgeIPLSource.iplConstructionSource.choiceLink choice).source =
@@ -33149,26 +33152,20 @@ structure ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedCo
                       (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.remark395SelectedQRegion_quotientEndpoint
                         remark395HullSource
                         arithmeticDivisorBackedComponentSource.qPilotRegion_eq_selectedQRegion).2.2.1 },
-                remark3114_log_theta_lattice_procession_constructed :=
-                  ∀ t choice,
-                    arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
-                        choice =
-                      arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
-                        (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.flProcessionAction.transition
-                          t choice),
-                remark3114_log_theta_lattice_procession_constructed_proof :=
-                  arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.fl_procession_stays_in_equalityQuotient,
-                fl_cardinality_and_procession_label_transitions_constructed :=
-                  Fintype.card (ZMod l.value) = l.value ∧
-                    ∀ t choice,
-                      arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
-                          choice =
-                        arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientMap
-                          (arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.flProcessionAction.transition
-                            t choice),
-                fl_cardinality_and_procession_label_transitions_constructed_proof :=
-                  ⟨by simp,
-                    arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.fl_procession_stays_in_equalityQuotient⟩,
+                  processionData :=
+                    { transitionIndex := ULift.{v, 0} (ZMod l.value),
+                      transitionIndexFintype := inferInstance,
+                      labelCardinality := l.value,
+                      transition :=
+                        fun t =>
+                          arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.flProcessionAction.transition
+                            t.down,
+                      labelCardinality_eq_transitionIndex_card := by
+                        simp,
+                      transition_stays_in_equalityQuotient :=
+                        fun t choice =>
+                          arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.fl_procession_stays_in_equalityQuotient
+                            t.down choice },
                 theorem311_hodge_she_ipl_apt_source_bridge_constructed :=
                   QualitativeData.HasStructuredIPL package.preLedger.output.family ∧
                     QualitativeData.HasStructuredSHE package.preLedger.output.family ∧
@@ -33673,6 +33670,8 @@ structure ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedCo
             estimate.cTheta * (-package.preLedger.qSigned),
         closed_endpoint_removes_raw_canonicalCThetaScale_le_cTheta_hypothesis :=
           remark395HullSource.canonicalCThetaScale <= estimate.cTheta }
+    IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.RemainingPayloadAudit
+      topLevelObligations
   oneSidedQuotientAudit :
     IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.OneSidedQuotientAudit
       arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource
@@ -34182,13 +34181,16 @@ theorem boundarySignedEqualityOrStrictCTheta_from_constructedQualitativeHodgeSHE
       topLevelPaperTraceRemainingPayloadAudit := by
         dsimp [IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.RemainingPayloadAudit]
         exact
-          ⟨⟨IUTStage1Theorem311TypedIndeterminacyCore.strictFiniteToyTypedIndeterminacyNonvacuityAudit
-                target⟩,
-            ⟨arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.quotient_is_equalityQuotient,
-              arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.typedCoreActionLawAudit⟩,
+            ⟨⟨IUTStage1Theorem311TypedIndeterminacyCore.strictFiniteToyTypedIndeterminacyNonvacuityAudit
+                  target⟩,
+              ⟨arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.typedCoreActionLawAudit,
+                arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.typedIndeterminacyCore.equalityQuotientSetoidAudit,
+                arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.ind3_upper_semi_relation_audit⟩,
             constructedHodgeIPLSource.iplConstructionSource.construction_choiceLink_endpoint,
             arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.possibleImages_pullback_from_equalityQuotient,
-            arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.fl_procession_stays_in_equalityQuotient,
+              fun t choice =>
+                arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.fl_procession_stays_in_equalityQuotient
+                  t.down choice,
             arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.possibleImageCompatibility,
             arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.possibleImageCompatibility.ind1_region_eq,
             arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.possibleImageCompatibility.ind2_region_eq,
@@ -34206,8 +34208,10 @@ theorem boundarySignedEqualityOrStrictCTheta_from_constructedQualitativeHodgeSHE
                       arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice :=
                   arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.possibleImages_pullback_from_equalityQuotient
                     arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice,
-            ⟨by simp,
-              arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.fl_procession_stays_in_equalityQuotient⟩,
+              ⟨by simp,
+                fun t choice =>
+                  arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.fl_procession_stays_in_equalityQuotient
+                    t.down choice⟩,
             ⟨constructedBundle.hasStructuredIPL,
               constructedBundle.hasStructuredSHE_from_context,
               constructedBundle.hasStructuredAPT,
