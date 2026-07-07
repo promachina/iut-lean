@@ -20124,6 +20124,112 @@ theorem quotientPossibleImagesAudit
           core.logVolume choice₁ <= core.logVolume choice₂) :=
   (obligations.milestoneCompletionAudit audit).quotient_possible_images
 
+set_option linter.style.longLine false in
+/--
+Preferred source-spine route audit for the current 3.11-to-3.12 paper trace.
+
+This is the public route rewire for the source boundary.  The route no longer
+takes separate Theorem 3.11/Remarks construction flags or separate Step (x)
+finite-divisor/log-Kummer flags.  It takes one
+`Theorem311HodgeTheaterLogThetaLogKummerSource`, projects those two obligation
+packages from that source, and then combines them with the still-separate Step
+(xi), IUT IV, and additive-Haar layers.
+-/
+structure PreferredSourceSpineRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (stepXI_hull_determinant :
+      StepXIHullDeterminantObligations
+        sourceData.Core sourceData.Images)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations) : Prop where
+  source_spine :
+    Theorem311HodgeTheaterLogThetaLogKummerSource.SourceSpineAudit
+      sourceData
+  assembled_obligations :
+    let obligations :=
+      ofHodgeTheaterLogThetaLogKummerSource
+        sourceData stepXI_hull_determinant iutIV_cTheta
+        additive_haar_arithmetic_degree_padic
+    RemainingPayloadAudit obligations
+  milestone_completion :
+    let obligations :=
+      ofHodgeTheaterLogThetaLogKummerSource
+        sourceData stepXI_hull_determinant iutIV_cTheta
+        additive_haar_arithmetic_degree_padic
+    MilestoneCompletionAudit obligations
+  theorem311_projected_from_source :
+    let obligations :=
+      ofHodgeTheaterLogThetaLogKummerSource
+        sourceData stepXI_hull_determinant iutIV_cTheta
+        additive_haar_arithmetic_degree_padic
+    obligations.theorem311_and_remarks =
+      sourceData.theorem311Obligations
+  stepX_projected_from_source :
+    let obligations :=
+      ofHodgeTheaterLogThetaLogKummerSource
+        sourceData stepXI_hull_determinant iutIV_cTheta
+        additive_haar_arithmetic_degree_padic
+    obligations.stepX_finite_divisor =
+      sourceData.stepXFiniteDivisorObligations
+  constructor_into_current_corridor :
+    let obligations :=
+      ofHodgeTheaterLogThetaLogKummerSource
+        sourceData stepXI_hull_determinant iutIV_cTheta
+        additive_haar_arithmetic_degree_padic
+    obligations.theorem311_and_remarks.theorem311_hodge_she_ipl_apt_source_bridge_constructed ∧
+      obligations.stepX_finite_divisor.finite_divisor_packet_source_constructed ∧
+      obligations.stepX_finite_divisor.realified_frobenioid_log_kummer_source_constructed ∧
+      obligations.stepX_finite_divisor.kummer_forgetting_compatibility_constructed ∧
+      obligations.stepX_finite_divisor.vertical_iq_target_source_constructed
+  lowered_endpoint :
+    let obligations :=
+      ofHodgeTheaterLogThetaLogKummerSource
+        sourceData stepXI_hull_determinant iutIV_cTheta
+        additive_haar_arithmetic_degree_padic
+    AdditiveHaarArithmeticDegreePadicObligations.RemainingPayloadAudit
+        obligations.additive_haar_arithmetic_degree_padic ∧
+      obligations.iutIV_cTheta.local_to_global_canonicalCThetaScale_le_cTheta_constructed
+
+set_option linter.style.longLine false in
+theorem preferredSourceSpineRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (stepXI_hull_determinant :
+      StepXIHullDeterminantObligations
+        sourceData.Core sourceData.Images)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations)
+    (audit :
+      RemainingPayloadAudit
+        (ofHodgeTheaterLogThetaLogKummerSource
+          sourceData stepXI_hull_determinant iutIV_cTheta
+          additive_haar_arithmetic_degree_padic)) :
+    PreferredSourceSpineRouteAudit
+      sourceData stepXI_hull_determinant iutIV_cTheta
+      additive_haar_arithmetic_degree_padic := by
+  let obligations :=
+    ofHodgeTheaterLogThetaLogKummerSource
+      sourceData stepXI_hull_determinant iutIV_cTheta
+      additive_haar_arithmetic_degree_padic
+  exact
+    { source_spine := sourceData.sourceSpineAudit,
+      assembled_obligations := audit,
+      milestone_completion :=
+        milestoneCompletionAudit obligations audit,
+      theorem311_projected_from_source := rfl,
+      stepX_projected_from_source := rfl,
+      constructor_into_current_corridor :=
+        constructorIntoCurrentCorridorAudit obligations audit,
+      lowered_endpoint :=
+        loweredEndpointAudit obligations audit }
+
 end Obligations
 
 end IUTStage1Theorem311ToCorollary312PaperTrace
