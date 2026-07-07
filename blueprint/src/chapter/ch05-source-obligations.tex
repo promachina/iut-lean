@@ -182,12 +182,17 @@
 \begin{proposition}[Preferred Step (xi)-constructed route audit]
   \label{prop:preferred-step-xi-paper-source-route-audit}
   \uses{def:hodge-logtheta-logkummer-spine,def:paper-derived-step-xi-source,prop:step-xi-source-assembles-obligations}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.NonStepXIRemainingPayloadAudit}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.remainingPayloadAuditOfNonStepXI}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredStepXIPaperSourceRouteAudit}
   \leanok
   The preferred paper-trace route can now consume the source spine together
   with a paper-derived Step (xi) source.  The Step (xi) obligation package is
   projected internally, so this route no longer takes a standalone
-  \texttt{StepXIHullDeterminantObligations} argument.
+  \texttt{StepXIHullDeterminantObligations} argument.  Its remaining payload
+  input has also been split: callers supply the non-Step-(xi) payload audit,
+  while the legacy Step-(xi) audit fields are derived from the structured
+  Step-(xi) source.
 \end{proposition}
 
 \begin{theorem}[Construct \(\SHE\) from source data]

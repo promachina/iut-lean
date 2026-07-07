@@ -20183,6 +20183,95 @@ def RemainingPayloadAudit
     obligations.iutIV_cTheta.local_to_global_canonicalCThetaScale_le_cTheta_constructed ∧
     obligations.additive_haar_arithmetic_degree_padic.RemainingPayloadAudit
 
+def NonStepXIRemainingPayloadAudit
+    (obligations : Obligations core images) : Prop :=
+  obligations.theorem311_and_remarks.typed_indeterminacy_nonvacuity_witness_constructed ∧
+    obligations.theorem311_and_remarks.theorem311_multiradial_representation_constructed ∧
+    obligations.theorem311_and_remarks.remark3112_input_prime_strip_link_constructed ∧
+    obligations.theorem311_and_remarks.remark3113_theta_pilot_possible_images_constructed ∧
+    obligations.theorem311_and_remarks.remark3114_log_theta_lattice_procession_constructed ∧
+    IUTStage1Theorem311TypedIndeterminacyCore.PossibleImageQuotientCompatibility
+      core images ∧
+    (∀ {choice₁ choice₂ : choice},
+      core.ind1.step choice₁ choice₂ ->
+        images.region choice₁ = images.region choice₂) ∧
+    (∀ {choice₁ choice₂ : choice},
+      core.ind2.step choice₁ choice₂ ->
+        images.region choice₁ = images.region choice₂) ∧
+    (∀ {choice₁ choice₂ : choice},
+      core.ind3.step choice₁ choice₂ ->
+        core.logVolume choice₁ <= core.logVolume choice₂) ∧
+    obligations.theorem311_and_remarks.selected_q_region_is_theorem311_possible_image ∧
+    obligations.theorem311_and_remarks.fl_cardinality_and_procession_label_transitions_constructed ∧
+    obligations.theorem311_and_remarks.theorem311_hodge_she_ipl_apt_source_bridge_constructed ∧
+    obligations.stepX_finite_divisor.finite_divisor_packet_source_constructed ∧
+    obligations.stepX_finite_divisor.realified_frobenioid_log_kummer_source_constructed ∧
+    obligations.stepX_finite_divisor.kummer_forgetting_compatibility_constructed ∧
+    obligations.stepX_finite_divisor.vertical_iq_target_source_constructed ∧
+    obligations.stepX_finite_divisor.packet_source_target_log_volume_calibration_constructed ∧
+    obligations.iutIV_cTheta.proposition14_distinguished_log_shell_inclusions_constructed ∧
+    obligations.iutIV_cTheta.proposition14_distinguished_numerical_bounds_constructed ∧
+    obligations.iutIV_cTheta.proposition14_nondistinguished_zero_log_volume_constructed ∧
+    obligations.iutIV_cTheta.proposition15_archimedean_metric_containment_constructed ∧
+    obligations.iutIV_cTheta.theorem110_arithmetic_divisor_source_constructed ∧
+    obligations.iutIV_cTheta.theorem110_distinguished_formula_to_gap_constructed ∧
+    obligations.iutIV_cTheta.theorem110_archimedean_formula_to_gap_constructed ∧
+    obligations.iutIV_cTheta.additive_haar_local_normalization_constructed ∧
+    obligations.iutIV_cTheta.finite_place_scale_and_gap_sum_identifications_constructed ∧
+    obligations.iutIV_cTheta.finite_place_summed_stepxi_haar_bound_constructed ∧
+    obligations.iutIV_cTheta.finite_place_total_haar_defect_ge_one_constructed ∧
+    obligations.iutIV_cTheta.iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed ∧
+    obligations.iutIV_cTheta.ordered_real_plus_one_cancellation_constructed ∧
+    (IUTIVCThetaObligations.local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed
+      obligations.iutIV_cTheta) ∧
+    obligations.iutIV_cTheta.finite_place_arithmetic_gap_constructed ∧
+    obligations.iutIV_cTheta.local_to_global_canonicalCThetaScale_le_cTheta_constructed ∧
+    obligations.additive_haar_arithmetic_degree_padic.RemainingPayloadAudit
+
+set_option linter.style.longLine false in
+theorem remainingPayloadAuditOfNonStepXI
+    (obligations : Obligations core images)
+    (audit : NonStepXIRemainingPayloadAudit obligations) :
+    RemainingPayloadAudit obligations := by
+  have hstepXI_hull :
+      obligations.stepXI_hull_determinant.remark395_holomorphic_hull_operator_constructed :=
+    obligations.stepXI_hull_determinant
+      |>.remark395_holomorphic_hull_operator_constructed_proof
+  have hstepXI_family :
+      obligations.stepXI_hull_determinant.theorem311_possible_image_family_matches_hull_source :=
+    obligations.stepXI_hull_determinant
+      |>.theorem311_possible_image_family_matches_hull_source_proof
+  have hstepXI_selected :
+      obligations.stepXI_hull_determinant.selected_q_region_contained_in_possible_image_union :=
+    obligations.stepXI_hull_determinant
+      |>.selected_q_region_contained_in_possible_image_union_proof
+  have hstepXI_ob12 :
+      obligations.stepXI_hull_determinant.ob1_ob2_hull_absorption_constructed :=
+    obligations.stepXI_hull_determinant
+      |>.ob1_ob2_hull_absorption_constructed_proof
+  have hstepXI_ob34 :
+      obligations.stepXI_hull_determinant.ob3_ob4_adjusted_determinant_normalization_constructed :=
+    obligations.stepXI_hull_determinant
+      |>.ob3_ob4_adjusted_determinant_normalization_constructed_proof
+  have hstepXI_ob5 :
+      obligations.stepXI_hull_determinant.ob5_quotient_determinant_compatibility_constructed :=
+    obligations.stepXI_hull_determinant
+      |>.ob5_quotient_determinant_compatibility_constructed_proof
+  have hstepXI_ob7 :
+      obligations.stepXI_hull_determinant.ob7_prime_strip_log_kummer_compatibility_retained :=
+    obligations.stepXI_hull_determinant
+      |>.ob7_prime_strip_log_kummer_compatibility_retained_proof
+  have hstepXI_tensor :
+      obligations.stepXI_hull_determinant.weighted_determinant_tensor_power_bound_constructed :=
+    obligations.stepXI_hull_determinant
+      |>.weighted_determinant_tensor_power_bound_constructed_proof
+  have hstepXI_q :
+      obligations.stepXI_hull_determinant.q_region_logVolume_le_thetaSigned_constructed :=
+    obligations.stepXI_hull_determinant
+      |>.q_region_logVolume_le_thetaSigned_constructed_proof
+  dsimp [NonStepXIRemainingPayloadAudit, RemainingPayloadAudit] at audit ⊢
+  tauto
+
 theorem ind3_upper_semi_not_equality_payload
     (obligations : Obligations core images)
     {choice₁ choice₂ : choice}
@@ -20777,6 +20866,11 @@ structure PreferredStepXIPaperSourceRouteAudit
       sourceData
   step_xi_source :
     StepXIPaperDerivedHullDeterminantSource.Audit stepXI
+  assembled_non_stepxi_payload :
+    let obligations :=
+      ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+        sourceData stepXI iutIV_cTheta additive_haar_arithmetic_degree_padic
+    NonStepXIRemainingPayloadAudit obligations
   assembled_obligations :
     let obligations :=
       ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
@@ -20839,7 +20933,7 @@ theorem preferredStepXIPaperSourceRouteAudit
     (additive_haar_arithmetic_degree_padic :
       AdditiveHaarArithmeticDegreePadicObligations)
     (audit :
-      RemainingPayloadAudit
+      NonStepXIRemainingPayloadAudit
         (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
           sourceData stepXI iutIV_cTheta
           additive_haar_arithmetic_degree_padic)) :
@@ -20850,12 +20944,15 @@ theorem preferredStepXIPaperSourceRouteAudit
     ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
       sourceData stepXI iutIV_cTheta
       additive_haar_arithmetic_degree_padic
+  have fullAudit : RemainingPayloadAudit obligations :=
+    remainingPayloadAuditOfNonStepXI obligations audit
   exact
     { source_spine := sourceData.sourceSpineAudit,
       step_xi_source := stepXI.audit,
-      assembled_obligations := audit,
+      assembled_non_stepxi_payload := audit,
+      assembled_obligations := fullAudit,
       milestone_completion :=
-        milestoneCompletionAudit obligations audit,
+        milestoneCompletionAudit obligations fullAudit,
       theorem311_projected_from_source := rfl,
       stepX_projected_from_source := rfl,
       stepXI_projected_from_source := rfl,
@@ -20864,20 +20961,20 @@ theorem preferredStepXIPaperSourceRouteAudit
       constructor_into_current_corridor := by
         refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
         · exact
-            (constructorIntoCurrentCorridorAudit obligations audit).1
+            (constructorIntoCurrentCorridorAudit obligations fullAudit).1
         · exact
-            (constructorIntoCurrentCorridorAudit obligations audit).2.1
+            (constructorIntoCurrentCorridorAudit obligations fullAudit).2.1
         · exact
-            (constructorIntoCurrentCorridorAudit obligations audit).2.2.1
+            (constructorIntoCurrentCorridorAudit obligations fullAudit).2.2.1
         · exact
-            (constructorIntoCurrentCorridorAudit obligations audit).2.2.2.1
+            (constructorIntoCurrentCorridorAudit obligations fullAudit).2.2.2.1
         · exact
-            (constructorIntoCurrentCorridorAudit obligations audit).2.2.2.2
+            (constructorIntoCurrentCorridorAudit obligations fullAudit).2.2.2.2
         · exact
             obligations.stepXI_hull_determinant
               |>.q_region_logVolume_le_thetaSigned_constructed_proof,
       lowered_endpoint :=
-        loweredEndpointAudit obligations audit }
+        loweredEndpointAudit obligations fullAudit }
 
 end Obligations
 
