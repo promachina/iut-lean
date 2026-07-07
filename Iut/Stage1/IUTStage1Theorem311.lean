@@ -18291,14 +18291,14 @@ theorem q_region_logVolume_le_thetaSigned_constructed_proof
 end StepXIHullDeterminantObligations
 
 /--
-IUT IV local-to-global `C_Theta` obligations underneath the current
-additive-Haar local analytic source.
+Local analytic part of the IUT IV `C_Theta` source.
 
-The fields name the remaining local analytic constructions from IUT IV,
-Propositions 1.4 and 1.5, Theorem 1.10, and the global summation comparison
-that proves the constructed canonical scale is bounded by `C_Theta`.
+This is the paper's Theorem 1.10 local split: distinguished
+nonarchimedean log-shell inclusions and numerical estimates from Proposition
+1.4(iii), nondistinguished zero contribution from Proposition 1.4(iv), and the
+archimedean metric container from Proposition 1.5.
 -/
-structure IUTIVCThetaSourceData where
+structure IUTIVLocalAnalyticCThetaSourceData where
   proposition14_distinguished_log_shell_inclusions_constructed : Prop
   proposition14_distinguished_log_shell_inclusions_constructed_proof :
     proposition14_distinguished_log_shell_inclusions_constructed
@@ -18311,6 +18311,16 @@ structure IUTIVCThetaSourceData where
   proposition15_archimedean_metric_containment_constructed : Prop
   proposition15_archimedean_metric_containment_constructed_proof :
     proposition15_archimedean_metric_containment_constructed
+
+/--
+Theorem 1.10 arithmetic-divisor source data below the local analytic split.
+
+The first field is the arithmetic-divisor package for the theorem.  The next
+two fields record the distinguished and archimedean formula-to-gap passages;
+the final field records the additive-Haar local normalization used by the
+finite-place summation.
+-/
+structure IUTIVTheorem110CThetaSourceData where
   theorem110_arithmetic_divisor_source_constructed : Prop
   theorem110_arithmetic_divisor_source_constructed_proof :
     theorem110_arithmetic_divisor_source_constructed
@@ -18323,6 +18333,21 @@ structure IUTIVCThetaSourceData where
   additive_haar_local_normalization_constructed : Prop
   additive_haar_local_normalization_constructed_proof :
     additive_haar_local_normalization_constructed
+
+/--
+Finite-place summation source for the IUT IV `C_Theta` comparison.
+
+The data records the finite sum identifications and the Step (xi)/Haar bound.
+The final canonical-scale comparison is not supplied as an independent proof:
+it is derived below from the arithmetic gap
+`canonicalCThetaScale + 1 <= arithmeticUpperTerm - mainLogTerm` and the
+IUT IV handoff identity `cTheta + 1 = arithmeticUpperTerm - mainLogTerm`.
+-/
+structure IUTIVFinitePlaceCThetaSummationSourceData where
+  canonicalCThetaScale : Real
+  cTheta : Real
+  arithmeticUpperTerm : Real
+  mainLogTerm : Real
   finite_place_scale_and_gap_sum_identifications_constructed : Prop
   finite_place_scale_and_gap_sum_identifications_constructed_proof :
     finite_place_scale_and_gap_sum_identifications_constructed
@@ -18335,9 +18360,6 @@ structure IUTIVCThetaSourceData where
   iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed : Prop
   iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed_proof :
     iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed
-  ordered_real_plus_one_cancellation_constructed : Prop
-  ordered_real_plus_one_cancellation_constructed_proof :
-    ordered_real_plus_one_cancellation_constructed
   local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed :
     Prop
   local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed_proof :
@@ -18345,9 +18367,200 @@ structure IUTIVCThetaSourceData where
   finite_place_arithmetic_gap_constructed : Prop
   finite_place_arithmetic_gap_constructed_proof :
     finite_place_arithmetic_gap_constructed
-  local_to_global_canonicalCThetaScale_le_cTheta_constructed : Prop
-  local_to_global_canonicalCThetaScale_le_cTheta_constructed_proof :
-    local_to_global_canonicalCThetaScale_le_cTheta_constructed
+  cTheta_plus_one_eq_arithmetic_gap :
+    cTheta + 1 = arithmeticUpperTerm - mainLogTerm
+  canonicalCThetaScale_plus_one_le_arithmetic_gap :
+    canonicalCThetaScale + 1 <= arithmeticUpperTerm - mainLogTerm
+
+namespace IUTIVFinitePlaceCThetaSummationSourceData
+
+def ordered_real_plus_one_cancellation_constructed
+    (data : IUTIVFinitePlaceCThetaSummationSourceData) : Prop :=
+  data.canonicalCThetaScale + 1 <= data.cTheta + 1
+
+theorem ordered_real_plus_one_cancellation_constructed_proof
+    (data : IUTIVFinitePlaceCThetaSummationSourceData) :
+    data.ordered_real_plus_one_cancellation_constructed := by
+  dsimp [ordered_real_plus_one_cancellation_constructed]
+  rw [data.cTheta_plus_one_eq_arithmetic_gap]
+  exact data.canonicalCThetaScale_plus_one_le_arithmetic_gap
+
+def local_to_global_canonicalCThetaScale_le_cTheta_constructed
+    (data : IUTIVFinitePlaceCThetaSummationSourceData) : Prop :=
+  data.canonicalCThetaScale <= data.cTheta
+
+theorem local_to_global_canonicalCThetaScale_le_cTheta_constructed_proof
+    (data : IUTIVFinitePlaceCThetaSummationSourceData) :
+    data.local_to_global_canonicalCThetaScale_le_cTheta_constructed := by
+  have hplus := data.ordered_real_plus_one_cancellation_constructed_proof
+  dsimp [ordered_real_plus_one_cancellation_constructed,
+    local_to_global_canonicalCThetaScale_le_cTheta_constructed] at hplus ⊢
+  linarith
+
+end IUTIVFinitePlaceCThetaSummationSourceData
+
+/--
+IUT IV local-to-global `C_Theta` obligations underneath the current
+additive-Haar local analytic source.
+
+The record is now three source layers matching Theorem 1.10: local analytic
+containers, arithmetic-divisor/formula data, and finite-place summation.  The
+old paper-trace names are retained as derived projections below.
+-/
+structure IUTIVCThetaSourceData where
+  localAnalyticData : IUTIVLocalAnalyticCThetaSourceData
+  theorem110Data : IUTIVTheorem110CThetaSourceData
+  finitePlaceData : IUTIVFinitePlaceCThetaSummationSourceData
+
+namespace IUTIVCThetaSourceData
+
+def proposition14_distinguished_log_shell_inclusions_constructed
+    (data : IUTIVCThetaSourceData) : Prop :=
+  data.localAnalyticData.proposition14_distinguished_log_shell_inclusions_constructed
+
+theorem proposition14_distinguished_log_shell_inclusions_constructed_proof
+    (data : IUTIVCThetaSourceData) :
+    data.proposition14_distinguished_log_shell_inclusions_constructed :=
+  data.localAnalyticData.proposition14_distinguished_log_shell_inclusions_constructed_proof
+
+def proposition14_distinguished_numerical_bounds_constructed
+    (data : IUTIVCThetaSourceData) : Prop :=
+  data.localAnalyticData.proposition14_distinguished_numerical_bounds_constructed
+
+theorem proposition14_distinguished_numerical_bounds_constructed_proof
+    (data : IUTIVCThetaSourceData) :
+    data.proposition14_distinguished_numerical_bounds_constructed :=
+  data.localAnalyticData.proposition14_distinguished_numerical_bounds_constructed_proof
+
+def proposition14_nondistinguished_zero_log_volume_constructed
+    (data : IUTIVCThetaSourceData) : Prop :=
+  data.localAnalyticData.proposition14_nondistinguished_zero_log_volume_constructed
+
+theorem proposition14_nondistinguished_zero_log_volume_constructed_proof
+    (data : IUTIVCThetaSourceData) :
+    data.proposition14_nondistinguished_zero_log_volume_constructed :=
+  data.localAnalyticData.proposition14_nondistinguished_zero_log_volume_constructed_proof
+
+def proposition15_archimedean_metric_containment_constructed
+    (data : IUTIVCThetaSourceData) : Prop :=
+  data.localAnalyticData.proposition15_archimedean_metric_containment_constructed
+
+theorem proposition15_archimedean_metric_containment_constructed_proof
+    (data : IUTIVCThetaSourceData) :
+    data.proposition15_archimedean_metric_containment_constructed :=
+  data.localAnalyticData.proposition15_archimedean_metric_containment_constructed_proof
+
+def theorem110_arithmetic_divisor_source_constructed
+    (data : IUTIVCThetaSourceData) : Prop :=
+  data.theorem110Data.theorem110_arithmetic_divisor_source_constructed
+
+theorem theorem110_arithmetic_divisor_source_constructed_proof
+    (data : IUTIVCThetaSourceData) :
+    data.theorem110_arithmetic_divisor_source_constructed :=
+  data.theorem110Data.theorem110_arithmetic_divisor_source_constructed_proof
+
+def theorem110_distinguished_formula_to_gap_constructed
+    (data : IUTIVCThetaSourceData) : Prop :=
+  data.theorem110Data.theorem110_distinguished_formula_to_gap_constructed
+
+theorem theorem110_distinguished_formula_to_gap_constructed_proof
+    (data : IUTIVCThetaSourceData) :
+    data.theorem110_distinguished_formula_to_gap_constructed :=
+  data.theorem110Data.theorem110_distinguished_formula_to_gap_constructed_proof
+
+def theorem110_archimedean_formula_to_gap_constructed
+    (data : IUTIVCThetaSourceData) : Prop :=
+  data.theorem110Data.theorem110_archimedean_formula_to_gap_constructed
+
+theorem theorem110_archimedean_formula_to_gap_constructed_proof
+    (data : IUTIVCThetaSourceData) :
+    data.theorem110_archimedean_formula_to_gap_constructed :=
+  data.theorem110Data.theorem110_archimedean_formula_to_gap_constructed_proof
+
+def additive_haar_local_normalization_constructed
+    (data : IUTIVCThetaSourceData) : Prop :=
+  data.theorem110Data.additive_haar_local_normalization_constructed
+
+theorem additive_haar_local_normalization_constructed_proof
+    (data : IUTIVCThetaSourceData) :
+    data.additive_haar_local_normalization_constructed :=
+  data.theorem110Data.additive_haar_local_normalization_constructed_proof
+
+def finite_place_scale_and_gap_sum_identifications_constructed
+    (data : IUTIVCThetaSourceData) : Prop :=
+  data.finitePlaceData.finite_place_scale_and_gap_sum_identifications_constructed
+
+theorem finite_place_scale_and_gap_sum_identifications_constructed_proof
+    (data : IUTIVCThetaSourceData) :
+    data.finite_place_scale_and_gap_sum_identifications_constructed :=
+  data.finitePlaceData.finite_place_scale_and_gap_sum_identifications_constructed_proof
+
+def finite_place_summed_stepxi_haar_bound_constructed
+    (data : IUTIVCThetaSourceData) : Prop :=
+  data.finitePlaceData.finite_place_summed_stepxi_haar_bound_constructed
+
+theorem finite_place_summed_stepxi_haar_bound_constructed_proof
+    (data : IUTIVCThetaSourceData) :
+    data.finite_place_summed_stepxi_haar_bound_constructed :=
+  data.finitePlaceData.finite_place_summed_stepxi_haar_bound_constructed_proof
+
+def finite_place_total_haar_defect_ge_one_constructed
+    (data : IUTIVCThetaSourceData) : Prop :=
+  data.finitePlaceData.finite_place_total_haar_defect_ge_one_constructed
+
+theorem finite_place_total_haar_defect_ge_one_constructed_proof
+    (data : IUTIVCThetaSourceData) :
+    data.finite_place_total_haar_defect_ge_one_constructed :=
+  data.finitePlaceData.finite_place_total_haar_defect_ge_one_constructed_proof
+
+def iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed
+    (data : IUTIVCThetaSourceData) : Prop :=
+  data.finitePlaceData.iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed
+
+theorem iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed_proof
+    (data : IUTIVCThetaSourceData) :
+    data.iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed :=
+  data.finitePlaceData.iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed_proof
+
+def ordered_real_plus_one_cancellation_constructed
+    (data : IUTIVCThetaSourceData) : Prop :=
+  data.finitePlaceData.ordered_real_plus_one_cancellation_constructed
+
+theorem ordered_real_plus_one_cancellation_constructed_proof
+    (data : IUTIVCThetaSourceData) :
+    data.ordered_real_plus_one_cancellation_constructed :=
+  data.finitePlaceData.ordered_real_plus_one_cancellation_constructed_proof
+
+def local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed
+    (data : IUTIVCThetaSourceData) : Prop :=
+  data.finitePlaceData
+    |>.local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed
+
+theorem local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed_proof
+    (data : IUTIVCThetaSourceData) :
+    data.local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed :=
+  data.finitePlaceData
+    |>.local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed_proof
+
+def finite_place_arithmetic_gap_constructed
+    (data : IUTIVCThetaSourceData) : Prop :=
+  data.finitePlaceData.finite_place_arithmetic_gap_constructed
+
+theorem finite_place_arithmetic_gap_constructed_proof
+    (data : IUTIVCThetaSourceData) :
+    data.finite_place_arithmetic_gap_constructed :=
+  data.finitePlaceData.finite_place_arithmetic_gap_constructed_proof
+
+def local_to_global_canonicalCThetaScale_le_cTheta_constructed
+    (data : IUTIVCThetaSourceData) : Prop :=
+  data.finitePlaceData.local_to_global_canonicalCThetaScale_le_cTheta_constructed
+
+theorem local_to_global_canonicalCThetaScale_le_cTheta_constructed_proof
+    (data : IUTIVCThetaSourceData) :
+    data.local_to_global_canonicalCThetaScale_le_cTheta_constructed :=
+  data.finitePlaceData.local_to_global_canonicalCThetaScale_le_cTheta_constructed_proof
+
+end IUTIVCThetaSourceData
 
 /--
 IUT IV local-to-global `C_Theta` obligations underneath the current
