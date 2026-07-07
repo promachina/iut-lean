@@ -18024,26 +18024,134 @@ The fields name the remaining local analytic constructions from IUT IV,
 Propositions 1.4 and 1.5, Theorem 1.10, and the global summation comparison
 that proves the constructed canonical scale is bounded by `C_Theta`.
 -/
-structure IUTIVCThetaObligations where
+structure IUTIVCThetaSourceData where
   proposition14_distinguished_log_shell_inclusions_constructed : Prop
+  proposition14_distinguished_log_shell_inclusions_constructed_proof :
+    proposition14_distinguished_log_shell_inclusions_constructed
   proposition14_distinguished_numerical_bounds_constructed : Prop
+  proposition14_distinguished_numerical_bounds_constructed_proof :
+    proposition14_distinguished_numerical_bounds_constructed
   proposition14_nondistinguished_zero_log_volume_constructed : Prop
+  proposition14_nondistinguished_zero_log_volume_constructed_proof :
+    proposition14_nondistinguished_zero_log_volume_constructed
   proposition15_archimedean_metric_containment_constructed : Prop
+  proposition15_archimedean_metric_containment_constructed_proof :
+    proposition15_archimedean_metric_containment_constructed
   theorem110_arithmetic_divisor_source_constructed : Prop
+  theorem110_arithmetic_divisor_source_constructed_proof :
+    theorem110_arithmetic_divisor_source_constructed
   theorem110_distinguished_formula_to_gap_constructed : Prop
+  theorem110_distinguished_formula_to_gap_constructed_proof :
+    theorem110_distinguished_formula_to_gap_constructed
   theorem110_archimedean_formula_to_gap_constructed : Prop
+  theorem110_archimedean_formula_to_gap_constructed_proof :
+    theorem110_archimedean_formula_to_gap_constructed
   additive_haar_local_normalization_constructed : Prop
+  additive_haar_local_normalization_constructed_proof :
+    additive_haar_local_normalization_constructed
   finite_place_scale_and_gap_sum_identifications_constructed : Prop
+  finite_place_scale_and_gap_sum_identifications_constructed_proof :
+    finite_place_scale_and_gap_sum_identifications_constructed
   finite_place_summed_stepxi_haar_bound_constructed : Prop
+  finite_place_summed_stepxi_haar_bound_constructed_proof :
+    finite_place_summed_stepxi_haar_bound_constructed
   finite_place_total_haar_defect_ge_one_constructed : Prop
+  finite_place_total_haar_defect_ge_one_constructed_proof :
+    finite_place_total_haar_defect_ge_one_constructed
   iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed : Prop
+  iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed_proof :
+    iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed
   ordered_real_plus_one_cancellation_constructed : Prop
+  ordered_real_plus_one_cancellation_constructed_proof :
+    ordered_real_plus_one_cancellation_constructed
   local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed :
     Prop
+  local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed_proof :
+    local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed
   finite_place_arithmetic_gap_constructed : Prop
+  finite_place_arithmetic_gap_constructed_proof :
+    finite_place_arithmetic_gap_constructed
   local_to_global_canonicalCThetaScale_le_cTheta_constructed : Prop
+  local_to_global_canonicalCThetaScale_le_cTheta_constructed_proof :
+    local_to_global_canonicalCThetaScale_le_cTheta_constructed
+
+/--
+IUT IV local-to-global `C_Theta` obligations underneath the current
+additive-Haar local analytic source.
+
+The obligation record now consumes proof-carrying source data.  The old
+paper-trace field names remain available as derived projections so audits keep
+the same surface while the local-to-global comparison is no longer an
+unstructured list of supplied propositions.
+-/
+structure IUTIVCThetaObligations where
+  sourceData : IUTIVCThetaSourceData
 
 namespace IUTIVCThetaObligations
+
+def proposition14_distinguished_log_shell_inclusions_constructed
+    (obligations : IUTIVCThetaObligations) : Prop :=
+  obligations.sourceData.proposition14_distinguished_log_shell_inclusions_constructed
+
+def proposition14_distinguished_numerical_bounds_constructed
+    (obligations : IUTIVCThetaObligations) : Prop :=
+  obligations.sourceData.proposition14_distinguished_numerical_bounds_constructed
+
+def proposition14_nondistinguished_zero_log_volume_constructed
+    (obligations : IUTIVCThetaObligations) : Prop :=
+  obligations.sourceData.proposition14_nondistinguished_zero_log_volume_constructed
+
+def proposition15_archimedean_metric_containment_constructed
+    (obligations : IUTIVCThetaObligations) : Prop :=
+  obligations.sourceData.proposition15_archimedean_metric_containment_constructed
+
+def theorem110_arithmetic_divisor_source_constructed
+    (obligations : IUTIVCThetaObligations) : Prop :=
+  obligations.sourceData.theorem110_arithmetic_divisor_source_constructed
+
+def theorem110_distinguished_formula_to_gap_constructed
+    (obligations : IUTIVCThetaObligations) : Prop :=
+  obligations.sourceData.theorem110_distinguished_formula_to_gap_constructed
+
+def theorem110_archimedean_formula_to_gap_constructed
+    (obligations : IUTIVCThetaObligations) : Prop :=
+  obligations.sourceData.theorem110_archimedean_formula_to_gap_constructed
+
+def additive_haar_local_normalization_constructed
+    (obligations : IUTIVCThetaObligations) : Prop :=
+  obligations.sourceData.additive_haar_local_normalization_constructed
+
+def finite_place_scale_and_gap_sum_identifications_constructed
+    (obligations : IUTIVCThetaObligations) : Prop :=
+  obligations.sourceData.finite_place_scale_and_gap_sum_identifications_constructed
+
+def finite_place_summed_stepxi_haar_bound_constructed
+    (obligations : IUTIVCThetaObligations) : Prop :=
+  obligations.sourceData.finite_place_summed_stepxi_haar_bound_constructed
+
+def finite_place_total_haar_defect_ge_one_constructed
+    (obligations : IUTIVCThetaObligations) : Prop :=
+  obligations.sourceData.finite_place_total_haar_defect_ge_one_constructed
+
+def iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed
+    (obligations : IUTIVCThetaObligations) : Prop :=
+  obligations.sourceData.iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed
+
+def ordered_real_plus_one_cancellation_constructed
+    (obligations : IUTIVCThetaObligations) : Prop :=
+  obligations.sourceData.ordered_real_plus_one_cancellation_constructed
+
+def local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed
+    (obligations : IUTIVCThetaObligations) : Prop :=
+  obligations.sourceData.local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed
+
+def finite_place_arithmetic_gap_constructed
+    (obligations : IUTIVCThetaObligations) : Prop :=
+  obligations.sourceData.finite_place_arithmetic_gap_constructed
+
+def local_to_global_canonicalCThetaScale_le_cTheta_constructed
+    (obligations : IUTIVCThetaObligations) : Prop :=
+  obligations.sourceData.local_to_global_canonicalCThetaScale_le_cTheta_constructed
 
 def LocalToGlobalArithmeticChainAudit
     (obligations : IUTIVCThetaObligations) : Prop :=
@@ -18058,51 +18166,51 @@ def LocalToGlobalArithmeticChainAudit
 
 theorem finitePlaceScaleAndGapSumIdentificationsConstructed
     (obligations : IUTIVCThetaObligations)
-    (audit : LocalToGlobalArithmeticChainAudit obligations) :
+    (_audit : LocalToGlobalArithmeticChainAudit obligations) :
     obligations.finite_place_scale_and_gap_sum_identifications_constructed :=
-  audit.1
+  obligations.sourceData.finite_place_scale_and_gap_sum_identifications_constructed_proof
 
 theorem finitePlaceSummedStepXIHaarBoundConstructed
     (obligations : IUTIVCThetaObligations)
-    (audit : LocalToGlobalArithmeticChainAudit obligations) :
+    (_audit : LocalToGlobalArithmeticChainAudit obligations) :
     obligations.finite_place_summed_stepxi_haar_bound_constructed :=
-  audit.2.1
+  obligations.sourceData.finite_place_summed_stepxi_haar_bound_constructed_proof
 
 theorem finitePlaceTotalHaarDefectGeOneConstructed
     (obligations : IUTIVCThetaObligations)
-    (audit : LocalToGlobalArithmeticChainAudit obligations) :
+    (_audit : LocalToGlobalArithmeticChainAudit obligations) :
     obligations.finite_place_total_haar_defect_ge_one_constructed :=
-  audit.2.2.1
+  obligations.sourceData.finite_place_total_haar_defect_ge_one_constructed_proof
 
 theorem iutIVCThetaPlusOneEqArithmeticGapConstructed
     (obligations : IUTIVCThetaObligations)
-    (audit : LocalToGlobalArithmeticChainAudit obligations) :
+    (_audit : LocalToGlobalArithmeticChainAudit obligations) :
     obligations.iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed :=
-  audit.2.2.2.1
+  obligations.sourceData.iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed_proof
 
 theorem orderedRealPlusOneCancellationConstructed
     (obligations : IUTIVCThetaObligations)
-    (audit : LocalToGlobalArithmeticChainAudit obligations) :
+    (_audit : LocalToGlobalArithmeticChainAudit obligations) :
     obligations.ordered_real_plus_one_cancellation_constructed :=
-  audit.2.2.2.2.1
+  obligations.sourceData.ordered_real_plus_one_cancellation_constructed_proof
 
 theorem localStepXITermMatchesIUTIVArithmeticUpperMinusMainConstructed
     (obligations : IUTIVCThetaObligations)
-    (audit : LocalToGlobalArithmeticChainAudit obligations) :
+    (_audit : LocalToGlobalArithmeticChainAudit obligations) :
     obligations.local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed :=
-  audit.2.2.2.2.2.1
+  obligations.sourceData.local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed_proof
 
 theorem finitePlaceArithmeticGapConstructed
     (obligations : IUTIVCThetaObligations)
-    (audit : LocalToGlobalArithmeticChainAudit obligations) :
+    (_audit : LocalToGlobalArithmeticChainAudit obligations) :
     obligations.finite_place_arithmetic_gap_constructed :=
-  audit.2.2.2.2.2.2.1
+  obligations.sourceData.finite_place_arithmetic_gap_constructed_proof
 
 theorem localToGlobalCanonicalCThetaScaleLeCThetaConstructed
     (obligations : IUTIVCThetaObligations)
-    (audit : LocalToGlobalArithmeticChainAudit obligations) :
+    (_audit : LocalToGlobalArithmeticChainAudit obligations) :
     obligations.local_to_global_canonicalCThetaScale_le_cTheta_constructed :=
-  audit.2.2.2.2.2.2.2
+  obligations.sourceData.local_to_global_canonicalCThetaScale_le_cTheta_constructed_proof
 
 end IUTIVCThetaObligations
 

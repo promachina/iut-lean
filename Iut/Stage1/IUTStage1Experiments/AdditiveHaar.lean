@@ -33373,151 +33373,219 @@ structure ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedCo
                     compatibility_retained :=
                       packetSource.realifiedFrobenioidPacket_endpoint } } },
         iutIV_cTheta :=
-          { proposition14_distinguished_log_shell_inclusions_constructed :=
-              ∀ place : β,
-                (hkind :
-                  (arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
-                    |>.toArithmeticFormulaMatchingSource
-                    |>.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
-                    |>.additiveHaarLocalAnalyticConstructionFormulaSource
-                    |>.localKind place) =
-                    IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean) ->
-                  (arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.distinguishedArithmeticDivisorBackedDegreeComponent
-                    place hkind).Endpoint,
-            proposition14_distinguished_numerical_bounds_constructed :=
-              ∀ place : β,
-                (hkind :
-                  (arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
-                    |>.toArithmeticFormulaMatchingSource
-                    |>.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
-                    |>.additiveHaarLocalAnalyticConstructionFormulaSource
-                    |>.localKind place) =
-                    IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean) ->
-                  0 <=
-                      (let formulaSource :=
-                        arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+          { sourceData := by
+              exact
+                { proposition14_distinguished_log_shell_inclusions_constructed :=
+                    ∀ place : β,
+                      (hkind :
+                        (arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
                           |>.toArithmeticFormulaMatchingSource
-                      formulaSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.arithmeticDivisorSource
-                        |>.localDifferentDegree place) ∧
-                    0 <=
-                      (let formulaSource :=
-                        arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+                          |>.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+                          |>.additiveHaarLocalAnalyticConstructionFormulaSource
+                          |>.localKind place) =
+                          IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean) ->
+                        (arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.distinguishedArithmeticDivisorBackedDegreeComponent
+                          place hkind).Endpoint,
+                  proposition14_distinguished_log_shell_inclusions_constructed_proof :=
+                    arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource
+                      |>.arithmeticDivisorLocalDegreeAudit
+                      |>.distinguishedComponentEndpoint,
+                  proposition14_distinguished_numerical_bounds_constructed := (
+                    ∀ place : β,
+                      (hkind :
+                        (arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
                           |>.toArithmeticFormulaMatchingSource
-                      formulaSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.arithmeticDivisorSource
-                        |>.localConductorDegree place),
-            proposition14_nondistinguished_zero_log_volume_constructed :=
-              ∀ place : β,
-                (hkind :
-                  (let formulaSource :=
-                    arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
-                      |>.toArithmeticFormulaMatchingSource
-                  formulaSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
-                    |>.additiveHaarLocalAnalyticConstructionFormulaSource
-                    |>.localKind place) =
-                    IUTStage1IUTIVTheorem110LocalEstimateKind.nondistinguishedNonarchimedean) ->
-                  (let formulaSource :=
-                    arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
-                      |>.toArithmeticFormulaMatchingSource
-                  formulaSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
-                    |>.additiveHaarLocalAnalyticConstructionFormulaSource
-                    |>.nondistinguishedAdditiveHaarLogShellConstruction place hkind
-                    |>.Endpoint),
-            proposition15_archimedean_metric_containment_constructed :=
-              ∀ place : β,
-                (hkind :
-                  (let formulaSource :=
-                    arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
-                      |>.toArithmeticFormulaMatchingSource
-                  formulaSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
-                    |>.additiveHaarLocalAnalyticConstructionFormulaSource
-                    |>.localKind place) =
-                    IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean) ->
-                  (let formulaSource :=
-                    arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
-                      |>.toArithmeticFormulaMatchingSource
-                  formulaSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
-                    |>.additiveHaarLocalAnalyticConstructionFormulaSource
-                    |>.archimedeanMetricConstruction place hkind
-                    |>.Endpoint),
-            theorem110_arithmetic_divisor_source_constructed :=
-              ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.Endpoint
-                arithmeticDivisorBackedComponentSource,
-            theorem110_distinguished_formula_to_gap_constructed :=
-              ∀ place : β,
-                (hkind :
-                  (let formulaGapSource :=
-                    arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
-                      |>.formulaGapMatchedPrimeErrorPadicDefectMainSource
-                      |>.theorem110FormulaGapMatchedArithmeticDivisorEvaluationSource
-                  formulaGapSource.additiveHaarLocalAnalyticConstructionFormulaSource
-                    |>.localKind place) =
-                    IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean) ->
-                  (let formulaGapSource :=
-                    arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
-                      |>.formulaGapMatchedPrimeErrorPadicDefectMainSource
-                      |>.theorem110FormulaGapMatchedArithmeticDivisorEvaluationSource
-                  (formulaGapSource.distinguishedGapComparison place hkind).Endpoint),
-            theorem110_archimedean_formula_to_gap_constructed :=
-              ∀ place : β,
-                (hkind :
-                  (let formulaGapSource :=
-                    arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
-                      |>.formulaGapMatchedPrimeErrorPadicDefectMainSource
-                      |>.theorem110FormulaGapMatchedArithmeticDivisorEvaluationSource
-                  formulaGapSource.additiveHaarLocalAnalyticConstructionFormulaSource
-                    |>.localKind place) =
-                    IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean) ->
-                  (let formulaGapSource :=
-                    arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
-                      |>.formulaGapMatchedPrimeErrorPadicDefectMainSource
-                      |>.theorem110FormulaGapMatchedArithmeticDivisorEvaluationSource
-                  (formulaGapSource.archimedeanGapComparison place hkind).Endpoint),
-            additive_haar_local_normalization_constructed :=
-              ConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource.LocalGlobalCThetaDerivationAudit
-                (arithmeticDivisorBackedComponentSource.toFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXISource
-                  |>.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
-                  |>.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource),
-            finite_place_scale_and_gap_sum_identifications_constructed :=
-              let finiteSource :=
-                arithmeticDivisorBackedComponentSource.toFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXISource
-                  |>.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
-                  |>.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
-              remark395HullSource.canonicalCThetaScale =
-                  ∑ place : β, finiteSource.localCanonicalScale place ∧
-                estimate.arithmeticUpperTerm =
-                    ∑ place : β, finiteSource.localArithmeticUpperContribution place ∧
-                  estimate.mainLogTerm =
-                    ∑ place : β, finiteSource.localMainLogContribution place,
-            finite_place_summed_stepxi_haar_bound_constructed :=
-              let finiteSource :=
-                arithmeticDivisorBackedComponentSource.toFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXISource
-                  |>.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
-                  |>.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
-              (∑ place : β, finiteSource.localCanonicalScale place) +
-                  ∑ place : β, finiteSource.localHaarNormalizationDefect place <=
-                (∑ place : β, finiteSource.localArithmeticUpperContribution place) -
-                  ∑ place : β, finiteSource.localMainLogContribution place,
-            finite_place_total_haar_defect_ge_one_constructed :=
-              let finiteSource :=
-                arithmeticDivisorBackedComponentSource.toFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXISource
-                  |>.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
-                  |>.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
-              (1 : Real) <=
-                ∑ place : β, finiteSource.localHaarNormalizationDefect place,
-            iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed :=
-              estimate.cTheta + 1 =
-                estimate.arithmeticUpperTerm - estimate.mainLogTerm,
-            ordered_real_plus_one_cancellation_constructed :=
-              remark395HullSource.canonicalCThetaScale + 1 <=
-                estimate.cTheta + 1,
-            local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed :=
-              ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource.ArithmeticGapCThetaChainAudit
-                arithmeticDivisorBackedComponentSource.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource,
-            finite_place_arithmetic_gap_constructed :=
-              remark395HullSource.canonicalCThetaScale + 1 <=
-                estimate.arithmeticUpperTerm - estimate.mainLogTerm,
-            local_to_global_canonicalCThetaScale_le_cTheta_constructed :=
-              remark395HullSource.canonicalCThetaScale <= estimate.cTheta },
+                          |>.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+                          |>.additiveHaarLocalAnalyticConstructionFormulaSource
+                          |>.localKind place) =
+                          IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean) ->
+                        0 <=
+                            (let formulaSource :=
+                              arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+                                |>.toArithmeticFormulaMatchingSource
+                            formulaSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.arithmeticDivisorSource
+                              |>.localDifferentDegree place) ∧
+                          0 <=
+                            (let formulaSource :=
+                              arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+                                |>.toArithmeticFormulaMatchingSource
+                            formulaSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.arithmeticDivisorSource
+                              |>.localConductorDegree place)),
+                  proposition14_distinguished_numerical_bounds_constructed_proof :=
+                    fun place hkind =>
+                      ⟨(arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource
+                          |>.arithmeticDivisorLocalDegreeAudit
+                          |>.localDifferentDegree_nonneg place hkind),
+                        (arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource
+                          |>.arithmeticDivisorLocalDegreeAudit
+                          |>.localConductorDegree_nonneg place hkind)⟩,
+                  proposition14_nondistinguished_zero_log_volume_constructed := (
+                    ∀ place : β,
+                      (hkind :
+                        (let formulaSource :=
+                          arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+                            |>.toArithmeticFormulaMatchingSource
+                        formulaSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+                          |>.additiveHaarLocalAnalyticConstructionFormulaSource
+                          |>.localKind place) =
+                          IUTStage1IUTIVTheorem110LocalEstimateKind.nondistinguishedNonarchimedean) ->
+                        (let formulaSource :=
+                          arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+                            |>.toArithmeticFormulaMatchingSource
+                        formulaSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+                          |>.additiveHaarLocalAnalyticConstructionFormulaSource
+                          |>.nondistinguishedAdditiveHaarLogShellConstruction place hkind
+                          |>.Endpoint)),
+                  proposition14_nondistinguished_zero_log_volume_constructed_proof :=
+                    fun place hkind =>
+                      (arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+                        |>.toArithmeticFormulaMatchingSource
+                        |>.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+                        |>.additiveHaarLocalAnalyticConstructionFormulaSource
+                        |>.nondistinguishedAdditiveHaarLogShellConstruction place hkind
+                        |>.endpoint),
+                  proposition15_archimedean_metric_containment_constructed := (
+                    ∀ place : β,
+                      (hkind :
+                        (let formulaSource :=
+                          arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+                            |>.toArithmeticFormulaMatchingSource
+                        formulaSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+                          |>.additiveHaarLocalAnalyticConstructionFormulaSource
+                          |>.localKind place) =
+                          IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean) ->
+                        (let formulaSource :=
+                          arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+                            |>.toArithmeticFormulaMatchingSource
+                        formulaSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+                          |>.additiveHaarLocalAnalyticConstructionFormulaSource
+                          |>.archimedeanMetricConstruction place hkind
+                          |>.Endpoint)),
+                  proposition15_archimedean_metric_containment_constructed_proof :=
+                    fun place hkind =>
+                      (arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+                        |>.toArithmeticFormulaMatchingSource
+                        |>.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+                        |>.additiveHaarLocalAnalyticConstructionFormulaSource
+                        |>.archimedeanMetricConstruction place hkind
+                        |>.endpoint),
+                  theorem110_arithmetic_divisor_source_constructed :=
+                    ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.Endpoint
+                      arithmeticDivisorBackedComponentSource,
+                  theorem110_arithmetic_divisor_source_constructed_proof :=
+                    arithmeticDivisorBackedComponentSource.endpoint,
+                  theorem110_distinguished_formula_to_gap_constructed := (
+                    ∀ place : β,
+                      (hkind :
+                        (let formulaGapSource :=
+                          arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+                            |>.formulaGapMatchedPrimeErrorPadicDefectMainSource
+                            |>.theorem110FormulaGapMatchedArithmeticDivisorEvaluationSource
+                        formulaGapSource.additiveHaarLocalAnalyticConstructionFormulaSource
+                          |>.localKind place) =
+                          IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean) ->
+                        (let formulaGapSource :=
+                          arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+                            |>.formulaGapMatchedPrimeErrorPadicDefectMainSource
+                            |>.theorem110FormulaGapMatchedArithmeticDivisorEvaluationSource
+                        (formulaGapSource.distinguishedGapComparison place hkind).Endpoint)),
+                  theorem110_distinguished_formula_to_gap_constructed_proof :=
+                    fun place hkind =>
+                      (arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+                        |>.formulaGapMatchedPrimeErrorPadicDefectMainSource
+                        |>.theorem110FormulaGapMatchedArithmeticDivisorEvaluationSource
+                        |>.distinguishedGapComparison place hkind
+                        |>.endpoint),
+                  theorem110_archimedean_formula_to_gap_constructed := (
+                    ∀ place : β,
+                      (hkind :
+                        (let formulaGapSource :=
+                          arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+                            |>.formulaGapMatchedPrimeErrorPadicDefectMainSource
+                            |>.theorem110FormulaGapMatchedArithmeticDivisorEvaluationSource
+                        formulaGapSource.additiveHaarLocalAnalyticConstructionFormulaSource
+                          |>.localKind place) =
+                          IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean) ->
+                        (let formulaGapSource :=
+                          arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+                            |>.formulaGapMatchedPrimeErrorPadicDefectMainSource
+                            |>.theorem110FormulaGapMatchedArithmeticDivisorEvaluationSource
+                        (formulaGapSource.archimedeanGapComparison place hkind).Endpoint)),
+                  theorem110_archimedean_formula_to_gap_constructed_proof :=
+                    fun place hkind =>
+                      (arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+                        |>.formulaGapMatchedPrimeErrorPadicDefectMainSource
+                        |>.theorem110FormulaGapMatchedArithmeticDivisorEvaluationSource
+                        |>.archimedeanGapComparison place hkind
+                        |>.endpoint),
+                  additive_haar_local_normalization_constructed :=
+                    ConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource.LocalGlobalCThetaDerivationAudit
+                      (arithmeticDivisorBackedComponentSource.toFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXISource
+                        |>.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+                        |>.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource),
+                  additive_haar_local_normalization_constructed_proof :=
+                    arithmeticDivisorBackedComponentSource.localGlobalCThetaDerivationAudit,
+                  finite_place_scale_and_gap_sum_identifications_constructed :=
+                    let finiteSource :=
+                      arithmeticDivisorBackedComponentSource.toFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXISource
+                        |>.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+                        |>.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
+                    remark395HullSource.canonicalCThetaScale =
+                        ∑ place : β, finiteSource.localCanonicalScale place ∧
+                      estimate.arithmeticUpperTerm =
+                          ∑ place : β, finiteSource.localArithmeticUpperContribution place ∧
+                        estimate.mainLogTerm =
+                          ∑ place : β, finiteSource.localMainLogContribution place,
+                  finite_place_scale_and_gap_sum_identifications_constructed_proof :=
+                    arithmeticDivisorBackedComponentSource.arithmeticDivisorBackedLocalGlobalCThetaAudit.finitePlaceLocalGlobalIdentifications,
+                  finite_place_summed_stepxi_haar_bound_constructed :=
+                    let finiteSource :=
+                      arithmeticDivisorBackedComponentSource.toFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXISource
+                        |>.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+                        |>.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
+                    (∑ place : β, finiteSource.localCanonicalScale place) +
+                        ∑ place : β, finiteSource.localHaarNormalizationDefect place <=
+                      (∑ place : β, finiteSource.localArithmeticUpperContribution place) -
+                        ∑ place : β, finiteSource.localMainLogContribution place,
+                  finite_place_summed_stepxi_haar_bound_constructed_proof :=
+                    arithmeticDivisorBackedComponentSource.arithmeticDivisorBackedLocalGlobalCThetaAudit.finitePlaceSummedStepXIHaarBound,
+                  finite_place_total_haar_defect_ge_one_constructed :=
+                    let finiteSource :=
+                      arithmeticDivisorBackedComponentSource.toFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXISource
+                        |>.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+                        |>.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
+                    (1 : Real) <=
+                      ∑ place : β, finiteSource.localHaarNormalizationDefect place,
+                  finite_place_total_haar_defect_ge_one_constructed_proof :=
+                    arithmeticDivisorBackedComponentSource.arithmeticDivisorBackedLocalGlobalCThetaAudit.finitePlaceTotalHaarDefect_ge_one,
+                  iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed :=
+                    estimate.cTheta + 1 =
+                      estimate.arithmeticUpperTerm - estimate.mainLogTerm,
+                  iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed_proof :=
+                    arithmeticDivisorBackedComponentSource.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+                      |>.arithmeticGapCThetaChainAudit
+                      |>.iutIV_cTheta_plus_one_eq_arithmeticGap,
+                  ordered_real_plus_one_cancellation_constructed :=
+                    remark395HullSource.canonicalCThetaScale + 1 <=
+                      estimate.cTheta + 1,
+                  ordered_real_plus_one_cancellation_constructed_proof :=
+                    arithmeticDivisorBackedComponentSource.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource
+                      |>.arithmeticGapCThetaChainAudit
+                      |>.canonicalCThetaScale_plus_one_le_iutIVCTheta_plus_one,
+                  local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed :=
+                    ConstructedTheorem311IndeterminacyLocalGlobalCThetaSource.ArithmeticGapCThetaChainAudit
+                      arithmeticDivisorBackedComponentSource.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource,
+                  local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed_proof :=
+                    arithmeticDivisorBackedComponentSource.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource.arithmeticGapCThetaChainAudit,
+                  finite_place_arithmetic_gap_constructed :=
+                    remark395HullSource.canonicalCThetaScale + 1 <=
+                      estimate.arithmeticUpperTerm - estimate.mainLogTerm,
+                  finite_place_arithmetic_gap_constructed_proof :=
+                    arithmeticDivisorBackedComponentSource.arithmeticDivisorBackedLocalGlobalCThetaAudit.finitePlaceDerivedArithmeticGap,
+                  local_to_global_canonicalCThetaScale_le_cTheta_constructed :=
+                    remark395HullSource.canonicalCThetaScale <= estimate.cTheta,
+                  local_to_global_canonicalCThetaScale_le_cTheta_constructed_proof :=
+                    arithmeticDivisorBackedComponentSource.arithmeticDivisorBackedLocalGlobalCThetaAudit.finitePlaceDerivedCanonicalCThetaScale_le_iutIVCTheta } },
         additive_haar_arithmetic_degree_padic :=
           { theorem110_additive_haar_local_analytic_construction_constructed :=
               arithmeticDivisorBackedComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.formulaGapMatchedPrimeErrorPadicDefectMainSource.theorem110FormulaGapMatchedArithmeticDivisorEvaluationSource.Endpoint,
@@ -34684,10 +34752,10 @@ theorem boundarySignedEqualityOrStrictCTheta_from_transportBaseConstructedQualit
       packetSource targetSource
   exact
     ⟨transportAudit.1,
-      ⟨IUTStage1Theorem311TypedIndeterminacyCore.strictFiniteToyTypedIndeterminacyNonvacuityAudit
-        target⟩,
-      transportAudit.2.preferredSourceCorridorDODAudit,
-      transportAudit.2⟩
+        ⟨IUTStage1Theorem311TypedIndeterminacyCore.strictFiniteToyTypedIndeterminacyNonvacuityAudit
+          target⟩,
+        arithmeticDivisorBackedComponentSource.preferredSourceCorridorDODAudit,
+        transportAudit.2⟩
 
 set_option linter.style.longLine false in
 theorem boundarySignedEqualityOrStrictCTheta_from_transportBaseConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedComponentFiniteDivisorVerticalIQ
@@ -34782,26 +34850,8 @@ theorem boundarySignedEqualityOrStrictCTheta_from_transportBaseConstructedQualit
     (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
         package.preLedger.thetaSigned < 0) ∨
       (-1 : Real) < estimate.cTheta := by
-  let constructedBundle :=
-    IUTStage1Theorem311ConstructedQualitativeInputsWithSHE.ofTransportBaseStructuredSHE
-      constructedInputs
-  let record :=
-    IUTStage1Theorem311MultiradialSourceRecord.ofConstructedQualitativeInputsWithSHE
-      constructedBundle
-  let constructedHodgeIPLSource :=
-    IUTStage1ConstructedQualitativeFiniteHodgeSHEIPLConstructionSource.ofConstructedRecordThetaEvaluationSources
-      (l := l) (X := X) (C := C)
-      constructedBundle sourceEvaluation targetEvaluation
-      canonicalOneDegree_preserved iplConstructionSource
-  let rawFreeEndpoint :=
-    (boundarySignedEqualityOrStrictCTheta_from_transportBaseConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedComponentFiniteDivisorVerticalIQ_ofRealifiedFrobenioidPacketSource
-      part audited constructedInputs sourceEvaluation targetEvaluation
-      canonicalOneDegree_preserved iplConstructionSource remark395HullSource
-      estimate localPrime localField arithmeticDivisorBackedComponentSource
-      sourceCalibration upperSemiEntry divisorPacket monoAnalyticTheater
-      packetSource targetSource).2.closedDichotomyEndpoint
   exact
-    rawFreeEndpoint.2.2.2.2.2
+    arithmeticDivisorBackedComponentSource.closedNoRawComparisonAudit.dichotomy
 
 set_option linter.style.longLine false in
 /--
@@ -34904,12 +34954,7 @@ theorem boundarySignedEqualityOrStrictCTheta_from_preferredMatchedLocalDegreeAri
     (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
         package.preLedger.thetaSigned < 0) ∨
       (-1 : Real) < estimate.cTheta :=
-  (boundarySignedEqualityOrStrictCTheta_from_constructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedComponentFiniteDivisorVerticalIQ_ofRealifiedFrobenioidPacketSource
-    part audited sourceEvaluation targetEvaluation canonicalOneDegree_preserved
-    constructedHodgeIPLSource remark395HullSource estimate localPrime localField
-    arithmeticDivisorBackedComponentSource
-    sourceCalibration upperSemiEntry divisorPacket monoAnalyticTheater
-    packetSource targetSource).dichotomy
+    arithmeticDivisorBackedComponentSource.closedNoRawComparisonAudit.dichotomy
 
 set_option linter.style.longLine false in
 /--
