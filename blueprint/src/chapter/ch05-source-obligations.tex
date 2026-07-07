@@ -113,9 +113,26 @@
   coordinate.
 \end{definition}
 
+\begin{proposition}[Selected \(q\)-region from the quotient family]
+  \label{prop:step-xi-selected-q-region-quotient-family}
+  \uses{def:paper-derived-step-xi-source}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIHullFormationData.ofQuotientHullCompatibility}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIHullFormationData.ofQuotientHullCompatibility_audit}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.ofQuotientHullCompatibility}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.ofQuotientHullCompatibility_audit}
+  \leanok
+  The selected \(q\)-region used in Step (xi) can be constructed as the
+  possible region attached to the selected Theorem 3.11 equality-quotient
+  choice.  Its containment in the possible-image union is therefore the
+  family-union inclusion from the Remark 3.9.5 possible-image source.  The
+  paper-derived Step (xi) source has a matching constructor that fixes this
+  choice to the source spine's selected \(q\)-choice, rather than taking a
+  preassembled hull record with a separately supplied containment proof.
+\end{proposition}
+
 \begin{proposition}[Step (xi) source assembles obligations]
   \label{prop:step-xi-source-assembles-obligations}
-  \uses{def:paper-derived-step-xi-source}
+  \uses{def:paper-derived-step-xi-source,prop:step-xi-selected-q-region-quotient-family}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.toStepXIHullDeterminantObligations}
   \leanok
   The structured Step (xi) source projects to the hull/determinant obligation
@@ -179,7 +196,7 @@
 
 \begin{theorem}[Construct hull plus determinant]
   \label{thm:construct-hdd}
-  \uses{def:hdd,prop:step-xi-upper-ray-input,def:paper-derived-step-xi-source,prop:preferred-step-xi-paper-source-route-audit}
+  \uses{def:hdd,prop:step-xi-upper-ray-input,def:paper-derived-step-xi-source,prop:step-xi-selected-q-region-quotient-family,prop:preferred-step-xi-paper-source-route-audit}
   \notready
   The paper-derived Step (xi) source should be lowered further to actual
   holomorphic-hull and determinant operations corresponding to Remark 3.9.5

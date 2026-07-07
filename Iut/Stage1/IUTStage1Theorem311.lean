@@ -18596,6 +18596,76 @@ variable {target : Copy}
 variable {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
 variable {images : RegionFamily target choice}
 
+set_option linter.style.longLine false in
+/--
+Construct Step (xi) hull-formation data from quotient-indexed Theorem 3.11
+possible images.
+
+In the source proof, Step (xi-c) selects one q-pilot output possibility from the
+Theorem 3.11 family, and Step (xi-d) then passes to the holomorphic hull.  Thus
+the selected q-region containment is not an independent Step (xi) assumption:
+it is the canonical inclusion of a member of the possible-image family into the
+family union.
+-/
+def ofQuotientHullCompatibility
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        core images hullOperator)
+    (selectedQChoice : choice) :
+    StepXIHullFormationData core images :=
+  { hullOperator := hullOperator,
+    quotientHullCompatibility := quotientHullCompatibility,
+    selectedQChoice := selectedQChoice,
+    selectedQRegion :=
+      quotientHullCompatibility.familySource.possibleRegion
+        (core.equalityQuotientMap selectedQChoice),
+    selectedQRegion_eq_quotientRegion := rfl,
+    selectedQRegion_subset_possibleImageUnion :=
+      quotientHullCompatibility.familySource.possibleRegion_subset_familyUnion
+        (core.equalityQuotientMap selectedQChoice) }
+
+theorem ofQuotientHullCompatibility_selectedQRegion_eq_possibleRegion
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        core images hullOperator)
+    (selectedQChoice : choice) :
+    (ofQuotientHullCompatibility hullOperator quotientHullCompatibility
+        selectedQChoice).selectedQRegion =
+      quotientHullCompatibility.familySource.possibleRegion
+        (core.equalityQuotientMap selectedQChoice) :=
+  rfl
+
+theorem ofQuotientHullCompatibility_selectedQRegion_subset_familyUnion
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        core images hullOperator)
+    (selectedQChoice : choice) :
+    (ofQuotientHullCompatibility hullOperator quotientHullCompatibility
+        selectedQChoice).selectedQRegion ⊆
+      quotientHullCompatibility.familySource.familyUnion :=
+  quotientHullCompatibility.familySource.possibleRegion_subset_familyUnion
+    (core.equalityQuotientMap selectedQChoice)
+
+theorem ofQuotientHullCompatibility_selectedQRegion_subset_canonicalHull
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        core images hullOperator)
+    (selectedQChoice : choice) :
+    (ofQuotientHullCompatibility hullOperator quotientHullCompatibility
+        selectedQChoice).selectedQRegion ⊆
+      quotientHullCompatibility.familySource.canonicalHull :=
+  (ofQuotientHullCompatibility_selectedQRegion_subset_familyUnion
+      hullOperator quotientHullCompatibility selectedQChoice).trans
+    quotientHullCompatibility.familySource.familyUnion_subset_phi
+
 theorem hullOperatorConstructed
     (data : StepXIHullFormationData core images) :
     Nonempty (IUTStage1Remark395HolomorphicHullOperator (Point target)) :=
@@ -18633,6 +18703,66 @@ theorem ob1Ob2HullAbsorption
   ⟨data.selectedQRegionContainedInCanonicalHull,
     data.quotientHullCompatibility.familySource.familyUnion_subset_phi,
     data.quotientHullCompatibility.familySource.phi_closed⟩
+
+set_option linter.style.longLine false in
+/--
+Audit for the quotient-derived Step (xi-c)/(xi-d) hull constructor.
+
+The fields record that the q-region is definitionally the selected Theorem 3.11
+possible image, its inclusion in the possible-image union is supplied by Remark
+3.9.5 family-union membership, and the Ob1/Ob2 hull absorption follows from
+the already constructed holomorphic hull source.
+-/
+structure QuotientConstructedAudit
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        core images hullOperator)
+    (selectedQChoice : choice) : Prop where
+  selected_q_region_is_possible_region :
+    (ofQuotientHullCompatibility hullOperator quotientHullCompatibility
+        selectedQChoice).selectedQRegion =
+      quotientHullCompatibility.familySource.possibleRegion
+        (core.equalityQuotientMap selectedQChoice)
+  selected_q_region_contained_in_possible_image_union :
+    (ofQuotientHullCompatibility hullOperator quotientHullCompatibility
+        selectedQChoice).selectedQRegion ⊆
+      quotientHullCompatibility.familySource.familyUnion
+  selected_q_region_contained_in_canonical_hull :
+    (ofQuotientHullCompatibility hullOperator quotientHullCompatibility
+        selectedQChoice).selectedQRegion ⊆
+      quotientHullCompatibility.familySource.canonicalHull
+  ob1_ob2_hull_absorption :
+    (ofQuotientHullCompatibility hullOperator quotientHullCompatibility
+          selectedQChoice).selectedQRegion ⊆
+        quotientHullCompatibility.familySource.canonicalHull ∧
+      quotientHullCompatibility.familySource.familyUnion ⊆
+        quotientHullCompatibility.familySource.canonicalHull ∧
+      quotientHullCompatibility.familySource.hullOperator.isClosed
+        quotientHullCompatibility.familySource.canonicalHull
+
+theorem ofQuotientHullCompatibility_audit
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        core images hullOperator)
+    (selectedQChoice : choice) :
+    QuotientConstructedAudit hullOperator quotientHullCompatibility
+      selectedQChoice :=
+  { selected_q_region_is_possible_region :=
+      ofQuotientHullCompatibility_selectedQRegion_eq_possibleRegion
+        hullOperator quotientHullCompatibility selectedQChoice,
+    selected_q_region_contained_in_possible_image_union :=
+      ofQuotientHullCompatibility_selectedQRegion_subset_familyUnion
+        hullOperator quotientHullCompatibility selectedQChoice,
+    selected_q_region_contained_in_canonical_hull :=
+      ofQuotientHullCompatibility_selectedQRegion_subset_canonicalHull
+        hullOperator quotientHullCompatibility selectedQChoice,
+    ob1_ob2_hull_absorption :=
+      (ofQuotientHullCompatibility hullOperator quotientHullCompatibility
+        selectedQChoice).ob1Ob2HullAbsorption }
 
 theorem ob5QuotientCompatibility
     (data : StepXIHullFormationData core images) :
@@ -19031,6 +19161,50 @@ variable
     Theorem311HodgeTheaterLogThetaLogKummerSource
       (target := target) coric l}
 
+set_option linter.style.longLine false in
+/--
+Build the paper-derived Step (xi) source directly from quotient-compatible
+Theorem 3.11 possible images.
+
+This is the source-facing constructor for Step (xi-c)/(xi-d): the selected
+q-region is forced to be the possible region attached to the source spine's
+selected q-choice, so its containment in the possible-image union is inherited
+from the quotient family rather than supplied by the caller.
+-/
+def ofQuotientHullCompatibility
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        sourceData.Core sourceData.Images hullOperator)
+    (determinantData :
+      StepXIDeterminantComparisonData.{u, v}
+        (StepXIHullFormationData.ofQuotientHullCompatibility
+          hullOperator quotientHullCompatibility sourceData.selectedQChoice)
+        thetaSigned)
+    (ob7Compatibility : StepXIPrimeStripLogKummerCompatibilityData)
+    (ob7_sourcePrimeStrip_eq :
+      ob7Compatibility.sourcePrimeStrip = sourceData.inputPrimeStrip)
+    (ob7_targetPrimeStrip_eq :
+      ob7Compatibility.targetPrimeStrip = sourceData.outputPrimeStrip)
+    (ob7_logKummerColumn_eq_selected :
+      ob7Compatibility.logKummerColumn =
+        sourceData.selectedQChoice.coordinate.logThetaColumn) :
+    StepXIPaperDerivedHullDeterminantSource sourceData :=
+  { paperTrace := paperTrace,
+    thetaSigned := thetaSigned,
+    hullData :=
+      StepXIHullFormationData.ofQuotientHullCompatibility
+        hullOperator quotientHullCompatibility sourceData.selectedQChoice,
+    selectedQChoice_eq_source := rfl,
+    determinantData := determinantData,
+    ob7Compatibility := ob7Compatibility,
+    ob7_sourcePrimeStrip_eq := ob7_sourcePrimeStrip_eq,
+    ob7_targetPrimeStrip_eq := ob7_targetPrimeStrip_eq,
+    ob7_logKummerColumn_eq_selected := ob7_logKummerColumn_eq_selected }
+
 def toStepXIHullDeterminantSourceData
     (stepXI :
       StepXIPaperDerivedHullDeterminantSource sourceData) :
@@ -19138,6 +19312,41 @@ theorem audit
     q_region_logVolume_le_thetaSigned :=
       stepXI.determinantData.qRegionLogVolume_le_thetaSigned,
     obligations_projected := rfl }
+
+set_option linter.style.longLine false in
+theorem ofQuotientHullCompatibility_audit
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        sourceData.Core sourceData.Images hullOperator)
+    (determinantData :
+      StepXIDeterminantComparisonData.{u, v}
+        (StepXIHullFormationData.ofQuotientHullCompatibility
+          hullOperator quotientHullCompatibility sourceData.selectedQChoice)
+        thetaSigned)
+    (ob7Compatibility : StepXIPrimeStripLogKummerCompatibilityData)
+    (ob7_sourcePrimeStrip_eq :
+      ob7Compatibility.sourcePrimeStrip = sourceData.inputPrimeStrip)
+    (ob7_targetPrimeStrip_eq :
+      ob7Compatibility.targetPrimeStrip = sourceData.outputPrimeStrip)
+    (ob7_logKummerColumn_eq_selected :
+      ob7Compatibility.logKummerColumn =
+        sourceData.selectedQChoice.coordinate.logThetaColumn) :
+    Audit
+      (ofQuotientHullCompatibility
+        (sourceData := sourceData)
+        paperTrace thetaSigned hullOperator quotientHullCompatibility
+        determinantData ob7Compatibility ob7_sourcePrimeStrip_eq
+        ob7_targetPrimeStrip_eq ob7_logKummerColumn_eq_selected) :=
+  audit
+    (ofQuotientHullCompatibility
+      (sourceData := sourceData)
+      paperTrace thetaSigned hullOperator quotientHullCompatibility
+      determinantData ob7Compatibility ob7_sourcePrimeStrip_eq
+      ob7_targetPrimeStrip_eq ob7_logKummerColumn_eq_selected)
 
 end StepXIPaperDerivedHullDeterminantSource
 
