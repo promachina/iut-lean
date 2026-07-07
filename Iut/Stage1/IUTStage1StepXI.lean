@@ -27310,6 +27310,19 @@ theorem endpoint
     bridgeSource.determinantLogVolume_le_thetaSigned,
     bridgeSource.qRegionLogVolume_le_thetaSigned⟩
 
+set_option linter.style.longLine false in
+theorem familyHullLogVolume_eq_determinantLogVolume
+    (bridgeSource :
+      IUTStage1Remark395RecordHullDeterminantBridgeSource
+        (β := β) record) :
+    bridgeSource.hullOperator.logVolume
+        (bridgeSource.hullOperator.phi
+          (recordThetaPossibleImageUnion record)) =
+      bridgeSource.determinantSource.determinantLogVolume := by
+  simpa [IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator,
+    IUTStage1HullLogVolumeApproximant.canonical] using
+    bridgeSource.compatibility.approximant_eq_determinantLogVolume
+
 theorem ofOb3Ob5CompatibilitySource_endpoint
     (compatibilitySource :
       IUTStage1Remark395RecordOb3Ob5DeterminantCompatibilitySource
@@ -56269,6 +56282,152 @@ theorem toStepXIDeterminantComparisonData_audit
     selectedQRegionLogVolume_le_normalized
 
 end IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
+
+namespace IUTStage1Remark395RecordHullDeterminantBridgeSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {β : Type v} [Fintype β]
+
+open IUTStage1Theorem311HullDetSourceConstructor
+
+set_option linter.style.longLine false in
+/--
+Construct the paper-trace Step (xi) determinant comparison from the
+record-canonical Remark 3.9.5 hull/determinant bridge.
+
+The only identification still required at this boundary is that the
+paper-derived selected q-region log-volume is the same log-volume as the
+record bridge q-pilot region.  Once that is supplied, the Ob5/Ob6 upper-ray
+bridge provides both the q-region-to-normalized-determinant inequality and the
+determinant-to-theta bound.
+-/
+noncomputable def toStepXIDeterminantComparisonData
+    {choice : Type x}
+    {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
+    {images : RegionFamily target choice}
+    {hullData :
+      IUTStage1Theorem311ToCorollary312PaperTrace.StepXIHullFormationData
+        core images}
+    (bridgeSource :
+      IUTStage1Remark395RecordHullDeterminantBridgeSource
+        (β := β) record)
+    (selectedQRegionLogVolume_eq_bridgeQRegion :
+      hullData.hullOperator.logVolume hullData.selectedQRegion =
+        bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion) :
+    IUTStage1Theorem311ToCorollary312PaperTrace.StepXIDeterminantComparisonData
+      hullData package.preLedger.thetaSigned :=
+  StepXIWeightedDeterminantProjection.toStepXIDeterminantComparisonData
+    bridgeSource.determinantSource
+    (hullData := hullData)
+    (thetaSigned := package.preLedger.thetaSigned)
+    (bridgeSource.hullOperator.logVolume
+      (bridgeSource.hullOperator.phi
+        (recordThetaPossibleImageUnion record)))
+    bridgeSource.familyHullLogVolume_eq_determinantLogVolume
+    bridgeSource.determinantLogVolume_le_thetaSigned
+    (by
+      calc
+        hullData.hullOperator.logVolume hullData.selectedQRegion =
+            bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion :=
+          selectedQRegionLogVolume_eq_bridgeQRegion
+        _ <= bridgeSource.determinantSource.normalizedLogVolume :=
+          bridgeSource.qRegionLogVolume_le_determinantNormalizedLogVolume)
+
+set_option linter.style.longLine false in
+/--
+Audit for the Step (xi-e)/(xi-f) upper-ray handoff into the new determinant
+comparison record.
+-/
+structure StepXIDeterminantComparisonFromBridgeAudit
+    {choice : Type x}
+    {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
+    {images : RegionFamily target choice}
+    {hullData :
+      IUTStage1Theorem311ToCorollary312PaperTrace.StepXIHullFormationData
+        core images}
+    (bridgeSource :
+      IUTStage1Remark395RecordHullDeterminantBridgeSource
+        (β := β) record)
+    (selectedQRegionLogVolume_eq_bridgeQRegion :
+      hullData.hullOperator.logVolume hullData.selectedQRegion =
+        bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion) : Prop where
+  selected_q_region_logVolume_identified :
+    hullData.hullOperator.logVolume hullData.selectedQRegion =
+      bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion
+  selected_q_region_logVolume_le_normalized :
+    hullData.hullOperator.logVolume hullData.selectedQRegion <=
+      bridgeSource.determinantSource.normalizedLogVolume
+  determinantLogVolume_le_thetaSigned :
+    bridgeSource.determinantSource.determinantLogVolume <=
+      package.preLedger.thetaSigned
+  determinant_projection_audit :
+    StepXIWeightedDeterminantProjection.StepXIDeterminantComparisonProjectionAudit
+      (hullData := hullData)
+      (thetaSigned := package.preLedger.thetaSigned)
+      bridgeSource.determinantSource
+      (bridgeSource.hullOperator.logVolume
+        (bridgeSource.hullOperator.phi
+          (recordThetaPossibleImageUnion record)))
+      bridgeSource.familyHullLogVolume_eq_determinantLogVolume
+      bridgeSource.determinantLogVolume_le_thetaSigned
+      selected_q_region_logVolume_le_normalized
+  q_region_logVolume_le_thetaSigned :
+    hullData.hullOperator.logVolume hullData.selectedQRegion <=
+      package.preLedger.thetaSigned
+
+set_option linter.style.longLine false in
+theorem stepXIDeterminantComparisonFromBridgeAudit
+    {choice : Type x}
+    {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
+    {images : RegionFamily target choice}
+    {hullData :
+      IUTStage1Theorem311ToCorollary312PaperTrace.StepXIHullFormationData
+        core images}
+    (bridgeSource :
+      IUTStage1Remark395RecordHullDeterminantBridgeSource
+        (β := β) record)
+    (selectedQRegionLogVolume_eq_bridgeQRegion :
+      hullData.hullOperator.logVolume hullData.selectedQRegion =
+        bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion) :
+    StepXIDeterminantComparisonFromBridgeAudit
+      (hullData := hullData)
+      bridgeSource selectedQRegionLogVolume_eq_bridgeQRegion := by
+  have hselected_le_normalized :
+      hullData.hullOperator.logVolume hullData.selectedQRegion <=
+        bridgeSource.determinantSource.normalizedLogVolume := by
+    calc
+      hullData.hullOperator.logVolume hullData.selectedQRegion =
+          bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion :=
+        selectedQRegionLogVolume_eq_bridgeQRegion
+      _ <= bridgeSource.determinantSource.normalizedLogVolume :=
+        bridgeSource.qRegionLogVolume_le_determinantNormalizedLogVolume
+  have hselected_le_theta :
+      hullData.hullOperator.logVolume hullData.selectedQRegion <=
+        package.preLedger.thetaSigned :=
+    hselected_le_normalized.trans
+      bridgeSource.determinantNormalizedLogVolume_le_thetaSigned
+  exact
+    { selected_q_region_logVolume_identified :=
+        selectedQRegionLogVolume_eq_bridgeQRegion,
+      selected_q_region_logVolume_le_normalized := hselected_le_normalized,
+      determinantLogVolume_le_thetaSigned :=
+        bridgeSource.determinantLogVolume_le_thetaSigned,
+      determinant_projection_audit :=
+        StepXIWeightedDeterminantProjection.stepXIDeterminantComparisonProjectionAudit
+          (hullData := hullData)
+          (thetaSigned := package.preLedger.thetaSigned)
+          bridgeSource.determinantSource
+          (bridgeSource.hullOperator.logVolume
+            (bridgeSource.hullOperator.phi
+              (recordThetaPossibleImageUnion record)))
+          bridgeSource.familyHullLogVolume_eq_determinantLogVolume
+          bridgeSource.determinantLogVolume_le_thetaSigned
+          hselected_le_normalized,
+      q_region_logVolume_le_thetaSigned := hselected_le_theta }
+
+end IUTStage1Remark395RecordHullDeterminantBridgeSource
 
 namespace IUTStage1Remark395RecordOb3Ob5DeterminantCompatibilitySource
 
