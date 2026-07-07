@@ -60852,5 +60852,268 @@ end IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
 
 end IUTStage1SourcePackage
 
+namespace IUTStage1Theorem311ToCorollary312PaperTrace
+namespace StepXIPaperDerivedHullDeterminantSource
+
+variable {source target : Copy} {index : Type x}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {coric : Type u} {l : PrimeGeFive}
+variable
+  {sourceData :
+    Theorem311HodgeTheaterLogThetaLogKummerSource
+      (target := target) coric l}
+variable {β : Type v} [Fintype β]
+
+set_option linter.style.longLine false in
+/--
+Log-volume identification for the Step (xi-e)/(xi-f) source-spine/record
+handoff.
+
+The source papers identify the possible-image output selected in Step (xi-c)
+with the q-pilot log-volume computed in Step (xi-e).  At the current interface
+this is expressed by two lower-level alignments: the paper-derived hull
+operator is the record bridge hull operator, and the record bridge q-pilot
+region is the source-spine selected Theorem 3.11 possible image.  The selected
+region of `StepXIHullFormationData.ofQuotientHullCompatibility` is then forced
+by the quotient-family constructor, so the log-volume equality is a theorem.
+-/
+theorem selectedQRegionLogVolume_eq_bridgeQRegion_ofQuotientBridge
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        sourceData.Core sourceData.Images hullOperator)
+    (bridgeSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordHullDeterminantBridgeSource
+        (β := β) record)
+    (hullOperator_eq_bridge :
+      hullOperator = bridgeSource.hullOperator)
+    (bridgeQRegion_eq_sourceSelectedPossibleImage :
+      bridgeSource.qPilotRegion =
+        (sourceData.Images.region sourceData.selectedQChoice).toSet) :
+    let hullData :=
+      StepXIHullFormationData.ofQuotientHullCompatibility
+        hullOperator quotientHullCompatibility sourceData.selectedQChoice;
+    hullData.hullOperator.logVolume hullData.selectedQRegion =
+      bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion := by
+  intro hullData
+  have hselected :
+      hullData.selectedQRegion =
+        (sourceData.Images.region sourceData.selectedQChoice).toSet := by
+    calc
+      hullData.selectedQRegion =
+          quotientHullCompatibility.familySource.possibleRegion
+            (sourceData.Core.equalityQuotientMap sourceData.selectedQChoice) :=
+        rfl
+      _ = (sourceData.Images.region sourceData.selectedQChoice).toSet :=
+        quotientHullCompatibility.possibleRegion_pullback_eq
+          sourceData.selectedQChoice
+  calc
+    hullData.hullOperator.logVolume hullData.selectedQRegion =
+        hullOperator.logVolume
+          (sourceData.Images.region sourceData.selectedQChoice).toSet := by
+      change hullOperator.logVolume hullData.selectedQRegion =
+        hullOperator.logVolume
+          (sourceData.Images.region sourceData.selectedQChoice).toSet
+      rw [hselected]
+    _ =
+        bridgeSource.hullOperator.logVolume
+          (sourceData.Images.region sourceData.selectedQChoice).toSet := by
+      rw [hullOperator_eq_bridge]
+    _ =
+        bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion := by
+      rw [bridgeQRegion_eq_sourceSelectedPossibleImage]
+
+set_option linter.style.longLine false in
+/--
+Build the paper-derived Step (xi) source from a record-canonical
+Remark 3.9.5 bridge.
+
+Compared with `ofQuotientHullCompatibility`, this constructor no longer accepts
+a standalone determinant comparison record.  The determinant comparison is
+projected from the record bridge once the source-spine selected q-region is
+identified with the bridge q-pilot region.
+-/
+noncomputable def ofQuotientHullCompatibilityBridge
+    (paperTrace : StepXIPaperTrace)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        sourceData.Core sourceData.Images hullOperator)
+    (bridgeSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordHullDeterminantBridgeSource
+        (β := β) record)
+    (hullOperator_eq_bridge :
+      hullOperator = bridgeSource.hullOperator)
+    (bridgeQRegion_eq_sourceSelectedPossibleImage :
+      bridgeSource.qPilotRegion =
+        (sourceData.Images.region sourceData.selectedQChoice).toSet)
+    (ob7Compatibility : StepXIPrimeStripLogKummerCompatibilityData)
+    (ob7_sourcePrimeStrip_eq :
+      ob7Compatibility.sourcePrimeStrip = sourceData.inputPrimeStrip)
+    (ob7_targetPrimeStrip_eq :
+      ob7Compatibility.targetPrimeStrip = sourceData.outputPrimeStrip)
+    (ob7_logKummerColumn_eq_selected :
+      ob7Compatibility.logKummerColumn =
+        sourceData.selectedQChoice.coordinate.logThetaColumn) :
+    StepXIPaperDerivedHullDeterminantSource.{u, v} sourceData :=
+  ofQuotientHullCompatibility
+    (sourceData := sourceData)
+    paperTrace package.preLedger.thetaSigned
+    hullOperator quotientHullCompatibility
+    (IUTStage1SourcePackage.IUTStage1Remark395RecordHullDeterminantBridgeSource.toStepXIDeterminantComparisonData
+      (record := record) (β := β)
+      bridgeSource
+      (selectedQRegionLogVolume_eq_bridgeQRegion_ofQuotientBridge
+        (sourceData := sourceData)
+        hullOperator quotientHullCompatibility bridgeSource
+        hullOperator_eq_bridge
+        bridgeQRegion_eq_sourceSelectedPossibleImage))
+    ob7Compatibility ob7_sourcePrimeStrip_eq ob7_targetPrimeStrip_eq
+    ob7_logKummerColumn_eq_selected
+
+set_option linter.style.longLine false in
+/--
+Audit for the bridge-backed paper-derived Step (xi) constructor.
+-/
+structure QuotientBridgeConstructorAudit
+    (paperTrace : StepXIPaperTrace)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        sourceData.Core sourceData.Images hullOperator)
+    (bridgeSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordHullDeterminantBridgeSource
+        (β := β) record)
+    (hullOperator_eq_bridge :
+      hullOperator = bridgeSource.hullOperator)
+    (bridgeQRegion_eq_sourceSelectedPossibleImage :
+      bridgeSource.qPilotRegion =
+        (sourceData.Images.region sourceData.selectedQChoice).toSet)
+    (ob7Compatibility : StepXIPrimeStripLogKummerCompatibilityData)
+    (ob7_sourcePrimeStrip_eq :
+      ob7Compatibility.sourcePrimeStrip = sourceData.inputPrimeStrip)
+    (ob7_targetPrimeStrip_eq :
+      ob7Compatibility.targetPrimeStrip = sourceData.outputPrimeStrip)
+    (ob7_logKummerColumn_eq_selected :
+      ob7Compatibility.logKummerColumn =
+        sourceData.selectedQChoice.coordinate.logThetaColumn) : Prop where
+  selected_q_region_is_source_possible_image :
+    (StepXIHullFormationData.ofQuotientHullCompatibility
+      hullOperator quotientHullCompatibility
+      sourceData.selectedQChoice).selectedQRegion =
+        (sourceData.Images.region sourceData.selectedQChoice).toSet
+  bridge_q_region_is_source_possible_image :
+    bridgeSource.qPilotRegion =
+      (sourceData.Images.region sourceData.selectedQChoice).toSet
+  selected_q_region_logVolume_identified :
+    let hullData :=
+      StepXIHullFormationData.ofQuotientHullCompatibility
+        hullOperator quotientHullCompatibility sourceData.selectedQChoice;
+    hullData.hullOperator.logVolume hullData.selectedQRegion =
+      bridgeSource.hullOperator.logVolume bridgeSource.qPilotRegion
+  determinant_comparison_from_bridge :
+    IUTStage1SourcePackage.IUTStage1Remark395RecordHullDeterminantBridgeSource.StepXIDeterminantComparisonFromBridgeAudit
+      (record := record) (β := β)
+      (hullData :=
+        StepXIHullFormationData.ofQuotientHullCompatibility
+          hullOperator quotientHullCompatibility sourceData.selectedQChoice)
+      bridgeSource
+      (selectedQRegionLogVolume_eq_bridgeQRegion_ofQuotientBridge
+        (sourceData := sourceData)
+        hullOperator quotientHullCompatibility bridgeSource
+        hullOperator_eq_bridge
+        bridgeQRegion_eq_sourceSelectedPossibleImage)
+  step_xi_source_audit :
+    Audit
+      (ofQuotientHullCompatibilityBridge
+        (sourceData := sourceData) (record := record) (β := β)
+        paperTrace hullOperator quotientHullCompatibility bridgeSource
+        hullOperator_eq_bridge bridgeQRegion_eq_sourceSelectedPossibleImage
+        ob7Compatibility ob7_sourcePrimeStrip_eq ob7_targetPrimeStrip_eq
+        ob7_logKummerColumn_eq_selected)
+
+set_option linter.style.longLine false in
+theorem ofQuotientHullCompatibilityBridge_audit
+    (paperTrace : StepXIPaperTrace)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        sourceData.Core sourceData.Images hullOperator)
+    (bridgeSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordHullDeterminantBridgeSource
+        (β := β) record)
+    (hullOperator_eq_bridge :
+      hullOperator = bridgeSource.hullOperator)
+    (bridgeQRegion_eq_sourceSelectedPossibleImage :
+      bridgeSource.qPilotRegion =
+        (sourceData.Images.region sourceData.selectedQChoice).toSet)
+    (ob7Compatibility : StepXIPrimeStripLogKummerCompatibilityData)
+    (ob7_sourcePrimeStrip_eq :
+      ob7Compatibility.sourcePrimeStrip = sourceData.inputPrimeStrip)
+    (ob7_targetPrimeStrip_eq :
+      ob7Compatibility.targetPrimeStrip = sourceData.outputPrimeStrip)
+    (ob7_logKummerColumn_eq_selected :
+      ob7Compatibility.logKummerColumn =
+        sourceData.selectedQChoice.coordinate.logThetaColumn) :
+    QuotientBridgeConstructorAudit
+      (sourceData := sourceData) (record := record) (β := β)
+      paperTrace hullOperator quotientHullCompatibility bridgeSource
+      hullOperator_eq_bridge bridgeQRegion_eq_sourceSelectedPossibleImage
+      ob7Compatibility ob7_sourcePrimeStrip_eq ob7_targetPrimeStrip_eq
+      ob7_logKummerColumn_eq_selected := by
+  have hselected :
+      (StepXIHullFormationData.ofQuotientHullCompatibility
+        hullOperator quotientHullCompatibility
+        sourceData.selectedQChoice).selectedQRegion =
+          (sourceData.Images.region sourceData.selectedQChoice).toSet := by
+    calc
+      (StepXIHullFormationData.ofQuotientHullCompatibility
+          hullOperator quotientHullCompatibility
+          sourceData.selectedQChoice).selectedQRegion =
+          quotientHullCompatibility.familySource.possibleRegion
+            (sourceData.Core.equalityQuotientMap sourceData.selectedQChoice) :=
+        rfl
+      _ = (sourceData.Images.region sourceData.selectedQChoice).toSet :=
+        quotientHullCompatibility.possibleRegion_pullback_eq
+          sourceData.selectedQChoice
+  exact
+    { selected_q_region_is_source_possible_image := hselected,
+      bridge_q_region_is_source_possible_image :=
+        bridgeQRegion_eq_sourceSelectedPossibleImage,
+      selected_q_region_logVolume_identified :=
+        selectedQRegionLogVolume_eq_bridgeQRegion_ofQuotientBridge
+          (sourceData := sourceData)
+          hullOperator quotientHullCompatibility bridgeSource
+          hullOperator_eq_bridge
+          bridgeQRegion_eq_sourceSelectedPossibleImage,
+      determinant_comparison_from_bridge :=
+        IUTStage1SourcePackage.IUTStage1Remark395RecordHullDeterminantBridgeSource.stepXIDeterminantComparisonFromBridgeAudit
+          (record := record) (β := β)
+          (hullData :=
+            StepXIHullFormationData.ofQuotientHullCompatibility
+              hullOperator quotientHullCompatibility sourceData.selectedQChoice)
+          bridgeSource
+          (selectedQRegionLogVolume_eq_bridgeQRegion_ofQuotientBridge
+            (sourceData := sourceData)
+            hullOperator quotientHullCompatibility bridgeSource
+            hullOperator_eq_bridge
+            bridgeQRegion_eq_sourceSelectedPossibleImage),
+      step_xi_source_audit :=
+        audit
+          (ofQuotientHullCompatibilityBridge
+            (sourceData := sourceData) (record := record) (β := β)
+            paperTrace hullOperator quotientHullCompatibility bridgeSource
+            hullOperator_eq_bridge bridgeQRegion_eq_sourceSelectedPossibleImage
+            ob7Compatibility ob7_sourcePrimeStrip_eq ob7_targetPrimeStrip_eq
+            ob7_logKummerColumn_eq_selected) }
+
+end StepXIPaperDerivedHullDeterminantSource
+end IUTStage1Theorem311ToCorollary312PaperTrace
+
 end Stage1
 end Iut
