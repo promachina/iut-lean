@@ -34801,8 +34801,14 @@ theorem boundarySignedEqualityOrStrictCTheta_from_transportBaseConstructedQualit
     (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
         package.preLedger.thetaSigned < 0) ∨
       (-1 : Real) < estimate.cTheta := by
-  exact
-    arithmeticDivisorBackedComponentSource.closedNoRawComparisonAudit.dichotomy
+  let transportAudit :=
+    boundarySignedEqualityOrStrictCTheta_from_transportBaseConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedComponentFiniteDivisorVerticalIQ_ofRealifiedFrobenioidPacketSource
+      part audited constructedInputs sourceEvaluation targetEvaluation
+      canonicalOneDegree_preserved iplConstructionSource remark395HullSource
+      estimate localPrime localField arithmeticDivisorBackedComponentSource
+      sourceCalibration upperSemiEntry divisorPacket monoAnalyticTheater
+      packetSource targetSource
+  exact transportAudit.2.dichotomy
 
 set_option linter.style.longLine false in
 /--
@@ -34904,8 +34910,14 @@ theorem boundarySignedEqualityOrStrictCTheta_from_preferredMatchedLocalDegreeAri
         package.logKummer upperSemiEntry.toEntry) :
     (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
         package.preLedger.thetaSigned < 0) ∨
-      (-1 : Real) < estimate.cTheta :=
-    arithmeticDivisorBackedComponentSource.closedNoRawComparisonAudit.dichotomy
+      (-1 : Real) < estimate.cTheta := by
+  let audit :=
+    boundarySignedEqualityOrStrictCTheta_from_constructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedComponentFiniteDivisorVerticalIQ_ofRealifiedFrobenioidPacketSource
+      part audited sourceEvaluation targetEvaluation canonicalOneDegree_preserved
+      constructedHodgeIPLSource remark395HullSource estimate localPrime localField
+      arithmeticDivisorBackedComponentSource sourceCalibration upperSemiEntry
+      divisorPacket monoAnalyticTheater packetSource targetSource
+  exact audit.dichotomy
 
 set_option linter.style.longLine false in
 /--
