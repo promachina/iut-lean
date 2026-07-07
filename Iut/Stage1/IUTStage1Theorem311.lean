@@ -17940,6 +17940,307 @@ theorem packetSourceTargetLogVolumeCalibrationConstructed
 
 end StepXFiniteDivisorObligations
 
+set_option linter.style.longLine false in
+/--
+Source-derived Hodge-theater/log-theta/log-Kummer spine for the preferred
+Theorem 3.11 to Corollary 3.12 corridor.
+
+This is the first single source object below the paper-trace boundary.  It keeps
+the concrete `0`/`1` Hodge-theater histories, the input and output prime strips,
+the theta-pilot possible-image source, the selected q-choice, and the
+nonarchimedean vertical log-Kummer packet-aligned finite-procession source in
+one record.  The old Theorem 3.11 and Step (x) paper-trace obligation records
+are now projections of this spine for the concrete preferred choice space.
+-/
+structure Theorem311HodgeTheaterLogThetaLogKummerSource
+    {target : Copy}
+    (coric : Type u) (l : PrimeGeFive) where
+  zeroColumnHodgeTheater : QualitativeData.HodgeTheaterId
+  oneColumnHodgeTheater : QualitativeData.HodgeTheaterId
+  zeroColumnHistoryLabel : String
+  oneColumnHistoryLabel : String
+  inputPrimeStrip : QualitativeData.PrimeStripId
+  outputPrimeStrip : QualitativeData.PrimeStripId
+  gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l
+  thetaPossibleImageSource :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource
+      (target := target) coric l
+  verticalLogKummerSource :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ProcessionNormalizedVerticalLogKummerPacketAlignmentSource
+      coric l
+  selectedQChoice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l
+  selectedQChoice_oneColumn :
+    selectedQChoice.hodgeTheater = oneColumnHodgeTheater
+  selectedQChoice_history :
+    selectedQChoice.historyLabel = oneColumnHistoryLabel
+  selectedQChoice_primeStripLinked : Prop
+  selectedQChoice_primeStripLinked_proof :
+    selectedQChoice_primeStripLinked
+  sheOneColumnExpressible : Prop
+  sheOneColumnExpressible_proof : sheOneColumnExpressible
+  aptTransportConstructed : Prop
+  aptTransportConstructed_proof : aptTransportConstructed
+  finiteDivisorPacketSource :
+    Prop
+  finiteDivisorPacketSource_proof :
+    finiteDivisorPacketSource
+  realifiedFrobenioidLogKummerSource :
+    Prop
+  realifiedFrobenioidLogKummerSource_proof :
+    realifiedFrobenioidLogKummerSource
+  kummerForgettingCompatibility :
+    Prop
+  kummerForgettingCompatibility_proof :
+    kummerForgettingCompatibility
+  verticalIQTargetSource :
+    Prop
+  verticalIQTargetSource_proof :
+    verticalIQTargetSource
+  packetSourceTargetLogVolumeCalibration :
+    Prop
+  packetSourceTargetLogVolumeCalibration_proof :
+    packetSourceTargetLogVolumeCalibration
+
+namespace Theorem311HodgeTheaterLogThetaLogKummerSource
+
+variable {target : Copy} {coric : Type u} {l : PrimeGeFive}
+
+open IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta
+
+abbrev Core
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l) :
+    IUTStage1Theorem311TypedIndeterminacyCore
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :=
+  typedCoreOfProcessionNormalizedVerticalLogKummerPacketAlignmentSource
+    sourceData.verticalLogKummerSource
+
+abbrev Images
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l) :
+    RegionFamily target
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :=
+  sourceData.thetaPossibleImageSource.choiceImages
+
+def theorem311PossibleImageSourceData
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l) :
+    Theorem311PossibleImageSourceData
+      sourceData.Core sourceData.Images :=
+  { quotientImages :=
+      sourceData.thetaPossibleImageSource
+        |>.toEqualityQuotientPossibleImagesOfVerticalLogKummerPacketAlignment
+          sourceData.verticalLogKummerSource,
+    selectedQChoice := sourceData.selectedQChoice,
+    selectedQRegion :=
+      (sourceData.thetaPossibleImageSource
+        |>.toEqualityQuotientPossibleImagesOfVerticalLogKummerPacketAlignment
+          sourceData.verticalLogKummerSource)
+        |>.quotientImages.region
+          (sourceData.Core.equalityQuotientMap sourceData.selectedQChoice),
+    selectedQRegion_eq_quotientRegion := rfl }
+
+def theorem311MultiradialRepresentationSourceData
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l) :
+    Theorem311MultiradialRepresentationSourceData sourceData.Core :=
+  { actionLawAudit := sourceData.Core.actionLawAudit,
+    equalityQuotientSetoidAudit :=
+      sourceData.Core.equalityQuotientSetoidAudit,
+    ind3UpperSemiRelationAudit :=
+      sourceData.Core.ind3UpperSemiRelationAudit }
+
+def theorem311LogThetaProcessionSourceData
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l) :
+    Theorem311LogThetaProcessionSourceData sourceData.Core :=
+  { transitionIndex := ZMod l.value,
+    transitionIndexFintype := inferInstance,
+    labelCardinality := l.value,
+    transition := fun t choice =>
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate t choice,
+    labelCardinality_eq_transitionIndex_card := by
+      exact ZMod.card l.value,
+    transition_stays_in_equalityQuotient := by
+      intro t choice
+      exact
+        sourceData.Core.ind1_equalityQuotientMap_eq
+          (IUTStage1ConcreteHodgeTheaterLogThetaChoice.flProcessionTranslate_ind1Step
+            t choice) }
+
+def theorem311SourceData
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l) :
+    Theorem311AndRemarksSourceData
+      sourceData.Core sourceData.Images :=
+  { typed_indeterminacy_nonvacuity_witness_constructed :=
+      Nonempty (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l),
+    typed_indeterminacy_nonvacuity_witness_constructed_proof :=
+      ⟨sourceData.selectedQChoice⟩,
+    multiradialData :=
+      sourceData.theorem311MultiradialRepresentationSourceData,
+    remark3112_input_prime_strip_link_constructed :=
+      sourceData.selectedQChoice_primeStripLinked,
+    remark3112_input_prime_strip_link_constructed_proof :=
+      sourceData.selectedQChoice_primeStripLinked_proof,
+    possibleImageData :=
+      sourceData.theorem311PossibleImageSourceData,
+    processionData :=
+      sourceData.theorem311LogThetaProcessionSourceData,
+    theorem311_hodge_she_ipl_apt_source_bridge_constructed :=
+      sourceData.sheOneColumnExpressible ∧ sourceData.aptTransportConstructed,
+    theorem311_hodge_she_ipl_apt_source_bridge_constructed_proof :=
+      ⟨sourceData.sheOneColumnExpressible_proof,
+        sourceData.aptTransportConstructed_proof⟩ }
+
+def theorem311Obligations
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l) :
+    Theorem311AndRemarksObligations
+      sourceData.Core sourceData.Images :=
+  { sourceData := sourceData.theorem311SourceData }
+
+def stepXFiniteDivisorSourceData
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l) :
+    StepXFiniteDivisorSourceData sourceData.Core :=
+  { ind1_procession_normalized_logVolume_preserved := by
+      intro choice₁ choice₂ hstep
+      exact sourceData.Core.ind1_preserves_logVolume hstep,
+    ind2_procession_normalized_logVolume_preserved := by
+      intro choice₁ choice₂ hstep
+      exact sourceData.Core.ind2_preserves_logVolume hstep,
+    ind3_upper_semi_logVolume_inequality := by
+      intro choice₁ choice₂ hstep
+      exact sourceData.Core.ind3_logVolume_le hstep,
+    ind3_upper_semi_relation_audit :=
+      sourceData.Core.ind3UpperSemiRelationAudit,
+    finite_divisor_packet_source_constructed :=
+      sourceData.finiteDivisorPacketSource,
+    finite_divisor_packet_source_constructed_proof :=
+      sourceData.finiteDivisorPacketSource_proof,
+    realified_frobenioid_log_kummer_source_constructed :=
+      sourceData.realifiedFrobenioidLogKummerSource,
+    realified_frobenioid_log_kummer_source_constructed_proof :=
+      sourceData.realifiedFrobenioidLogKummerSource_proof,
+    kummer_forgetting_compatibility_constructed :=
+      sourceData.kummerForgettingCompatibility,
+    kummer_forgetting_compatibility_constructed_proof :=
+      sourceData.kummerForgettingCompatibility_proof,
+    vertical_iq_target_source_constructed :=
+      sourceData.verticalIQTargetSource,
+    vertical_iq_target_source_constructed_proof :=
+      sourceData.verticalIQTargetSource_proof,
+    packet_source_target_log_volume_calibration_constructed :=
+      sourceData.packetSourceTargetLogVolumeCalibration,
+    packet_source_target_log_volume_calibration_constructed_proof :=
+      sourceData.packetSourceTargetLogVolumeCalibration_proof }
+
+def stepXFiniteDivisorObligations
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l) :
+    StepXFiniteDivisorObligations sourceData.Core :=
+  { sourceData := sourceData.stepXFiniteDivisorSourceData }
+
+set_option linter.style.longLine false in
+/--
+Audit that the unified source spine supplies the two formerly separate
+source-paper inputs used by the preferred corridor: the Theorem 3.11/Remarks
+payload and the Step (x) finite-divisor/log-Kummer payload.
+-/
+structure SourceSpineAudit
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l) : Prop where
+  selectedQChoice_oneColumn :
+    sourceData.selectedQChoice.hodgeTheater = sourceData.oneColumnHodgeTheater
+  selectedQChoice_history :
+    sourceData.selectedQChoice.historyLabel = sourceData.oneColumnHistoryLabel
+  verticalLogKummerPacketAlignmentAudit :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ProcessionNormalizedVerticalLogKummerPacketAlignmentSource.Audit
+      sourceData.verticalLogKummerSource
+  typedCoreAudit :
+    IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.ProcessionNormalizedVerticalLogKummerPacketAlignmentSourceTypedCoreAudit
+      sourceData.verticalLogKummerSource
+  possibleImageAudit :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource.VerticalLogKummerPacketAlignmentAudit
+      sourceData.thetaPossibleImageSource sourceData.verticalLogKummerSource
+  theorem311RemainingPayloadAudit :
+    Theorem311AndRemarksObligations.RemainingPayloadAudit
+      sourceData.theorem311Obligations
+  stepXFiniteDivisorObligations :
+    Nonempty (StepXFiniteDivisorObligations sourceData.Core)
+
+set_option linter.style.longLine false in
+theorem sourceSpineAudit
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l) :
+    SourceSpineAudit sourceData := by
+  let theorem311Obligations := sourceData.theorem311Obligations
+  exact
+    { selectedQChoice_oneColumn := sourceData.selectedQChoice_oneColumn,
+      selectedQChoice_history := sourceData.selectedQChoice_history,
+      verticalLogKummerPacketAlignmentAudit :=
+        sourceData.verticalLogKummerSource.audit,
+      typedCoreAudit :=
+        IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.processionNormalizedVerticalLogKummerPacketAlignmentSourceTypedCoreAudit
+          sourceData.verticalLogKummerSource,
+      possibleImageAudit :=
+        sourceData.thetaPossibleImageSource.verticalLogKummerPacketAlignmentAudit
+          sourceData.verticalLogKummerSource,
+      theorem311RemainingPayloadAudit := by
+        dsimp [Theorem311AndRemarksObligations.RemainingPayloadAudit,
+          theorem311Obligations,
+          theorem311Obligations, theorem311SourceData,
+          theorem311PossibleImageSourceData,
+          theorem311MultiradialRepresentationSourceData,
+          theorem311LogThetaProcessionSourceData]
+        exact
+          ⟨⟨sourceData.selectedQChoice⟩,
+            ⟨sourceData.Core.actionLawAudit,
+              sourceData.Core.equalityQuotientSetoidAudit,
+              sourceData.Core.ind3UpperSemiRelationAudit⟩,
+            sourceData.selectedQChoice_primeStripLinked_proof,
+            (sourceData.theorem311PossibleImageSourceData
+              |>.thetaPilotPossibleImagesConstructed_proof),
+            sourceData.theorem311LogThetaProcessionSourceData
+              |>.logThetaLatticeProcessionConstructed_proof,
+            sourceData.theorem311PossibleImageSourceData
+              |>.possibleImagesDependOnEqualityQuotient,
+            by
+              intro choice₁ choice₂ hstep
+              exact
+                sourceData.thetaPossibleImageSource.ind1_region_eq
+                  hstep,
+            by
+              intro choice₁ choice₂ hstep
+              exact
+                sourceData.thetaPossibleImageSource.ind2_region_eq
+                  hstep,
+            by
+              intro choice₁ choice₂ hstep
+              exact sourceData.Core.ind3_logVolume_le hstep,
+            sourceData.theorem311PossibleImageSourceData
+              |>.selectedQRegionIsTheorem311PossibleImage_proof,
+            sourceData.theorem311LogThetaProcessionSourceData
+              |>.flCardinalityAndProcessionLabelTransitionsConstructed_proof,
+            ⟨sourceData.sheOneColumnExpressible_proof,
+              sourceData.aptTransportConstructed_proof⟩⟩,
+      stepXFiniteDivisorObligations :=
+        ⟨sourceData.stepXFiniteDivisorObligations⟩ }
+
+end Theorem311HodgeTheaterLogThetaLogKummerSource
+
 /--
 Prime-strip/log-Kummer compatibility data retained through Step (xi).
 
@@ -18952,6 +19253,62 @@ namespace Obligations
 
 variable {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
 variable {images : RegionFamily targetCopy choice}
+
+set_option linter.style.longLine false in
+/--
+Assemble the top-level paper-trace obligations from the unified
+Hodge-theater/log-theta/log-Kummer source spine.
+
+This is the ledger-level route rewire for the preferred concrete source
+boundary: Theorem 3.11/Remarks and Step (x) are no longer supplied as two
+independent obligation packages.  They are projected from one source object;
+Step (xi), IUT IV, and additive-Haar arithmetic-degree data remain the next
+separate layers.
+-/
+def ofHodgeTheaterLogThetaLogKummerSource
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (stepXI_hull_determinant :
+      StepXIHullDeterminantObligations
+        sourceData.Core sourceData.Images)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations) :
+    Obligations sourceData.Core sourceData.Images :=
+  { theorem311_and_remarks :=
+      sourceData.theorem311Obligations,
+    stepX_finite_divisor :=
+      sourceData.stepXFiniteDivisorObligations,
+    stepXI_hull_determinant := stepXI_hull_determinant,
+    iutIV_cTheta := iutIV_cTheta,
+    additive_haar_arithmetic_degree_padic :=
+      additive_haar_arithmetic_degree_padic }
+
+set_option linter.style.longLine false in
+theorem ofHodgeTheaterLogThetaLogKummerSource_sourceSpineAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (stepXI_hull_determinant :
+      StepXIHullDeterminantObligations
+        sourceData.Core sourceData.Images)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations) :
+    let obligations :=
+      ofHodgeTheaterLogThetaLogKummerSource
+        sourceData stepXI_hull_determinant iutIV_cTheta
+        additive_haar_arithmetic_degree_padic
+    Theorem311HodgeTheaterLogThetaLogKummerSource.SourceSpineAudit
+      sourceData ∧
+      obligations.theorem311_and_remarks = sourceData.theorem311Obligations ∧
+      obligations.stepX_finite_divisor =
+        sourceData.stepXFiniteDivisorObligations := by
+  intro obligations
+  exact ⟨sourceData.sourceSpineAudit, rfl, rfl⟩
 
 def RemainingPayloadAudit
     (obligations : Obligations core images) : Prop :=

@@ -31,9 +31,31 @@
 
 \section{Obligations to discharge next}
 
+\begin{definition}[Hodge/log-theta/log-Kummer source spine]
+  \label{def:hodge-logtheta-logkummer-spine}
+  \uses{def:prime-strip-links,def:hodge-theater-histories}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311HodgeTheaterLogThetaLogKummerSource}
+  \leanok
+  The source spine packages the \(0\)- and \(1\)-column Hodge-theater histories,
+  prime strips, theta-pilot possible images, selected \(q\)-choice, and vertical
+  log-Kummer packet alignment.  Its projections supply the current Theorem
+  3.11 source obligations and the Step (x) finite-divisor/log-Kummer
+  obligations for the preferred concrete route.
+\end{definition}
+
+\begin{proposition}[The spine assembles the source ledger]
+  \label{prop:spine-assembles-source-ledger}
+  \uses{def:hodge-logtheta-logkummer-spine}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ofHodgeTheaterLogThetaLogKummerSource}
+  \leanok
+  Given the source spine, the remaining Step (xi), IUT IV, and additive-Haar
+  layers assemble into the top-level paper-trace obligation record without
+  separately supplying Theorem 3.11 and Step (x) obligation packages.
+\end{proposition}
+
 \begin{theorem}[Construct \(\SHE\) from source data]
   \label{thm:construct-she}
-  \uses{def:she,def:initial-theta-data,def:hodge-theater-histories}
+  \uses{def:she,def:initial-theta-data,def:hodge-theater-histories,def:hodge-logtheta-logkummer-spine}
   \notready
   The simultaneous holomorphic expressibility data used in the current route
   should be constructed from the arithmetic holomorphic structure of the
@@ -47,7 +69,7 @@
 
 \begin{theorem}[Construct \(\IPL\) from the prime-strip link]
   \label{thm:construct-ipl}
-  \uses{def:prime-strip-links,thm:theorem-311-source-output}
+  \uses{def:prime-strip-links,thm:theorem-311-source-output,def:hodge-logtheta-logkummer-spine}
   \notready
   The input prime-strip link property should be derived from the
   \(\Theta^{\times\mu}_{\mathrm{LGP}}\)-link and the multiradial output of
