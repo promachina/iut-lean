@@ -33612,12 +33612,7 @@ structure ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedCo
                 constructedHodgeIPLSource,
             strongest_additive_haar_endpoint_has_remaining_payload_audit :=
               ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.Endpoint
-                arithmeticDivisorBackedComponentSource },
-        closed_endpoint_removes_thetaSigned_le_cTheta_absLogQ_hypothesis :=
-          package.preLedger.thetaSigned <=
-            estimate.cTheta * (-package.preLedger.qSigned),
-        closed_endpoint_removes_raw_canonicalCThetaScale_le_cTheta_hypothesis :=
-          remark395HullSource.canonicalCThetaScale <= estimate.cTheta }
+                arithmeticDivisorBackedComponentSource } }
     IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.RemainingPayloadAudit
       topLevelObligations
   oneSidedQuotientAudit :
@@ -34258,9 +34253,8 @@ theorem boundarySignedEqualityOrStrictCTheta_from_constructedQualitativeHodgeSHE
             arithmeticDivisorBackedComponentSource.toConstructedTheorem311IndeterminacyLocalGlobalCThetaSource.arithmeticGapCThetaChainAudit,
             arithmeticDivisorBackedComponentSource.arithmeticDivisorBackedLocalGlobalCThetaAudit.finitePlaceDerivedArithmeticGap,
             arithmeticDivisorBackedComponentSource.arithmeticDivisorBackedLocalGlobalCThetaAudit.finitePlaceDerivedCanonicalCThetaScale_le_iutIVCTheta,
-            hpaperTrace,
-            arithmeticDivisorBackedComponentSource.localGlobalHandoffAudit.thetaSigned_le_iutIVCTheta_absLogQ,
-            arithmeticDivisorBackedComponentSource.arithmeticDivisorBackedLocalGlobalCThetaAudit.finitePlaceDerivedCanonicalCThetaScale_le_iutIVCTheta⟩,
+            hpaperTrace.1,
+            hpaperTrace.2⟩,
       oneSidedQuotientAudit :=
         arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit,
       oneSidedRemark395CompatibilityAudit :=

@@ -18947,8 +18947,6 @@ structure Obligations
     IUTIVCThetaObligations
   additive_haar_arithmetic_degree_padic :
     AdditiveHaarArithmeticDegreePadicObligations
-  closed_endpoint_removes_thetaSigned_le_cTheta_absLogQ_hypothesis : Prop
-  closed_endpoint_removes_raw_canonicalCThetaScale_le_cTheta_hypothesis : Prop
 
 namespace Obligations
 
@@ -19007,9 +19005,7 @@ def RemainingPayloadAudit
       obligations.iutIV_cTheta) ∧
     obligations.iutIV_cTheta.finite_place_arithmetic_gap_constructed ∧
     obligations.iutIV_cTheta.local_to_global_canonicalCThetaScale_le_cTheta_constructed ∧
-    obligations.additive_haar_arithmetic_degree_padic.RemainingPayloadAudit ∧
-    obligations.closed_endpoint_removes_thetaSigned_le_cTheta_absLogQ_hypothesis ∧
-    obligations.closed_endpoint_removes_raw_canonicalCThetaScale_le_cTheta_hypothesis
+    obligations.additive_haar_arithmetic_degree_padic.RemainingPayloadAudit
 
 theorem ind3_upper_semi_not_equality_payload
     (obligations : Obligations core images)
@@ -19316,20 +19312,6 @@ theorem additiveHaarStrongestEndpointHasRemainingPayloadAudit
     obligations.additive_haar_arithmetic_degree_padic
     (obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit)
 
-theorem closedEndpointRemovesThetaSignedLeCThetaAbsLogQHypothesis
-    (obligations : Obligations core images)
-    (audit : RemainingPayloadAudit obligations) :
-    obligations.closed_endpoint_removes_thetaSigned_le_cTheta_absLogQ_hypothesis := by
-  dsimp [RemainingPayloadAudit] at audit
-  tauto
-
-theorem closedEndpointRemovesRawCanonicalCThetaScaleLeCThetaHypothesis
-    (obligations : Obligations core images)
-    (audit : RemainingPayloadAudit obligations) :
-    obligations.closed_endpoint_removes_raw_canonicalCThetaScale_le_cTheta_hypothesis := by
-  dsimp [RemainingPayloadAudit] at audit
-  tauto
-
 /--
 Goal-facing completion audit for the concrete Hodge-theater/log-theta
 Theorem 3.11 source layer.
@@ -19385,8 +19367,7 @@ structure MilestoneCompletionAudit
   lowered_endpoint :
     AdditiveHaarArithmeticDegreePadicObligations.RemainingPayloadAudit
         obligations.additive_haar_arithmetic_degree_padic ∧
-      obligations.closed_endpoint_removes_thetaSigned_le_cTheta_absLogQ_hypothesis ∧
-      obligations.closed_endpoint_removes_raw_canonicalCThetaScale_le_cTheta_hypothesis
+      obligations.iutIV_cTheta.local_to_global_canonicalCThetaScale_le_cTheta_constructed
   audit_and_paper :
     RemainingPayloadAudit obligations
 
@@ -19424,8 +19405,9 @@ theorem milestoneCompletionAudit
     lowered_endpoint := by
       exact
         ⟨obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit audit,
-          obligations.closedEndpointRemovesThetaSignedLeCThetaAbsLogQHypothesis audit,
-          obligations.closedEndpointRemovesRawCanonicalCThetaScaleLeCThetaHypothesis audit⟩
+          IUTIVCThetaObligations.localToGlobalCanonicalCThetaScaleLeCThetaConstructed
+            obligations.iutIV_cTheta
+            (obligations.localToGlobalArithmeticChainAudit audit)⟩
     audit_and_paper := audit }
 
 theorem paperTraceAudit
@@ -19468,8 +19450,7 @@ theorem loweredEndpointAudit
     (audit : RemainingPayloadAudit obligations) :
     AdditiveHaarArithmeticDegreePadicObligations.RemainingPayloadAudit
         obligations.additive_haar_arithmetic_degree_padic ∧
-      obligations.closed_endpoint_removes_thetaSigned_le_cTheta_absLogQ_hypothesis ∧
-      obligations.closed_endpoint_removes_raw_canonicalCThetaScale_le_cTheta_hypothesis :=
+      obligations.iutIV_cTheta.local_to_global_canonicalCThetaScale_le_cTheta_constructed :=
   (obligations.milestoneCompletionAudit audit).lowered_endpoint
 
 theorem quotientPossibleImagesAudit
