@@ -42,16 +42,29 @@
   log-volume calibration are projected from this data.
 \end{definition}
 
+\begin{definition}[Theorem 3.11 \(\IPL/\SHE/\APT\) bridge package]
+  \label{def:theorem-311-ipl-she-apt-bridge}
+  \uses{def:prime-strip-links,def:hodge-theater-histories}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311IPLSHEAPTBridgePackage}
+  \leanok
+  The Theorem 3.11 bridge is packaged as one source object containing an
+  input-prime-strip-link construction, a one-column structured \(\SHE\)
+  transport context, and an \(\APT\) construction.  The selected input link,
+  one-column \(\SHE\), and \(\APT\) transport endpoints are projections of
+  this package.
+\end{definition}
+
 \begin{definition}[Hodge/log-theta/log-Kummer source spine]
   \label{def:hodge-logtheta-logkummer-spine}
-  \uses{def:prime-strip-links,def:hodge-theater-histories,def:step-x-logkummer-package}
+  \uses{def:prime-strip-links,def:hodge-theater-histories,def:theorem-311-ipl-she-apt-bridge,def:step-x-logkummer-package}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311HodgeTheaterLogThetaLogKummerSource}
   \leanok
   The source spine packages the \(0\)- and \(1\)-column Hodge-theater histories,
   prime strips, theta-pilot possible images, selected \(q\)-choice, and vertical
-  log-Kummer packet alignment.  Its Step (x) payload is the structured package
-  above, so the preferred concrete route no longer gets the finite-divisor and
-  log-Kummer source assertions as separate spine fields.
+  log-Kummer packet alignment.  Its Theorem 3.11 bridge and Step (x) payload
+  are the structured packages above, so the preferred concrete route no longer
+  gets the \(\IPL/\SHE/\APT\) or finite-divisor/log-Kummer assertions as
+  separate spine fields.
 \end{definition}
 
 \begin{proposition}[The spine assembles the source ledger]
@@ -66,7 +79,7 @@
 
 \begin{theorem}[Construct \(\SHE\) from source data]
   \label{thm:construct-she}
-  \uses{def:she,def:initial-theta-data,def:hodge-theater-histories,def:hodge-logtheta-logkummer-spine}
+  \uses{def:she,def:initial-theta-data,def:hodge-theater-histories,def:theorem-311-ipl-she-apt-bridge,def:hodge-logtheta-logkummer-spine}
   \notready
   The simultaneous holomorphic expressibility data used in the current route
   should be constructed from the arithmetic holomorphic structure of the

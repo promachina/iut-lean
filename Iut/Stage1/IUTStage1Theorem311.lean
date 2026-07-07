@@ -18104,6 +18104,143 @@ end StepXVerticalLogKummerFiniteDivisorPackage
 
 set_option linter.style.longLine false in
 /--
+Structured Theorem 3.11 IPL/SHE/APT bridge package for the concrete source spine.
+
+This package replaces the three source-spine propositions for the input
+prime-strip link, the one-column simultaneous holomorphic expression, and
+algorithmic parallel transport.  It is intentionally tied to the input/output
+prime strips, the selected q-choice, and the one-column Hodge theater of the
+spine, so the legacy obligation fields are theorem projections from one
+coherent bridge object.
+-/
+structure Theorem311IPLSHEAPTBridgePackage
+    {target : Copy}
+    (coric : Type u) (l : PrimeGeFive)
+    (inputPrimeStrip outputPrimeStrip : QualitativeData.PrimeStripId)
+    (oneColumnHodgeTheater : QualitativeData.HodgeTheaterId)
+    (selectedQChoice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) where
+  sourceCopy : Copy
+  outputFamily :
+    TransportedRegionFamily sourceCopy target
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+  iplConstruction :
+    QualitativeData.InputPrimeStripLinkConstruction outputFamily
+  ipl_input_eq :
+    iplConstruction.inputPrimeStrip = inputPrimeStrip
+  selected_choicePrimeStrip_eq_output :
+    iplConstruction.choicePrimeStrip selectedQChoice = outputPrimeStrip
+  sheTransportContext :
+    QualitativeData.StructuredSHETransportContext outputFamily
+  she_codomain_eq_oneColumn :
+    sheTransportContext.baseContext.codomainStructure.theater =
+      oneColumnHodgeTheater
+  aptConstruction :
+    QualitativeData.AlgorithmicParallelTransportConstruction outputFamily
+
+namespace Theorem311IPLSHEAPTBridgePackage
+
+variable {target : Copy} {coric : Type u} {l : PrimeGeFive}
+variable {inputPrimeStrip outputPrimeStrip : QualitativeData.PrimeStripId}
+variable {oneColumnHodgeTheater : QualitativeData.HodgeTheaterId}
+variable {selectedQChoice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+
+def selectedInputPrimeStripLinkConstructed
+    (bridge :
+      Theorem311IPLSHEAPTBridgePackage
+        (target := target) coric l inputPrimeStrip outputPrimeStrip
+        oneColumnHodgeTheater selectedQChoice) : Prop :=
+  (bridge.iplConstruction.choiceLink selectedQChoice).source =
+      inputPrimeStrip ∧
+    (bridge.iplConstruction.choiceLink selectedQChoice).target =
+      outputPrimeStrip
+
+theorem selectedInputPrimeStripLinkConstructed_proof
+    (bridge :
+      Theorem311IPLSHEAPTBridgePackage
+        (target := target) coric l inputPrimeStrip outputPrimeStrip
+        oneColumnHodgeTheater selectedQChoice) :
+    bridge.selectedInputPrimeStripLinkConstructed := by
+  constructor
+  · calc
+      (bridge.iplConstruction.choiceLink selectedQChoice).source =
+          bridge.iplConstruction.inputPrimeStrip := rfl
+      _ = inputPrimeStrip := bridge.ipl_input_eq
+  · calc
+      (bridge.iplConstruction.choiceLink selectedQChoice).target =
+          bridge.iplConstruction.choicePrimeStrip selectedQChoice := rfl
+      _ = outputPrimeStrip := bridge.selected_choicePrimeStrip_eq_output
+
+def oneColumnSHEConstructed
+    (bridge :
+      Theorem311IPLSHEAPTBridgePackage
+        (target := target) coric l inputPrimeStrip outputPrimeStrip
+        oneColumnHodgeTheater selectedQChoice) : Prop :=
+  QualitativeData.HasStructuredSHE bridge.outputFamily ∧
+    bridge.sheTransportContext.baseContext.codomainStructure.theater =
+      oneColumnHodgeTheater ∧
+    bridge.sheTransportContext.baseContext.simultaneousExpression.AllLocalValid ∧
+    (∀ mechanism : QualitativeData.TransportMechanismId,
+      ¬ bridge.sheTransportContext.transportSystem.Allows
+        bridge.sheTransportContext.baseContext.domainStructure.theater
+        bridge.sheTransportContext.baseContext.codomainStructure.theater
+        mechanism)
+
+theorem oneColumnSHEConstructed_proof
+    (bridge :
+      Theorem311IPLSHEAPTBridgePackage
+        (target := target) coric l inputPrimeStrip outputPrimeStrip
+        oneColumnHodgeTheater selectedQChoice) :
+    bridge.oneColumnSHEConstructed :=
+  ⟨bridge.sheTransportContext.hasStructuredSHE,
+    bridge.she_codomain_eq_oneColumn,
+    bridge.sheTransportContext.baseContext.allLocalExpressionValid,
+    bridge.sheTransportContext.noAllowedDomainToCodomainWithMechanism⟩
+
+def aptTransportConstructed
+    (bridge :
+      Theorem311IPLSHEAPTBridgePackage
+        (target := target) coric l inputPrimeStrip outputPrimeStrip
+        oneColumnHodgeTheater selectedQChoice) : Prop :=
+  QualitativeData.HasStructuredAPT bridge.outputFamily ∧
+    bridge.aptConstruction.APTEndpoint ∧
+    bridge.aptConstruction.APTTransportQuotientAudit ∧
+    ¬ bridge.aptConstruction.transportSystem.forbiddenIdentification
+      bridge.aptConstruction.arrow.source bridge.aptConstruction.arrow.target
+
+theorem aptTransportConstructed_proof
+    (bridge :
+      Theorem311IPLSHEAPTBridgePackage
+        (target := target) coric l inputPrimeStrip outputPrimeStrip
+        oneColumnHodgeTheater selectedQChoice) :
+    bridge.aptTransportConstructed :=
+  ⟨⟨bridge.aptConstruction.toAPTDatum⟩,
+    bridge.aptConstruction.aptEndpoint,
+    bridge.aptConstruction.aptTransportQuotientAudit,
+    bridge.aptConstruction.permitted_not_forbidden⟩
+
+def hodgeSHEIPLAPTBridgeConstructed
+    (bridge :
+      Theorem311IPLSHEAPTBridgePackage
+        (target := target) coric l inputPrimeStrip outputPrimeStrip
+        oneColumnHodgeTheater selectedQChoice) : Prop :=
+  bridge.selectedInputPrimeStripLinkConstructed ∧
+    bridge.oneColumnSHEConstructed ∧
+    bridge.aptTransportConstructed
+
+theorem hodgeSHEIPLAPTBridgeConstructed_proof
+    (bridge :
+      Theorem311IPLSHEAPTBridgePackage
+        (target := target) coric l inputPrimeStrip outputPrimeStrip
+        oneColumnHodgeTheater selectedQChoice) :
+    bridge.hodgeSHEIPLAPTBridgeConstructed :=
+  ⟨bridge.selectedInputPrimeStripLinkConstructed_proof,
+    bridge.oneColumnSHEConstructed_proof,
+    bridge.aptTransportConstructed_proof⟩
+
+end Theorem311IPLSHEAPTBridgePackage
+
+set_option linter.style.longLine false in
+/--
 Source-derived Hodge-theater/log-theta/log-Kummer spine for the preferred
 Theorem 3.11 to Corollary 3.12 corridor.
 
@@ -18135,13 +18272,10 @@ structure Theorem311HodgeTheaterLogThetaLogKummerSource
     selectedQChoice.hodgeTheater = oneColumnHodgeTheater
   selectedQChoice_history :
     selectedQChoice.historyLabel = oneColumnHistoryLabel
-  selectedQChoice_primeStripLinked : Prop
-  selectedQChoice_primeStripLinked_proof :
-    selectedQChoice_primeStripLinked
-  sheOneColumnExpressible : Prop
-  sheOneColumnExpressible_proof : sheOneColumnExpressible
-  aptTransportConstructed : Prop
-  aptTransportConstructed_proof : aptTransportConstructed
+  theorem311BridgePackage :
+    Theorem311IPLSHEAPTBridgePackage
+      (target := target) coric l inputPrimeStrip outputPrimeStrip
+      oneColumnHodgeTheater selectedQChoice
   stepXLogKummerPackage :
     StepXVerticalLogKummerFiniteDivisorPackage.{u}
 
@@ -18230,18 +18364,20 @@ def theorem311SourceData
     multiradialData :=
       sourceData.theorem311MultiradialRepresentationSourceData,
     remark3112_input_prime_strip_link_constructed :=
-      sourceData.selectedQChoice_primeStripLinked,
+      sourceData.theorem311BridgePackage
+        |>.selectedInputPrimeStripLinkConstructed,
     remark3112_input_prime_strip_link_constructed_proof :=
-      sourceData.selectedQChoice_primeStripLinked_proof,
+      sourceData.theorem311BridgePackage
+        |>.selectedInputPrimeStripLinkConstructed_proof,
     possibleImageData :=
       sourceData.theorem311PossibleImageSourceData,
     processionData :=
       sourceData.theorem311LogThetaProcessionSourceData,
     theorem311_hodge_she_ipl_apt_source_bridge_constructed :=
-      sourceData.sheOneColumnExpressible ∧ sourceData.aptTransportConstructed,
+      sourceData.theorem311BridgePackage.hodgeSHEIPLAPTBridgeConstructed,
     theorem311_hodge_she_ipl_apt_source_bridge_constructed_proof :=
-      ⟨sourceData.sheOneColumnExpressible_proof,
-        sourceData.aptTransportConstructed_proof⟩ }
+      sourceData.theorem311BridgePackage
+        |>.hodgeSHEIPLAPTBridgeConstructed_proof }
 
 def theorem311Obligations
     (sourceData :
@@ -18368,7 +18504,8 @@ theorem sourceSpineAudit
             ⟨sourceData.Core.actionLawAudit,
               sourceData.Core.equalityQuotientSetoidAudit,
               sourceData.Core.ind3UpperSemiRelationAudit⟩,
-            sourceData.selectedQChoice_primeStripLinked_proof,
+            sourceData.theorem311BridgePackage
+              |>.selectedInputPrimeStripLinkConstructed_proof,
             (sourceData.theorem311PossibleImageSourceData
               |>.thetaPilotPossibleImagesConstructed_proof),
             sourceData.theorem311LogThetaProcessionSourceData
@@ -18392,8 +18529,8 @@ theorem sourceSpineAudit
               |>.selectedQRegionIsTheorem311PossibleImage_proof,
             sourceData.theorem311LogThetaProcessionSourceData
               |>.flCardinalityAndProcessionLabelTransitionsConstructed_proof,
-            ⟨sourceData.sheOneColumnExpressible_proof,
-              sourceData.aptTransportConstructed_proof⟩⟩,
+            sourceData.theorem311BridgePackage
+              |>.hodgeSHEIPLAPTBridgeConstructed_proof⟩,
       stepXLogKummerPackageEndpoint :=
         sourceData.stepXLogKummerPackage.endpoint,
       stepXFiniteDivisorObligations :=
