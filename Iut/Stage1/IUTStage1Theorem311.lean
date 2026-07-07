@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: IUT Lean formalization contributors
 -/
 import Iut.Stage1.IUTStage1HodgeSHE
+import Iut.Stage1.IUTStage1SourceCore
 
 /-!
 Theorem 3.11 source-choice and multiradial image data for Stage 1.
@@ -17942,6 +17943,167 @@ end StepXFiniteDivisorObligations
 
 set_option linter.style.longLine false in
 /--
+Structured Step (x) finite-divisor/vertical log-Kummer package.
+
+The proof of Corollary 3.12 uses Step (x) to pass from the finite
+nonarchimedean divisor packet through the realified Frobenioid/log-Kummer
+comparison and into the vertically coric `IQ` target.  Earlier paper-trace
+records exposed this as five unrelated propositions.  This package keeps the
+same five legacy endpoints as projections of one source object:
+
+* a finite divisor tensor-packet product,
+* its associated realified Frobenioid tensor packet,
+* a realified Frobenioid Kummer compatibility to the target packet,
+* the mono-analytic forgetting transfer, and
+* the vertical-column `IQ`/Frobenioid log-Kummer correspondences.
+-/
+structure StepXVerticalLogKummerFiniteDivisorPackage where
+  labelIndex : Nat
+  sourceProduct :
+    IUTStage1BaseValuationTensorPacketProductLogVolume
+      IUTStage1PlaceKind.nonarchimedean labelIndex
+  finiteDivisorPacketSource :
+    IUTStage1FiniteDivisorTensorPacketProductSource sourceProduct
+  sourceRealization : IUTStage1TensorPacketRealizationKind
+  sourceTheater : QualitativeData.HodgeTheaterId
+  sourceRealifiedPacket :
+    IUTStage1RealifiedFrobenioidTensorPacketProductSource
+      IUTStage1PlaceKind.nonarchimedean labelIndex
+  sourceRealifiedPacket_eq_finiteDivisor :
+    sourceRealifiedPacket =
+      finiteDivisorPacketSource.toRealifiedFrobenioidTensorPacketProductSource
+        sourceRealization sourceTheater
+  targetRealifiedPacket :
+    IUTStage1RealifiedFrobenioidTensorPacketProductSource
+      IUTStage1PlaceKind.nonarchimedean labelIndex
+  realifiedFrobenioidKummerCompatibility :
+    IUTStage1RealifiedFrobenioidKummerCompatibility
+      sourceRealifiedPacket targetRealifiedPacket
+  kummerForgettingTransfer :
+    IUTStage1MonoAnalyticTensorPacketForgettingTransfer
+      sourceRealifiedPacket.toRealized targetRealifiedPacket.toRealized
+  verticalIQ : Type u
+  verticalIQNonempty : Nonempty verticalIQ
+  verticalLogKummerCorrespondence :
+    IUTStage1ColumnLogKummerCorrespondence verticalIQ
+  sourceRow : Int
+  targetRow : Int
+  targetRow_eq_sourceRow_plus_one : targetRow = sourceRow + 1
+  columnFrobenioidCompatibility :
+    IUTStage1ColumnFrobenioidLogKummerCompatibility
+  sourceRowObject_eq_sourcePacket :
+    columnFrobenioidCompatibility.frobenioidObject sourceRow =
+      sourceRealifiedPacket.frobenioidDegree
+  targetRowObject_eq_targetPacket :
+    columnFrobenioidCompatibility.frobenioidObject targetRow =
+      targetRealifiedPacket.frobenioidDegree
+
+namespace StepXVerticalLogKummerFiniteDivisorPackage
+
+def finiteDivisorPacketSourceConstructed
+    (package : StepXVerticalLogKummerFiniteDivisorPackage) : Prop :=
+  Nonempty (IUTStage1FiniteDivisorTensorPacketProductSource
+    package.sourceProduct)
+
+theorem finiteDivisorPacketSourceConstructed_proof
+    (package : StepXVerticalLogKummerFiniteDivisorPackage) :
+    package.finiteDivisorPacketSourceConstructed :=
+  ⟨package.finiteDivisorPacketSource⟩
+
+def realifiedFrobenioidLogKummerSourceConstructed
+    (package : StepXVerticalLogKummerFiniteDivisorPackage) : Prop :=
+  Nonempty
+    (IUTStage1RealifiedFrobenioidKummerCompatibility
+      package.sourceRealifiedPacket package.targetRealifiedPacket)
+
+theorem realifiedFrobenioidLogKummerSourceConstructed_proof
+    (package : StepXVerticalLogKummerFiniteDivisorPackage) :
+    package.realifiedFrobenioidLogKummerSourceConstructed :=
+  ⟨package.realifiedFrobenioidKummerCompatibility⟩
+
+def kummerForgettingCompatibilityConstructed
+    (package : StepXVerticalLogKummerFiniteDivisorPackage) : Prop :=
+  Nonempty
+    (IUTStage1MonoAnalyticTensorPacketForgettingTransfer
+      package.sourceRealifiedPacket.toRealized
+      package.targetRealifiedPacket.toRealized)
+
+theorem kummerForgettingCompatibilityConstructed_proof
+    (package : StepXVerticalLogKummerFiniteDivisorPackage) :
+    package.kummerForgettingCompatibilityConstructed :=
+  ⟨package.kummerForgettingTransfer⟩
+
+def verticalIQTargetSourceConstructed
+    (package : StepXVerticalLogKummerFiniteDivisorPackage) : Prop :=
+  Nonempty package.verticalIQ ∧
+    Nonempty
+      (IUTStage1ColumnLogKummerCorrespondence.{u, u}
+        package.verticalIQ)
+
+theorem verticalIQTargetSourceConstructed_proof
+    (package : StepXVerticalLogKummerFiniteDivisorPackage) :
+    package.verticalIQTargetSourceConstructed :=
+  ⟨package.verticalIQNonempty, ⟨package.verticalLogKummerCorrespondence⟩⟩
+
+def packetSourceTargetLogVolumeCalibrationConstructed
+    (package : StepXVerticalLogKummerFiniteDivisorPackage) : Prop :=
+  package.targetRealifiedPacket.toRealized.product.productLogVolume =
+    package.sourceRealifiedPacket.toRealized.product.productLogVolume
+
+theorem packetSourceTargetLogVolumeCalibrationConstructed_proof
+    (package : StepXVerticalLogKummerFiniteDivisorPackage) :
+    package.packetSourceTargetLogVolumeCalibrationConstructed :=
+  package.realifiedFrobenioidKummerCompatibility
+    |>.toTransfer_preserves_productLogVolume
+
+theorem adjacentColumnRealifiedLogVolumeCalibration
+    (package : StepXVerticalLogKummerFiniteDivisorPackage) :
+    package.targetRealifiedPacket.frobenioidDegree.realifiedLogVolume =
+      package.sourceRealifiedPacket.frobenioidDegree.realifiedLogVolume := by
+  have htarget :
+      package.targetRealifiedPacket.frobenioidDegree.realifiedLogVolume =
+        (package.columnFrobenioidCompatibility.frobenioidObject
+          package.targetRow).realifiedLogVolume := by
+    rw [← package.targetRowObject_eq_targetPacket]
+  have hsource :
+      (package.columnFrobenioidCompatibility.frobenioidObject
+          package.sourceRow).realifiedLogVolume =
+        package.sourceRealifiedPacket.frobenioidDegree.realifiedLogVolume := by
+    rw [package.sourceRowObject_eq_sourcePacket]
+  calc
+    package.targetRealifiedPacket.frobenioidDegree.realifiedLogVolume =
+        (package.columnFrobenioidCompatibility.frobenioidObject
+          package.targetRow).realifiedLogVolume := htarget
+    _ =
+        (package.columnFrobenioidCompatibility.frobenioidObject
+          (package.sourceRow + 1)).realifiedLogVolume := by
+      rw [package.targetRow_eq_sourceRow_plus_one]
+    _ =
+        (package.columnFrobenioidCompatibility.frobenioidObject
+          package.sourceRow).realifiedLogVolume :=
+      package.columnFrobenioidCompatibility
+        |>.adjacent_logLink_preserves_realifiedLogVolume package.sourceRow
+    _ =
+        package.sourceRealifiedPacket.frobenioidDegree.realifiedLogVolume :=
+      hsource
+
+theorem endpoint
+    (package : StepXVerticalLogKummerFiniteDivisorPackage) :
+    package.finiteDivisorPacketSourceConstructed ∧
+      package.realifiedFrobenioidLogKummerSourceConstructed ∧
+      package.kummerForgettingCompatibilityConstructed ∧
+      package.verticalIQTargetSourceConstructed ∧
+      package.packetSourceTargetLogVolumeCalibrationConstructed :=
+  ⟨package.finiteDivisorPacketSourceConstructed_proof,
+    package.realifiedFrobenioidLogKummerSourceConstructed_proof,
+    package.kummerForgettingCompatibilityConstructed_proof,
+    package.verticalIQTargetSourceConstructed_proof,
+    package.packetSourceTargetLogVolumeCalibrationConstructed_proof⟩
+
+end StepXVerticalLogKummerFiniteDivisorPackage
+
+set_option linter.style.longLine false in
+/--
 Source-derived Hodge-theater/log-theta/log-Kummer spine for the preferred
 Theorem 3.11 to Corollary 3.12 corridor.
 
@@ -17980,26 +18142,8 @@ structure Theorem311HodgeTheaterLogThetaLogKummerSource
   sheOneColumnExpressible_proof : sheOneColumnExpressible
   aptTransportConstructed : Prop
   aptTransportConstructed_proof : aptTransportConstructed
-  finiteDivisorPacketSource :
-    Prop
-  finiteDivisorPacketSource_proof :
-    finiteDivisorPacketSource
-  realifiedFrobenioidLogKummerSource :
-    Prop
-  realifiedFrobenioidLogKummerSource_proof :
-    realifiedFrobenioidLogKummerSource
-  kummerForgettingCompatibility :
-    Prop
-  kummerForgettingCompatibility_proof :
-    kummerForgettingCompatibility
-  verticalIQTargetSource :
-    Prop
-  verticalIQTargetSource_proof :
-    verticalIQTargetSource
-  packetSourceTargetLogVolumeCalibration :
-    Prop
-  packetSourceTargetLogVolumeCalibration_proof :
-    packetSourceTargetLogVolumeCalibration
+  stepXLogKummerPackage :
+    StepXVerticalLogKummerFiniteDivisorPackage.{u}
 
 namespace Theorem311HodgeTheaterLogThetaLogKummerSource
 
@@ -18124,25 +18268,33 @@ def stepXFiniteDivisorSourceData
     ind3_upper_semi_relation_audit :=
       sourceData.Core.ind3UpperSemiRelationAudit,
     finite_divisor_packet_source_constructed :=
-      sourceData.finiteDivisorPacketSource,
+      sourceData.stepXLogKummerPackage.finiteDivisorPacketSourceConstructed,
     finite_divisor_packet_source_constructed_proof :=
-      sourceData.finiteDivisorPacketSource_proof,
+      sourceData.stepXLogKummerPackage
+        |>.finiteDivisorPacketSourceConstructed_proof,
     realified_frobenioid_log_kummer_source_constructed :=
-      sourceData.realifiedFrobenioidLogKummerSource,
+      sourceData.stepXLogKummerPackage
+        |>.realifiedFrobenioidLogKummerSourceConstructed,
     realified_frobenioid_log_kummer_source_constructed_proof :=
-      sourceData.realifiedFrobenioidLogKummerSource_proof,
+      sourceData.stepXLogKummerPackage
+        |>.realifiedFrobenioidLogKummerSourceConstructed_proof,
     kummer_forgetting_compatibility_constructed :=
-      sourceData.kummerForgettingCompatibility,
+      sourceData.stepXLogKummerPackage
+        |>.kummerForgettingCompatibilityConstructed,
     kummer_forgetting_compatibility_constructed_proof :=
-      sourceData.kummerForgettingCompatibility_proof,
+      sourceData.stepXLogKummerPackage
+        |>.kummerForgettingCompatibilityConstructed_proof,
     vertical_iq_target_source_constructed :=
-      sourceData.verticalIQTargetSource,
+      sourceData.stepXLogKummerPackage.verticalIQTargetSourceConstructed,
     vertical_iq_target_source_constructed_proof :=
-      sourceData.verticalIQTargetSource_proof,
+      sourceData.stepXLogKummerPackage
+        |>.verticalIQTargetSourceConstructed_proof,
     packet_source_target_log_volume_calibration_constructed :=
-      sourceData.packetSourceTargetLogVolumeCalibration,
+      sourceData.stepXLogKummerPackage
+        |>.packetSourceTargetLogVolumeCalibrationConstructed,
     packet_source_target_log_volume_calibration_constructed_proof :=
-      sourceData.packetSourceTargetLogVolumeCalibration_proof }
+      sourceData.stepXLogKummerPackage
+        |>.packetSourceTargetLogVolumeCalibrationConstructed_proof }
 
 def stepXFiniteDivisorObligations
     (sourceData :
@@ -18177,6 +18329,12 @@ structure SourceSpineAudit
   theorem311RemainingPayloadAudit :
     Theorem311AndRemarksObligations.RemainingPayloadAudit
       sourceData.theorem311Obligations
+  stepXLogKummerPackageEndpoint :
+    sourceData.stepXLogKummerPackage.finiteDivisorPacketSourceConstructed ∧
+      sourceData.stepXLogKummerPackage.realifiedFrobenioidLogKummerSourceConstructed ∧
+      sourceData.stepXLogKummerPackage.kummerForgettingCompatibilityConstructed ∧
+      sourceData.stepXLogKummerPackage.verticalIQTargetSourceConstructed ∧
+      sourceData.stepXLogKummerPackage.packetSourceTargetLogVolumeCalibrationConstructed
   stepXFiniteDivisorObligations :
     Nonempty (StepXFiniteDivisorObligations sourceData.Core)
 
@@ -18236,6 +18394,8 @@ theorem sourceSpineAudit
               |>.flCardinalityAndProcessionLabelTransitionsConstructed_proof,
             ⟨sourceData.sheOneColumnExpressible_proof,
               sourceData.aptTransportConstructed_proof⟩⟩,
+      stepXLogKummerPackageEndpoint :=
+        sourceData.stepXLogKummerPackage.endpoint,
       stepXFiniteDivisorObligations :=
         ⟨sourceData.stepXFiniteDivisorObligations⟩ }
 
@@ -18986,7 +19146,8 @@ theorem localStepXITermMatchesIUTIVArithmeticUpperMinusMainConstructed
     (obligations : IUTIVCThetaObligations)
     (_audit : LocalToGlobalArithmeticChainAudit obligations) :
     obligations.local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed :=
-  obligations.sourceData.local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed_proof
+  obligations.sourceData
+    |>.local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed_proof
 
 theorem finitePlaceArithmeticGapConstructed
     (obligations : IUTIVCThetaObligations)
