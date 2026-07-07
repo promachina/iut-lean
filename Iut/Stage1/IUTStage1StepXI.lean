@@ -56039,6 +56039,237 @@ theorem boundedFamily_ob5_endpoint
 
 end IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
 
+namespace StepXIWeightedDeterminantProjection
+
+variable {target : Copy}
+variable {choice : Type u}
+variable {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
+variable {images : RegionFamily target choice}
+variable {hullData : IUTStage1Theorem311ToCorollary312PaperTrace.StepXIHullFormationData
+  core images}
+variable {thetaSigned : Real}
+variable {β : Type v} [Fintype β]
+
+set_option linter.style.longLine false in
+/--
+Project a weighted arithmetic-vector-bundle determinant source into the
+Step (xi) determinant comparison record.
+
+This is the Ob3/Ob4 lowering used by the current milestone.  The determinant
+index, adjusted summands, determinant sum, normalized determinant, and positive
+tensor power are all read from the weighted determinant source.  The remaining
+inputs are exactly the cross-boundary comparisons: the family-hull log-volume
+identity, the normalized determinant upper bound by the Step (xi) theta scalar,
+and the selected q-region log-volume bound.
+-/
+noncomputable def toStepXIDeterminantComparisonData
+    (determinantSource :
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β)
+    (familyHullLogVolume : Real)
+    (familyHullLogVolume_eq_determinantLogVolume :
+      familyHullLogVolume = determinantSource.determinantLogVolume)
+    (determinantLogVolume_le_thetaSigned :
+      determinantSource.determinantLogVolume <= thetaSigned)
+    (selectedQRegionLogVolume_le_normalized :
+      hullData.hullOperator.logVolume hullData.selectedQRegion <=
+        determinantSource.normalizedLogVolume) :
+    IUTStage1Theorem311ToCorollary312PaperTrace.StepXIDeterminantComparisonData
+      hullData thetaSigned :=
+  { determinantIndex := β,
+    determinantIndexFintype := inferInstance,
+    adjustedLogVolume := fun index =>
+      (determinantSource.summand index).adjustedLogVolume,
+    determinantLogVolume := determinantSource.determinantLogVolume,
+    determinantLogVolume_eq_adjustedSum :=
+      determinantSource.determinantLogVolume_eq_sum,
+    familyHullLogVolume := familyHullLogVolume,
+    familyHullLogVolume_eq_determinantLogVolume :=
+      familyHullLogVolume_eq_determinantLogVolume,
+    normalizedLogVolume := determinantSource.normalizedLogVolume,
+    normalizedLogVolume_le_familyHullLogVolume := by
+      exact le_of_eq
+        (determinantSource.normalizedLogVolume_eq_determinantLogVolume.trans
+          familyHullLogVolume_eq_determinantLogVolume.symm),
+    tensorPower := determinantSource.positiveTensorPower,
+    tensorPower_pos := determinantSource.tensor_power_pos,
+    weightedDeterminantBound := by
+      exact determinantSource.normalizedLogVolume_eq_determinantLogVolume.le.trans
+        determinantLogVolume_le_thetaSigned,
+    selectedQRegionLogVolume_le_normalized :=
+      selectedQRegionLogVolume_le_normalized }
+
+set_option linter.style.longLine false in
+/--
+Audit that the Step (xi) determinant comparison was produced from the weighted
+arithmetic-vector-bundle determinant source rather than supplied as an opaque
+record.
+-/
+structure StepXIDeterminantComparisonProjectionAudit
+    (determinantSource :
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β)
+    (familyHullLogVolume : Real)
+    (familyHullLogVolume_eq_determinantLogVolume :
+      familyHullLogVolume = determinantSource.determinantLogVolume)
+    (determinantLogVolume_le_thetaSigned :
+      determinantSource.determinantLogVolume <= thetaSigned)
+    (selectedQRegionLogVolume_le_normalized :
+      hullData.hullOperator.logVolume hullData.selectedQRegion <=
+        determinantSource.normalizedLogVolume) : Prop where
+  determinantIndex_eq :
+    (toStepXIDeterminantComparisonData determinantSource
+        (hullData := hullData) (thetaSigned := thetaSigned)
+        familyHullLogVolume familyHullLogVolume_eq_determinantLogVolume
+        determinantLogVolume_le_thetaSigned
+        selectedQRegionLogVolume_le_normalized).determinantIndex = β
+  determinantLogVolume_eq_weightedSum :
+    (toStepXIDeterminantComparisonData determinantSource
+        (hullData := hullData) (thetaSigned := thetaSigned)
+        familyHullLogVolume familyHullLogVolume_eq_determinantLogVolume
+        determinantLogVolume_le_thetaSigned
+        selectedQRegionLogVolume_le_normalized).determinantLogVolume =
+      Finset.univ.sum fun index =>
+        (determinantSource.summand index).adjustedLogVolume
+  normalizedLogVolume_eq_determinantLogVolume :
+    (toStepXIDeterminantComparisonData determinantSource
+        (hullData := hullData) (thetaSigned := thetaSigned)
+        familyHullLogVolume familyHullLogVolume_eq_determinantLogVolume
+        determinantLogVolume_le_thetaSigned
+        selectedQRegionLogVolume_le_normalized).normalizedLogVolume =
+      determinantSource.determinantLogVolume
+  tensorPower_eq :
+    (toStepXIDeterminantComparisonData determinantSource
+        (hullData := hullData) (thetaSigned := thetaSigned)
+        familyHullLogVolume familyHullLogVolume_eq_determinantLogVolume
+        determinantLogVolume_le_thetaSigned
+        selectedQRegionLogVolume_le_normalized).tensorPower =
+      determinantSource.positiveTensorPower
+  ob3_ob4_normalization :
+    let data := toStepXIDeterminantComparisonData determinantSource
+        (hullData := hullData) (thetaSigned := thetaSigned)
+        familyHullLogVolume familyHullLogVolume_eq_determinantLogVolume
+        determinantLogVolume_le_thetaSigned
+        selectedQRegionLogVolume_le_normalized
+    letI : Fintype data.determinantIndex := data.determinantIndexFintype
+    data.determinantLogVolume =
+        Finset.univ.sum data.adjustedLogVolume ∧
+      data.familyHullLogVolume = data.determinantLogVolume ∧
+      data.normalizedLogVolume <= data.familyHullLogVolume
+  weighted_tensor_power_bound :
+    let data := toStepXIDeterminantComparisonData determinantSource
+        (hullData := hullData) (thetaSigned := thetaSigned)
+        familyHullLogVolume familyHullLogVolume_eq_determinantLogVolume
+        determinantLogVolume_le_thetaSigned
+        selectedQRegionLogVolume_le_normalized
+    0 < data.tensorPower ∧ data.normalizedLogVolume <= thetaSigned
+
+set_option linter.style.longLine false in
+theorem stepXIDeterminantComparisonProjectionAudit
+    (determinantSource :
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β)
+    (familyHullLogVolume : Real)
+    (familyHullLogVolume_eq_determinantLogVolume :
+      familyHullLogVolume = determinantSource.determinantLogVolume)
+    (determinantLogVolume_le_thetaSigned :
+      determinantSource.determinantLogVolume <= thetaSigned)
+    (selectedQRegionLogVolume_le_normalized :
+      hullData.hullOperator.logVolume hullData.selectedQRegion <=
+        determinantSource.normalizedLogVolume) :
+    StepXIDeterminantComparisonProjectionAudit
+      (hullData := hullData) (thetaSigned := thetaSigned)
+      determinantSource familyHullLogVolume
+      familyHullLogVolume_eq_determinantLogVolume
+      determinantLogVolume_le_thetaSigned
+      selectedQRegionLogVolume_le_normalized :=
+  { determinantIndex_eq := rfl,
+    determinantLogVolume_eq_weightedSum :=
+      determinantSource.determinantLogVolume_eq_sum,
+    normalizedLogVolume_eq_determinantLogVolume :=
+      determinantSource.normalizedLogVolume_eq_determinantLogVolume,
+    tensorPower_eq := rfl,
+    ob3_ob4_normalization :=
+      (toStepXIDeterminantComparisonData determinantSource
+        (hullData := hullData) (thetaSigned := thetaSigned)
+        familyHullLogVolume familyHullLogVolume_eq_determinantLogVolume
+        determinantLogVolume_le_thetaSigned
+        selectedQRegionLogVolume_le_normalized)
+        |>.ob3Ob4AdjustedDeterminantNormalization,
+    weighted_tensor_power_bound :=
+      (toStepXIDeterminantComparisonData determinantSource
+        (hullData := hullData) (thetaSigned := thetaSigned)
+        familyHullLogVolume familyHullLogVolume_eq_determinantLogVolume
+        determinantLogVolume_le_thetaSigned
+        selectedQRegionLogVolume_le_normalized)
+        |>.weightedDeterminantTensorPowerBound }
+
+end StepXIWeightedDeterminantProjection
+
+namespace IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
+
+variable {source target : Copy} {index : Type u}
+variable {package : IUTStage1SourcePackage source target index}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable {choice : Type x}
+variable {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
+variable {images : RegionFamily target choice}
+variable {hullData : IUTStage1Theorem311ToCorollary312PaperTrace.StepXIHullFormationData
+  core images}
+variable {thetaSigned : Real}
+variable {β : Type v} [Fintype β]
+
+set_option linter.style.longLine false in
+/--
+Construct the new Step (xi) determinant comparison record from the
+record-native family-hull determinant source.
+
+Here the Ob5 equality between family-hull log-volume and determinant
+log-volume is no longer an argument: it is projected from
+`IUTStage1RecordBoundedFamilyHullDetLogVolumeSource`.
+-/
+noncomputable def toStepXIDeterminantComparisonData
+    (sourceData :
+      IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
+        (β := β) record)
+    (determinantLogVolume_le_thetaSigned :
+      sourceData.determinantSource.determinantLogVolume <= thetaSigned)
+    (selectedQRegionLogVolume_le_normalized :
+      hullData.hullOperator.logVolume hullData.selectedQRegion <=
+        sourceData.determinantSource.normalizedLogVolume) :
+    IUTStage1Theorem311ToCorollary312PaperTrace.StepXIDeterminantComparisonData
+      hullData thetaSigned :=
+  StepXIWeightedDeterminantProjection.toStepXIDeterminantComparisonData
+    sourceData.determinantSource
+    (hullData := hullData) (thetaSigned := thetaSigned)
+    sourceData.familyHullLogVolume
+    sourceData.familyHullLogVolume_eq_determinant
+    determinantLogVolume_le_thetaSigned
+    selectedQRegionLogVolume_le_normalized
+
+set_option linter.style.longLine false in
+theorem toStepXIDeterminantComparisonData_audit
+    (sourceData :
+      IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
+        (β := β) record)
+    (determinantLogVolume_le_thetaSigned :
+      sourceData.determinantSource.determinantLogVolume <= thetaSigned)
+    (selectedQRegionLogVolume_le_normalized :
+      hullData.hullOperator.logVolume hullData.selectedQRegion <=
+        sourceData.determinantSource.normalizedLogVolume) :
+    StepXIWeightedDeterminantProjection.StepXIDeterminantComparisonProjectionAudit
+      (hullData := hullData) (thetaSigned := thetaSigned)
+      sourceData.determinantSource sourceData.familyHullLogVolume
+      sourceData.familyHullLogVolume_eq_determinant
+      determinantLogVolume_le_thetaSigned
+      selectedQRegionLogVolume_le_normalized :=
+  StepXIWeightedDeterminantProjection.stepXIDeterminantComparisonProjectionAudit
+    sourceData.determinantSource
+    (hullData := hullData) (thetaSigned := thetaSigned)
+    sourceData.familyHullLogVolume
+    sourceData.familyHullLogVolume_eq_determinant
+    determinantLogVolume_le_thetaSigned
+    selectedQRegionLogVolume_le_normalized
+
+end IUTStage1RecordBoundedFamilyHullDetLogVolumeSource
+
 namespace IUTStage1Remark395RecordOb3Ob5DeterminantCompatibilitySource
 
 variable {source target : Copy} {index : Type u}

@@ -130,9 +130,26 @@
   preassembled hull record with a separately supplied containment proof.
 \end{proposition}
 
+\begin{proposition}[Step (xi) determinant comparison from weighted determinants]
+  \label{prop:step-xi-weighted-determinant-projection}
+  \uses{def:paper-derived-step-xi-source,prop:step-xi-selected-q-region-quotient-family}
+  \lean{Iut.Stage1.IUTStage1SourcePackage.StepXIWeightedDeterminantProjection.toStepXIDeterminantComparisonData}
+  \lean{Iut.Stage1.IUTStage1SourcePackage.StepXIWeightedDeterminantProjection.stepXIDeterminantComparisonProjectionAudit}
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1RecordBoundedFamilyHullDetLogVolumeSource.toStepXIDeterminantComparisonData}
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1RecordBoundedFamilyHullDetLogVolumeSource.toStepXIDeterminantComparisonData_audit}
+  \leanok
+  The determinant comparison record consumed by the paper-derived Step (xi)
+  source can now be produced from the existing weighted arithmetic-vector-bundle
+  determinant source.  The finite adjusted summands, determinant sum,
+  normalization, and positive tensor power are projections from that lower
+  source.  The remaining inputs at this boundary are the cross-comparisons from
+  selected \(q\)-region log-volume to normalized determinant and from
+  determinant log-volume to the Step (xi) theta scalar.
+\end{proposition}
+
 \begin{proposition}[Step (xi) source assembles obligations]
   \label{prop:step-xi-source-assembles-obligations}
-  \uses{def:paper-derived-step-xi-source,prop:step-xi-selected-q-region-quotient-family}
+  \uses{def:paper-derived-step-xi-source,prop:step-xi-selected-q-region-quotient-family,prop:step-xi-weighted-determinant-projection}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.toStepXIHullDeterminantObligations}
   \leanok
   The structured Step (xi) source projects to the hull/determinant obligation
@@ -196,7 +213,7 @@
 
 \begin{theorem}[Construct hull plus determinant]
   \label{thm:construct-hdd}
-  \uses{def:hdd,prop:step-xi-upper-ray-input,def:paper-derived-step-xi-source,prop:step-xi-selected-q-region-quotient-family,prop:preferred-step-xi-paper-source-route-audit}
+  \uses{def:hdd,prop:step-xi-upper-ray-input,def:paper-derived-step-xi-source,prop:step-xi-selected-q-region-quotient-family,prop:step-xi-weighted-determinant-projection,prop:preferred-step-xi-paper-source-route-audit}
   \notready
   The paper-derived Step (xi) source should be lowered further to actual
   holomorphic-hull and determinant operations corresponding to Remark 3.9.5
