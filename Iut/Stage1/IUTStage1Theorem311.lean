@@ -17742,31 +17742,31 @@ theorem coarsePayloadAudit
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     CoarsePayloadAudit obligations :=
-  audit.1
+  AuditConjunction.left audit
 
 theorem fineLocalPayloadAudit
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : RemainingPayloadAudit obligations) :
     FineLocalPayloadAudit obligations :=
-  audit.2
+  AuditConjunction.right audit
 
 theorem formulaGapLocalEstimateAuditThreaded
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : FineLocalPayloadAudit obligations) :
     obligations.formula_gap_local_estimate_audit_threaded :=
-  audit.1
+  AuditConjunction.first3 audit
 
 theorem arithmeticDegreeCalibrationAuditThreaded
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : FineLocalPayloadAudit obligations) :
     obligations.arithmetic_degree_calibration_audit_threaded :=
-  audit.2.1
+  AuditConjunction.second3 audit
 
 theorem padicPrimeErrorFormulaMatchingEndpointThreaded
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
     (audit : FineLocalPayloadAudit obligations) :
     obligations.padic_prime_error_formula_matching_endpoint_threaded :=
-  audit.2.2
+  AuditConjunction.third3 audit
 
 theorem constructedIPLChoiceLinkEndpointThreaded
     (obligations : AdditiveHaarArithmeticDegreePadicObligations)
