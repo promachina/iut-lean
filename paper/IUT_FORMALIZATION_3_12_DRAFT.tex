@@ -405,8 +405,11 @@ containment plus the localized family-hull/normalized-determinant equality;
 the localized projection audit now also exposes the adjusted Ob3/Ob5 endpoint,
 the induced Ob3/Ob5 compatibility source, and the bounded-family
 hull/determinant log-volume endpoint proved in the lower SourceCore layer.
-the remaining numerical input at this boundary is the final normalized
-localized determinant bound by \(\Theta_{\mathrm{signed}}\).  The
+For the stricter localized route, the final normalized localized determinant
+bound by \(\Theta_{\mathrm{signed}}\) is no longer supplied as a standalone
+inequality: Lean derives it from the identification of
+\(\Theta_{\mathrm{signed}}\) with the constructed localized family-hull
+log-volume.  The
 record-canonical Remark 3.9.5 hull/determinant bridge now also feeds this
 record: once the paper-derived selected \(q\)-region log-volume is identified
 with the record bridge q-pilot log-volume, the q-region-to-normalized-
@@ -463,15 +466,18 @@ invokes the preferred route.  A stronger hull-side wrapper now goes below the
 minimal-hull argument: it constructs the concrete hull source internally from
 the source-spine equality-quotient possible-image family and the principal
 \(\lambda\cdot O\) hull source, then threads that hull source through the
-localized determinant and Ob7 route.  The older preferred route still accepts
-an already constructed Step (xi) source, so the remaining route-hardening task
-is to promote the principal-product localized wrapper to the primary public
-boundary and demote the looser routes.
+localized determinant and Ob7 route.  This principal-product route now has a
+strict variant in which the determinant upper bound is derived from
+\(\Theta_{\mathrm{signed}}\) equal to the localized family-hull log-volume.
+The older preferred route still accepts an already constructed Step (xi)
+source, so the remaining route-hardening task is to promote the strict
+principal-product localized wrapper to the primary public boundary and demote
+the looser routes.
 This is progress below a free-floating obligation bundle.  What remains is to
 construct, from the source papers, the actual lower operations corresponding to:
 \[
 \begin{array}{l}
-\text{promoting the principal-product localized wrapper to the primary public route},\\
+\text{promoting the strict principal-product localized wrapper to the primary public route},\\
 \text{Ob5 quotient determinant compatibility},\\
 \text{the action-packet theta formula to source-spine comparison},\\
 \text{the lower construction of the coric Ob7 prime-strip invariant}.
