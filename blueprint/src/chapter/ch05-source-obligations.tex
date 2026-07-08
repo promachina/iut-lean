@@ -220,21 +220,29 @@
   \lean{Iut.Stage1.IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource.PackageTargetRegionLatticeKeySource.targetRegions_same_thetaPilotClass}
   \lean{Iut.Stage1.IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource.PackageTargetRegionLatticeKeySource.toPackageTargetRegionClassSource}
   \lean{Iut.Stage1.IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource.PackageTargetRegionLatticeKeySource.choiceImages_eq_targetRegions}
+  \lean{Iut.Stage1.IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource.PackageTargetRegionLatticeFormulaSource}
+  \lean{Iut.Stage1.IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource.PackageTargetRegionLatticeFormulaSource.targetRegions_same_latticeKey}
+  \lean{Iut.Stage1.IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource.PackageTargetRegionLatticeFormulaSource.toPackageTargetRegionLatticeKeySource}
+  \lean{Iut.Stage1.IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource.PackageTargetRegionLatticeFormulaSource.choiceImages_eq_targetRegions}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311HodgeTheaterLogThetaLogKummerSource.Images_eq_targetRegions_of_class_region_eq}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311HodgeTheaterLogThetaLogKummerSource.withTargetRegionClassSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311HodgeTheaterLogThetaLogKummerSource.withTargetRegionClassSource_Images_eq_targetRegions}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311HodgeTheaterLogThetaLogKummerSource.withTargetRegionLatticeKeySource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311HodgeTheaterLogThetaLogKummerSource.withTargetRegionLatticeKeySource_Images_eq_targetRegions}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311HodgeTheaterLogThetaLogKummerSource.withTargetRegionLatticeFormulaSource}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311HodgeTheaterLogThetaLogKummerSource.withTargetRegionLatticeFormulaSource_Images_eq_targetRegions}
   \lean{Iut.Stage1.IUTStage1Theorem311MultiradialSourceRecord.sourceSpineThetaPossibleImages}
   \lean{Iut.Stage1.IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImages}
   \lean{Iut.Stage1.IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfClassRegionEq}
   \lean{Iut.Stage1.IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfTargetRegionClassSource}
   \lean{Iut.Stage1.IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfTargetRegionLatticeKeySource}
+  \lean{Iut.Stage1.IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfTargetRegionLatticeFormulaSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.ofSourceSpineThetaRecordOb3Ob5ExactThetaCoricOb7FromFiberInd2ActionPacket}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.ofSourceSpineThetaRecordOb3Ob5ExactThetaCoricOb7FromFiberInd2ActionPacketClassRegions}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.ofSourceSpineThetaRecordOb3Ob5ExactThetaCoricOb7FromFiberInd2ActionPacketClassRegions_audit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.ofSourceSpineThetaRecordOb3Ob5ExactThetaCoricOb7FromTargetRegionClassSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.ofSourceSpineThetaRecordOb3Ob5ExactThetaCoricOb7FromTargetRegionLatticeKeySource}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.ofSourceSpineThetaRecordOb3Ob5ExactThetaCoricOb7FromTargetRegionLatticeFormulaSource}
   \leanok
   The determinant comparison record consumed by the paper-derived Step (xi)
   source can now be produced from the existing weighted arithmetic-vector-bundle
@@ -318,7 +326,12 @@
   spine before the exact-theta action-packet Step (xi) route is applied.  This
   target-region class invariance has also been lowered to invariance under the
   concrete theta-pilot lattice key: Hodge theater, history label, log-theta
-  lattice coordinate, and coric datum.  On
+  lattice coordinate, and coric datum.  That key-invariance source has now been
+  lowered again to a target-region lattice formula: each package target region
+  is identified with the formula value indexed by the same
+  Hodge/history/lattice/coric data, and Lean derives key invariance, the class
+  trace, the source-image/target-region family equality, and the Step (xi)
+  source-spine route from this formula.  On
   the strongest selected route, this
   source link is itself built from the constructed Remark 3.9.5 bridge and the
   coric prime-strip
