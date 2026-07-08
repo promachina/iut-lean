@@ -13271,6 +13271,135 @@ end ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormulaRecordSource
 
 set_option linter.style.longLine false in
 /--
+Record-level possible-image witnesses derived from the class-indexed Theorem
+3.11 possible-image source.
+
+The record possible-image family is identified with the source-spine
+theta-pilot class-image pullback, so point witnesses are read from the
+class-indexed source rather than supplied independently for each downstream
+Step (xi) source record.
+-/
+structure ConcreteHodgeTheaterLogThetaThetaPilotPossibleImageWitnessSource
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package) where
+  representativeData :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassRepresentativeData
+      coric l
+  thetaPossibleImageSource :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource
+      (target := target) coric l
+  record_images_eq_source :
+    record.thetaPossibleImages.images = thetaPossibleImageSource.choiceImages
+
+namespace ConcreteHodgeTheaterLogThetaThetaPilotPossibleImageWitnessSource
+
+variable {coric : Type u}
+variable
+  {package :
+    IUTStage1SourcePackage source target
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+
+set_option linter.style.longLine false in
+/-- Possible-image point for a theta-pilot class, read from the source family. -/
+def possibleImagePoint
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotPossibleImageWitnessSource record)
+    (thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric)) :
+    Point target :=
+  sourceData.thetaPossibleImageSource.classImagePoint thetaClass
+
+set_option linter.style.longLine false in
+theorem record_region_eq_source_class_region
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotPossibleImageWitnessSource record)
+    (thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric)) :
+    record.thetaPossibleImages.images.region
+        (sourceData.representativeData.representative thetaClass) =
+      sourceData.thetaPossibleImageSource.classImages.region thetaClass := by
+  calc
+    record.thetaPossibleImages.images.region
+        (sourceData.representativeData.representative thetaClass) =
+        sourceData.thetaPossibleImageSource.choiceImages.region
+          (sourceData.representativeData.representative thetaClass) := by
+      exact
+        congrArg
+          (fun images :
+              RegionFamily target
+                (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) =>
+            images.region
+              (sourceData.representativeData.representative thetaClass))
+          sourceData.record_images_eq_source
+    _ =
+        sourceData.thetaPossibleImageSource.classImages.region
+          (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+            (sourceData.representativeData.representative thetaClass)) :=
+      sourceData.thetaPossibleImageSource.choiceImages_region
+        (sourceData.representativeData.representative thetaClass)
+    _ = sourceData.thetaPossibleImageSource.classImages.region thetaClass := by
+      rw [sourceData.representativeData.thetaPilotClass_representative thetaClass]
+
+set_option linter.style.longLine false in
+theorem possibleImagePoint_mem
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotPossibleImageWitnessSource record)
+    (thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric)) :
+    (record.thetaPossibleImages.images.region
+        (sourceData.representativeData.representative thetaClass)).Contains
+      (sourceData.possibleImagePoint thetaClass) := by
+  rw [sourceData.record_region_eq_source_class_region thetaClass]
+  exact sourceData.thetaPossibleImageSource.classImagePoint_mem thetaClass
+
+set_option linter.style.longLine false in
+theorem possibleImageNonempty
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotPossibleImageWitnessSource record)
+    (thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric)) :
+    (record.thetaPossibleImages.images.region
+        (sourceData.representativeData.representative thetaClass)).toSet.Nonempty :=
+  ⟨sourceData.possibleImagePoint thetaClass,
+    sourceData.possibleImagePoint_mem thetaClass⟩
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotPossibleImageWitnessSource record) :
+    (∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      record.thetaPossibleImages.images.region
+          (sourceData.representativeData.representative thetaClass) =
+        sourceData.thetaPossibleImageSource.classImages.region thetaClass) ∧
+      (∀ thetaClass :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric),
+        (record.thetaPossibleImages.images.region
+          (sourceData.representativeData.representative thetaClass)).Contains
+          (sourceData.possibleImagePoint thetaClass)) ∧
+      (∀ thetaClass :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric),
+        (record.thetaPossibleImages.images.region
+          (sourceData.representativeData.representative thetaClass)).toSet.Nonempty) :=
+  ⟨sourceData.record_region_eq_source_class_region,
+    sourceData.possibleImagePoint_mem,
+    sourceData.possibleImageNonempty⟩
+
+end ConcreteHodgeTheaterLogThetaThetaPilotPossibleImageWitnessSource
+
+set_option linter.style.longLine false in
+/--
 Lattice-key image law for theta-pilot possible images.
 
 This is lower than the lattice-formula record source.  The formula itself is
@@ -18367,6 +18496,56 @@ def toFiberInd2ActionPacketTensorLabelSource
       sourceData.fiberTransport_upperSemiTransport,
     fiberTransport_processionTransport :=
       sourceData.fiberTransport_processionTransport }
+
+set_option linter.style.longLine false in
+/--
+Construct the symmetry-label fiber source from the common possible-image
+witness bridge.
+-/
+def ofPossibleImageWitnessSource
+    (witnessSource :
+      ConcreteHodgeTheaterLogThetaThetaPilotPossibleImageWitnessSource record)
+    (quotientImages :
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).EqualityQuotientPossibleImages record.thetaPossibleImages.images)
+    (fiberTransport_symmetryLabelInd2ActionPacketTransport :
+      ∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          IUTStage1SymmetryLabelInd2ActionPacketTransport
+            coric
+            (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+              (l := l) choice₁ choice₂).local_tensor_state
+            choice₂.local_tensor_state)
+    (fiberTransport_upperSemiTransport :
+      ∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          IUTStage1UpperSemiCompatibilityState.UpperSemiTransport
+            (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+              (l := l) choice₁ choice₂).upper_semi_state
+            choice₂.upper_semi_state)
+    (fiberTransport_processionTransport :
+      ∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          IUTStage1ProcessionState.ProcessionTransport
+            (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+              (l := l) choice₁ choice₂).procession_state
+            choice₂.procession_state) :
+    ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSymmetryLabelTransportSource
+      record indData :=
+  { representativeData := witnessSource.representativeData,
+    quotientImages := quotientImages,
+    possibleImagePoint := witnessSource.possibleImagePoint,
+    possibleImagePoint_mem := witnessSource.possibleImagePoint_mem,
+    fiberTransport_symmetryLabelInd2ActionPacketTransport :=
+      fiberTransport_symmetryLabelInd2ActionPacketTransport,
+    fiberTransport_upperSemiTransport := fiberTransport_upperSemiTransport,
+    fiberTransport_processionTransport := fiberTransport_processionTransport }
 
 set_option linter.style.longLine false in
 def toFiberInd2ActionPacketTransportSource
