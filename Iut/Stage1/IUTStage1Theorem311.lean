@@ -18596,6 +18596,174 @@ variable {target : Copy}
 variable {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
 variable {images : RegionFamily target choice}
 
+/--
+Concrete Remark 3.9.5 holomorphic-hull source for Step (xi-c)/(xi-d).
+
+This is the lower replacement for supplying a free `hullOperator` to the Step
+(xi) constructor.  The hull operator is derived from the source-paper
+minimal-hull system: `phi(P)` is the intersection of all hulls containing `P`.
+The possible-image family is already factored through the Theorem 3.11
+`(Ind1)/(Ind2)` equality quotient, so the selected q-region and Ob1/Ob2 hull
+absorption below are theorems of this source object.
+-/
+structure ConcreteHolomorphicHullSystemSource
+    {target : Copy}
+    (core : IUTStage1Theorem311TypedIndeterminacyCore choice)
+    (images : RegionFamily target choice) where
+  hullSystem : IUTStage1Remark395HolomorphicHullSystem (Point target)
+  quotientImages :
+    IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientPossibleImages
+      core images
+  selectedQChoice : choice
+
+namespace ConcreteHolomorphicHullSystemSource
+
+variable {target : Copy}
+variable {core : IUTStage1Theorem311TypedIndeterminacyCore choice}
+variable {images : RegionFamily target choice}
+
+def hullOperator
+    (source : ConcreteHolomorphicHullSystemSource core images) :
+    IUTStage1Remark395HolomorphicHullOperator (Point target) :=
+  source.hullSystem.toHolomorphicHullOperator
+
+def quotientHullCompatibility
+    (source : ConcreteHolomorphicHullSystemSource core images) :
+    IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+      core images source.hullOperator :=
+  { quotientImages := source.quotientImages }
+
+def familySource
+    (source : ConcreteHolomorphicHullSystemSource core images) :
+    IUTStage1Remark395PossibleImageFamilySource
+      (Point target) (Quot core.equalityQuotient.relation) :=
+  source.quotientHullCompatibility.familySource
+
+/--
+The Step (xi) hull-formation data derived from the minimal-hull system.
+-/
+def toHullFormationData
+    (source : ConcreteHolomorphicHullSystemSource core images) :
+    StepXIHullFormationData core images :=
+  { hullOperator := source.hullOperator,
+    quotientHullCompatibility := source.quotientHullCompatibility,
+    selectedQChoice := source.selectedQChoice,
+    selectedQRegion :=
+      source.familySource.possibleRegion
+        (core.equalityQuotientMap source.selectedQChoice),
+    selectedQRegion_eq_quotientRegion := rfl,
+    selectedQRegion_subset_possibleImageUnion :=
+      source.familySource.possibleRegion_subset_familyUnion
+        (core.equalityQuotientMap source.selectedQChoice) }
+
+theorem familySource_eq_ofHullSystem
+    (source : ConcreteHolomorphicHullSystemSource core images) :
+    source.familySource =
+      IUTStage1Remark395PossibleImageFamilySource.ofHullSystem
+        source.hullSystem
+        (fun quotientChoice =>
+          (source.quotientImages.quotientImages.region quotientChoice).toSet) :=
+  rfl
+
+theorem selectedQRegion_eq_sourcePossibleImage
+    (source : ConcreteHolomorphicHullSystemSource core images) :
+    source.toHullFormationData.selectedQRegion =
+      (images.region source.selectedQChoice).toSet := by
+  calc
+    source.toHullFormationData.selectedQRegion =
+        source.familySource.possibleRegion
+          (core.equalityQuotientMap source.selectedQChoice) :=
+      rfl
+    _ = (images.region source.selectedQChoice).toSet :=
+      source.quotientHullCompatibility.possibleRegion_pullback_eq
+        source.selectedQChoice
+
+theorem canonicalHull_eq_minimalHull
+    (source : ConcreteHolomorphicHullSystemSource core images) :
+    source.familySource.canonicalHull =
+      source.hullSystem.phi source.familySource.familyUnion :=
+  rfl
+
+theorem canonicalHull_isHull
+    (source : ConcreteHolomorphicHullSystemSource core images) :
+    source.hullSystem.isHull source.familySource.canonicalHull := by
+  rw [source.canonicalHull_eq_minimalHull]
+  exact source.hullSystem.phi_isHull source.familySource.familyUnion
+
+theorem familyUnion_subset_canonicalHull
+    (source : ConcreteHolomorphicHullSystemSource core images) :
+    source.familySource.familyUnion ⊆ source.familySource.canonicalHull :=
+  source.familySource.familyUnion_subset_phi
+
+theorem selectedQRegion_subset_familyUnion
+    (source : ConcreteHolomorphicHullSystemSource core images) :
+    source.toHullFormationData.selectedQRegion ⊆
+      source.familySource.familyUnion :=
+  source.toHullFormationData.selectedQRegion_subset_possibleImageUnion
+
+theorem selectedQRegion_subset_canonicalHull
+    (source : ConcreteHolomorphicHullSystemSource core images) :
+    source.toHullFormationData.selectedQRegion ⊆
+      source.familySource.canonicalHull :=
+  Set.Subset.trans source.selectedQRegion_subset_familyUnion
+    source.familySource.familyUnion_subset_phi
+
+theorem ob1Ob2_from_minimalHull
+    (source : ConcreteHolomorphicHullSystemSource core images) :
+    source.toHullFormationData.selectedQRegion ⊆
+        source.familySource.canonicalHull ∧
+      source.familySource.familyUnion ⊆ source.familySource.canonicalHull ∧
+      source.hullSystem.isHull source.familySource.canonicalHull :=
+  ⟨source.selectedQRegion_subset_canonicalHull,
+    source.familyUnion_subset_canonicalHull,
+    source.canonicalHull_isHull⟩
+
+/--
+Audit that Step (xi-c)/(xi-d) are now backed by the Remark 3.9.5 minimal-hull
+construction, not by an arbitrary hull-operator witness.
+-/
+structure Audit
+    (source : ConcreteHolomorphicHullSystemSource core images) : Prop where
+  family_source_is_minimal_hull_source :
+    source.familySource =
+      IUTStage1Remark395PossibleImageFamilySource.ofHullSystem
+        source.hullSystem
+        (fun quotientChoice =>
+          (source.quotientImages.quotientImages.region quotientChoice).toSet)
+  selected_q_region_is_source_possible_image :
+    source.toHullFormationData.selectedQRegion =
+      (images.region source.selectedQChoice).toSet
+  canonical_hull_is_minimal_hull :
+    source.familySource.canonicalHull =
+      source.hullSystem.phi source.familySource.familyUnion
+  canonical_hull_is_hull :
+    source.hullSystem.isHull source.familySource.canonicalHull
+  selected_q_region_contained_in_possible_image_union :
+    source.toHullFormationData.selectedQRegion ⊆ source.familySource.familyUnion
+  ob1_ob2_from_minimal_hull :
+    source.toHullFormationData.selectedQRegion ⊆
+        source.familySource.canonicalHull ∧
+      source.familySource.familyUnion ⊆ source.familySource.canonicalHull ∧
+      source.hullSystem.isHull source.familySource.canonicalHull
+
+theorem audit
+    (source : ConcreteHolomorphicHullSystemSource core images) :
+    Audit source :=
+  { family_source_is_minimal_hull_source :=
+      source.familySource_eq_ofHullSystem,
+    selected_q_region_is_source_possible_image :=
+      source.selectedQRegion_eq_sourcePossibleImage,
+    canonical_hull_is_minimal_hull :=
+      source.canonicalHull_eq_minimalHull,
+    canonical_hull_is_hull :=
+      source.canonicalHull_isHull,
+    selected_q_region_contained_in_possible_image_union :=
+      source.selectedQRegion_subset_familyUnion,
+    ob1_ob2_from_minimal_hull :=
+      source.ob1Ob2_from_minimalHull }
+
+end ConcreteHolomorphicHullSystemSource
+
 set_option linter.style.longLine false in
 /--
 Construct Step (xi) hull-formation data from quotient-indexed Theorem 3.11
@@ -19383,6 +19551,84 @@ def ofQuotientHullCompatibilityThetaLGPOb7Source
   ofQuotientHullCompatibility
     (sourceData := sourceData)
     paperTrace thetaSigned hullOperator quotientHullCompatibility
+    determinantData
+    ob7Source.toPrimeStripLogKummerCompatibilityData
+    ob7Source.sourcePrimeStrip_eq
+    ob7Source.targetPrimeStrip_eq
+    ob7Source.logKummerColumn_eq_selected
+
+set_option linter.style.longLine false in
+/--
+Build the paper-derived Step (xi) source from a concrete Remark 3.9.5
+minimal-hull system.
+
+Compared with `ofQuotientHullCompatibility`, this constructor no longer takes a
+free hull operator or free quotient-hull bridge.  Both are projected from
+`ConcreteHolomorphicHullSystemSource`, whose hull operator is derived from the
+intersection-of-all-hulls definition of `phi(P)`.
+-/
+def ofConcreteHolomorphicHullSystem
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    (concreteHullSource :
+      StepXIHullFormationData.ConcreteHolomorphicHullSystemSource
+        sourceData.Core sourceData.Images)
+    (selectedQChoice_eq_source :
+      concreteHullSource.selectedQChoice = sourceData.selectedQChoice)
+    (determinantData :
+      StepXIDeterminantComparisonData.{u, v}
+        concreteHullSource.toHullFormationData thetaSigned)
+    (ob7Compatibility : StepXIPrimeStripLogKummerCompatibilityData)
+    (ob7_sourcePrimeStrip_eq :
+      ob7Compatibility.sourcePrimeStrip = sourceData.inputPrimeStrip)
+    (ob7_targetPrimeStrip_eq :
+      ob7Compatibility.targetPrimeStrip = sourceData.outputPrimeStrip)
+    (ob7_logKummerColumn_eq_selected :
+      ob7Compatibility.logKummerColumn =
+        sourceData.selectedQChoice.coordinate.logThetaColumn) :
+    StepXIPaperDerivedHullDeterminantSource sourceData :=
+  { paperTrace := paperTrace,
+    thetaSigned := thetaSigned,
+    hullData := concreteHullSource.toHullFormationData,
+    selectedQChoice_eq_source := by
+      exact selectedQChoice_eq_source,
+    determinantData := determinantData,
+    ob7Compatibility := ob7Compatibility,
+    ob7_sourcePrimeStrip_eq := ob7_sourcePrimeStrip_eq,
+    ob7_targetPrimeStrip_eq := ob7_targetPrimeStrip_eq,
+    ob7_logKummerColumn_eq_selected := ob7_logKummerColumn_eq_selected }
+
+set_option linter.style.longLine false in
+/--
+Concrete-hull-system Step (xi) constructor with Ob7 still read from the shared
+`Theta^{x mu}`/log-Kummer source.
+
+This is the preferred hull-side constructor for the current milestone: the
+hull operator, equality-quotient family, selected q-region, union containment,
+and Ob1/Ob2 absorption all come from the minimal-hull source, while the Ob7
+compatibility remains tied to the source-spine log-Kummer column.
+-/
+def ofConcreteHolomorphicHullSystemThetaLGPOb7Source
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    (concreteHullSource :
+      StepXIHullFormationData.ConcreteHolomorphicHullSystemSource
+        sourceData.Core sourceData.Images)
+    (selectedQChoice_eq_source :
+      concreteHullSource.selectedQChoice = sourceData.selectedQChoice)
+    (determinantData :
+      StepXIDeterminantComparisonData.{u, v}
+        concreteHullSource.toHullFormationData thetaSigned)
+    {β Penv Pgau V : Type v} {μ : Type w}
+    [Fintype β] [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData concreteHullSource.toHullFormationData
+        β Penv Pgau V μ) :
+    StepXIPaperDerivedHullDeterminantSource sourceData :=
+  ofConcreteHolomorphicHullSystem
+    (sourceData := sourceData)
+    paperTrace thetaSigned concreteHullSource selectedQChoice_eq_source
     determinantData
     ob7Source.toPrimeStripLogKummerCompatibilityData
     ob7Source.sourcePrimeStrip_eq

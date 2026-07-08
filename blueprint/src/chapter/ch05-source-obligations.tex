@@ -118,8 +118,13 @@
   \uses{def:paper-derived-step-xi-source}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIHullFormationData.ofQuotientHullCompatibility}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIHullFormationData.ofQuotientHullCompatibility_audit}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIHullFormationData.ConcreteHolomorphicHullSystemSource}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIHullFormationData.ConcreteHolomorphicHullSystemSource.toHullFormationData}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIHullFormationData.ConcreteHolomorphicHullSystemSource.audit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.ofQuotientHullCompatibility}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.ofQuotientHullCompatibility_audit}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystem}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemThetaLGPOb7Source}
   \leanok
   The selected \(q\)-region used in Step (xi) can be constructed as the
   possible region attached to the selected Theorem 3.11 equality-quotient
@@ -127,7 +132,10 @@
   family-union inclusion from the Remark 3.9.5 possible-image source.  The
   paper-derived Step (xi) source has a matching constructor that fixes this
   choice to the source spine's selected \(q\)-choice, rather than taking a
-  preassembled hull record with a separately supplied containment proof.
+  preassembled hull record with a separately supplied containment proof.  The
+  strengthened constructor takes a Remark 3.9.5 minimal-hull system, derives
+  the hull operator from the intersection-of-hulls definition of \(\phi(P)\),
+  and proves the Ob1/Ob2 hull absorption facts from that source.
 \end{proposition}
 
 \begin{proposition}[Step (xi) determinant comparison from weighted determinants]

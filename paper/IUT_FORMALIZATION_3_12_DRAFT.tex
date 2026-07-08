@@ -379,7 +379,13 @@ At the hull-formation boundary, the selected \(q\)-region is now constructed
 from the equality-quotient possible-image family, so its containment in the
 possible-image union is no longer a separately supplied Step (xi) field; the
 paper-derived source constructor uses the source spine's selected \(q\)-choice
-directly.
+directly.  This boundary has now been lowered one step further: the Step (xi)
+hull source may be built from the Remark 3.9.5 minimal-hull system
+\(\phi(P)=\bigcap_{P\subseteq H}H\).  Lean derives the holomorphic hull
+operator, the canonical hull of the possible-image union, closedness of this
+canonical hull, containment of the selected \(q\)-region in the union, and the
+Ob1/Ob2 absorption statement from this minimal-hull source rather than from a
+free hull-operator witness.
 At the determinant boundary, the Step (xi) determinant comparison record can
 now be constructed from the weighted arithmetic-vector-bundle determinant
 source already present in the Step (xi) layer: the finite adjusted summands,
@@ -438,9 +444,9 @@ This is progress below a free-floating obligation bundle.  What remains is to
 construct, from the source papers, the actual lower operations corresponding to:
 \[
 \begin{array}{l}
-\text{the concrete holomorphic hull operator/source},\\
+\text{the product/principal valuation-ball instantiation of the minimal hull source},\\
 \text{the lower weighted determinant/localization source itself},\\
-\text{the lower source proof of Ob1/Ob2 hull absorption},\\
+\text{wiring the existing lower hull sources into the preferred Step (xi) route},\\
 \text{Ob3/Ob4 adjusted determinant data from localizations},\\
 \text{Ob5 quotient determinant compatibility},\\
 \text{the action-packet theta formula to source-spine comparison},\\
