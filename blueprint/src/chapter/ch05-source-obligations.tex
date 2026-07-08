@@ -229,6 +229,8 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedRestrictionAnchoredCommonPlaceGlobalNormalizedOb7ConstructionSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalRestrictionAnchoredGlobalNormalizedOb7ConstructionSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource}
+  \lean{Iut.Stage1.IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource.familyHullLogVolume_pos_of_localizedAdjusted_nonneg_exists_pos}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalSummandPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource}
   \lean{Iut.Stage1.IUTStage1WeightedDeterminantPrimeStripProductFormulaSource.ofSingleGaussianPlace}
   \lean{Iut.Stage1.IUTStage1WeightedDeterminantPrimeStripProductFormulaSource.ofSingleGaussianPlace_endpoint}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedSinglePlaceOb7ConstructionSource}
@@ -563,6 +565,7 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalAnchoredOb7}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalRestrictionAnchoredOb7}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalPositiveRestrictionAnchoredOb7}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalSummandPositiveRestrictionAnchoredOb7}
   \leanok
   The promoted public paper-trace route is now the strict principal-product
   localized wrapper.  It consumes the source spine, a principal product
@@ -587,10 +590,11 @@
   route, the environment primes, Gaussian primes, and places are all indexed
   by the same type, so the prime-place equivalences are identity maps
   constructed internally.  The current strictest diagonal wrapper also derives
-  the Gaussian-global nonzero proof from positivity of the localized
-  family-hull log-volume and the determinant/global comparison, using the
-  already formalized equality between localized determinant log-volume and
-  family-hull log-volume.
+  localized family-hull positivity from nonnegativity of the localized
+  adjusted determinant summands together with one strictly positive summand.
+  This feeds the already formalized equality between localized determinant
+  log-volume and family-hull log-volume, and hence derives the
+  Gaussian-global nonzero proof from the determinant/global comparison.
   The Gaussian local-global Frobenioid restriction identity then proves the
   global product-formula equality before the product-formula audit is invoked.
   The weighted-partition, explicit raw-ratio, and one-summand routes remain as

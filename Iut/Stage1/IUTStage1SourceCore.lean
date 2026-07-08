@@ -7509,6 +7509,33 @@ theorem familyHullLogVolume_eq_localizedAdjustedSum
   data.familyHullLogVolume_eq_localizedLogVolumeSum_source.trans
     data.localizedLogVolumeSum_eq_localizedAdjustedSum
 
+theorem familyHullLogVolume_pos_of_localizedAdjusted_nonneg_exists_pos
+    (data :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        α ι η β γ)
+    (localizedAdjusted_nonneg :
+      ∀ index : β,
+        0 <= data.localizedSource.weightedAdjustedLogVolume index)
+    (positiveIndex : β)
+    (positiveIndex_pos :
+      0 < data.localizedSource.weightedAdjustedLogVolume positiveIndex) :
+    0 < data.familyHullLogVolume := by
+  rw [data.familyHullLogVolume_eq_localizedAdjustedSum]
+  have hterm_le_sum :
+      data.localizedSource.weightedAdjustedLogVolume positiveIndex <=
+        Finset.univ.sum fun index =>
+          data.localizedSource.weightedAdjustedLogVolume index :=
+    Finset.single_le_sum
+      (s := (Finset.univ : Finset β))
+      (a := positiveIndex)
+      (f := fun index : β =>
+        data.localizedSource.weightedAdjustedLogVolume index)
+      (by
+        intro index _hindex
+        exact localizedAdjusted_nonneg index)
+      (Finset.mem_univ positiveIndex)
+  exact lt_of_lt_of_le positiveIndex_pos hterm_le_sum
+
 set_option linter.style.longLine false in
 noncomputable def toOb3Ob5AdjustedDeterminantLogVolumeSource
     (data :
