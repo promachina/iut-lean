@@ -28429,6 +28429,32 @@ namespace IUTStage1EnvironmentGaussianLocalEvaluation
 
 variable {V : Type u} [Fintype V]
 
+/--
+Construct the local environment/Gaussian evaluation from one shared
+local-global collection.
+
+This is the finite degree/log-volume shadow of the local compatibility in
+IUT II, Corollary 4.6(v): once the environment/Gaussian evaluation identifies
+the ordinary global realified Frobenioid and the local-global collection is
+anchored to the environment ordinary degree object, the Gaussian global anchor
+and every local restriction comparison are forced.
+-/
+def ofSharedLocalGlobalCollection
+    (evaluation : IUTStage1EnvironmentGaussianRealifiedFrobenioidEvaluation V)
+    (collection : IUTStage1LocalGlobalRealifiedFrobenioidCollection V)
+    (global_eq_environment :
+      collection.globalObject =
+        evaluation.environment.ordinary.toDegreeObject) :
+    IUTStage1EnvironmentGaussianLocalEvaluation V :=
+  { evaluation := evaluation,
+    environmentLocal := collection,
+    gaussianLocal := collection,
+    environment_global_eq := global_eq_environment,
+    gaussian_global_eq := by
+      rw [evaluation.evaluation_ordinary_eq]
+      exact global_eq_environment,
+    local_restriction_eq := fun _ => rfl }
+
 theorem environmentGlobalLogVolume_eq_ordinary
     (comparison : IUTStage1EnvironmentGaussianLocalEvaluation V) :
     comparison.environmentLocal.globalObject.realifiedLogVolume =
@@ -28490,6 +28516,36 @@ theorem endpoint
       ⟨comparison.localRestrictedLogVolume_eq_environment v,
         comparison.localExtensionDegree_eq_environment v,
         comparison.gaussianLocalLogVolume_eq_environment v⟩⟩
+
+set_option linter.style.longLine false in
+theorem ofSharedLocalGlobalCollection_endpoint
+    (evaluation : IUTStage1EnvironmentGaussianRealifiedFrobenioidEvaluation V)
+    (collection : IUTStage1LocalGlobalRealifiedFrobenioidCollection V)
+    (global_eq_environment :
+      collection.globalObject =
+        evaluation.environment.ordinary.toDegreeObject) :
+    let comparison :=
+      ofSharedLocalGlobalCollection
+        evaluation collection global_eq_environment;
+    comparison.evaluation = evaluation ∧
+      comparison.environmentLocal = collection ∧
+      comparison.gaussianLocal = collection ∧
+      comparison.environmentLocal.globalObject =
+        evaluation.environment.ordinary.toDegreeObject ∧
+      comparison.gaussianLocal.globalObject =
+        evaluation.gaussian.ordinary.toDegreeObject ∧
+      (∀ v : V,
+        comparison.gaussianLocal.localization v =
+          comparison.environmentLocal.localization v) ∧
+      comparison.gaussianLocal.globalObject.realifiedLogVolume =
+        comparison.environmentLocal.globalObject.realifiedLogVolume :=
+  by
+    intro comparison
+    exact
+      ⟨rfl, rfl, rfl, global_eq_environment,
+        comparison.gaussian_global_eq,
+        comparison.local_restriction_eq,
+        comparison.gaussianGlobalLogVolume_eq_environment⟩
 
 end IUTStage1EnvironmentGaussianLocalEvaluation
 
