@@ -6578,6 +6578,56 @@ theorem adjustedRawLogVolume_pos_of_structureSheaf_lt_bundle
   rw [data.adjusted_raw_eq]
   exact sub_pos.mpr structureSheaf_lt_bundle
 
+theorem structureSheafLogVolume_le_bundleLogVolume_of_eq_directSummand_nonneg
+    (data :
+      IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource η γ)
+    (structureSheafSummand : γ)
+    (structureSheaf_eq_directSummand :
+      data.structureSheafLogVolume =
+        data.bundle.directSummandLogVolume structureSheafSummand)
+    (directSummand_nonneg :
+      ∀ summand : γ, 0 <= data.bundle.directSummandLogVolume summand) :
+    data.structureSheafLogVolume <= data.bundle.bundleLogVolume := by
+  rw [structureSheaf_eq_directSummand,
+    IUTStage1LocalizedArithmeticVectorBundle.bundleLogVolume]
+  exact
+    Finset.single_le_sum
+      (s := (Finset.univ : Finset γ))
+      (a := structureSheafSummand)
+      (f := data.bundle.directSummandLogVolume)
+      (by
+        intro summand _hsummand
+        exact directSummand_nonneg summand)
+      (Finset.mem_univ structureSheafSummand)
+
+theorem structureSheafLogVolume_lt_bundleLogVolume_of_eq_directSummand_nonneg_pos
+    (data :
+      IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource η γ)
+    (structureSheafSummand positiveSummand : γ)
+    (positiveSummand_ne_structureSheaf : positiveSummand ≠ structureSheafSummand)
+    (structureSheaf_eq_directSummand :
+      data.structureSheafLogVolume =
+        data.bundle.directSummandLogVolume structureSheafSummand)
+    (directSummand_nonneg :
+      ∀ summand : γ, 0 <= data.bundle.directSummandLogVolume summand)
+    (positiveSummand_pos :
+      0 < data.bundle.directSummandLogVolume positiveSummand) :
+    data.structureSheafLogVolume < data.bundle.bundleLogVolume := by
+  rw [structureSheaf_eq_directSummand,
+    IUTStage1LocalizedArithmeticVectorBundle.bundleLogVolume]
+  exact
+    Finset.single_lt_sum
+      (s := (Finset.univ : Finset γ))
+      (i := structureSheafSummand)
+      (j := positiveSummand)
+      positiveSummand_ne_structureSheaf
+      (Finset.mem_univ structureSheafSummand)
+      (Finset.mem_univ positiveSummand)
+      positiveSummand_pos
+      (by
+        intro summand _hsummand _hsummand_ne
+        exact directSummand_nonneg summand)
+
 theorem weightedAdjustedLogVolume_nonneg_of_adjustedRaw_nonneg
     (data :
       IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource η γ)
@@ -7061,6 +7111,61 @@ theorem adjustedRawLogVolume_pos_of_structureSheaf_lt_bundle
     0 < (data.localization index).adjustedRawLogVolume :=
   (data.localization index).adjustedRawLogVolume_pos_of_structureSheaf_lt_bundle
     structureSheaf_lt_bundle
+
+theorem structureSheafLogVolume_le_bundleLogVolume_of_eq_directSummand_nonneg
+    (data :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ)
+    (structureSheafSummand : β -> γ)
+    (structureSheaf_eq_directSummand :
+      ∀ index : β,
+        (data.localization index).structureSheafLogVolume =
+          (data.localization index).bundle.directSummandLogVolume
+            (structureSheafSummand index))
+    (directSummand_nonneg :
+      ∀ index : β,
+        ∀ summand : γ,
+          0 <= (data.localization index).bundle.directSummandLogVolume summand)
+    (index : β) :
+    (data.localization index).structureSheafLogVolume <=
+      (data.localization index).bundle.bundleLogVolume :=
+  (data.localization index)
+    |>.structureSheafLogVolume_le_bundleLogVolume_of_eq_directSummand_nonneg
+      (structureSheafSummand index)
+      (structureSheaf_eq_directSummand index)
+      (directSummand_nonneg index)
+
+theorem structureSheafLogVolume_lt_bundleLogVolume_of_eq_directSummand_nonneg_pos
+    (data :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ)
+    (structureSheafSummand : β -> γ)
+    (index : β)
+    (positiveSummand : γ)
+    (positiveSummand_ne_structureSheaf :
+      positiveSummand ≠ structureSheafSummand index)
+    (structureSheaf_eq_directSummand :
+      ∀ index : β,
+        (data.localization index).structureSheafLogVolume =
+          (data.localization index).bundle.directSummandLogVolume
+            (structureSheafSummand index))
+    (directSummand_nonneg :
+      ∀ index : β,
+        ∀ summand : γ,
+          0 <= (data.localization index).bundle.directSummandLogVolume summand)
+    (positiveSummand_pos :
+      0 <
+        (data.localization index).bundle.directSummandLogVolume
+          positiveSummand) :
+    (data.localization index).structureSheafLogVolume <
+      (data.localization index).bundle.bundleLogVolume :=
+  (data.localization index)
+    |>.structureSheafLogVolume_lt_bundleLogVolume_of_eq_directSummand_nonneg_pos
+      (structureSheafSummand index) positiveSummand
+      positiveSummand_ne_structureSheaf
+      (structureSheaf_eq_directSummand index)
+      (directSummand_nonneg index)
+      positiveSummand_pos
 
 set_option linter.style.longLine false in
 theorem determinantLogVolume_eq_sum_weightedAdjusted
