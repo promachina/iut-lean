@@ -28838,6 +28838,73 @@ theorem normalizedLogVolume_eq_primeStripGlobal
   rw [source.determinantSource.normalizedLogVolume_eq_determinantLogVolume]
   exact source.determinantLogVolume_eq_primeStripGlobal
 
+set_option linter.style.longLine false in
+/--
+Single-place local-global product formula constructor.
+
+This is the finite one-summand case of the Ob7 product-formula handoff.  If the
+determinant has a single localization summand whose adjusted log-volume is the
+extension-degree multiple of the Gaussian local object at `place`, then the
+global determinant/prime-strip equality is proved by the local-global
+Frobenioid restriction identity
+`extensionDegree * localRealifiedLogVolume = globalRealifiedLogVolume`.
+-/
+noncomputable def ofSingleGaussianPlace
+    (determinantSource :
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource PUnit)
+    (primeStripLift :
+      IUTStage1EnvironmentGaussianThetaMuPrimeStripLift Penv Pgau V μ)
+    (place : V)
+    (summand_adjustedLogVolume_eq_localGlobal :
+      (determinantSource.summand PUnit.unit).adjustedLogVolume =
+        ((primeStripLift.base.localEvaluation.gaussianLocal.localization place).extensionDegree : Real) *
+          (primeStripLift.base.localEvaluation.gaussianLocal.localObject place).realifiedLogVolume) :
+    IUTStage1WeightedDeterminantPrimeStripProductFormulaSource
+      PUnit Penv Pgau V μ :=
+  { determinantSource := determinantSource,
+    primeStripLift := primeStripLift,
+    summandPlace := fun _ => place,
+    conversionRatio := fun _ =>
+      (primeStripLift.base.localEvaluation.gaussianLocal.localization place).extensionDegree,
+    summand_adjustedLogVolume_eq_convertedGaussianLocal := by
+      intro index
+      cases index
+      simpa using summand_adjustedLogVolume_eq_localGlobal,
+    product_formula_eq_primeStripGlobal := by
+      have hlocal :=
+        primeStripLift.base.localEvaluation.gaussianLocal.extensionDegree_mul_localRealifiedLogVolume
+          place
+      simpa using hlocal }
+
+set_option linter.style.longLine false in
+theorem ofSingleGaussianPlace_endpoint
+    (determinantSource :
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource PUnit)
+    (primeStripLift :
+      IUTStage1EnvironmentGaussianThetaMuPrimeStripLift Penv Pgau V μ)
+    (place : V)
+    (summand_adjustedLogVolume_eq_localGlobal :
+      (determinantSource.summand PUnit.unit).adjustedLogVolume =
+        ((primeStripLift.base.localEvaluation.gaussianLocal.localization place).extensionDegree : Real) *
+          (primeStripLift.base.localEvaluation.gaussianLocal.localObject place).realifiedLogVolume) :
+    let source :=
+      ofSingleGaussianPlace
+        determinantSource primeStripLift place
+        summand_adjustedLogVolume_eq_localGlobal;
+    source.determinantSource = determinantSource ∧
+      source.primeStripLift = primeStripLift ∧
+      source.summandPlace PUnit.unit = place ∧
+      source.convertedLocalGaussianLogVolume PUnit.unit =
+        ((primeStripLift.base.localEvaluation.gaussianLocal.localization place).extensionDegree : Real) *
+          (primeStripLift.base.localEvaluation.gaussianLocal.localObject place).realifiedLogVolume ∧
+      source.determinantSource.determinantLogVolume =
+        source.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume :=
+  by
+    intro source
+    exact
+      ⟨rfl, rfl, rfl, rfl,
+        source.determinantLogVolume_eq_primeStripGlobal⟩
+
 theorem endpoint
     (source :
       IUTStage1WeightedDeterminantPrimeStripProductFormulaSource

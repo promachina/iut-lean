@@ -64685,6 +64685,104 @@ end StepXIThetaLGPLocalizedProductFormulaOb7ConstructionSource
 
 set_option linter.style.longLine false in
 /--
+Localized single-place Ob7 source for the preferred public Step (xi) route.
+
+This specializes the localized product-formula construction to the one-summand
+case in which the determinant summand is calibrated by the Gaussian
+local-global Frobenioid restriction identity at a selected place.  The finite
+product-formula source is constructed internally by
+`IUTStage1WeightedDeterminantPrimeStripProductFormulaSource.ofSingleGaussianPlace`.
+-/
+structure StepXIThetaLGPLocalizedSinglePlaceOb7ConstructionSource
+    (hullData : StepXIHullFormationData sourceData.Core sourceData.Images)
+    {η : Type x} {γ : Type w} [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point target) (Quot sourceData.Core.equalityQuotient.relation) η PUnit γ)
+    (Penv Pgau V : Type v) (μ : Type w)
+    [Fintype Penv] [Fintype Pgau] [Fintype V] where
+  primeStripLift : IUTStage1EnvironmentGaussianThetaMuPrimeStripLift Penv Pgau V μ
+  place : V
+  summand_adjustedLogVolume_eq_localGlobal :
+    (localizedSource.localizedSource.toAdjustedDeterminantSource.toWeightedDeterminantSource.summand
+        PUnit.unit).adjustedLogVolume =
+      ((primeStripLift.base.localEvaluation.gaussianLocal.localization place).extensionDegree : Real) *
+        (primeStripLift.base.localEvaluation.gaussianLocal.localObject place).realifiedLogVolume
+  coricUnitCharacter : V -> μ
+  environment_unit_eq_coric :
+    ∀ p : Penv,
+      primeStripLift.environmentUnitCharacter p =
+        coricUnitCharacter (primeStripLift.base.environmentPrimeToPlace p)
+
+namespace StepXIThetaLGPLocalizedSinglePlaceOb7ConstructionSource
+
+variable {hullData : StepXIHullFormationData sourceData.Core sourceData.Images}
+variable {η : Type x} {γ : Type w} [Fintype γ]
+variable
+  {localizedSource :
+    IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+      (Point target) (Quot sourceData.Core.equalityQuotient.relation) η PUnit γ}
+variable {Penv Pgau V : Type v} {μ : Type w}
+variable [Fintype Penv] [Fintype Pgau] [Fintype V]
+
+set_option linter.style.longLine false in
+noncomputable def toProductFormulaSource
+    (source :
+      StepXIThetaLGPLocalizedSinglePlaceOb7ConstructionSource
+        (sourceData := sourceData)
+        hullData localizedSource Penv Pgau V μ) :
+    IUTStage1WeightedDeterminantPrimeStripProductFormulaSource
+      PUnit Penv Pgau V μ :=
+  IUTStage1WeightedDeterminantPrimeStripProductFormulaSource.ofSingleGaussianPlace
+    localizedSource.localizedSource.toAdjustedDeterminantSource.toWeightedDeterminantSource
+    source.primeStripLift source.place
+    source.summand_adjustedLogVolume_eq_localGlobal
+
+set_option linter.style.longLine false in
+noncomputable def toLocalizedProductFormulaOb7ConstructionSource
+    (source :
+      StepXIThetaLGPLocalizedSinglePlaceOb7ConstructionSource
+        (sourceData := sourceData)
+        hullData localizedSource Penv Pgau V μ) :
+    StepXIThetaLGPLocalizedProductFormulaOb7ConstructionSource
+      (sourceData := sourceData) (β := PUnit)
+      hullData localizedSource Penv Pgau V μ :=
+  { determinantProductFormulaSource := source.toProductFormulaSource,
+    determinantProductFormula_determinantSource_eq := rfl,
+    coricUnitCharacter := source.coricUnitCharacter,
+    environment_unit_eq_coric := source.environment_unit_eq_coric }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (source :
+      StepXIThetaLGPLocalizedSinglePlaceOb7ConstructionSource
+        (sourceData := sourceData)
+        hullData localizedSource Penv Pgau V μ) :
+    let productFormulaSource := source.toProductFormulaSource;
+    let constructionSource := source.toLocalizedProductFormulaOb7ConstructionSource;
+    productFormulaSource.determinantSource =
+        localizedSource.localizedSource.toAdjustedDeterminantSource.toWeightedDeterminantSource ∧
+      productFormulaSource.summandPlace PUnit.unit = source.place ∧
+      productFormulaSource.convertedLocalGaussianLogVolume PUnit.unit =
+        ((source.primeStripLift.base.localEvaluation.gaussianLocal.localization source.place).extensionDegree : Real) *
+          (source.primeStripLift.base.localEvaluation.gaussianLocal.localObject source.place).realifiedLogVolume ∧
+      productFormulaSource.determinantSource.determinantLogVolume =
+        source.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume ∧
+      constructionSource.determinantProductFormulaSource =
+        productFormulaSource ∧
+      constructionSource.determinantProductFormula_determinantSource_eq =
+        rfl :=
+  by
+    intro productFormulaSource constructionSource
+    exact
+      ⟨rfl, rfl, rfl,
+        productFormulaSource.determinantLogVolume_eq_primeStripGlobal,
+        rfl, rfl⟩
+
+end StepXIThetaLGPLocalizedSinglePlaceOb7ConstructionSource
+
+set_option linter.style.longLine false in
+/--
 Construct the Remark 3.9.5 source whose q-pilot region is the selected
 Theorem 3.11 possible image from the source spine.
 
