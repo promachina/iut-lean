@@ -594,6 +594,7 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource.thetaSigned_eq_familyHullLogVolume}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource.familyHullLogVolume_eq_restrictionAnchoredGlobal}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalDirectSummandEnvironmentThetaLocalizedAdjustedRestrictionAnchoredOb7}
   \leanok
   The promoted public paper-trace route is now the strict principal-product
   localized wrapper.  It consumes the source spine, a principal product
@@ -617,8 +618,9 @@
   restricted global prime log-volumes.  In the diagonal finite valuation-index
   route, the environment primes, Gaussian primes, and places are all indexed
   by the same type, so the prime-place equivalences are identity maps
-  constructed internally.  The current strictest diagonal wrapper now consumes
-  finite direct-summand data and environment-theta/family-hull calibration: the
+  constructed internally.  The current strictest public diagonal wrapper now
+  consumes finite direct-summand data and environment-theta/localized
+  adjusted-sum calibration: the
   structure-sheaf log-volume is identified with a distinguished direct summand
   of each localized arithmetic vector bundle, all direct summands are
   nonnegative, and one non-structure summand is strictly positive.  Finite
@@ -626,15 +628,14 @@
   log-volume with the localized bundle log-volume; the subtraction formula
   derives adjusted raw local positivity; positive determinant weights derive
   localized adjusted summand positivity; finite summation gives localized
-  family-hull positivity.  The theta scalar at the strict boundary is now the
-  environment theta divisor log-volume by definition.  The next lowered source
+  family-hull positivity.  The theta scalar at the strict boundary is the
+  environment theta divisor log-volume by definition.  The public route now
   identifies this environment theta log-volume with the localized adjusted
-  determinant sum; Lean then derives the equality with the family-hull
-  log-volume from the localized Ob3/Ob5 identity.  This derived equality
-  implies the family-hull/global calibration via theta/ordinary realified
-  Frobenioid compatibility, and the localized determinant/family-hull equality
-  then gives the determinant/global equality needed for the Gaussian-global
-  nonzero proof.
+  determinant sum; Lean derives the equality with the family-hull log-volume
+  from the localized Ob3/Ob5 identity.  This derived equality implies the
+  family-hull/global calibration via theta/ordinary realified Frobenioid
+  compatibility, and the localized determinant/family-hull equality then gives
+  the determinant/global equality needed for the Gaussian-global nonzero proof.
   The Gaussian local-global Frobenioid restriction identity then proves the
   global product-formula equality before the product-formula audit is invoked.
   The structure-sheaf-positive, raw-positive, summand-positive,
