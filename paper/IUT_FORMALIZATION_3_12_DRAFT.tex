@@ -410,6 +410,13 @@ statement: choices in the \((\mathrm{Ind}1,\mathrm{Ind}2)\) equality orbit
 have identical quotient possible regions and quotient-region log-volumes, while
 the same localized family-hull construction supplies the determinant and
 bounded-family tensor endpoint.
+The principal-product hull source has also been connected to the lower
+upper-semi quotient formalism of Remark 3.9.5(v): the concrete hull source now
+projects to a bounded-family hull quotient source, proves that this quotient
+hull is the canonical/principal family hull, and proves that any two nonempty
+quotient-indexed possible regions have the same collapsed quotient image.  For
+equality-orbit choices, Lean packages this with region equality, log-volume
+equality, quotient-image equality, and containment in the family hull.
 For the stricter localized route, the final normalized localized determinant
 bound by \(\Theta_{\mathrm{signed}}\) is no longer supplied as a standalone
 inequality: Lean derives it from the identification of
@@ -482,7 +489,7 @@ This is progress below a free-floating obligation bundle.  What remains is to
 construct, from the source papers, the actual lower operations corresponding to:
 \[
 \begin{array}{l}
-\text{the lower paper construction of the Ob5 quotient source itself},\\
+\text{nonemptiness/choice data for paper-level possible images in the Ob5 quotient source},\\
 \text{the action-packet theta formula to source-spine comparison},\\
 \text{the lower construction of the coric Ob7 prime-strip invariant}.
 \end{array}

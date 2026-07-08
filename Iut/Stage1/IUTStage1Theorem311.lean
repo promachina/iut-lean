@@ -18639,6 +18639,12 @@ def familySource
       (Point target) (Quot core.equalityQuotient.relation) :=
   source.quotientHullCompatibility.familySource
 
+def boundedFamilyHullQuotientSource
+    (source : ConcreteHolomorphicHullSystemSource core images) :
+    IUTStage1BoundedFamilyHullQuotientSource
+      (Point target) (Quot core.equalityQuotient.relation) :=
+  source.familySource.toBoundedFamilyHullQuotientSource
+
 /--
 The Step (xi) hull-formation data derived from the minimal-hull system.
 -/
@@ -18684,6 +18690,12 @@ theorem canonicalHull_eq_minimalHull
       source.hullSystem.phi source.familySource.familyUnion :=
   rfl
 
+theorem boundedFamilyHullQuotientSource_familyHull_eq_canonical
+    (source : ConcreteHolomorphicHullSystemSource core images) :
+    source.boundedFamilyHullQuotientSource.familyHull =
+      source.familySource.canonicalHull :=
+  rfl
+
 theorem canonicalHull_isHull
     (source : ConcreteHolomorphicHullSystemSource core images) :
     source.hullSystem.isHull source.familySource.canonicalHull := by
@@ -18718,6 +18730,62 @@ theorem ob1Ob2_from_minimalHull
     source.familyUnion_subset_canonicalHull,
     source.canonicalHull_isHull⟩
 
+theorem ob5UpperSemiQuotientImagesEq
+    (source : ConcreteHolomorphicHullSystemSource core images) :
+    ∀ q₁ q₂ : Quot core.equalityQuotient.relation,
+      (source.familySource.possibleRegion q₁).Nonempty ->
+      (source.familySource.possibleRegion q₂).Nonempty ->
+        source.familySource.quotientMap ''
+            source.familySource.possibleRegion q₁ =
+          source.familySource.quotientMap ''
+            source.familySource.possibleRegion q₂ :=
+  fun q₁ q₂ hne₁ hne₂ =>
+    source.familySource.quotientMap_images_eq q₁ q₂ hne₁ hne₂
+
+set_option linter.style.longLine false in
+theorem ob5EqualityOrbitUpperSemiEndpoint
+    (source : ConcreteHolomorphicHullSystemSource core images) :
+    ∀ {choice₁ choice₂ : choice},
+      choice₂ ∈ core.equalityOrbit choice₁ ->
+      (source.familySource.possibleRegion
+        (core.equalityQuotientMap choice₁)).Nonempty ->
+      (source.familySource.possibleRegion
+        (core.equalityQuotientMap choice₂)).Nonempty ->
+        source.familySource.possibleRegion
+            (core.equalityQuotientMap choice₁) =
+          source.familySource.possibleRegion
+            (core.equalityQuotientMap choice₂) ∧
+        source.hullOperator.logVolume
+            (source.familySource.possibleRegion
+              (core.equalityQuotientMap choice₁)) =
+          source.hullOperator.logVolume
+            (source.familySource.possibleRegion
+              (core.equalityQuotientMap choice₂)) ∧
+        source.familySource.quotientMap ''
+            source.familySource.possibleRegion
+              (core.equalityQuotientMap choice₁) =
+          source.familySource.quotientMap ''
+            source.familySource.possibleRegion
+              (core.equalityQuotientMap choice₂) ∧
+        source.familySource.possibleRegion
+            (core.equalityQuotientMap choice₁) ⊆
+          source.familySource.canonicalHull ∧
+        source.familySource.possibleRegion
+            (core.equalityQuotientMap choice₂) ⊆
+          source.familySource.canonicalHull :=
+  by
+    intro choice₁ choice₂ hmem hne₁ hne₂
+    exact
+      ⟨source.quotientHullCompatibility.possibleRegion_eq_of_equalityOrbit hmem,
+        source.quotientHullCompatibility.logVolume_eq_of_equalityOrbit hmem,
+        source.familySource.quotientMap_images_eq
+          (core.equalityQuotientMap choice₁)
+          (core.equalityQuotientMap choice₂) hne₁ hne₂,
+        source.familySource.possibleRegion_subset_phi
+          (core.equalityQuotientMap choice₁),
+        source.familySource.possibleRegion_subset_phi
+          (core.equalityQuotientMap choice₂)⟩
+
 /--
 Audit that Step (xi-c)/(xi-d) are now backed by the Remark 3.9.5 minimal-hull
 construction, not by an arbitrary hull-operator witness.
@@ -18736,15 +18804,55 @@ structure Audit
   canonical_hull_is_minimal_hull :
     source.familySource.canonicalHull =
       source.hullSystem.phi source.familySource.familyUnion
+  bounded_family_hull_quotient_familyHull_eq_canonical :
+    source.boundedFamilyHullQuotientSource.familyHull =
+      source.familySource.canonicalHull
   canonical_hull_is_hull :
     source.hullSystem.isHull source.familySource.canonicalHull
   selected_q_region_contained_in_possible_image_union :
     source.toHullFormationData.selectedQRegion ⊆ source.familySource.familyUnion
   ob1_ob2_from_minimal_hull :
-    source.toHullFormationData.selectedQRegion ⊆
+      source.toHullFormationData.selectedQRegion ⊆
         source.familySource.canonicalHull ∧
       source.familySource.familyUnion ⊆ source.familySource.canonicalHull ∧
       source.hullSystem.isHull source.familySource.canonicalHull
+  ob5_upper_semi_quotient_images_eq :
+    ∀ q₁ q₂ : Quot core.equalityQuotient.relation,
+      (source.familySource.possibleRegion q₁).Nonempty ->
+      (source.familySource.possibleRegion q₂).Nonempty ->
+        source.familySource.quotientMap ''
+            source.familySource.possibleRegion q₁ =
+          source.familySource.quotientMap ''
+            source.familySource.possibleRegion q₂
+  ob5_equality_orbit_upper_semi_endpoint :
+    ∀ {choice₁ choice₂ : choice},
+      choice₂ ∈ core.equalityOrbit choice₁ ->
+      (source.familySource.possibleRegion
+        (core.equalityQuotientMap choice₁)).Nonempty ->
+      (source.familySource.possibleRegion
+        (core.equalityQuotientMap choice₂)).Nonempty ->
+        source.familySource.possibleRegion
+            (core.equalityQuotientMap choice₁) =
+          source.familySource.possibleRegion
+            (core.equalityQuotientMap choice₂) ∧
+        source.hullOperator.logVolume
+            (source.familySource.possibleRegion
+              (core.equalityQuotientMap choice₁)) =
+          source.hullOperator.logVolume
+            (source.familySource.possibleRegion
+              (core.equalityQuotientMap choice₂)) ∧
+        source.familySource.quotientMap ''
+            source.familySource.possibleRegion
+              (core.equalityQuotientMap choice₁) =
+          source.familySource.quotientMap ''
+            source.familySource.possibleRegion
+              (core.equalityQuotientMap choice₂) ∧
+        source.familySource.possibleRegion
+            (core.equalityQuotientMap choice₁) ⊆
+          source.familySource.canonicalHull ∧
+        source.familySource.possibleRegion
+            (core.equalityQuotientMap choice₂) ⊆
+          source.familySource.canonicalHull
 
 theorem audit
     (source : ConcreteHolomorphicHullSystemSource core images) :
@@ -18755,12 +18863,18 @@ theorem audit
       source.selectedQRegion_eq_sourcePossibleImage,
     canonical_hull_is_minimal_hull :=
       source.canonicalHull_eq_minimalHull,
+    bounded_family_hull_quotient_familyHull_eq_canonical :=
+      source.boundedFamilyHullQuotientSource_familyHull_eq_canonical,
     canonical_hull_is_hull :=
       source.canonicalHull_isHull,
     selected_q_region_contained_in_possible_image_union :=
       source.selectedQRegion_subset_familyUnion,
     ob1_ob2_from_minimal_hull :=
-      source.ob1Ob2_from_minimalHull }
+      source.ob1Ob2_from_minimalHull,
+    ob5_upper_semi_quotient_images_eq :=
+      source.ob5UpperSemiQuotientImagesEq,
+    ob5_equality_orbit_upper_semi_endpoint :=
+      source.ob5EqualityOrbitUpperSemiEndpoint }
 
 set_option linter.style.longLine false in
 /--
@@ -18870,6 +18984,13 @@ structure PrincipalProductHullSourceAudit
     source.familySource.canonicalHull =
       principalSource.principalHull
         (principalSource.intersectionParameter source.familySource.familyUnion)
+  bounded_family_quotient_hull_is_principal_intersection :
+    let source :=
+      ofPrincipalProductHullSystemSource
+        principalSource quotientImages selectedQChoice;
+    source.boundedFamilyHullQuotientSource.familyHull =
+      principalSource.principalHull
+        (principalSource.intersectionParameter source.familySource.familyUnion)
   family_hull_logVolume_is_principal :
     let source :=
       ofPrincipalProductHullSystemSource
@@ -18877,6 +18998,49 @@ structure PrincipalProductHullSourceAudit
     source.hullOperator.logVolume source.familySource.canonicalHull =
       principalSource.principalHullLogVolume
         (principalSource.intersectionParameter source.familySource.familyUnion)
+  upper_semi_ob5_quotient_images_eq :
+    let source :=
+      ofPrincipalProductHullSystemSource
+        principalSource quotientImages selectedQChoice;
+    ∀ q₁ q₂ : Quot core.equalityQuotient.relation,
+      (source.familySource.possibleRegion q₁).Nonempty ->
+      (source.familySource.possibleRegion q₂).Nonempty ->
+        source.familySource.quotientMap ''
+            source.familySource.possibleRegion q₁ =
+          source.familySource.quotientMap ''
+            source.familySource.possibleRegion q₂
+  equality_orbit_upper_semi_ob5_endpoint :
+    let source :=
+      ofPrincipalProductHullSystemSource
+        principalSource quotientImages selectedQChoice;
+    ∀ {choice₁ choice₂ : choice},
+      choice₂ ∈ core.equalityOrbit choice₁ ->
+      (source.familySource.possibleRegion
+        (core.equalityQuotientMap choice₁)).Nonempty ->
+      (source.familySource.possibleRegion
+        (core.equalityQuotientMap choice₂)).Nonempty ->
+        source.familySource.possibleRegion
+            (core.equalityQuotientMap choice₁) =
+          source.familySource.possibleRegion
+            (core.equalityQuotientMap choice₂) ∧
+        source.hullOperator.logVolume
+            (source.familySource.possibleRegion
+              (core.equalityQuotientMap choice₁)) =
+          source.hullOperator.logVolume
+            (source.familySource.possibleRegion
+              (core.equalityQuotientMap choice₂)) ∧
+        source.familySource.quotientMap ''
+            source.familySource.possibleRegion
+              (core.equalityQuotientMap choice₁) =
+          source.familySource.quotientMap ''
+            source.familySource.possibleRegion
+              (core.equalityQuotientMap choice₂) ∧
+        source.familySource.possibleRegion
+            (core.equalityQuotientMap choice₁) ⊆
+          source.familySource.canonicalHull ∧
+        source.familySource.possibleRegion
+            (core.equalityQuotientMap choice₂) ⊆
+          source.familySource.canonicalHull
 
 theorem ofPrincipalProductHullSystemSource_audit
     {Λ : Type v}
@@ -18899,9 +19063,28 @@ theorem ofPrincipalProductHullSystemSource_audit
     family_hull_is_principal_intersection :=
       ofPrincipalProductHullSystemSource_familyHull_eq_principalHull
         principalSource quotientImages selectedQChoice,
+    bounded_family_quotient_hull_is_principal_intersection := by
+      dsimp [boundedFamilyHullQuotientSource]
+      exact
+        ofPrincipalProductHullSystemSource_familyHull_eq_principalHull
+          principalSource quotientImages selectedQChoice,
     family_hull_logVolume_is_principal :=
       ofPrincipalProductHullSystemSource_familyHullLogVolume_eq_principal
-        principalSource quotientImages selectedQChoice }
+        principalSource quotientImages selectedQChoice,
+    upper_semi_ob5_quotient_images_eq := by
+      let source :=
+        ofPrincipalProductHullSystemSource
+          principalSource quotientImages selectedQChoice
+      exact source.ob5UpperSemiQuotientImagesEq,
+    equality_orbit_upper_semi_ob5_endpoint := by
+      dsimp
+      intro choice₁ choice₂ hmem hne₁ hne₂
+      exact
+        (ofPrincipalProductHullSystemSource
+          principalSource quotientImages selectedQChoice)
+          |>.ob5EqualityOrbitUpperSemiEndpoint
+          (choice₁ := choice₁) (choice₂ := choice₂)
+          hmem hne₁ hne₂ }
 
 end ConcreteHolomorphicHullSystemSource
 
