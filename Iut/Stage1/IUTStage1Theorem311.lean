@@ -18762,6 +18762,147 @@ theorem audit
     ob1_ob2_from_minimal_hull :=
       source.ob1Ob2_from_minimalHull }
 
+set_option linter.style.longLine false in
+/--
+Construct the concrete Step (xi) hull source from the principal product-hull
+presentation of Remark 3.9.5(i).
+
+Here the paper's local integer/valuation-ball region is the base region
+`O`, the parameters are the nonzero scalars `lambda`, and the lower source has
+already proved that `lambda * O` at the intersection parameter is the smallest
+principal product hull containing the region.  The Step (xi) source then adds
+only the Theorem 3.11 equality-quotient possible images and the selected
+q-choice.
+-/
+def ofPrincipalProductHullSystemSource
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point target) Λ)
+    (quotientImages :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientPossibleImages
+        core images)
+    (selectedQChoice : choice) :
+    ConcreteHolomorphicHullSystemSource core images :=
+  { hullSystem := principalSource.toHolomorphicHullSystem,
+    quotientImages := quotientImages,
+    selectedQChoice := selectedQChoice }
+
+theorem ofPrincipalProductHullSystemSource_familyHull_eq_principalHull
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point target) Λ)
+    (quotientImages :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientPossibleImages
+        core images)
+    (selectedQChoice : choice) :
+    let source :=
+      ofPrincipalProductHullSystemSource
+        principalSource quotientImages selectedQChoice;
+    source.familySource.canonicalHull =
+      principalSource.principalHull
+        (principalSource.intersectionParameter source.familySource.familyUnion) :=
+  by
+    intro source
+    exact
+      principalSource.phi_eq_principalHull_intersectionParameter
+        source.familySource.familyUnion
+
+theorem ofPrincipalProductHullSystemSource_familyHullLogVolume_eq_principal
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point target) Λ)
+    (quotientImages :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientPossibleImages
+        core images)
+    (selectedQChoice : choice) :
+    let source :=
+      ofPrincipalProductHullSystemSource
+        principalSource quotientImages selectedQChoice;
+    source.hullOperator.logVolume source.familySource.canonicalHull =
+      principalSource.principalHullLogVolume
+        (principalSource.intersectionParameter source.familySource.familyUnion) :=
+  by
+    intro source
+    rw [ofPrincipalProductHullSystemSource_familyHull_eq_principalHull
+      principalSource quotientImages selectedQChoice]
+    exact
+      principalSource.logVolume_principalHull_eq_source
+        (principalSource.intersectionParameter source.familySource.familyUnion)
+
+set_option linter.style.longLine false in
+/--
+Audit for the principal product/valuation-ball instantiation of the Step (xi)
+minimal hull source.
+
+This records the hard lower content imported from the Remark 3.9.5 source:
+all parameters are nonzero, principal hulls are scalar images of the base
+integer/valuation-ball region, the family hull is the principal hull at the
+intersection parameter, and its log-volume is the lower principal-hull
+log-volume.
+-/
+structure PrincipalProductHullSourceAudit
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point target) Λ)
+    (quotientImages :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientPossibleImages
+        core images)
+    (selectedQChoice : choice) : Prop where
+  concrete_hull_source :
+    Audit
+      (ofPrincipalProductHullSystemSource
+        principalSource quotientImages selectedQChoice)
+  parameters_nonzero :
+    ∀ parameter : Λ, principalSource.parameter_nonzero parameter
+  principal_hulls_are_scalar_images :
+    ∀ parameter : Λ,
+      principalSource.principalHull parameter =
+        principalSource.scalarMultiple parameter ''
+          principalSource.localIntegerRegion
+  family_hull_is_principal_intersection :
+    let source :=
+      ofPrincipalProductHullSystemSource
+        principalSource quotientImages selectedQChoice;
+    source.familySource.canonicalHull =
+      principalSource.principalHull
+        (principalSource.intersectionParameter source.familySource.familyUnion)
+  family_hull_logVolume_is_principal :
+    let source :=
+      ofPrincipalProductHullSystemSource
+        principalSource quotientImages selectedQChoice;
+    source.hullOperator.logVolume source.familySource.canonicalHull =
+      principalSource.principalHullLogVolume
+        (principalSource.intersectionParameter source.familySource.familyUnion)
+
+theorem ofPrincipalProductHullSystemSource_audit
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point target) Λ)
+    (quotientImages :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientPossibleImages
+        core images)
+    (selectedQChoice : choice) :
+    PrincipalProductHullSourceAudit
+      principalSource quotientImages selectedQChoice :=
+  { concrete_hull_source :=
+      (ofPrincipalProductHullSystemSource
+        principalSource quotientImages selectedQChoice).audit,
+    parameters_nonzero :=
+      principalSource.parameter_nonzero_source,
+    principal_hulls_are_scalar_images :=
+      principalSource.principalHull_eq_scalarMultiple_image,
+    family_hull_is_principal_intersection :=
+      ofPrincipalProductHullSystemSource_familyHull_eq_principalHull
+        principalSource quotientImages selectedQChoice,
+    family_hull_logVolume_is_principal :=
+      ofPrincipalProductHullSystemSource_familyHullLogVolume_eq_principal
+        principalSource quotientImages selectedQChoice }
+
 end ConcreteHolomorphicHullSystemSource
 
 set_option linter.style.longLine false in
