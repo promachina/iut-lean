@@ -21981,6 +21981,209 @@ theorem preferredConcreteLocalizedStepXIPaperSourceRouteAudit
           additive_haar_arithmetic_degree_padic audit,
       step_xi_obligations_constructed_internally := rfl }
 
+set_option linter.style.longLine false in
+/--
+Concrete Step (xi) hull source obtained from the source spine and a principal
+product hull system.
+
+This is the hull-side source selected by the strongest current route: the
+possible-image family is the Theorem 3.11 equality-quotient family already
+constructed in the Hodge/log-theta/log-Kummer spine, while the holomorphic hull
+operator is the principal `lambda * O` minimal hull of Remark 3.9.5(i).
+-/
+def principalProductConcreteHullSource
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ) :
+    StepXIHullFormationData.ConcreteHolomorphicHullSystemSource
+      sourceData.Core sourceData.Images :=
+  StepXIHullFormationData.ConcreteHolomorphicHullSystemSource.ofPrincipalProductHullSystemSource
+    principalSource sourceData.theorem311PossibleImageSourceData.quotientImages
+    sourceData.selectedQChoice
+
+set_option linter.style.longLine false in
+/--
+Step (xi) hull-formation data projected from the source-spine principal product
+hull source.
+-/
+def principalProductHullFormationData
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ) :
+    StepXIHullFormationData sourceData.Core sourceData.Images :=
+  (principalProductConcreteHullSource sourceData principalSource).toHullFormationData
+
+def principalProductHullOperator
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ) :
+    IUTStage1Remark395HolomorphicHullOperator (Point targetCopy) :=
+  (principalProductHullFormationData sourceData principalSource).hullOperator
+
+def principalProductPossibleRegion
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ) :
+    Quot sourceData.Core.equalityQuotient.relation -> Set (Point targetCopy) :=
+  ((principalProductHullFormationData sourceData principalSource).quotientHullCompatibility)
+    |>.familySource.possibleRegion
+
+set_option linter.style.longLine false in
+/--
+Principal-product localized preferred Step (xi) route audit.
+
+This is the stricter hull-side public boundary beneath
+`preferredConcreteLocalizedStepXIPaperSourceRouteAudit`: callers no longer
+provide a `ConcreteHolomorphicHullSystemSource`.  Lean constructs that source
+from the Theorem 3.11 equality-quotient possible images in `sourceData` and
+the principal product/valuation-ball `lambda * O` hull system, then projects
+the localized determinant and Ob7 route through the same internally constructed
+Step (xi) source.
+-/
+structure PreferredPrincipalProductLocalizedStepXIPaperSourceRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        principalProductHullOperator sourceData principalSource)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        principalProductPossibleRegion sourceData principalSource)
+    (normalizedLogVolume_le_thetaSigned :
+      localizedSource.localizedSource.normalizedDeterminantLogVolume <=
+        thetaSigned)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (principalProductHullFormationData sourceData principalSource)
+        β Penv Pgau V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations) : Prop where
+  principal_product_hull_source :
+    StepXIHullFormationData.ConcreteHolomorphicHullSystemSource.PrincipalProductHullSourceAudit
+      principalSource sourceData.theorem311PossibleImageSourceData.quotientImages
+      sourceData.selectedQChoice
+  concrete_localized_route :
+    PreferredConcreteLocalizedStepXIPaperSourceRouteAudit
+      sourceData paperTrace thetaSigned
+      (principalProductConcreteHullSource sourceData principalSource)
+      rfl localizedSource hullOperator_eq possibleRegion_eq
+      normalizedLogVolume_le_thetaSigned ob7Source iutIV_cTheta
+      additive_haar_arithmetic_degree_padic
+  concrete_hull_constructed_from_source_spine :
+    (principalProductConcreteHullSource sourceData principalSource).quotientImages =
+      sourceData.theorem311PossibleImageSourceData.quotientImages
+  selected_q_choice_from_source_spine :
+    (principalProductConcreteHullSource sourceData principalSource).selectedQChoice =
+      sourceData.selectedQChoice
+
+set_option linter.style.longLine false in
+theorem preferredPrincipalProductLocalizedStepXIPaperSourceRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        principalProductHullOperator sourceData principalSource)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        principalProductPossibleRegion sourceData principalSource)
+    (normalizedLogVolume_le_thetaSigned :
+      localizedSource.localizedSource.normalizedDeterminantLogVolume <=
+        thetaSigned)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (principalProductHullFormationData sourceData principalSource)
+        β Penv Pgau V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations)
+    (audit :
+      let concreteHullSource :=
+        principalProductConcreteHullSource sourceData principalSource;
+      let stepXI :=
+        StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaLGPOb7Source
+            (sourceData := sourceData)
+            paperTrace thetaSigned concreteHullSource
+            rfl localizedSource hullOperator_eq possibleRegion_eq
+            normalizedLogVolume_le_thetaSigned ob7Source;
+      NonStepXIRemainingPayloadAudit
+        (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+          sourceData stepXI iutIV_cTheta
+          additive_haar_arithmetic_degree_padic)) :
+    PreferredPrincipalProductLocalizedStepXIPaperSourceRouteAudit
+      sourceData paperTrace thetaSigned principalSource localizedSource
+      hullOperator_eq possibleRegion_eq normalizedLogVolume_le_thetaSigned
+      ob7Source iutIV_cTheta additive_haar_arithmetic_degree_padic := by
+  exact
+    { principal_product_hull_source :=
+        StepXIHullFormationData.ConcreteHolomorphicHullSystemSource.ofPrincipalProductHullSystemSource_audit
+          principalSource
+          sourceData.theorem311PossibleImageSourceData.quotientImages
+          sourceData.selectedQChoice,
+      concrete_localized_route :=
+        preferredConcreteLocalizedStepXIPaperSourceRouteAudit
+          sourceData paperTrace thetaSigned
+          (principalProductConcreteHullSource sourceData principalSource)
+          rfl localizedSource hullOperator_eq possibleRegion_eq
+          normalizedLogVolume_le_thetaSigned ob7Source iutIV_cTheta
+          additive_haar_arithmetic_degree_padic audit,
+      concrete_hull_constructed_from_source_spine := rfl,
+      selected_q_choice_from_source_spine := rfl }
+
 end Obligations
 
 end IUTStage1Theorem311ToCorollary312PaperTrace

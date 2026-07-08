@@ -271,6 +271,10 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredStepXIPaperSourceRouteAudit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredConcreteLocalizedStepXIPaperSourceRouteAudit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredConcreteLocalizedStepXIPaperSourceRouteAudit}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.principalProductConcreteHullSource}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.principalProductHullFormationData}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredPrincipalProductLocalizedStepXIPaperSourceRouteAudit}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPrincipalProductLocalizedStepXIPaperSourceRouteAudit}
   \leanok
   The preferred paper-trace route can now consume the source spine together
   with a paper-derived Step (xi) source.  The Step (xi) obligation package is
@@ -282,7 +286,10 @@
   further: it takes the Remark 3.9.5 minimal-hull source, localized
   vector-bundle determinant decomposition, and \(\Theta^{\times\mu}\)
   log-Kummer Ob7 source directly, constructs the paper-derived Step (xi) source
-  internally, and then invokes the preferred route.
+  internally, and then invokes the preferred route.  The strongest hull-side
+  wrapper now replaces that minimal-hull argument by the source-spine equality
+  quotient together with a principal product \(\lambda\cdot O\) hull source, so
+  the concrete hull source itself is constructed inside the route.
 \end{proposition}
 
 \begin{theorem}[Construct \(\SHE\) from source data]
