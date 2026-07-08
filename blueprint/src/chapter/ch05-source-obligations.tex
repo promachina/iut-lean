@@ -211,6 +211,8 @@
   \lean{Iut.Stage1.IUTStage1EnvironmentAnchoredLocalGlobalRealifiedFrobenioidSource}
   \lean{Iut.Stage1.IUTStage1EnvironmentAnchoredLocalGlobalRealifiedFrobenioidSource.toLocalGlobalCollection}
   \lean{Iut.Stage1.IUTStage1EnvironmentAnchoredLocalGlobalRealifiedFrobenioidSource.toEnvironmentGaussianLocalEvaluation}
+  \lean{Iut.Stage1.IUTStage1EnvironmentAnchoredRestrictionLocalGlobalRealifiedFrobenioidSource}
+  \lean{Iut.Stage1.IUTStage1EnvironmentAnchoredRestrictionLocalGlobalRealifiedFrobenioidSource.toEnvironmentAnchoredLocalGlobalRealifiedFrobenioidSource}
   \lean{Iut.Stage1.IUTStage1EnvironmentGaussianLocalEvaluation.ofSharedLocalGlobalCollection}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedCommonPlaceGlobalNormalizedOb7ConstructionSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedCommonPlaceGlobalNormalizedOb7ConstructionSource.toGlobalNormalizedRawAdjustedOb7ConstructionSource}
@@ -224,6 +226,8 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalAnchoredGlobalNormalizedOb7ConstructionSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalAnchoredGlobalNormalizedOb7ConstructionSource.toAnchoredCommonPlaceGlobalNormalizedOb7ConstructionSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalAnchoredGlobalNormalizedOb7ConstructionSource.endpoint}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedRestrictionAnchoredCommonPlaceGlobalNormalizedOb7ConstructionSource}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalRestrictionAnchoredGlobalNormalizedOb7ConstructionSource}
   \lean{Iut.Stage1.IUTStage1WeightedDeterminantPrimeStripProductFormulaSource.ofSingleGaussianPlace}
   \lean{Iut.Stage1.IUTStage1WeightedDeterminantPrimeStripProductFormulaSource.ofSingleGaussianPlace_endpoint}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedSinglePlaceOb7ConstructionSource}
@@ -556,6 +560,7 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditSharedLocalGlobalCommonPlaceOb7}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditAnchoredCommonPlaceOb7}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalAnchoredOb7}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalRestrictionAnchoredOb7}
   \leanok
   The promoted public paper-trace route is now the strict principal-product
   localized wrapper.  It consumes the source spine, a principal product
@@ -574,12 +579,12 @@
   valuation-indexed coric character, construct the prime evaluation,
   \(\Theta^{\times\mu}\) lift, and coric invariant internally.
   A further anchored wrapper constructs the local-global collection, its
-  environment anchor, and the local environment/Gaussian evaluation from local
-  objects and global-to-local restrictions whose global value is the
-  environment ordinary realified Frobenioid.  In the diagonal finite
-  valuation-index route, the environment primes, Gaussian primes, and places
-  are all indexed by the same type, so the prime-place equivalences are
-  identity maps constructed internally.
+  environment anchor, and the local environment/Gaussian evaluation from
+  global-to-local restrictions whose local realified objects are now forced by
+  restricted global prime log-volumes.  In the diagonal finite valuation-index
+  route, the environment primes, Gaussian primes, and places are all indexed
+  by the same type, so the prime-place equivalences are identity maps
+  constructed internally.
   The Gaussian local-global Frobenioid restriction identity then proves the
   global product-formula equality before the product-formula audit is invoked.
   The weighted-partition, explicit raw-ratio, and one-summand routes remain as

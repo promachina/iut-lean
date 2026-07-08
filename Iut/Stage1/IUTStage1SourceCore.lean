@@ -28476,6 +28476,83 @@ theorem endpoint
 end IUTStage1EnvironmentAnchoredLocalGlobalRealifiedFrobenioidSource
 
 /--
+Environment-anchored local-global source with local objects constructed from
+the global-to-local restrictions.
+
+This is the next finite shadow of Remark 3.9.5(ix): once the local object
+identifier and the restriction of the global prime are fixed, the local
+realified degree object is not independent data.  Lean constructs it with zero
+divisor degree and unit log-volume equal to the restricted global prime
+log-volume, so the compatibility with the restriction is definitional.
+-/
+structure IUTStage1EnvironmentAnchoredRestrictionLocalGlobalRealifiedFrobenioidSource
+    (V : Type u) [Fintype V] where
+  evaluation : IUTStage1EnvironmentGaussianRealifiedFrobenioidEvaluation V
+  localization : V -> IUTStage1GlobalToLocalRealifiedFrobenioidRestriction
+  localObjectId : V -> IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean
+  environment_global_realified_eq_localPrime :
+    ∀ v : V,
+      evaluation.environment.ordinary.realifiedLogVolume =
+        (localization v).localPrimeLogVolume
+
+namespace IUTStage1EnvironmentAnchoredRestrictionLocalGlobalRealifiedFrobenioidSource
+
+variable {V : Type u} [Fintype V]
+
+def localObject
+    (source :
+      IUTStage1EnvironmentAnchoredRestrictionLocalGlobalRealifiedFrobenioidSource V)
+    (v : V) :
+    IUTStage1RealifiedFrobenioidDegreeObject :=
+  { object := source.localObjectId v,
+    divisorDegree := 0,
+    unitLogVolume := (source.localization v).restrictedGlobalPrimeLogVolume,
+    realifiedLogVolume := (source.localization v).restrictedGlobalPrimeLogVolume,
+    realified_logVolume_eq := by simp }
+
+theorem localObject_realifiedLogVolume_eq_restricted
+    (source :
+      IUTStage1EnvironmentAnchoredRestrictionLocalGlobalRealifiedFrobenioidSource V)
+    (v : V) :
+    (source.localObject v).realifiedLogVolume =
+      (source.localization v).restrictedGlobalPrimeLogVolume :=
+  rfl
+
+def toEnvironmentAnchoredLocalGlobalRealifiedFrobenioidSource
+    (source :
+      IUTStage1EnvironmentAnchoredRestrictionLocalGlobalRealifiedFrobenioidSource V) :
+    IUTStage1EnvironmentAnchoredLocalGlobalRealifiedFrobenioidSource V :=
+  { evaluation := source.evaluation,
+    localObject := source.localObject,
+    localization := source.localization,
+    local_realified_eq_restricted :=
+      source.localObject_realifiedLogVolume_eq_restricted,
+    environment_global_realified_eq_localPrime :=
+      source.environment_global_realified_eq_localPrime }
+
+theorem endpoint
+    (source :
+      IUTStage1EnvironmentAnchoredRestrictionLocalGlobalRealifiedFrobenioidSource V) :
+    let anchored :=
+      source.toEnvironmentAnchoredLocalGlobalRealifiedFrobenioidSource;
+    anchored.evaluation = source.evaluation ∧
+      anchored.localObject = source.localObject ∧
+      anchored.localization = source.localization ∧
+      (∀ v : V,
+        (anchored.localObject v).realifiedLogVolume =
+          (source.localization v).restrictedGlobalPrimeLogVolume) ∧
+      anchored.toLocalGlobalCollection.globalObject =
+        source.evaluation.environment.ordinary.toDegreeObject :=
+  by
+    intro anchored
+    exact
+      ⟨rfl, rfl, rfl,
+        source.localObject_realifiedLogVolume_eq_restricted,
+        anchored.globalObject_eq_environment⟩
+
+end IUTStage1EnvironmentAnchoredRestrictionLocalGlobalRealifiedFrobenioidSource
+
+/--
 Finite local compatibility for the environment/Gaussian evaluation.
 
 IUT II, Corollary 4.6(v), and the subsequent prime-strip formulation identify
