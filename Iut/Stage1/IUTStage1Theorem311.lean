@@ -16907,6 +16907,146 @@ theorem endpoint
 
 end PackageTargetRegionClassSource
 
+set_option linter.style.longLine false in
+/--
+Package target regions depending only on the theta-pilot lattice key.
+
+This lowers `PackageTargetRegionClassSource`: instead of supplying invariance
+under equality of the bundled theta-pilot class, it supplies the four concrete
+equalities that define this class, namely Hodge theater, history label,
+theta-pilot log-theta lattice coordinate, and coric datum.
+-/
+structure PackageTargetRegionLatticeKeySource
+    {source : Copy}
+    (package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)) where
+  representativeData :
+    ThetaPilotClassRepresentativeData coric l
+  targetRegions_same_latticeKey :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      choice₁.hodgeTheater = choice₂.hodgeTheater ->
+      choice₁.historyLabel = choice₂.historyLabel ->
+      thetaPilotLatticeCoordinate choice₁ =
+        thetaPilotLatticeCoordinate choice₂ ->
+      choice₁.coric = choice₂.coric ->
+        package.preLedger.output.comparisons.targetRegions.region choice₁ =
+          package.preLedger.output.comparisons.targetRegions.region choice₂
+  targetRegionPoint :
+    ThetaPilotClass (coric := coric) -> Point target
+  targetRegionPoint_mem :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      (package.preLedger.output.comparisons.targetRegions.region
+        (representativeData.representative thetaClass)).Contains
+        (targetRegionPoint thetaClass)
+
+namespace PackageTargetRegionLatticeKeySource
+
+variable {source : Copy}
+variable
+  {package :
+    IUTStage1SourcePackage source target
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+
+set_option linter.style.longLine false in
+/-- Lattice-key invariance implies theta-pilot-class invariance. -/
+theorem targetRegions_same_thetaPilotClass
+    (targetSource : PackageTargetRegionLatticeKeySource
+      (target := target) package)
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hclass : thetaPilotClass choice₁ = thetaPilotClass choice₂) :
+    package.preLedger.output.comparisons.targetRegions.region choice₁ =
+      package.preLedger.output.comparisons.targetRegions.region choice₂ := by
+  rcases thetaPilotClass_eq_iff_latticeKey_eq.mp hclass with
+    ⟨hhodge, hhistory, hlattice, hcoric⟩
+  exact
+    targetSource.targetRegions_same_latticeKey
+      hhodge hhistory hlattice hcoric
+
+set_option linter.style.longLine false in
+/-- Promote lattice-key target-region data to the class-invariance source. -/
+def toPackageTargetRegionClassSource
+    (targetSource : PackageTargetRegionLatticeKeySource
+      (target := target) package) :
+    PackageTargetRegionClassSource (target := target) package :=
+  { representativeData := targetSource.representativeData,
+    targetRegions_same_thetaPilotClass :=
+      targetSource.targetRegions_same_thetaPilotClass,
+    targetRegionPoint := targetSource.targetRegionPoint,
+    targetRegionPoint_mem := targetSource.targetRegionPoint_mem }
+
+set_option linter.style.longLine false in
+/--
+The target-region-backed theta-pilot possible-image source built from
+lattice-key invariance.
+-/
+def toThetaPilotClassPossibleImageSource
+    (targetSource : PackageTargetRegionLatticeKeySource
+      (target := target) package) :
+    ThetaPilotClassPossibleImageSource
+      (target := target) coric l :=
+  targetSource.toPackageTargetRegionClassSource
+    |>.toThetaPilotClassPossibleImageSource
+
+set_option linter.style.longLine false in
+theorem class_region_eq_targetRegions
+    (targetSource : PackageTargetRegionLatticeKeySource
+      (target := target) package)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (targetSource.toThetaPilotClassPossibleImageSource).classImages.region
+        (thetaPilotClass choice) =
+      package.preLedger.output.comparisons.targetRegions.region choice :=
+  targetSource.toPackageTargetRegionClassSource
+    |>.class_region_eq_targetRegions choice
+
+set_option linter.style.longLine false in
+theorem choiceImages_eq_targetRegions
+    (targetSource : PackageTargetRegionLatticeKeySource
+      (target := target) package) :
+    (targetSource.toThetaPilotClassPossibleImageSource).choiceImages =
+      package.preLedger.output.comparisons.targetRegions :=
+  targetSource.toPackageTargetRegionClassSource
+    |>.choiceImages_eq_targetRegions
+
+set_option linter.style.longLine false in
+/-- Endpoint audit for the lattice-key target-region source. -/
+theorem endpoint
+    (targetSource : PackageTargetRegionLatticeKeySource
+      (target := target) package) :
+    (∀ thetaClass : ThetaPilotClass (coric := coric),
+      thetaPilotClass
+          (targetSource.representativeData.representative thetaClass) =
+        thetaClass) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        choice₁.hodgeTheater = choice₂.hodgeTheater ->
+        choice₁.historyLabel = choice₂.historyLabel ->
+        thetaPilotLatticeCoordinate choice₁ =
+          thetaPilotLatticeCoordinate choice₂ ->
+        choice₁.coric = choice₂.coric ->
+          package.preLedger.output.comparisons.targetRegions.region choice₁ =
+            package.preLedger.output.comparisons.targetRegions.region choice₂) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        thetaPilotClass choice₁ = thetaPilotClass choice₂ ->
+          package.preLedger.output.comparisons.targetRegions.region choice₁ =
+            package.preLedger.output.comparisons.targetRegions.region choice₂) ∧
+      (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        (targetSource.toThetaPilotClassPossibleImageSource).classImages.region
+            (thetaPilotClass choice) =
+          package.preLedger.output.comparisons.targetRegions.region choice) ∧
+      (targetSource.toThetaPilotClassPossibleImageSource).choiceImages =
+        package.preLedger.output.comparisons.targetRegions :=
+  ⟨targetSource.representativeData.thetaPilotClass_representative,
+    targetSource.targetRegions_same_latticeKey,
+    targetSource.targetRegions_same_thetaPilotClass,
+    targetSource.class_region_eq_targetRegions,
+    targetSource.choiceImages_eq_targetRegions⟩
+
+end PackageTargetRegionLatticeKeySource
+
 theorem choiceImages_region
     (source : ThetaPilotClassPossibleImageSource
       (target := target) coric l)
@@ -18800,6 +18940,61 @@ theorem withTargetRegionClassSource_Images_eq_targetRegions
       IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource.PackageTargetRegionClassSource
         (target := target) package) :
     (sourceData.withTargetRegionClassSource targetSource).Images =
+      package.preLedger.output.comparisons.targetRegions :=
+  targetSource.choiceImages_eq_targetRegions
+
+set_option linter.style.longLine false in
+/--
+Replace the theta possible-image source of the unified spine by the
+package-target-region source obtained from lattice-key invariance.
+-/
+def withTargetRegionLatticeKeySource
+    {source : Copy}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l)
+    (targetSource :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource.PackageTargetRegionLatticeKeySource
+        (target := target) package) :
+    Theorem311HodgeTheaterLogThetaLogKummerSource
+      (target := target) coric l :=
+  sourceData.withTargetRegionClassSource
+    targetSource.toPackageTargetRegionClassSource
+
+set_option linter.style.longLine false in
+theorem withTargetRegionLatticeKeySource_class_region_eq_targetRegions
+    {source : Copy}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l)
+    (targetSource :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource.PackageTargetRegionLatticeKeySource
+        (target := target) package)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (sourceData.withTargetRegionLatticeKeySource targetSource).thetaPossibleImageSource.classImages.region
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice) =
+      package.preLedger.output.comparisons.targetRegions.region choice :=
+  targetSource.class_region_eq_targetRegions choice
+
+set_option linter.style.longLine false in
+theorem withTargetRegionLatticeKeySource_Images_eq_targetRegions
+    {source : Copy}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l)
+    (targetSource :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource.PackageTargetRegionLatticeKeySource
+        (target := target) package) :
+    (sourceData.withTargetRegionLatticeKeySource targetSource).Images =
       package.preLedger.output.comparisons.targetRegions :=
   targetSource.choiceImages_eq_targetRegions
 
