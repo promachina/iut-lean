@@ -20919,17 +20919,22 @@ theorem quotientPossibleImagesAudit
   (obligations.milestoneCompletionAudit audit).quotient_possible_images
 
 set_option linter.style.longLine false in
-/--
-Preferred source-spine route audit for the current 3.11-to-3.12 paper trace.
+/-!
+Legacy source-spine route audit for the pre-Step-(xi)-source paper trace.
 
-This is the public route rewire for the source boundary.  The route no longer
-takes separate Theorem 3.11/Remarks construction flags or separate Step (x)
-finite-divisor/log-Kummer flags.  It takes one
+This is retained as a historical audit of the source-spine rewire.  It no
+longer defines the preferred public route, because it still consumes the old
+`StepXIHullDeterminantObligations` bundle directly.  The preferred public route
+is `preferredStepXIPaperSourceRouteAudit`, which consumes a structured
+`StepXIPaperDerivedHullDeterminantSource`.
+
+The legacy route no longer takes separate Theorem 3.11/Remarks construction
+flags or separate Step (x) finite-divisor/log-Kummer flags.  It takes one
 `Theorem311HodgeTheaterLogThetaLogKummerSource`, projects those two obligation
 packages from that source, and then combines them with the still-separate Step
 (xi), IUT IV, and additive-Haar layers.
 -/
-structure PreferredSourceSpineRouteAudit
+structure LegacySourceSpineRouteAudit
     {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
     (sourceData :
       Theorem311HodgeTheaterLogThetaLogKummerSource
@@ -20989,7 +20994,7 @@ structure PreferredSourceSpineRouteAudit
       obligations.iutIV_cTheta.local_to_global_canonicalCThetaScale_le_cTheta_constructed
 
 set_option linter.style.longLine false in
-theorem preferredSourceSpineRouteAudit
+theorem legacySourceSpineRouteAudit
     {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
     (sourceData :
       Theorem311HodgeTheaterLogThetaLogKummerSource
@@ -21005,7 +21010,7 @@ theorem preferredSourceSpineRouteAudit
         (ofHodgeTheaterLogThetaLogKummerSource
           sourceData stepXI_hull_determinant iutIV_cTheta
           additive_haar_arithmetic_degree_padic)) :
-    PreferredSourceSpineRouteAudit
+    LegacySourceSpineRouteAudit
       sourceData stepXI_hull_determinant iutIV_cTheta
       additive_haar_arithmetic_degree_padic := by
   let obligations :=

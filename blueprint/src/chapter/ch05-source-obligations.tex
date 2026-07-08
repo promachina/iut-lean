@@ -77,16 +77,16 @@
   separately supplying Theorem 3.11 and Step (x) obligation packages.
 \end{proposition}
 
-\begin{proposition}[Preferred source-spine route audit]
-  \label{prop:preferred-source-spine-route-audit}
+\begin{proposition}[Legacy source-spine route audit]
+  \label{prop:legacy-source-spine-route-audit}
   \uses{def:hodge-logtheta-logkummer-spine,prop:spine-assembles-source-ledger}
-  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredSourceSpineRouteAudit}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.legacySourceSpineRouteAudit}
   \leanok
-  The preferred paper-trace route now consumes one Hodge/log-theta/log-Kummer
-  source spine for the Theorem 3.11 and Step (x) layers.  The audit records
-  that these two obligation packages are projected from the spine, then
-  combines them with the still-separate Step (xi), IUT IV, and additive-Haar
-  layers to reach the current lowered endpoint audit.
+  This legacy paper-trace route consumes one Hodge/log-theta/log-Kummer source
+  spine for the Theorem 3.11 and Step (x) layers, but still takes the old
+  Step (xi) hull/determinant obligation bundle directly.  It is retained only
+  as a historical comparison point; the preferred route is the
+  Step-(xi)-constructed route below.
 \end{proposition}
 
 \begin{definition}[Step (xi) paper trace]
@@ -255,7 +255,7 @@
 
 \begin{theorem}[Construct \(\SHE\) from source data]
   \label{thm:construct-she}
-  \uses{def:she,def:initial-theta-data,def:hodge-theater-histories,def:theorem-311-ipl-she-apt-bridge,def:hodge-logtheta-logkummer-spine,prop:preferred-source-spine-route-audit,prop:preferred-step-xi-paper-source-route-audit}
+  \uses{def:she,def:initial-theta-data,def:hodge-theater-histories,def:theorem-311-ipl-she-apt-bridge,def:hodge-logtheta-logkummer-spine,prop:legacy-source-spine-route-audit,prop:preferred-step-xi-paper-source-route-audit}
   \notready
   The simultaneous holomorphic expressibility data used in the current route
   should be constructed from the arithmetic holomorphic structure of the
