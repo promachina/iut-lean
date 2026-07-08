@@ -21832,9 +21832,11 @@ Legacy source-spine route audit for the pre-Step-(xi)-source paper trace.
 
 This is retained as a historical audit of the source-spine rewire.  It no
 longer defines the preferred public route, because it still consumes the old
-`StepXIHullDeterminantObligations` bundle directly.  The preferred public route
-is `preferredStepXIPaperSourceRouteAudit`, which consumes a structured
-`StepXIPaperDerivedHullDeterminantSource`.
+`StepXIHullDeterminantObligations` bundle directly.  The base Step (xi) source
+route is `preferredStepXIPaperSourceRouteAudit`, which consumes a structured
+`StepXIPaperDerivedHullDeterminantSource`; the promoted public boundary is
+`preferredPublicStepXIPaperSourceRouteAudit`, which constructs that Step (xi)
+source from the principal-product localized data.
 
 The legacy route no longer takes separate Theorem 3.11/Remarks construction
 flags or separate Step (x) finite-divisor/log-Kummer flags.  It takes one
@@ -21939,9 +21941,10 @@ theorem legacySourceSpineRouteAudit
 
 set_option linter.style.longLine false in
 /--
-Preferred Step (xi)-constructed route audit for the 3.11-to-3.12 paper trace.
+Base Step (xi)-constructed route audit for the 3.11-to-3.12 paper trace.
 
-This is the public route for the new milestone.  It consumes the unified
+This is the structured Step (xi) source route below the current public
+principal-product localized boundary.  It consumes the unified
 Theorem 3.11/Step (x) source spine and a structured IUT III Step (xi) /
 Remark 3.9.5 source.  The old `StepXIHullDeterminantObligations` layer is
 projected internally from that Step (xi) source, rather than supplied as a
@@ -22772,6 +22775,75 @@ theorem preferredPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRout
           sourceData.selectedQChoice,
       concrete_hull_constructed_from_source_spine := rfl,
       selected_q_choice_from_source_spine := rfl }
+
+set_option linter.style.longLine false in
+/--
+Preferred public Step (xi) paper-source route.
+
+This is the promoted public boundary for the current Step (xi) milestone.  It
+does not accept a preassembled Step (xi) source, a standalone hull/determinant
+obligation bundle, or the normalized determinant upper bound as an independent
+estimate.  Instead it consumes the source spine, a principal product
+`lambda * O` hull source, a localized vector-bundle determinant decomposition,
+the theta-equals-family-hull log-volume identification, and the shared
+`Theta^{x mu}`/log-Kummer Ob7 source.
+-/
+theorem preferredPublicStepXIPaperSourceRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        principalProductHullOperator sourceData principalSource)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        principalProductPossibleRegion sourceData principalSource)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned = localizedSource.familyHullLogVolume)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (principalProductHullFormationData sourceData principalSource)
+        β Penv Pgau V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations)
+    (audit :
+      let concreteHullSource :=
+        principalProductConcreteHullSource sourceData principalSource;
+      let stepXI :=
+        StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaEqFamilyHullThetaLGPOb7Source
+            (sourceData := sourceData)
+            paperTrace thetaSigned concreteHullSource
+            rfl localizedSource hullOperator_eq possibleRegion_eq
+            thetaSigned_eq_familyHullLogVolume ob7Source;
+      NonStepXIRemainingPayloadAudit
+        (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+          sourceData stepXI iutIV_cTheta
+          additive_haar_arithmetic_degree_padic)) :
+    PreferredPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+      sourceData paperTrace thetaSigned principalSource localizedSource
+      hullOperator_eq possibleRegion_eq thetaSigned_eq_familyHullLogVolume
+      ob7Source iutIV_cTheta additive_haar_arithmetic_degree_padic :=
+  preferredPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+    sourceData paperTrace thetaSigned principalSource localizedSource
+    hullOperator_eq possibleRegion_eq thetaSigned_eq_familyHullLogVolume
+    ob7Source iutIV_cTheta additive_haar_arithmetic_degree_padic audit
 
 end Obligations
 

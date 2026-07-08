@@ -285,21 +285,21 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.principalProductHullFormationData}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredPrincipalProductLocalizedStepXIPaperSourceRouteAudit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPrincipalProductLocalizedStepXIPaperSourceRouteAudit}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAudit}
   \leanok
-  The preferred paper-trace route can now consume the source spine together
-  with a paper-derived Step (xi) source.  The Step (xi) obligation package is
-  projected internally, so this route no longer takes a standalone
-  \texttt{StepXIHullDeterminantObligations} argument.  Its remaining payload
-  input has also been split: callers supply the non-Step-(xi) payload audit,
-  while the legacy Step-(xi) audit fields are derived from the structured
-  Step-(xi) source.  A stricter concrete-localized wrapper now goes one level
-  further: it takes the Remark 3.9.5 minimal-hull source, localized
-  vector-bundle determinant decomposition, and \(\Theta^{\times\mu}\)
-  log-Kummer Ob7 source directly, constructs the paper-derived Step (xi) source
-  internally, and then invokes the preferred route.  The strongest hull-side
-  wrapper now replaces that minimal-hull argument by the source-spine equality
-  quotient together with a principal product \(\lambda\cdot O\) hull source, so
-  the concrete hull source itself is constructed inside the route.
+  The promoted public paper-trace route is now the strict principal-product
+  localized wrapper.  It consumes the source spine, a principal product
+  \(\lambda\cdot O\) hull source, a localized vector-bundle determinant
+  decomposition, the equality identifying \(\Theta_{\mathrm{signed}}\) with
+  the constructed localized family-hull log-volume, and the shared
+  \(\Theta^{\times\mu}\) log-Kummer Ob7 source.  The Step (xi) source and
+  obligation package are projected internally, so the public boundary no longer
+  takes a standalone \texttt{StepXIHullDeterminantObligations}, a preassembled
+  paper-derived Step (xi) source, or an independent normalized-determinant
+  upper-bound estimate.  The looser route theorems remain as compatibility
+  layers underneath this promoted boundary.
 \end{proposition}
 
 \begin{theorem}[Construct \(\SHE\) from source data]
