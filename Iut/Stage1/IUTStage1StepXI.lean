@@ -17720,6 +17720,137 @@ end IUTStage1TensorLabelInd2ActionPacketTransport
 
 set_option linter.style.longLine false in
 /--
+Source-level `(Ind2)` packet/action transport built from a single direct-summand
+packet symmetry-label transport source.
+
+This is one level below `IUTStage1TensorLabelInd2ActionPacketTransport`: the
+source no longer supplies the two raw tensor-label equalities separately.  They
+are read from the paper-shaped `SymmetryLabelTransportSource`, whose source
+kind is identified with the retained nonarchimedean `Ism` or archimedean
+order-two action kind.
+-/
+inductive IUTStage1SymmetryLabelInd2ActionPacketTransport
+    (coric : Type u)
+    (state₁ state₂ : IUTStage1LocalTensorState) : Type u where
+  | nonarchimedean
+      (audited₁ audited₂ :
+        IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.nonarchimedean)
+      (source_tensor_eq :
+        audited₁.choice.local_tensor_state.packetState.tensorState = state₁)
+      (target_tensor_eq :
+        audited₂.choice.local_tensor_state.packetState.tensorState = state₂)
+      (actionSource :
+        IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntrySourceStep
+          audited₁ audited₂)
+      (labelTransport :
+        IUTStage1LocalTensorDirectSummandPacketState.SymmetryLabelTransportSource
+          audited₁.choice.local_tensor_state audited₂.choice.local_tensor_state)
+  | archimedean
+      (audited₁ audited₂ :
+        IUTStage1PlaceAuditedDirectSummandPacketChoice
+          coric IUTStage1PlaceKind.archimedean)
+      (source_tensor_eq :
+        audited₁.choice.local_tensor_state.packetState.tensorState = state₁)
+      (target_tensor_eq :
+        audited₂.choice.local_tensor_state.packetState.tensorState = state₂)
+      (actionSource :
+        IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntrySourceStep
+          audited₁ audited₂)
+      (labelTransport :
+        IUTStage1LocalTensorDirectSummandPacketState.SymmetryLabelTransportSource
+          audited₁.choice.local_tensor_state audited₂.choice.local_tensor_state)
+
+namespace IUTStage1SymmetryLabelInd2ActionPacketTransport
+
+variable {coric : Type u}
+variable {state₁ state₂ : IUTStage1LocalTensorState}
+
+set_option linter.style.longLine false in
+/--
+Project a packet symmetry-label transport source to the tensor-label transport
+boundary.
+-/
+def toTensorLabelInd2ActionPacketTransport
+    (source :
+      IUTStage1SymmetryLabelInd2ActionPacketTransport
+        coric state₁ state₂) :
+    IUTStage1TensorLabelInd2ActionPacketTransport
+      coric state₁ state₂ :=
+  match source with
+  | nonarchimedean audited₁ audited₂ source_tensor_eq target_tensor_eq
+      actionSource labelTransport =>
+      IUTStage1TensorLabelInd2ActionPacketTransport.nonarchimedean
+        audited₁ audited₂ source_tensor_eq target_tensor_eq actionSource
+        (labelTransport.source_symmetry_eq_sourceKind.trans
+          (congrArg IUTStage1TensorSummandSymmetryKind.toLocalTensorSymmetryId
+            actionSource.matching_action.symmetryKind_eq))
+        (labelTransport.target_symmetry_eq_sourceKind.trans
+          (congrArg IUTStage1TensorSummandSymmetryKind.toLocalTensorSymmetryId
+            actionSource.matching_action.symmetryKind_eq))
+        labelTransport.symmetryKindTransport
+  | archimedean audited₁ audited₂ source_tensor_eq target_tensor_eq
+      actionSource labelTransport =>
+      IUTStage1TensorLabelInd2ActionPacketTransport.archimedean
+        audited₁ audited₂ source_tensor_eq target_tensor_eq actionSource
+        (labelTransport.source_symmetry_eq_sourceKind.trans
+          (congrArg IUTStage1TensorSummandSymmetryKind.toLocalTensorSymmetryId
+            actionSource.matching_action.symmetryKind_eq))
+        (labelTransport.target_symmetry_eq_sourceKind.trans
+          (congrArg IUTStage1TensorSummandSymmetryKind.toLocalTensorSymmetryId
+            actionSource.matching_action.symmetryKind_eq))
+        labelTransport.symmetryKindTransport
+
+set_option linter.style.longLine false in
+def toSourceLevelInd2ActionPacketTransport
+    (source :
+      IUTStage1SymmetryLabelInd2ActionPacketTransport
+        coric state₁ state₂) :
+    IUTStage1SourceLevelInd2ActionPacketTransport
+      coric state₁ state₂ :=
+  source.toTensorLabelInd2ActionPacketTransport.toSourceLevelInd2ActionPacketTransport
+
+set_option linter.style.longLine false in
+def toInd2ActionPacketSymmetrySource
+    (source :
+      IUTStage1SymmetryLabelInd2ActionPacketTransport
+        coric state₁ state₂) :
+    IUTStage1LocalTensorState.Ind2ActionPacketSymmetrySource
+      state₁ state₂ :=
+  source.toTensorLabelInd2ActionPacketTransport.toInd2ActionPacketSymmetrySource
+
+set_option linter.style.longLine false in
+theorem toInd2ActionPacketSymmetrySource_audit
+    (source :
+      IUTStage1SymmetryLabelInd2ActionPacketTransport
+        coric state₁ state₂) :
+    IUTStage1LocalTensorState.Ind2ActionPacketSymmetrySource.Audit
+      source.toInd2ActionPacketSymmetrySource :=
+  source.toTensorLabelInd2ActionPacketTransport.toInd2ActionPacketSymmetrySource_audit
+
+set_option linter.style.longLine false in
+/-- The retained source label transport supplies the local transport audit. -/
+theorem labelTransportAudit
+    (source :
+      IUTStage1SymmetryLabelInd2ActionPacketTransport
+        coric state₁ state₂) :
+    match source with
+    | nonarchimedean _ _ _ _ _ labelTransport =>
+        IUTStage1LocalTensorDirectSummandPacketState.SymmetryLabelTransportSource.TransportAudit
+          labelTransport
+    | archimedean _ _ _ _ _ labelTransport =>
+        IUTStage1LocalTensorDirectSummandPacketState.SymmetryLabelTransportSource.TransportAudit
+          labelTransport := by
+  cases source with
+  | nonarchimedean _ _ _ _ _ labelTransport =>
+      exact labelTransport.transportAudit
+  | archimedean _ _ _ _ _ labelTransport =>
+      exact labelTransport.transportAudit
+
+end IUTStage1SymmetryLabelInd2ActionPacketTransport
+
+set_option linter.style.longLine false in
+/--
 Fiber `(Ind2)` action-packet source whose packet/action transport is produced
 from retained Theorem 3.11 place-audited label-transport action data.
 
@@ -18108,6 +18239,203 @@ theorem endpoint
     sourceData.toFiberInd2ActionPacketTransportSource.fiberTransport_ind2ActionPacketSymmetry⟩
 
 end ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTensorLabelSource
+
+set_option linter.style.longLine false in
+/--
+Fiber `(Ind2)` action-packet source constructed from direct-summand packet
+symmetry-label transport.
+
+This is below
+`ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTensorLabelSource`:
+the fiber no longer supplies raw source/target tensor-label equalities.  Each
+fiber transport supplies the single packet-local symmetry-label transport
+source, from which Lean derives the tensor-label transport and then the
+retained packet/action source.
+-/
+structure ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSymmetryLabelTransportSource
+    {coric : Type u}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l) where
+  representativeData :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassRepresentativeData
+      coric l
+  quotientImages :
+    (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+        indData).EqualityQuotientPossibleImages record.thetaPossibleImages.images
+  possibleImagePoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  possibleImagePoint_mem :
+    ∀ thetaClass,
+      (record.thetaPossibleImages.images.region
+        (representativeData.representative thetaClass)).Contains
+        (possibleImagePoint thetaClass)
+  fiberTransport_symmetryLabelInd2ActionPacketTransport :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂ ->
+        IUTStage1SymmetryLabelInd2ActionPacketTransport
+          coric
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂).local_tensor_state
+          choice₂.local_tensor_state
+  fiberTransport_upperSemiTransport :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂ ->
+        IUTStage1UpperSemiCompatibilityState.UpperSemiTransport
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂).upper_semi_state
+          choice₂.upper_semi_state
+  fiberTransport_processionTransport :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂ ->
+        IUTStage1ProcessionState.ProcessionTransport
+          (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+            (l := l) choice₁ choice₂).procession_state
+          choice₂.procession_state
+
+namespace ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSymmetryLabelTransportSource
+
+variable {coric : Type u}
+variable
+  {package :
+    IUTStage1SourcePackage source target
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+variable {record : IUTStage1Theorem311MultiradialSourceRecord package}
+variable
+  {indData :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+
+set_option linter.style.longLine false in
+def fiberTransport_tensorLabelInd2ActionPacketTransport
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSymmetryLabelTransportSource
+        record indData)
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂) :
+    IUTStage1TensorLabelInd2ActionPacketTransport
+      coric
+      (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+        (l := l) choice₁ choice₂).local_tensor_state
+      choice₂.local_tensor_state :=
+  (sourceData.fiberTransport_symmetryLabelInd2ActionPacketTransport
+    transport).toTensorLabelInd2ActionPacketTransport
+
+set_option linter.style.longLine false in
+theorem fiberTransport_symmetryLabelInd2ActionPacketTransportAudit
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSymmetryLabelTransportSource
+        record indData)
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (transport :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+        (l := l) choice₁ choice₂) :
+    IUTStage1LocalTensorState.Ind2ActionPacketSymmetrySource.Audit
+      ((sourceData.fiberTransport_symmetryLabelInd2ActionPacketTransport
+        transport).toInd2ActionPacketSymmetrySource) :=
+  (sourceData.fiberTransport_symmetryLabelInd2ActionPacketTransport
+    transport).toInd2ActionPacketSymmetrySource_audit
+
+set_option linter.style.longLine false in
+/-- Forget the symmetry-label source to the tensor-label action source. -/
+def toFiberInd2ActionPacketTensorLabelSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSymmetryLabelTransportSource
+        record indData) :
+    ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTensorLabelSource
+      record indData :=
+  { representativeData := sourceData.representativeData,
+    quotientImages := sourceData.quotientImages,
+    possibleImagePoint := sourceData.possibleImagePoint,
+    possibleImagePoint_mem := sourceData.possibleImagePoint_mem,
+    fiberTransport_tensorLabelInd2ActionPacketTransport :=
+      sourceData.fiberTransport_tensorLabelInd2ActionPacketTransport,
+    fiberTransport_upperSemiTransport :=
+      sourceData.fiberTransport_upperSemiTransport,
+    fiberTransport_processionTransport :=
+      sourceData.fiberTransport_processionTransport }
+
+set_option linter.style.longLine false in
+def toFiberInd2ActionPacketTransportSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSymmetryLabelTransportSource
+        record indData) :
+    ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+      record indData :=
+  sourceData.toFiberInd2ActionPacketTensorLabelSource.toFiberInd2ActionPacketTransportSource
+
+set_option linter.style.longLine false in
+def toPackageTargetRegionLatticeFormulaSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSymmetryLabelTransportSource
+        record indData) :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource.PackageTargetRegionLatticeFormulaSource
+      (target := target) package :=
+  sourceData.toFiberInd2ActionPacketTensorLabelSource.toPackageTargetRegionLatticeFormulaSource
+
+set_option linter.style.longLine false in
+theorem packageTargetRegionLatticeFormulaSource_endpoint
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSymmetryLabelTransportSource
+        record indData) :
+    (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      package.preLedger.output.comparisons.targetRegions.region choice =
+        sourceData.toFiberInd2ActionPacketTransportSource.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.thetaRegion
+          choice.hodgeTheater choice.historyLabel
+          (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
+            choice)
+          choice.coric) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          package.preLedger.output.comparisons.targetRegions.region choice₁ =
+            package.preLedger.output.comparisons.targetRegions.region choice₂) ∧
+      (sourceData.toPackageTargetRegionLatticeFormulaSource.toThetaPilotClassPossibleImageSource).choiceImages =
+        package.preLedger.output.comparisons.targetRegions :=
+  sourceData.toFiberInd2ActionPacketTensorLabelSource.packageTargetRegionLatticeFormulaSource_endpoint
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSymmetryLabelTransportSource
+        record indData) :
+    (∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+      (transport :
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂),
+        IUTStage1LocalTensorState.Ind2ActionPacketSymmetrySource.Audit
+          ((sourceData.fiberTransport_symmetryLabelInd2ActionPacketTransport
+            transport).toInd2ActionPacketSymmetrySource)) ∧
+      Nonempty
+        sourceData.toFiberInd2ActionPacketTransportSource.PostProcessionInd2ActionPacketTransportSourceAudit ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          IUTStage1LocalTensorState.Ind2ActionPacketSymmetry
+            (ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+              (l := l) choice₁ choice₂).local_tensor_state
+            choice₂.local_tensor_state) :=
+  ⟨sourceData.fiberTransport_symmetryLabelInd2ActionPacketTransportAudit,
+    ⟨sourceData.toFiberInd2ActionPacketTransportSource.postProcessionInd2ActionPacketTransportSourceAudit⟩,
+    sourceData.toFiberInd2ActionPacketTransportSource.fiberTransport_ind2ActionPacketSymmetry⟩
+
+end ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSymmetryLabelTransportSource
 
 namespace ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource
 
