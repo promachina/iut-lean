@@ -29087,6 +29087,160 @@ theorem ofAdjustedLocalizationGaussianRawPartition_endpoint
 
 set_option linter.style.longLine false in
 /--
+Product-formula constructor from normalized Ob3 adjusted-localization data.
+
+This lowers the raw-ratio boundary one step.  The raw Gaussian ratio attached
+to a determinant summand is not supplied independently; it is the adjusted raw
+localization log-volume divided by the common Gaussian global log-volume.  If
+the weighted determinant log-volume is identified with this nonzero global
+Gaussian value, then the ratio weights sum to `1`, and the local-global
+Frobenioid restriction identity proves the required raw calibration at every
+selected place.
+-/
+noncomputable def ofAdjustedLocalizationGaussianGlobalNormalization
+    {γ : Type v} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (primeStripLift :
+      IUTStage1EnvironmentGaussianThetaMuPrimeStripLift Penv Pgau V μ)
+    (summandPlace : β -> V)
+    (gaussianGlobal_ne_zero :
+      primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume ≠
+        0)
+    (determinantLogVolume_eq_gaussianGlobal :
+      ob3ob4Source.determinantLogVolume =
+        primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume) :
+    IUTStage1WeightedDeterminantPrimeStripProductFormulaSource
+      β Penv Pgau V μ :=
+  ofAdjustedLocalizationGaussianRawPartition
+    ob3ob4Source primeStripLift summandPlace
+    (fun index =>
+      ob3ob4Source.adjustedRawLogVolume index /
+        primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume)
+    (by
+      let gaussianGlobal :=
+        primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume
+      have hweighted :
+          (Finset.univ.sum fun index : β =>
+              ((ob3ob4Source.localization index).weight : Real) *
+                ob3ob4Source.adjustedRawLogVolume index) =
+            ob3ob4Source.determinantLogVolume := by
+        calc
+          (Finset.univ.sum fun index : β =>
+              ((ob3ob4Source.localization index).weight : Real) *
+                ob3ob4Source.adjustedRawLogVolume index) =
+              Finset.univ.sum fun index : β =>
+                ob3ob4Source.weightedAdjustedLogVolume index := by
+            refine Finset.sum_congr rfl ?_
+            intro index _
+            exact (ob3ob4Source.weightedAdjustedLogVolume_eq index).symm
+          _ = ob3ob4Source.determinantLogVolume :=
+            ob3ob4Source.determinantLogVolume_eq_sum_weightedAdjusted.symm
+      calc
+        (Finset.univ.sum fun index : β =>
+            ((ob3ob4Source.localization index).weight : Real) *
+              (ob3ob4Source.adjustedRawLogVolume index /
+                primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume)) =
+            Finset.univ.sum fun index : β =>
+              (((ob3ob4Source.localization index).weight : Real) *
+                ob3ob4Source.adjustedRawLogVolume index) /
+                primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume := by
+          refine Finset.sum_congr rfl ?_
+          intro index _
+          ring
+        _ =
+            (Finset.univ.sum fun index : β =>
+              ((ob3ob4Source.localization index).weight : Real) *
+                ob3ob4Source.adjustedRawLogVolume index) /
+              primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume := by
+          rw [Finset.sum_div]
+        _ =
+            ob3ob4Source.determinantLogVolume /
+              primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume := by
+          rw [hweighted]
+        _ =
+            primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume /
+              primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume := by
+          rw [determinantLogVolume_eq_gaussianGlobal]
+        _ = 1 := by
+          exact div_self gaussianGlobal_ne_zero)
+    (by
+      intro index
+      let gaussianGlobal :=
+        primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume
+      calc
+        ob3ob4Source.adjustedRawLogVolume index =
+            (ob3ob4Source.adjustedRawLogVolume index /
+                primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume) *
+              primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume := by
+          exact (div_mul_cancel₀
+            (ob3ob4Source.adjustedRawLogVolume index)
+            gaussianGlobal_ne_zero).symm
+        _ =
+            (ob3ob4Source.adjustedRawLogVolume index /
+                primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume) *
+              (((primeStripLift.base.localEvaluation.gaussianLocal.localization
+                (summandPlace index)).extensionDegree : Real) *
+                (primeStripLift.base.localEvaluation.gaussianLocal.localObject
+                  (summandPlace index)).realifiedLogVolume) := by
+          rw [primeStripLift.base.localEvaluation.gaussianLocal.extensionDegree_mul_localRealifiedLogVolume
+            (summandPlace index)]
+        _ =
+            (ob3ob4Source.adjustedRawLogVolume index /
+                primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume) *
+              ((primeStripLift.base.localEvaluation.gaussianLocal.localization
+                (summandPlace index)).extensionDegree : Real) *
+                (primeStripLift.base.localEvaluation.gaussianLocal.localObject
+                  (summandPlace index)).realifiedLogVolume := by
+          ring)
+
+set_option linter.style.longLine false in
+theorem ofAdjustedLocalizationGaussianGlobalNormalization_endpoint
+    {γ : Type v} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (primeStripLift :
+      IUTStage1EnvironmentGaussianThetaMuPrimeStripLift Penv Pgau V μ)
+    (summandPlace : β -> V)
+    (gaussianGlobal_ne_zero :
+      primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume ≠
+        0)
+    (determinantLogVolume_eq_gaussianGlobal :
+      ob3ob4Source.determinantLogVolume =
+        primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume) :
+    let source :=
+      ofAdjustedLocalizationGaussianGlobalNormalization
+        ob3ob4Source primeStripLift summandPlace gaussianGlobal_ne_zero
+        determinantLogVolume_eq_gaussianGlobal;
+    source.determinantSource =
+        ob3ob4Source.toWeightedDeterminantSource ∧
+      source.primeStripLift = primeStripLift ∧
+      source.summandPlace = summandPlace ∧
+      source.conversionRatio =
+        (fun index =>
+          ((ob3ob4Source.localization index).weight : Real) *
+            (ob3ob4Source.adjustedRawLogVolume index /
+              primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume) *
+            ((primeStripLift.base.localEvaluation.gaussianLocal.localization
+              (summandPlace index)).extensionDegree : Real)) ∧
+      Finset.univ.sum source.convertedLocalGaussianLogVolume =
+        source.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume ∧
+      source.determinantSource.determinantLogVolume =
+        source.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume ∧
+      ob3ob4Source.determinantLogVolume =
+        source.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume :=
+  by
+    intro source
+    exact
+      ⟨rfl, rfl, rfl, rfl,
+        by
+          simpa [convertedLocalGaussianLogVolume] using
+            source.product_formula_eq_primeStripGlobal,
+        source.determinantLogVolume_eq_primeStripGlobal,
+        determinantLogVolume_eq_gaussianGlobal⟩
+
+set_option linter.style.longLine false in
+/--
 Single-place local-global product formula constructor.
 
 This is the finite one-summand case of the Ob7 product-formula handoff.  If the

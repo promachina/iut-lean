@@ -611,8 +611,13 @@ and then invokes the product-formula public route.  Each determinant summand is
 assigned a Gaussian place and raw ratio, the partition weight is computed from
 the Ob3 localization weight times this ratio, and Lean derives the weighted
 summand calibration and global product-formula equality from the Gaussian
-local-global Frobenioid restriction identity.  The earlier weighted-partition
-and one-summand localized constructors remain as compatibility layers.
+local-global Frobenioid restriction identity.  This has now been lowered once
+more: the public route also accepts a globally normalized raw-adjusted source
+in which the raw ratio is computed as adjusted raw log-volume divided by the
+nonzero Gaussian global log-volume.  The Ob3 weighted determinant sum together
+with determinant/global prime-strip equality proves the finite normalization.
+The earlier explicit-ratio, weighted-partition, and one-summand localized
+constructors remain as compatibility layers.
 This is progress below a free-floating obligation bundle.  What remains is to
 construct, from the source papers, the actual lower operations corresponding to:
 \[
@@ -620,7 +625,7 @@ construct, from the source papers, the actual lower operations corresponding to:
 \text{the analytic construction of the class-indexed possible-image source},\\
 \text{the analytic construction of the place-audited packet/action symmetry-label transport inputs},\\
 \text{the analytic construction of the Ob7 prime-strip lift and coric unit-character data},\\
-\text{the analytic construction of the raw adjusted-localization Gaussian ratios}.
+\text{the determinant/global prime-strip equality and nonzero Gaussian global value}.
 \end{array}
 \]
 This is the next natural place to eliminate a family of \texttt{Prop}-level
