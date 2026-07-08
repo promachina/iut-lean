@@ -186,10 +186,17 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedProductFormulaOb7ConstructionSource.endpoint}
   \lean{Iut.Stage1.IUTStage1WeightedDeterminantPrimeStripProductFormulaSource.ofGaussianLocalGlobalWeightedPartition}
   \lean{Iut.Stage1.IUTStage1WeightedDeterminantPrimeStripProductFormulaSource.ofGaussianLocalGlobalWeightedPartition_endpoint}
+  \lean{Iut.Stage1.IUTStage1WeightedDeterminantPrimeStripProductFormulaSource.ofAdjustedLocalizationGaussianRawPartition}
+  \lean{Iut.Stage1.IUTStage1WeightedDeterminantPrimeStripProductFormulaSource.ofAdjustedLocalizationGaussianRawPartition_endpoint}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedWeightedPartitionOb7ConstructionSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedWeightedPartitionOb7ConstructionSource.toProductFormulaSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedWeightedPartitionOb7ConstructionSource.toLocalizedProductFormulaOb7ConstructionSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedWeightedPartitionOb7ConstructionSource.endpoint}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedRawAdjustedPartitionOb7ConstructionSource}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedRawAdjustedPartitionOb7ConstructionSource.toProductFormulaSource}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedRawAdjustedPartitionOb7ConstructionSource.toWeightedPartitionOb7ConstructionSource}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedRawAdjustedPartitionOb7ConstructionSource.toLocalizedProductFormulaOb7ConstructionSource}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedRawAdjustedPartitionOb7ConstructionSource.endpoint}
   \lean{Iut.Stage1.IUTStage1WeightedDeterminantPrimeStripProductFormulaSource.ofSingleGaussianPlace}
   \lean{Iut.Stage1.IUTStage1WeightedDeterminantPrimeStripProductFormulaSource.ofSingleGaussianPlace_endpoint}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedSinglePlaceOb7ConstructionSource}
@@ -525,11 +532,12 @@
   \(\Theta^{\times\mu}\) log-Kummer Ob7 source or, in the strengthened public
   wrapper, localized weighted determinant product-formula data that constructs
   this Ob7 source internally.  This product-formula datum can now itself be
-  constructed from a finite weighted partition of the determinant summands:
-  each summand is assigned a Gaussian place and a normalized partition weight,
-  and the Gaussian local-global Frobenioid restriction identity proves the
-  global product-formula equality.  The one-summand route is the degenerate
-  case of this weighted-partition construction.  The Step (xi) source and
+  constructed from raw adjusted-localization calibration data: each summand is
+  assigned a Gaussian place and raw ratio, the partition weight is computed
+  from the Ob3 localization weight times this ratio, and the Gaussian
+  local-global Frobenioid restriction identity proves the global product-formula
+  equality.  The weighted-partition and one-summand routes remain as
+  compatibility layers.  The Step (xi) source and
   obligation package are projected internally, so the public boundary no longer
   takes a standalone \texttt{StepXIHullDeterminantObligations}, a preassembled
   paper-derived Step (xi) source, or an independent normalized-determinant

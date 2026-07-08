@@ -28958,6 +28958,135 @@ theorem ofGaussianLocalGlobalWeightedPartition_endpoint
 
 set_option linter.style.longLine false in
 /--
+Product-formula constructor from Ob3 adjusted-localization raw calibrations.
+
+This lowers the weighted-partition input one layer.  The caller calibrates the
+raw structure-sheaf-adjusted localization log-volume against the Gaussian
+local-global term.  The determinant summand calibration is then derived using
+the Ob3 localization weight:
+
+`weightedAdjusted = localizationWeight * adjustedRaw`.
+
+The partition weights used in the product formula are therefore not independent
+data; they are computed as `localizationWeight * rawGaussianRatio`.
+-/
+noncomputable def ofAdjustedLocalizationGaussianRawPartition
+    {γ : Type v} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (primeStripLift :
+      IUTStage1EnvironmentGaussianThetaMuPrimeStripLift Penv Pgau V μ)
+    (summandPlace : β -> V)
+    (rawGaussianRatio : β -> Real)
+    (weighted_raw_ratio_sum_eq_one :
+      Finset.univ.sum
+          (fun index : β =>
+            ((ob3ob4Source.localization index).weight : Real) *
+              rawGaussianRatio index) =
+        1)
+    (adjustedRawLogVolume_eq_rawGaussianLocalGlobal :
+      ∀ index : β,
+        ob3ob4Source.adjustedRawLogVolume index =
+          rawGaussianRatio index *
+            ((primeStripLift.base.localEvaluation.gaussianLocal.localization
+              (summandPlace index)).extensionDegree : Real) *
+              (primeStripLift.base.localEvaluation.gaussianLocal.localObject
+                (summandPlace index)).realifiedLogVolume) :
+    IUTStage1WeightedDeterminantPrimeStripProductFormulaSource
+      β Penv Pgau V μ :=
+  ofGaussianLocalGlobalWeightedPartition
+    ob3ob4Source.toWeightedDeterminantSource
+    primeStripLift
+    summandPlace
+    (fun index =>
+      ((ob3ob4Source.localization index).weight : Real) *
+        rawGaussianRatio index)
+    weighted_raw_ratio_sum_eq_one
+    (by
+      intro index
+      calc
+        (ob3ob4Source.toWeightedDeterminantSource.summand index).adjustedLogVolume =
+            (ob3ob4Source.localization index).toLocalizationSource.adjustedLogVolume := by
+          rfl
+        _ =
+            ob3ob4Source.weightedAdjustedLogVolume index := by
+          exact
+            (ob3ob4Source.localization index)
+              |>.toLocalizationSource_adjustedLogVolume_eq_weightedAdjusted
+        _ =
+            ((ob3ob4Source.localization index).weight : Real) *
+              ob3ob4Source.adjustedRawLogVolume index := by
+          exact ob3ob4Source.weightedAdjustedLogVolume_eq index
+        _ =
+            ((ob3ob4Source.localization index).weight : Real) *
+              (rawGaussianRatio index *
+                ((primeStripLift.base.localEvaluation.gaussianLocal.localization
+                  (summandPlace index)).extensionDegree : Real) *
+                  (primeStripLift.base.localEvaluation.gaussianLocal.localObject
+                    (summandPlace index)).realifiedLogVolume) := by
+          rw [adjustedRawLogVolume_eq_rawGaussianLocalGlobal index]
+        _ =
+            (((ob3ob4Source.localization index).weight : Real) *
+                rawGaussianRatio index) *
+              ((primeStripLift.base.localEvaluation.gaussianLocal.localization
+                (summandPlace index)).extensionDegree : Real) *
+                (primeStripLift.base.localEvaluation.gaussianLocal.localObject
+                  (summandPlace index)).realifiedLogVolume := by
+          ring)
+
+set_option linter.style.longLine false in
+theorem ofAdjustedLocalizationGaussianRawPartition_endpoint
+    {γ : Type v} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (primeStripLift :
+      IUTStage1EnvironmentGaussianThetaMuPrimeStripLift Penv Pgau V μ)
+    (summandPlace : β -> V)
+    (rawGaussianRatio : β -> Real)
+    (weighted_raw_ratio_sum_eq_one :
+      Finset.univ.sum
+          (fun index : β =>
+            ((ob3ob4Source.localization index).weight : Real) *
+              rawGaussianRatio index) =
+        1)
+    (adjustedRawLogVolume_eq_rawGaussianLocalGlobal :
+      ∀ index : β,
+        ob3ob4Source.adjustedRawLogVolume index =
+          rawGaussianRatio index *
+            ((primeStripLift.base.localEvaluation.gaussianLocal.localization
+              (summandPlace index)).extensionDegree : Real) *
+              (primeStripLift.base.localEvaluation.gaussianLocal.localObject
+                (summandPlace index)).realifiedLogVolume) :
+    let source :=
+      ofAdjustedLocalizationGaussianRawPartition
+        ob3ob4Source primeStripLift summandPlace rawGaussianRatio
+        weighted_raw_ratio_sum_eq_one
+        adjustedRawLogVolume_eq_rawGaussianLocalGlobal;
+    source.determinantSource =
+        ob3ob4Source.toWeightedDeterminantSource ∧
+      source.primeStripLift = primeStripLift ∧
+      source.summandPlace = summandPlace ∧
+      source.conversionRatio =
+        (fun index =>
+          ((ob3ob4Source.localization index).weight : Real) *
+            rawGaussianRatio index *
+            ((primeStripLift.base.localEvaluation.gaussianLocal.localization
+              (summandPlace index)).extensionDegree : Real)) ∧
+      Finset.univ.sum source.convertedLocalGaussianLogVolume =
+        source.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume ∧
+      source.determinantSource.determinantLogVolume =
+        source.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume :=
+  by
+    intro source
+    exact
+      ⟨rfl, rfl, rfl, rfl,
+        by
+          simpa [convertedLocalGaussianLogVolume] using
+            source.product_formula_eq_primeStripGlobal,
+        source.determinantLogVolume_eq_primeStripGlobal⟩
+
+set_option linter.style.longLine false in
+/--
 Single-place local-global product formula constructor.
 
 This is the finite one-summand case of the Ob7 product-formula handoff.  If the

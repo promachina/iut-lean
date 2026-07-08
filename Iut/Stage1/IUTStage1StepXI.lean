@@ -64800,6 +64800,156 @@ end StepXIThetaLGPLocalizedWeightedPartitionOb7ConstructionSource
 
 set_option linter.style.longLine false in
 /--
+Localized raw-adjusted Ob7 calibration source for the preferred public Step
+(xi) route.
+
+This lowers `StepXIThetaLGPLocalizedWeightedPartitionOb7ConstructionSource`:
+the partition weights are computed from the Ob3 localization weights and raw
+Gaussian ratios, while the determinant summand calibration is derived from the
+structure-sheaf-adjusted raw log-volume calibration of each localized vector
+bundle summand.
+-/
+structure StepXIThetaLGPLocalizedRawAdjustedPartitionOb7ConstructionSource
+    (hullData : StepXIHullFormationData sourceData.Core sourceData.Images)
+    {η : Type x} {β : Type v} {γ : Type w} [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point target) (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (Penv Pgau V : Type v) (μ : Type w)
+    [Fintype Penv] [Fintype Pgau] [Fintype V] where
+  primeStripLift : IUTStage1EnvironmentGaussianThetaMuPrimeStripLift Penv Pgau V μ
+  summandPlace : β -> V
+  rawGaussianRatio : β -> Real
+  weighted_raw_ratio_sum_eq_one :
+    Finset.univ.sum
+        (fun index : β =>
+          ((localizedSource.localizedSource.toAdjustedDeterminantSource.localization index).weight : Real) *
+            rawGaussianRatio index) =
+      1
+  adjustedRawLogVolume_eq_rawGaussianLocalGlobal :
+    ∀ index : β,
+      localizedSource.localizedSource.toAdjustedDeterminantSource.adjustedRawLogVolume index =
+        rawGaussianRatio index *
+          ((primeStripLift.base.localEvaluation.gaussianLocal.localization
+            (summandPlace index)).extensionDegree : Real) *
+            (primeStripLift.base.localEvaluation.gaussianLocal.localObject
+              (summandPlace index)).realifiedLogVolume
+  coricUnitCharacter : V -> μ
+  environment_unit_eq_coric :
+    ∀ p : Penv,
+      primeStripLift.environmentUnitCharacter p =
+        coricUnitCharacter (primeStripLift.base.environmentPrimeToPlace p)
+
+namespace StepXIThetaLGPLocalizedRawAdjustedPartitionOb7ConstructionSource
+
+variable {hullData : StepXIHullFormationData sourceData.Core sourceData.Images}
+variable {η : Type x} {β : Type v} {γ : Type w} [Fintype β] [Fintype γ]
+variable
+  {localizedSource :
+    IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+      (Point target) (Quot sourceData.Core.equalityQuotient.relation) η β γ}
+variable {Penv Pgau V : Type v} {μ : Type w}
+variable [Fintype Penv] [Fintype Pgau] [Fintype V]
+
+set_option linter.style.longLine false in
+def partitionWeight
+    (source :
+      StepXIThetaLGPLocalizedRawAdjustedPartitionOb7ConstructionSource
+        (sourceData := sourceData) (β := β)
+        hullData localizedSource Penv Pgau V μ) :
+    β -> Real :=
+  fun index =>
+    ((localizedSource.localizedSource.toAdjustedDeterminantSource.localization index).weight : Real) *
+      source.rawGaussianRatio index
+
+set_option linter.style.longLine false in
+noncomputable def toProductFormulaSource
+    (source :
+      StepXIThetaLGPLocalizedRawAdjustedPartitionOb7ConstructionSource
+        (sourceData := sourceData) (β := β)
+        hullData localizedSource Penv Pgau V μ) :
+    IUTStage1WeightedDeterminantPrimeStripProductFormulaSource
+      β Penv Pgau V μ :=
+  IUTStage1WeightedDeterminantPrimeStripProductFormulaSource.ofAdjustedLocalizationGaussianRawPartition
+    localizedSource.localizedSource.toAdjustedDeterminantSource
+    source.primeStripLift source.summandPlace source.rawGaussianRatio
+    source.weighted_raw_ratio_sum_eq_one
+    source.adjustedRawLogVolume_eq_rawGaussianLocalGlobal
+
+set_option linter.style.longLine false in
+noncomputable def toWeightedPartitionOb7ConstructionSource
+    (source :
+      StepXIThetaLGPLocalizedRawAdjustedPartitionOb7ConstructionSource
+        (sourceData := sourceData) (β := β)
+        hullData localizedSource Penv Pgau V μ) :
+    StepXIThetaLGPLocalizedWeightedPartitionOb7ConstructionSource
+      (sourceData := sourceData) (β := β)
+      hullData localizedSource Penv Pgau V μ :=
+  { primeStripLift := source.primeStripLift,
+    summandPlace := source.summandPlace,
+    partitionWeight := source.partitionWeight,
+    partition_weight_sum_eq_one := source.weighted_raw_ratio_sum_eq_one,
+    summand_adjustedLogVolume_eq_weightedLocalGlobal := by
+      intro index
+      exact
+        (source.toProductFormulaSource
+          |>.summand_adjustedLogVolume_eq_convertedGaussianLocal index),
+    coricUnitCharacter := source.coricUnitCharacter,
+    environment_unit_eq_coric := source.environment_unit_eq_coric }
+
+set_option linter.style.longLine false in
+noncomputable def toLocalizedProductFormulaOb7ConstructionSource
+    (source :
+      StepXIThetaLGPLocalizedRawAdjustedPartitionOb7ConstructionSource
+        (sourceData := sourceData) (β := β)
+        hullData localizedSource Penv Pgau V μ) :
+    StepXIThetaLGPLocalizedProductFormulaOb7ConstructionSource
+      (sourceData := sourceData) (β := β)
+      hullData localizedSource Penv Pgau V μ :=
+  { determinantProductFormulaSource := source.toProductFormulaSource,
+    determinantProductFormula_determinantSource_eq := rfl,
+    coricUnitCharacter := source.coricUnitCharacter,
+    environment_unit_eq_coric := source.environment_unit_eq_coric }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (source :
+      StepXIThetaLGPLocalizedRawAdjustedPartitionOb7ConstructionSource
+        (sourceData := sourceData) (β := β)
+        hullData localizedSource Penv Pgau V μ) :
+    let productFormulaSource := source.toProductFormulaSource;
+    let constructionSource := source.toLocalizedProductFormulaOb7ConstructionSource;
+    productFormulaSource.determinantSource =
+        localizedSource.localizedSource.toAdjustedDeterminantSource.toWeightedDeterminantSource ∧
+      productFormulaSource.summandPlace = source.summandPlace ∧
+      productFormulaSource.conversionRatio =
+        (fun index =>
+          ((localizedSource.localizedSource.toAdjustedDeterminantSource.localization index).weight : Real) *
+            source.rawGaussianRatio index *
+            ((source.primeStripLift.base.localEvaluation.gaussianLocal.localization
+              (source.summandPlace index)).extensionDegree : Real)) ∧
+      Finset.univ.sum productFormulaSource.convertedLocalGaussianLogVolume =
+        source.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume ∧
+      productFormulaSource.determinantSource.determinantLogVolume =
+        source.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume ∧
+      constructionSource.determinantProductFormulaSource =
+        productFormulaSource ∧
+      constructionSource.determinantProductFormula_determinantSource_eq =
+        rfl :=
+  by
+    intro productFormulaSource constructionSource
+    exact
+      ⟨rfl, rfl, rfl,
+        by
+          simpa [IUTStage1WeightedDeterminantPrimeStripProductFormulaSource.convertedLocalGaussianLogVolume]
+            using productFormulaSource.product_formula_eq_primeStripGlobal,
+        productFormulaSource.determinantLogVolume_eq_primeStripGlobal,
+        rfl, rfl⟩
+
+end StepXIThetaLGPLocalizedRawAdjustedPartitionOb7ConstructionSource
+
+set_option linter.style.longLine false in
+/--
 Localized single-place Ob7 source for the preferred public Step (xi) route.
 
 This specializes the localized product-formula construction to the one-summand

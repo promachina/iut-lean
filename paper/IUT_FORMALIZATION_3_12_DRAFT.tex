@@ -605,12 +605,12 @@ Ob7 source from the localized determinant source, local Gaussian summand
 calibration, finite determinant product formula, and coric unit-character
 data.  Thus the public route can consume product-formula data in place of a
 prebuilt Ob7 compatibility record.  This product-formula source has now been
-lowered further to finite weighted-partition data: each determinant summand is
-assigned a Gaussian place and a normalized partition weight, the adjusted
-summand is calibrated to the corresponding weighted local-global term, and
-Lean derives the global product-formula equality from the Gaussian
-local-global Frobenioid restriction identity.  The earlier one-summand
-localized constructor is the degenerate case of this weighted-partition route.
+lowered further to raw adjusted-localization data: each determinant summand is
+assigned a Gaussian place and raw ratio, the partition weight is computed from
+the Ob3 localization weight times this ratio, and Lean derives the weighted
+summand calibration and global product-formula equality from the Gaussian
+local-global Frobenioid restriction identity.  The earlier weighted-partition
+and one-summand localized constructors remain as compatibility layers.
 This is progress below a free-floating obligation bundle.  What remains is to
 construct, from the source papers, the actual lower operations corresponding to:
 \[
@@ -618,7 +618,7 @@ construct, from the source papers, the actual lower operations corresponding to:
 \text{the analytic construction of the class-indexed possible-image source},\\
 \text{the analytic construction of the place-audited packet/action symmetry-label transport inputs},\\
 \text{the analytic construction of the Ob7 prime-strip lift and coric unit-character data},\\
-\text{the analytic construction of the determinant partition weights and summand calibrations}.
+\text{the analytic construction of the raw adjusted-localization Gaussian ratios}.
 \end{array}
 \]
 This is the next natural place to eliminate a family of \texttt{Prop}-level
