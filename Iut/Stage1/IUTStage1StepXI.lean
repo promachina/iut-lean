@@ -13102,6 +13102,35 @@ theorem endpoint
           hhodge hhistory hlattice hcoric,
     formulaEndpoint.2.2.2.1⟩
 
+set_option linter.style.longLine false in
+/--
+Lattice-key image law to Hodge-theater source-spine possible-image trace.
+
+This lowers the Step (xi) image handoff from a record-level lattice formula to
+the invariant that possible-image regions are constant on the
+Hodge-theater/history/log-theta-lattice/coric key.  The lattice formula is
+constructed from representatives, then compared with the source-spine
+theta-pilot class-image family.
+-/
+theorem record_region_eq_sourceImages_of_latticeImageLawSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource
+        record indData)
+    (spine :
+      IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l)
+    (latticeFormula_eq_sourceClassImages :
+      ∀ thetaClass :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric),
+        sourceData.latticeFormula.toClassFormula.thetaRegion thetaClass =
+          spine.thetaPossibleImageSource.classImages.region thetaClass) :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      record.thetaPossibleImages.images.region choice =
+        spine.Images.region choice :=
+  sourceData.toLatticeFormulaRecordSource.record_region_eq_sourceImages_of_latticeFormulaRecordSource
+    spine latticeFormula_eq_sourceClassImages
+
 end ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource
 
 set_option linter.style.longLine false in
@@ -62564,6 +62593,107 @@ noncomputable def ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantCoricOb7
           sourceData.Images.region choice :=
     IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormulaRecordSource.record_region_eq_sourceImages_of_latticeFormulaRecordSource
       (record := record) latticeFormulaSource sourceData
+      latticeFormula_eq_sourceClassImages
+  ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantCoricOb7FromSourceRegionTrace
+    (sourceData := sourceData) (record := record) (β := β)
+    paperTrace operation hullOperation determinantOperation hullOperator
+    record_region_eq_source ob3ob4Source compatibility
+    measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+    q_pilot_positive normalization quotientHullCompatibility
+    coricInvariant determinantLogVolume_eq_coricPrimeStripGlobal
+
+set_option linter.style.longLine false in
+/--
+Selected Step (xi) constructor from a theta-pilot lattice image law.
+
+This is below the lattice-formula record route: the lattice formula is built
+internally from representative concrete choices and same-lattice-key invariance,
+then compared with the Hodge-theater source spine's class-image family.  The
+pointwise record/source trace and all subsequent union/quotient alignments are
+derived internally.
+-/
+noncomputable def ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantCoricOb7FromLatticeImageLawSource
+    {source target : Copy} {coric : Type u} {l : PrimeGeFive}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {β : Type v} [Fintype β]
+    (paperTrace : StepXIPaperTrace)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (latticeImageLawSource :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource
+        record indData)
+    (latticeFormula_eq_sourceClassImages :
+      ∀ thetaClass :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric),
+        latticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+            thetaClass =
+          sourceData.thetaPossibleImageSource.classImages.region thetaClass)
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      package.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          hullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (sourceData.Images.region sourceData.selectedQChoice).toSet
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.sourceSelectedRegion_subset_recordUnion_of_region_eq
+            (record := record) (sourceData := sourceData)
+            (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource.record_region_eq_sourceImages_of_latticeImageLawSource
+              (record := record) latticeImageLawSource sourceData
+              latticeFormula_eq_sourceClassImages))
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -package.preLedger.qSigned)
+    (normalization : package.preLedger.normalization)
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        sourceData.Core sourceData.Images hullOperator)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (coricInvariant :
+      IUTStage1CoricThetaMuPrimeStripInvariant Penv Pgau V μ)
+    (determinantLogVolume_eq_coricPrimeStripGlobal :
+      ob3ob4Source.toWeightedDeterminantSource.determinantLogVolume =
+        coricInvariant.lift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume) :
+    StepXIPaperDerivedHullDeterminantSource.{u, v} sourceData :=
+  let record_region_eq_source :
+      ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        record.thetaPossibleImages.images.region choice =
+          sourceData.Images.region choice :=
+    IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource.record_region_eq_sourceImages_of_latticeImageLawSource
+      (record := record) latticeImageLawSource sourceData
       latticeFormula_eq_sourceClassImages
   ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantCoricOb7FromSourceRegionTrace
     (sourceData := sourceData) (record := record) (β := β)
