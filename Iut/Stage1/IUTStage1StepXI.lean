@@ -17585,6 +17585,137 @@ theorem toInd2ActionPacketSymmetrySource_audit
       source.toInd2ActionPacketSymmetrySource :=
   source.toSourceLevelInd2ActionPacketTransport.toInd2ActionPacketSymmetrySource_audit
 
+set_option linter.style.longLine false in
+/--
+The nonarchimedean tensor-label transport projected to the ordinary
+label-transport step used by the Theorem 3.11 possible-image quotient audit.
+-/
+def nonarchimedeanLabelTransportStep
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (actionSource :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntrySourceStep
+        audited₁ audited₂)
+    (source_tensor_symmetry_eq :
+      audited₁.choice.local_tensor_state.packetState.tensorState.symmetry =
+        IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm.toLocalTensorSymmetryId)
+    (target_tensor_symmetry_eq :
+      audited₂.choice.local_tensor_state.packetState.tensorState.symmetry =
+        IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm.toLocalTensorSymmetryId)
+    (kindTransport :
+      IUTStage1LocalTensorDirectSummandPacketState.SymmetryKindTransport
+        audited₁.choice.local_tensor_state audited₂.choice.local_tensor_state) :
+    IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntryLabelTransportStep
+      audited₁ audited₂ :=
+  (IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntryLabelTransportSourceStep.ofTensorSymmetryLabels
+    actionSource source_tensor_symmetry_eq target_tensor_symmetry_eq
+    kindTransport).toLabelTransportStep
+
+set_option linter.style.longLine false in
+/--
+Possible-image/fiber audit derived from nonarchimedean tensor-label data.
+
+The tensor labels construct the label transport; the existing Theorem 3.11
+place-audited multiradial audit then proves both equality of possible-image
+regions and membership of the acting place in the nonarchimedean `(Ind2)`
+fiber.
+-/
+def nonarchimedeanPossibleImageFiberAudit
+    {target : Copy}
+    (data :
+      IUTStage1PlaceAuditedMultiradialImages
+        (target := target) coric IUTStage1PlaceKind.nonarchimedean)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.nonarchimedean}
+    (fiberPackage :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanInd2FiberPackage
+        audited₁)
+    (actionSource :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.NonarchimedeanIsmActionEntrySourceStep
+        audited₁ audited₂)
+    (source_tensor_symmetry_eq :
+      audited₁.choice.local_tensor_state.packetState.tensorState.symmetry =
+        IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm.toLocalTensorSymmetryId)
+    (target_tensor_symmetry_eq :
+      audited₂.choice.local_tensor_state.packetState.tensorState.symmetry =
+        IUTStage1TensorSummandSymmetryKind.nonarchimedeanIsm.toLocalTensorSymmetryId)
+    (kindTransport :
+      IUTStage1LocalTensorDirectSummandPacketState.SymmetryKindTransport
+        audited₁.choice.local_tensor_state audited₂.choice.local_tensor_state) :
+    IUTStage1PlaceAuditedMultiradialImages.NonarchimedeanEntryLabelTransportPossibleImageAudit
+      data fiberPackage
+      (nonarchimedeanLabelTransportStep actionSource
+        source_tensor_symmetry_eq target_tensor_symmetry_eq kindTransport) :=
+  data.nonarchimedeanEntryLabelTransportPossibleImageAudit
+    fiberPackage
+    (nonarchimedeanLabelTransportStep actionSource
+      source_tensor_symmetry_eq target_tensor_symmetry_eq kindTransport)
+
+set_option linter.style.longLine false in
+/--
+The archimedean tensor-label transport projected to the ordinary
+label-transport step used by the Theorem 3.11 possible-image quotient audit.
+-/
+def archimedeanLabelTransportStep
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (actionSource :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntrySourceStep
+        audited₁ audited₂)
+    (source_tensor_symmetry_eq :
+      audited₁.choice.local_tensor_state.packetState.tensorState.symmetry =
+        IUTStage1TensorSummandSymmetryKind.archimedeanOrderTwo.toLocalTensorSymmetryId)
+    (target_tensor_symmetry_eq :
+      audited₂.choice.local_tensor_state.packetState.tensorState.symmetry =
+        IUTStage1TensorSummandSymmetryKind.archimedeanOrderTwo.toLocalTensorSymmetryId)
+    (kindTransport :
+      IUTStage1LocalTensorDirectSummandPacketState.SymmetryKindTransport
+        audited₁.choice.local_tensor_state audited₂.choice.local_tensor_state) :
+    IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntryLabelTransportStep
+      audited₁ audited₂ :=
+  (IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntryLabelTransportSourceStep.ofTensorSymmetryLabels
+    actionSource source_tensor_symmetry_eq target_tensor_symmetry_eq
+    kindTransport).toLabelTransportStep
+
+set_option linter.style.longLine false in
+/--
+Possible-image/fiber audit derived from archimedean tensor-label data.
+-/
+def archimedeanPossibleImageFiberAudit
+    {target : Copy}
+    (data :
+      IUTStage1PlaceAuditedMultiradialImages
+        (target := target) coric IUTStage1PlaceKind.archimedean)
+    {audited₁ audited₂ :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice
+        coric IUTStage1PlaceKind.archimedean}
+    (fiberPackage :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanInd2FiberPackage
+        audited₁)
+    (actionSource :
+      IUTStage1PlaceAuditedDirectSummandPacketChoice.ArchimedeanOrderTwoActionEntrySourceStep
+        audited₁ audited₂)
+    (source_tensor_symmetry_eq :
+      audited₁.choice.local_tensor_state.packetState.tensorState.symmetry =
+        IUTStage1TensorSummandSymmetryKind.archimedeanOrderTwo.toLocalTensorSymmetryId)
+    (target_tensor_symmetry_eq :
+      audited₂.choice.local_tensor_state.packetState.tensorState.symmetry =
+        IUTStage1TensorSummandSymmetryKind.archimedeanOrderTwo.toLocalTensorSymmetryId)
+    (kindTransport :
+      IUTStage1LocalTensorDirectSummandPacketState.SymmetryKindTransport
+        audited₁.choice.local_tensor_state audited₂.choice.local_tensor_state) :
+    IUTStage1PlaceAuditedMultiradialImages.ArchimedeanEntryLabelTransportPossibleImageAudit
+      data fiberPackage
+      (archimedeanLabelTransportStep actionSource
+        source_tensor_symmetry_eq target_tensor_symmetry_eq kindTransport) :=
+  data.archimedeanEntryLabelTransportPossibleImageAudit
+    fiberPackage
+    (archimedeanLabelTransportStep actionSource
+      source_tensor_symmetry_eq target_tensor_symmetry_eq kindTransport)
+
 end IUTStage1TensorLabelInd2ActionPacketTransport
 
 set_option linter.style.longLine false in
