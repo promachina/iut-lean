@@ -28840,6 +28840,124 @@ theorem normalizedLogVolume_eq_primeStripGlobal
 
 set_option linter.style.longLine false in
 /--
+Finite weighted local-global product-formula constructor.
+
+This is the multi-summand version of the Ob7 product-formula handoff that is
+available from the present local-global Frobenioid shadow.  Each determinant
+summand is calibrated to a partition weight times the extension-degree multiple
+of the Gaussian local object at its selected place.  Since the local-global
+restriction law identifies this extension-degree multiple with the same global
+realified log-volume at every selected place, normalized weights summing to
+`1` prove the required finite product formula.
+-/
+noncomputable def ofGaussianLocalGlobalWeightedPartition
+    (determinantSource :
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β)
+    (primeStripLift :
+      IUTStage1EnvironmentGaussianThetaMuPrimeStripLift Penv Pgau V μ)
+    (summandPlace : β -> V)
+    (partitionWeight : β -> Real)
+    (partition_weight_sum_eq_one :
+      Finset.univ.sum partitionWeight = 1)
+    (summand_adjustedLogVolume_eq_weightedLocalGlobal :
+      ∀ index : β,
+        (determinantSource.summand index).adjustedLogVolume =
+          partitionWeight index *
+            ((primeStripLift.base.localEvaluation.gaussianLocal.localization
+              (summandPlace index)).extensionDegree : Real) *
+              (primeStripLift.base.localEvaluation.gaussianLocal.localObject
+                (summandPlace index)).realifiedLogVolume) :
+    IUTStage1WeightedDeterminantPrimeStripProductFormulaSource
+      β Penv Pgau V μ :=
+  { determinantSource := determinantSource,
+    primeStripLift := primeStripLift,
+    summandPlace := summandPlace,
+    conversionRatio := fun index =>
+      partitionWeight index *
+        (primeStripLift.base.localEvaluation.gaussianLocal.localization
+          (summandPlace index)).extensionDegree,
+    summand_adjustedLogVolume_eq_convertedGaussianLocal := by
+      intro index
+      exact summand_adjustedLogVolume_eq_weightedLocalGlobal index,
+    product_formula_eq_primeStripGlobal := by
+      calc
+        (Finset.univ.sum fun index : β =>
+          partitionWeight index *
+              ((primeStripLift.base.localEvaluation.gaussianLocal.localization
+                (summandPlace index)).extensionDegree : Real) *
+            (primeStripLift.base.localEvaluation.gaussianLocal.localObject
+              (summandPlace index)).realifiedLogVolume) =
+            Finset.univ.sum fun index : β =>
+              partitionWeight index *
+                (((primeStripLift.base.localEvaluation.gaussianLocal.localization
+                  (summandPlace index)).extensionDegree : Real) *
+                  (primeStripLift.base.localEvaluation.gaussianLocal.localObject
+                    (summandPlace index)).realifiedLogVolume) := by
+          refine Finset.sum_congr rfl ?_
+          intro index _
+          ring
+        _ =
+            Finset.univ.sum fun index : β =>
+              partitionWeight index *
+                primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume := by
+          refine Finset.sum_congr rfl ?_
+          intro index _
+          rw [primeStripLift.base.localEvaluation.gaussianLocal.extensionDegree_mul_localRealifiedLogVolume
+            (summandPlace index)]
+        _ =
+            (Finset.univ.sum partitionWeight) *
+              primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume := by
+          rw [Finset.sum_mul]
+        _ =
+            primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume := by
+          rw [partition_weight_sum_eq_one, one_mul] }
+
+set_option linter.style.longLine false in
+theorem ofGaussianLocalGlobalWeightedPartition_endpoint
+    (determinantSource :
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource β)
+    (primeStripLift :
+      IUTStage1EnvironmentGaussianThetaMuPrimeStripLift Penv Pgau V μ)
+    (summandPlace : β -> V)
+    (partitionWeight : β -> Real)
+    (partition_weight_sum_eq_one :
+      Finset.univ.sum partitionWeight = 1)
+    (summand_adjustedLogVolume_eq_weightedLocalGlobal :
+      ∀ index : β,
+        (determinantSource.summand index).adjustedLogVolume =
+          partitionWeight index *
+            ((primeStripLift.base.localEvaluation.gaussianLocal.localization
+              (summandPlace index)).extensionDegree : Real) *
+              (primeStripLift.base.localEvaluation.gaussianLocal.localObject
+                (summandPlace index)).realifiedLogVolume) :
+    let source :=
+      ofGaussianLocalGlobalWeightedPartition
+        determinantSource primeStripLift summandPlace partitionWeight
+        partition_weight_sum_eq_one
+        summand_adjustedLogVolume_eq_weightedLocalGlobal;
+      source.determinantSource = determinantSource ∧
+      source.primeStripLift = primeStripLift ∧
+      source.summandPlace = summandPlace ∧
+      source.conversionRatio =
+        (fun index =>
+          partitionWeight index *
+            ((primeStripLift.base.localEvaluation.gaussianLocal.localization
+              (summandPlace index)).extensionDegree : Real)) ∧
+      Finset.univ.sum source.convertedLocalGaussianLogVolume =
+        source.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume ∧
+      source.determinantSource.determinantLogVolume =
+        source.primeStripLift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume :=
+  by
+    intro source
+    exact
+      ⟨rfl, rfl, rfl, rfl,
+        by
+          simpa [convertedLocalGaussianLogVolume] using
+            source.product_formula_eq_primeStripGlobal,
+        source.determinantLogVolume_eq_primeStripGlobal⟩
+
+set_option linter.style.longLine false in
+/--
 Single-place local-global product formula constructor.
 
 This is the finite one-summand case of the Ob7 product-formula handoff.  If the
