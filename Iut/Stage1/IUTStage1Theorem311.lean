@@ -18581,6 +18581,41 @@ def stepXFiniteDivisorObligations
 
 set_option linter.style.longLine false in
 /--
+Source-spine image calibration from theta-pilot class regions.
+
+In the Theorem 3.11 source spine, `Images` is the pullback of the
+theta-pilot-class possible-image family along `thetaPilotClass`.  Thus a
+pointwise formula identifying every pulled-back class region with the package
+target region is enough to identify the full possible-image family.  This
+lowers the Step (xi) image boundary from an opaque family equality to the
+class-region trace used by the multiradial source data.
+-/
+theorem Images_eq_targetRegions_of_class_region_eq
+    {source : Copy}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l)
+    (class_region_eq_targetRegions :
+      ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        sourceData.thetaPossibleImageSource.classImages.region
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+              choice) =
+          package.preLedger.output.comparisons.targetRegions.region choice) :
+    sourceData.Images =
+      package.preLedger.output.comparisons.targetRegions := by
+  unfold Images
+  unfold IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource.choiceImages
+  cases htarget : package.preLedger.output.comparisons.targetRegions with
+  | mk targetRegion =>
+    congr
+    funext choice
+    simpa [htarget] using class_region_eq_targetRegions choice
+
+set_option linter.style.longLine false in
+/--
 Audit that the unified source spine supplies the two formerly separate
 source-paper inputs used by the preferred corridor: the Theorem 3.11/Remarks
 payload and the Step (x) finite-divisor/log-Kummer payload.

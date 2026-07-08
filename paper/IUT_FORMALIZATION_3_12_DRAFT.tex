@@ -520,7 +520,13 @@ on the exact-theta action-packet route.  A further constructed-record variant
 installs the unified source-spine image family directly as the record's
 theta-pilot possible-image family, so the record/source image equality becomes
 definitional; the remaining image-side calibration is that these source-spine
-images are the package target-region family.  At the public
+images are the package target-region family.  This calibration has now been
+lowered from a whole-family equality to the pointwise theta-pilot
+class-region trace
+\(\mathcal R_{\mathrm{class}}(\mathrm{class}(c))
+  =\mathcal R_{\mathrm{target}}(c)\);
+Lean derives the source-image/target-region family equality internally before
+installing the source-spine record.  At the public
 paper-trace route boundary, the remaining payload audit has now been split so
 the caller supplies only the non-Step-(xi) payload; the legacy Step-(xi) audit
 fields are derived internally from the structured Step-(xi) source.  A stricter
@@ -543,7 +549,7 @@ construct, from the source papers, the actual lower operations corresponding to:
 \[
 \begin{array}{l}
 \text{the analytic construction of the source-level possible-image witnesses},\\
-\text{the calibration of source-spine images with the package target regions},\\
+\text{the construction of the class-region/target-region calibration trace},\\
 \text{the lower construction of the coric Ob7 prime-strip invariant}.
 \end{array}
 \]

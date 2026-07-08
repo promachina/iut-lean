@@ -2621,6 +2621,55 @@ theorem withSourceSpineThetaPossibleImages_images_eq_source
       sourceData.Images :=
   rfl
 
+set_option linter.style.longLine false in
+/--
+Install the unified source-spine images from a theta-pilot class-region trace.
+
+This is the lower-image constructor for the preferred Step (xi) route: the
+package target regions are identified with the source spine by the pointwise
+theta-pilot class formula, and the whole-family equality is derived internally.
+-/
+def withSourceSpineThetaPossibleImagesOfClassRegionEq
+    {coric : Type u} {l : PrimeGeFive}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (sourceData :
+      IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l)
+    (class_region_eq_targetRegions :
+      ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        sourceData.thetaPossibleImageSource.classImages.region
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+              choice) =
+          package.preLedger.output.comparisons.targetRegions.region choice) :
+    IUTStage1Theorem311MultiradialSourceRecord package :=
+  withSourceSpineThetaPossibleImages record sourceData
+    (sourceData.Images_eq_targetRegions_of_class_region_eq
+      (package := package) class_region_eq_targetRegions)
+
+set_option linter.style.longLine false in
+theorem withSourceSpineThetaPossibleImagesOfClassRegionEq_images_eq_source
+    {coric : Type u} {l : PrimeGeFive}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (record : IUTStage1Theorem311MultiradialSourceRecord package)
+    (sourceData :
+      IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l)
+    (class_region_eq_targetRegions :
+      ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        sourceData.thetaPossibleImageSource.classImages.region
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+              choice) =
+          package.preLedger.output.comparisons.targetRegions.region choice) :
+    (withSourceSpineThetaPossibleImagesOfClassRegionEq record sourceData
+        class_region_eq_targetRegions).thetaPossibleImages.images =
+      sourceData.Images :=
+  rfl
+
 theorem ofConstructedQualitativeInputsWithSHE_bundle_eq
     (bundle : IUTStage1Theorem311ConstructedQualitativeInputsWithSHE package) :
     (ofConstructedQualitativeInputsWithSHE bundle).bundle =
@@ -65898,6 +65947,214 @@ theorem ofSourceSpineThetaRecordOb3Ob5ExactThetaCoricOb7FromFiberInd2ActionPacke
       (sourceData := sourceData) (β := β)
       paperTrace operation hullOperation determinantOperation
       recordBase source_images_eq_targetRegions actionPacketTransportSource
+      detLogVolumeSource measure_eq_hullLogVolume
+      thetaSigned_eq_familyHullLogVolume hullDetBridge_eq q_pilot_positive
+      normalization coricInvariant determinantLogVolume_eq_coricPrimeStripGlobal)
+
+set_option linter.style.longLine false in
+/--
+Deep source-spine Step (xi) constructor from theta-pilot class-region target
+calibration.
+
+This is the class-region version of
+`ofSourceSpineThetaRecordOb3Ob5ExactThetaCoricOb7FromFiberInd2ActionPacket`:
+the whole source-image/target-region equality is derived from the pointwise
+theta-pilot class formula, so the image-side input is now a lower
+Theorem 3.11 source trace.
+-/
+noncomputable def ofSourceSpineThetaRecordOb3Ob5ExactThetaCoricOb7FromFiberInd2ActionPacketClassRegions
+    {source target : Copy} {coric : Type u} {l : PrimeGeFive}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {β : Type v} [Fintype β]
+    (paperTrace : StepXIPaperTrace)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (recordBase : IUTStage1Theorem311MultiradialSourceRecord package)
+    (class_region_eq_targetRegions :
+      ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        sourceData.thetaPossibleImageSource.classImages.region
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+              choice) =
+          package.preLedger.output.comparisons.targetRegions.region choice)
+    (actionPacketTransportSource :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfClassRegionEq
+          recordBase sourceData class_region_eq_targetRegions)
+        indData)
+    {γ : Type w} [Fintype γ]
+    (detLogVolumeSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ)
+        (IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfClassRegionEq
+          recordBase sourceData class_region_eq_targetRegions))
+    (measure_eq_hullLogVolume :
+      package.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          detLogVolumeSource.hullOperator).toRegionMeasure)
+    (thetaSigned_eq_familyHullLogVolume :
+      package.preLedger.thetaSigned =
+        (detLogVolumeSource.toRecordOb3Ob5DeterminantCompatibilitySource
+          |>.toRecordBoundedFamilyHullDetLogVolumeSource).familyHullLogVolume)
+    (hullDetBridge_eq :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record :=
+            IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfClassRegionEq
+              recordBase sourceData class_region_eq_targetRegions)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            detLogVolumeSource.hullOperator)
+          (sourceData.Images.region sourceData.selectedQChoice).toSet
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.sourceSelectedRegion_subset_recordUnion_of_region_eq
+            (record :=
+              IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfClassRegionEq
+                recordBase sourceData class_region_eq_targetRegions)
+            (sourceData := sourceData)
+            (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource.record_region_eq_sourceImages_of_fiberInd2ActionPacketTransportSource
+              (record :=
+                IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfClassRegionEq
+                  recordBase sourceData class_region_eq_targetRegions)
+              actionPacketTransportSource sourceData
+              (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource.latticeFormula_eq_sourceClassImages_of_recordImagesEqSource
+                (record :=
+                  IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfClassRegionEq
+                    recordBase sourceData class_region_eq_targetRegions)
+                actionPacketTransportSource sourceData rfl)))
+          detLogVolumeSource.ob3ob4Source.toWeightedDeterminantSource
+          detLogVolumeSource.toRecordOb3Ob5DeterminantCompatibilitySource.toCompatibility
+          measure_eq_hullLogVolume
+          ((detLogVolumeSource.toRecordOb3Ob5DeterminantCompatibilitySource
+            |>.toRecordBoundedFamilyHullDetLogVolumeSource)
+            |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+                thetaSigned_eq_familyHullLogVolume))
+    (q_pilot_positive : 0 < -package.preLedger.qSigned)
+    (normalization : package.preLedger.normalization)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (coricInvariant :
+      IUTStage1CoricThetaMuPrimeStripInvariant Penv Pgau V μ)
+    (determinantLogVolume_eq_coricPrimeStripGlobal :
+      detLogVolumeSource.ob3ob4Source.toWeightedDeterminantSource.determinantLogVolume =
+        coricInvariant.lift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume) :
+    StepXIPaperDerivedHullDeterminantSource.{u, v} sourceData :=
+  let source_images_eq_targetRegions :=
+    sourceData.Images_eq_targetRegions_of_class_region_eq
+      (package := package) class_region_eq_targetRegions
+  ofSourceSpineThetaRecordOb3Ob5ExactThetaCoricOb7FromFiberInd2ActionPacket
+    (sourceData := sourceData) (β := β)
+    paperTrace operation hullOperation determinantOperation recordBase
+    source_images_eq_targetRegions actionPacketTransportSource
+    detLogVolumeSource measure_eq_hullLogVolume
+    thetaSigned_eq_familyHullLogVolume hullDetBridge_eq q_pilot_positive
+    normalization coricInvariant determinantLogVolume_eq_coricPrimeStripGlobal
+
+set_option linter.style.longLine false in
+theorem ofSourceSpineThetaRecordOb3Ob5ExactThetaCoricOb7FromFiberInd2ActionPacketClassRegions_audit
+    {source target : Copy} {coric : Type u} {l : PrimeGeFive}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {β : Type v} [Fintype β]
+    (paperTrace : StepXIPaperTrace)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (recordBase : IUTStage1Theorem311MultiradialSourceRecord package)
+    (class_region_eq_targetRegions :
+      ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        sourceData.thetaPossibleImageSource.classImages.region
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
+              choice) =
+          package.preLedger.output.comparisons.targetRegions.region choice)
+    (actionPacketTransportSource :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfClassRegionEq
+          recordBase sourceData class_region_eq_targetRegions)
+        indData)
+    {γ : Type w} [Fintype γ]
+    (detLogVolumeSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ)
+        (IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfClassRegionEq
+          recordBase sourceData class_region_eq_targetRegions))
+    (measure_eq_hullLogVolume :
+      package.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          detLogVolumeSource.hullOperator).toRegionMeasure)
+    (thetaSigned_eq_familyHullLogVolume :
+      package.preLedger.thetaSigned =
+        (detLogVolumeSource.toRecordOb3Ob5DeterminantCompatibilitySource
+          |>.toRecordBoundedFamilyHullDetLogVolumeSource).familyHullLogVolume)
+    (hullDetBridge_eq :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record :=
+            IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfClassRegionEq
+              recordBase sourceData class_region_eq_targetRegions)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            detLogVolumeSource.hullOperator)
+          (sourceData.Images.region sourceData.selectedQChoice).toSet
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.sourceSelectedRegion_subset_recordUnion_of_region_eq
+            (record :=
+              IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfClassRegionEq
+                recordBase sourceData class_region_eq_targetRegions)
+            (sourceData := sourceData)
+            (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource.record_region_eq_sourceImages_of_fiberInd2ActionPacketTransportSource
+              (record :=
+                IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfClassRegionEq
+                  recordBase sourceData class_region_eq_targetRegions)
+              actionPacketTransportSource sourceData
+              (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource.latticeFormula_eq_sourceClassImages_of_recordImagesEqSource
+                (record :=
+                  IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfClassRegionEq
+                    recordBase sourceData class_region_eq_targetRegions)
+                actionPacketTransportSource sourceData rfl)))
+          detLogVolumeSource.ob3ob4Source.toWeightedDeterminantSource
+          detLogVolumeSource.toRecordOb3Ob5DeterminantCompatibilitySource.toCompatibility
+          measure_eq_hullLogVolume
+          ((detLogVolumeSource.toRecordOb3Ob5DeterminantCompatibilitySource
+            |>.toRecordBoundedFamilyHullDetLogVolumeSource)
+            |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+                thetaSigned_eq_familyHullLogVolume))
+    (q_pilot_positive : 0 < -package.preLedger.qSigned)
+    (normalization : package.preLedger.normalization)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (coricInvariant :
+      IUTStage1CoricThetaMuPrimeStripInvariant Penv Pgau V μ)
+    (determinantLogVolume_eq_coricPrimeStripGlobal :
+      detLogVolumeSource.ob3ob4Source.toWeightedDeterminantSource.determinantLogVolume =
+        coricInvariant.lift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume) :
+    Audit
+      (ofSourceSpineThetaRecordOb3Ob5ExactThetaCoricOb7FromFiberInd2ActionPacketClassRegions
+        (sourceData := sourceData) (β := β)
+        paperTrace operation hullOperation determinantOperation
+        recordBase class_region_eq_targetRegions actionPacketTransportSource
+        detLogVolumeSource measure_eq_hullLogVolume
+        thetaSigned_eq_familyHullLogVolume hullDetBridge_eq q_pilot_positive
+        normalization coricInvariant
+        determinantLogVolume_eq_coricPrimeStripGlobal) :=
+  audit
+    (ofSourceSpineThetaRecordOb3Ob5ExactThetaCoricOb7FromFiberInd2ActionPacketClassRegions
+      (sourceData := sourceData) (β := β)
+      paperTrace operation hullOperation determinantOperation
+      recordBase class_region_eq_targetRegions actionPacketTransportSource
       detLogVolumeSource measure_eq_hullLogVolume
       thetaSigned_eq_familyHullLogVolume hullDetBridge_eq q_pilot_positive
       normalization coricInvariant determinantLogVolume_eq_coricPrimeStripGlobal)
