@@ -21681,6 +21681,165 @@ theorem preferredStepXIPaperSourceRouteAudit
       lowered_endpoint :=
         loweredEndpointAudit obligations fullAudit }
 
+set_option linter.style.longLine false in
+/--
+Concrete-localized preferred Step (xi) route audit.
+
+This strengthens the public route one level below
+`preferredStepXIPaperSourceRouteAudit`: the caller no longer supplies a
+preassembled `StepXIPaperDerivedHullDeterminantSource`.  Instead, Lean builds
+that Step (xi) source from a Remark 3.9.5 minimal-hull system, a localized
+arithmetic-vector-bundle determinant decomposition, and the shared
+`Theta^{x mu}`/log-Kummer Ob7 source, then runs the preferred route on the
+constructed source.
+-/
+structure PreferredConcreteLocalizedStepXIPaperSourceRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    (concreteHullSource :
+      StepXIHullFormationData.ConcreteHolomorphicHullSystemSource
+        sourceData.Core sourceData.Images)
+    (selectedQChoice_eq_source :
+      concreteHullSource.selectedQChoice = sourceData.selectedQChoice)
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        concreteHullSource.toHullFormationData.hullOperator)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        concreteHullSource.toHullFormationData.quotientHullCompatibility.familySource.possibleRegion)
+    (normalizedLogVolume_le_thetaSigned :
+      localizedSource.localizedSource.normalizedDeterminantLogVolume <=
+        thetaSigned)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData concreteHullSource.toHullFormationData
+        β Penv Pgau V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations) : Prop where
+  concrete_hull_source :
+    StepXIHullFormationData.ConcreteHolomorphicHullSystemSource.Audit
+      concreteHullSource
+  localized_determinant_source :
+    StepXIDeterminantComparisonData.LocalizedHullVectorBundleProjectionAudit
+      (hullData := concreteHullSource.toHullFormationData)
+      localizedSource hullOperator_eq possibleRegion_eq
+      normalizedLogVolume_le_thetaSigned
+  constructed_step_xi_source :
+    let stepXI :=
+      StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaLGPOb7Source
+          (sourceData := sourceData)
+          paperTrace thetaSigned concreteHullSource
+          selectedQChoice_eq_source localizedSource hullOperator_eq
+          possibleRegion_eq normalizedLogVolume_le_thetaSigned ob7Source;
+    StepXIPaperDerivedHullDeterminantSource.Audit stepXI
+  preferred_route :
+    let stepXI :=
+      StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaLGPOb7Source
+          (sourceData := sourceData)
+          paperTrace thetaSigned concreteHullSource
+          selectedQChoice_eq_source localizedSource hullOperator_eq
+          possibleRegion_eq normalizedLogVolume_le_thetaSigned ob7Source;
+    PreferredStepXIPaperSourceRouteAudit
+      sourceData stepXI iutIV_cTheta
+      additive_haar_arithmetic_degree_padic
+  step_xi_obligations_constructed_internally :
+    let stepXI :=
+      StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaLGPOb7Source
+          (sourceData := sourceData)
+          paperTrace thetaSigned concreteHullSource
+          selectedQChoice_eq_source localizedSource hullOperator_eq
+          possibleRegion_eq normalizedLogVolume_le_thetaSigned ob7Source;
+    (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+      sourceData stepXI iutIV_cTheta
+      additive_haar_arithmetic_degree_padic).stepXI_hull_determinant =
+      stepXI.toStepXIHullDeterminantObligations
+
+set_option linter.style.longLine false in
+theorem preferredConcreteLocalizedStepXIPaperSourceRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    (concreteHullSource :
+      StepXIHullFormationData.ConcreteHolomorphicHullSystemSource
+        sourceData.Core sourceData.Images)
+    (selectedQChoice_eq_source :
+      concreteHullSource.selectedQChoice = sourceData.selectedQChoice)
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        concreteHullSource.toHullFormationData.hullOperator)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        concreteHullSource.toHullFormationData.quotientHullCompatibility.familySource.possibleRegion)
+    (normalizedLogVolume_le_thetaSigned :
+      localizedSource.localizedSource.normalizedDeterminantLogVolume <=
+        thetaSigned)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData concreteHullSource.toHullFormationData
+        β Penv Pgau V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations)
+    (audit :
+      let stepXI :=
+        StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaLGPOb7Source
+            (sourceData := sourceData)
+            paperTrace thetaSigned concreteHullSource
+            selectedQChoice_eq_source localizedSource hullOperator_eq
+            possibleRegion_eq normalizedLogVolume_le_thetaSigned ob7Source;
+      NonStepXIRemainingPayloadAudit
+        (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+          sourceData stepXI iutIV_cTheta
+          additive_haar_arithmetic_degree_padic)) :
+    PreferredConcreteLocalizedStepXIPaperSourceRouteAudit
+      sourceData paperTrace thetaSigned concreteHullSource
+      selectedQChoice_eq_source localizedSource hullOperator_eq
+      possibleRegion_eq normalizedLogVolume_le_thetaSigned ob7Source
+      iutIV_cTheta additive_haar_arithmetic_degree_padic := by
+  let stepXI :=
+    StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaLGPOb7Source
+        (sourceData := sourceData)
+        paperTrace thetaSigned concreteHullSource
+        selectedQChoice_eq_source localizedSource hullOperator_eq
+        possibleRegion_eq normalizedLogVolume_le_thetaSigned ob7Source
+  exact
+    { concrete_hull_source := concreteHullSource.audit,
+      localized_determinant_source :=
+        StepXIDeterminantComparisonData.ofLocalizedHullVectorBundleDecompositionSource_audit
+            (hullData := concreteHullSource.toHullFormationData)
+            localizedSource hullOperator_eq possibleRegion_eq
+            normalizedLogVolume_le_thetaSigned,
+      constructed_step_xi_source := stepXI.audit,
+      preferred_route :=
+        preferredStepXIPaperSourceRouteAudit
+          sourceData stepXI iutIV_cTheta
+          additive_haar_arithmetic_degree_padic audit,
+      step_xi_obligations_constructed_internally := rfl }
+
 end Obligations
 
 end IUTStage1Theorem311ToCorollary312PaperTrace

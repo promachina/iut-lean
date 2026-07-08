@@ -262,6 +262,8 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.NonStepXIRemainingPayloadAudit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.remainingPayloadAuditOfNonStepXI}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredStepXIPaperSourceRouteAudit}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredConcreteLocalizedStepXIPaperSourceRouteAudit}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredConcreteLocalizedStepXIPaperSourceRouteAudit}
   \leanok
   The preferred paper-trace route can now consume the source spine together
   with a paper-derived Step (xi) source.  The Step (xi) obligation package is
@@ -269,7 +271,11 @@
   \texttt{StepXIHullDeterminantObligations} argument.  Its remaining payload
   input has also been split: callers supply the non-Step-(xi) payload audit,
   while the legacy Step-(xi) audit fields are derived from the structured
-  Step-(xi) source.
+  Step-(xi) source.  A stricter concrete-localized wrapper now goes one level
+  further: it takes the Remark 3.9.5 minimal-hull source, localized
+  vector-bundle determinant decomposition, and \(\Theta^{\times\mu}\)
+  log-Kummer Ob7 source directly, constructs the paper-derived Step (xi) source
+  internally, and then invokes the preferred route.
 \end{proposition}
 
 \begin{theorem}[Construct \(\SHE\) from source data]
