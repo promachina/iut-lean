@@ -155,6 +155,9 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantCoricOb7}
   \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion_eq_quotientFamilyUnion_of_images_eq}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantCoricOb7FromSourceImages}
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImages_eq_sourceImages_of_region_eq}
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.sourceSelectedRegion_subset_recordUnion_of_region_eq}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantCoricOb7FromSourceRegionTrace}
   \leanok
   The determinant comparison record consumed by the paper-derived Step (xi)
   source can now be produced from the existing weighted arithmetic-vector-bundle
@@ -187,7 +190,12 @@
   identifies the record union with the equality-quotient Remark 3.9.5 family
   union.  The corresponding selected route therefore takes this image-family
   equality and derives both the selected-q containment in the record union and
-  the quotient-family union alignment internally.
+  the quotient-family union alignment internally.  One layer lower, the same
+  route can now consume the paper-shaped pointwise trace
+  \(\mathcal R_{\mathrm{record}}(c)=\mathcal R_{\mathrm{source}}(c)\) for
+  each concrete Hodge-theater/log-theta choice \(c\); Lean assembles this into
+  the full \texttt{RegionFamily} equality before applying the quotient-union
+  theorem.
 \end{proposition}
 
 \begin{proposition}[Step (xi) source assembles obligations]

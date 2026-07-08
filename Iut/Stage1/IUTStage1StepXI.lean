@@ -10423,6 +10423,82 @@ theorem qPilotRegion_subset_recordUnion_of_choice
     RegionFamily.choice_subset_union
       record.thetaPossibleImages.images choice x (q_subset_choice hx)
 
+theorem regionFamily_eq_of_region_eq
+    {ι : Type u} {images₁ images₂ : RegionFamily target ι}
+    (hregion : ∀ choice : ι, images₁.region choice = images₂.region choice) :
+    images₁ = images₂ := by
+  cases images₁
+  cases images₂
+  congr
+  funext choice
+  exact hregion choice
+
+set_option linter.style.longLine false in
+/--
+Turn the source-spine/record pointwise possible-image trace into equality of
+the two `RegionFamily` objects.
+
+Several lower Theorem 3.11 constructors naturally produce the source trace
+choice-by-choice.  Step (xi), however, needs the whole possible-image family to
+transport unions and quotient-family hulls.  Since `RegionFamily` has only the
+`region` field, this theorem performs exactly that structure-level assembly.
+-/
+theorem recordThetaPossibleImages_eq_sourceImages_of_region_eq
+    {coric : Type u} {l : PrimeGeFive}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {sourceData :
+      IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l}
+    (record_region_eq_source :
+      ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        record.thetaPossibleImages.images.region choice =
+          sourceData.Images.region choice) :
+    record.thetaPossibleImages.images = sourceData.Images := by
+  exact regionFamily_eq_of_region_eq record_region_eq_source
+
+set_option linter.style.longLine false in
+/--
+Selected source-spine q-region containment from the pointwise record/source
+possible-image trace.
+
+This is the selected-image part of the same source trace as
+`recordThetaPossibleImages_eq_sourceImages_of_region_eq`: the selected
+Theorem 3.11 possible image is one member of the record possible-image family,
+hence lies in the record union used by the Step (xi) determinant bridge.
+-/
+theorem sourceSelectedRegion_subset_recordUnion_of_region_eq
+    {coric : Type u} {l : PrimeGeFive}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {sourceData :
+      IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l}
+    (record_region_eq_source :
+      ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        record.thetaPossibleImages.images.region choice =
+          sourceData.Images.region choice) :
+    (sourceData.Images.region sourceData.selectedQChoice).toSet ⊆
+      recordThetaPossibleImageUnion record := by
+  have hchoice :
+      (sourceData.Images.region sourceData.selectedQChoice).toSet ⊆
+        recordThetaPossibleImage record sourceData.selectedQChoice := by
+    intro point hpoint
+    change
+      point ∈
+        (record.thetaPossibleImages.images.region
+          sourceData.selectedQChoice).toSet
+    rw [record_region_eq_source sourceData.selectedQChoice]
+    exact hpoint
+  exact
+    qPilotRegion_subset_recordUnion_of_choice
+      (record := record) sourceData.selectedQChoice
+      (sourceData.Images.region sourceData.selectedQChoice).toSet hchoice
+
 set_option linter.style.longLine false in
 /--
 Record possible-image union versus the equality-quotient Remark 3.9.5 family.
@@ -61970,6 +62046,111 @@ noncomputable def ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantCoricOb7
       IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
         (record := record) sourceData.selectedQChoice
         (sourceData.Images.region sourceData.selectedQChoice).toSet hchoice
+  let recordUnion_eq_quotientFamilyUnion :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record =
+        quotientHullCompatibility.familySource.familyUnion :=
+    IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion_eq_quotientFamilyUnion_of_images_eq
+      (record := record) (sourceData := sourceData)
+      record_images_eq_source hullOperator quotientHullCompatibility
+  ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantCoricOb7
+    (sourceData := sourceData) (record := record) (β := β)
+    paperTrace operation hullOperation determinantOperation hullOperator
+    selectedQRegion_subset_recordUnion ob3ob4Source compatibility
+    measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+    q_pilot_positive normalization quotientHullCompatibility
+    recordUnion_eq_quotientFamilyUnion coricInvariant
+    determinantLogVolume_eq_coricPrimeStripGlobal
+
+set_option linter.style.longLine false in
+/--
+Same-index selected-possible-image Step (xi) constructor from the lower
+pointwise source-spine/record possible-image trace.
+
+This is one layer below
+`ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantCoricOb7FromSourceImages`:
+callers no longer supply equality of the full `RegionFamily`.  Instead, they
+provide the source-paper-shaped trace that each concrete Hodge-theater/log-theta
+choice has the same record possible image as the source-spine possible-image
+family.  The full family equality, selected-q containment, and
+record-union/equality-quotient-family alignment are assembled internally.
+-/
+noncomputable def ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantCoricOb7FromSourceRegionTrace
+    {source target : Copy} {coric : Type u} {l : PrimeGeFive}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l}
+    {β : Type v} [Fintype β]
+    (paperTrace : StepXIPaperTrace)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (record_region_eq_source :
+      ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        record.thetaPossibleImages.images.region choice =
+          sourceData.Images.region choice)
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      package.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          hullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (sourceData.Images.region sourceData.selectedQChoice).toSet
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.sourceSelectedRegion_subset_recordUnion_of_region_eq
+            (record := record) (sourceData := sourceData)
+            record_region_eq_source)
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -package.preLedger.qSigned)
+    (normalization : package.preLedger.normalization)
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        sourceData.Core sourceData.Images hullOperator)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (coricInvariant :
+      IUTStage1CoricThetaMuPrimeStripInvariant Penv Pgau V μ)
+    (determinantLogVolume_eq_coricPrimeStripGlobal :
+      ob3ob4Source.toWeightedDeterminantSource.determinantLogVolume =
+        coricInvariant.lift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume) :
+    StepXIPaperDerivedHullDeterminantSource.{u, v} sourceData :=
+  let selectedQRegion_subset_recordUnion :
+      (sourceData.Images.region sourceData.selectedQChoice).toSet ⊆
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record :=
+    IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.sourceSelectedRegion_subset_recordUnion_of_region_eq
+      (record := record) (sourceData := sourceData) record_region_eq_source
+  let record_images_eq_source :
+      record.thetaPossibleImages.images = sourceData.Images :=
+    IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImages_eq_sourceImages_of_region_eq
+      (record := record) (sourceData := sourceData) record_region_eq_source
   let recordUnion_eq_quotientFamilyUnion :
       IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
           record =
