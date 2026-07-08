@@ -67069,6 +67069,219 @@ end StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaLocalizedAdjuste
 
 set_option linter.style.longLine false in
 /--
+Localized diagonal direct-summand Ob7 source calibrated through the
+Hodge/log-theta theta scalar.
+
+This is the next refinement below the localized adjusted-sum source.  The
+environment theta divisor log-volume is no longer identified directly with the
+localized adjusted determinant sum.  Instead, it passes through a named
+Hodge/log-theta scalar, corresponding to the theta-monoid degree that occurs in
+the Theorem 3.11 Hodge--Arakelov input, and only then through the finite
+localized summand calibration.  The direct adjusted-sum source is recovered as a
+constructor, keeping the public route honest about the current lower boundary.
+-/
+structure StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaHodgeSummandRestrictionAnchoredOb7ConstructionSource
+    (hullData : StepXIHullFormationData sourceData.Core sourceData.Images)
+    {η : Type x} {β : Type v} {γ : Type w} [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point target) (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (V : Type v) (μ : Type w) [Fintype V] where
+  restrictionLocalGlobalSource :
+    IUTStage1EnvironmentAnchoredRestrictionLocalGlobalRealifiedFrobenioidSource V
+  summandPlace : β -> V
+  coricUnitCharacter : V -> μ
+  structureSheafSummand : β -> γ
+  structureSheaf_eq_directSummand :
+    ∀ index : β,
+      (localizedSource.localizedSource.localization index).structureSheafLogVolume =
+        (localizedSource.localizedSource.localization index).bundle.directSummandLogVolume
+          (structureSheafSummand index)
+  directSummand_nonneg :
+    ∀ index : β,
+      ∀ summand : γ,
+        0 <=
+          (localizedSource.localizedSource.localization index).bundle.directSummandLogVolume
+            summand
+  positiveIndex : β
+  positiveSummand : γ
+  positiveSummand_ne_structureSheaf :
+    positiveSummand ≠ structureSheafSummand positiveIndex
+  positiveSummand_pos :
+    0 <
+      (localizedSource.localizedSource.localization positiveIndex).bundle.directSummandLogVolume
+        positiveSummand
+  thetaMonoidDegree : Real
+  environmentThetaLogVolume_eq_thetaMonoidDegree :
+    restrictionLocalGlobalSource.evaluation.environment.theta.thetaDivisorLogVolume =
+      thetaMonoidDegree
+  thetaMonoidDegree_eq_localizedAdjustedSum :
+    thetaMonoidDegree = localizedSource.localizedAdjustedSum
+
+namespace StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaHodgeSummandRestrictionAnchoredOb7ConstructionSource
+
+variable {hullData : StepXIHullFormationData sourceData.Core sourceData.Images}
+variable {η : Type x} {β : Type v} {γ : Type w} [Fintype β] [Fintype γ]
+variable
+  {localizedSource :
+    IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+      (Point target) (Quot sourceData.Core.equalityQuotient.relation) η β γ}
+variable {V : Type v} {μ : Type w} [Fintype V]
+
+noncomputable def thetaSigned
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaHodgeSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData localizedSource V μ) :
+    Real :=
+  source.restrictionLocalGlobalSource.evaluation.environment.theta.thetaDivisorLogVolume
+
+theorem thetaSigned_eq_environmentThetaLogVolume
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaHodgeSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData localizedSource V μ) :
+    source.thetaSigned =
+      source.restrictionLocalGlobalSource.evaluation.environment.theta.thetaDivisorLogVolume :=
+  rfl
+
+theorem thetaSigned_eq_thetaMonoidDegree
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaHodgeSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData localizedSource V μ) :
+    source.thetaSigned = source.thetaMonoidDegree := by
+  simpa [thetaSigned] using source.environmentThetaLogVolume_eq_thetaMonoidDegree
+
+theorem environmentThetaLogVolume_eq_localizedAdjustedSum
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaHodgeSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData localizedSource V μ) :
+    source.restrictionLocalGlobalSource.evaluation.environment.theta.thetaDivisorLogVolume =
+      localizedSource.localizedAdjustedSum :=
+  source.environmentThetaLogVolume_eq_thetaMonoidDegree.trans
+    source.thetaMonoidDegree_eq_localizedAdjustedSum
+
+theorem thetaSigned_eq_localizedAdjustedSum
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaHodgeSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData localizedSource V μ) :
+    source.thetaSigned = localizedSource.localizedAdjustedSum :=
+  source.thetaSigned_eq_thetaMonoidDegree.trans
+    source.thetaMonoidDegree_eq_localizedAdjustedSum
+
+theorem thetaSigned_eq_familyHullLogVolume
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaHodgeSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData localizedSource V μ) :
+    source.thetaSigned = localizedSource.familyHullLogVolume :=
+  source.thetaSigned_eq_localizedAdjustedSum.trans
+    localizedSource.familyHullLogVolume_eq_localizedAdjustedSum.symm
+
+set_option linter.style.longLine false in
+noncomputable def toEnvironmentThetaLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaHodgeSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData localizedSource V μ) :
+    StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+      (sourceData := sourceData) (β := β) (γ := γ)
+      hullData localizedSource V μ :=
+  { restrictionLocalGlobalSource := source.restrictionLocalGlobalSource,
+    summandPlace := source.summandPlace,
+    coricUnitCharacter := source.coricUnitCharacter,
+    structureSheafSummand := source.structureSheafSummand,
+    structureSheaf_eq_directSummand := source.structureSheaf_eq_directSummand,
+    directSummand_nonneg := source.directSummand_nonneg,
+    positiveIndex := source.positiveIndex,
+    positiveSummand := source.positiveSummand,
+    positiveSummand_ne_structureSheaf := source.positiveSummand_ne_structureSheaf,
+    positiveSummand_pos := source.positiveSummand_pos,
+    environmentThetaLogVolume_eq_localizedAdjustedSum :=
+      source.environmentThetaLogVolume_eq_localizedAdjustedSum }
+
+set_option linter.style.longLine false in
+noncomputable def toEnvironmentThetaRestrictionAnchoredOb7ConstructionSource
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaHodgeSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData localizedSource V μ) :
+    StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaRestrictionAnchoredOb7ConstructionSource
+      (sourceData := sourceData) (β := β) (γ := γ)
+      hullData localizedSource V μ :=
+  source.toEnvironmentThetaLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+    |>.toEnvironmentThetaRestrictionAnchoredOb7ConstructionSource
+
+set_option linter.style.longLine false in
+noncomputable def toDiagonalDirectSummandFamilyHullGlobalRestrictionAnchoredOb7ConstructionSource
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaHodgeSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData localizedSource V μ) :
+    StepXIThetaLGPLocalizedDiagonalDirectSummandFamilyHullGlobalRestrictionAnchoredOb7ConstructionSource
+      (sourceData := sourceData) (β := β) (γ := γ)
+      hullData localizedSource V μ :=
+  source.toEnvironmentThetaLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+    |>.toDiagonalDirectSummandFamilyHullGlobalRestrictionAnchoredOb7ConstructionSource
+
+set_option linter.style.longLine false in
+noncomputable def toDiagonalDirectSummandPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaHodgeSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData localizedSource V μ) :
+    StepXIThetaLGPLocalizedDiagonalDirectSummandPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+      (sourceData := sourceData) (β := β) (γ := γ)
+      hullData localizedSource V μ :=
+  source.toEnvironmentThetaLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+    |>.toDiagonalDirectSummandPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+
+set_option linter.style.longLine false in
+theorem familyHullLogVolume_eq_restrictionAnchoredGlobal
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaHodgeSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData localizedSource V μ) :
+    localizedSource.familyHullLogVolume =
+      (source.restrictionLocalGlobalSource.toEnvironmentAnchoredLocalGlobalRealifiedFrobenioidSource
+        |>.toLocalGlobalCollection).globalObject.realifiedLogVolume :=
+  source.toEnvironmentThetaLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+    |>.familyHullLogVolume_eq_restrictionAnchoredGlobal
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaHodgeSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData localizedSource V μ) :
+    let adjustedSource :=
+      source.toEnvironmentThetaLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource;
+    source.thetaSigned = source.thetaMonoidDegree ∧
+      source.thetaMonoidDegree = localizedSource.localizedAdjustedSum ∧
+      source.thetaSigned = localizedSource.localizedAdjustedSum ∧
+      source.thetaSigned = localizedSource.familyHullLogVolume ∧
+      localizedSource.familyHullLogVolume =
+        (source.restrictionLocalGlobalSource.toEnvironmentAnchoredLocalGlobalRealifiedFrobenioidSource
+          |>.toLocalGlobalCollection).globalObject.realifiedLogVolume ∧
+      adjustedSource.environmentThetaLogVolume_eq_localizedAdjustedSum =
+        source.environmentThetaLogVolume_eq_localizedAdjustedSum :=
+  by
+    intro adjustedSource
+    exact
+      ⟨source.thetaSigned_eq_thetaMonoidDegree,
+        source.thetaMonoidDegree_eq_localizedAdjustedSum,
+        source.thetaSigned_eq_localizedAdjustedSum,
+        source.thetaSigned_eq_familyHullLogVolume,
+        source.familyHullLogVolume_eq_restrictionAnchoredGlobal,
+        rfl⟩
+
+end StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaHodgeSummandRestrictionAnchoredOb7ConstructionSource
+
+set_option linter.style.longLine false in
+/--
 Localized single-place Ob7 source for the preferred public Step (xi) route.
 
 This specializes the localized product-formula construction to the one-summand
@@ -74411,6 +74624,222 @@ theorem preferredPublicStepXIPaperSourceRouteAuditDiagonalDirectSummandEnvironme
     (environmentThetaAdjustedSource.toEnvironmentThetaRestrictionAnchoredOb7ConstructionSource
       (sourceData := sourceData))
     (environmentThetaAdjustedSource.thetaSigned_eq_familyHullLogVolume
+      (sourceData := sourceData))
+    iutIV_cTheta additive_haar_arithmetic_degree_padic audit
+
+set_option linter.style.longLine false in
+/--
+Preferred public Step (xi) paper-source route with environment theta calibrated
+through the Hodge/log-theta theta scalar.
+
+This is stricter than the localized adjusted-sum route: the public input is a
+Hodge/log-theta scalar, identified first with the environment theta divisor
+log-volume and then with the localized finite adjusted determinant sum.  The
+older adjusted-sum source is constructed internally before the route delegates
+to the audited localized Step (xi) construction.
+-/
+theorem preferredPublicStepXIPaperSourceRouteAuditDiagonalDirectSummandEnvironmentThetaHodgeSummandRestrictionAnchoredOb7
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (paperTrace : StepXIPaperTrace)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        principalProductHullOperator sourceData principalSource)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        principalProductPossibleRegion sourceData principalSource)
+    {V : Type v} {μ : Type w} [Fintype V]
+    (environmentThetaHodgeSource :
+      StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaHodgeSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        (principalProductHullFormationData sourceData principalSource)
+        localizedSource V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations)
+    (audit :
+      let environmentThetaAdjustedSource :=
+        environmentThetaHodgeSource.toEnvironmentThetaLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+          (sourceData := sourceData)
+      let environmentThetaSource :=
+        environmentThetaAdjustedSource.toEnvironmentThetaRestrictionAnchoredOb7ConstructionSource
+          (sourceData := sourceData)
+      let environmentThetaLogVolume_eq_familyHullLogVolume :=
+        environmentThetaAdjustedSource.thetaSigned_eq_familyHullLogVolume
+          (sourceData := sourceData)
+      let thetaSigned := environmentThetaSource.thetaSigned
+      let thetaGlobalSource :=
+        environmentThetaSource.toDiagonalDirectSummandThetaGlobalRestrictionAnchoredOb7ConstructionSource
+          (sourceData := sourceData)
+      let familyHullGlobalSource :=
+        thetaGlobalSource.toDiagonalDirectSummandFamilyHullGlobalRestrictionAnchoredOb7ConstructionSource
+          (sourceData := sourceData) environmentThetaLogVolume_eq_familyHullLogVolume
+      let directSummandPositiveSource :=
+        familyHullGlobalSource.toDiagonalDirectSummandPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+          (sourceData := sourceData)
+      let structureSheafPositiveSource :=
+        directSummandPositiveSource.toDiagonalStructureSheafPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+          (sourceData := sourceData)
+      let rawPositiveSource :=
+        structureSheafPositiveSource.toDiagonalRawPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+          (sourceData := sourceData)
+      let summandPositiveSource :=
+        rawPositiveSource.toDiagonalSummandPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+          (sourceData := sourceData)
+      let positiveRestrictionSource :=
+        summandPositiveSource.toDiagonalPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+          (sourceData := sourceData)
+      let restrictionDiagonalSource :=
+        positiveRestrictionSource.toDiagonalRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+          (sourceData := sourceData)
+      let diagonalSource :=
+        restrictionDiagonalSource.toDiagonalAnchoredGlobalNormalizedOb7ConstructionSource
+          (sourceData := sourceData)
+      let anchoredSource :=
+        diagonalSource.toAnchoredCommonPlaceGlobalNormalizedOb7ConstructionSource
+          (sourceData := sourceData)
+      let sharedSource :=
+        anchoredSource.toSharedLocalGlobalCommonPlaceGlobalNormalizedOb7ConstructionSource
+          (sourceData := sourceData)
+      let commonPlaceSource :=
+        sharedSource.toCommonPlaceGlobalNormalizedOb7ConstructionSource
+          (sourceData := sourceData)
+      let normalizedSource :=
+        commonPlaceSource.toGlobalNormalizedRawAdjustedOb7ConstructionSource
+          (sourceData := sourceData)
+      let constructionSource :=
+        normalizedSource.toLocalizedProductFormulaOb7ConstructionSource
+          (sourceData := sourceData)
+      let tensorPower_bound :
+          (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+              constructionSource.determinantProductFormulaSource.determinantSource).normalizedLogVolume <=
+            thetaSigned := by
+            have hlocalized :=
+              StepXIDeterminantComparisonData.localizedNormalizedLogVolume_le_thetaSigned_ofThetaEqFamilyHullLogVolume
+                localizedSource environmentThetaLogVolume_eq_familyHullLogVolume
+            calc
+              (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+                  constructionSource.determinantProductFormulaSource.determinantSource).normalizedLogVolume =
+                  constructionSource.determinantProductFormulaSource.determinantSource.determinantLogVolume :=
+                IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant_normalizedLogVolume_eq
+                  constructionSource.determinantProductFormulaSource.determinantSource
+              _ =
+                  constructionSource.determinantProductFormulaSource.determinantSource.normalizedLogVolume := by
+                rw [constructionSource.determinantProductFormulaSource.determinantSource.normalizedLogVolume_eq_determinantLogVolume]
+              _ =
+                  localizedSource.localizedSource.normalizedDeterminantLogVolume := by
+                rw [constructionSource.determinantProductFormula_determinantSource_eq]
+                rfl
+              _ <= thetaSigned := hlocalized;
+      let ob7Source :=
+        constructionSource.toThetaLGPOb7CompatibilitySource
+          (sourceData := sourceData)
+          thetaSigned hullOperator_eq possibleRegion_eq tensorPower_bound;
+      let concreteHullSource :=
+        principalProductConcreteHullSource sourceData principalSource;
+      let stepXI :=
+        StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaEqFamilyHullThetaLGPOb7Source
+            (sourceData := sourceData)
+            paperTrace thetaSigned concreteHullSource
+            rfl localizedSource hullOperator_eq possibleRegion_eq
+            environmentThetaLogVolume_eq_familyHullLogVolume ob7Source;
+      NonStepXIRemainingPayloadAudit
+        (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+          sourceData stepXI iutIV_cTheta
+          additive_haar_arithmetic_degree_padic)) :
+    let environmentThetaAdjustedSource :=
+      environmentThetaHodgeSource.toEnvironmentThetaLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData)
+    let environmentThetaSource :=
+      environmentThetaAdjustedSource.toEnvironmentThetaRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData)
+    let environmentThetaLogVolume_eq_familyHullLogVolume :=
+      environmentThetaAdjustedSource.thetaSigned_eq_familyHullLogVolume
+        (sourceData := sourceData)
+    let thetaSigned := environmentThetaSource.thetaSigned
+    let thetaGlobalSource :=
+      environmentThetaSource.toDiagonalDirectSummandThetaGlobalRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData)
+    let familyHullGlobalSource :=
+      thetaGlobalSource.toDiagonalDirectSummandFamilyHullGlobalRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) environmentThetaLogVolume_eq_familyHullLogVolume
+    let directSummandPositiveSource :=
+      familyHullGlobalSource.toDiagonalDirectSummandPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData)
+    let structureSheafPositiveSource :=
+      directSummandPositiveSource.toDiagonalStructureSheafPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData)
+    let rawPositiveSource :=
+      structureSheafPositiveSource.toDiagonalRawPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData)
+    let summandPositiveSource :=
+      rawPositiveSource.toDiagonalSummandPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData)
+    let positiveRestrictionSource :=
+      summandPositiveSource.toDiagonalPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData)
+    let restrictionDiagonalSource :=
+      positiveRestrictionSource.toDiagonalRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData)
+    let diagonalSource :=
+      restrictionDiagonalSource.toDiagonalAnchoredGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData)
+    let anchoredSource :=
+      diagonalSource.toAnchoredCommonPlaceGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData)
+    let sharedSource :=
+      anchoredSource.toSharedLocalGlobalCommonPlaceGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData)
+    let commonPlaceSource :=
+      sharedSource.toCommonPlaceGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData)
+    let normalizedSource :=
+      commonPlaceSource.toGlobalNormalizedRawAdjustedOb7ConstructionSource
+        (sourceData := sourceData)
+    let constructionSource :=
+      normalizedSource.toLocalizedProductFormulaOb7ConstructionSource
+        (sourceData := sourceData)
+    PreferredPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+      sourceData paperTrace thetaSigned principalSource localizedSource
+      hullOperator_eq possibleRegion_eq environmentThetaLogVolume_eq_familyHullLogVolume
+      (constructionSource.toThetaLGPOb7CompatibilitySource
+        (sourceData := sourceData)
+        thetaSigned hullOperator_eq possibleRegion_eq
+        (by
+          have hlocalized :=
+            StepXIDeterminantComparisonData.localizedNormalizedLogVolume_le_thetaSigned_ofThetaEqFamilyHullLogVolume
+              localizedSource environmentThetaLogVolume_eq_familyHullLogVolume
+          calc
+            (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+                constructionSource.determinantProductFormulaSource.determinantSource).normalizedLogVolume =
+                constructionSource.determinantProductFormulaSource.determinantSource.determinantLogVolume :=
+              IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant_normalizedLogVolume_eq
+                constructionSource.determinantProductFormulaSource.determinantSource
+            _ =
+                constructionSource.determinantProductFormulaSource.determinantSource.normalizedLogVolume := by
+              rw [constructionSource.determinantProductFormulaSource.determinantSource.normalizedLogVolume_eq_determinantLogVolume]
+            _ =
+                localizedSource.localizedSource.normalizedDeterminantLogVolume := by
+              rw [constructionSource.determinantProductFormula_determinantSource_eq]
+              rfl
+            _ <= thetaSigned := hlocalized))
+      iutIV_cTheta additive_haar_arithmetic_degree_padic :=
+  preferredPublicStepXIPaperSourceRouteAuditDiagonalDirectSummandEnvironmentThetaLocalizedAdjustedRestrictionAnchoredOb7
+    sourceData paperTrace principalSource localizedSource hullOperator_eq
+    possibleRegion_eq
+    (environmentThetaHodgeSource.toEnvironmentThetaLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
       (sourceData := sourceData))
     iutIV_cTheta additive_haar_arithmetic_degree_padic audit
 
