@@ -19469,6 +19469,56 @@ structure LocalizedHullVectorBundleProjectionAudit
   localized_normalized_eq_determinant :
     localizedSource.localizedSource.normalizedDeterminantLogVolume =
       localizedSource.localizedSource.determinantLogVolume
+  localized_ob3_ob5_adjusted_endpoint :
+    let adjustedSource :=
+      localizedSource.toOb3Ob5AdjustedDeterminantLogVolumeSource;
+    adjustedSource.familyHullLogVolume =
+        adjustedSource.adjustedSummandLogVolume ∧
+      adjustedSource.adjustedSummandLogVolume =
+        adjustedSource.ob3ob4Source.determinantLogVolume ∧
+      adjustedSource.familyHullLogVolume =
+        adjustedSource.ob3ob4Source.determinantLogVolume ∧
+      adjustedSource.familyHullLogVolume =
+        adjustedSource.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      adjustedSource.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          adjustedSource.toOb3Ob5DeterminantCompatibilitySource.familyHull =
+        adjustedSource.toOb3Ob5DeterminantCompatibilitySource.determinantSource.normalizedLogVolume ∧
+      adjustedSource.toOb3Ob5DeterminantCompatibilitySource.hullOperator.logVolume
+          adjustedSource.toOb3Ob5DeterminantCompatibilitySource.familyHull =
+        adjustedSource.toOb3Ob5DeterminantCompatibilitySource.determinantSource.determinantLogVolume
+  localized_ob3_ob5_compatibility_endpoint :
+    let adjustedSource :=
+      localizedSource.toOb3Ob5AdjustedDeterminantLogVolumeSource;
+    let compatibilitySource :=
+      adjustedSource.toOb3Ob5DeterminantCompatibilitySource;
+    compatibilitySource.determinantSource =
+        adjustedSource.ob3ob4Source.toWeightedDeterminantSource ∧
+      adjustedSource.familyHullLogVolume =
+        adjustedSource.adjustedSummandLogVolume ∧
+      adjustedSource.adjustedSummandLogVolume =
+        adjustedSource.ob3ob4Source.determinantLogVolume ∧
+      adjustedSource.familyHullLogVolume =
+        adjustedSource.ob3ob4Source.determinantLogVolume ∧
+      adjustedSource.familyHullLogVolume =
+        adjustedSource.ob3ob4Source.normalizedDeterminantLogVolume ∧
+      compatibilitySource.hullOperator.logVolume
+          compatibilitySource.familyHull =
+        compatibilitySource.determinantSource.normalizedLogVolume ∧
+      compatibilitySource.hullOperator.logVolume
+          compatibilitySource.familyHull =
+        compatibilitySource.determinantSource.determinantLogVolume
+  bounded_family_hull_det_log_volume_endpoint :
+    let compatibilitySource :=
+      localizedSource.toOb3Ob5AdjustedDeterminantLogVolumeSource
+        |>.toOb3Ob5DeterminantCompatibilitySource;
+    compatibilitySource.toBoundedFamilyHullDetLogVolumeSource.familyUnion =
+        compatibilitySource.familyUnion ∧
+      compatibilitySource.toBoundedFamilyHullDetLogVolumeSource.familyHull =
+        compatibilitySource.familyHull ∧
+      compatibilitySource.toBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume =
+        compatibilitySource.determinantSource.determinantLogVolume ∧
+      compatibilitySource.toBoundedFamilyHullDetLogVolumeSource.tensorPower.normalizedLogVolume =
+        compatibilitySource.toBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume
   determinant_data_endpoint :
     let data :=
       ofLocalizedHullVectorBundleDecompositionSource
@@ -19511,6 +19561,16 @@ theorem ofLocalizedHullVectorBundleDecompositionSource_audit
       localizedSource.localizedSource.determinantLogVolume_eq_sum_weightedAdjusted,
     localized_normalized_eq_determinant :=
       localizedSource.localizedSource.normalizedDeterminantLogVolume_eq_determinant,
+    localized_ob3_ob5_adjusted_endpoint :=
+      (localizedSource.toOb3Ob5AdjustedDeterminantLogVolumeSource).endpoint,
+    localized_ob3_ob5_compatibility_endpoint :=
+      (localizedSource.toOb3Ob5AdjustedDeterminantLogVolumeSource)
+        |>.toOb3Ob5DeterminantCompatibilitySource_endpoint,
+    bounded_family_hull_det_log_volume_endpoint := by
+      let compatibilitySource :=
+        localizedSource.toOb3Ob5AdjustedDeterminantLogVolumeSource
+          |>.toOb3Ob5DeterminantCompatibilitySource
+      exact compatibilitySource.toBoundedFamilyHullDetLogVolumeSource_endpoint,
     determinant_data_endpoint := by
       let data :=
         ofLocalizedHullVectorBundleDecompositionSource
