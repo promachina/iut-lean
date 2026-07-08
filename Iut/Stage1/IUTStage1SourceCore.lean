@@ -28518,6 +28518,28 @@ namespace IUTStage1EnvironmentGaussianFPrimeStripEvaluation
 
 variable {Penv Pgau V : Type u} [Fintype Penv] [Fintype Pgau] [Fintype V]
 
+/--
+Construct the finite `F`-prime-strip evaluation from two identifications with
+the same valuation set.
+
+This is the lower finite source shape for the prime-place square: once the
+environment and Gaussian prime sets are both identified with `V`, the
+environment-to-Gaussian prime evaluation is forced, and the place-compatibility
+law is definitional.
+-/
+def ofCommonPlaceEquivalences
+    (localEvaluation : IUTStage1EnvironmentGaussianLocalEvaluation V)
+    (environmentPrimeToPlace : Penv ≃ V)
+    (gaussianPrimeToPlace : Pgau ≃ V) :
+    IUTStage1EnvironmentGaussianFPrimeStripEvaluation Penv Pgau V :=
+  { localEvaluation := localEvaluation,
+    environmentPrimeToPlace := environmentPrimeToPlace,
+    gaussianPrimeToPlace := gaussianPrimeToPlace,
+    primeEvaluation := environmentPrimeToPlace.trans gaussianPrimeToPlace.symm,
+    prime_place_compatible := by
+      intro p
+      simp }
+
 theorem gaussianPlaceOfEvaluation_eq_environmentPlace
     (strip :
       IUTStage1EnvironmentGaussianFPrimeStripEvaluation Penv Pgau V)
@@ -28595,6 +28617,31 @@ theorem endpoint
         strip.gaussianExtensionDegree_at_evaluatedPrime_eq_environment p,
         strip.gaussianLocalLogVolume_at_evaluatedPrime_eq_environment p⟩⟩
 
+set_option linter.style.longLine false in
+theorem ofCommonPlaceEquivalences_endpoint
+    (localEvaluation : IUTStage1EnvironmentGaussianLocalEvaluation V)
+    (environmentPrimeToPlace : Penv ≃ V)
+    (gaussianPrimeToPlace : Pgau ≃ V) :
+    let strip :=
+      ofCommonPlaceEquivalences
+        localEvaluation environmentPrimeToPlace gaussianPrimeToPlace;
+    strip.localEvaluation = localEvaluation ∧
+      strip.environmentPrimeToPlace = environmentPrimeToPlace ∧
+      strip.gaussianPrimeToPlace = gaussianPrimeToPlace ∧
+      strip.primeEvaluation =
+        environmentPrimeToPlace.trans gaussianPrimeToPlace.symm ∧
+      (∀ p : Penv,
+        strip.gaussianPrimeToPlace (strip.primeEvaluation p) =
+          strip.environmentPrimeToPlace p) ∧
+      strip.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume =
+        strip.localEvaluation.environmentLocal.globalObject.realifiedLogVolume :=
+  by
+    intro strip
+    exact
+      ⟨rfl, rfl, rfl, rfl,
+        strip.gaussianPlaceOfEvaluation_eq_environmentPlace,
+        strip.localEvaluation.gaussianGlobalLogVolume_eq_environment⟩
+
 end IUTStage1EnvironmentGaussianFPrimeStripEvaluation
 
 /--
@@ -28617,6 +28664,21 @@ namespace IUTStage1EnvironmentGaussianThetaMuPrimeStripLift
 
 variable {Penv Pgau V : Type u} {μ : Type v}
 variable [Fintype Penv] [Fintype Pgau] [Fintype V]
+
+/--
+Construct the `F^{×μ}` lift from a valuation-indexed unit character.
+
+The environment unit character is pulled back along the environment
+prime-place equivalence.  The Gaussian unit character is then transported along
+the prime-strip evaluation as before, so no Gaussian-side unit data is supplied.
+-/
+def ofPlaceUnitCharacter
+    (base : IUTStage1EnvironmentGaussianFPrimeStripEvaluation Penv Pgau V)
+    (placeUnitCharacter : V -> μ) :
+    IUTStage1EnvironmentGaussianThetaMuPrimeStripLift Penv Pgau V μ :=
+  { base := base,
+    environmentUnitCharacter := fun p =>
+      placeUnitCharacter (base.environmentPrimeToPlace p) }
 
 def gaussianUnitCharacter
     (lift :
@@ -28660,6 +28722,29 @@ theorem endpoint
       ⟨lift.base.gaussianPlaceOfEvaluation_eq_environmentPlace p,
         lift.base.gaussianLocalLogVolume_at_evaluatedPrime_eq_environment p,
         lift.gaussianUnitCharacter_at_evaluatedPrime p⟩⟩
+
+set_option linter.style.longLine false in
+theorem ofPlaceUnitCharacter_endpoint
+    (base : IUTStage1EnvironmentGaussianFPrimeStripEvaluation Penv Pgau V)
+    (placeUnitCharacter : V -> μ) :
+    let lift := ofPlaceUnitCharacter base placeUnitCharacter;
+    lift.base = base ∧
+      (∀ p : Penv,
+        lift.environmentUnitCharacter p =
+          placeUnitCharacter (base.environmentPrimeToPlace p)) ∧
+      (∀ p : Penv,
+        lift.gaussianUnitCharacter (lift.base.primeEvaluation p) =
+          placeUnitCharacter (base.environmentPrimeToPlace p)) ∧
+      lift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume =
+        lift.base.localEvaluation.environmentLocal.globalObject.realifiedLogVolume :=
+  by
+    intro lift
+    exact
+      ⟨rfl, fun _ => rfl,
+        fun p => by
+          rw [lift.gaussianUnitCharacter_at_evaluatedPrime p]
+          rfl,
+        lift.base.localEvaluation.gaussianGlobalLogVolume_eq_environment⟩
 
 end IUTStage1EnvironmentGaussianThetaMuPrimeStripLift
 
@@ -28710,6 +28795,31 @@ def ofLiftAndCoricUnitCharacter
     coricUnitCharacter := coricUnitCharacter,
     environment_unit_eq_coric := environment_unit_eq_coric }
 
+/--
+Construct the coric `F^{⊢×μ}` invariant directly from common prime-place
+coordinates and a valuation-indexed coric unit character.
+
+This is the lower finite source shape used by the new Ob7 route: the
+environment/Gaussian prime evaluation is forced by the two place
+identifications, the environment unit character is the pullback of the same
+coric character, and the Gaussian coric equality is then derived by transport.
+-/
+def ofCommonPlaceUnitCharacter
+    (localEvaluation : IUTStage1EnvironmentGaussianLocalEvaluation V)
+    (environmentPrimeToPlace : Penv ≃ V)
+    (gaussianPrimeToPlace : Pgau ≃ V)
+    (coricUnitCharacter : V -> μ) :
+    IUTStage1CoricThetaMuPrimeStripInvariant Penv Pgau V μ :=
+  let base :=
+    IUTStage1EnvironmentGaussianFPrimeStripEvaluation.ofCommonPlaceEquivalences
+      localEvaluation environmentPrimeToPlace gaussianPrimeToPlace
+  let lift :=
+    IUTStage1EnvironmentGaussianThetaMuPrimeStripLift.ofPlaceUnitCharacter
+      base coricUnitCharacter
+  { lift := lift,
+    coricUnitCharacter := coricUnitCharacter,
+    environment_unit_eq_coric := fun _ => rfl }
+
 theorem gaussianUnitCharacter_at_evaluatedPrime_eq_coric
     (invariant :
       IUTStage1CoricThetaMuPrimeStripInvariant Penv Pgau V μ)
@@ -28751,6 +28861,38 @@ theorem endpoint
     ⟨invariant.environment_unit_eq_coric p,
       invariant.gaussianUnitCharacter_at_evaluatedPrime_eq_coric p,
       invariant.environmentUnitCharacter_eq_gaussianUnitCharacter_at_evaluatedPrime p⟩
+
+set_option linter.style.longLine false in
+theorem ofCommonPlaceUnitCharacter_endpoint
+    (localEvaluation : IUTStage1EnvironmentGaussianLocalEvaluation V)
+    (environmentPrimeToPlace : Penv ≃ V)
+    (gaussianPrimeToPlace : Pgau ≃ V)
+    (coricUnitCharacter : V -> μ) :
+    let invariant :=
+      ofCommonPlaceUnitCharacter
+        localEvaluation environmentPrimeToPlace gaussianPrimeToPlace
+        coricUnitCharacter;
+    invariant.lift.base.localEvaluation = localEvaluation ∧
+      invariant.lift.base.environmentPrimeToPlace = environmentPrimeToPlace ∧
+      invariant.lift.base.gaussianPrimeToPlace = gaussianPrimeToPlace ∧
+      invariant.lift.base.primeEvaluation =
+        environmentPrimeToPlace.trans gaussianPrimeToPlace.symm ∧
+      invariant.coricUnitCharacter = coricUnitCharacter ∧
+      (∀ p : Penv,
+        invariant.lift.environmentUnitCharacter p =
+          coricUnitCharacter (environmentPrimeToPlace p)) ∧
+      (∀ p : Penv,
+        invariant.lift.gaussianUnitCharacter
+            (invariant.lift.base.primeEvaluation p) =
+          coricUnitCharacter
+            (invariant.lift.base.gaussianPrimeToPlace
+              (invariant.lift.base.primeEvaluation p))) :=
+  by
+    intro invariant
+    exact
+      ⟨rfl, rfl, rfl, rfl, rfl,
+        fun _ => rfl,
+        invariant.gaussianUnitCharacter_at_evaluatedPrime_eq_coric⟩
 
 end IUTStage1CoricThetaMuPrimeStripInvariant
 
