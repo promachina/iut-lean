@@ -16778,6 +16778,135 @@ theorem choiceImageNonempty
   ⟨source.choiceImagePoint choice,
     source.choiceImagePoint_mem choice⟩
 
+set_option linter.style.longLine false in
+/--
+Package-target-region theta-pilot class source.
+
+This is the target-region-backed construction of the class-indexed possible
+images.  A representative section chooses one concrete Hodge-theater/log-theta
+choice for every theta-pilot class; the target-region invariance law says that
+the package target regions depend only on this class.  Point witnesses for the
+representative target regions then give the witness-bearing theta-pilot
+possible-image source used by Theorem 3.11.
+-/
+structure PackageTargetRegionClassSource
+    {source : Copy}
+    (package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)) where
+  representativeData :
+    ThetaPilotClassRepresentativeData coric l
+  targetRegions_same_thetaPilotClass :
+    ∀ {choice₁ choice₂ :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      thetaPilotClass choice₁ = thetaPilotClass choice₂ ->
+        package.preLedger.output.comparisons.targetRegions.region choice₁ =
+          package.preLedger.output.comparisons.targetRegions.region choice₂
+  targetRegionPoint :
+    ThetaPilotClass (coric := coric) -> Point target
+  targetRegionPoint_mem :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      (package.preLedger.output.comparisons.targetRegions.region
+        (representativeData.representative thetaClass)).Contains
+        (targetRegionPoint thetaClass)
+
+namespace PackageTargetRegionClassSource
+
+variable {source : Copy}
+variable
+  {package :
+    IUTStage1SourcePackage source target
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+
+set_option linter.style.longLine false in
+/-- Class-indexed regions obtained from package target regions via representatives. -/
+def classImages
+    (targetSource : PackageTargetRegionClassSource
+      (target := target) package) :
+    RegionFamily target (ThetaPilotClass (coric := coric)) :=
+  { region := fun thetaClass =>
+      package.preLedger.output.comparisons.targetRegions.region
+        (targetSource.representativeData.representative thetaClass) }
+
+set_option linter.style.longLine false in
+/-- The target-region-backed theta-pilot possible-image source. -/
+def toThetaPilotClassPossibleImageSource
+    (targetSource : PackageTargetRegionClassSource
+      (target := target) package) :
+    ThetaPilotClassPossibleImageSource
+      (target := target) coric l :=
+  { classImages := targetSource.classImages,
+    classImagePoint := targetSource.targetRegionPoint,
+    classImagePoint_mem := targetSource.targetRegionPoint_mem }
+
+set_option linter.style.longLine false in
+/--
+The constructed class-indexed source pulls back to the package target regions.
+-/
+theorem class_region_eq_targetRegions
+    (targetSource : PackageTargetRegionClassSource
+      (target := target) package)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (targetSource.toThetaPilotClassPossibleImageSource).classImages.region
+        (thetaPilotClass choice) =
+      package.preLedger.output.comparisons.targetRegions.region choice :=
+  targetSource.targetRegions_same_thetaPilotClass
+    (choice₁ :=
+      targetSource.representativeData.representative (thetaPilotClass choice))
+    (choice₂ := choice)
+    (targetSource.representativeData.thetaPilotClass_representative
+      (thetaPilotClass choice))
+
+set_option linter.style.longLine false in
+/--
+The constructed choice-indexed possible-image family is the package target
+region family.
+-/
+theorem choiceImages_eq_targetRegions
+    (targetSource : PackageTargetRegionClassSource
+      (target := target) package) :
+    (targetSource.toThetaPilotClassPossibleImageSource).choiceImages =
+      package.preLedger.output.comparisons.targetRegions := by
+  unfold ThetaPilotClassPossibleImageSource.choiceImages
+  cases htarget : package.preLedger.output.comparisons.targetRegions with
+  | mk targetRegion =>
+    congr
+    funext choice
+    simpa [class_region_eq_targetRegions, htarget]
+
+set_option linter.style.longLine false in
+/-- Endpoint audit for the target-region-backed theta-pilot source. -/
+theorem endpoint
+    (targetSource : PackageTargetRegionClassSource
+      (target := target) package) :
+    (∀ thetaClass : ThetaPilotClass (coric := coric),
+      thetaPilotClass
+          (targetSource.representativeData.representative thetaClass) =
+        thetaClass) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        thetaPilotClass choice₁ = thetaPilotClass choice₂ ->
+          package.preLedger.output.comparisons.targetRegions.region choice₁ =
+            package.preLedger.output.comparisons.targetRegions.region choice₂) ∧
+      (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        (targetSource.toThetaPilotClassPossibleImageSource).classImages.region
+            (thetaPilotClass choice) =
+          package.preLedger.output.comparisons.targetRegions.region choice) ∧
+      (targetSource.toThetaPilotClassPossibleImageSource).choiceImages =
+        package.preLedger.output.comparisons.targetRegions ∧
+      (∀ thetaClass : ThetaPilotClass (coric := coric),
+        ((targetSource.toThetaPilotClassPossibleImageSource).classImages.region
+          thetaClass).Contains
+          ((targetSource.toThetaPilotClassPossibleImageSource).classImagePoint
+            thetaClass)) :=
+  ⟨targetSource.representativeData.thetaPilotClass_representative,
+    targetSource.targetRegions_same_thetaPilotClass,
+    targetSource.class_region_eq_targetRegions,
+    targetSource.choiceImages_eq_targetRegions,
+    targetSource.toThetaPilotClassPossibleImageSource.classImagePoint_mem⟩
+
+end PackageTargetRegionClassSource
+
 theorem choiceImages_region
     (source : ThetaPilotClassPossibleImageSource
       (target := target) coric l)
@@ -18613,6 +18742,66 @@ theorem Images_eq_targetRegions_of_class_region_eq
     congr
     funext choice
     simpa [htarget] using class_region_eq_targetRegions choice
+
+set_option linter.style.longLine false in
+/--
+Replace the theta possible-image source of the unified spine by the
+package-target-region-backed theta-pilot class source.
+
+All Hodge-theater, selected-q, bridge, and log-Kummer data are preserved.  Only
+the possible-image family is rebuilt from package target regions plus
+theta-pilot-class invariance.
+-/
+def withTargetRegionClassSource
+    {source : Copy}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l)
+    (targetSource :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource.PackageTargetRegionClassSource
+        (target := target) package) :
+    Theorem311HodgeTheaterLogThetaLogKummerSource
+      (target := target) coric l :=
+  { sourceData with
+    thetaPossibleImageSource :=
+      targetSource.toThetaPilotClassPossibleImageSource }
+
+set_option linter.style.longLine false in
+theorem withTargetRegionClassSource_class_region_eq_targetRegions
+    {source : Copy}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l)
+    (targetSource :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource.PackageTargetRegionClassSource
+        (target := target) package)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (sourceData.withTargetRegionClassSource targetSource).thetaPossibleImageSource.classImages.region
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice) =
+      package.preLedger.output.comparisons.targetRegions.region choice :=
+  targetSource.class_region_eq_targetRegions choice
+
+set_option linter.style.longLine false in
+theorem withTargetRegionClassSource_Images_eq_targetRegions
+    {source : Copy}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l)
+    (targetSource :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource.PackageTargetRegionClassSource
+        (target := target) package) :
+    (sourceData.withTargetRegionClassSource targetSource).Images =
+      package.preLedger.output.comparisons.targetRegions :=
+  targetSource.choiceImages_eq_targetRegions
 
 set_option linter.style.longLine false in
 /--
