@@ -10425,6 +10425,74 @@ theorem qPilotRegion_subset_recordUnion_of_choice
 
 set_option linter.style.longLine false in
 /--
+Record possible-image union versus the equality-quotient Remark 3.9.5 family.
+
+This is the Theorem 3.11-to-Remark 3.9.5 union alignment used in Step (xi):
+if the source-spine possible-image family is the record possible-image family,
+then quotienting by the typed `(Ind1)/(Ind2)` equality relation does not change
+the underlying union of point-regions.  The forward direction maps a record
+choice to its equality-quotient class; the reverse direction chooses a
+representative of the quotient class.
+-/
+theorem recordThetaPossibleImageUnion_eq_quotientFamilyUnion_of_images_eq
+    {coric : Type u} {l : PrimeGeFive}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {sourceData :
+      IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l}
+    (record_images_eq_source :
+      record.thetaPossibleImages.images = sourceData.Images)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        sourceData.Core sourceData.Images hullOperator) :
+    recordThetaPossibleImageUnion record =
+      quotientHullCompatibility.familySource.familyUnion := by
+  apply Set.ext
+  intro point
+  constructor
+  · intro hpoint
+    rw [recordThetaPossibleImageUnion] at hpoint
+    rcases Set.mem_iUnion.mp hpoint with ⟨choice, hchoice⟩
+    have hsource :
+        point ∈ (sourceData.Images.region choice).toSet := by
+      simpa [recordThetaPossibleImage, record_images_eq_source] using hchoice
+    have hquotient :
+        point ∈ quotientHullCompatibility.familySource.possibleRegion
+          (sourceData.Core.equalityQuotientMap choice) := by
+      simpa [quotientHullCompatibility.possibleRegion_pullback_eq choice]
+        using hsource
+    exact
+      quotientHullCompatibility.familySource.possibleRegion_subset_familyUnion
+        (sourceData.Core.equalityQuotientMap choice) hquotient
+  · intro hpoint
+    rw [IUTStage1Remark395PossibleImageFamilySource.familyUnion] at hpoint
+    rcases Set.mem_iUnion.mp hpoint with ⟨quotientChoice, hquotient⟩
+    refine
+      Quot.inductionOn quotientChoice
+        (motive := fun quotientChoice =>
+          point ∈ quotientHullCompatibility.familySource.possibleRegion
+              quotientChoice →
+            point ∈ recordThetaPossibleImageUnion record)
+        ?_ hquotient
+    intro choice hchoice
+    have hsource :
+        point ∈ (sourceData.Images.region choice).toSet := by
+      change
+        point ∈ quotientHullCompatibility.familySource.possibleRegion
+          (sourceData.Core.equalityQuotientMap choice) at hchoice
+      rw [quotientHullCompatibility.possibleRegion_pullback_eq choice] at hchoice
+      exact hchoice
+    have hrecord : point ∈ recordThetaPossibleImage record choice := by
+      simpa [recordThetaPossibleImage, record_images_eq_source] using hsource
+    exact Set.mem_iUnion.mpr ⟨choice, hrecord⟩
+
+set_option linter.style.longLine false in
+/--
 Quotient-aware Theorem 3.11 multiradial source for the Step (xi) corridor.
 
 This is the stronger source object used by the current milestone.  It ties the
@@ -61795,6 +61863,128 @@ noncomputable def ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantCoricOb7
     selectedQRegion_subset_recordUnion ob3ob4Source compatibility
     measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
     q_pilot_positive normalization quotientHullCompatibility ob7Source
+
+set_option linter.style.longLine false in
+/--
+Same-index selected-possible-image Step (xi) constructor with the
+record/equality-quotient union alignment derived from the source image
+identification.
+
+This is the sharper paper-spine route for the common case where the
+Theorem 3.11 source data and the multiradial record are indexed by the same
+concrete Hodge-theater/log-theta choices.  The selected q-region containment
+and the record-union/equality-quotient-family equality are no longer supplied
+as independent bridge hypotheses; both are projections of
+`record.thetaPossibleImages.images = sourceData.Images`.
+-/
+noncomputable def ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantCoricOb7FromSourceImages
+    {source target : Copy} {coric : Type u} {l : PrimeGeFive}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l}
+    {β : Type v} [Fintype β]
+    (paperTrace : StepXIPaperTrace)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (record_images_eq_source :
+      record.thetaPossibleImages.images = sourceData.Images)
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      package.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          hullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (sourceData.Images.region sourceData.selectedQChoice).toSet
+          (by
+            have hchoice :
+                (sourceData.Images.region sourceData.selectedQChoice).toSet ⊆
+                  IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+                    record sourceData.selectedQChoice := by
+              intro point hpoint
+              simpa
+                [IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage,
+                  record_images_eq_source]
+                using hpoint
+            exact
+              IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+                (record := record) sourceData.selectedQChoice
+                (sourceData.Images.region sourceData.selectedQChoice).toSet
+                hchoice)
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -package.preLedger.qSigned)
+    (normalization : package.preLedger.normalization)
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        sourceData.Core sourceData.Images hullOperator)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (coricInvariant :
+      IUTStage1CoricThetaMuPrimeStripInvariant Penv Pgau V μ)
+    (determinantLogVolume_eq_coricPrimeStripGlobal :
+      ob3ob4Source.toWeightedDeterminantSource.determinantLogVolume =
+        coricInvariant.lift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume) :
+    StepXIPaperDerivedHullDeterminantSource.{u, v} sourceData :=
+  let selectedQRegion_subset_recordUnion :
+      (sourceData.Images.region sourceData.selectedQChoice).toSet ⊆
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record := by
+    have hchoice :
+        (sourceData.Images.region sourceData.selectedQChoice).toSet ⊆
+          IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+            record sourceData.selectedQChoice := by
+      intro point hpoint
+      simpa
+        [IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage,
+          record_images_eq_source]
+        using hpoint
+    exact
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.qPilotRegion_subset_recordUnion_of_choice
+        (record := record) sourceData.selectedQChoice
+        (sourceData.Images.region sourceData.selectedQChoice).toSet hchoice
+  let recordUnion_eq_quotientFamilyUnion :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+          record =
+        quotientHullCompatibility.familySource.familyUnion :=
+    IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion_eq_quotientFamilyUnion_of_images_eq
+      (record := record) (sourceData := sourceData)
+      record_images_eq_source hullOperator quotientHullCompatibility
+  ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantCoricOb7
+    (sourceData := sourceData) (record := record) (β := β)
+    paperTrace operation hullOperation determinantOperation hullOperator
+    selectedQRegion_subset_recordUnion ob3ob4Source compatibility
+    measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+    q_pilot_positive normalization quotientHullCompatibility
+    recordUnion_eq_quotientFamilyUnion coricInvariant
+    determinantLogVolume_eq_coricPrimeStripGlobal
 
 end StepXIPaperDerivedHullDeterminantSource
 end IUTStage1Theorem311ToCorollary312PaperTrace
