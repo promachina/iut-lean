@@ -33289,6 +33289,15 @@ structure ConcreteValuationBallThetaClassRegionBackedFamilyUnionSource
         (coric := coric),
       (thetaRegionSource.thetaRegion thetaClass).toSet =
         valuationSource.valuationCover.possibleRegion thetaClass
+  thetaRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  thetaRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (thetaRegionSource.thetaRegion thetaClass).Contains
+        (thetaRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassRegionBackedFamilyUnionSource
 
@@ -33319,7 +33328,9 @@ def toThetaClassImageBackedFamilyUnionSource
     ConcreteValuationBallThetaClassImageBackedFamilyUnionSource
       sourceData gluingTorsor selectedQChoice valuationSource where
   thetaImageSource :=
-    { classImages := regionBackedSource.thetaRegionSource.thetaClassImages }
+    { classImages := regionBackedSource.thetaRegionSource.thetaClassImages,
+      classImagePoint := regionBackedSource.thetaRegionPoint,
+      classImagePoint_mem := regionBackedSource.thetaRegionPoint_mem }
   record_region_eq := by
     intro choice
     simpa
@@ -33411,6 +33422,15 @@ structure ConcreteValuationBallThetaClassLatticeFormulaBackedFamilyUnionSource
         (coric := coric),
       (latticeSource.latticeFormula.toClassFormula.thetaRegion thetaClass).toSet =
         valuationSource.valuationCover.possibleRegion thetaClass
+  latticeThetaRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  latticeThetaRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (latticeSource.latticeFormula.toClassFormula.thetaRegion thetaClass).Contains
+        (latticeThetaRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassLatticeFormulaBackedFamilyUnionSource
 
@@ -33449,6 +33469,13 @@ def toThetaClassRegionBackedFamilyUnionSource
       using
         latticeBackedSource.latticeThetaRegion_toSet_eq_valuationRegion
           thetaClass
+  thetaRegionPoint := latticeBackedSource.latticeThetaRegionPoint
+  thetaRegionPoint_mem := by
+    intro thetaClass
+    simpa
+      [ConcreteHodgeTheaterLogThetaThetaPilotClassFormulaRecordSource.toClassRegionSource]
+      using
+        latticeBackedSource.latticeThetaRegionPoint_mem thetaClass
 
 set_option linter.style.longLine false in
 def toThetaClassImageBackedFamilyUnionSource
@@ -33550,6 +33577,16 @@ structure ConcreteValuationBallThetaClassLatticeImageLawBackedFamilyUnionSource
       (latticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
         thetaClass).toSet =
         valuationSource.valuationCover.possibleRegion thetaClass
+  latticeImageRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  latticeImageRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (latticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (latticeImageRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassLatticeImageLawBackedFamilyUnionSource
 
@@ -33586,6 +33623,10 @@ def toThetaClassLatticeFormulaBackedFamilyUnionSource
     exact
       imageLawBackedSource.latticeImageRegion_toSet_eq_valuationRegion
         thetaClass
+  latticeThetaRegionPoint :=
+    imageLawBackedSource.latticeImageRegionPoint
+  latticeThetaRegionPoint_mem :=
+    imageLawBackedSource.latticeImageRegionPoint_mem
 
 set_option linter.style.longLine false in
 def toThetaClassImageBackedFamilyUnionSource
@@ -33690,6 +33731,16 @@ structure ConcreteValuationBallThetaClassFiberTransportBackedFamilyUnionSource
       (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
         thetaClass).toSet =
         valuationSource.valuationCover.possibleRegion thetaClass
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassFiberTransportBackedFamilyUnionSource
 
@@ -33726,6 +33777,10 @@ def toThetaClassLatticeImageLawBackedFamilyUnionSource
     exact
       fiberTransportBackedSource.fiberTransportRegion_toSet_eq_valuationRegion
         thetaClass
+  latticeImageRegionPoint :=
+    fiberTransportBackedSource.fiberTransportRegionPoint
+  latticeImageRegionPoint_mem :=
+    fiberTransportBackedSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 def toThetaClassLatticeFormulaBackedFamilyUnionSource
@@ -33845,6 +33900,16 @@ structure ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedFamilyU
       fun thetaClass =>
         (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
           thetaClass).toSet
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedFamilyUnionSource
 
@@ -33891,6 +33956,10 @@ def toFiberTransportBackedFamilyUnionSource
       sourceData gluingTorsor selectedQChoice valuationSource where
   fiberTransportRegion_toSet_eq_valuationRegion :=
     thetaDefinedSource.fiberTransportRegion_toSet_eq_valuationRegion
+  fiberTransportRegionPoint :=
+    thetaDefinedSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    thetaDefinedSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 def toThetaClassLatticeImageLawBackedFamilyUnionSource
@@ -34205,6 +34274,16 @@ structure ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincip
           point ∈
             (valuationCoverSource.factorValuationCalibration
               valuationCoverSource.anchor place).region }
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 set_option linter.style.longLine false
 
@@ -34252,6 +34331,10 @@ def toThetaRegionDefinedFamilyUnionSource
       sourceData gluingTorsor selectedQChoice
       principalSource.toPrincipalValuationBallProductHullCoverSource where
   possibleRegion_eq_fiberTransportThetaRegion := rfl
+  fiberTransportRegionPoint :=
+    principalSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    principalSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 theorem endpoint
@@ -34524,7 +34607,17 @@ noncomputable def ofPrincipalValuationBallProductHullCoverSource
       principalCover.valuationCover.possibleRegion =
         (fun thetaClass =>
           (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
-            thetaClass).toSet)) :
+            thetaClass).toSet))
+    (fiberTransportRegionPoint :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric) -> Point target)
+    (fiberTransportRegionPoint_mem :
+      ∀ thetaClass :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric),
+        (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+          thetaClass).Contains
+          (fiberTransportRegionPoint thetaClass)) :
     ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource
       sourceData (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ) where
   valuationCoverSource :=
@@ -34539,6 +34632,8 @@ noncomputable def ofPrincipalValuationBallProductHullCoverSource
       IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource.directProductCell,
       IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource.localFactorRegion]
       using principalCover.localIntegerRegion_eq_anchorCell
+  fiberTransportRegionPoint := fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem := fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 theorem ofPrincipalValuationBallProductHullCoverSource_endpoint
@@ -34552,10 +34647,21 @@ theorem ofPrincipalValuationBallProductHullCoverSource_endpoint
       principalCover.valuationCover.possibleRegion =
         (fun thetaClass =>
           (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
-            thetaClass).toSet)) :
+            thetaClass).toSet))
+    (fiberTransportRegionPoint :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric) -> Point target)
+    (fiberTransportRegionPoint_mem :
+      ∀ thetaClass :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric),
+        (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+          thetaClass).Contains
+          (fiberTransportRegionPoint thetaClass)) :
     let constructed :=
       ofPrincipalValuationBallProductHullCoverSource
-        (sourceData := sourceData) principalCover possibleRegion_eq_thetaRegion;
+        (sourceData := sourceData) principalCover possibleRegion_eq_thetaRegion
+        fiberTransportRegionPoint fiberTransportRegionPoint_mem;
     constructed.toPrincipalValuationBallProductHullCoverSource.valuationCover.possibleRegion =
         principalCover.valuationCover.possibleRegion ∧
       constructed.toPrincipalValuationBallProductHullCoverSource.valuationCover.possibleRegion =
@@ -34629,6 +34735,12 @@ def toThetaRegionDefinedFamilyUnionSource
     simpa [latticeImageLawSource_eq] using
       (imageLawBackedSource.latticeImageRegion_toSet_eq_valuationRegion
         thetaClass).symm
+  fiberTransportRegionPoint :=
+    imageLawBackedSource.latticeImageRegionPoint
+  fiberTransportRegionPoint_mem := by
+    intro thetaClass
+    simpa [latticeImageLawSource_eq] using
+      imageLawBackedSource.latticeImageRegionPoint_mem thetaClass
 
 set_option linter.style.longLine false in
 /--
@@ -34654,6 +34766,11 @@ noncomputable def toThetaRegionDefinedPrincipalValuationBallSource
       (imageLawBackedSource.toThetaRegionDefinedFamilyUnionSource
         latticeImageLawSource_eq
         |>.possibleRegion_eq_fiberTransportThetaRegion)
+      imageLawBackedSource.latticeImageRegionPoint
+      (by
+        intro thetaClass
+        simpa [latticeImageLawSource_eq] using
+          imageLawBackedSource.latticeImageRegionPoint_mem thetaClass)
 
 set_option linter.style.longLine false in
 theorem thetaRegionDefinedPrincipalValuationBallEndpoint
@@ -34738,6 +34855,10 @@ def toThetaRegionDefinedFamilyUnionSource
     exact
       (fiberBackedSource.fiberTransportRegion_toSet_eq_valuationRegion
         thetaClass).symm
+  fiberTransportRegionPoint :=
+    fiberBackedSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    fiberBackedSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 /--
@@ -34759,6 +34880,8 @@ noncomputable def toThetaRegionDefinedPrincipalValuationBallSource
       (sourceData := sourceData) valuationSource
       (fiberBackedSource.toThetaRegionDefinedFamilyUnionSource
         |>.possibleRegion_eq_fiberTransportThetaRegion)
+      fiberBackedSource.fiberTransportRegionPoint
+      fiberBackedSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 theorem thetaRegionDefinedPrincipalValuationBallEndpoint
@@ -35250,6 +35373,16 @@ structure ConcreteValuationBallThetaClassFiberTransportCellCoverSource
       (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
         thetaClass).toSet =
         valuationSource.valuationCover.possibleRegion thetaClass
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassFiberTransportCellCoverSource
 
@@ -35281,6 +35414,10 @@ def toFiberTransportBackedFamilyUnionSource
       sourceData gluingTorsor selectedQChoice valuationSource where
   fiberTransportRegion_toSet_eq_valuationRegion :=
     cellSource.fiberTransportRegion_toSet_eq_valuationRegion
+  fiberTransportRegionPoint :=
+    cellSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    cellSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 def toThetaClassDirectProductCellCoverSource
@@ -35399,6 +35536,16 @@ structure ConcreteValuationBallThetaClassFiberTransportLocalFactorCoverSource
       (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
         thetaClass).toSet =
         valuationSource.valuationCover.possibleRegion thetaClass
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassFiberTransportLocalFactorCoverSource
 
@@ -35454,6 +35601,10 @@ def toFiberTransportCellCoverSource
     localFactorSource.directProductCell_subset_fiberTransportRegion
   fiberTransportRegion_toSet_eq_valuationRegion :=
     localFactorSource.fiberTransportRegion_toSet_eq_valuationRegion
+  fiberTransportRegionPoint :=
+    localFactorSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    localFactorSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 theorem endpoint
@@ -35557,6 +35708,16 @@ structure ConcreteValuationBallThetaClassFiberTransportValuationRadiusCoverSourc
       (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
         thetaClass).toSet =
         valuationSource.valuationCover.possibleRegion thetaClass
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassFiberTransportValuationRadiusCoverSource
 
@@ -35613,6 +35774,10 @@ def toFiberTransportLocalFactorCoverSource
     radiusSource.valuationBallFactor_subset_fiberTransportRegion
   fiberTransportRegion_toSet_eq_valuationRegion :=
     radiusSource.fiberTransportRegion_toSet_eq_valuationRegion
+  fiberTransportRegionPoint :=
+    radiusSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    radiusSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 def toFiberTransportCellCoverSource
@@ -35763,6 +35928,10 @@ noncomputable def toFiberTransportValuationRadiusCoverSource
   fiberTransportRegion_toSet_eq_valuationRegion := by
     intro thetaClass
     rfl
+  fiberTransportRegionPoint :=
+    radiusSource.principalSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    radiusSource.principalSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 noncomputable def toFiberTransportCellCoverSource
@@ -35889,6 +36058,16 @@ structure ConcreteValuationBallThetaClassFiberTransportLocalThetaEstimateSource
       (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
         thetaClass).toSet =
         valuationSource.valuationCover.possibleRegion thetaClass
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassFiberTransportLocalThetaEstimateSource
 
@@ -35951,6 +36130,10 @@ def toValuationRadiusCoverSource
     estimateSource.valuationBallRadius_subset_fiberTransportRegion
   fiberTransportRegion_toSet_eq_valuationRegion :=
     estimateSource.fiberTransportRegion_toSet_eq_valuationRegion
+  fiberTransportRegionPoint :=
+    estimateSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    estimateSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 def toFiberTransportLocalFactorCoverSource
@@ -36080,6 +36263,16 @@ structure ConcreteValuationBallThetaClassFiberTransportLocalThetaPredicateSource
       (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
         thetaClass).toSet =
         valuationSource.valuationCover.possibleRegion thetaClass
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassFiberTransportLocalThetaPredicateSource
 
@@ -36146,6 +36339,10 @@ def toLocalThetaEstimateSource
     predicateSource.valuationRadius_thetaEstimate
   fiberTransportRegion_toSet_eq_valuationRegion :=
     predicateSource.fiberTransportRegion_toSet_eq_valuationRegion
+  fiberTransportRegionPoint :=
+    predicateSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    predicateSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 def toValuationRadiusCoverSource
@@ -36269,6 +36466,16 @@ structure ConcreteValuationBallThetaClassFiberTransportLocalThetaInequalitySourc
       (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
         thetaClass).toSet =
         valuationSource.valuationCover.possibleRegion thetaClass
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassFiberTransportLocalThetaInequalitySource
 
@@ -36310,6 +36517,10 @@ def toLocalThetaPredicateSource
     inequalitySource.thetaRegion_toSet_eq_realizedLocalThetaInequality
   fiberTransportRegion_toSet_eq_valuationRegion :=
     inequalitySource.fiberTransportRegion_toSet_eq_valuationRegion
+  fiberTransportRegionPoint :=
+    inequalitySource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    inequalitySource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 def toLocalThetaEstimateSource
@@ -36429,6 +36640,16 @@ structure ConcreteValuationBallThetaClassFiberTransportValuationNormGaugeSource
       (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
         thetaClass).toSet =
         valuationSource.valuationCover.possibleRegion thetaClass
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassFiberTransportValuationNormGaugeSource
 
@@ -36481,6 +36702,10 @@ def toLocalThetaInequalitySource
       using gaugeSource.thetaRegion_toSet_eq_realizedValuationBall index
   fiberTransportRegion_toSet_eq_valuationRegion :=
     gaugeSource.fiberTransportRegion_toSet_eq_valuationRegion
+  fiberTransportRegionPoint :=
+    gaugeSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    gaugeSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 def toLocalThetaPredicateSource
@@ -36607,6 +36832,16 @@ structure ConcreteValuationBallThetaClassFiberTransportValuationBallExactSource
       valuationSource.valuationCover.possibleRegion thetaClass ⊆
         (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
           thetaClass).toSet
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassFiberTransportValuationBallExactSource
 
@@ -36673,6 +36908,10 @@ def toValuationNormGaugeSource
     exactSource.thetaRegion_toSet_eq_realizedValuationBall
   fiberTransportRegion_toSet_eq_valuationRegion :=
     exactSource.fiberTransportRegion_toSet_eq_valuationRegion
+  fiberTransportRegionPoint :=
+    exactSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    exactSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 def toLocalThetaInequalitySource
@@ -36809,6 +37048,16 @@ structure ConcreteValuationBallThetaClassFiberTransportValuationBallPointwiseSou
           point ∈
             (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
               thetaClass).toSet
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassFiberTransportValuationBallPointwiseSource
 
@@ -36936,6 +37185,10 @@ def toValuationBallExactSource
     pointwiseSource.thetaRegion_subset_valuationRegion
   valuationRegion_subset_thetaRegion :=
     pointwiseSource.valuationRegion_subset_thetaRegion
+  fiberTransportRegionPoint :=
+    pointwiseSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    pointwiseSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 def toValuationNormGaugeSource
@@ -37095,6 +37348,16 @@ structure ConcreteValuationBallThetaClassFiberTransportValuationBallLocalChartSo
           point ∈
             (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
               thetaClass).toSet
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassFiberTransportValuationBallLocalChartSource
 
@@ -37160,6 +37423,10 @@ def toValuationBallPointwiseSource
     localChartSource.thetaRegion_point_in_valuationRegion
   valuationRegion_point_in_thetaRegion :=
     localChartSource.valuationRegion_point_in_thetaRegion
+  fiberTransportRegionPoint :=
+    localChartSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    localChartSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 def toValuationBallExactSource
@@ -37330,6 +37597,16 @@ structure ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellChar
           point ∈
             (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
               thetaClass).toSet
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellChartSource
 
@@ -37419,6 +37696,10 @@ def toValuationBallLocalChartSource
     logShellSource.thetaRegion_point_in_valuationRegion
   valuationRegion_point_in_thetaRegion :=
     logShellSource.valuationRegion_point_in_thetaRegion
+  fiberTransportRegionPoint :=
+    logShellSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    logShellSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 def toValuationBallPointwiseSource
@@ -37593,6 +37874,16 @@ structure ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellImag
           point ∈
             (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
               thetaClass).toSet
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellImageSource
 
@@ -37756,6 +38047,10 @@ noncomputable def toLogShellChartSource
     imageSource.thetaRegion_point_in_valuationRegion
   valuationRegion_point_in_thetaRegion :=
     imageSource.valuationRegion_point_in_thetaRegion
+  fiberTransportRegionPoint :=
+    imageSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    imageSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 noncomputable def toValuationBallLocalChartSource
@@ -37951,6 +38246,16 @@ structure ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellExac
           point ∈
             (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
               thetaClass).toSet
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellExactSource
 
@@ -38060,6 +38365,10 @@ def toLogShellImageSource
     exactSource.thetaRegion_point_in_valuationRegion
   valuationRegion_point_in_thetaRegion :=
     exactSource.valuationRegion_point_in_thetaRegion
+  fiberTransportRegionPoint :=
+    exactSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    exactSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 noncomputable def toLogShellChartSource
@@ -38189,6 +38498,16 @@ structure ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellNone
           point ∈
             (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
               thetaClass).toSet
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassFiberTransportValuationBallLogShellNonemptyExactSource
 
@@ -38252,6 +38571,10 @@ noncomputable def toLogShellExactSource
     nonemptySource.thetaRegion_point_in_valuationRegion
   valuationRegion_point_in_thetaRegion :=
     nonemptySource.valuationRegion_point_in_thetaRegion
+  fiberTransportRegionPoint :=
+    nonemptySource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    nonemptySource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 noncomputable def toLogShellImageSource
@@ -38391,6 +38714,16 @@ structure ConcreteValuationBallThetaClassFiberTransportValuationBallNonemptyExac
           point ∈
             (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
               thetaClass).toSet
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassFiberTransportValuationBallNonemptyExactSource
 
@@ -38442,6 +38775,10 @@ noncomputable def toLogShellNonemptyExactSource
     ballSource.thetaRegion_point_in_valuationRegion
   valuationRegion_point_in_thetaRegion :=
     ballSource.valuationRegion_point_in_thetaRegion
+  fiberTransportRegionPoint :=
+    ballSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    ballSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 noncomputable def toLogShellExactSource
@@ -38603,6 +38940,16 @@ structure ConcreteValuationBallThetaClassFiberTransportCenteredValuationBallExac
           point ∈
             (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
               thetaClass).toSet
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassFiberTransportCenteredValuationBallExactSource
 
@@ -38672,6 +39019,10 @@ noncomputable def toValuationBallNonemptyExactSource
     centerSource.thetaRegion_point_in_valuationRegion
   valuationRegion_point_in_thetaRegion :=
     centerSource.valuationRegion_point_in_thetaRegion
+  fiberTransportRegionPoint :=
+    centerSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    centerSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 noncomputable def toLogShellNonemptyExactSource
@@ -38845,6 +39196,16 @@ structure ConcreteValuationBallThetaClassFiberTransportZeroCenteredValuationBall
           point ∈
             (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
               thetaClass).toSet
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassFiberTransportZeroCenteredValuationBallExactSource
 
@@ -38901,6 +39262,10 @@ noncomputable def toCenteredValuationBallExactSource
     zeroSource.thetaRegion_point_in_valuationRegion
   valuationRegion_point_in_thetaRegion :=
     zeroSource.valuationRegion_point_in_thetaRegion
+  fiberTransportRegionPoint :=
+    zeroSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    zeroSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 noncomputable def toValuationBallNonemptyExactSource
@@ -39082,6 +39447,16 @@ structure ConcreteValuationBallThetaClassFiberTransportMetricZeroValuationBallEx
           point ∈
             (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
               thetaClass).toSet
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassFiberTransportMetricZeroValuationBallExactSource
 
@@ -39140,6 +39515,10 @@ noncomputable def toZeroCenteredValuationBallExactSource
     metricSource.thetaRegion_point_in_valuationRegion
   valuationRegion_point_in_thetaRegion :=
     metricSource.valuationRegion_point_in_thetaRegion
+  fiberTransportRegionPoint :=
+    metricSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    metricSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 noncomputable def toCenteredValuationBallExactSource
@@ -39329,6 +39708,16 @@ structure ConcreteValuationBallThetaClassFiberTransportConstructedLogShellMetric
           point ∈
             (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
               thetaClass).toSet
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 set_option linter.style.longLine false
 
@@ -39412,6 +39801,10 @@ noncomputable def toMetricZeroValuationBallExactSource
     constructedSource.thetaRegion_point_in_valuationRegion
   valuationRegion_point_in_thetaRegion :=
     constructedSource.valuationRegion_point_in_thetaRegion
+  fiberTransportRegionPoint :=
+    constructedSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    constructedSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 noncomputable def toZeroCenteredValuationBallExactSource
@@ -39561,6 +39954,16 @@ structure ConcreteValuationBallThetaClassFiberTransportPointwiseConstructedLogSh
           point ∈
             (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
               thetaClass).toSet
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 set_option linter.style.longLine false
 
@@ -39676,6 +40079,10 @@ def toConstructedLogShellMetricZeroValuationBallExactSource
     pointwiseSource.thetaRegion_point_in_valuationRegion
   valuationRegion_point_in_thetaRegion :=
     pointwiseSource.valuationRegion_point_in_thetaRegion
+  fiberTransportRegionPoint :=
+    pointwiseSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    pointwiseSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 noncomputable def toMetricZeroValuationBallExactSource
@@ -39887,6 +40294,10 @@ def toPointwiseConstructedLogShellMetricZeroValuationBallExactSource
     regionBackedSource.thetaRegion_point_in_valuationRegion
   valuationRegion_point_in_thetaRegion :=
     regionBackedSource.valuationRegion_point_in_thetaRegion
+  fiberTransportRegionPoint :=
+    regionBackedSource.fiberTransportBackedSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    regionBackedSource.fiberTransportBackedSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 def toConstructedLogShellMetricZeroValuationBallExactSource
@@ -41128,6 +41539,10 @@ noncomputable def toValuationBallLocalChartSource
   valuationRegion_point_in_thetaRegion := by
     intro thetaClass point hpoint
     simpa using hpoint
+  fiberTransportRegionPoint :=
+    localChartSource.principalSource.fiberTransportRegionPoint
+  fiberTransportRegionPoint_mem :=
+    localChartSource.principalSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 noncomputable def toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource

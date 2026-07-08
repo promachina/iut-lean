@@ -16726,6 +16726,12 @@ structure ThetaPilotClassPossibleImageSource
     (coric : Type u) (l : PrimeGeFive) where
   classImages :
     RegionFamily target (ThetaPilotClass (coric := coric))
+  classImagePoint :
+    ThetaPilotClass (coric := coric) -> Point target
+  classImagePoint_mem :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      (classImages.region thetaClass).Contains
+        (classImagePoint thetaClass)
 
 namespace ThetaPilotClassPossibleImageSource
 
@@ -16739,6 +16745,38 @@ def choiceImages
       (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :=
   { region := fun choice =>
       source.classImages.region (thetaPilotClass choice) }
+
+/-- The class-level point witness pulled back to a concrete choice. -/
+def choiceImagePoint
+    (source : ThetaPilotClassPossibleImageSource
+      (target := target) coric l)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    Point target :=
+  source.classImagePoint (thetaPilotClass choice)
+
+theorem choiceImagePoint_mem
+    (source : ThetaPilotClassPossibleImageSource
+      (target := target) coric l)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (source.choiceImages.region choice).Contains
+      (source.choiceImagePoint choice) :=
+  source.classImagePoint_mem (thetaPilotClass choice)
+
+theorem classImageNonempty
+    (source : ThetaPilotClassPossibleImageSource
+      (target := target) coric l)
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    (source.classImages.region thetaClass).toSet.Nonempty :=
+  ⟨source.classImagePoint thetaClass,
+    source.classImagePoint_mem thetaClass⟩
+
+theorem choiceImageNonempty
+    (source : ThetaPilotClassPossibleImageSource
+      (target := target) coric l)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (source.choiceImages.region choice).toSet.Nonempty :=
+  ⟨source.choiceImagePoint choice,
+    source.choiceImagePoint_mem choice⟩
 
 theorem choiceImages_region
     (source : ThetaPilotClassPossibleImageSource
@@ -16947,6 +16985,12 @@ structure Audit
     ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
       source.choiceImages.region choice =
         source.classImages.region (thetaPilotClass choice)
+  class_images_nonempty :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      (source.classImages.region thetaClass).toSet.Nonempty
+  choice_images_nonempty :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.choiceImages.region choice).toSet.Nonempty
   equality_quotient_possible_images :
     Nonempty
       (IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientPossibleImages
@@ -16985,6 +17029,8 @@ theorem audit
   { choice_region_is_thetaPilot_pullback := by
       intro choice
       exact source.choiceImages_region choice,
+    class_images_nonempty := source.classImageNonempty,
+    choice_images_nonempty := source.choiceImageNonempty,
     equality_quotient_possible_images :=
       ⟨source.toEqualityQuotientPossibleImages indData⟩,
     ind1_region_eq := by
@@ -17022,6 +17068,9 @@ structure ProcessionNormalizedAudit
         (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCoreOfProcessionNormalizedLogVolumeSource
           volumeSource)
         source.choiceImages)
+  choice_images_nonempty :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.choiceImages.region choice).toSet.Nonempty
   choice_region_is_thetaPilot_pullback :
     ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
       source.choiceImages.region choice =
@@ -17063,6 +17112,7 @@ theorem processionNormalizedAudit
     equality_quotient_possible_images :=
       ⟨source.toEqualityQuotientPossibleImagesOfProcessionNormalized
         volumeSource⟩,
+    choice_images_nonempty := source.choiceImageNonempty,
     choice_region_is_thetaPilot_pullback := by
       intro choice
       exact source.choiceImages_region choice,
@@ -17102,6 +17152,9 @@ structure ProcessionNormalizedUpperSemiAudit
         (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCoreOfProcessionNormalizedUpperSemiComparisonSource
           volumeSource)
         source.choiceImages)
+  choice_images_nonempty :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.choiceImages.region choice).toSet.Nonempty
   choice_region_is_thetaPilot_pullback :
     ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
       source.choiceImages.region choice =
@@ -17143,6 +17196,7 @@ theorem processionNormalizedUpperSemiAudit
     equality_quotient_possible_images :=
       ⟨source.toEqualityQuotientPossibleImagesOfProcessionNormalizedUpperSemi
         volumeSource⟩,
+    choice_images_nonempty := source.choiceImageNonempty,
     choice_region_is_thetaPilot_pullback := by
       intro choice
       exact source.choiceImages_region choice,
@@ -17182,6 +17236,9 @@ structure VerticalLogKummerPacketAlignmentAudit
         (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCoreOfProcessionNormalizedVerticalLogKummerPacketAlignmentSource
           volumeSource)
         source.choiceImages)
+  choice_images_nonempty :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.choiceImages.region choice).toSet.Nonempty
   choice_region_is_thetaPilot_pullback :
     ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
       source.choiceImages.region choice =
@@ -17224,6 +17281,7 @@ theorem verticalLogKummerPacketAlignmentAudit
     equality_quotient_possible_images :=
       ⟨source.toEqualityQuotientPossibleImagesOfVerticalLogKummerPacketAlignment
         volumeSource⟩,
+    choice_images_nonempty := source.choiceImageNonempty,
     choice_region_is_thetaPilot_pullback := by
       intro choice
       exact source.choiceImages_region choice,
@@ -17387,6 +17445,10 @@ structure Theorem311PossibleImageSourceData
   quotientImages :
     IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientPossibleImages
       core images
+  possibleImagePoint : choice -> Point targetCopy
+  possibleImagePoint_mem :
+    ∀ choice₀ : choice,
+      (images.region choice₀).Contains (possibleImagePoint choice₀)
   selectedQChoice : choice
   selectedQRegion : Region targetCopy
   selectedQRegion_eq_quotientRegion :
@@ -17411,6 +17473,25 @@ theorem thetaPilotPossibleImagesConstructed_proof
     data.thetaPilotPossibleImagesConstructed :=
   data.quotientImages.pullback_region_eq
 
+def possibleImageNonempty
+    (data : Theorem311PossibleImageSourceData core images)
+    (choice₀ : choice) : Prop :=
+  (images.region choice₀).toSet.Nonempty
+
+theorem possibleImageNonempty_proof
+    (data : Theorem311PossibleImageSourceData core images)
+    (choice₀ : choice) :
+    data.possibleImageNonempty choice₀ :=
+  ⟨data.possibleImagePoint choice₀, data.possibleImagePoint_mem choice₀⟩
+
+theorem quotientPossibleImageNonempty
+    (data : Theorem311PossibleImageSourceData core images)
+    (choice₀ : choice) :
+    (data.quotientImages.quotientImages.region
+        (core.equalityQuotientMap choice₀)).toSet.Nonempty := by
+  rw [data.quotientImages.pullback_region_eq choice₀]
+  exact data.possibleImageNonempty_proof choice₀
+
 def possibleImagesDependOnEqualityQuotient
     (data : Theorem311PossibleImageSourceData core images) :
     IUTStage1Theorem311TypedIndeterminacyCore.PossibleImageQuotientCompatibility
@@ -17431,6 +17512,61 @@ theorem selectedQRegionIsTheorem311PossibleImage_proof
       data.selectedQRegion_eq_quotientRegion
     _ = images.region data.selectedQChoice :=
       data.quotientImages.pullback_region_eq data.selectedQChoice
+
+def selectedQRegionNonempty
+    (data : Theorem311PossibleImageSourceData core images) : Prop :=
+  data.selectedQRegion.toSet.Nonempty
+
+theorem selectedQRegionNonempty_proof
+    (data : Theorem311PossibleImageSourceData core images) :
+    data.selectedQRegionNonempty := by
+  dsimp [selectedQRegionNonempty]
+  rw [data.selectedQRegionIsTheorem311PossibleImage_proof]
+  exact data.possibleImageNonempty_proof data.selectedQChoice
+
+set_option linter.style.longLine false in
+theorem equalityOrbitPossibleImageNonempty_pair
+    (data : Theorem311PossibleImageSourceData core images)
+    {choice₁ choice₂ : choice}
+    (_hmem : choice₂ ∈ core.equalityOrbit choice₁) :
+    (data.quotientImages.quotientImages.region
+        (core.equalityQuotientMap choice₁)).toSet.Nonempty ∧
+      (data.quotientImages.quotientImages.region
+        (core.equalityQuotientMap choice₂)).toSet.Nonempty :=
+  ⟨data.quotientPossibleImageNonempty choice₁,
+    data.quotientPossibleImageNonempty choice₂⟩
+
+set_option linter.style.longLine false in
+structure NonemptyAudit
+    (data : Theorem311PossibleImageSourceData core images) : Prop where
+  all_choice_possible_images_nonempty :
+    ∀ choice₀ : choice, (images.region choice₀).toSet.Nonempty
+  all_quotient_pullbacks_nonempty :
+    ∀ choice₀ : choice,
+      (data.quotientImages.quotientImages.region
+          (core.equalityQuotientMap choice₀)).toSet.Nonempty
+  selected_q_region_nonempty :
+    data.selectedQRegion.toSet.Nonempty
+  equality_orbit_pair_nonempty :
+    ∀ {choice₁ choice₂ : choice},
+      choice₂ ∈ core.equalityOrbit choice₁ ->
+        (data.quotientImages.quotientImages.region
+            (core.equalityQuotientMap choice₁)).toSet.Nonempty ∧
+          (data.quotientImages.quotientImages.region
+            (core.equalityQuotientMap choice₂)).toSet.Nonempty
+
+theorem nonemptyAudit
+    (data : Theorem311PossibleImageSourceData core images) :
+    NonemptyAudit data :=
+  { all_choice_possible_images_nonempty :=
+      data.possibleImageNonempty_proof,
+    all_quotient_pullbacks_nonempty :=
+      data.quotientPossibleImageNonempty,
+    selected_q_region_nonempty :=
+      data.selectedQRegionNonempty_proof,
+    equality_orbit_pair_nonempty := by
+      intro choice₁ choice₂ hmem
+      exact data.equalityOrbitPossibleImageNonempty_pair hmem }
 
 end Theorem311PossibleImageSourceData
 
@@ -18312,6 +18448,10 @@ def theorem311PossibleImageSourceData
       sourceData.thetaPossibleImageSource
         |>.toEqualityQuotientPossibleImagesOfVerticalLogKummerPacketAlignment
           sourceData.verticalLogKummerSource,
+    possibleImagePoint :=
+      sourceData.thetaPossibleImageSource.choiceImagePoint,
+    possibleImagePoint_mem :=
+      sourceData.thetaPossibleImageSource.choiceImagePoint_mem,
     selectedQChoice := sourceData.selectedQChoice,
     selectedQRegion :=
       (sourceData.thetaPossibleImageSource
