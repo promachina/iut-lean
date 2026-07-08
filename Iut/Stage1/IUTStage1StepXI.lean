@@ -69710,6 +69710,130 @@ theorem preferredPublicStepXIPaperSourceRouteAuditProductFormulaOb7
       hullOperator_eq possibleRegion_eq thetaSigned_eq_familyHullLogVolume
       ob7Source iutIV_cTheta additive_haar_arithmetic_degree_padic audit
 
+set_option linter.style.longLine false in
+/--
+Preferred public Step (xi) paper-source route with Ob7 constructed from raw
+adjusted-localization Gaussian calibration data.
+
+This lowers the public product-formula route by one layer: the caller no
+longer supplies a localized product-formula Ob7 construction source.  Instead,
+the source datum supplies the raw Ob3 adjusted-localization calibration
+against Gaussian local-global terms.  Lean constructs the weighted
+product-formula source internally, then reuses the product-formula public
+audit above.
+-/
+theorem preferredPublicStepXIPaperSourceRouteAuditRawAdjustedProductFormulaOb7
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        principalProductHullOperator sourceData principalSource)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        principalProductPossibleRegion sourceData principalSource)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned = localizedSource.familyHullLogVolume)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (rawConstructionSource :
+      StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedRawAdjustedPartitionOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        (principalProductHullFormationData sourceData principalSource)
+        localizedSource Penv Pgau V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations)
+    (audit :
+      let constructionSource :=
+        rawConstructionSource.toLocalizedProductFormulaOb7ConstructionSource
+          (sourceData := sourceData)
+      let tensorPower_bound :
+          (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+              constructionSource.determinantProductFormulaSource.determinantSource).normalizedLogVolume <=
+            thetaSigned := by
+            have hlocalized :=
+              StepXIDeterminantComparisonData.localizedNormalizedLogVolume_le_thetaSigned_ofThetaEqFamilyHullLogVolume
+                localizedSource thetaSigned_eq_familyHullLogVolume
+            calc
+              (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+                  constructionSource.determinantProductFormulaSource.determinantSource).normalizedLogVolume =
+                  constructionSource.determinantProductFormulaSource.determinantSource.determinantLogVolume :=
+                IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant_normalizedLogVolume_eq
+                  constructionSource.determinantProductFormulaSource.determinantSource
+              _ =
+                  constructionSource.determinantProductFormulaSource.determinantSource.normalizedLogVolume := by
+                rw [constructionSource.determinantProductFormulaSource.determinantSource.normalizedLogVolume_eq_determinantLogVolume]
+              _ =
+                  localizedSource.localizedSource.normalizedDeterminantLogVolume := by
+                rw [constructionSource.determinantProductFormula_determinantSource_eq]
+                rfl
+              _ <= thetaSigned := hlocalized;
+      let ob7Source :=
+        constructionSource.toThetaLGPOb7CompatibilitySource
+          (sourceData := sourceData)
+          thetaSigned hullOperator_eq possibleRegion_eq tensorPower_bound;
+      let concreteHullSource :=
+        principalProductConcreteHullSource sourceData principalSource;
+      let stepXI :=
+        StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaEqFamilyHullThetaLGPOb7Source
+            (sourceData := sourceData)
+            paperTrace thetaSigned concreteHullSource
+            rfl localizedSource hullOperator_eq possibleRegion_eq
+            thetaSigned_eq_familyHullLogVolume ob7Source;
+      NonStepXIRemainingPayloadAudit
+        (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+          sourceData stepXI iutIV_cTheta
+          additive_haar_arithmetic_degree_padic)) :
+    let constructionSource :=
+      rawConstructionSource.toLocalizedProductFormulaOb7ConstructionSource
+        (sourceData := sourceData)
+    PreferredPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+      sourceData paperTrace thetaSigned principalSource localizedSource
+      hullOperator_eq possibleRegion_eq thetaSigned_eq_familyHullLogVolume
+      (constructionSource.toThetaLGPOb7CompatibilitySource
+        (sourceData := sourceData)
+        thetaSigned hullOperator_eq possibleRegion_eq
+        (by
+          have hlocalized :=
+            StepXIDeterminantComparisonData.localizedNormalizedLogVolume_le_thetaSigned_ofThetaEqFamilyHullLogVolume
+              localizedSource thetaSigned_eq_familyHullLogVolume
+          calc
+            (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+                constructionSource.determinantProductFormulaSource.determinantSource).normalizedLogVolume =
+                constructionSource.determinantProductFormulaSource.determinantSource.determinantLogVolume :=
+              IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant_normalizedLogVolume_eq
+                constructionSource.determinantProductFormulaSource.determinantSource
+            _ =
+                constructionSource.determinantProductFormulaSource.determinantSource.normalizedLogVolume := by
+              rw [constructionSource.determinantProductFormulaSource.determinantSource.normalizedLogVolume_eq_determinantLogVolume]
+            _ =
+                localizedSource.localizedSource.normalizedDeterminantLogVolume := by
+              rw [constructionSource.determinantProductFormula_determinantSource_eq]
+              rfl
+            _ <= thetaSigned := hlocalized))
+      iutIV_cTheta additive_haar_arithmetic_degree_padic := by
+  intro constructionSource
+  exact
+    preferredPublicStepXIPaperSourceRouteAuditProductFormulaOb7
+      sourceData paperTrace thetaSigned principalSource localizedSource
+      hullOperator_eq possibleRegion_eq thetaSigned_eq_familyHullLogVolume
+      constructionSource iutIV_cTheta additive_haar_arithmetic_degree_padic
+      audit
+
 end Obligations
 
 end IUTStage1Theorem311ToCorollary312PaperTrace

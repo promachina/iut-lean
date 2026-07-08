@@ -604,8 +604,10 @@ this public audit now also constructs the localized \(\Theta^{\times\mu}\)
 Ob7 source from the localized determinant source, local Gaussian summand
 calibration, finite determinant product formula, and coric unit-character
 data.  Thus the public route can consume product-formula data in place of a
-prebuilt Ob7 compatibility record.  This product-formula source has now been
-lowered further to raw adjusted-localization data: each determinant summand is
+prebuilt Ob7 compatibility record.  The public audit now has a stricter
+raw-adjusted variant: it consumes raw adjusted-localization Gaussian
+calibration data, constructs the localized product-formula source internally,
+and then invokes the product-formula public route.  Each determinant summand is
 assigned a Gaussian place and raw ratio, the partition weight is computed from
 the Ob3 localization weight times this ratio, and Lean derives the weighted
 summand calibration and global product-formula equality from the Gaussian
