@@ -566,6 +566,10 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalRestrictionAnchoredOb7}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalPositiveRestrictionAnchoredOb7}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalSummandPositiveRestrictionAnchoredOb7}
+  \lean{Iut.Stage1.IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.weightedAdjustedLogVolume_nonneg_of_adjustedRaw_nonneg}
+  \lean{Iut.Stage1.IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.weightedAdjustedLogVolume_pos_of_adjustedRaw_pos}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalRawPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalRawPositiveRestrictionAnchoredOb7}
   \leanok
   The promoted public paper-trace route is now the strict principal-product
   localized wrapper.  It consumes the source spine, a principal product
@@ -589,16 +593,17 @@
   restricted global prime log-volumes.  In the diagonal finite valuation-index
   route, the environment primes, Gaussian primes, and places are all indexed
   by the same type, so the prime-place equivalences are identity maps
-  constructed internally.  The current strictest diagonal wrapper also derives
-  localized family-hull positivity from nonnegativity of the localized
-  adjusted determinant summands together with one strictly positive summand.
-  This feeds the already formalized equality between localized determinant
-  log-volume and family-hull log-volume, and hence derives the
+  constructed internally.  The current strictest diagonal wrapper now consumes
+  nonnegativity of the adjusted raw local vector-bundle log-volumes and one
+  strictly positive adjusted raw local log-volume.  The positive determinant
+  weights derive localized adjusted summand positivity, finite summation gives
+  localized family-hull positivity, and the already formalized equality between
+  localized determinant log-volume and family-hull log-volume derives the
   Gaussian-global nonzero proof from the determinant/global comparison.
   The Gaussian local-global Frobenioid restriction identity then proves the
   global product-formula equality before the product-formula audit is invoked.
-  The weighted-partition, explicit raw-ratio, and one-summand routes remain as
-  compatibility layers.  The Step (xi) source and
+  The summand-positive, weighted-partition, explicit raw-ratio, and
+  one-summand routes remain as compatibility layers.  The Step (xi) source and
   obligation package are projected internally, so the public boundary no longer
   takes a standalone \texttt{StepXIHullDeterminantObligations}, a preassembled
   paper-derived Step (xi) source, or an independent normalized-determinant

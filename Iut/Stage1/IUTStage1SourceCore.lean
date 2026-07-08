@@ -6366,6 +6366,23 @@ theorem toLocalizationSource_adjustedLogVolume_eq_weightedAdjusted
     IUTStage1ArithmeticVectorBundleLocalizationLogVolume.adjustedLogVolume,
     data.adjusted_raw_eq]
 
+theorem weight_real_pos
+    (data : IUTStage1StructureSheafAdjustedLocalizationSource γ) :
+    0 < (data.weight : Real) := by
+  exact_mod_cast data.weight_pos
+
+theorem weightedAdjustedLogVolume_nonneg_of_adjustedRaw_nonneg
+    (data : IUTStage1StructureSheafAdjustedLocalizationSource γ)
+    (adjustedRaw_nonneg : 0 <= data.adjustedRawLogVolume) :
+    0 <= data.weightedAdjustedLogVolume := by
+  exact mul_nonneg (le_of_lt data.weight_real_pos) adjustedRaw_nonneg
+
+theorem weightedAdjustedLogVolume_pos_of_adjustedRaw_pos
+    (data : IUTStage1StructureSheafAdjustedLocalizationSource γ)
+    (adjustedRaw_pos : 0 < data.adjustedRawLogVolume) :
+    0 < data.weightedAdjustedLogVolume := by
+  exact mul_pos data.weight_real_pos adjustedRaw_pos
+
 theorem endpoint
     (data : IUTStage1StructureSheafAdjustedLocalizationSource γ) :
     data.toLocalizationSource.bundleLogVolume =
@@ -6518,6 +6535,26 @@ theorem toAdjustedLocalizationSource_weightedAdjustedLogVolume_eq
     data.toAdjustedLocalizationSource.weightedAdjustedLogVolume =
       data.weightedAdjustedLogVolume :=
   rfl
+
+theorem weight_real_pos
+    (data :
+      IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource η γ) :
+    0 < (data.weight : Real) := by
+  exact_mod_cast data.weight_pos
+
+theorem weightedAdjustedLogVolume_nonneg_of_adjustedRaw_nonneg
+    (data :
+      IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource η γ)
+    (adjustedRaw_nonneg : 0 <= data.adjustedRawLogVolume) :
+    0 <= data.weightedAdjustedLogVolume := by
+  exact mul_nonneg (le_of_lt data.weight_real_pos) adjustedRaw_nonneg
+
+theorem weightedAdjustedLogVolume_pos_of_adjustedRaw_pos
+    (data :
+      IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource η γ)
+    (adjustedRaw_pos : 0 < data.adjustedRawLogVolume) :
+    0 < data.weightedAdjustedLogVolume := by
+  exact mul_pos data.weight_real_pos adjustedRaw_pos
 
 theorem endpoint
     (data :
@@ -6802,6 +6839,23 @@ theorem weightedAdjustedLogVolume_eq
         (data.adjustedRawLogVolume index) :=
   rfl
 
+theorem weightedAdjustedLogVolume_nonneg_of_adjustedRaw_nonneg
+    (data : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (adjustedRaw_nonneg :
+      ∀ index : β, 0 <= data.adjustedRawLogVolume index)
+    (index : β) :
+    0 <= data.weightedAdjustedLogVolume index :=
+  (data.localization index).weightedAdjustedLogVolume_nonneg_of_adjustedRaw_nonneg
+    (adjustedRaw_nonneg index)
+
+theorem weightedAdjustedLogVolume_pos_of_adjustedRaw_pos
+    (data : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (index : β)
+    (adjustedRaw_pos : 0 < data.adjustedRawLogVolume index) :
+    0 < data.weightedAdjustedLogVolume index :=
+  (data.localization index).weightedAdjustedLogVolume_pos_of_adjustedRaw_pos
+    adjustedRaw_pos
+
 set_option linter.style.longLine false in
 theorem determinantLogVolume_eq_sum_weightedAdjusted
     (data : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ) :
@@ -6924,6 +6978,28 @@ theorem localization_projected_weightedAdjustedLogVolume_eq
     data.toAdjustedDeterminantSource.weightedAdjustedLogVolume index =
       data.weightedAdjustedLogVolume index :=
   rfl
+
+theorem weightedAdjustedLogVolume_nonneg_of_adjustedRaw_nonneg
+    (data :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ)
+    (adjustedRaw_nonneg :
+      ∀ index : β, 0 <= (data.localization index).adjustedRawLogVolume)
+    (index : β) :
+    0 <= data.weightedAdjustedLogVolume index :=
+  (data.localization index).weightedAdjustedLogVolume_nonneg_of_adjustedRaw_nonneg
+    (adjustedRaw_nonneg index)
+
+theorem weightedAdjustedLogVolume_pos_of_adjustedRaw_pos
+    (data :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ)
+    (index : β)
+    (adjustedRaw_pos :
+      0 < (data.localization index).adjustedRawLogVolume) :
+    0 < data.weightedAdjustedLogVolume index :=
+  (data.localization index).weightedAdjustedLogVolume_pos_of_adjustedRaw_pos
+    adjustedRaw_pos
 
 set_option linter.style.longLine false in
 theorem determinantLogVolume_eq_sum_weightedAdjusted
