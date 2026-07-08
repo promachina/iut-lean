@@ -12195,6 +12195,14 @@ structure ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource
           IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₂ ->
         record.thetaPossibleImages.images.region choice₁ =
           record.thetaPossibleImages.images.region choice₂
+  representativeImagePoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  representativeImagePoint_mem :
+    ∀ thetaClass,
+      (record.thetaPossibleImages.images.region
+        (representative thetaClass)).Contains
+        (representativeImagePoint thetaClass)
 
 namespace ConcreteHodgeTheaterLogThetaThetaPilotClassImageLawSource
 
@@ -12348,6 +12356,12 @@ structure ConcreteHodgeTheaterLogThetaThetaPilotClassRegionSource
         thetaRegion
           (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass
             choice)
+  thetaRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  thetaRegionPoint_mem :
+    ∀ thetaClass,
+      (thetaRegion thetaClass).Contains (thetaRegionPoint thetaClass)
 
 namespace ConcreteHodgeTheaterLogThetaThetaPilotClassRegionSource
 
@@ -12399,7 +12413,13 @@ def toClassImageLawSource
                 choice₂) := by
           rw [hclass]
         _ = record.thetaPossibleImages.images.region choice₂ :=
-          (sourceData.record_region_eq choice₂).symm }
+          (sourceData.record_region_eq choice₂).symm,
+    representativeImagePoint := sourceData.thetaRegionPoint,
+    representativeImagePoint_mem := by
+      intro thetaClass
+      simpa [sourceData.record_region_eq
+        (sourceData.representativeData.representative thetaClass)]
+        using sourceData.thetaRegionPoint_mem thetaClass }
 
 set_option linter.style.longLine false in
 theorem endpoint
@@ -12522,6 +12542,14 @@ structure ConcreteHodgeTheaterLogThetaThetaPilotClassFormula
   thetaRegion :
     IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
       (coric := coric) -> Region target
+  thetaRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  thetaRegionPoint_mem :
+    ∀ thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric),
+      (thetaRegion thetaClass).Contains (thetaRegionPoint thetaClass)
 
 namespace ConcreteHodgeTheaterLogThetaThetaPilotClassFormula
 
@@ -12548,6 +12576,40 @@ theorem toChoiceImages_region
       formula.thetaRegion
         (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice) :=
   rfl
+
+set_option linter.style.longLine false in
+/-- The class-formula point witness pulled back to a concrete choice. -/
+def toChoiceImagePoint
+    (formula :
+      ConcreteHodgeTheaterLogThetaThetaPilotClassFormula coric l target)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    Point target :=
+  formula.thetaRegionPoint
+    (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice)
+
+set_option linter.style.longLine false in
+theorem toChoiceImagePoint_mem
+    (formula :
+      ConcreteHodgeTheaterLogThetaThetaPilotClassFormula coric l target)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (formula.toChoiceImages.region choice).Contains
+      (formula.toChoiceImagePoint choice) :=
+  formula.thetaRegionPoint_mem
+    (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice)
+
+set_option linter.style.longLine false in
+/--
+Package a witness-bearing class formula as the source-facing theta-pilot
+possible-image family.
+-/
+def toThetaPilotClassPossibleImageSource
+    (formula :
+      ConcreteHodgeTheaterLogThetaThetaPilotClassFormula coric l target) :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource
+      (target := target) coric l :=
+  { classImages := { region := formula.thetaRegion },
+    classImagePoint := formula.thetaRegionPoint,
+    classImagePoint_mem := formula.thetaRegionPoint_mem }
 
 end ConcreteHodgeTheaterLogThetaThetaPilotClassFormula
 
@@ -12612,7 +12674,9 @@ def toClassRegionSource
           sourceData.thetaPossibleImages_eq
       simpa
         [ConcreteHodgeTheaterLogThetaThetaPilotClassFormula.toChoiceImages]
-        using h }
+        using h,
+    thetaRegionPoint := sourceData.formula.thetaRegionPoint,
+    thetaRegionPoint_mem := sourceData.formula.thetaRegionPoint_mem }
 
 set_option linter.style.longLine false in
 theorem endpoint
@@ -12714,6 +12778,17 @@ structure ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormula
     QualitativeData.HodgeTheaterId -> String ->
       IUTStage1Theorem311ThetaPilotLatticeCoordinate ->
         coric -> Region target
+  thetaRegionPoint :
+    QualitativeData.HodgeTheaterId -> String ->
+      IUTStage1Theorem311ThetaPilotLatticeCoordinate ->
+        coric -> Point target
+  thetaRegionPoint_mem :
+    ∀ (hodgeTheater : QualitativeData.HodgeTheaterId)
+      (historyLabel : String)
+      (lattice : IUTStage1Theorem311ThetaPilotLatticeCoordinate)
+      (c : coric),
+      (thetaRegion hodgeTheater historyLabel lattice c).Contains
+        (thetaRegionPoint hodgeTheater historyLabel lattice c)
 
 namespace ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormula
 
@@ -12727,7 +12802,16 @@ def toClassFormula
     ConcreteHodgeTheaterLogThetaThetaPilotClassFormula coric l target :=
   { thetaRegion := fun thetaClass =>
       formula.thetaRegion thetaClass.hodgeTheater thetaClass.historyLabel
-        thetaClass.latticeCoordinate thetaClass.coric }
+        thetaClass.latticeCoordinate thetaClass.coric,
+    thetaRegionPoint := fun thetaClass =>
+      formula.thetaRegionPoint thetaClass.hodgeTheater thetaClass.historyLabel
+        thetaClass.latticeCoordinate thetaClass.coric,
+    thetaRegionPoint_mem := by
+      intro thetaClass
+      exact
+        formula.thetaRegionPoint_mem thetaClass.hodgeTheater
+          thetaClass.historyLabel thetaClass.latticeCoordinate
+          thetaClass.coric }
 
 set_option linter.style.longLine false in
 @[simp]
@@ -12739,6 +12823,19 @@ theorem toClassFormula_thetaRegion
         (coric := coric)) :
     formula.toClassFormula.thetaRegion thetaClass =
       formula.thetaRegion thetaClass.hodgeTheater thetaClass.historyLabel
+        thetaClass.latticeCoordinate thetaClass.coric :=
+  rfl
+
+set_option linter.style.longLine false in
+@[simp]
+theorem toClassFormula_thetaRegionPoint
+    (formula :
+      ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormula coric l target)
+    (thetaClass :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+        (coric := coric)) :
+    formula.toClassFormula.thetaRegionPoint thetaClass =
+      formula.thetaRegionPoint thetaClass.hodgeTheater thetaClass.historyLabel
         thetaClass.latticeCoordinate thetaClass.coric :=
   rfl
 
@@ -12762,6 +12859,15 @@ theorem toChoiceImages_region
           choice)
         choice.coric := by
   rfl
+
+set_option linter.style.longLine false in
+theorem toChoiceImagePoint_mem
+    (formula :
+      ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormula coric l target)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (formula.toChoiceImages.region choice).Contains
+      (formula.toClassFormula.toChoiceImagePoint choice) :=
+  formula.toClassFormula.toChoiceImagePoint_mem choice
 
 end ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormula
 
@@ -12947,6 +13053,24 @@ structure ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource
             choice₁.coric = choice₂.coric ->
               record.thetaPossibleImages.images.region choice₁ =
                 record.thetaPossibleImages.images.region choice₂
+  latticeImageRegionPoint :
+    QualitativeData.HodgeTheaterId -> String ->
+      IUTStage1Theorem311ThetaPilotLatticeCoordinate ->
+        coric -> Point target
+  latticeImageRegionPoint_mem :
+    ∀ (hodgeTheater : QualitativeData.HodgeTheaterId)
+      (historyLabel : String)
+      (lattice : IUTStage1Theorem311ThetaPilotLatticeCoordinate)
+      (c : coric),
+      (record.thetaPossibleImages.images.region
+          (representativeData.representative
+            { hodgeTheater := hodgeTheater,
+              historyLabel := historyLabel,
+              column := lattice.column,
+              row := lattice.row,
+              logThetaColumn := lattice.logThetaColumn,
+              coric := c })).Contains
+        (latticeImageRegionPoint hodgeTheater historyLabel lattice c)
 
 namespace ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource
 
@@ -12991,7 +13115,13 @@ def latticeFormula
     ConcreteHodgeTheaterLogThetaThetaPilotLatticeFormula coric l target :=
   { thetaRegion := fun hodgeTheater historyLabel lattice c =>
       record.thetaPossibleImages.images.region
-        (sourceData.representativeAt hodgeTheater historyLabel lattice c) }
+        (sourceData.representativeAt hodgeTheater historyLabel lattice c),
+    thetaRegionPoint := sourceData.latticeImageRegionPoint,
+    thetaRegionPoint_mem := by
+      intro hodgeTheater historyLabel lattice c
+      exact
+        sourceData.latticeImageRegionPoint_mem
+          hodgeTheater historyLabel lattice c }
 
 set_option linter.style.longLine false in
 theorem latticeFormula_thetaRegion
@@ -13029,6 +13159,28 @@ theorem record_region_eq_latticeFormula
     rfl rfl rfl rfl
 
 set_option linter.style.longLine false in
+/-- The lattice-image-law point witness pulled back to a concrete choice. -/
+def possibleImagePoint
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource
+        record indData)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    Point target :=
+  sourceData.latticeFormula.toClassFormula.toChoiceImagePoint choice
+
+set_option linter.style.longLine false in
+theorem possibleImagePoint_mem
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource
+        record indData)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (record.thetaPossibleImages.images.region choice).Contains
+      (sourceData.possibleImagePoint choice) := by
+  have hmem :=
+    sourceData.latticeFormula.toChoiceImagePoint_mem choice
+  simpa [sourceData.record_region_eq_latticeFormula choice] using hmem
+
+set_option linter.style.longLine false in
 /-- Promote the lattice-key image law to the record-level lattice formula source. -/
 def toLatticeFormulaRecordSource
     (sourceData :
@@ -13057,6 +13209,16 @@ theorem endpoint
           lattice c =
         record.thetaPossibleImages.images.region
           (sourceData.representativeAt hodgeTheater historyLabel lattice c)) ∧
+      (∀ hodgeTheater historyLabel
+          (lattice : IUTStage1Theorem311ThetaPilotLatticeCoordinate)
+          (c : coric),
+        (sourceData.latticeFormula.thetaRegion hodgeTheater historyLabel
+          lattice c).Contains
+          (sourceData.latticeFormula.thetaRegionPoint hodgeTheater
+            historyLabel lattice c)) ∧
+      (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        (record.thetaPossibleImages.images.region choice).Contains
+          (sourceData.possibleImagePoint choice)) ∧
       (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
         record.thetaPossibleImages.images.region choice =
           sourceData.latticeFormula.thetaRegion choice.hodgeTheater
@@ -13092,6 +13254,8 @@ theorem endpoint
             record.thetaPossibleImages.images.region choice₂) :=
   let formulaEndpoint := sourceData.toLatticeFormulaRecordSource.endpoint
   ⟨sourceData.latticeFormula_thetaRegion,
+    sourceData.latticeFormula.thetaRegionPoint_mem,
+    sourceData.possibleImagePoint_mem,
     sourceData.record_region_eq_latticeFormula,
     formulaEndpoint.1,
     sourceData.representativeData.thetaPilotClass_representative,
@@ -13251,6 +13415,14 @@ structure ConcreteHodgeTheaterLogThetaThetaPilotFiberTransportSource
         (l := l) choice₁ choice₂ ->
         record.thetaPossibleImages.images.region choice₁ =
           record.thetaPossibleImages.images.region choice₂
+  fiberTransportRegionPoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  fiberTransportRegionPoint_mem :
+    ∀ thetaClass,
+      (record.thetaPossibleImages.images.region
+        (representativeData.representative thetaClass)).Contains
+        (fiberTransportRegionPoint thetaClass)
 
 namespace ConcreteHodgeTheaterLogThetaThetaPilotFiberTransportSource
 
@@ -13278,7 +13450,25 @@ def toLatticeImageLawSource
       exact
         sourceData.fiberTransport_region_eq
           (ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport.ofLatticeKeyEq
-            (l := l) hhodge hhistory hlattice hcoric) }
+            (l := l) hhodge hhistory hlattice hcoric),
+    latticeImageRegionPoint := fun hodgeTheater historyLabel lattice c =>
+      sourceData.fiberTransportRegionPoint
+        { hodgeTheater := hodgeTheater,
+          historyLabel := historyLabel,
+          column := lattice.column,
+          row := lattice.row,
+          logThetaColumn := lattice.logThetaColumn,
+          coric := c },
+    latticeImageRegionPoint_mem := by
+      intro hodgeTheater historyLabel lattice c
+      exact
+        sourceData.fiberTransportRegionPoint_mem
+          { hodgeTheater := hodgeTheater,
+            historyLabel := historyLabel,
+            column := lattice.column,
+            row := lattice.row,
+            logThetaColumn := lattice.logThetaColumn,
+            coric := c } }
 
 set_option linter.style.longLine false in
 theorem endpoint
@@ -13336,8 +13526,8 @@ theorem endpoint
         sourceData.fiberTransport_region_eq
           (ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport.ofThetaPilotClassEq
             (l := l) hclass),
-    latticeEndpoint.2.2.2.2.1,
-    latticeEndpoint.2.2.1⟩
+    latticeEndpoint.2.2.2.2.2.2.1,
+    latticeEndpoint.2.2.2.2.1⟩
 
 set_option linter.style.longLine false in
 /--
@@ -13395,6 +13585,14 @@ structure ConcreteHodgeTheaterLogThetaThetaPilotFiberEqualityQuotientSource
   quotientImages :
     (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
         indData).EqualityQuotientPossibleImages record.thetaPossibleImages.images
+  possibleImagePoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  possibleImagePoint_mem :
+    ∀ thetaClass,
+      (record.thetaPossibleImages.images.region
+        (representativeData.representative thetaClass)).Contains
+        (possibleImagePoint thetaClass)
   fiberTransport_mem_equalityOrbit :
     ∀ {choice₁ choice₂ :
         IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
@@ -13456,7 +13654,9 @@ def toFiberTransportSource
     ConcreteHodgeTheaterLogThetaThetaPilotFiberTransportSource
       record indData :=
   { representativeData := sourceData.representativeData,
-    fiberTransport_region_eq := sourceData.fiberTransport_region_eq }
+    fiberTransport_region_eq := sourceData.fiberTransport_region_eq,
+    fiberTransportRegionPoint := sourceData.possibleImagePoint,
+    fiberTransportRegionPoint_mem := sourceData.possibleImagePoint_mem }
 
 set_option linter.style.longLine false in
 theorem endpoint
@@ -13634,6 +13834,14 @@ structure ConcreteHodgeTheaterLogThetaThetaPilotFiberInd12ChainSource
   quotientImages :
     (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
         indData).EqualityQuotientPossibleImages record.thetaPossibleImages.images
+  possibleImagePoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  possibleImagePoint_mem :
+    ∀ thetaClass,
+      (record.thetaPossibleImages.images.region
+        (representativeData.representative thetaClass)).Contains
+        (possibleImagePoint thetaClass)
   fiberTransport_ind12Chain :
     ∀ {choice₁ choice₂ :
         IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
@@ -13679,6 +13887,8 @@ def toFiberEqualityQuotientSource
       record indData :=
   { representativeData := sourceData.representativeData,
     quotientImages := sourceData.quotientImages,
+    possibleImagePoint := sourceData.possibleImagePoint,
+    possibleImagePoint_mem := sourceData.possibleImagePoint_mem,
     fiberTransport_mem_equalityOrbit :=
       sourceData.fiberTransport_mem_equalityOrbit }
 
@@ -13755,6 +13965,14 @@ structure ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource
   quotientImages :
     (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
         indData).EqualityQuotientPossibleImages record.thetaPossibleImages.images
+  possibleImagePoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  possibleImagePoint_mem :
+    ∀ thetaClass,
+      (record.thetaPossibleImages.images.region
+        (representativeData.representative thetaClass)).Contains
+        (possibleImagePoint thetaClass)
   fiberTransport_ind2AfterProcession :
     ∀ {choice₁ choice₂ :
         IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
@@ -13925,6 +14143,8 @@ def toFiberInd12ChainSource
       record indData :=
   { representativeData := sourceData.representativeData,
     quotientImages := sourceData.quotientImages,
+    possibleImagePoint := sourceData.possibleImagePoint,
+    possibleImagePoint_mem := sourceData.possibleImagePoint_mem,
     fiberTransport_ind12Chain := sourceData.fiberTransport_ind12Chain }
 
 set_option linter.style.longLine false in
@@ -14029,6 +14249,14 @@ structure ConcreteHodgeTheaterLogThetaThetaPilotFiberLocalTensorDataSource
   quotientImages :
     (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
         indData).EqualityQuotientPossibleImages record.thetaPossibleImages.images
+  possibleImagePoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  possibleImagePoint_mem :
+    ∀ thetaClass,
+      (record.thetaPossibleImages.images.region
+        (representativeData.representative thetaClass)).Contains
+        (possibleImagePoint thetaClass)
   fiberTransport_procession_eq :
     ∀ {choice₁ choice₂ :
         IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
@@ -14137,6 +14365,8 @@ def toFiberProcessionTensorSource
       record indData :=
   { representativeData := sourceData.representativeData,
     quotientImages := sourceData.quotientImages,
+    possibleImagePoint := sourceData.possibleImagePoint,
+    possibleImagePoint_mem := sourceData.possibleImagePoint_mem,
     fiberTransport_ind2AfterProcession :=
       sourceData.fiberTransport_ind2AfterProcession }
 
@@ -14210,6 +14440,14 @@ structure ConcreteHodgeTheaterLogThetaThetaPilotFiberDirectSummandSymmetrySource
   quotientImages :
     (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
         indData).EqualityQuotientPossibleImages record.thetaPossibleImages.images
+  possibleImagePoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  possibleImagePoint_mem :
+    ∀ thetaClass,
+      (record.thetaPossibleImages.images.region
+        (representativeData.representative thetaClass)).Contains
+        (possibleImagePoint thetaClass)
   fiberTransport_procession_eq :
     ∀ {choice₁ choice₂ :
         IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
@@ -14273,6 +14511,8 @@ def toFiberLocalTensorDataSource
       record indData :=
   { representativeData := sourceData.representativeData,
     quotientImages := sourceData.quotientImages,
+    possibleImagePoint := sourceData.possibleImagePoint,
+    possibleImagePoint_mem := sourceData.possibleImagePoint_mem,
     fiberTransport_procession_eq :=
       sourceData.fiberTransport_procession_eq,
     fiberTransport_directSummandCount_eq :=
@@ -14358,6 +14598,14 @@ structure ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTransportSource
   quotientImages :
     (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
         indData).EqualityQuotientPossibleImages record.thetaPossibleImages.images
+  possibleImagePoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  possibleImagePoint_mem :
+    ∀ thetaClass,
+      (record.thetaPossibleImages.images.region
+        (representativeData.representative thetaClass)).Contains
+        (possibleImagePoint thetaClass)
   fiberTransport_processionTransport :
     ∀ {choice₁ choice₂ :
         IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
@@ -14496,6 +14744,8 @@ def toFiberDirectSummandSymmetrySource
       record indData :=
   { representativeData := sourceData.representativeData,
     quotientImages := sourceData.quotientImages,
+    possibleImagePoint := sourceData.possibleImagePoint,
+    possibleImagePoint_mem := sourceData.possibleImagePoint_mem,
     fiberTransport_procession_eq :=
       sourceData.fiberTransport_procession_eq,
     fiberTransport_directSummandSymmetry :=
@@ -14606,6 +14856,14 @@ structure ConcreteHodgeTheaterLogThetaThetaPilotFiberUpperSemiTransportSource
   quotientImages :
     (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
         indData).EqualityQuotientPossibleImages record.thetaPossibleImages.images
+  possibleImagePoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  possibleImagePoint_mem :
+    ∀ thetaClass,
+      (record.thetaPossibleImages.images.region
+        (representativeData.representative thetaClass)).Contains
+        (possibleImagePoint thetaClass)
   fiberTransport_upperSemiTransport :
     ∀ {choice₁ choice₂ :
         IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
@@ -14743,6 +15001,8 @@ def toFiberProcessionTransportSource
       record indData :=
   { representativeData := sourceData.representativeData,
     quotientImages := sourceData.quotientImages,
+    possibleImagePoint := sourceData.possibleImagePoint,
+    possibleImagePoint_mem := sourceData.possibleImagePoint_mem,
     fiberTransport_processionTransport :=
       sourceData.fiberTransport_processionTransport,
     fiberTransport_directSummandSymmetry :=
@@ -14879,6 +15139,14 @@ structure ConcreteHodgeTheaterLogThetaThetaPilotFiberDirectSummandPacketSource
   quotientImages :
     (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
         indData).EqualityQuotientPossibleImages record.thetaPossibleImages.images
+  possibleImagePoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  possibleImagePoint_mem :
+    ∀ thetaClass,
+      (record.thetaPossibleImages.images.region
+        (representativeData.representative thetaClass)).Contains
+        (possibleImagePoint thetaClass)
   fiberTransport_directSummandPacketSymmetry :
     ∀ {choice₁ choice₂ :
         IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
@@ -14945,6 +15213,8 @@ def toFiberUpperSemiTransportSource
       record indData :=
   { representativeData := sourceData.representativeData,
     quotientImages := sourceData.quotientImages,
+    possibleImagePoint := sourceData.possibleImagePoint,
+    possibleImagePoint_mem := sourceData.possibleImagePoint_mem,
     fiberTransport_upperSemiTransport :=
       sourceData.fiberTransport_upperSemiTransport,
     fiberTransport_processionTransport :=
@@ -15028,6 +15298,14 @@ structure ConcreteHodgeTheaterLogThetaThetaPilotFiberDirectSummandActionPacketSo
   quotientImages :
     (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
         indData).EqualityQuotientPossibleImages record.thetaPossibleImages.images
+  possibleImagePoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  possibleImagePoint_mem :
+    ∀ thetaClass,
+      (record.thetaPossibleImages.images.region
+        (representativeData.representative thetaClass)).Contains
+        (possibleImagePoint thetaClass)
   fiberTransport_directSummandActionPacketSymmetry :
     ∀ {choice₁ choice₂ :
         IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
@@ -15110,6 +15388,8 @@ def toFiberDirectSummandPacketSource
       record indData :=
   { representativeData := sourceData.representativeData,
     quotientImages := sourceData.quotientImages,
+    possibleImagePoint := sourceData.possibleImagePoint,
+    possibleImagePoint_mem := sourceData.possibleImagePoint_mem,
     fiberTransport_directSummandPacketSymmetry :=
       sourceData.fiberTransport_directSummandPacketSymmetry,
     fiberTransport_upperSemiTransport :=
@@ -15201,6 +15481,14 @@ structure ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketSource
   quotientImages :
     (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
         indData).EqualityQuotientPossibleImages record.thetaPossibleImages.images
+  possibleImagePoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  possibleImagePoint_mem :
+    ∀ thetaClass,
+      (record.thetaPossibleImages.images.region
+        (representativeData.representative thetaClass)).Contains
+        (possibleImagePoint thetaClass)
   fiberTransport_ind2ActionPacketSymmetry :
     ∀ {choice₁ choice₂ :
         IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
@@ -15758,6 +16046,8 @@ def toFiberDirectSummandActionPacketSource
       record indData :=
   { representativeData := sourceData.representativeData,
     quotientImages := sourceData.quotientImages,
+    possibleImagePoint := sourceData.possibleImagePoint,
+    possibleImagePoint_mem := sourceData.possibleImagePoint_mem,
     fiberTransport_directSummandActionPacketSymmetry :=
       sourceData.fiberTransport_directSummandActionPacketSymmetry,
     fiberTransport_upperSemiTransport :=
@@ -15858,6 +16148,14 @@ structure ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSo
   quotientImages :
     (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
         indData).EqualityQuotientPossibleImages record.thetaPossibleImages.images
+  possibleImagePoint :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+      (coric := coric) -> Point target
+  possibleImagePoint_mem :
+    ∀ thetaClass,
+      (record.thetaPossibleImages.images.region
+        (representativeData.representative thetaClass)).Contains
+        (possibleImagePoint thetaClass)
   fiberTransport_ind2ActionPacketSymmetrySource :
     ∀ {choice₁ choice₂ :
         IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
@@ -15979,6 +16277,8 @@ def toFiberInd2ActionPacketSource
       record indData :=
   { representativeData := sourceData.representativeData,
     quotientImages := sourceData.quotientImages,
+    possibleImagePoint := sourceData.possibleImagePoint,
+    possibleImagePoint_mem := sourceData.possibleImagePoint_mem,
     fiberTransport_ind2ActionPacketSymmetry :=
       sourceData.fiberTransport_ind2ActionPacketSymmetry,
     fiberTransport_upperSemiTransport :=
@@ -16656,7 +16956,37 @@ def toLatticeImageLawSource
       exact
         sourceData.same_thetaPilotClass_region_eq
           (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass_eq_of_latticeKey_eq
-            hhodge hhistory hlattice hcoric) }
+            hhodge hhistory hlattice hcoric),
+    latticeImageRegionPoint := fun hodgeTheater historyLabel lattice c =>
+      sourceData.representativeImagePoint
+        { hodgeTheater := hodgeTheater,
+          historyLabel := historyLabel,
+          column := lattice.column,
+          row := lattice.row,
+          logThetaColumn := lattice.logThetaColumn,
+          coric := c },
+    latticeImageRegionPoint_mem := by
+      intro hodgeTheater historyLabel lattice c
+      let thetaClass :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+            (coric := coric) :=
+        { hodgeTheater := hodgeTheater,
+          historyLabel := historyLabel,
+          column := lattice.column,
+          row := lattice.row,
+          logThetaColumn := lattice.logThetaColumn,
+          coric := c }
+      have hregion :
+          record.thetaPossibleImages.images.region
+              (sourceData.representative thetaClass) =
+            record.thetaPossibleImages.images.region
+              (sourceData.toRepresentativeData.representative thetaClass) :=
+        sourceData.same_thetaPilotClass_region_eq
+          (by
+            rw [sourceData.representative_thetaPilotClass thetaClass,
+              sourceData.toRepresentativeData.thetaPilotClass_representative thetaClass])
+      simpa [thetaClass, hregion.symm]
+        using sourceData.representativeImagePoint_mem thetaClass }
 
 set_option linter.style.longLine false in
 /--
@@ -16676,7 +17006,21 @@ def toFiberTransportSource
   { representativeData := sourceData.toRepresentativeData,
     fiberTransport_region_eq := by
       intro choice₁ choice₂ transport
-      exact sourceData.same_thetaPilotClass_region_eq transport.thetaPilotClass_eq }
+      exact sourceData.same_thetaPilotClass_region_eq transport.thetaPilotClass_eq,
+    fiberTransportRegionPoint := sourceData.representativeImagePoint,
+    fiberTransportRegionPoint_mem := by
+      intro thetaClass
+      have hregion :
+          record.thetaPossibleImages.images.region
+              (sourceData.representative thetaClass) =
+            record.thetaPossibleImages.images.region
+              (sourceData.toRepresentativeData.representative thetaClass) :=
+        sourceData.same_thetaPilotClass_region_eq
+          (by
+            rw [sourceData.representative_thetaPilotClass thetaClass,
+              sourceData.toRepresentativeData.thetaPilotClass_representative thetaClass])
+      simpa [hregion.symm]
+        using sourceData.representativeImagePoint_mem thetaClass }
 
 set_option linter.style.longLine false in
 theorem toLatticeImageLawSource_endpoint
@@ -16704,8 +17048,8 @@ theorem toLatticeImageLawSource_endpoint
         sourceData.toLatticeImageLawSource.latticeFormula.toChoiceImages :=
   let latticeEndpoint := sourceData.toLatticeImageLawSource.endpoint
   ⟨sourceData.toRepresentativeData.thetaPilotClass_representative,
-    latticeEndpoint.2.2.2.2.1,
-    latticeEndpoint.2.2.1⟩
+    latticeEndpoint.2.2.2.2.2.2.1,
+    latticeEndpoint.2.2.2.2.1⟩
 
 set_option linter.style.longLine false in
 theorem toFiberTransportSource_endpoint
@@ -23154,9 +23498,9 @@ theorem ofConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLaw_endpoint
   let constructionEndpoint := construction.endpoint
   exact
     ⟨sourceEndpoint.1,
-      sourceEndpoint.2.1,
-      sourceEndpoint.2.2.1,
+      sourceEndpoint.2.2.2.1,
       sourceEndpoint.2.2.2.2.1,
+      sourceEndpoint.2.2.2.2.2.2.1,
       constructionEndpoint.2.1,
       constructionEndpoint.2.2.1,
       constructionEndpoint.2.2.2.1,
@@ -24367,9 +24711,9 @@ theorem ofLatticeImageLawSource_endpoint
   let quotientEndpoint := quotientSource.endpoint
   exact
     ⟨sourceEndpoint.1,
-      sourceEndpoint.2.1,
-      sourceEndpoint.2.2.1,
+      sourceEndpoint.2.2.2.1,
       sourceEndpoint.2.2.2.2.1,
+      sourceEndpoint.2.2.2.2.2.2.1,
       quotientSource.pullback_region_eq,
       quotientEndpoint.2.1,
       quotientEndpoint.2.2.1,
@@ -30214,8 +30558,8 @@ theorem ofLatticeImageLawSource_toRemark395SelectedQHullLogVolumeAudit_endpoint
       tensorPower_bound hullDetBridge_eq q_pilot_positive normalization
   exact
     ⟨sourceEndpoint.1,
-      sourceEndpoint.2.1,
-      sourceEndpoint.2.2.1,
+      sourceEndpoint.2.2.2.1,
+      sourceEndpoint.2.2.2.2.1,
       selectedEndpoint.1,
       selectedEndpoint.2.1,
       selectedEndpoint.2.2.2.1,
@@ -30338,8 +30682,8 @@ theorem ofLatticeImageLawSource_toRemark395ConstructedGlobalCThetaScaleCompariso
       cTheta canonicalCThetaScale_le_cTheta
   exact
     ⟨sourceEndpoint.1,
-      sourceEndpoint.2.1,
-      sourceEndpoint.2.2.1,
+      sourceEndpoint.2.2.2.1,
+      sourceEndpoint.2.2.2.2.1,
       globalEndpoint.2.1,
       globalEndpoint.2.2.1,
       globalEndpoint.2.2.2.1,
@@ -33422,15 +33766,6 @@ structure ConcreteValuationBallThetaClassLatticeFormulaBackedFamilyUnionSource
         (coric := coric),
       (latticeSource.latticeFormula.toClassFormula.thetaRegion thetaClass).toSet =
         valuationSource.valuationCover.possibleRegion thetaClass
-  latticeThetaRegionPoint :
-    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
-      (coric := coric) -> Point target
-  latticeThetaRegionPoint_mem :
-    ∀ thetaClass :
-      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
-        (coric := coric),
-      (latticeSource.latticeFormula.toClassFormula.thetaRegion thetaClass).Contains
-        (latticeThetaRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassLatticeFormulaBackedFamilyUnionSource
 
@@ -33469,13 +33804,15 @@ def toThetaClassRegionBackedFamilyUnionSource
       using
         latticeBackedSource.latticeThetaRegion_toSet_eq_valuationRegion
           thetaClass
-  thetaRegionPoint := latticeBackedSource.latticeThetaRegionPoint
+  thetaRegionPoint :=
+    latticeBackedSource.latticeSource.latticeFormula.toClassFormula.thetaRegionPoint
   thetaRegionPoint_mem := by
     intro thetaClass
     simpa
       [ConcreteHodgeTheaterLogThetaThetaPilotClassFormulaRecordSource.toClassRegionSource]
       using
-        latticeBackedSource.latticeThetaRegionPoint_mem thetaClass
+        latticeBackedSource.latticeSource.latticeFormula.toClassFormula.thetaRegionPoint_mem
+          thetaClass
 
 set_option linter.style.longLine false in
 def toThetaClassImageBackedFamilyUnionSource
@@ -33577,16 +33914,6 @@ structure ConcreteValuationBallThetaClassLatticeImageLawBackedFamilyUnionSource
       (latticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
         thetaClass).toSet =
         valuationSource.valuationCover.possibleRegion thetaClass
-  latticeImageRegionPoint :
-    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
-      (coric := coric) -> Point target
-  latticeImageRegionPoint_mem :
-    ∀ thetaClass :
-      IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
-        (coric := coric),
-      (latticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
-        thetaClass).Contains
-        (latticeImageRegionPoint thetaClass)
 
 namespace ConcreteValuationBallThetaClassLatticeImageLawBackedFamilyUnionSource
 
@@ -33623,10 +33950,6 @@ def toThetaClassLatticeFormulaBackedFamilyUnionSource
     exact
       imageLawBackedSource.latticeImageRegion_toSet_eq_valuationRegion
         thetaClass
-  latticeThetaRegionPoint :=
-    imageLawBackedSource.latticeImageRegionPoint
-  latticeThetaRegionPoint_mem :=
-    imageLawBackedSource.latticeImageRegionPoint_mem
 
 set_option linter.style.longLine false in
 def toThetaClassImageBackedFamilyUnionSource
@@ -33688,9 +34011,9 @@ theorem endpoint
   let formulaEndpoint :=
     imageLawBackedSource.toThetaClassLatticeFormulaBackedFamilyUnionSource.endpoint
   exact
-    ⟨imageLawEndpoint.2.2.2.2.1,
-      imageLawEndpoint.2.2.1,
-      imageLawEndpoint.2.1,
+    ⟨imageLawEndpoint.2.2.2.2.2.2.1,
+      imageLawEndpoint.2.2.2.2.1,
+      imageLawEndpoint.2.2.2.1,
       imageLawBackedSource.latticeImageRegion_toSet_eq_valuationRegion,
       formulaEndpoint.2.2.2⟩
 
@@ -33777,10 +34100,6 @@ def toThetaClassLatticeImageLawBackedFamilyUnionSource
     exact
       fiberTransportBackedSource.fiberTransportRegion_toSet_eq_valuationRegion
         thetaClass
-  latticeImageRegionPoint :=
-    fiberTransportBackedSource.fiberTransportRegionPoint
-  latticeImageRegionPoint_mem :=
-    fiberTransportBackedSource.fiberTransportRegionPoint_mem
 
 set_option linter.style.longLine false in
 def toThetaClassLatticeFormulaBackedFamilyUnionSource
@@ -34736,11 +35055,11 @@ def toThetaRegionDefinedFamilyUnionSource
       (imageLawBackedSource.latticeImageRegion_toSet_eq_valuationRegion
         thetaClass).symm
   fiberTransportRegionPoint :=
-    imageLawBackedSource.latticeImageRegionPoint
-  fiberTransportRegionPoint_mem := by
-    intro thetaClass
-    simpa [latticeImageLawSource_eq] using
-      imageLawBackedSource.latticeImageRegionPoint_mem thetaClass
+    sourceData.toFiberTransportSource.toLatticeImageLawSource
+      |>.latticeFormula |>.toClassFormula |>.thetaRegionPoint
+  fiberTransportRegionPoint_mem :=
+    sourceData.toFiberTransportSource.toLatticeImageLawSource
+      |>.latticeFormula |>.toClassFormula |>.thetaRegionPoint_mem
 
 set_option linter.style.longLine false in
 /--
@@ -34766,11 +35085,10 @@ noncomputable def toThetaRegionDefinedPrincipalValuationBallSource
       (imageLawBackedSource.toThetaRegionDefinedFamilyUnionSource
         latticeImageLawSource_eq
         |>.possibleRegion_eq_fiberTransportThetaRegion)
-      imageLawBackedSource.latticeImageRegionPoint
-      (by
-        intro thetaClass
-        simpa [latticeImageLawSource_eq] using
-          imageLawBackedSource.latticeImageRegionPoint_mem thetaClass)
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource
+        |>.latticeFormula |>.toClassFormula |>.thetaRegionPoint)
+      (sourceData.toFiberTransportSource.toLatticeImageLawSource
+        |>.latticeFormula |>.toClassFormula |>.thetaRegionPoint_mem)
 
 set_option linter.style.longLine false in
 theorem thetaRegionDefinedPrincipalValuationBallEndpoint

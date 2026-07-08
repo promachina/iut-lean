@@ -59,8 +59,12 @@ Remark 3.9.5-style hull/determinant data, and the existing \(\CTheta\)
 endpoint.  The possible-image layer is now witness-bearing: class-level
 possible images, quotient pullbacks, and the selected \(q\)-region carry
 explicit nonemptiness data through the Step (xi) valuation-ball/log-shell
-source chain.  The current result is a checked conditional Stage 1 corridor,
-not a closed proof of Corollary 3.12 from Mochizuki's published hypotheses.
+source chain.  The class/log-theta-lattice formula and typed fiber-transport
+sources now carry these witnesses as part of the same Theorem 3.11 spine; the
+remaining lower task is to construct those source fields from the analytic
+multiradial/log-theta objects of the papers.  The current result is a checked
+conditional Stage 1 corridor, not a closed proof of Corollary 3.12 from
+Mochizuki's published hypotheses.
 
 We also maintain a Lean blueprint and intend to make the project consumable by
 Apodeixis as a collaboration and review layer.  The blueprint is presently a
@@ -307,8 +311,11 @@ point witness for every class, Lean pulls these witnesses back to concrete
 choices, and the equality-quotient construction proves nonemptiness of the
 quotient pullbacks and of the selected \(q\)-region.  The Step (xi)
 valuation-ball/log-shell source chain now transports the same theta-region
-witnesses down to the local exact-source constructors.  The paper-derived
-Step (xi) source also has a quotient-compatible
+witnesses down to the local exact-source constructors.  More recently, the
+class-region, class-formula, log-theta-lattice formula, lattice-image-law,
+and typed fiber-transport source records themselves were made witness-bearing,
+so this nonemptiness data is no longer introduced independently by the
+valuation wrapper.  The paper-derived Step (xi) source also has a quotient-compatible
 constructor that fixes the selected choice to the source spine, instead of
 accepting an independently assembled hull record at that point.  The remaining
 \IUT{} IV and additive-Haar layers are then combined with this constructed
@@ -499,7 +506,7 @@ This is progress below a free-floating obligation bundle.  What remains is to
 construct, from the source papers, the actual lower operations corresponding to:
 \[
 \begin{array}{l}
-\text{the derivation of possible-image point witnesses from the multiradial construction},\\
+\text{the analytic construction of the source-level possible-image witnesses},\\
 \text{the action-packet theta formula to source-spine comparison},\\
 \text{the lower construction of the coric Ob7 prime-strip invariant}.
 \end{array}
