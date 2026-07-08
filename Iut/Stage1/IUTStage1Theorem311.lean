@@ -19729,6 +19729,126 @@ theorem ofLocalizedHullVectorBundleDecompositionSourceOfThetaEqFamilyHullLogVolu
           data.weightedDeterminantTensorPowerBound,
           data.qRegionLogVolume_le_thetaSigned⟩ }
 
+set_option linter.style.longLine false in
+/--
+Ob5 quotient compatibility tied to the localized determinant source.
+
+Remark 3.9.5(v)--(vii) uses the same bounded-family hull both to quotient
+possible images and to pass through determinant/log-volume.  This audit keeps
+that joint source visible at the Step (xi) boundary: equality-orbit choices
+give the same quotient possible region and log-volume, while the localized
+Ob3/Ob5 source identifies the family-hull log-volume with the determinant and
+the stricter route identifies the Step (xi) theta scalar with that family hull.
+-/
+structure LocalizedOb5QuotientDeterminantBridgeAudit
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point target) (Quot core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator = hullData.hullOperator)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        hullData.quotientHullCompatibility.familySource.possibleRegion)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned = localizedSource.familyHullLogVolume) : Prop where
+  quotient_possible_regions_eq :
+    ∀ {choice₁ choice₂ : choice},
+      choice₂ ∈ core.equalityOrbit choice₁ ->
+        hullData.quotientHullCompatibility.familySource.possibleRegion
+            (core.equalityQuotientMap choice₁) =
+          hullData.quotientHullCompatibility.familySource.possibleRegion
+            (core.equalityQuotientMap choice₂)
+  quotient_possible_region_logVolumes_eq :
+    ∀ {choice₁ choice₂ : choice},
+      choice₂ ∈ core.equalityOrbit choice₁ ->
+        hullData.hullOperator.logVolume
+            (hullData.quotientHullCompatibility.familySource.possibleRegion
+              (core.equalityQuotientMap choice₁)) =
+          hullData.hullOperator.logVolume
+            (hullData.quotientHullCompatibility.familySource.possibleRegion
+              (core.equalityQuotientMap choice₂))
+  localized_possible_region_eq_quotient_source :
+    localizedSource.possibleRegion =
+      hullData.quotientHullCompatibility.familySource.possibleRegion
+  localized_hull_operator_eq_hullData :
+    localizedSource.hullOperator = hullData.hullOperator
+  localized_theta_eq_family_hull :
+    thetaSigned = localizedSource.familyHullLogVolume
+  localized_theta_eq_projection :
+    LocalizedHullVectorBundleThetaEqFamilyHullProjectionAudit
+      (hullData := hullData) localizedSource hullOperator_eq
+      possibleRegion_eq thetaSigned_eq_familyHullLogVolume
+  localized_ob3_ob5_hull_logVolume_eq_determinant :
+    let compatibilitySource :=
+      localizedSource.toOb3Ob5AdjustedDeterminantLogVolumeSource
+        |>.toOb3Ob5DeterminantCompatibilitySource;
+    compatibilitySource.hullOperator.logVolume compatibilitySource.familyHull =
+      compatibilitySource.determinantSource.determinantLogVolume
+  bounded_family_hull_det_log_volume_endpoint :
+    let compatibilitySource :=
+      localizedSource.toOb3Ob5AdjustedDeterminantLogVolumeSource
+        |>.toOb3Ob5DeterminantCompatibilitySource;
+    compatibilitySource.toBoundedFamilyHullDetLogVolumeSource.familyUnion =
+        compatibilitySource.familyUnion ∧
+      compatibilitySource.toBoundedFamilyHullDetLogVolumeSource.familyHull =
+        compatibilitySource.familyHull ∧
+      compatibilitySource.toBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume =
+        compatibilitySource.determinantSource.determinantLogVolume ∧
+      compatibilitySource.toBoundedFamilyHullDetLogVolumeSource.tensorPower.normalizedLogVolume =
+        compatibilitySource.toBoundedFamilyHullDetLogVolumeSource.familyHullLogVolume
+  selected_q_region_le_theta_from_localized_bridge :
+    hullData.hullOperator.logVolume hullData.selectedQRegion <= thetaSigned
+
+set_option linter.style.longLine false in
+theorem localizedOb5QuotientDeterminantBridgeAudit
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point target) (Quot core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator = hullData.hullOperator)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        hullData.quotientHullCompatibility.familySource.possibleRegion)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned = localizedSource.familyHullLogVolume) :
+    LocalizedOb5QuotientDeterminantBridgeAudit
+      (hullData := hullData) localizedSource hullOperator_eq
+      possibleRegion_eq thetaSigned_eq_familyHullLogVolume :=
+  { quotient_possible_regions_eq :=
+      hullData.ob5QuotientCompatibility.1,
+    quotient_possible_region_logVolumes_eq :=
+      hullData.ob5QuotientCompatibility.2,
+    localized_possible_region_eq_quotient_source :=
+      possibleRegion_eq,
+    localized_hull_operator_eq_hullData :=
+      hullOperator_eq,
+    localized_theta_eq_family_hull :=
+      thetaSigned_eq_familyHullLogVolume,
+    localized_theta_eq_projection :=
+      ofLocalizedHullVectorBundleDecompositionSourceOfThetaEqFamilyHullLogVolume_audit
+        (hullData := hullData) localizedSource hullOperator_eq
+        possibleRegion_eq thetaSigned_eq_familyHullLogVolume,
+    localized_ob3_ob5_hull_logVolume_eq_determinant := by
+      let compatibilitySource :=
+        localizedSource.toOb3Ob5AdjustedDeterminantLogVolumeSource
+          |>.toOb3Ob5DeterminantCompatibilitySource
+      exact compatibilitySource.familyHullLogVolume_eq_determinant,
+    bounded_family_hull_det_log_volume_endpoint := by
+      let compatibilitySource :=
+        localizedSource.toOb3Ob5AdjustedDeterminantLogVolumeSource
+          |>.toOb3Ob5DeterminantCompatibilitySource
+      exact compatibilitySource.toBoundedFamilyHullDetLogVolumeSource_endpoint,
+    selected_q_region_le_theta_from_localized_bridge := by
+      let data :=
+        ofLocalizedHullVectorBundleDecompositionSourceOfThetaEqFamilyHullLogVolume
+          (hullData := hullData) localizedSource hullOperator_eq
+          possibleRegion_eq thetaSigned_eq_familyHullLogVolume
+      exact data.qRegionLogVolume_le_thetaSigned }
+
 end StepXIDeterminantComparisonData
 
 /--
@@ -22286,6 +22406,11 @@ structure PreferredConcreteLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
       (hullData := concreteHullSource.toHullFormationData)
       localizedSource hullOperator_eq possibleRegion_eq
       thetaSigned_eq_familyHullLogVolume
+  ob5_quotient_determinant_bridge :
+    StepXIDeterminantComparisonData.LocalizedOb5QuotientDeterminantBridgeAudit
+      (hullData := concreteHullSource.toHullFormationData)
+      localizedSource hullOperator_eq possibleRegion_eq
+      thetaSigned_eq_familyHullLogVolume
   derived_concrete_localized_route :
     PreferredConcreteLocalizedStepXIPaperSourceRouteAudit
       sourceData paperTrace thetaSigned concreteHullSource
@@ -22394,6 +22519,11 @@ theorem preferredConcreteLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
         thetaSigned_eq_familyHullLogVolume,
       localized_theta_eq_determinant_source :=
         StepXIDeterminantComparisonData.ofLocalizedHullVectorBundleDecompositionSourceOfThetaEqFamilyHullLogVolume_audit
+          (hullData := concreteHullSource.toHullFormationData)
+          localizedSource hullOperator_eq possibleRegion_eq
+          thetaSigned_eq_familyHullLogVolume,
+      ob5_quotient_determinant_bridge :=
+        StepXIDeterminantComparisonData.localizedOb5QuotientDeterminantBridgeAudit
           (hullData := concreteHullSource.toHullFormationData)
           localizedSource hullOperator_eq possibleRegion_eq
           thetaSigned_eq_familyHullLogVolume,
@@ -22663,6 +22793,11 @@ structure PreferredPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRo
       rfl localizedSource hullOperator_eq possibleRegion_eq
       thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
       additive_haar_arithmetic_degree_padic
+  ob5_quotient_determinant_bridge :
+    StepXIDeterminantComparisonData.LocalizedOb5QuotientDeterminantBridgeAudit
+      (hullData := principalProductHullFormationData sourceData principalSource)
+      localizedSource hullOperator_eq possibleRegion_eq
+      thetaSigned_eq_familyHullLogVolume
   derived_principal_product_route :
     PreferredPrincipalProductLocalizedStepXIPaperSourceRouteAudit
       sourceData paperTrace thetaSigned principalSource localizedSource
@@ -22763,6 +22898,11 @@ theorem preferredPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRout
           rfl localizedSource hullOperator_eq possibleRegion_eq
           thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
           additive_haar_arithmetic_degree_padic audit,
+      ob5_quotient_determinant_bridge :=
+        StepXIDeterminantComparisonData.localizedOb5QuotientDeterminantBridgeAudit
+          (hullData := principalProductHullFormationData sourceData principalSource)
+          localizedSource hullOperator_eq possibleRegion_eq
+          thetaSigned_eq_familyHullLogVolume,
       derived_principal_product_route :=
         preferredPrincipalProductLocalizedStepXIPaperSourceRouteAudit
           sourceData paperTrace thetaSigned principalSource localizedSource

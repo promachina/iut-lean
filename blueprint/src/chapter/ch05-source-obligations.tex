@@ -217,7 +217,12 @@
   determinant equality.  The localized projection audit also exposes the
   adjusted Ob3/Ob5 endpoint, the induced Ob3/Ob5 compatibility source, and the
   bounded-family hull/determinant log-volume endpoint from the lower source
-  layer.  On the stricter localized route, the final normalized determinant
+  layer.  The strict localized route additionally carries an Ob5
+  quotient/determinant bridge audit: equality-orbit choices give the same
+  quotient possible region and quotient-region log-volume, and this same
+  localized family-hull source supplies the Ob3/Ob5 determinant equality and
+  bounded-family tensor endpoint.  On the stricter localized route, the final
+  normalized determinant
   upper bound is no longer supplied as an independent inequality: it is derived
   from the identification of the Step (xi) theta scalar with the constructed
   localized family-hull log-volume.  A further
@@ -283,6 +288,8 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredConcreteLocalizedStepXIPaperSourceRouteAudit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.principalProductConcreteHullSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.principalProductHullFormationData}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIDeterminantComparisonData.LocalizedOb5QuotientDeterminantBridgeAudit}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIDeterminantComparisonData.localizedOb5QuotientDeterminantBridgeAudit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredPrincipalProductLocalizedStepXIPaperSourceRouteAudit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPrincipalProductLocalizedStepXIPaperSourceRouteAudit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit}
@@ -298,7 +305,10 @@
   obligation package are projected internally, so the public boundary no longer
   takes a standalone \texttt{StepXIHullDeterminantObligations}, a preassembled
   paper-derived Step (xi) source, or an independent normalized-determinant
-  upper-bound estimate.  The looser route theorems remain as compatibility
+  upper-bound estimate.  Its audit also threads the localized Ob5
+  quotient/determinant bridge, so quotient-region invariance and the
+  bounded-family determinant endpoint are checked against the same constructed
+  family-hull data.  The looser route theorems remain as compatibility
   layers underneath this promoted boundary.
 \end{proposition}
 
