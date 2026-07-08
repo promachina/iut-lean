@@ -13339,6 +13339,35 @@ theorem endpoint
     latticeEndpoint.2.2.2.2.1,
     latticeEndpoint.2.2.1⟩
 
+set_option linter.style.longLine false in
+/--
+Fiber-transport source to Hodge-theater source-spine possible-image trace.
+
+The fiber-transport source proves region equality across typed theta-pilot
+fiber transports.  Since same lattice-key data builds such a transport, Lean
+first derives the lattice image law source and then the pointwise
+record/source trace used by Step (xi).
+-/
+theorem record_region_eq_sourceImages_of_fiberTransportSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransportSource
+        record indData)
+    (spine :
+      IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l)
+    (latticeFormula_eq_sourceClassImages :
+      ∀ thetaClass :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric),
+        sourceData.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+            thetaClass =
+          spine.thetaPossibleImageSource.classImages.region thetaClass) :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      record.thetaPossibleImages.images.region choice =
+        spine.Images.region choice :=
+  sourceData.toLatticeImageLawSource.record_region_eq_sourceImages_of_latticeImageLawSource
+    spine latticeFormula_eq_sourceClassImages
+
 end ConcreteHodgeTheaterLogThetaThetaPilotFiberTransportSource
 
 set_option linter.style.longLine false in
@@ -62694,6 +62723,106 @@ noncomputable def ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantCoricOb7
           sourceData.Images.region choice :=
     IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource.record_region_eq_sourceImages_of_latticeImageLawSource
       (record := record) latticeImageLawSource sourceData
+      latticeFormula_eq_sourceClassImages
+  ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantCoricOb7FromSourceRegionTrace
+    (sourceData := sourceData) (record := record) (β := β)
+    paperTrace operation hullOperation determinantOperation hullOperator
+    record_region_eq_source ob3ob4Source compatibility
+    measure_eq_hullLogVolume tensorPower_bound hullDetBridge_eq
+    q_pilot_positive normalization quotientHullCompatibility
+    coricInvariant determinantLogVolume_eq_coricPrimeStripGlobal
+
+set_option linter.style.longLine false in
+/--
+Selected Step (xi) constructor from theta-pilot fiber-transport invariance.
+
+This is below the lattice image-law route: same-key data is first converted to
+a typed theta-pilot fiber transport, and the source supplies possible-image
+region equality across such transports.  Lean derives the lattice image law,
+then the record/source trace and all subsequent Step (xi) alignments.
+-/
+noncomputable def ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantCoricOb7FromFiberTransportSource
+    {source target : Copy} {coric : Type u} {l : PrimeGeFive}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {β : Type v} [Fintype β]
+    (paperTrace : StepXIPaperTrace)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    (fiberTransportSource :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberTransportSource
+        record indData)
+    (latticeFormula_eq_sourceClassImages :
+      ∀ thetaClass :
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric),
+        fiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+            thetaClass =
+          sourceData.thetaPossibleImageSource.classImages.region thetaClass)
+    {γ : Type w} [Fintype γ]
+    (ob3ob4Source :
+      IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImageUnion
+            record))
+        ob3ob4Source.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      package.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          hullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          ob3ob4Source.toWeightedDeterminantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (sourceData.Images.region sourceData.selectedQChoice).toSet
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.sourceSelectedRegion_subset_recordUnion_of_region_eq
+            (record := record) (sourceData := sourceData)
+            (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberTransportSource.record_region_eq_sourceImages_of_fiberTransportSource
+              (record := record) fiberTransportSource sourceData
+              latticeFormula_eq_sourceClassImages))
+          ob3ob4Source.toWeightedDeterminantSource compatibility
+          measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -package.preLedger.qSigned)
+    (normalization : package.preLedger.normalization)
+    (quotientHullCompatibility :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientHullLogVolumeCompatibility
+        sourceData.Core sourceData.Images hullOperator)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (coricInvariant :
+      IUTStage1CoricThetaMuPrimeStripInvariant Penv Pgau V μ)
+    (determinantLogVolume_eq_coricPrimeStripGlobal :
+      ob3ob4Source.toWeightedDeterminantSource.determinantLogVolume =
+        coricInvariant.lift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume) :
+    StepXIPaperDerivedHullDeterminantSource.{u, v} sourceData :=
+  let record_region_eq_source :
+      ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        record.thetaPossibleImages.images.region choice =
+          sourceData.Images.region choice :=
+    IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberTransportSource.record_region_eq_sourceImages_of_fiberTransportSource
+      (record := record) fiberTransportSource sourceData
       latticeFormula_eq_sourceClassImages
   ofSourceSelectedPossibleImageOb3Ob4AdjustedDeterminantCoricOb7FromSourceRegionTrace
     (sourceData := sourceData) (record := record) (β := β)
