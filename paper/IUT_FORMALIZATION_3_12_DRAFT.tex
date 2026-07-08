@@ -540,7 +540,14 @@ now been lowered to a target-region lattice formula: each package target
 region is identified with a formula indexed by the Hodge theater, history
 label, theta-pilot lattice coordinate, and coric datum, and Lean derives the
 key invariance, class trace, full source-image/target-region family
-equality, and Step (xi) source-spine handoff from that formula.  At the public
+equality, and Step (xi) source-spine handoff from that formula.  The formula
+is now also produced from the concrete lattice-image law already present in
+the Theorem 3.11 source spine: record possible images are evaluated by the
+lattice formula, and the multiradial record's target-region realization
+identifies those record regions with the package target regions.  The
+exact-theta Step (xi) source-spine route can therefore consume the
+lattice-image law directly, without an independently supplied target-region
+lattice formula.  At the public
 paper-trace route boundary, the remaining payload audit has now been split so
 the caller supplies only the non-Step-(xi) payload; the legacy Step-(xi) audit
 fields are derived internally from the structured Step-(xi) source.  A stricter
@@ -563,7 +570,7 @@ construct, from the source papers, the actual lower operations corresponding to:
 \[
 \begin{array}{l}
 \text{the analytic construction of the source-level possible-image witnesses},\\
-\text{the construction of the target-region lattice formula from paper data},\\
+\text{the construction of the concrete lattice-image law from paper data},\\
 \text{the lower construction of the coric Ob7 prime-strip invariant}.
 \end{array}
 \]

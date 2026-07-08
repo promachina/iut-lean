@@ -13545,6 +13545,73 @@ theorem record_region_eq_sourceImages_of_latticeImageLawSource
   sourceData.toLatticeFormulaRecordSource.record_region_eq_sourceImages_of_latticeFormulaRecordSource
     spine latticeFormula_eq_sourceClassImages
 
+set_option linter.style.longLine false in
+/--
+Construct the package target-region lattice formula from the record
+lattice-image law.
+
+The formula is the same Hodge/history/theta-pilot-lattice/coric formula already
+constructed for record possible images.  The extra step here is source-facing:
+the multiradial record identifies its possible-image regions with the package
+target regions, so Lean turns the record-image formula into a package
+target-region formula.
+-/
+def toPackageTargetRegionLatticeFormulaSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource
+        record indData) :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource.PackageTargetRegionLatticeFormulaSource
+      (target := target) package :=
+  { representativeData := sourceData.representativeData,
+    thetaRegion := sourceData.latticeFormula.thetaRegion,
+    targetRegions_region_eq := by
+      intro choice
+      calc
+        package.preLedger.output.comparisons.targetRegions.region choice =
+            (package.preLedger.output.comparison choice).targetRegion := by
+          rfl
+        _ = record.thetaPossibleImages.images.region choice :=
+          (record.thetaPossibleImages.choice_region_eq_targetRegion choice).symm
+        _ =
+            sourceData.latticeFormula.thetaRegion choice.hodgeTheater
+              choice.historyLabel
+              (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
+                choice)
+              choice.coric :=
+          sourceData.record_region_eq_latticeFormula choice,
+    thetaRegionPoint := sourceData.latticeFormula.thetaRegionPoint,
+    thetaRegionPoint_mem := sourceData.latticeFormula.thetaRegionPoint_mem }
+
+set_option linter.style.longLine false in
+/-- Endpoint exposing the package target-region formula derived from the lattice-image law. -/
+theorem packageTargetRegionLatticeFormulaSource_endpoint
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource
+        record indData) :
+    (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      package.preLedger.output.comparisons.targetRegions.region choice =
+        sourceData.latticeFormula.thetaRegion choice.hodgeTheater
+          choice.historyLabel
+          (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
+            choice)
+          choice.coric) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        choice₁.hodgeTheater = choice₂.hodgeTheater ->
+        choice₁.historyLabel = choice₂.historyLabel ->
+        IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
+            choice₁ =
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
+            choice₂ ->
+        choice₁.coric = choice₂.coric ->
+          package.preLedger.output.comparisons.targetRegions.region choice₁ =
+            package.preLedger.output.comparisons.targetRegions.region choice₂) ∧
+      (sourceData.toPackageTargetRegionLatticeFormulaSource.toThetaPilotClassPossibleImageSource).choiceImages =
+        package.preLedger.output.comparisons.targetRegions :=
+  let endpoint :=
+    sourceData.toPackageTargetRegionLatticeFormulaSource.endpoint
+  ⟨endpoint.1, endpoint.2.1, endpoint.2.2.2.1⟩
+
 end ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource
 
 set_option linter.style.longLine false in
@@ -66589,6 +66656,122 @@ noncomputable def ofSourceSpineThetaRecordOb3Ob5ExactThetaCoricOb7FromTargetRegi
       (sourceData.withTargetRegionLatticeFormulaSource targetSource) :=
   ofSourceSpineThetaRecordOb3Ob5ExactThetaCoricOb7FromTargetRegionLatticeKeySource
     sourceData targetSource.toPackageTargetRegionLatticeKeySource
+    paperTrace operation hullOperation determinantOperation recordBase
+    actionPacketTransportSource detLogVolumeSource measure_eq_hullLogVolume
+    thetaSigned_eq_familyHullLogVolume hullDetBridge_eq q_pilot_positive
+    normalization coricInvariant determinantLogVolume_eq_coricPrimeStripGlobal
+
+set_option linter.style.longLine false in
+/--
+Deep source-spine Step (xi) constructor from the concrete lattice-image law.
+
+This lowers the target-region lattice-formula endpoint one more step along the
+existing Theorem 3.11 source spine.  The lattice-image law constructs the
+Hodge/history/theta-pilot-lattice/coric formula for record possible images;
+the multiradial record's target-region realization then turns this into the
+package target-region formula consumed by the Step (xi) route.
+-/
+noncomputable def ofSourceSpineThetaRecordOb3Ob5ExactThetaCoricOb7FromTargetRegionLatticeImageLawSource
+    {source target : Copy} {coric : Type u} {l : PrimeGeFive}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l)
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {β : Type v} [Fintype β]
+    (paperTrace : StepXIPaperTrace)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (recordBase : IUTStage1Theorem311MultiradialSourceRecord package)
+    (latticeImageSource :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotLatticeImageLawSource
+        recordBase indData)
+    (actionPacketTransportSource :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        (IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfTargetRegionLatticeFormulaSource
+          recordBase sourceData
+          latticeImageSource.toPackageTargetRegionLatticeFormulaSource)
+        indData)
+    {γ : Type w} [Fintype γ]
+    (detLogVolumeSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ)
+        (IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfTargetRegionLatticeFormulaSource
+          recordBase sourceData
+          latticeImageSource.toPackageTargetRegionLatticeFormulaSource))
+    (measure_eq_hullLogVolume :
+      package.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          detLogVolumeSource.hullOperator).toRegionMeasure)
+    (thetaSigned_eq_familyHullLogVolume :
+      package.preLedger.thetaSigned =
+        (detLogVolumeSource.toRecordOb3Ob5DeterminantCompatibilitySource
+          |>.toRecordBoundedFamilyHullDetLogVolumeSource).familyHullLogVolume)
+    (hullDetBridge_eq :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record :=
+            IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfTargetRegionLatticeFormulaSource
+              recordBase sourceData
+              latticeImageSource.toPackageTargetRegionLatticeFormulaSource)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            detLogVolumeSource.hullOperator)
+          ((sourceData.withTargetRegionLatticeFormulaSource
+              latticeImageSource.toPackageTargetRegionLatticeFormulaSource).Images.region
+            (sourceData.withTargetRegionLatticeFormulaSource
+              latticeImageSource.toPackageTargetRegionLatticeFormulaSource).selectedQChoice).toSet
+          (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.sourceSelectedRegion_subset_recordUnion_of_region_eq
+            (record :=
+              IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfTargetRegionLatticeFormulaSource
+                recordBase sourceData
+                latticeImageSource.toPackageTargetRegionLatticeFormulaSource)
+            (sourceData :=
+              sourceData.withTargetRegionLatticeFormulaSource
+                latticeImageSource.toPackageTargetRegionLatticeFormulaSource)
+            (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource.record_region_eq_sourceImages_of_fiberInd2ActionPacketTransportSource
+              (record :=
+                IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfTargetRegionLatticeFormulaSource
+                  recordBase sourceData
+                  latticeImageSource.toPackageTargetRegionLatticeFormulaSource)
+              actionPacketTransportSource
+              (sourceData.withTargetRegionLatticeFormulaSource
+                latticeImageSource.toPackageTargetRegionLatticeFormulaSource)
+              (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource.latticeFormula_eq_sourceClassImages_of_recordImagesEqSource
+                (record :=
+                  IUTStage1Theorem311MultiradialSourceRecord.withSourceSpineThetaPossibleImagesOfTargetRegionLatticeFormulaSource
+                    recordBase sourceData
+                    latticeImageSource.toPackageTargetRegionLatticeFormulaSource)
+                actionPacketTransportSource
+                (sourceData.withTargetRegionLatticeFormulaSource
+                  latticeImageSource.toPackageTargetRegionLatticeFormulaSource)
+                rfl)))
+          detLogVolumeSource.ob3ob4Source.toWeightedDeterminantSource
+          detLogVolumeSource.toRecordOb3Ob5DeterminantCompatibilitySource.toCompatibility
+          measure_eq_hullLogVolume
+          ((detLogVolumeSource.toRecordOb3Ob5DeterminantCompatibilitySource
+            |>.toRecordBoundedFamilyHullDetLogVolumeSource)
+            |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+                thetaSigned_eq_familyHullLogVolume))
+    (q_pilot_positive : 0 < -package.preLedger.qSigned)
+    (normalization : package.preLedger.normalization)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (coricInvariant :
+      IUTStage1CoricThetaMuPrimeStripInvariant Penv Pgau V μ)
+    (determinantLogVolume_eq_coricPrimeStripGlobal :
+      detLogVolumeSource.ob3ob4Source.toWeightedDeterminantSource.determinantLogVolume =
+        coricInvariant.lift.base.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume) :
+    StepXIPaperDerivedHullDeterminantSource.{u, v}
+      (sourceData.withTargetRegionLatticeFormulaSource
+        latticeImageSource.toPackageTargetRegionLatticeFormulaSource) :=
+  ofSourceSpineThetaRecordOb3Ob5ExactThetaCoricOb7FromTargetRegionLatticeFormulaSource
+    sourceData latticeImageSource.toPackageTargetRegionLatticeFormulaSource
     paperTrace operation hullOperation determinantOperation recordBase
     actionPacketTransportSource detLogVolumeSource measure_eq_hullLogVolume
     thetaSigned_eq_familyHullLogVolume hullDetBridge_eq q_pilot_positive
