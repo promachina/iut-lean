@@ -228,6 +228,7 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalAnchoredGlobalNormalizedOb7ConstructionSource.endpoint}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedRestrictionAnchoredCommonPlaceGlobalNormalizedOb7ConstructionSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalRestrictionAnchoredGlobalNormalizedOb7ConstructionSource}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource}
   \lean{Iut.Stage1.IUTStage1WeightedDeterminantPrimeStripProductFormulaSource.ofSingleGaussianPlace}
   \lean{Iut.Stage1.IUTStage1WeightedDeterminantPrimeStripProductFormulaSource.ofSingleGaussianPlace_endpoint}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedSinglePlaceOb7ConstructionSource}
@@ -561,6 +562,7 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditAnchoredCommonPlaceOb7}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalAnchoredOb7}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalRestrictionAnchoredOb7}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalPositiveRestrictionAnchoredOb7}
   \leanok
   The promoted public paper-trace route is now the strict principal-product
   localized wrapper.  It consumes the source spine, a principal product
@@ -584,7 +586,11 @@
   restricted global prime log-volumes.  In the diagonal finite valuation-index
   route, the environment primes, Gaussian primes, and places are all indexed
   by the same type, so the prime-place equivalences are identity maps
-  constructed internally.
+  constructed internally.  The current strictest diagonal wrapper also derives
+  the Gaussian-global nonzero proof from positivity of the localized
+  family-hull log-volume and the determinant/global comparison, using the
+  already formalized equality between localized determinant log-volume and
+  family-hull log-volume.
   The Gaussian local-global Frobenioid restriction identity then proves the
   global product-formula equality before the product-formula audit is invoked.
   The weighted-partition, explicit raw-ratio, and one-summand routes remain as

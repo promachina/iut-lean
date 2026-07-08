@@ -65707,6 +65707,139 @@ end StepXIThetaLGPLocalizedDiagonalRestrictionAnchoredGlobalNormalizedOb7Constru
 
 set_option linter.style.longLine false in
 /--
+Localized diagonal restriction-anchored Ob7 source with Gaussian nonzero
+derived from family-hull positivity.
+
+The globally normalized product-formula route only needs the Gaussian global
+log-volume to be nonzero in order to divide by it.  In the localized Step (xi)
+setting, the determinant log-volume is already the localized family-hull
+log-volume.  Thus a positive family-hull certificate, together with the
+determinant/global comparison, derives the nonzero Gaussian global value
+instead of accepting it as an independent field.
+-/
+structure StepXIThetaLGPLocalizedDiagonalPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+    (hullData : StepXIHullFormationData sourceData.Core sourceData.Images)
+    {η : Type x} {β : Type v} {γ : Type w} [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point target) (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (V : Type v) (μ : Type w) [Fintype V] where
+  restrictionLocalGlobalSource :
+    IUTStage1EnvironmentAnchoredRestrictionLocalGlobalRealifiedFrobenioidSource V
+  summandPlace : β -> V
+  coricUnitCharacter : V -> μ
+  familyHullLogVolume_pos :
+    0 < localizedSource.familyHullLogVolume
+  determinantLogVolume_eq_restrictionAnchoredGlobal :
+    localizedSource.localizedSource.toAdjustedDeterminantSource.determinantLogVolume =
+      (restrictionLocalGlobalSource.toEnvironmentAnchoredLocalGlobalRealifiedFrobenioidSource
+        |>.toLocalGlobalCollection).globalObject.realifiedLogVolume
+
+set_option linter.style.longLine false
+
+namespace StepXIThetaLGPLocalizedDiagonalPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+
+variable {hullData : StepXIHullFormationData sourceData.Core sourceData.Images}
+variable {η : Type x} {β : Type v} {γ : Type w} [Fintype β] [Fintype γ]
+variable
+  {localizedSource :
+    IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+      (Point target) (Quot sourceData.Core.equalityQuotient.relation) η β γ}
+variable {V : Type v} {μ : Type w} [Fintype V]
+
+theorem determinantLogVolume_eq_familyHullLogVolume
+    (_source :
+      StepXIThetaLGPLocalizedDiagonalPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData localizedSource V μ) :
+    localizedSource.localizedSource.toAdjustedDeterminantSource.determinantLogVolume =
+      localizedSource.familyHullLogVolume := by
+  calc
+    localizedSource.localizedSource.toAdjustedDeterminantSource.determinantLogVolume =
+        localizedSource.localizedSource.determinantLogVolume := rfl
+    _ = localizedSource.localizedAdjustedSum :=
+        localizedSource.localizedSource.determinantLogVolume_eq_sum_weightedAdjusted
+    _ = localizedSource.familyHullLogVolume :=
+        localizedSource.familyHullLogVolume_eq_localizedAdjustedSum.symm
+
+theorem determinantLogVolume_pos
+    (source :
+      StepXIThetaLGPLocalizedDiagonalPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData localizedSource V μ) :
+    0 <
+      localizedSource.localizedSource.toAdjustedDeterminantSource.determinantLogVolume := by
+  rw [source.determinantLogVolume_eq_familyHullLogVolume]
+  exact source.familyHullLogVolume_pos
+
+theorem restrictionAnchoredGlobal_pos
+    (source :
+      StepXIThetaLGPLocalizedDiagonalPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData localizedSource V μ) :
+    0 <
+      (source.restrictionLocalGlobalSource.toEnvironmentAnchoredLocalGlobalRealifiedFrobenioidSource
+        |>.toLocalGlobalCollection).globalObject.realifiedLogVolume := by
+  rw [← source.determinantLogVolume_eq_restrictionAnchoredGlobal]
+  exact source.determinantLogVolume_pos
+
+theorem restrictionAnchoredGlobal_ne_zero
+    (source :
+      StepXIThetaLGPLocalizedDiagonalPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData localizedSource V μ) :
+    (source.restrictionLocalGlobalSource.toEnvironmentAnchoredLocalGlobalRealifiedFrobenioidSource
+        |>.toLocalGlobalCollection).globalObject.realifiedLogVolume ≠
+      0 :=
+  ne_of_gt source.restrictionAnchoredGlobal_pos
+
+set_option linter.style.longLine false in
+noncomputable def toDiagonalRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+    (source :
+      StepXIThetaLGPLocalizedDiagonalPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData localizedSource V μ) :
+    StepXIThetaLGPLocalizedDiagonalRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+      (sourceData := sourceData) (β := β) (γ := γ)
+      hullData localizedSource V μ :=
+  { restrictionLocalGlobalSource := source.restrictionLocalGlobalSource,
+    summandPlace := source.summandPlace,
+    coricUnitCharacter := source.coricUnitCharacter,
+    gaussianGlobal_ne_zero := source.restrictionAnchoredGlobal_ne_zero,
+    determinantLogVolume_eq_restrictionAnchoredGlobal :=
+      source.determinantLogVolume_eq_restrictionAnchoredGlobal }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (source :
+      StepXIThetaLGPLocalizedDiagonalPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData localizedSource V μ) :
+    let restrictionDiagonalSource :=
+      source.toDiagonalRestrictionAnchoredGlobalNormalizedOb7ConstructionSource;
+    localizedSource.localizedSource.toAdjustedDeterminantSource.determinantLogVolume =
+        localizedSource.familyHullLogVolume ∧
+      0 <
+        localizedSource.localizedSource.toAdjustedDeterminantSource.determinantLogVolume ∧
+      0 <
+        (source.restrictionLocalGlobalSource.toEnvironmentAnchoredLocalGlobalRealifiedFrobenioidSource
+          |>.toLocalGlobalCollection).globalObject.realifiedLogVolume ∧
+      restrictionDiagonalSource.gaussianGlobal_ne_zero =
+        source.restrictionAnchoredGlobal_ne_zero ∧
+      restrictionDiagonalSource.determinantLogVolume_eq_restrictionAnchoredGlobal =
+        source.determinantLogVolume_eq_restrictionAnchoredGlobal :=
+  by
+    intro restrictionDiagonalSource
+    exact
+      ⟨source.determinantLogVolume_eq_familyHullLogVolume,
+        source.determinantLogVolume_pos,
+        source.restrictionAnchoredGlobal_pos,
+        rfl, rfl⟩
+
+end StepXIThetaLGPLocalizedDiagonalPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+
+set_option linter.style.longLine false in
+/--
 Localized single-place Ob7 source for the preferred public Step (xi) route.
 
 This specializes the localized product-formula construction to the one-summand
@@ -71412,6 +71545,164 @@ theorem preferredPublicStepXIPaperSourceRouteAuditDiagonalRestrictionAnchoredOb7
       sourceData paperTrace thetaSigned principalSource localizedSource
       hullOperator_eq possibleRegion_eq thetaSigned_eq_familyHullLogVolume
       diagonalSource iutIV_cTheta additive_haar_arithmetic_degree_padic audit
+
+set_option linter.style.longLine false in
+/--
+Preferred public Step (xi) paper-source route for the diagonal positive
+restriction-anchored Ob7 source.
+
+This lowers the previous restriction-anchored route by deriving the Gaussian
+global nonzero proof from positivity of the localized family hull and the
+determinant/global comparison.  Thus the public boundary no longer accepts an
+independent nonzero Gaussian-global field at this layer.
+-/
+theorem preferredPublicStepXIPaperSourceRouteAuditDiagonalPositiveRestrictionAnchoredOb7
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        principalProductHullOperator sourceData principalSource)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        principalProductPossibleRegion sourceData principalSource)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned = localizedSource.familyHullLogVolume)
+    {V : Type v} {μ : Type w} [Fintype V]
+    (positiveRestrictionSource :
+      StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        (principalProductHullFormationData sourceData principalSource)
+        localizedSource V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations)
+    (audit :
+      let restrictionDiagonalSource :=
+        positiveRestrictionSource.toDiagonalRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+          (sourceData := sourceData)
+      let diagonalSource :=
+        restrictionDiagonalSource.toDiagonalAnchoredGlobalNormalizedOb7ConstructionSource
+          (sourceData := sourceData)
+      let anchoredSource :=
+        diagonalSource.toAnchoredCommonPlaceGlobalNormalizedOb7ConstructionSource
+          (sourceData := sourceData)
+      let sharedSource :=
+        anchoredSource.toSharedLocalGlobalCommonPlaceGlobalNormalizedOb7ConstructionSource
+          (sourceData := sourceData)
+      let commonPlaceSource :=
+        sharedSource.toCommonPlaceGlobalNormalizedOb7ConstructionSource
+          (sourceData := sourceData)
+      let normalizedSource :=
+        commonPlaceSource.toGlobalNormalizedRawAdjustedOb7ConstructionSource
+          (sourceData := sourceData)
+      let constructionSource :=
+        normalizedSource.toLocalizedProductFormulaOb7ConstructionSource
+          (sourceData := sourceData)
+      let tensorPower_bound :
+          (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+              constructionSource.determinantProductFormulaSource.determinantSource).normalizedLogVolume <=
+            thetaSigned := by
+            have hlocalized :=
+              StepXIDeterminantComparisonData.localizedNormalizedLogVolume_le_thetaSigned_ofThetaEqFamilyHullLogVolume
+                localizedSource thetaSigned_eq_familyHullLogVolume
+            calc
+              (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+                  constructionSource.determinantProductFormulaSource.determinantSource).normalizedLogVolume =
+                  constructionSource.determinantProductFormulaSource.determinantSource.determinantLogVolume :=
+                IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant_normalizedLogVolume_eq
+                  constructionSource.determinantProductFormulaSource.determinantSource
+              _ =
+                  constructionSource.determinantProductFormulaSource.determinantSource.normalizedLogVolume := by
+                rw [constructionSource.determinantProductFormulaSource.determinantSource.normalizedLogVolume_eq_determinantLogVolume]
+              _ =
+                  localizedSource.localizedSource.normalizedDeterminantLogVolume := by
+                rw [constructionSource.determinantProductFormula_determinantSource_eq]
+                rfl
+              _ <= thetaSigned := hlocalized;
+      let ob7Source :=
+        constructionSource.toThetaLGPOb7CompatibilitySource
+          (sourceData := sourceData)
+          thetaSigned hullOperator_eq possibleRegion_eq tensorPower_bound;
+      let concreteHullSource :=
+        principalProductConcreteHullSource sourceData principalSource;
+      let stepXI :=
+        StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaEqFamilyHullThetaLGPOb7Source
+            (sourceData := sourceData)
+            paperTrace thetaSigned concreteHullSource
+            rfl localizedSource hullOperator_eq possibleRegion_eq
+            thetaSigned_eq_familyHullLogVolume ob7Source;
+      NonStepXIRemainingPayloadAudit
+        (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+          sourceData stepXI iutIV_cTheta
+          additive_haar_arithmetic_degree_padic)) :
+    let restrictionDiagonalSource :=
+      positiveRestrictionSource.toDiagonalRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData)
+    let diagonalSource :=
+      restrictionDiagonalSource.toDiagonalAnchoredGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData)
+    let anchoredSource :=
+      diagonalSource.toAnchoredCommonPlaceGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData)
+    let sharedSource :=
+      anchoredSource.toSharedLocalGlobalCommonPlaceGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData)
+    let commonPlaceSource :=
+      sharedSource.toCommonPlaceGlobalNormalizedOb7ConstructionSource
+        (sourceData := sourceData)
+    let normalizedSource :=
+      commonPlaceSource.toGlobalNormalizedRawAdjustedOb7ConstructionSource
+        (sourceData := sourceData)
+    let constructionSource :=
+      normalizedSource.toLocalizedProductFormulaOb7ConstructionSource
+        (sourceData := sourceData)
+    PreferredPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+      sourceData paperTrace thetaSigned principalSource localizedSource
+      hullOperator_eq possibleRegion_eq thetaSigned_eq_familyHullLogVolume
+      (constructionSource.toThetaLGPOb7CompatibilitySource
+        (sourceData := sourceData)
+        thetaSigned hullOperator_eq possibleRegion_eq
+        (by
+          have hlocalized :=
+            StepXIDeterminantComparisonData.localizedNormalizedLogVolume_le_thetaSigned_ofThetaEqFamilyHullLogVolume
+              localizedSource thetaSigned_eq_familyHullLogVolume
+          calc
+            (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+                constructionSource.determinantProductFormulaSource.determinantSource).normalizedLogVolume =
+                constructionSource.determinantProductFormulaSource.determinantSource.determinantLogVolume :=
+              IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant_normalizedLogVolume_eq
+                constructionSource.determinantProductFormulaSource.determinantSource
+            _ =
+                constructionSource.determinantProductFormulaSource.determinantSource.normalizedLogVolume := by
+              rw [constructionSource.determinantProductFormulaSource.determinantSource.normalizedLogVolume_eq_determinantLogVolume]
+            _ =
+                localizedSource.localizedSource.normalizedDeterminantLogVolume := by
+              rw [constructionSource.determinantProductFormula_determinantSource_eq]
+              rfl
+            _ <= thetaSigned := hlocalized))
+      iutIV_cTheta additive_haar_arithmetic_degree_padic := by
+  intro restrictionDiagonalSource diagonalSource anchoredSource sharedSource
+    commonPlaceSource normalizedSource constructionSource
+  exact
+    preferredPublicStepXIPaperSourceRouteAuditDiagonalRestrictionAnchoredOb7
+      sourceData paperTrace thetaSigned principalSource localizedSource
+      hullOperator_eq possibleRegion_eq thetaSigned_eq_familyHullLogVolume
+      restrictionDiagonalSource iutIV_cTheta
+      additive_haar_arithmetic_degree_padic audit
 
 end Obligations
 
