@@ -6371,6 +6371,24 @@ theorem weight_real_pos
     0 < (data.weight : Real) := by
   exact_mod_cast data.weight_pos
 
+theorem adjustedRawLogVolume_nonneg_of_structureSheaf_le_bundle
+    (data : IUTStage1StructureSheafAdjustedLocalizationSource γ)
+    (structureSheaf_le_bundle :
+      data.structureSheafLogVolume <=
+        Finset.univ.sum data.directSummandLogVolume) :
+    0 <= data.adjustedRawLogVolume := by
+  rw [data.adjusted_raw_eq]
+  exact sub_nonneg.mpr structureSheaf_le_bundle
+
+theorem adjustedRawLogVolume_pos_of_structureSheaf_lt_bundle
+    (data : IUTStage1StructureSheafAdjustedLocalizationSource γ)
+    (structureSheaf_lt_bundle :
+      data.structureSheafLogVolume <
+        Finset.univ.sum data.directSummandLogVolume) :
+    0 < data.adjustedRawLogVolume := by
+  rw [data.adjusted_raw_eq]
+  exact sub_pos.mpr structureSheaf_lt_bundle
+
 theorem weightedAdjustedLogVolume_nonneg_of_adjustedRaw_nonneg
     (data : IUTStage1StructureSheafAdjustedLocalizationSource γ)
     (adjustedRaw_nonneg : 0 <= data.adjustedRawLogVolume) :
@@ -6541,6 +6559,24 @@ theorem weight_real_pos
       IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource η γ) :
     0 < (data.weight : Real) := by
   exact_mod_cast data.weight_pos
+
+theorem adjustedRawLogVolume_nonneg_of_structureSheaf_le_bundle
+    (data :
+      IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource η γ)
+    (structureSheaf_le_bundle :
+      data.structureSheafLogVolume <= data.bundle.bundleLogVolume) :
+    0 <= data.adjustedRawLogVolume := by
+  rw [data.adjusted_raw_eq]
+  exact sub_nonneg.mpr structureSheaf_le_bundle
+
+theorem adjustedRawLogVolume_pos_of_structureSheaf_lt_bundle
+    (data :
+      IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource η γ)
+    (structureSheaf_lt_bundle :
+      data.structureSheafLogVolume < data.bundle.bundleLogVolume) :
+    0 < data.adjustedRawLogVolume := by
+  rw [data.adjusted_raw_eq]
+  exact sub_pos.mpr structureSheaf_lt_bundle
 
 theorem weightedAdjustedLogVolume_nonneg_of_adjustedRaw_nonneg
     (data :
@@ -7000,6 +7036,31 @@ theorem weightedAdjustedLogVolume_pos_of_adjustedRaw_pos
     0 < data.weightedAdjustedLogVolume index :=
   (data.localization index).weightedAdjustedLogVolume_pos_of_adjustedRaw_pos
     adjustedRaw_pos
+
+theorem adjustedRawLogVolume_nonneg_of_structureSheaf_le_bundle
+    (data :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ)
+    (structureSheaf_le_bundle :
+      ∀ index : β,
+        (data.localization index).structureSheafLogVolume <=
+          (data.localization index).bundle.bundleLogVolume)
+    (index : β) :
+    0 <= (data.localization index).adjustedRawLogVolume :=
+  (data.localization index).adjustedRawLogVolume_nonneg_of_structureSheaf_le_bundle
+    (structureSheaf_le_bundle index)
+
+theorem adjustedRawLogVolume_pos_of_structureSheaf_lt_bundle
+    (data :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ)
+    (index : β)
+    (structureSheaf_lt_bundle :
+      (data.localization index).structureSheafLogVolume <
+        (data.localization index).bundle.bundleLogVolume) :
+    0 < (data.localization index).adjustedRawLogVolume :=
+  (data.localization index).adjustedRawLogVolume_pos_of_structureSheaf_lt_bundle
+    structureSheaf_lt_bundle
 
 set_option linter.style.longLine false in
 theorem determinantLogVolume_eq_sum_weightedAdjusted
