@@ -390,7 +390,16 @@ At the determinant boundary, the Step (xi) determinant comparison record can
 now be constructed from the weighted arithmetic-vector-bundle determinant
 source already present in the Step (xi) layer: the finite adjusted summands,
 determinant sum, normalization, and positive tensor power are projected from
-that lower source rather than supplied as independent fields.  The
+that lower source rather than supplied as independent fields.  This has now
+been lowered to the localized arithmetic-vector-bundle decomposition source:
+the localized hull cover supplies a finite sum of localized hull-region
+log-volumes, each localized log-volume is identified with the corresponding
+structure-sheaf-adjusted vector-bundle contribution, and Lean projects the
+result to the Step (xi) determinant comparison data.  The selected
+\(q\)-region-to-normalized-determinant inequality is then derived from hull
+containment plus the localized family-hull/normalized-determinant equality;
+the remaining numerical input at this boundary is the final normalized
+localized determinant bound by \(\Theta_{\mathrm{signed}}\).  The
 record-canonical Remark 3.9.5 hull/determinant bridge now also feeds this
 record: once the paper-derived selected \(q\)-region log-volume is identified
 with the record bridge q-pilot log-volume, the q-region-to-normalized-
@@ -445,9 +454,8 @@ construct, from the source papers, the actual lower operations corresponding to:
 \[
 \begin{array}{l}
 \text{the product/principal valuation-ball instantiation of the minimal hull source},\\
-\text{the lower weighted determinant/localization source itself},\\
-\text{wiring the existing lower hull sources into the preferred Step (xi) route},\\
-\text{Ob3/Ob4 adjusted determinant data from localizations},\\
+\text{hardening the preferred route to require the localized determinant constructor},\\
+\text{wiring the existing lower product/principal hull sources into the preferred Step (xi) route},\\
 \text{Ob5 quotient determinant compatibility},\\
 \text{the action-packet theta formula to source-spine comparison},\\
 \text{the lower construction of the coric Ob7 prime-strip invariant}.

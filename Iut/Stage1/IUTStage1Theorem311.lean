@@ -19164,6 +19164,226 @@ theorem qRegionLogVolume_le_thetaSigned
   le_trans data.selectedQRegionLogVolume_le_normalized
     data.weightedDeterminantBound
 
+set_option linter.style.longLine false in
+/--
+Compare the selected Step (xi) q-region with the normalized determinant coming
+from a localized arithmetic-vector-bundle decomposition.
+
+The selected q-region is already contained in the canonical Remark 3.9.5 hull.
+If the localized Ob3 decomposition uses the same hull operator and
+equality-quotient possible-image family, then the localized decomposition
+identifies this canonical hull log-volume with the normalized determinant
+log-volume.  Thus the q-region-to-normalized determinant bound is derived from
+the hull and localized vector-bundle data, not supplied separately.
+-/
+theorem selectedQRegionLogVolume_le_localizedNormalized
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point target) (Quot core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator = hullData.hullOperator)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        hullData.quotientHullCompatibility.familySource.possibleRegion) :
+    hullData.hullOperator.logVolume hullData.selectedQRegion <=
+      localizedSource.localizedSource.normalizedDeterminantLogVolume := by
+  have hselected_le_canonical :
+      hullData.hullOperator.logVolume hullData.selectedQRegion <=
+        hullData.hullOperator.logVolume
+          hullData.quotientHullCompatibility.familySource.canonicalHull :=
+    hullData.hullOperator.logVolume_mono
+      hullData.selectedQRegionContainedInCanonicalHull
+  have hcanonical_eq_familyHull :
+      hullData.quotientHullCompatibility.familySource.canonicalHull =
+        localizedSource.familyHull := by
+    dsimp [IUTStage1Remark395PossibleImageFamilySource.canonicalHull,
+      IUTStage1Remark395PossibleImageFamilySource.familyUnion,
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource.familyHull,
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource.familyUnion]
+    change
+      hullData.hullOperator.phi
+          (⋃ i, hullData.quotientHullCompatibility.familySource.possibleRegion i) =
+        localizedSource.hullOperator.phi
+          (⋃ i, localizedSource.possibleRegion i)
+    let sourceUnion :=
+      ⋃ i, hullData.quotientHullCompatibility.familySource.possibleRegion i
+    let localizedUnion := ⋃ i, localizedSource.possibleRegion i
+    have hsourceUnion_eq_localizedUnion : sourceUnion = localizedUnion := by
+      dsimp [sourceUnion, localizedUnion]
+      rw [← possibleRegion_eq]
+    have hoperator :
+        hullData.hullOperator.phi sourceUnion =
+          localizedSource.hullOperator.phi sourceUnion :=
+      congrArg (fun op =>
+        op.phi sourceUnion) hullOperator_eq.symm
+    exact hoperator.trans
+      (congrArg localizedSource.hullOperator.phi
+        hsourceUnion_eq_localizedUnion)
+  have hcanonicalLog_eq_familyHullLog :
+      hullData.hullOperator.logVolume
+          hullData.quotientHullCompatibility.familySource.canonicalHull =
+        localizedSource.familyHullLogVolume := by
+    rw [hcanonical_eq_familyHull]
+    dsimp [IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource.familyHullLogVolume]
+    rw [hullOperator_eq]
+  have hfamily_eq_determinant :
+      localizedSource.familyHullLogVolume =
+        localizedSource.localizedSource.determinantLogVolume :=
+    localizedSource.familyHullLogVolume_eq_localizedAdjustedSum.trans
+      localizedSource.localizedSource.determinantLogVolume_eq_sum_weightedAdjusted.symm
+  have hfamily_eq_normalized :
+      localizedSource.familyHullLogVolume =
+        localizedSource.localizedSource.normalizedDeterminantLogVolume :=
+    hfamily_eq_determinant.trans
+      localizedSource.localizedSource.normalizedDeterminantLogVolume_eq_determinant.symm
+  exact hselected_le_canonical.trans
+    (le_of_eq (hcanonicalLog_eq_familyHullLog.trans hfamily_eq_normalized))
+
+set_option linter.style.longLine false in
+/--
+Build the Step (xi) determinant comparison data from localized arithmetic
+vector-bundle data.
+
+The determinant index is the finite localization index `β`; adjusted summands
+are the structure-sheaf-normalized localized vector-bundle contributions; the
+determinant log-volume is their finite sum; the positive tensor power and
+normalization come from the localized Ob3/Ob4 source; and the selected
+q-region-to-normalized determinant bound is proved by the localized hull
+decomposition above.  The only remaining numerical input at this boundary is
+the final normalized-determinant upper bound by `thetaSigned`.
+-/
+noncomputable def ofLocalizedHullVectorBundleDecompositionSource
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point target) (Quot core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator = hullData.hullOperator)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        hullData.quotientHullCompatibility.familySource.possibleRegion)
+    (normalizedLogVolume_le_thetaSigned :
+      localizedSource.localizedSource.normalizedDeterminantLogVolume <=
+        thetaSigned) :
+    StepXIDeterminantComparisonData.{u, v} hullData thetaSigned :=
+  { determinantIndex := β,
+    determinantIndexFintype := inferInstance,
+    adjustedLogVolume :=
+      localizedSource.localizedSource.weightedAdjustedLogVolume,
+    determinantLogVolume :=
+      localizedSource.localizedSource.determinantLogVolume,
+    determinantLogVolume_eq_adjustedSum :=
+      localizedSource.localizedSource.determinantLogVolume_eq_sum_weightedAdjusted,
+    familyHullLogVolume := localizedSource.familyHullLogVolume,
+    familyHullLogVolume_eq_determinantLogVolume :=
+      localizedSource.familyHullLogVolume_eq_localizedAdjustedSum.trans
+        localizedSource.localizedSource.determinantLogVolume_eq_sum_weightedAdjusted.symm,
+    normalizedLogVolume :=
+      localizedSource.localizedSource.normalizedDeterminantLogVolume,
+    normalizedLogVolume_le_familyHullLogVolume :=
+      le_of_eq
+        ((localizedSource.familyHullLogVolume_eq_localizedAdjustedSum.trans
+            localizedSource.localizedSource.determinantLogVolume_eq_sum_weightedAdjusted.symm)
+          |>.trans
+            localizedSource.localizedSource.normalizedDeterminantLogVolume_eq_determinant.symm
+          |>.symm),
+    tensorPower := localizedSource.localizedSource.positiveTensorPower,
+    tensorPower_pos := localizedSource.localizedSource.tensor_power_pos,
+    weightedDeterminantBound := normalizedLogVolume_le_thetaSigned,
+    selectedQRegionLogVolume_le_normalized :=
+      selectedQRegionLogVolume_le_localizedNormalized
+        (hullData := hullData) localizedSource hullOperator_eq
+        possibleRegion_eq }
+
+set_option linter.style.longLine false in
+/--
+Audit for the localized vector-bundle determinant projection into Step (xi).
+-/
+structure LocalizedHullVectorBundleProjectionAudit
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point target) (Quot core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator = hullData.hullOperator)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        hullData.quotientHullCompatibility.familySource.possibleRegion)
+    (normalizedLogVolume_le_thetaSigned :
+      localizedSource.localizedSource.normalizedDeterminantLogVolume <=
+        thetaSigned) : Prop where
+  localized_region_subset_family_hull :
+    ∀ index : β,
+      localizedSource.localizedRegion index ⊆ localizedSource.familyHull
+  localized_family_hull_eq_adjusted_sum :
+    localizedSource.familyHullLogVolume =
+      localizedSource.localizedAdjustedSum
+  localized_determinant_eq_adjusted_sum :
+    localizedSource.localizedSource.determinantLogVolume =
+      localizedSource.localizedAdjustedSum
+  localized_normalized_eq_determinant :
+    localizedSource.localizedSource.normalizedDeterminantLogVolume =
+      localizedSource.localizedSource.determinantLogVolume
+  determinant_data_endpoint :
+    let data :=
+      ofLocalizedHullVectorBundleDecompositionSource
+        (hullData := hullData) localizedSource hullOperator_eq
+        possibleRegion_eq normalizedLogVolume_le_thetaSigned;
+    letI : Fintype data.determinantIndex := data.determinantIndexFintype;
+    (data.determinantLogVolume =
+          Finset.univ.sum data.adjustedLogVolume ∧
+        data.familyHullLogVolume = data.determinantLogVolume ∧
+        data.normalizedLogVolume <= data.familyHullLogVolume) ∧
+      (0 < data.tensorPower ∧ data.normalizedLogVolume <= thetaSigned) ∧
+      hullData.hullOperator.logVolume hullData.selectedQRegion <= thetaSigned
+  selected_q_region_le_normalized :
+    hullData.hullOperator.logVolume hullData.selectedQRegion <=
+      localizedSource.localizedSource.normalizedDeterminantLogVolume
+
+set_option linter.style.longLine false in
+theorem ofLocalizedHullVectorBundleDecompositionSource_audit
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point target) (Quot core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator = hullData.hullOperator)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        hullData.quotientHullCompatibility.familySource.possibleRegion)
+    (normalizedLogVolume_le_thetaSigned :
+      localizedSource.localizedSource.normalizedDeterminantLogVolume <=
+        thetaSigned) :
+    LocalizedHullVectorBundleProjectionAudit
+      localizedSource hullOperator_eq
+      possibleRegion_eq normalizedLogVolume_le_thetaSigned :=
+  { localized_region_subset_family_hull :=
+      localizedSource.endpoint.1,
+    localized_family_hull_eq_adjusted_sum :=
+      localizedSource.familyHullLogVolume_eq_localizedAdjustedSum,
+    localized_determinant_eq_adjusted_sum :=
+      localizedSource.localizedSource.determinantLogVolume_eq_sum_weightedAdjusted,
+    localized_normalized_eq_determinant :=
+      localizedSource.localizedSource.normalizedDeterminantLogVolume_eq_determinant,
+    determinant_data_endpoint := by
+      let data :=
+        ofLocalizedHullVectorBundleDecompositionSource
+          (hullData := hullData) localizedSource hullOperator_eq
+          possibleRegion_eq normalizedLogVolume_le_thetaSigned
+      exact
+        ⟨data.ob3Ob4AdjustedDeterminantNormalization,
+          data.weightedDeterminantTensorPowerBound,
+          data.qRegionLogVolume_le_thetaSigned⟩,
+    selected_q_region_le_normalized :=
+      selectedQRegionLogVolume_le_localizedNormalized
+        (hullData := hullData) localizedSource hullOperator_eq
+        possibleRegion_eq }
+
 end StepXIDeterminantComparisonData
 
 /--
@@ -19634,6 +19854,56 @@ def ofConcreteHolomorphicHullSystemThetaLGPOb7Source
     ob7Source.sourcePrimeStrip_eq
     ob7Source.targetPrimeStrip_eq
     ob7Source.logKummerColumn_eq_selected
+
+set_option linter.style.longLine false in
+/--
+Concrete Step (xi) constructor with localized arithmetic-vector-bundle
+determinants.
+
+This is the hull/determinant version of the source route: the hull data comes
+from the Remark 3.9.5 minimal-hull system, the determinant comparison comes
+from a localized hull/vector-bundle decomposition, and Ob7 is still read from
+the shared `Theta^{x mu}`/log-Kummer source.  The remaining numerical estimate
+at this boundary is the normalized localized determinant bound by
+`thetaSigned`.
+-/
+noncomputable def ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaLGPOb7Source
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    (concreteHullSource :
+      StepXIHullFormationData.ConcreteHolomorphicHullSystemSource
+        sourceData.Core sourceData.Images)
+    (selectedQChoice_eq_source :
+      concreteHullSource.selectedQChoice = sourceData.selectedQChoice)
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point target) (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        concreteHullSource.toHullFormationData.hullOperator)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        concreteHullSource.toHullFormationData.quotientHullCompatibility.familySource.possibleRegion)
+    (normalizedLogVolume_le_thetaSigned :
+      localizedSource.localizedSource.normalizedDeterminantLogVolume <=
+        thetaSigned)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData concreteHullSource.toHullFormationData
+        β Penv Pgau V μ) :
+    StepXIPaperDerivedHullDeterminantSource sourceData :=
+  ofConcreteHolomorphicHullSystemThetaLGPOb7Source
+    (sourceData := sourceData)
+    paperTrace thetaSigned concreteHullSource selectedQChoice_eq_source
+    (StepXIDeterminantComparisonData.ofLocalizedHullVectorBundleDecompositionSource
+      (hullData := concreteHullSource.toHullFormationData)
+      localizedSource hullOperator_eq possibleRegion_eq
+      normalizedLogVolume_le_thetaSigned)
+    ob7Source
 
 def toStepXIHullDeterminantSourceData
     (stepXI :
