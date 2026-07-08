@@ -13875,6 +13875,56 @@ theorem record_region_eq_sourceImages_of_fiberTransportSource
   sourceData.toLatticeImageLawSource.record_region_eq_sourceImages_of_latticeImageLawSource
     spine latticeFormula_eq_sourceClassImages
 
+set_option linter.style.longLine false in
+/--
+Construct the package target-region lattice formula from typed fiber transport.
+
+Same lattice-key data is converted to a typed fiber transport, and the
+fiber-transport region equality gives the lattice-image law.  The package
+target-region formula is then obtained from that lattice-image law and the
+record's target-region realization theorem.
+-/
+def toPackageTargetRegionLatticeFormulaSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransportSource
+        record indData) :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource.PackageTargetRegionLatticeFormulaSource
+      (target := target) package :=
+  sourceData.toLatticeImageLawSource.toPackageTargetRegionLatticeFormulaSource
+
+set_option linter.style.longLine false in
+/-- Endpoint exposing the package target-region formula derived from fiber transport. -/
+theorem packageTargetRegionLatticeFormulaSource_endpoint
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberTransportSource
+        record indData) :
+    (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      package.preLedger.output.comparisons.targetRegions.region choice =
+        sourceData.toLatticeImageLawSource.latticeFormula.thetaRegion
+          choice.hodgeTheater choice.historyLabel
+          (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
+            choice)
+          choice.coric) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          package.preLedger.output.comparisons.targetRegions.region choice₁ =
+            package.preLedger.output.comparisons.targetRegions.region choice₂) ∧
+      (sourceData.toPackageTargetRegionLatticeFormulaSource.toThetaPilotClassPossibleImageSource).choiceImages =
+        package.preLedger.output.comparisons.targetRegions := by
+  let formulaEndpoint :=
+    sourceData.toPackageTargetRegionLatticeFormulaSource.endpoint
+  exact
+    ⟨formulaEndpoint.1,
+      by
+        intro choice₁ choice₂ transport
+        exact
+          formulaEndpoint.2.1
+            transport.hodgeTheater_eq transport.historyLabel_eq
+            transport.thetaPilotLatticeCoordinate_eq transport.coric_eq,
+      formulaEndpoint.2.2.2.1⟩
+
 end ConcreteHodgeTheaterLogThetaThetaPilotFiberTransportSource
 
 set_option linter.style.longLine false in
@@ -14050,6 +14100,45 @@ theorem record_region_eq_sourceImages_of_fiberEqualityQuotientSource
         spine.Images.region choice :=
   sourceData.toFiberTransportSource.record_region_eq_sourceImages_of_fiberTransportSource
     spine latticeFormula_eq_sourceClassImages
+
+set_option linter.style.longLine false in
+/--
+Construct the package target-region lattice formula from equality-quotient
+fiber data.
+
+The quotient pullback proves fiber-transport region equality; Lean then derives
+the lattice-image law and finally the package target-region formula.
+-/
+def toPackageTargetRegionLatticeFormulaSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberEqualityQuotientSource
+        record indData) :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource.PackageTargetRegionLatticeFormulaSource
+      (target := target) package :=
+  sourceData.toFiberTransportSource.toPackageTargetRegionLatticeFormulaSource
+
+set_option linter.style.longLine false in
+/-- Endpoint exposing the package target-region formula derived from equality-quotient data. -/
+theorem packageTargetRegionLatticeFormulaSource_endpoint
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberEqualityQuotientSource
+        record indData) :
+    (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      package.preLedger.output.comparisons.targetRegions.region choice =
+        sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.thetaRegion
+          choice.hodgeTheater choice.historyLabel
+          (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
+            choice)
+          choice.coric) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          package.preLedger.output.comparisons.targetRegions.region choice₁ =
+            package.preLedger.output.comparisons.targetRegions.region choice₂) ∧
+      (sourceData.toPackageTargetRegionLatticeFormulaSource.toThetaPilotClassPossibleImageSource).choiceImages =
+        package.preLedger.output.comparisons.targetRegions :=
+  sourceData.toFiberTransportSource.packageTargetRegionLatticeFormulaSource_endpoint
 
 end ConcreteHodgeTheaterLogThetaThetaPilotFiberEqualityQuotientSource
 
@@ -17191,6 +17280,47 @@ theorem record_region_eq_sourceImages_of_fiberInd2ActionPacketTransportSource
         spine.Images.region choice :=
   sourceData.toFiberTransportSource.record_region_eq_sourceImages_of_fiberTransportSource
     spine latticeFormula_eq_sourceClassImages
+
+set_option linter.style.longLine false in
+/--
+Construct the package target-region lattice formula from retained `(Ind2)`
+action-packet transport data.
+
+The retained packet/action source is forgotten through the typed
+post-procession transport stack, the equality quotient, and the fiber-transport
+source.  The resulting lattice-image law is then converted into the package
+target-region formula.
+-/
+def toPackageTargetRegionLatticeFormulaSource
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        record indData) :
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClassPossibleImageSource.PackageTargetRegionLatticeFormulaSource
+      (target := target) package :=
+  sourceData.toFiberTransportSource.toPackageTargetRegionLatticeFormulaSource
+
+set_option linter.style.longLine false in
+/-- Endpoint exposing the package target-region formula derived from action-packet transport. -/
+theorem packageTargetRegionLatticeFormulaSource_endpoint
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        record indData) :
+    (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      package.preLedger.output.comparisons.targetRegions.region choice =
+        sourceData.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.thetaRegion
+          choice.hodgeTheater choice.historyLabel
+          (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotLatticeCoordinate
+            choice)
+          choice.coric) ∧
+      (∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+        ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := l) choice₁ choice₂ ->
+          package.preLedger.output.comparisons.targetRegions.region choice₁ =
+            package.preLedger.output.comparisons.targetRegions.region choice₂) ∧
+      (sourceData.toPackageTargetRegionLatticeFormulaSource.toThetaPilotClassPossibleImageSource).choiceImages =
+        package.preLedger.output.comparisons.targetRegions :=
+  sourceData.toFiberTransportSource.packageTargetRegionLatticeFormulaSource_endpoint
 
 set_option linter.style.longLine false in
 /--
