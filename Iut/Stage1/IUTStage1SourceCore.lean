@@ -28714,6 +28714,19 @@ def ofCommonPlaceEquivalences
       intro p
       simp }
 
+/--
+Diagonal finite `F`-prime-strip evaluation.
+
+When the environment primes, Gaussian primes, and valuation places are already
+represented by the same finite index type, the two prime-place identifications
+are the identity equivalence and the prime evaluation is the identity map.
+-/
+def ofDiagonalPlaces
+    (localEvaluation : IUTStage1EnvironmentGaussianLocalEvaluation V) :
+    IUTStage1EnvironmentGaussianFPrimeStripEvaluation V V V :=
+  ofCommonPlaceEquivalences
+    localEvaluation (Equiv.refl V) (Equiv.refl V)
+
 theorem gaussianPlaceOfEvaluation_eq_environmentPlace
     (strip :
       IUTStage1EnvironmentGaussianFPrimeStripEvaluation Penv Pgau V)
@@ -28814,6 +28827,23 @@ theorem ofCommonPlaceEquivalences_endpoint
     exact
       ⟨rfl, rfl, rfl, rfl,
         strip.gaussianPlaceOfEvaluation_eq_environmentPlace,
+        strip.localEvaluation.gaussianGlobalLogVolume_eq_environment⟩
+
+set_option linter.style.longLine false in
+theorem ofDiagonalPlaces_endpoint
+    (localEvaluation : IUTStage1EnvironmentGaussianLocalEvaluation V) :
+    let strip := ofDiagonalPlaces localEvaluation;
+    strip.localEvaluation = localEvaluation ∧
+      strip.environmentPrimeToPlace = Equiv.refl V ∧
+      strip.gaussianPrimeToPlace = Equiv.refl V ∧
+      strip.primeEvaluation = Equiv.refl V ∧
+      (∀ v : V, strip.primeEvaluation v = v) ∧
+      strip.localEvaluation.gaussianLocal.globalObject.realifiedLogVolume =
+        strip.localEvaluation.environmentLocal.globalObject.realifiedLogVolume :=
+  by
+    intro strip
+    exact
+      ⟨rfl, rfl, rfl, rfl, fun _ => rfl,
         strip.localEvaluation.gaussianGlobalLogVolume_eq_environment⟩
 
 end IUTStage1EnvironmentGaussianFPrimeStripEvaluation
@@ -28994,6 +29024,21 @@ def ofCommonPlaceUnitCharacter
     coricUnitCharacter := coricUnitCharacter,
     environment_unit_eq_coric := fun _ => rfl }
 
+/--
+Construct the diagonal coric `F^{⊢×μ}` invariant.
+
+This is the finite same-index form of the coric prime-strip link: the
+environment prime, Gaussian prime, and valuation-place coordinates are all the
+same type, so the common-place constructor uses identity prime-place maps.
+-/
+def ofDiagonalPlaceUnitCharacter
+    (localEvaluation : IUTStage1EnvironmentGaussianLocalEvaluation V)
+    (coricUnitCharacter : V -> μ) :
+    IUTStage1CoricThetaMuPrimeStripInvariant V V V μ :=
+  ofCommonPlaceUnitCharacter
+    localEvaluation (Equiv.refl V) (Equiv.refl V)
+    coricUnitCharacter
+
 theorem gaussianUnitCharacter_at_evaluatedPrime_eq_coric
     (invariant :
       IUTStage1CoricThetaMuPrimeStripInvariant Penv Pgau V μ)
@@ -29067,6 +29112,30 @@ theorem ofCommonPlaceUnitCharacter_endpoint
       ⟨rfl, rfl, rfl, rfl, rfl,
         fun _ => rfl,
         invariant.gaussianUnitCharacter_at_evaluatedPrime_eq_coric⟩
+
+set_option linter.style.longLine false in
+theorem ofDiagonalPlaceUnitCharacter_endpoint
+    (localEvaluation : IUTStage1EnvironmentGaussianLocalEvaluation V)
+    (coricUnitCharacter : V -> μ) :
+    let invariant :=
+      ofDiagonalPlaceUnitCharacter localEvaluation coricUnitCharacter;
+    invariant.lift.base.localEvaluation = localEvaluation ∧
+      invariant.lift.base.environmentPrimeToPlace = Equiv.refl V ∧
+      invariant.lift.base.gaussianPrimeToPlace = Equiv.refl V ∧
+      invariant.lift.base.primeEvaluation = Equiv.refl V ∧
+      invariant.coricUnitCharacter = coricUnitCharacter ∧
+      (∀ v : V,
+        invariant.lift.environmentUnitCharacter v =
+          coricUnitCharacter v) ∧
+      (∀ v : V,
+        invariant.lift.gaussianUnitCharacter v =
+          coricUnitCharacter v) :=
+  by
+    intro invariant
+    exact
+      ⟨rfl, rfl, rfl, rfl, rfl,
+        fun _ => rfl,
+        fun _ => rfl⟩
 
 end IUTStage1CoricThetaMuPrimeStripInvariant
 

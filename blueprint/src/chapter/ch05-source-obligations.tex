@@ -204,8 +204,10 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedGlobalNormalizedRawAdjustedOb7ConstructionSource.toLocalizedProductFormulaOb7ConstructionSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedGlobalNormalizedRawAdjustedOb7ConstructionSource.endpoint}
   \lean{Iut.Stage1.IUTStage1EnvironmentGaussianFPrimeStripEvaluation.ofCommonPlaceEquivalences}
+  \lean{Iut.Stage1.IUTStage1EnvironmentGaussianFPrimeStripEvaluation.ofDiagonalPlaces}
   \lean{Iut.Stage1.IUTStage1EnvironmentGaussianThetaMuPrimeStripLift.ofPlaceUnitCharacter}
   \lean{Iut.Stage1.IUTStage1CoricThetaMuPrimeStripInvariant.ofCommonPlaceUnitCharacter}
+  \lean{Iut.Stage1.IUTStage1CoricThetaMuPrimeStripInvariant.ofDiagonalPlaceUnitCharacter}
   \lean{Iut.Stage1.IUTStage1EnvironmentAnchoredLocalGlobalRealifiedFrobenioidSource}
   \lean{Iut.Stage1.IUTStage1EnvironmentAnchoredLocalGlobalRealifiedFrobenioidSource.toLocalGlobalCollection}
   \lean{Iut.Stage1.IUTStage1EnvironmentAnchoredLocalGlobalRealifiedFrobenioidSource.toEnvironmentGaussianLocalEvaluation}
@@ -219,6 +221,9 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedAnchoredCommonPlaceGlobalNormalizedOb7ConstructionSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedAnchoredCommonPlaceGlobalNormalizedOb7ConstructionSource.toSharedLocalGlobalCommonPlaceGlobalNormalizedOb7ConstructionSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedAnchoredCommonPlaceGlobalNormalizedOb7ConstructionSource.endpoint}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalAnchoredGlobalNormalizedOb7ConstructionSource}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalAnchoredGlobalNormalizedOb7ConstructionSource.toAnchoredCommonPlaceGlobalNormalizedOb7ConstructionSource}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalAnchoredGlobalNormalizedOb7ConstructionSource.endpoint}
   \lean{Iut.Stage1.IUTStage1WeightedDeterminantPrimeStripProductFormulaSource.ofSingleGaussianPlace}
   \lean{Iut.Stage1.IUTStage1WeightedDeterminantPrimeStripProductFormulaSource.ofSingleGaussianPlace_endpoint}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedSinglePlaceOb7ConstructionSource}
@@ -550,6 +555,7 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditCommonPlaceGlobalNormalizedOb7}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditSharedLocalGlobalCommonPlaceOb7}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditAnchoredCommonPlaceOb7}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalAnchoredOb7}
   \leanok
   The promoted public paper-trace route is now the strict principal-product
   localized wrapper.  It consumes the source spine, a principal product
@@ -570,7 +576,10 @@
   A further anchored wrapper constructs the local-global collection, its
   environment anchor, and the local environment/Gaussian evaluation from local
   objects and global-to-local restrictions whose global value is the
-  environment ordinary realified Frobenioid.
+  environment ordinary realified Frobenioid.  In the diagonal finite
+  valuation-index route, the environment primes, Gaussian primes, and places
+  are all indexed by the same type, so the prime-place equivalences are
+  identity maps constructed internally.
   The Gaussian local-global Frobenioid restriction identity then proves the
   global product-formula equality before the product-formula audit is invoked.
   The weighted-partition, explicit raw-ratio, and one-summand routes remain as
