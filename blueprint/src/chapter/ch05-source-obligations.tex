@@ -603,6 +603,10 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource.thetaMonoidDegree_eq_localizedAdjustedSum}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource.endpoint}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalDirectSummandEnvironmentThetaHodgeEvaluationSummandRestrictionAnchoredOb7}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource.environmentThetaLogVolume_eq_hodgeCanonicalDegree}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource.endpoint}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalDirectSummandEnvironmentThetaGaussianHodgeEvaluationSummandRestrictionAnchoredOb7}
   \leanok
   The promoted public paper-trace route is now the strict principal-product
   localized wrapper.  It consumes the source spine, a principal product
@@ -628,11 +632,15 @@
   by the same type, so the prime-place equivalences are identity maps
   constructed internally.  The current strictest public diagonal wrapper now
   consumes finite direct-summand data, an audited Hodge--Arakelov theta
-  evaluation, and finite Hodge theta summands: the environment theta divisor
-  log-volume is identified with the evaluation's theta-monoid degree; the
-  Hodge theta summands have this theta-monoid degree as their finite sum; and
-  each summand is identified pointwise with the corresponding localized
-  weighted adjusted determinant contribution.  The
+  evaluation, a Gaussian theta/Hodge canonical-degree bridge, and finite Hodge
+  theta summands: the environment theta divisor log-volume is first identified
+  with the Gaussian theta divisor log-volume by the environment/Gaussian
+  Frobenioid evaluation; the Gaussian theta log-volume is then matched with
+  the Hodge canonical full-label Gaussian degree; the Hodge evaluation
+  identifies this canonical degree with the theta-monoid degree; the Hodge
+  theta summands have this theta-monoid degree as their finite sum; and each
+  summand is identified pointwise with the corresponding localized weighted
+  adjusted determinant contribution.  The
   structure-sheaf log-volume is identified with a distinguished direct summand
   of each localized arithmetic vector bundle, all direct summands are
   nonnegative, and one non-structure summand is strictly positive.  Finite
@@ -642,10 +650,11 @@
   localized adjusted summand positivity; finite summation gives localized
   family-hull positivity.  The theta scalar at the strict boundary is the
   environment theta divisor log-volume by definition.  The public route now
-  constructs the older Hodge-scalar source internally from the audited
-  evaluation and finite summand calibration, then derives the
-  environment-theta/localized adjusted-sum equality; Lean derives the equality
-  with the family-hull log-volume from the localized Ob3/Ob5 identity.  This
+  constructs the older Hodge-evaluation and Hodge-scalar sources internally
+  from the Gaussian/Hodge bridge, audited evaluation, and finite summand
+  calibration, then derives the environment-theta/localized adjusted-sum
+  equality; Lean derives the equality with the family-hull log-volume from the
+  localized Ob3/Ob5 identity.  This
   derived equality implies the
   family-hull/global calibration via theta/ordinary realified Frobenioid
   compatibility, and the localized determinant/family-hull equality then gives
