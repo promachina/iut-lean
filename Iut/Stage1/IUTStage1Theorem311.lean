@@ -23937,6 +23937,163 @@ theorem preferredPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRout
 
 set_option linter.style.longLine false in
 /--
+Construct the Corollary 3.12 Step (xi)/Remark 3.9.5 paper trace from the
+same lower sources used by the strongest principal-product localized route.
+
+This removes the last standalone `StepXIPaperTrace` input from the strict
+public Step (xi) surface: the trace propositions are now concrete consequences
+of the unified Theorem 3.11 source spine, the principal \(\lambda\cdot O\)
+hull source, the localized arithmetic-vector-bundle determinant projection,
+the theta-equals-family-hull identification, and the shared coric Ob7
+log-Kummer source.
+-/
+def principalProductLocalizedThetaEqFamilyHullPaperTrace
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (thetaSigned : Real)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        principalProductHullOperator sourceData principalSource)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        principalProductPossibleRegion sourceData principalSource)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned = localizedSource.familyHullLogVolume)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (principalProductHullFormationData sourceData principalSource)
+        β Penv Pgau V μ) :
+    StepXIPaperTrace :=
+  let hullData := principalProductHullFormationData sourceData principalSource
+  let principalAudit :=
+    StepXIHullFormationData.ConcreteHolomorphicHullSystemSource.ofPrincipalProductHullSystemSource_audit
+      principalSource
+      sourceData.theorem311PossibleImageSourceData.quotientImages
+      sourceData.selectedQChoice
+  let localizedThetaAudit :=
+    StepXIDeterminantComparisonData.ofLocalizedHullVectorBundleDecompositionSourceOfThetaEqFamilyHullLogVolume_audit
+      (hullData := hullData) localizedSource hullOperator_eq
+      possibleRegion_eq thetaSigned_eq_familyHullLogVolume
+  let ob5Audit :=
+    StepXIDeterminantComparisonData.localizedOb5QuotientDeterminantBridgeAudit
+      (hullData := hullData) localizedSource hullOperator_eq
+      possibleRegion_eq thetaSigned_eq_familyHullLogVolume
+  let family_eq_determinant :
+      localizedSource.familyHullLogVolume =
+        localizedSource.localizedSource.determinantLogVolume :=
+    localizedSource.familyHullLogVolume_eq_localizedAdjustedSum.trans
+      localizedSource.localizedSource.determinantLogVolume_eq_sum_weightedAdjusted.symm
+  let family_eq_normalized :
+      localizedSource.familyHullLogVolume =
+        localizedSource.localizedSource.normalizedDeterminantLogVolume :=
+    family_eq_determinant.trans
+      localizedSource.localizedSource.normalizedDeterminantLogVolume_eq_determinant.symm
+  { step_xi_a_gluing_q_pilot_to_theta_pilot :=
+      sourceData.selectedQChoice.hodgeTheater =
+          sourceData.oneColumnHodgeTheater ∧
+        sourceData.selectedQChoice.historyLabel =
+          sourceData.oneColumnHistoryLabel,
+    step_xi_a_gluing_q_pilot_to_theta_pilot_proof :=
+      ⟨sourceData.selectedQChoice_oneColumn,
+        sourceData.selectedQChoice_history⟩,
+    step_xi_b_theorem311_possible_outputs_with_ipl_she_apt :=
+      Theorem311HodgeTheaterLogThetaLogKummerSource.SourceSpineAudit
+        sourceData,
+    step_xi_b_theorem311_possible_outputs_with_ipl_she_apt_proof :=
+      sourceData.sourceSpineAudit,
+    step_xi_c_one_column_possible_images_linked_to_q_pilot :=
+      hullData.selectedQRegion ⊆
+        hullData.quotientHullCompatibility.familySource.familyUnion,
+    step_xi_c_one_column_possible_images_linked_to_q_pilot_proof :=
+      hullData.selectedQRegionContainedInPossibleImageUnion,
+    step_xi_d_hull_and_determinant_make_objects_comparable :=
+      StepXIDeterminantComparisonData.LocalizedHullVectorBundleThetaEqFamilyHullProjectionAudit
+        (hullData := hullData) localizedSource hullOperator_eq
+        possibleRegion_eq thetaSigned_eq_familyHullLogVolume,
+    step_xi_d_hull_and_determinant_make_objects_comparable_proof :=
+      localizedThetaAudit,
+    step_xi_e_log_volume_set_linked_to_fixed_q_volume :=
+      hullData.hullOperator.logVolume hullData.selectedQRegion <=
+        localizedSource.localizedSource.normalizedDeterminantLogVolume,
+    step_xi_e_log_volume_set_linked_to_fixed_q_volume_proof :=
+      localizedThetaAudit.localized_projection_audit
+        |>.selected_q_region_le_normalized,
+    step_xi_f_q_volume_lies_in_theta_upper_ray :=
+      hullData.hullOperator.logVolume hullData.selectedQRegion <=
+        thetaSigned,
+    step_xi_f_q_volume_lies_in_theta_upper_ray_proof :=
+      ob5Audit.selected_q_region_le_theta_from_localized_bridge,
+    step_xi_g_two_computations_of_q_pilot_log_volume :=
+      thetaSigned = localizedSource.familyHullLogVolume ∧
+        localizedSource.familyHullLogVolume =
+          localizedSource.localizedSource.normalizedDeterminantLogVolume,
+    step_xi_g_two_computations_of_q_pilot_log_volume_proof :=
+      ⟨thetaSigned_eq_familyHullLogVolume, family_eq_normalized⟩,
+    ob1_unit_indeterminacy_on_log_shell_packets :=
+      ∀ parameter : Λ, principalSource.parameter_nonzero parameter,
+    ob1_unit_indeterminacy_on_log_shell_packets_proof :=
+      principalAudit.parameters_nonzero,
+    ob2_hull_turns_regions_into_arithmetic_vector_bundles :=
+      StepXIHullFormationData.ConcreteHolomorphicHullSystemSource.PrincipalProductHullSourceAudit
+        principalSource
+        sourceData.theorem311PossibleImageSourceData.quotientImages
+        sourceData.selectedQChoice,
+    ob2_hull_turns_regions_into_arithmetic_vector_bundles_proof :=
+      principalAudit,
+    ob3_determinant_of_arithmetic_vector_bundle :=
+      StepXIDeterminantComparisonData.LocalizedHullVectorBundleThetaEqFamilyHullProjectionAudit
+        (hullData := hullData) localizedSource hullOperator_eq
+        possibleRegion_eq thetaSigned_eq_familyHullLogVolume,
+    ob3_determinant_of_arithmetic_vector_bundle_proof :=
+      localizedThetaAudit,
+    ob4_positive_tensor_power_comparison_object :=
+      0 < localizedSource.localizedSource.positiveTensorPower,
+    ob4_positive_tensor_power_comparison_object_proof :=
+      localizedSource.localizedSource.tensor_power_pos,
+    ob5_quotient_comparable_object_compatibility :=
+      StepXIDeterminantComparisonData.LocalizedOb5QuotientDeterminantBridgeAudit
+        (hullData := hullData) localizedSource hullOperator_eq
+        possibleRegion_eq thetaSigned_eq_familyHullLogVolume,
+    ob5_quotient_comparable_object_compatibility_proof :=
+      ob5Audit,
+    ob6_log_volume_hull_approximant_comparison :=
+      hullData.hullOperator.logVolume hullData.selectedQRegion <=
+        localizedSource.localizedSource.normalizedDeterminantLogVolume,
+    ob6_log_volume_hull_approximant_comparison_proof :=
+      localizedThetaAudit.localized_projection_audit
+        |>.selected_q_region_le_normalized,
+    ob7_log_kummer_prime_strip_compatibility :=
+      ob7Source.retainedStatement,
+    ob7_log_kummer_prime_strip_compatibility_proof :=
+      ob7Source.retainedStatement_proof,
+    ob8_vertical_shift_adjusted_by_log_kummer :=
+      ob7Source.ob7Source.bridgeSource.qRegionLogVolume <=
+        ob7Source.ob7Source.primeStripGlobalLogVolume,
+    ob8_vertical_shift_adjusted_by_log_kummer_proof :=
+      ob7Source.ob7Source.qRegionLogVolume_le_primeStripGlobal,
+    ob9_realified_semisimplification_log_volume_compatibility :=
+      ob7Source.ob7Source.bridgeSource.determinantNormalizedLogVolume =
+        ob7Source.ob7Source.primeStripGlobalLogVolume,
+    ob9_realified_semisimplification_log_volume_compatibility_proof :=
+      ob7Source.ob7Source.determinantNormalizedLogVolume_eq_primeStripGlobal }
+
+set_option linter.style.longLine false in
+/--
 Preferred public Step (xi) paper-source route.
 
 This is the promoted public boundary for the current Step (xi) milestone.  It
@@ -24003,6 +24160,89 @@ theorem preferredPublicStepXIPaperSourceRouteAudit
     sourceData paperTrace thetaSigned principalSource localizedSource
     hullOperator_eq possibleRegion_eq thetaSigned_eq_familyHullLogVolume
     ob7Source iutIV_cTheta additive_haar_arithmetic_degree_padic audit
+
+set_option linter.style.longLine false in
+/--
+Strict preferred public Step (xi) route with the paper trace constructed
+internally.
+
+Compared with `preferredPublicStepXIPaperSourceRouteAudit`, this theorem does
+not accept `StepXIPaperTrace` as an argument.  The trace is the concrete one
+projected by `principalProductLocalizedThetaEqFamilyHullPaperTrace` from the
+same Theorem 3.11 source spine, principal product hull source, localized
+determinant source, theta-family-hull equality, and Ob7 source used by the
+route itself.
+-/
+theorem preferredPublicConstructedPaperTraceStepXIPaperSourceRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (thetaSigned : Real)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        principalProductHullOperator sourceData principalSource)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        principalProductPossibleRegion sourceData principalSource)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned = localizedSource.familyHullLogVolume)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (principalProductHullFormationData sourceData principalSource)
+        β Penv Pgau V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations)
+    (audit :
+      let paperTrace :=
+        principalProductLocalizedThetaEqFamilyHullPaperTrace
+          sourceData thetaSigned principalSource localizedSource
+          hullOperator_eq possibleRegion_eq
+          thetaSigned_eq_familyHullLogVolume ob7Source;
+      let concreteHullSource :=
+        principalProductConcreteHullSource sourceData principalSource;
+      let stepXI :=
+        StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaEqFamilyHullThetaLGPOb7Source
+            (sourceData := sourceData)
+            paperTrace thetaSigned concreteHullSource
+            rfl localizedSource hullOperator_eq possibleRegion_eq
+            thetaSigned_eq_familyHullLogVolume ob7Source;
+      NonStepXIRemainingPayloadAudit
+        (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+          sourceData stepXI iutIV_cTheta
+          additive_haar_arithmetic_degree_padic)) :
+    PreferredPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+      sourceData
+      (principalProductLocalizedThetaEqFamilyHullPaperTrace
+        sourceData thetaSigned principalSource localizedSource
+        hullOperator_eq possibleRegion_eq
+        thetaSigned_eq_familyHullLogVolume ob7Source)
+      thetaSigned principalSource localizedSource
+      hullOperator_eq possibleRegion_eq thetaSigned_eq_familyHullLogVolume
+      ob7Source iutIV_cTheta additive_haar_arithmetic_degree_padic :=
+  preferredPublicStepXIPaperSourceRouteAudit
+    sourceData
+    (principalProductLocalizedThetaEqFamilyHullPaperTrace
+      sourceData thetaSigned principalSource localizedSource
+      hullOperator_eq possibleRegion_eq thetaSigned_eq_familyHullLogVolume
+      ob7Source)
+    thetaSigned principalSource localizedSource hullOperator_eq
+    possibleRegion_eq thetaSigned_eq_familyHullLogVolume ob7Source
+    iutIV_cTheta additive_haar_arithmetic_degree_padic audit
 
 end Obligations
 
