@@ -15005,6 +15005,200 @@ theorem endpoint
     data.basePrimeDilation_apply,
     data.basePrimeDilation_measure_toReal_eq⟩
 
+set_option linter.style.longLine false in
+/--
+The inverse base-prime dilation of the normalized valuation unit ball.
+
+In the local-field normalization used by IUT IV, multiplication by the base
+prime has Haar modulus \(p^{-[K:\mathbb Q_p]}\).  Hence the inverse image of
+the normalized unit ball has Haar mass \(p^{[K:\mathbb Q_p]}\), which is
+strictly larger than one.  This is the concrete non-unit compact-open source
+needed by the strict additive-Haar Step (xi) branch.
+-/
+def inverseBasePrimeUnitBall
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem) :
+    Set K :=
+  data.basePrimeDilation.symm '' data.integerSource.ringOfIntegers
+
+set_option linter.style.longLine false in
+theorem basePrimeDilation_image_inverseBasePrimeUnitBall_eq_ringOfIntegers
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem) :
+    data.basePrimeDilation '' data.inverseBasePrimeUnitBall =
+      data.integerSource.ringOfIntegers := by
+  ext point
+  constructor
+  · intro hpoint
+    rcases hpoint with ⟨preimage, hpreimage, hpoint⟩
+    rcases hpreimage with ⟨integerPoint, hinteger, hpreimage⟩
+    rw [← hpoint, ← hpreimage]
+    simpa using hinteger
+  · intro hpoint
+    refine ⟨data.basePrimeDilation.symm point, ?_, by simp⟩
+    exact ⟨point, hpoint, rfl⟩
+
+theorem inverseBasePrimeUnitBall_open
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem) :
+    IsOpen data.inverseBasePrimeUnitBall := by
+  have hunitOpen : IsOpen data.integerSource.ringOfIntegers := by
+    rw [← data.integerSource.valuationTopology_valuationBall_one_eq_ringOfIntegers]
+    exact data.integerSource.valuationTopology.unitBall_compactOpen.1
+  exact data.basePrimeDilation.symm.isOpenMap
+    data.integerSource.ringOfIntegers hunitOpen
+
+theorem inverseBasePrimeUnitBall_compact
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem) :
+    IsCompact data.inverseBasePrimeUnitBall := by
+  have hunitCompact : IsCompact data.integerSource.ringOfIntegers := by
+    rw [← data.integerSource.valuationTopology_valuationBall_one_eq_ringOfIntegers]
+    exact data.integerSource.valuationTopology.unitBall_compactOpen.2
+  exact hunitCompact.image data.basePrimeDilation.symm.continuous
+
+theorem inverseBasePrimeUnitBall_compactOpen
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem) :
+    IsOpen data.inverseBasePrimeUnitBall ∧
+      IsCompact data.inverseBasePrimeUnitBall :=
+  ⟨data.inverseBasePrimeUnitBall_open,
+    data.inverseBasePrimeUnitBall_compact⟩
+
+set_option linter.style.longLine false in
+theorem inverseBasePrimeUnitBall_measure_toReal_eq_pow
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem) :
+    (data.haarMeasure data.inverseBasePrimeUnitBall).toReal =
+      (p : Real) ^ Module.finrank ℚ_[p] K := by
+  let denom : Real := (p : Real) ^ Module.finrank ℚ_[p] K
+  have hdenom_pos : 0 < denom := by
+    exact pow_pos
+      (by exact_mod_cast (Fact.out : p.Prime).pos)
+      (Module.finrank ℚ_[p] K)
+  have hscale := data.basePrimeDilation_measure_toReal_eq
+    data.inverseBasePrimeUnitBall
+  rw [data.basePrimeDilation_image_inverseBasePrimeUnitBall_eq_ringOfIntegers,
+    data.valuationUnitBall_measure_one] at hscale
+  have hmeasure :
+      (data.haarMeasure data.inverseBasePrimeUnitBall).toReal / denom = 1 := by
+    simpa [denom] using hscale.symm
+  field_simp [hdenom_pos.ne'] at hmeasure
+  simpa [denom] using hmeasure
+
+set_option linter.style.longLine false in
+theorem one_lt_inverseBasePrimeUnitBall_measure_toReal
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem) :
+    1 < (data.haarMeasure data.inverseBasePrimeUnitBall).toReal := by
+  rw [data.inverseBasePrimeUnitBall_measure_toReal_eq_pow]
+  exact one_lt_pow₀
+    (by exact_mod_cast (Fact.out : p.Prime).one_lt)
+    (ne_of_gt (Module.finrank_pos : 0 < Module.finrank ℚ_[p] K))
+
+set_option linter.style.longLine false in
+noncomputable def toInverseBasePrimeUnitBallAdditiveHaarCompactOpenNormalizationSource
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem) :
+    IUTStage1AdditiveHaarCompactOpenNormalizationSource
+      α (Subring K) K hullSystem :=
+  { localRing := data.integerSource.integerSubring,
+    residuePrime := p,
+    residue_prime := Fact.out,
+    finiteExtensionDegree := Module.finrank ℚ_[p] K,
+    finite_extension_degree_pos := Module.finrank_pos,
+    realization := data.realization,
+    realizedRegion := data.realizedRegion,
+    realizedRegion_eq_image := data.realizedRegion_eq_image,
+    haarMeasure := data.haarMeasure,
+    haar_isAddHaar := data.haar_isAddHaar,
+    isCompactOpen := fun subset => IsOpen subset ∧ IsCompact subset,
+    compactOpen_is_open := by
+      intro subset hsubset
+      exact hsubset.1,
+    compactOpen_is_compact := by
+      intro subset hsubset
+      exact hsubset.2,
+    compactOpen_inter := by
+      intro left right hleft hright
+      exact ⟨hleft.1.inter hright.1,
+        hleft.2.inter_right hright.2.isClosed⟩,
+    ringOfIntegers := data.integerSource.ringOfIntegers,
+    compactOpenSubset := data.inverseBasePrimeUnitBall,
+    uniformizerScale := fun subset => data.basePrimeDilation '' subset,
+    ringOfIntegers_compactOpen := by
+      constructor
+      · rw [← data.integerSource.valuationTopology_valuationBall_one_eq_ringOfIntegers]
+        exact data.integerSource.valuationTopology.unitBall_compactOpen.1
+      · rw [← data.integerSource.valuationTopology_valuationBall_one_eq_ringOfIntegers]
+        exact data.integerSource.valuationTopology.unitBall_compactOpen.2,
+    compactOpenSubset_compactOpen :=
+      data.inverseBasePrimeUnitBall_compactOpen,
+    uniformizerScale_preserves_compactOpen := by
+      intro subset hsubset
+      exact ⟨data.basePrimeDilation.isOpenMap subset hsubset.1,
+        hsubset.2.image data.basePrimeDilation.continuous⟩,
+    ringOfIntegers_measure_one :=
+      data.valuationUnitBall_measure_one,
+    compactOpenSubset_measure_pos :=
+      (zero_lt_one.trans data.one_lt_inverseBasePrimeUnitBall_measure_toReal),
+    uniformizerScaled_measure_toReal_eq := by
+      simpa [inverseBasePrimeUnitBall] using
+        data.basePrimeDilation_measure_toReal_eq
+          data.inverseBasePrimeUnitBall,
+    hull_logVolume_eq_normalized := by
+      intro subset
+      simpa using data.hull_logVolume_eq_normalized subset }
+
+set_option linter.style.longLine false in
+theorem inverseBasePrimeUnitBall_additiveHaar_endpoint
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem) :
+    let inverseSource :=
+      data.toInverseBasePrimeUnitBallAdditiveHaarCompactOpenNormalizationSource;
+    inverseSource.compactOpenSubset = data.inverseBasePrimeUnitBall ∧
+      inverseSource.ringOfIntegers = data.integerSource.ringOfIntegers ∧
+      (inverseSource.haarMeasure inverseSource.compactOpenSubset).toReal =
+        (p : Real) ^ Module.finrank ℚ_[p] K ∧
+      1 < (inverseSource.haarMeasure inverseSource.compactOpenSubset).toReal ∧
+      0 < inverseSource.normalizedHaarLogVolume
+        inverseSource.compactOpenSubset :=
+  by
+    intro inverseSource
+    have hmeasure :
+        (inverseSource.haarMeasure inverseSource.compactOpenSubset).toReal =
+          (p : Real) ^ Module.finrank ℚ_[p] K := by
+      simpa [inverseSource,
+        toInverseBasePrimeUnitBallAdditiveHaarCompactOpenNormalizationSource] using
+        data.inverseBasePrimeUnitBall_measure_toReal_eq_pow
+    have hgt :
+        1 < (inverseSource.haarMeasure inverseSource.compactOpenSubset).toReal := by
+      simpa [inverseSource,
+        toInverseBasePrimeUnitBallAdditiveHaarCompactOpenNormalizationSource] using
+        data.one_lt_inverseBasePrimeUnitBall_measure_toReal
+    have hpos :
+        0 < inverseSource.normalizedHaarLogVolume
+          inverseSource.compactOpenSubset := by
+      dsimp [inverseSource,
+        toInverseBasePrimeUnitBallAdditiveHaarCompactOpenNormalizationSource,
+        IUTStage1AdditiveHaarCompactOpenNormalizationSource.normalizedHaarLogVolume,
+        IUTStage1AdditiveHaarCompactOpenNormalizationSource.rawHaarLogVolume,
+        IUTStage1AdditiveHaarCompactOpenNormalizationSource.rawHaarMeasure]
+      exact div_pos
+        (Real.log_pos
+          data.one_lt_inverseBasePrimeUnitBall_measure_toReal)
+        (by exact_mod_cast (Module.finrank_pos : 0 < Module.finrank ℚ_[p] K))
+    exact ⟨rfl, rfl, hmeasure, hgt, hpos⟩
+
 end IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
 
 /--

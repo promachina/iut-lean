@@ -80510,6 +80510,169 @@ end PrincipalProductAdditiveHaarCompactOpenFactorLocalizedAdjustedCalibrationSou
 
 set_option linter.style.longLine false in
 /--
+Principal-product additive-Haar compact-open-factor Step (xi) source whose
+strict selected factor is constructed from the inverse base-prime dilation of
+the normalized valuation unit ball.
+
+The generic additive-Haar calibration source asks directly for
+`1 < mu(U).toReal`.  This variant replaces that inequality by a concrete
+finite-extension local-field source: the selected compact-open factor is
+identified with \(p^{-1}O_K\), constructed as the inverse image of the
+normalized unit ball under the base-prime dilation.  The source-core Haar
+modulus theorem then proves the strict mass inequality.
+-/
+structure PrincipalProductInverseDilationAdditiveHaarCompactOpenFactorLocalizedAdjustedCalibrationSource
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {F : Type z} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    {p : Nat} [Fact p.Prime] {K : Type y} {β : Type v} {γ : Type w}
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    [Fintype β] [Fintype γ]
+    (principalProductAdditiveHaarSource :
+      PrincipalProductAdditiveHaarLocalizedHullVectorBundleDecompositionSource
+        sourceData principalSource (Subring K) K β γ)
+    (V : Type v) (μ : Type w) [Fintype V] where
+  restrictionLocalGlobalSource :
+    IUTStage1EnvironmentAnchoredRestrictionLocalGlobalRealifiedFrobenioidSource V
+  environmentOrdinaryLogVolume_eq_hodgeCanonicalDegree :
+    restrictionLocalGlobalSource.evaluation.environment.ordinary.realifiedLogVolume =
+      hodgeEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        hodgeEvaluation.thetaRootSource.canonicalFullLabel
+  summandPlace : β -> V
+  coricUnitCharacter : V -> μ
+  structureSheafSummand : β -> γ
+  structureSheafLogVolume_eq_additiveHaarNormalized :
+    ∀ index : β,
+      (principalProductAdditiveHaarSource.toAdditiveHaarLocalizedSource.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toNormSquareLocalizedHullVectorBundleDecompositionSource.toLocalizedHullVectorBundleDecompositionSource.localizedSource.localization
+          index).structureSheafLogVolume =
+        ((principalProductAdditiveHaarSource.toAdditiveHaarLocalizedSource.localizedSource.localization index).bundle.additiveHaarFactor
+            (structureSheafSummand index)).normalizedHaarLogVolume
+          ((principalProductAdditiveHaarSource.toAdditiveHaarLocalizedSource.localizedSource.localization index).bundle.additiveHaarFactor
+            (structureSheafSummand index)).compactOpenSubset
+  positiveIndex : β
+  positiveSummand : γ
+  positiveSummand_ne_structureSheaf :
+    positiveSummand ≠ structureSheafSummand positiveIndex
+  positiveInverseDilationSource :
+    IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+      (Point targetCopy) p K principalSource.toHolomorphicHullSystem
+  positiveSummandFactor_eq_inverseBasePrimeUnitBall :
+    (principalProductAdditiveHaarSource.toAdditiveHaarLocalizedSource.localizedSource.localization positiveIndex).bundle.additiveHaarFactor
+        positiveSummand =
+      positiveInverseDilationSource.toInverseBasePrimeUnitBallAdditiveHaarCompactOpenNormalizationSource
+  thetaMonoidDegree_eq_localizedAdjustedSum :
+    hodgeEvaluation.thetaMonoidDegree =
+      principalProductAdditiveHaarSource.toAdditiveHaarLocalizedSource.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toNormSquareLocalizedHullVectorBundleDecompositionSource.toLocalizedHullVectorBundleDecompositionSource.localizedAdjustedSum
+
+set_option linter.style.longLine false
+namespace PrincipalProductInverseDilationAdditiveHaarCompactOpenFactorLocalizedAdjustedCalibrationSource
+
+variable {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+variable (sourceData :
+  Theorem311HodgeTheaterLogThetaLogKummerSource
+    (target := targetCopy) coric l)
+variable {Λ : Type v}
+variable (principalSource :
+  IUTStage1Remark395PrincipalProductHullSystemSource
+    (Point targetCopy) Λ)
+variable {F : Type z} [Field F] {X C : HyperbolicOrbicurveModel F}
+variable {hodgeEvaluation :
+  IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+    l X C}
+variable {p : Nat} [Fact p.Prime] {K : Type y} {β : Type v} {γ : Type w}
+variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+variable [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+variable [Fintype β] [Fintype γ]
+variable
+  {principalProductAdditiveHaarSource :
+    PrincipalProductAdditiveHaarLocalizedHullVectorBundleDecompositionSource
+      sourceData principalSource (Subring K) K β γ}
+variable {V : Type v} {μ : Type w} [Fintype V]
+
+set_option linter.style.longLine false in
+theorem positiveSummandMeasure_gt_one
+    (source :
+      PrincipalProductInverseDilationAdditiveHaarCompactOpenFactorLocalizedAdjustedCalibrationSource
+        (p := p) (K := K) sourceData principalSource hodgeEvaluation
+        principalProductAdditiveHaarSource V μ) :
+    1 <
+      (((principalProductAdditiveHaarSource.toAdditiveHaarLocalizedSource.localizedSource.localization source.positiveIndex).bundle.additiveHaarFactor
+          source.positiveSummand).haarMeasure
+        ((principalProductAdditiveHaarSource.toAdditiveHaarLocalizedSource.localizedSource.localization source.positiveIndex).bundle.additiveHaarFactor
+          source.positiveSummand).compactOpenSubset).toReal := by
+  rw [source.positiveSummandFactor_eq_inverseBasePrimeUnitBall]
+  simpa [
+    IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource.toInverseBasePrimeUnitBallAdditiveHaarCompactOpenNormalizationSource] using
+    IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource.one_lt_inverseBasePrimeUnitBall_measure_toReal
+      source.positiveInverseDilationSource
+
+set_option linter.style.longLine false in
+noncomputable def toAdditiveHaarCompactOpenFactorLocalizedAdjustedCalibrationSource
+    (source :
+      PrincipalProductInverseDilationAdditiveHaarCompactOpenFactorLocalizedAdjustedCalibrationSource
+        (p := p) (K := K) sourceData principalSource hodgeEvaluation
+        principalProductAdditiveHaarSource V μ) :
+    PrincipalProductAdditiveHaarCompactOpenFactorLocalizedAdjustedCalibrationSource
+      sourceData principalSource hodgeEvaluation
+      principalProductAdditiveHaarSource V μ :=
+  { restrictionLocalGlobalSource := source.restrictionLocalGlobalSource,
+    environmentOrdinaryLogVolume_eq_hodgeCanonicalDegree :=
+      source.environmentOrdinaryLogVolume_eq_hodgeCanonicalDegree,
+    summandPlace := source.summandPlace,
+    coricUnitCharacter := source.coricUnitCharacter,
+    structureSheafSummand := source.structureSheafSummand,
+    structureSheafLogVolume_eq_additiveHaarNormalized :=
+      source.structureSheafLogVolume_eq_additiveHaarNormalized,
+    positiveIndex := source.positiveIndex,
+    positiveSummand := source.positiveSummand,
+    positiveSummand_ne_structureSheaf :=
+      source.positiveSummand_ne_structureSheaf,
+    positiveSummandMeasure_gt_one :=
+      positiveSummandMeasure_gt_one
+        (sourceData := sourceData) (principalSource := principalSource)
+        source,
+    thetaMonoidDegree_eq_localizedAdjustedSum :=
+      source.thetaMonoidDegree_eq_localizedAdjustedSum }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (source :
+      PrincipalProductInverseDilationAdditiveHaarCompactOpenFactorLocalizedAdjustedCalibrationSource
+        (p := p) (K := K) sourceData principalSource hodgeEvaluation
+        principalProductAdditiveHaarSource V μ) :
+    let additiveSource :=
+      toAdditiveHaarCompactOpenFactorLocalizedAdjustedCalibrationSource
+        (sourceData := sourceData) (principalSource := principalSource)
+        source;
+    1 <
+      (((principalProductAdditiveHaarSource.toAdditiveHaarLocalizedSource.localizedSource.localization source.positiveIndex).bundle.additiveHaarFactor
+          source.positiveSummand).haarMeasure
+        ((principalProductAdditiveHaarSource.toAdditiveHaarLocalizedSource.localizedSource.localization source.positiveIndex).bundle.additiveHaarFactor
+          source.positiveSummand).compactOpenSubset).toReal ∧
+      additiveSource.thetaMonoidDegree_eq_localizedAdjustedSum =
+        source.thetaMonoidDegree_eq_localizedAdjustedSum :=
+  by
+    intro additiveSource
+    exact
+      ⟨positiveSummandMeasure_gt_one
+        (sourceData := sourceData) (principalSource := principalSource)
+        source, rfl⟩
+
+end PrincipalProductInverseDilationAdditiveHaarCompactOpenFactorLocalizedAdjustedCalibrationSource
+set_option linter.style.longLine true
+
+set_option linter.style.longLine false in
+/--
 Principal-product additive-Haar public Step (xi) route with strict-positive
 compact-open factors and constructed paper trace.
 
@@ -80553,6 +80716,47 @@ noncomputable def preferredPublicPrincipalProductAdditiveHaarCompactOpenFactorLo
     sourceData principalSource hodgeEvaluation additiveHaarLocalizedSource
     (by rfl) additiveHaarCompactOpenFactorSource iutIV_cTheta
     additive_haar_arithmetic_degree_padic
+
+set_option linter.style.longLine false in
+/--
+Principal-product public Step (xi) route whose strict additive-Haar selected
+factor is constructed from the inverse base-prime dilation of the normalized
+valuation unit ball.
+-/
+noncomputable def preferredPublicPrincipalProductInverseDilationAdditiveHaarCompactOpenFactorLocalizedAdjustedConstructedPaperTraceStepXIPaperSourceRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {F : Type z} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    {p : Nat} [Fact p.Prime] {K : Type y} {β : Type v} {γ : Type w}
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    [Fintype β] [Fintype γ]
+    (principalProductAdditiveHaarSource :
+      PrincipalProductAdditiveHaarLocalizedHullVectorBundleDecompositionSource
+        sourceData principalSource (Subring K) K β γ)
+    {V : Type v} {μ : Type w} [Fintype V]
+    (localizedAdjustedInverseDilationSource :
+      PrincipalProductInverseDilationAdditiveHaarCompactOpenFactorLocalizedAdjustedCalibrationSource
+        (p := p) (K := K) sourceData principalSource hodgeEvaluation
+        principalProductAdditiveHaarSource V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations) :=
+  preferredPublicPrincipalProductAdditiveHaarCompactOpenFactorLocalizedAdjustedConstructedPaperTraceStepXIPaperSourceRouteAudit
+    sourceData principalSource hodgeEvaluation principalProductAdditiveHaarSource
+    (PrincipalProductInverseDilationAdditiveHaarCompactOpenFactorLocalizedAdjustedCalibrationSource.toAdditiveHaarCompactOpenFactorLocalizedAdjustedCalibrationSource
+      (sourceData := sourceData) (principalSource := principalSource)
+      localizedAdjustedInverseDilationSource)
+    iutIV_cTheta additive_haar_arithmetic_degree_padic
 
 set_option linter.style.longLine false in
 /--
