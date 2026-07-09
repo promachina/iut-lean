@@ -79922,6 +79922,67 @@ noncomputable def preferredPublicCompactOpenFactorRestrictionHodgeFamilyHullCali
     possibleRegion_eq restrictionHodgeFamilyHullCalibratedSource iutIV_cTheta
     additive_haar_arithmetic_degree_padic
 
+set_option linter.style.longLine false in
+/--
+Strongest finite-extension public Step (xi) route with the localized
+possible-region comparison stated at the p-adic finite source level.
+
+The older compact-open factor route asked for the possible-region equality
+after projecting through the unit-ball, additive-Haar, compact-open,
+norm-square, and ordinary localized hull layers.  This wrapper uses the
+source-core projection theorem to derive that equality from the finite
+extension localized source itself, so the public boundary is one layer closer
+to the Remark 3.9.5 valuation-ball data.
+-/
+noncomputable def preferredPublicPadicFiniteSourcePossibleRegionCompactOpenFactorRestrictionHodgeFamilyHullCalibratedConstructedPaperTraceStepXIPaperSourceRouteAuditDiagonalPadicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {F : Type z} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    {p : Nat} [Fact p.Prime] {K : Type y} {β : Type v} {γ : Type w}
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    [Fintype β] [Fintype γ]
+    (padicFiniteLocalizedSource :
+      IUTStage1Remark395PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) p K β γ
+        principalSource.toHolomorphicHullSystem)
+    (possibleRegion_eq :
+      padicFiniteLocalizedSource.possibleRegion =
+        principalProductPossibleRegion sourceData principalSource)
+    {V : Type v} {μ : Type w} [Fintype V]
+    (compactOpenFactorSource :
+      StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPPadicFiniteExtensionUnitBallCompactOpenFactorRestrictionHodgeFamilyHullCalibratedConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        (principalProductHullFormationData sourceData principalSource)
+        hodgeEvaluation padicFiniteLocalizedSource V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations) :=
+  let projected_possibleRegion_eq :
+      padicFiniteLocalizedSource.toUnitBallValuationHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toAdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toNormSquareLocalizedHullVectorBundleDecompositionSource.toLocalizedHullVectorBundleDecompositionSource.possibleRegion =
+        principalProductPossibleRegion sourceData principalSource := by
+    calc
+      padicFiniteLocalizedSource.toUnitBallValuationHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toAdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toNormSquareLocalizedHullVectorBundleDecompositionSource.toLocalizedHullVectorBundleDecompositionSource.possibleRegion =
+          padicFiniteLocalizedSource.possibleRegion :=
+        IUTStage1Remark395PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.projected_possibleRegion_eq
+          padicFiniteLocalizedSource
+      _ = principalProductPossibleRegion sourceData principalSource :=
+        possibleRegion_eq
+  preferredPublicCompactOpenFactorRestrictionHodgeFamilyHullCalibratedConstructedPaperTraceStepXIPaperSourceRouteAuditDiagonalPadicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7
+    sourceData principalSource hodgeEvaluation padicFiniteLocalizedSource
+    projected_possibleRegion_eq compactOpenFactorSource iutIV_cTheta
+    additive_haar_arithmetic_degree_padic
+
 end Obligations
 
 end IUTStage1Theorem311ToCorollary312PaperTrace

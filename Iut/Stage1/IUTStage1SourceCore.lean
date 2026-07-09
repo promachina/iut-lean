@@ -20281,6 +20281,20 @@ theorem endpoint
         |>.valuationBallFactor_compactOpenRadius_eq_one summand,
     data.projected_directSummandLogVolume_eq_padicFiniteExtensionUnitBallNormalized⟩
 
+set_option linter.style.longLine false in
+theorem projected_possibleRegion_eq
+    (data :
+      IUTStage1Remark395PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+        α ι p K β γ hullSystem) :
+    (data.toUnitBallValuationHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+        |>.toAdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+        |>.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+        |>.toNormSquareLocalizedHullVectorBundleDecompositionSource
+        |>.toLocalizedHullVectorBundleDecompositionSource
+        |>.possibleRegion) =
+      data.possibleRegion :=
+  rfl
+
 end IUTStage1Remark395PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
 
 namespace IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource
