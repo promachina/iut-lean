@@ -781,6 +781,11 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductAdditiveHaarMeasureModelFamilyHullIndexedCalibratedLocalizedHullCoverSource.localizedCoverLogVolume_eq_sum_source}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductAdditiveHaarMeasureModelFamilyHullIndexedCalibratedLocalizedHullCoverSource.toPrincipalProductAdditiveHaarCalibratedLocalizedHullCoverSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductAdditiveHaarMeasureModelFamilyHullIndexedCalibratedLocalizedHullCoverSource.endpoint}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductAdditiveHaarDirectProductMeasureModelCalibratedLocalizedHullCoverSource}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductAdditiveHaarDirectProductMeasureModelCalibratedLocalizedHullCoverSource.familyHullIndex}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductAdditiveHaarDirectProductMeasureModelCalibratedLocalizedHullCoverSource.localizedRegion_eq_familyHullIndexFiber_source}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductAdditiveHaarDirectProductMeasureModelCalibratedLocalizedHullCoverSource.toMeasureModelFamilyHullIndexedCalibratedLocalizedHullCoverSource}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductAdditiveHaarDirectProductMeasureModelCalibratedLocalizedHullCoverSource.endpoint}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductAdditiveHaarCompactOpenFactorLocalizedAdjustedCalibrationSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductAdditiveHaarCompactOpenFactorLocalizedAdjustedCalibrationSource.positiveSummandNormalized_pos}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductAdditiveHaarCompactOpenFactorLocalizedAdjustedCalibrationSource.toAdditiveHaarCompactOpenFactorSource}
@@ -788,6 +793,7 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductCalibratedLocalizedHullCoverInverseDilationAdditiveHaarCompactOpenFactorLocalizedAdjustedConstructedPaperTraceStepXIPaperSourceRouteAudit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductFamilyHullIndexedFiniteAdditiveCalibratedLocalizedHullCoverInverseDilationAdditiveHaarCompactOpenFactorLocalizedAdjustedConstructedPaperTraceStepXIPaperSourceRouteAudit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductMeasureModelFamilyHullIndexedCalibratedLocalizedHullCoverInverseDilationAdditiveHaarCompactOpenFactorLocalizedAdjustedConstructedPaperTraceStepXIPaperSourceRouteAudit}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductDirectProductMeasureModelCalibratedLocalizedHullCoverInverseDilationAdditiveHaarCompactOpenFactorLocalizedAdjustedConstructedPaperTraceStepXIPaperSourceRouteAudit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductAdditiveHaarStrictPositiveRouteBoundaryAudit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.principalProductAdditiveHaarStrictPositiveRouteBoundaryAudit}
   \lean{Iut.Stage1.IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource.inverseBasePrimeUnitBall}
@@ -866,7 +872,10 @@
   cover-volume formula.  A cover-local measure-model variant lowers the
   additivity input further: the localized volume sum is derived from the
   measure model for this finite cover instead of a global finite-additive hull
-  law.  The strict positive
+  law.  A direct-product variant removes the supplied family-hull index map:
+  local factor regions define the cells, local factor separation proves
+  disjointness, and Lean constructs the family-hull index and fiber equality
+  from the cover identity.  The strict positive
   determinant contribution has been split off into a non-unit-ball
   additive-Haar branch: its principal-product source fixes the possible-region
   family definitionally, constructs the paper trace internally, and derives the
@@ -923,7 +932,8 @@
   additivity, and local vector-bundle calibrations rather than supplied as
   localized source fields.  Its stricter measure-model wrapper replaces the
   global finite-additivity input by the log-volume measure model attached to
-  this cover.  The
+  this cover.  The direct-product wrapper goes one step lower by deriving the
+  family-hull index map from local factor regions and their separation.  The
   finite-extension valuation-unit-ball route is only a normalized legacy
   boundary: radius \(1\) and \(\mu(O_v)=1\) construct weak nonnegativity, and
   Lean proves that the selected unit-ball normalized log-volume is \(0\).  The
