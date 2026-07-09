@@ -60162,6 +60162,94 @@ theorem ofValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedL
       ⟨rfl, hpossible.symm, rfl⟩
 
 set_option linter.style.longLine false in
+/--
+Construct the record-facing Ob3/Ob5 adjusted determinant/log-volume source
+from the theta-region-defined principal valuation-ball source.
+
+The determinant record consumed by the Step (xi) source spine is no longer an
+independent package at this boundary.  Its holomorphic hull operator,
+localized determinant data, finite-additive log-volume equality, and
+possible-image family are inherited from the choice-indexed valuation-ball
+cover; the only synchronization with Theorem 3.11 is the proved equality
+between the transported theta-region family and the multiradial record's
+possible-image family.
+-/
+noncomputable def ofThetaRegionDefinedPrincipalValuationBallSource
+    {coric : Type u} {l : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {sourceData :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        recordConcrete indData}
+    {η : Type y} {K : Type z} {Λ : Type max u v w y z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    (principalSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource
+        sourceData (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+      (β := β) (γ := γ) recordConcrete :=
+  ofValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    (record := recordConcrete)
+    principalSource.toChoiceIndexedValuationCover
+    principalSource.toChoiceIndexedValuationCover_possibleRegion_eq_recordThetaPossibleImage
+
+set_option linter.style.longLine false in
+theorem ofThetaRegionDefinedPrincipalValuationBallSource_endpoint
+    {coric : Type u} {l : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {sourceData :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        recordConcrete indData}
+    {η : Type y} {K : Type z} {Λ : Type max u v w y z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    (principalSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource
+        sourceData (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    let recordSource :=
+      ofThetaRegionDefinedPrincipalValuationBallSource
+        (β := β) (γ := γ) principalSource;
+    let choiceCover := principalSource.toChoiceIndexedValuationCover;
+    recordSource.toSourceCoreAdjustedLogVolumeSource =
+        choiceCover.toOb3Ob5AdjustedDeterminantLogVolumeSource ∧
+      recordSource.hullOperator = choiceCover.hullSystem.toHolomorphicHullOperator ∧
+      recordSource.ob3ob4Source =
+        choiceCover.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source ∧
+      choiceCover.toOb3Ob5AdjustedDeterminantLogVolumeSource.possibleRegion =
+        recordThetaPossibleImage recordConcrete ∧
+      recordSource.familyHullLogVolume =
+        recordSource.adjustedSummandLogVolume ∧
+      recordSource.adjustedSummandLogVolume =
+        recordSource.ob3ob4Source.determinantLogVolume ∧
+      recordSource.familyHullLogVolume =
+        recordSource.ob3ob4Source.normalizedDeterminantLogVolume :=
+  by
+    intro recordSource choiceCover
+    have hsourceCore :=
+      ofValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource_toSourceCoreAdjustedLogVolumeSource_eq
+        (record := recordConcrete)
+        choiceCover
+        principalSource.toChoiceIndexedValuationCover_possibleRegion_eq_recordThetaPossibleImage
+    exact
+      ⟨hsourceCore,
+        rfl,
+        rfl,
+        principalSource.toChoiceIndexedValuationCover_possibleRegion_eq_recordThetaPossibleImage,
+        recordSource.familyHullLogVolume_eq_adjustedSummandLogVolume,
+        recordSource.adjustedSummandLogVolume_eq_determinantLogVolume,
+        recordSource.familyHullLogVolume_eq_normalizedDeterminantLogVolume⟩
+
+set_option linter.style.longLine false in
 noncomputable def toConstructedHolomorphicHullDeterminantSource
     (sourceData :
       IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
@@ -60419,6 +60507,86 @@ theorem toConstructedHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolum
         constructedSource.determinantLogVolume_le_thetaSigned,
         constructedSource.qRegionLogVolume_le_thetaSigned,
         constructedSource.qSigned_le_thetaSigned⟩
+
+set_option linter.style.longLine false in
+/--
+Constructed Step (xi) hull/determinant source from the theta-region-defined
+principal valuation-ball source.
+
+This is the valuation-cover version of
+`toConstructedHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolume`:
+the record Ob3/Ob5 adjusted determinant/log-volume source is built internally
+from the principal valuation-ball cover, its choice-indexed finite-additive
+valuation/Haar tensor data, and the transported theta-region identification.
+-/
+noncomputable def toConstructedHolomorphicHullDeterminantSourceOfThetaRegionDefinedPrincipalValuationBallSource
+    {coric : Type u} {l : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {actionPacketTransportSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        recordConcrete indData}
+    {η : Type y} {K : Type z} {Λ : Type max u v w y z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    (principalSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallSource
+        actionPacketTransportSource (η := η) (K := K) (β := β)
+        (γ := γ) (Λ := Λ))
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (qPilotRegion : Set (Point target))
+    (q_subset_recordUnion :
+      qPilotRegion ⊆ recordThetaPossibleImageUnion recordConcrete)
+    (measure_eq_hullLogVolume :
+      packageConcrete.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          (ofThetaRegionDefinedPrincipalValuationBallSource
+            (β := β) (γ := γ) principalSource).hullOperator).toRegionMeasure)
+    (thetaSigned_eq_familyHullLogVolume :
+      packageConcrete.preLedger.thetaSigned =
+        ((ofThetaRegionDefinedPrincipalValuationBallSource
+            (β := β) (γ := γ) principalSource)
+          |>.toRecordOb3Ob5DeterminantCompatibilitySource
+          |>.toRecordBoundedFamilyHullDetLogVolumeSource).familyHullLogVolume)
+    (hullDetBridge_eq :
+      packageConcrete.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordConcrete)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            (ofThetaRegionDefinedPrincipalValuationBallSource
+              (β := β) (γ := γ) principalSource).hullOperator)
+          qPilotRegion q_subset_recordUnion
+          (ofThetaRegionDefinedPrincipalValuationBallSource
+              (β := β) (γ := γ) principalSource).ob3ob4Source.toWeightedDeterminantSource
+          (ofThetaRegionDefinedPrincipalValuationBallSource
+              (β := β) (γ := γ) principalSource).toRecordOb3Ob5DeterminantCompatibilitySource.toCompatibility
+          measure_eq_hullLogVolume
+          (((ofThetaRegionDefinedPrincipalValuationBallSource
+                (β := β) (γ := γ) principalSource)
+            |>.toRecordOb3Ob5DeterminantCompatibilitySource
+            |>.toRecordBoundedFamilyHullDetLogVolumeSource)
+            |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+                thetaSigned_eq_familyHullLogVolume))
+    (q_pilot_positive : 0 < -packageConcrete.preLedger.qSigned)
+    (normalization : packageConcrete.preLedger.normalization) :
+    IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+      (β := β) recordConcrete :=
+  let recordSource :=
+    ofThetaRegionDefinedPrincipalValuationBallSource
+      (β := β) (γ := γ) principalSource
+  recordSource.toConstructedHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolume
+    operation hullOperation determinantOperation qPilotRegion
+    q_subset_recordUnion measure_eq_hullLogVolume
+    thetaSigned_eq_familyHullLogVolume hullDetBridge_eq q_pilot_positive
+    normalization
 
 set_option linter.style.longLine false in
 /--
