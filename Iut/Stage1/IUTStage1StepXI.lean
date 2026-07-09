@@ -80472,6 +80472,209 @@ end PrincipalProductAdditiveHaarLocalizedHullCoverSource
 
 set_option linter.style.longLine false in
 /--
+Principal-product additive-Haar localized hull cover with calibrated local
+vector-bundle regions.
+
+This lowers the pointwise Ob3 equality in
+`PrincipalProductAdditiveHaarLocalizedHullCoverSource`.  Instead of supplying
+`logvol(H_beta) = adjusted_beta` as a bare field, each `H_beta` is calibrated by
+the Remark 3.9.5(vii), (Ob3-1)--(Ob3-3), local vector-bundle source from
+`IUTStage1LocalizedHullRegionVectorBundleCalibrationSource`; a separate
+alignment equality identifies that calibrated local vector bundle with the
+additive-Haar determinant localization used by the public strict-positive route.
+-/
+structure PrincipalProductAdditiveHaarCalibratedLocalizedHullCoverSource
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    (η : Type x) (K : Type y) (β : Type v) (γ : Type w)
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+    [Fintype β] [Fintype γ] where
+  localizedSource :
+    IUTStage1Remark395Ob3Ob4AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+      (Point targetCopy) η K β γ principalSource.toHolomorphicHullSystem
+  localizedCalibration :
+    β -> IUTStage1LocalizedHullRegionVectorBundleCalibrationSource
+      principalSource.toHolomorphicHullSystem η γ
+  localizedCalibration_eq_source :
+    ∀ index : β,
+      (localizedCalibration index).localizedVectorBundle =
+        localizedSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.localization
+          index
+  familyHull_eq_localizedRegionUnion :
+    principalSource.toHolomorphicHullSystem.phi
+        (⋃ i, principalProductPossibleRegion sourceData principalSource i) =
+      ⋃ index, (localizedCalibration index).localizedRegion
+  localizedCoverLogVolume_eq_sum :
+    principalSource.toHolomorphicHullSystem.logVolume
+        (⋃ index, (localizedCalibration index).localizedRegion) =
+      Finset.univ.sum fun index =>
+        principalSource.toHolomorphicHullSystem.logVolume
+          ((localizedCalibration index).localizedRegion)
+
+namespace PrincipalProductAdditiveHaarCalibratedLocalizedHullCoverSource
+
+variable {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+variable (sourceData :
+  Theorem311HodgeTheaterLogThetaLogKummerSource
+    (target := targetCopy) coric l)
+variable {Λ : Type v}
+variable (principalSource :
+  IUTStage1Remark395PrincipalProductHullSystemSource
+    (Point targetCopy) Λ)
+variable {η : Type x} {K : Type y} {β : Type v} {γ : Type w}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+variable [Fintype β] [Fintype γ]
+
+def localizedRegion
+    (source :
+      PrincipalProductAdditiveHaarCalibratedLocalizedHullCoverSource
+        sourceData principalSource η K β γ)
+    (index : β) :
+    Set (Point targetCopy) :=
+  (source.localizedCalibration index).localizedRegion
+
+def localizedRegionUnion
+    (source :
+      PrincipalProductAdditiveHaarCalibratedLocalizedHullCoverSource
+        sourceData principalSource η K β γ) :
+    Set (Point targetCopy) :=
+  ⋃ index, localizedRegion sourceData principalSource source index
+
+def familyHull
+    (_source :
+      PrincipalProductAdditiveHaarCalibratedLocalizedHullCoverSource
+        sourceData principalSource η K β γ) :
+    Set (Point targetCopy) :=
+  principalSource.toHolomorphicHullSystem.phi
+    (⋃ i, principalProductPossibleRegion sourceData principalSource i)
+
+noncomputable def localizedVectorBundleSource
+    (source :
+      PrincipalProductAdditiveHaarCalibratedLocalizedHullCoverSource
+        sourceData principalSource η K β γ) :
+    IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource η β γ :=
+  source.localizedSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+    |>.toNormSquareLocalizedVectorBundleDeterminantSource
+    |>.toLocalizedVectorBundleDeterminantSource
+
+set_option linter.style.longLine false in
+theorem localizedVectorBundleSource_localization_eq
+    (source :
+      PrincipalProductAdditiveHaarCalibratedLocalizedHullCoverSource
+        sourceData principalSource η K β γ)
+    (index : β) :
+    (source.localizedCalibration index).localizedVectorBundle =
+      (localizedVectorBundleSource sourceData principalSource source).localization index :=
+  source.localizedCalibration_eq_source index
+
+set_option linter.style.longLine false in
+theorem localizedRegion_logVolume_eq_adjusted
+    (source :
+      PrincipalProductAdditiveHaarCalibratedLocalizedHullCoverSource
+        sourceData principalSource η K β γ)
+    (index : β) :
+    principalSource.toHolomorphicHullSystem.logVolume
+        (localizedRegion sourceData principalSource source index) =
+      (localizedVectorBundleSource sourceData principalSource source).weightedAdjustedLogVolume
+        index := by
+  simpa [localizedRegion, localizedVectorBundleSource,
+    IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.weightedAdjustedLogVolume,
+    source.localizedCalibration_eq_source index] using
+    (source.localizedCalibration index).region_logVolume_eq_weightedAdjustedLogVolume
+
+set_option linter.style.longLine false in
+theorem familyHull_eq_localizedRegionUnion_source
+    (source :
+      PrincipalProductAdditiveHaarCalibratedLocalizedHullCoverSource
+        sourceData principalSource η K β γ) :
+    familyHull sourceData principalSource source =
+      localizedRegionUnion sourceData principalSource source := by
+  simpa [familyHull, localizedRegionUnion, localizedRegion] using
+    source.familyHull_eq_localizedRegionUnion
+
+set_option linter.style.longLine false in
+theorem localizedCoverLogVolume_eq_sum_source
+    (source :
+      PrincipalProductAdditiveHaarCalibratedLocalizedHullCoverSource
+        sourceData principalSource η K β γ) :
+    principalSource.toHolomorphicHullSystem.logVolume
+        (localizedRegionUnion sourceData principalSource source) =
+      Finset.univ.sum fun index =>
+        principalSource.toHolomorphicHullSystem.logVolume
+          (localizedRegion sourceData principalSource source index) := by
+  simpa [localizedRegionUnion, localizedRegion] using
+    source.localizedCoverLogVolume_eq_sum
+
+set_option linter.style.longLine false in
+noncomputable def toPrincipalProductAdditiveHaarLocalizedHullCoverSource
+    (source :
+      PrincipalProductAdditiveHaarCalibratedLocalizedHullCoverSource
+        sourceData principalSource η K β γ) :
+    PrincipalProductAdditiveHaarLocalizedHullCoverSource
+      sourceData principalSource η K β γ :=
+  { localizedSource := source.localizedSource,
+    localizedRegion := localizedRegion sourceData principalSource source,
+    familyHull_eq_localizedRegionUnion := by
+      simpa [localizedRegion] using
+        source.familyHull_eq_localizedRegionUnion,
+    localizedCoverLogVolume_eq_sum := by
+      simpa [localizedRegion] using
+        source.localizedCoverLogVolume_eq_sum,
+    localizedRegion_logVolume_eq_adjusted := by
+      intro index
+      exact localizedRegion_logVolume_eq_adjusted
+        (sourceData := sourceData) (principalSource := principalSource)
+        source index }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (source :
+      PrincipalProductAdditiveHaarCalibratedLocalizedHullCoverSource
+        sourceData principalSource η K β γ) :
+    (∀ index : β,
+      (source.localizedCalibration index).localizedVectorBundle =
+        (localizedVectorBundleSource sourceData principalSource source).localization
+          index) ∧
+      (∀ index : β,
+        principalSource.toHolomorphicHullSystem.logVolume
+            (localizedRegion sourceData principalSource source index) =
+          (localizedVectorBundleSource sourceData principalSource source).weightedAdjustedLogVolume
+            index) ∧
+      familyHull sourceData principalSource source =
+        localizedRegionUnion sourceData principalSource source ∧
+      principalSource.toHolomorphicHullSystem.logVolume
+          (localizedRegionUnion sourceData principalSource source) =
+        (Finset.univ.sum fun index =>
+          principalSource.toHolomorphicHullSystem.logVolume
+            (localizedRegion sourceData principalSource source index)) ∧
+      (toPrincipalProductAdditiveHaarLocalizedHullCoverSource
+          (sourceData := sourceData) (principalSource := principalSource)
+          source).familyHull =
+        familyHull sourceData principalSource source ∧
+      (toPrincipalProductAdditiveHaarLocalizedHullCoverSource
+          (sourceData := sourceData) (principalSource := principalSource)
+          source).localizedRegionUnion =
+        localizedRegionUnion sourceData principalSource source :=
+  ⟨localizedVectorBundleSource_localization_eq
+      (sourceData := sourceData) (principalSource := principalSource) source,
+    localizedRegion_logVolume_eq_adjusted
+      (sourceData := sourceData) (principalSource := principalSource) source,
+    familyHull_eq_localizedRegionUnion_source
+      (sourceData := sourceData) (principalSource := principalSource) source,
+    localizedCoverLogVolume_eq_sum_source
+      (sourceData := sourceData) (principalSource := principalSource) source,
+    rfl, rfl⟩
+
+end PrincipalProductAdditiveHaarCalibratedLocalizedHullCoverSource
+
+set_option linter.style.longLine false in
+/--
 Principal-product additive-Haar compact-open-factor Step (xi) source calibrated
 by localized adjusted determinant data.
 
@@ -80981,6 +81184,52 @@ noncomputable def preferredPublicPrincipalProductLocalizedHullCoverInverseDilati
   preferredPublicPrincipalProductInverseDilationAdditiveHaarCompactOpenFactorLocalizedAdjustedConstructedPaperTraceStepXIPaperSourceRouteAudit
     sourceData principalSource hodgeEvaluation
     localizedHullCoverSource.toPrincipalProductAdditiveHaarLocalizedHullVectorBundleDecompositionSource
+    localizedAdjustedInverseDilationSource
+    iutIV_cTheta additive_haar_arithmetic_degree_padic
+
+set_option linter.style.longLine false in
+/--
+Principal-product public Step (xi) route whose localized hull cover is calibrated
+by explicit local vector-bundle regions before the strict inverse-dilation
+additive-Haar factor is applied.
+
+This lowers the public cover boundary by deriving the pointwise
+`logvol(H_beta) = adjusted_beta` identities from
+`IUTStage1LocalizedHullRegionVectorBundleCalibrationSource`, rather than taking
+them as fields of `PrincipalProductAdditiveHaarLocalizedHullCoverSource`.
+-/
+noncomputable def preferredPublicPrincipalProductCalibratedLocalizedHullCoverInverseDilationAdditiveHaarCompactOpenFactorLocalizedAdjustedConstructedPaperTraceStepXIPaperSourceRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {F : Type z} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    {p : Nat} [Fact p.Prime] {K : Type y} {β : Type v} {γ : Type w}
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    [Fintype β] [Fintype γ]
+    (calibratedLocalizedHullCoverSource :
+      PrincipalProductAdditiveHaarCalibratedLocalizedHullCoverSource
+        sourceData principalSource (Subring K) K β γ)
+    {V : Type v} {μ : Type w} [Fintype V]
+    (localizedAdjustedInverseDilationSource :
+      PrincipalProductInverseDilationAdditiveHaarCompactOpenFactorLocalizedAdjustedCalibrationSource
+        (p := p) (K := K) sourceData principalSource hodgeEvaluation
+        (calibratedLocalizedHullCoverSource.toPrincipalProductAdditiveHaarLocalizedHullCoverSource.toPrincipalProductAdditiveHaarLocalizedHullVectorBundleDecompositionSource)
+        V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations) :=
+  preferredPublicPrincipalProductLocalizedHullCoverInverseDilationAdditiveHaarCompactOpenFactorLocalizedAdjustedConstructedPaperTraceStepXIPaperSourceRouteAudit
+    sourceData principalSource hodgeEvaluation
+    calibratedLocalizedHullCoverSource.toPrincipalProductAdditiveHaarLocalizedHullCoverSource
     localizedAdjustedInverseDilationSource
     iutIV_cTheta additive_haar_arithmetic_degree_padic
 
