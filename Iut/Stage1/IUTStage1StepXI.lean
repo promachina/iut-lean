@@ -60422,6 +60422,80 @@ noncomputable def ofPrincipalPointwiseConstructedLogShellMetricZeroValuationBall
 
 set_option linter.style.longLine false in
 /--
+Construct the record-facing Ob3/Ob5 source from the compact-open log-Kummer
+image possible-region source.
+
+The image source proves the two local image laws that identify the
+Remark 3.9.5 possible region with realized compact-open local points.  Its
+principal theta-region-defined valuation source is then sufficient for the
+Ob3/Ob5 adjusted determinant/log-volume construction.
+-/
+noncomputable def ofCompactOpenLogKummerImagePossibleRegionSource
+    {coric : Type u} {l : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {sourceData :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        recordConcrete indData}
+    {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+    {selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    {η : Type y} {K : Type z} {Λ : Type max u v w y z}
+    [PseudoMetricSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    (imageSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerImagePossibleRegionSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+      (β := β) (γ := γ) recordConcrete :=
+  ofThetaRegionDefinedPrincipalValuationBallSource
+    (β := β) (γ := γ)
+    imageSource.principalSource
+
+set_option linter.style.longLine false in
+/--
+Construct the record-facing Ob3/Ob5 source from the compact-open log-Kummer
+correspondence possible-region source.
+
+The correspondence source supplies a relation between compact-open local
+points and possible-region points, plus realization and soundness laws.  Lean
+first extracts the compact-open image source, then enters the principal
+valuation-ball Ob3/Ob5 construction.
+-/
+noncomputable def ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+    {coric : Type u} {l : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {sourceData :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        recordConcrete indData}
+    {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+    {selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    {η : Type y} {K : Type z} {Λ : Type max u v w y z}
+    [PseudoMetricSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    (correspondenceSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerCorrespondencePossibleRegionSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+      (β := β) (γ := γ) recordConcrete :=
+  ofCompactOpenLogKummerImagePossibleRegionSource
+    (β := β) (γ := γ)
+    correspondenceSource.toCompactOpenLogKummerImagePossibleRegionSource
+
+set_option linter.style.longLine false in
+/--
 Construct the record-facing Ob3/Ob5 source from a compact-open log-Kummer map
 possible-region source.
 
@@ -60499,6 +60573,48 @@ theorem ofCompactOpenLogKummerMapPossibleRegionSource_endpoint
         (β := β) (γ := γ) pointwiseSource.principalSource
     have hpointwise := mapSource.graphPointwiseConstructedEndpoint
     exact ⟨rfl, hrecord.1, hpointwise.2.2.2.2⟩
+
+set_option linter.style.longLine false in
+theorem ofCompactOpenLogKummerCorrespondencePossibleRegionSource_endpoint
+    {coric : Type u} {l : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {sourceData :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        recordConcrete indData}
+    {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+    {selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    {η : Type y} {K : Type z} {Λ : Type max u v w y z}
+    [PseudoMetricSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    (correspondenceSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerCorrespondencePossibleRegionSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    let imageSource :=
+      correspondenceSource.toCompactOpenLogKummerImagePossibleRegionSource;
+    let recordSource :=
+      ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+        (β := β) (γ := γ) correspondenceSource;
+    recordSource =
+        ofCompactOpenLogKummerImagePossibleRegionSource
+          (β := β) (γ := γ) imageSource ∧
+      recordSource.toSourceCoreAdjustedLogVolumeSource =
+        imageSource.principalSource.toChoiceIndexedValuationCover.toOb3Ob5AdjustedDeterminantLogVolumeSource ∧
+      imageSource.principalSource.toPrincipalValuationBallProductHullCoverSource.possibleImageUnion =
+        imageSource.principalSource.toPrincipalValuationBallProductHullCoverSource.selectedPrincipalHull :=
+  by
+    intro imageSource recordSource
+    have hrecord :=
+      ofThetaRegionDefinedPrincipalValuationBallSource_endpoint
+        (β := β) (γ := γ) imageSource.principalSource
+    have hcorr := correspondenceSource.endpoint
+    exact ⟨rfl, hrecord.1, hcorr.2.2.2.2.2⟩
 
 set_option linter.style.longLine false in
 noncomputable def toConstructedHolomorphicHullDeterminantSource
@@ -61004,6 +61120,88 @@ noncomputable def toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogK
   let recordSource :=
     ofCompactOpenLogKummerMapPossibleRegionSource
       (β := β) (γ := γ) mapSource
+  recordSource.toConstructedHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolume
+    operation hullOperation determinantOperation qPilotRegion
+    q_subset_recordUnion measure_eq_hullLogVolume
+    thetaSigned_eq_familyHullLogVolume hullDetBridge_eq q_pilot_positive
+    normalization
+
+set_option linter.style.longLine false in
+/--
+Constructed Step (xi) hull/determinant source from a compact-open log-Kummer
+correspondence possible-region source.
+
+This exposes the correspondence relation as the lower input.  Lean extracts
+the compact-open image laws, constructs the record Ob3/Ob5 adjusted
+determinant/log-volume source, and then applies the exact-theta
+hull/determinant constructor.
+-/
+noncomputable def toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogKummerCorrespondencePossibleRegionSource
+    {coric : Type u} {l : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {actionPacketTransportSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        recordConcrete indData}
+    {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+    {selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    {η : Type y} {K : Type z} {Λ : Type max u v w y z}
+    [PseudoMetricSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    (correspondenceSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerCorrespondencePossibleRegionSource
+        actionPacketTransportSource gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ))
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (qPilotRegion : Set (Point target))
+    (q_subset_recordUnion :
+      qPilotRegion ⊆ recordThetaPossibleImageUnion recordConcrete)
+    (measure_eq_hullLogVolume :
+      packageConcrete.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          (ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+            (β := β) (γ := γ) correspondenceSource).hullOperator).toRegionMeasure)
+    (thetaSigned_eq_familyHullLogVolume :
+      packageConcrete.preLedger.thetaSigned =
+        ((ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+            (β := β) (γ := γ) correspondenceSource)
+          |>.toRecordOb3Ob5DeterminantCompatibilitySource
+          |>.toRecordBoundedFamilyHullDetLogVolumeSource).familyHullLogVolume)
+    (hullDetBridge_eq :
+      packageConcrete.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordConcrete)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            (ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+              (β := β) (γ := γ) correspondenceSource).hullOperator)
+          qPilotRegion q_subset_recordUnion
+          (ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+              (β := β) (γ := γ) correspondenceSource).ob3ob4Source.toWeightedDeterminantSource
+          (ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+              (β := β) (γ := γ) correspondenceSource).toRecordOb3Ob5DeterminantCompatibilitySource.toCompatibility
+          measure_eq_hullLogVolume
+          (((ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+                (β := β) (γ := γ) correspondenceSource)
+            |>.toRecordOb3Ob5DeterminantCompatibilitySource
+            |>.toRecordBoundedFamilyHullDetLogVolumeSource)
+            |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+                thetaSigned_eq_familyHullLogVolume))
+    (q_pilot_positive : 0 < -packageConcrete.preLedger.qSigned)
+    (normalization : packageConcrete.preLedger.normalization) :
+    IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+      (β := β) recordConcrete :=
+  let recordSource :=
+    ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+      (β := β) (γ := γ) correspondenceSource
   recordSource.toConstructedHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolume
     operation hullOperation determinantOperation qPilotRegion
     q_subset_recordUnion measure_eq_hullLogVolume
