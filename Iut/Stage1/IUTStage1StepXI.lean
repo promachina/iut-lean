@@ -67775,6 +67775,260 @@ end StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaGaussianHodgeEva
 
 set_option linter.style.longLine false in
 /--
+Constructed Gaussian/Hodge diagonal source.
+
+This lowers the previous Gaussian/Hodge source once more.  Instead of accepting
+an environment/Gaussian realified Frobenioid evaluation and a supplied equality
+from the Gaussian theta divisor log-volume to the Hodge canonical full-label
+degree, it constructs the environment and Gaussian divisor copies from the
+Hodge canonical full-label Gaussian degree itself.  The ordinary divisor has
+zero prime multiplicities and unit log-volume equal to that Hodge degree; the
+theta and log-shell copies are normalized, so their log-volumes agree with the
+ordinary realified log-volume.  The remaining lower datum is the
+global-to-local restriction equality at each local prime.
+-/
+structure StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+    (hullData : StepXIHullFormationData sourceData.Core sourceData.Images)
+    {l : PrimeGeFive} {F : Type z} [Field F]
+    {X C : HyperbolicOrbicurveModel F}
+    (hodgeEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    {η : Type x} {β : Type v} {γ : Type w} [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point target) (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (V : Type v) (μ : Type w) [Fintype V] where
+  globalObject : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean
+  localization : V -> IUTStage1GlobalToLocalRealifiedFrobenioidRestriction
+  localObjectId : V -> IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean
+  hodgeCanonicalDegree_eq_localPrime :
+    ∀ v : V,
+      hodgeEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          hodgeEvaluation.thetaRootSource.canonicalFullLabel =
+        (localization v).localPrimeLogVolume
+  summandPlace : β -> V
+  coricUnitCharacter : V -> μ
+  structureSheafSummand : β -> γ
+  structureSheaf_eq_directSummand :
+    ∀ index : β,
+      (localizedSource.localizedSource.localization index).structureSheafLogVolume =
+        (localizedSource.localizedSource.localization index).bundle.directSummandLogVolume
+          (structureSheafSummand index)
+  directSummand_nonneg :
+    ∀ index : β,
+      ∀ summand : γ,
+        0 <=
+          (localizedSource.localizedSource.localization index).bundle.directSummandLogVolume
+            summand
+  positiveIndex : β
+  positiveSummand : γ
+  positiveSummand_ne_structureSheaf :
+    positiveSummand ≠ structureSheafSummand positiveIndex
+  positiveSummand_pos :
+    0 <
+      (localizedSource.localizedSource.localization positiveIndex).bundle.directSummandLogVolume
+        positiveSummand
+  hodgeThetaSummand : β -> Real
+  thetaMonoidDegree_eq_hodgeThetaSummandSum :
+    hodgeEvaluation.thetaMonoidDegree =
+      Finset.univ.sum fun index => hodgeThetaSummand index
+  hodgeThetaSummand_eq_localizedWeightedAdjusted :
+    ∀ index : β,
+      hodgeThetaSummand index =
+        localizedSource.localizedSource.weightedAdjustedLogVolume index
+
+namespace StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+
+variable {hullData : StepXIHullFormationData sourceData.Core sourceData.Images}
+variable {l : PrimeGeFive} {F : Type z} [Field F]
+variable {X C : HyperbolicOrbicurveModel F}
+variable {hodgeEvaluation :
+  IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+    l X C}
+variable {η : Type x} {β : Type v} {γ : Type w} [Fintype β] [Fintype γ]
+variable
+  {localizedSource :
+    IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+      (Point target) (Quot sourceData.Core.equalityQuotient.relation) η β γ}
+variable {V : Type v} {μ : Type w} [Fintype V]
+
+noncomputable def hodgeCanonicalDegree
+    (_source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData hodgeEvaluation localizedSource V μ) :
+    Real :=
+  hodgeEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+    hodgeEvaluation.thetaRootSource.canonicalFullLabel
+
+noncomputable def ordinaryDivisor
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData hodgeEvaluation localizedSource V μ) :
+    IUTStage1FiniteRealifiedFrobenioidDivisorSource V :=
+  { object := source.globalObject,
+    primeMultiplicity := fun _ => 0,
+    primeDegree := fun _ => 0,
+    unitLogVolume := source.hodgeCanonicalDegree }
+
+theorem ordinaryDivisor_realifiedLogVolume_eq_hodgeCanonicalDegree
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData hodgeEvaluation localizedSource V μ) :
+    source.ordinaryDivisor.realifiedLogVolume = source.hodgeCanonicalDegree := by
+  simp [ordinaryDivisor, hodgeCanonicalDegree,
+    IUTStage1FiniteRealifiedFrobenioidDivisorSource.realifiedLogVolume,
+    IUTStage1FiniteRealifiedFrobenioidDivisorSource.divisorDegree]
+
+noncomputable def thetaDivisor
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData hodgeEvaluation localizedSource V μ) :
+    IUTStage1ThetaRealifiedFrobenioidDivisorSource V :=
+  { base := source.ordinaryDivisor,
+    thetaGeneratorLogVolume := 1 }
+
+noncomputable def logShellDivisor
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData hodgeEvaluation localizedSource V μ) :
+    IUTStage1LogShellRealifiedFrobenioidDivisorSource V :=
+  { base := source.ordinaryDivisor,
+    extensionDegree := 1,
+    extensionDegree_pos := by norm_num,
+    localFrobeniusLogVolume := 1 }
+
+noncomputable def compatibleDivisorCopies
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData hodgeEvaluation localizedSource V μ) :
+    IUTStage1CompatibleRealifiedFrobenioidDivisorCopies V :=
+  { ordinary := source.ordinaryDivisor,
+    theta := source.thetaDivisor,
+    logShell := source.logShellDivisor,
+    theta_base_eq := rfl,
+    logShell_base_eq := rfl,
+    theta_normalized := rfl,
+    logShell_normalized := by
+      norm_num [logShellDivisor,
+        IUTStage1LogShellRealifiedFrobenioidDivisorSource.normalizedFrobeniusLogVolume] }
+
+noncomputable def environmentGaussianEvaluation
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData hodgeEvaluation localizedSource V μ) :
+    IUTStage1EnvironmentGaussianRealifiedFrobenioidEvaluation V :=
+  { environment := source.compatibleDivisorCopies,
+    gaussian := source.compatibleDivisorCopies,
+    evaluation_ordinary_eq := rfl }
+
+theorem gaussianThetaLogVolume_eq_hodgeCanonicalDegree
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData hodgeEvaluation localizedSource V μ) :
+    source.environmentGaussianEvaluation.gaussian.theta.thetaDivisorLogVolume =
+      hodgeEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+        hodgeEvaluation.thetaRootSource.canonicalFullLabel := by
+  calc
+    source.environmentGaussianEvaluation.gaussian.theta.thetaDivisorLogVolume =
+        source.ordinaryDivisor.realifiedLogVolume := by
+      simpa [environmentGaussianEvaluation, compatibleDivisorCopies] using
+        source.compatibleDivisorCopies.thetaLogVolume_eq_ordinary
+    _ = source.hodgeCanonicalDegree :=
+      source.ordinaryDivisor_realifiedLogVolume_eq_hodgeCanonicalDegree
+    _ =
+        hodgeEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          hodgeEvaluation.thetaRootSource.canonicalFullLabel := rfl
+
+noncomputable def restrictionLocalGlobalSource
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData hodgeEvaluation localizedSource V μ) :
+    IUTStage1EnvironmentAnchoredRestrictionLocalGlobalRealifiedFrobenioidSource V :=
+  { evaluation := source.environmentGaussianEvaluation,
+    localization := source.localization,
+    localObjectId := source.localObjectId,
+    environment_global_realified_eq_localPrime := by
+      intro v
+      calc
+        source.environmentGaussianEvaluation.environment.ordinary.realifiedLogVolume =
+            source.hodgeCanonicalDegree := by
+          simpa [environmentGaussianEvaluation, compatibleDivisorCopies] using
+            source.ordinaryDivisor_realifiedLogVolume_eq_hodgeCanonicalDegree
+        _ = (source.localization v).localPrimeLogVolume :=
+          source.hodgeCanonicalDegree_eq_localPrime v }
+
+set_option linter.style.longLine false in
+noncomputable def toGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData hodgeEvaluation localizedSource V μ) :
+    StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+      (sourceData := sourceData) (β := β) (γ := γ)
+      hullData hodgeEvaluation localizedSource V μ :=
+  { restrictionLocalGlobalSource := source.restrictionLocalGlobalSource,
+    summandPlace := source.summandPlace,
+    coricUnitCharacter := source.coricUnitCharacter,
+    structureSheafSummand := source.structureSheafSummand,
+    structureSheaf_eq_directSummand := source.structureSheaf_eq_directSummand,
+    directSummand_nonneg := source.directSummand_nonneg,
+    positiveIndex := source.positiveIndex,
+    positiveSummand := source.positiveSummand,
+    positiveSummand_ne_structureSheaf := source.positiveSummand_ne_structureSheaf,
+    positiveSummand_pos := source.positiveSummand_pos,
+    hodgeThetaSummand := source.hodgeThetaSummand,
+    gaussianThetaLogVolume_eq_hodgeCanonicalDegree :=
+      source.gaussianThetaLogVolume_eq_hodgeCanonicalDegree,
+    thetaMonoidDegree_eq_hodgeThetaSummandSum :=
+      source.thetaMonoidDegree_eq_hodgeThetaSummandSum,
+    hodgeThetaSummand_eq_localizedWeightedAdjusted :=
+      source.hodgeThetaSummand_eq_localizedWeightedAdjusted }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData hodgeEvaluation localizedSource V μ) :
+    let gaussianHodgeSource :=
+      source.toGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource;
+    source.environmentGaussianEvaluation.environment =
+        source.compatibleDivisorCopies ∧
+      source.environmentGaussianEvaluation.gaussian =
+        source.compatibleDivisorCopies ∧
+      source.environmentGaussianEvaluation.gaussian.theta.thetaDivisorLogVolume =
+        hodgeEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          hodgeEvaluation.thetaRootSource.canonicalFullLabel ∧
+      source.restrictionLocalGlobalSource.evaluation =
+        source.environmentGaussianEvaluation ∧
+      (∀ v : V,
+        source.hodgeCanonicalDegree =
+          (source.localization v).localPrimeLogVolume) ∧
+      gaussianHodgeSource.gaussianThetaLogVolume_eq_hodgeCanonicalDegree =
+        source.gaussianThetaLogVolume_eq_hodgeCanonicalDegree :=
+  by
+    intro gaussianHodgeSource
+    exact
+      ⟨rfl, rfl,
+        source.gaussianThetaLogVolume_eq_hodgeCanonicalDegree,
+        rfl,
+        source.hodgeCanonicalDegree_eq_localPrime,
+        rfl⟩
+
+end StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+
+set_option linter.style.longLine false in
+/--
 Localized single-place Ob7 source for the preferred public Step (xi) route.
 
 This specializes the localized product-formula construction to the one-summand
@@ -75712,6 +75966,60 @@ noncomputable def preferredPublicStepXIPaperSourceRouteAuditDiagonalDirectSumman
     (environmentThetaGaussianHodgeSource.toEnvironmentThetaHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
       (sourceData := sourceData))
     iutIV_cTheta additive_haar_arithmetic_degree_padic audit
+
+set_option linter.style.longLine false in
+/--
+Preferred public Step (xi) paper-source route with the Gaussian/Hodge bridge
+constructed from Hodge canonical-degree divisor copies.
+
+This is stricter than the Gaussian/Hodge route: the caller supplies the Hodge
+evaluation, global-to-local restriction data, and finite summand/direct-summand
+data.  The environment/Gaussian realified Frobenioid evaluation and the
+Gaussian-theta-to-Hodge canonical-degree equality are constructed internally
+before delegating to the Gaussian/Hodge public route.
+-/
+noncomputable def preferredPublicStepXIPaperSourceRouteAuditDiagonalDirectSummandConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (paperTrace : StepXIPaperTrace)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {F : Type z} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        principalProductHullOperator sourceData principalSource)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        principalProductPossibleRegion sourceData principalSource)
+    {V : Type v} {μ : Type w} [Fintype V]
+    (constructedGaussianHodgeSource :
+      StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        (principalProductHullFormationData sourceData principalSource)
+        hodgeEvaluation localizedSource V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations) :=
+  fun audit =>
+    preferredPublicStepXIPaperSourceRouteAuditDiagonalDirectSummandEnvironmentThetaGaussianHodgeEvaluationSummandRestrictionAnchoredOb7
+      sourceData paperTrace principalSource hodgeEvaluation localizedSource
+      hullOperator_eq possibleRegion_eq
+      (constructedGaussianHodgeSource.toGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData))
+      iutIV_cTheta additive_haar_arithmetic_degree_padic audit
 
 end Obligations
 

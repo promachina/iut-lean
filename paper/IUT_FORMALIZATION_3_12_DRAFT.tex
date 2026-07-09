@@ -626,15 +626,16 @@ local realified objects are forced by the restricted global prime log-volumes.
 In the diagonal finite valuation-index route, the environment and Gaussian
 prime-place equivalences are identity maps constructed internally.  The
 strictest public diagonal wrapper now consumes finite direct-summand data, an
-audited Hodge--Arakelov theta evaluation, a Gaussian theta/Hodge
-canonical-degree bridge, and finite Hodge theta summands: the environment
-theta divisor log-volume is first identified with the Gaussian theta divisor
-log-volume by the environment/Gaussian Frobenioid evaluation; the Gaussian
-theta log-volume is then matched with the Hodge canonical full-label Gaussian
-degree; the Hodge evaluation identifies this canonical degree with the
-theta-monoid degree; the Hodge theta summands have this theta-monoid degree as
-their finite sum; and each summand is identified pointwise with the
-corresponding localized weighted adjusted determinant contribution.  The
+audited Hodge--Arakelov theta evaluation, global-to-local restriction data
+calibrated at the Hodge canonical full-label Gaussian degree, and finite Hodge
+theta summands.  The environment/Gaussian realified Frobenioid evaluation is
+constructed internally from zero-divisor ordinary/theta/log-shell copies whose
+unit log-volume is the Hodge canonical degree; normalization proves that the
+Gaussian theta divisor log-volume is this Hodge canonical degree.  The Hodge
+evaluation identifies the canonical degree with the theta-monoid degree; the
+Hodge theta summands have this theta-monoid degree as their finite sum; and
+each summand is identified pointwise with the corresponding localized weighted
+adjusted determinant contribution.  The
 structure-sheaf log-volume is identified with a distinguished direct summand
 of each localized arithmetic vector bundle, all direct summands are
 nonnegative, and one non-structure summand is strictly positive.  Finite summation derives the Ob3-1 inequalities
@@ -643,11 +644,11 @@ the subtraction formula derives adjusted raw local positivity; positive
 determinant weights derive localized adjusted summand positivity; finite
 summation gives localized family-hull positivity.  The theta scalar at the
 strict boundary is the environment theta divisor log-volume by definition.  The
-public route now constructs the older Hodge-evaluation and Hodge-scalar
-sources internally from the Gaussian/Hodge bridge, audited evaluation, and
-finite summand calibration, then derives the environment-theta/localized
-adjusted-sum equality; Lean then derives equality with the family-hull
-log-volume from the localized Ob3/Ob5 identity.  This derived
+public route now constructs the older Gaussian/Hodge, Hodge-evaluation, and
+Hodge-scalar sources internally from the Hodge canonical-degree divisor
+construction, audited evaluation, and finite summand calibration, then derives
+the environment-theta/localized adjusted-sum equality; Lean then derives
+equality with the family-hull log-volume from the localized Ob3/Ob5 identity.  This derived
 equality implies the family-hull/global calibration via theta/ordinary
 realified Frobenioid compatibility, and the localized determinant/family-hull
 equality then gives the determinant/global equality needed for the
@@ -663,7 +664,7 @@ construct, from the source papers, the actual lower operations corresponding to:
 \text{the analytic construction of the place-audited packet/action symmetry-label transport inputs},\\
 \text{the analytic construction of the global-to-local restrictions and local-prime global equality},\\
 \text{the analytic construction of non-diagonal prime-place coordinates and the coric character},\\
-\text{the Gaussian-theta/Hodge canonical-degree bridge and finite Hodge summand construction},\\
+\text{the Hodge canonical-degree local-prime calibration and finite Hodge summand construction},\\
 \text{the source construction of direct-summand positivity data}.
 \end{array}
 \]
