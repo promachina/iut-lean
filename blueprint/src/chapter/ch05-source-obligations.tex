@@ -766,6 +766,8 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductAdditiveHaarCompactOpenFactorLocalizedAdjustedCalibrationSource.positiveSummandNormalized_pos}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductAdditiveHaarCompactOpenFactorLocalizedAdjustedCalibrationSource.toAdditiveHaarCompactOpenFactorSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductAdditiveHaarCompactOpenFactorLocalizedAdjustedConstructedPaperTraceStepXIPaperSourceRouteAudit}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductAdditiveHaarStrictPositiveRouteBoundaryAudit}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.principalProductAdditiveHaarStrictPositiveRouteBoundaryAudit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPUnitBallValuationHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPUnitBallValuationHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource.endpoint}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalUnitBallValuationHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7}
@@ -796,6 +798,7 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductPadicFiniteCompactOpenFactorLocalizedAdjustedCalibrationSource.positiveSummandNormalized_eq_zero}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductPadicFiniteCompactOpenFactorLocalizedAdjustedCalibrationSource.unitBallStrictPositiveContradiction}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductPadicFiniteSourceLocalizedAdjustedCompactOpenFactorRestrictionHodgeFamilyHullCalibratedConstructedPaperTraceStepXIPaperSourceRouteAuditDiagonalPadicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductPadicFiniteSourceLocalizedAdjustedCompactOpenFactorRestrictionHodgeFamilyHullCalibratedConstructedPaperTraceStepXIPaperSourceRouteAuditDiagonalPadicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7_sourceContradiction}
   \leanok
   The promoted public paper-trace route is now the strict principal-product
   localized wrapper.  It consumes the source spine, a principal product
@@ -838,11 +841,9 @@
   restricted global prime log-volumes.  In the diagonal finite valuation-index
   route, the environment primes, Gaussian primes, and places are all indexed
   by the same type, so the prime-place equivalences are identity maps
-  constructed internally.  The current strictest public diagonal wrapper now
-  consumes a finite-extension-over-\(\mathbb Q_p\) local-field Haar-backed
-  valuation-unit-ball compact-open norm-square localized Remark 3.9.5
-  vector-bundle decomposition over the principal product hull system, an
-  audited Hodge--Arakelov theta
+  constructed internally.  The preferred non-vacuous public diagonal wrapper
+  now consumes the additive-Haar compact-open factor source over the principal
+  product hull system, an audited Hodge--Arakelov theta
   evaluation, global-to-local restriction data calibrated at the Hodge
   canonical full-label Gaussian degree, and the scalar equality between the
   Hodge theta-monoid degree and the localized adjusted determinant sum.  The
@@ -863,12 +864,11 @@
   \(1 < \mu(U)_{\mathbb R}\) gives strict positivity of the normalized Haar
   log-volume, and the norm-square projection gives the nonzero selected
   direct-summand norm.  The finite-extension valuation-unit-ball route is
-  weaker: radius \(1\) and \(\mu(O_v)=1\) construct the weak lower bound and
-  nonnegative normalized log-volumes, but they do not construct the strict
-  selected factor.  Thus the unit-ball compact-open factor route lowers the
-  structure-sheaf/direct-summand equality while leaving strict selected-factor
-  positivity as a lower boundary unless a non-unit compact-open source is
-  supplied.  Finite
+  only a normalized legacy boundary: radius \(1\) and \(\mu(O_v)=1\) construct
+  weak nonnegativity, and Lean proves that the selected unit-ball normalized
+  log-volume is \(0\).  The strict-positive unit-ball route is therefore
+  quarantined as vacuous unless a non-unit compact-open source replaces the
+  unit-ball factor.  Finite
   summation derives the Ob3-1 inequalities comparing the structure-sheaf
   log-volume with the localized bundle log-volume; the subtraction formula
   derives adjusted raw local positivity; positive determinant weights derive

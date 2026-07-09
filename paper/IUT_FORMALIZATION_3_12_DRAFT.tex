@@ -740,14 +740,12 @@ evaluation from global-to-local restrictions and local object identifiers; the
 local realified objects are forced by the restricted global prime log-volumes.
 In the diagonal finite valuation-index route, the environment and Gaussian
 prime-place equivalences are identity maps constructed internally.  The
-strictest public diagonal wrapper now consumes a
-finite-extension-over-\(\mathbb Q_p\) local-field Haar-backed
-valuation-unit-ball compact-open norm-square localized Remark 3.9.5
-vector-bundle decomposition over the principal product hull system, an audited
-Hodge--Arakelov theta evaluation,
-global-to-local restriction data calibrated at the Hodge canonical full-label
-Gaussian degree, and the scalar equality between the Hodge theta-monoid degree
-and the localized adjusted determinant sum.  The environment/Gaussian
+preferred non-vacuous public diagonal wrapper now uses the additive-Haar
+compact-open factor boundary over the principal product hull system, together
+with an audited Hodge--Arakelov theta evaluation, global-to-local restriction
+data calibrated at the Hodge canonical full-label Gaussian degree, and the
+scalar equality between the Hodge theta-monoid degree and the localized
+adjusted determinant sum.  The environment/Gaussian
 realified Frobenioid evaluation is
 constructed internally from zero-divisor ordinary/theta/log-shell copies whose
 unit log-volume is the Hodge canonical degree; normalization proves that the
@@ -764,15 +762,14 @@ constructed from additive Haar data.  The additive-Haar layer now has a strict
 factor constructor: from the source-level inequality \(1<\mu(U)_{\mathbb R}\)
 for the selected non-structure compact open, Lean proves positivity of
 \(\log(\mu(U)_{\mathbb R})/[K:\mathbb Q_p]\), then uses the norm-square
-projection to derive the nonzero direct-summand norm.  The valuation-unit-ball
-finite-extension branch remains a separate normalized boundary.  There the
-selected radius is forced to be \(1\), so \(\mu(O_v)=1\) constructs the weak
-Haar lower bound and nonnegative normalized log-volumes, but not the strict
-positive factor.  The current unit-ball compact-open factor route therefore
-lowers the structure-sheaf/direct-summand equality and projects a supplied
-strict factor through the norm-square layer; a non-unit compact-open or another
-lower source operation is still needed to construct that strict factor inside
-the finite-extension route.  Finite
+projection to derive the nonzero direct-summand norm.  Lean now records this
+as a boundary audit for the preferred additive-Haar route.  The
+valuation-unit-ball finite-extension branch remains only a normalized legacy
+boundary: the selected radius is forced to be \(1\), so \(\mu(O_v)=1\)
+constructs weak nonnegativity but also proves that the normalized log-volume
+of the selected unit-ball factor is \(0\).  Thus the strict-positive
+unit-ball route is explicitly quarantined as vacuous unless a lower non-unit
+compact-open source replaces the unit-ball factor.  Finite
 summation derives the Ob3-1 inequalities
 comparing the structure-sheaf log-volume with the localized bundle log-volume;
 the subtraction formula derives adjusted raw local positivity; positive

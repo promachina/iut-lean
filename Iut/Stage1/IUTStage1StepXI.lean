@@ -79653,9 +79653,10 @@ set_option linter.style.longLine false in
 Preferred public Step (xi) paper-source route with normalized valuation-unit-ball
 Haar compact-open norm-square localized direct-summand construction.
 
-This is the current strictest determinant-side public boundary.  The
-compact-open Haar mass lower bound used by the additive-Haar route is derived
-internally from the selected valuation-unit-ball normalization `mu(O_v)=1`.
+This is the legacy valuation-unit-ball determinant-side boundary.  It supplies
+the normalized unit-ball Haar mass `mu(O_v)=1`; this gives the weak
+nonnegative Haar normalization but cannot construct the strict positive
+summand required by the preferred additive-Haar route.
 -/
 noncomputable def preferredPublicStepXIPaperSourceRouteAuditDiagonalUnitBallValuationHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7
     {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
@@ -79706,10 +79707,11 @@ Preferred public Step (xi) paper-source route whose valuation-unit-ball
 compact-open norm-square determinant factors are constructed from
 finite-extension-over-`Q_p` local-field Haar data.
 
-This lowers the current strict route one level: callers provide concrete
-finite-extension local-field Haar factors with selected compact-open radius
-`1`; Lean projects them internally to the valuation-unit-ball, additive-Haar,
-compact-open norm-square, and Step (xi) routes.
+This is the finite-extension valuation-unit-ball lowering of the legacy
+normalized boundary: callers provide concrete local-field Haar factors with
+selected compact-open radius `1`; Lean projects them internally to the
+valuation-unit-ball, additive-Haar, compact-open norm-square, and Step (xi)
+routes.  The strict-positive factor is not constructed at this boundary.
 -/
 noncomputable def preferredPublicStepXIPaperSourceRouteAuditDiagonalPadicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7
     {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
@@ -80554,6 +80556,105 @@ noncomputable def preferredPublicPrincipalProductAdditiveHaarCompactOpenFactorLo
 
 set_option linter.style.longLine false in
 /--
+Boundary audit for the non-vacuous principal-product additive-Haar Step (xi)
+route.
+
+This exposes, at the same public boundary as the constructed paper-trace route,
+the facts that distinguish the additive-Haar branch from the normalized
+valuation-unit-ball branch: the possible-region family is the Theorem 3.11
+principal-product family, the Hodge theta-monoid degree is the localized
+adjusted determinant sum, and the strict determinant contribution is derived
+from the lower Haar inequality `1 < mu(U).toReal`.
+-/
+structure PrincipalProductAdditiveHaarStrictPositiveRouteBoundaryAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {F : Type z} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    {η : Type x} {K : Type y} {β : Type v} {γ : Type w}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+    [Fintype β] [Fintype γ]
+    (principalProductAdditiveHaarSource :
+      PrincipalProductAdditiveHaarLocalizedHullVectorBundleDecompositionSource
+        sourceData principalSource η K β γ)
+    {V : Type v} {μ : Type w} [Fintype V]
+    (localizedAdjustedAdditiveHaarSource :
+      PrincipalProductAdditiveHaarCompactOpenFactorLocalizedAdjustedCalibrationSource
+        sourceData principalSource hodgeEvaluation
+        principalProductAdditiveHaarSource V μ) :
+    Prop where
+  possibleRegion_eq_principalProduct :
+    principalProductAdditiveHaarSource.toAdditiveHaarLocalizedSource.possibleRegion =
+      principalProductPossibleRegion sourceData principalSource
+  projected_possibleRegion_eq_principalProduct :
+    principalProductAdditiveHaarSource.toAdditiveHaarLocalizedSource.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toNormSquareLocalizedHullVectorBundleDecompositionSource.toLocalizedHullVectorBundleDecompositionSource.possibleRegion =
+      principalProductPossibleRegion sourceData principalSource
+  thetaMonoidDegree_eq_localizedAdjustedSum :
+    hodgeEvaluation.thetaMonoidDegree =
+      localizedAdjustedAdditiveHaarSource.localizedSource.localizedAdjustedSum
+  positiveSummandMeasure_gt_one :
+    1 <
+      (((principalProductAdditiveHaarSource.toAdditiveHaarLocalizedSource.localizedSource.localization localizedAdjustedAdditiveHaarSource.positiveIndex).bundle.additiveHaarFactor
+          localizedAdjustedAdditiveHaarSource.positiveSummand).haarMeasure
+        ((principalProductAdditiveHaarSource.toAdditiveHaarLocalizedSource.localizedSource.localization localizedAdjustedAdditiveHaarSource.positiveIndex).bundle.additiveHaarFactor
+          localizedAdjustedAdditiveHaarSource.positiveSummand).compactOpenSubset).toReal
+  positiveSummandNormalized_pos :
+    0 <
+      ((principalProductAdditiveHaarSource.toAdditiveHaarLocalizedSource.localizedSource.localization localizedAdjustedAdditiveHaarSource.positiveIndex).bundle.additiveHaarFactor
+          localizedAdjustedAdditiveHaarSource.positiveSummand).normalizedHaarLogVolume
+        ((principalProductAdditiveHaarSource.toAdditiveHaarLocalizedSource.localizedSource.localization localizedAdjustedAdditiveHaarSource.positiveIndex).bundle.additiveHaarFactor
+          localizedAdjustedAdditiveHaarSource.positiveSummand).compactOpenSubset
+
+set_option linter.style.longLine false in
+theorem principalProductAdditiveHaarStrictPositiveRouteBoundaryAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {F : Type z} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    {η : Type x} {K : Type y} {β : Type v} {γ : Type w}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+    [Fintype β] [Fintype γ]
+    (principalProductAdditiveHaarSource :
+      PrincipalProductAdditiveHaarLocalizedHullVectorBundleDecompositionSource
+        sourceData principalSource η K β γ)
+    {V : Type v} {μ : Type w} [Fintype V]
+    (localizedAdjustedAdditiveHaarSource :
+      PrincipalProductAdditiveHaarCompactOpenFactorLocalizedAdjustedCalibrationSource
+        sourceData principalSource hodgeEvaluation
+        principalProductAdditiveHaarSource V μ) :
+    PrincipalProductAdditiveHaarStrictPositiveRouteBoundaryAudit
+      sourceData principalSource hodgeEvaluation
+      principalProductAdditiveHaarSource
+      localizedAdjustedAdditiveHaarSource :=
+  { possibleRegion_eq_principalProduct :=
+      principalProductAdditiveHaarSource.toAdditiveHaarLocalizedSource_possibleRegion_eq,
+    projected_possibleRegion_eq_principalProduct :=
+      principalProductAdditiveHaarSource.toAdditiveHaarLocalizedSource_projected_possibleRegion_eq,
+    thetaMonoidDegree_eq_localizedAdjustedSum :=
+      localizedAdjustedAdditiveHaarSource.thetaMonoidDegree_eq_localizedAdjustedSum,
+    positiveSummandMeasure_gt_one :=
+      localizedAdjustedAdditiveHaarSource.positiveSummandMeasure_gt_one,
+    positiveSummandNormalized_pos :=
+      localizedAdjustedAdditiveHaarSource.positiveSummandNormalized_pos }
+
+set_option linter.style.longLine false in
+/--
 Principal-product finite-extension localized Step (xi) source.
 
 This is the next source-facing lowering of the public Step (xi) route: the
@@ -80971,6 +81072,45 @@ noncomputable def preferredPublicPrincipalProductPadicFiniteSourceLocalizedAdjus
     sourceData principalSource hodgeEvaluation principalProductPadicFiniteSource
     compactOpenFactorSource iutIV_cTheta
     additive_haar_arithmetic_degree_padic
+
+set_option linter.style.longLine false in
+/--
+The localized-adjusted principal-product p-adic finite-extension unit-ball
+boundary is inconsistent if it is asked to supply the strict positive
+direct-summand contribution.
+
+The normalized valuation-unit ball has Haar mass `1`, hence normalized
+additive-Haar log-volume `0`.  This theorem makes the legacy unit-ball
+strict-positive route visibly vacuous at the same public boundary that used to
+feed the preferred Step (xi) route.
+-/
+theorem preferredPublicPrincipalProductPadicFiniteSourceLocalizedAdjustedCompactOpenFactorRestrictionHodgeFamilyHullCalibratedConstructedPaperTraceStepXIPaperSourceRouteAuditDiagonalPadicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7_sourceContradiction
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {F : Type z} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    {p : Nat} [Fact p.Prime] {K : Type y} {β : Type v} {γ : Type w}
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    [Fintype β] [Fintype γ]
+    {principalProductPadicFiniteSource :
+      PrincipalProductPadicFiniteLocalizedHullVectorBundleDecompositionSource
+        sourceData principalSource p K β γ}
+    {V : Type v} {μ : Type w} [Fintype V]
+    (localizedAdjustedCompactOpenFactorSource :
+      PrincipalProductPadicFiniteCompactOpenFactorLocalizedAdjustedCalibrationSource
+        sourceData principalSource hodgeEvaluation
+        principalProductPadicFiniteSource V μ) :
+    False :=
+  localizedAdjustedCompactOpenFactorSource.unitBallStrictPositiveContradiction
 
 end Obligations
 
