@@ -528,14 +528,14 @@ The additive-Haar principal-product branch now also has a cover-derived
 localized hull source: instead of taking the localized-region containment in
 the family hull and the family-hull log-volume sum as standalone fields, it
 assumes the explicit cover identity
-	\(\phi(\bigcup_i\Theta_i)=\bigcup_\beta H_\beta\) and the finite additivity
-	formula for this cover; Lean derives the old containment and volume-sum
-	interface from these lower hull-cover statements.  This boundary has now been
-	lowered again by a calibrated cover source: each \(H_\beta\) carries its own
-	Remark 3.9.5 local vector-bundle calibration, and Lean derives
-	\(\log\operatorname{vol}(H_\beta)\) as the corresponding weighted adjusted
-	determinant contribution after identifying that local vector bundle with the
-	additive-Haar determinant localization.
+\(\phi(\bigcup_i\Theta_i)=\bigcup_\beta H_\beta\) and the finite additivity
+formula for this cover; Lean derives the old containment and volume-sum
+interface from these lower hull-cover statements.  This boundary has now been
+lowered again: each \(H_\beta\) carries a local vector-bundle calibration, is
+presented as a fiber of an index map on the family hull, and Lean derives the
+cover identity, pairwise disjointness, finite-additive cover sum, and pointwise
+\(\log\operatorname{vol}(H_\beta)\) determinant identity after identifying that
+local vector bundle with the additive-Haar determinant localization.
 The strict positive determinant contribution has now been separated from the
 valuation-unit-ball normalization.  A principal-product additive-Haar route
 constructs the paper trace internally and derives the positive summand from the
@@ -783,10 +783,11 @@ has been instantiated by a concrete finite-extension local-field source:
 the selected factor is the inverse base-prime dilation \(p^{-1}O_K\), whose
 compact-openness and Haar mass \(p^{[K:\mathbb Q_p]}>1\) are proved in the
 source core and threaded through the preferred additive-Haar public wrapper.
-	The same wrapper can now consume a calibrated localized hull-cover source,
-	deriving the old family-hull containment, log-volume summation, and pointwise
-	localized-region determinant identities from the cover identity, finite cover
-	additivity, and local vector-bundle calibrations.
+The same wrapper can now consume a family-hull-indexed calibrated localized
+hull-cover source, deriving the old family-hull containment, log-volume
+summation, and pointwise localized-region determinant identities from the
+index-fiber presentation, finite additivity, and local vector-bundle
+calibrations.
 The valuation-unit-ball finite-extension branch remains only a normalized
 legacy boundary: the selected radius is forced to be \(1\), so \(\mu(O_v)=1\)
 constructs weak nonnegativity but also proves that the normalized log-volume
