@@ -60383,6 +60383,124 @@ theorem ofFiberTransportBackedPrincipalValuationBallSource_endpoint
     exact ⟨rfl, hrecord.1, hrecord.2.2.2.1⟩
 
 set_option linter.style.longLine false in
+/--
+Construct the record-facing Ob3/Ob5 source from the principal pointwise
+constructed log-shell metric-zero valuation-ball source.
+
+This is the local analytic pointwise version of the principal valuation-ball
+constructor: the source first constructs local representatives of transported
+theta-region points in the selected log-shell/valuation ball and proves the
+converse realization law.  Its principal theta-region-defined source then
+enters the Ob3/Ob5 adjusted determinant/log-volume construction.
+-/
+noncomputable def ofPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource
+    {coric : Type u} {l : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {sourceData :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        recordConcrete indData}
+    {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+    {selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    {η : Type y} {K : Type z} {Λ : Type max u v w y z}
+    [PseudoMetricSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    (principalPointwiseSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallPointwiseConstructedLogShellMetricZeroValuationBallExactSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+      (β := β) (γ := γ) recordConcrete :=
+  ofThetaRegionDefinedPrincipalValuationBallSource
+    (β := β) (γ := γ)
+    principalPointwiseSource.principalSource
+
+set_option linter.style.longLine false in
+/--
+Construct the record-facing Ob3/Ob5 source from a compact-open log-Kummer map
+possible-region source.
+
+The compact-open log-Kummer map source is lowered through its graph source and
+pointwise constructed log-shell source before entering the principal
+valuation-ball Ob3/Ob5 constructor.  Thus the public route records the local
+log-Kummer map/correspondence data instead of exposing only the already
+assembled principal valuation-ball cover.
+-/
+noncomputable def ofCompactOpenLogKummerMapPossibleRegionSource
+    {coric : Type u} {l : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {sourceData :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        recordConcrete indData}
+    {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+    {selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    {η : Type y} {K : Type z} {Λ : Type max u v w y z}
+    [PseudoMetricSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    (mapSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+      (β := β) (γ := γ) recordConcrete :=
+  ofPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource
+    (β := β) (γ := γ)
+    mapSource.toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource
+
+set_option linter.style.longLine false in
+theorem ofCompactOpenLogKummerMapPossibleRegionSource_endpoint
+    {coric : Type u} {l : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {sourceData :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        recordConcrete indData}
+    {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+    {selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    {η : Type y} {K : Type z} {Λ : Type max u v w y z}
+    [PseudoMetricSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    (mapSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+        sourceData gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ)) :
+    let pointwiseSource :=
+      mapSource.toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource;
+    let recordSource :=
+      ofCompactOpenLogKummerMapPossibleRegionSource
+        (β := β) (γ := γ) mapSource;
+    recordSource =
+        ofPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource
+          (β := β) (γ := γ) pointwiseSource ∧
+      recordSource.toSourceCoreAdjustedLogVolumeSource =
+        pointwiseSource.principalSource.toChoiceIndexedValuationCover.toOb3Ob5AdjustedDeterminantLogVolumeSource ∧
+      pointwiseSource.principalSource.toPrincipalValuationBallProductHullCoverSource.possibleImageUnion =
+        pointwiseSource.principalSource.toPrincipalValuationBallProductHullCoverSource.selectedPrincipalHull :=
+  by
+    intro pointwiseSource recordSource
+    have hrecord :=
+      ofThetaRegionDefinedPrincipalValuationBallSource_endpoint
+        (β := β) (γ := γ) pointwiseSource.principalSource
+    have hpointwise := mapSource.graphPointwiseConstructedEndpoint
+    exact ⟨rfl, hrecord.1, hpointwise.2.2.2.2⟩
+
+set_option linter.style.longLine false in
 noncomputable def toConstructedHolomorphicHullDeterminantSource
     (sourceData :
       IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
@@ -60804,6 +60922,88 @@ noncomputable def toConstructedHolomorphicHullDeterminantSourceOfFiberTransportB
   let recordSource :=
     ofFiberTransportBackedPrincipalValuationBallSource
       (β := β) (γ := γ) fiberBackedSource
+  recordSource.toConstructedHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolume
+    operation hullOperation determinantOperation qPilotRegion
+    q_subset_recordUnion measure_eq_hullLogVolume
+    thetaSigned_eq_familyHullLogVolume hullDetBridge_eq q_pilot_positive
+    normalization
+
+set_option linter.style.longLine false in
+/--
+Constructed Step (xi) hull/determinant source from a compact-open log-Kummer
+map possible-region source.
+
+This exposes the local log-Kummer map source as the public lower input, then
+constructs the pointwise log-shell source, the principal valuation-ball
+Ob3/Ob5 adjusted determinant/log-volume source, and finally the exact-theta
+hull/determinant source.
+-/
+noncomputable def toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogKummerMapPossibleRegionSource
+    {coric : Type u} {l : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {actionPacketTransportSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        recordConcrete indData}
+    {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+    {selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    {η : Type y} {K : Type z} {Λ : Type max u v w y z}
+    [PseudoMetricSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    (mapSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+        actionPacketTransportSource gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ))
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (qPilotRegion : Set (Point target))
+    (q_subset_recordUnion :
+      qPilotRegion ⊆ recordThetaPossibleImageUnion recordConcrete)
+    (measure_eq_hullLogVolume :
+      packageConcrete.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          (ofCompactOpenLogKummerMapPossibleRegionSource
+            (β := β) (γ := γ) mapSource).hullOperator).toRegionMeasure)
+    (thetaSigned_eq_familyHullLogVolume :
+      packageConcrete.preLedger.thetaSigned =
+        ((ofCompactOpenLogKummerMapPossibleRegionSource
+            (β := β) (γ := γ) mapSource)
+          |>.toRecordOb3Ob5DeterminantCompatibilitySource
+          |>.toRecordBoundedFamilyHullDetLogVolumeSource).familyHullLogVolume)
+    (hullDetBridge_eq :
+      packageConcrete.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordConcrete)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            (ofCompactOpenLogKummerMapPossibleRegionSource
+              (β := β) (γ := γ) mapSource).hullOperator)
+          qPilotRegion q_subset_recordUnion
+          (ofCompactOpenLogKummerMapPossibleRegionSource
+              (β := β) (γ := γ) mapSource).ob3ob4Source.toWeightedDeterminantSource
+          (ofCompactOpenLogKummerMapPossibleRegionSource
+              (β := β) (γ := γ) mapSource).toRecordOb3Ob5DeterminantCompatibilitySource.toCompatibility
+          measure_eq_hullLogVolume
+          (((ofCompactOpenLogKummerMapPossibleRegionSource
+                (β := β) (γ := γ) mapSource)
+            |>.toRecordOb3Ob5DeterminantCompatibilitySource
+            |>.toRecordBoundedFamilyHullDetLogVolumeSource)
+            |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+                thetaSigned_eq_familyHullLogVolume))
+    (q_pilot_positive : 0 < -packageConcrete.preLedger.qSigned)
+    (normalization : packageConcrete.preLedger.normalization) :
+    IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+      (β := β) recordConcrete :=
+  let recordSource :=
+    ofCompactOpenLogKummerMapPossibleRegionSource
+      (β := β) (γ := γ) mapSource
   recordSource.toConstructedHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolume
     operation hullOperation determinantOperation qPilotRegion
     q_subset_recordUnion measure_eq_hullLogVolume
