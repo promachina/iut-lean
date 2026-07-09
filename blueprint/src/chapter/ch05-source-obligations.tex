@@ -624,9 +624,16 @@
   \lean{Iut.Stage1.IUTStage1NormSquareStructureSheafAdjustedLocalizedVectorBundleSource}
   \lean{Iut.Stage1.IUTStage1Remark395Ob3Ob4NormSquareLocalizedVectorBundleDeterminantSource}
   \lean{Iut.Stage1.IUTStage1Remark395NormSquareLocalizedHullVectorBundleDecompositionSource}
+  \lean{Iut.Stage1.IUTStage1CompactOpenNormSquareLocalizedVectorBundleSource}
+  \lean{Iut.Stage1.IUTStage1CompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource}
+  \lean{Iut.Stage1.IUTStage1Remark395Ob3Ob4CompactOpenNormSquareLocalizedVectorBundleDeterminantSource}
+  \lean{Iut.Stage1.IUTStage1Remark395CompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource.endpoint}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource.endpoint}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7}
   \leanok
   The promoted public paper-trace route is now the strict principal-product
   localized wrapper.  It consumes the source spine, a principal product
@@ -651,7 +658,8 @@
   route, the environment primes, Gaussian primes, and places are all indexed
   by the same type, so the prime-place equivalences are identity maps
   constructed internally.  The current strictest public diagonal wrapper now
-  consumes a norm-square localized Remark 3.9.5 vector-bundle decomposition, an audited Hodge--Arakelov theta
+  consumes a compact-open norm-square localized Remark 3.9.5 vector-bundle
+  decomposition over the principal product hull system, an audited Hodge--Arakelov theta
   evaluation, global-to-local restriction data calibrated at the Hodge
   canonical full-label Gaussian degree, and the scalar equality between the
   Hodge theta-monoid degree and the localized adjusted determinant sum.  The
@@ -666,10 +674,11 @@
   degree.  The
   structure-sheaf log-volume is identified with a distinguished direct summand
   of each localized arithmetic vector bundle.  Each direct-summand log-volume
-  is projected from a norm-square localized bundle, and one non-structure
-  summand has nonzero norm; Lean derives the square presentation, all
-  direct-summand nonnegativity, and the strict positive summand from that single
-  localized Ob3/Ob4 source.  Finite
+  is projected from the normalized log-volume of a local compact-open tensor
+  factor; nonnegativity constructs the corresponding square-root norm, and one
+  non-structure summand has nonzero norm.  Lean derives the norm-square source,
+  square presentation, all direct-summand nonnegativity, and the strict positive
+  summand from that single compact-open Ob3/Ob4 source.  Finite
   summation derives the Ob3-1 inequalities comparing the structure-sheaf
   log-volume with the localized bundle log-volume; the subtraction formula
   derives adjusted raw local positivity; positive determinant weights derive
