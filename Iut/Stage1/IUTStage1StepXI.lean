@@ -68967,6 +68967,165 @@ end StepXIThetaLGPUnitBallValuationHaarCompactOpenNormSquareDirectSummandConstru
 
 set_option linter.style.longLine false in
 /--
+Localized-adjusted Gaussian/Hodge diagonal source whose valuation-unit-ball
+compact-open norm-square factors are constructed from finite-extension
+`Q_p`-local-field Haar data.
+
+This lowers the unit-ball Step (xi) route by projecting finite-extension
+proper-ultrametric Haar factors internally to the valuation-unit-ball source.
+-/
+structure StepXIThetaLGPPadicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+    (hullData : StepXIHullFormationData sourceData.Core sourceData.Images)
+    {l : PrimeGeFive} {F : Type z} [Field F]
+    {X C : HyperbolicOrbicurveModel F}
+    (hodgeEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    {p : Nat} [Fact p.Prime] {K : Type y} {β : Type v} {γ : Type w}
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    [Fintype β] [Fintype γ]
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem (Point target)}
+    (padicFiniteLocalizedSource :
+      IUTStage1Remark395PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+        (Point target) (Quot sourceData.Core.equalityQuotient.relation)
+        p K β γ hullSystem)
+    (V : Type v) (μ : Type w) [Fintype V] where
+  globalObject : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean
+  localization : V -> IUTStage1GlobalToLocalRealifiedFrobenioidRestriction
+  localObjectId : V -> IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean
+  hodgeCanonicalDegree_eq_localPrime :
+    ∀ v : V,
+      hodgeEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          hodgeEvaluation.thetaRootSource.canonicalFullLabel =
+        (localization v).localPrimeLogVolume
+  summandPlace : β -> V
+  coricUnitCharacter : V -> μ
+  structureSheafSummand : β -> γ
+  structureSheaf_eq_directSummand :
+    ∀ index : β,
+      (padicFiniteLocalizedSource.toUnitBallValuationHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toAdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toNormSquareLocalizedHullVectorBundleDecompositionSource.toLocalizedHullVectorBundleDecompositionSource.localizedSource.localization
+          index).structureSheafLogVolume =
+        (padicFiniteLocalizedSource.toUnitBallValuationHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toAdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toNormSquareLocalizedHullVectorBundleDecompositionSource.toLocalizedHullVectorBundleDecompositionSource.localizedSource.localization
+          index).bundle.directSummandLogVolume
+          (structureSheafSummand index)
+  positiveIndex : β
+  positiveSummand : γ
+  positiveSummand_ne_structureSheaf :
+    positiveSummand ≠ structureSheafSummand positiveIndex
+  positiveSummandNorm_ne_zero :
+    padicFiniteLocalizedSource.toUnitBallValuationHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toAdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toNormSquareLocalizedHullVectorBundleDecompositionSource.directSummandNorm
+      positiveIndex positiveSummand ≠ 0
+  thetaMonoidDegree_eq_localizedAdjustedSum :
+    hodgeEvaluation.thetaMonoidDegree =
+      padicFiniteLocalizedSource.toUnitBallValuationHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toAdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toNormSquareLocalizedHullVectorBundleDecompositionSource.toLocalizedHullVectorBundleDecompositionSource.localizedAdjustedSum
+
+namespace StepXIThetaLGPPadicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+
+variable {hullData : StepXIHullFormationData sourceData.Core sourceData.Images}
+variable {l : PrimeGeFive} {F : Type z} [Field F]
+variable {X C : HyperbolicOrbicurveModel F}
+variable {hodgeEvaluation :
+  IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+    l X C}
+variable {p : Nat} [Fact p.Prime] {K : Type y} {β : Type v} {γ : Type w}
+variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+variable [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+variable [Fintype β] [Fintype γ]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem (Point target)}
+variable
+  {padicFiniteLocalizedSource :
+    IUTStage1Remark395PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+      (Point target) (Quot sourceData.Core.equalityQuotient.relation)
+      p K β γ hullSystem}
+variable {V : Type v} {μ : Type w} [Fintype V]
+
+noncomputable def unitBallLocalizedSource
+    (_source :
+      StepXIThetaLGPPadicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData hodgeEvaluation padicFiniteLocalizedSource V μ) :
+    IUTStage1Remark395UnitBallValuationHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+      (Point target) (Quot sourceData.Core.equalityQuotient.relation)
+      (Subring K) K β γ hullSystem :=
+  padicFiniteLocalizedSource.toUnitBallValuationHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+
+set_option linter.style.longLine false in
+theorem directSummandLogVolume_eq_padicFiniteExtensionUnitBallNormalized
+    (source :
+      StepXIThetaLGPPadicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData hodgeEvaluation padicFiniteLocalizedSource V μ)
+    (index : β) (summand : γ) :
+    (source.unitBallLocalizedSource.toAdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toNormSquareLocalizedHullVectorBundleDecompositionSource.toLocalizedHullVectorBundleDecompositionSource.localizedSource.localization
+        index).bundle.directSummandLogVolume summand =
+      ((padicFiniteLocalizedSource.localizedSource.localization index).bundle.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+          summand).normalizedHaarLogVolume
+        ((padicFiniteLocalizedSource.localizedSource.localization index).bundle.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+          summand).compactOpenSubset :=
+  padicFiniteLocalizedSource.projected_directSummandLogVolume_eq_padicFiniteExtensionUnitBallNormalized
+    index summand
+
+set_option linter.style.longLine false in
+noncomputable def toUnitBallValuationHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+    (source :
+      StepXIThetaLGPPadicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData hodgeEvaluation padicFiniteLocalizedSource V μ) :
+    StepXIThetaLGPUnitBallValuationHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+      (sourceData := sourceData) (β := β) (γ := γ)
+      hullData hodgeEvaluation source.unitBallLocalizedSource V μ :=
+  { globalObject := source.globalObject,
+    localization := source.localization,
+    localObjectId := source.localObjectId,
+    hodgeCanonicalDegree_eq_localPrime :=
+      source.hodgeCanonicalDegree_eq_localPrime,
+    summandPlace := source.summandPlace,
+    coricUnitCharacter := source.coricUnitCharacter,
+    structureSheafSummand := source.structureSheafSummand,
+    structureSheaf_eq_directSummand := source.structureSheaf_eq_directSummand,
+    positiveIndex := source.positiveIndex,
+    positiveSummand := source.positiveSummand,
+    positiveSummand_ne_structureSheaf := source.positiveSummand_ne_structureSheaf,
+    positiveSummandNorm_ne_zero := source.positiveSummandNorm_ne_zero,
+    thetaMonoidDegree_eq_localizedAdjustedSum :=
+      source.thetaMonoidDegree_eq_localizedAdjustedSum }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (source :
+      StepXIThetaLGPPadicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData hodgeEvaluation padicFiniteLocalizedSource V μ) :
+    let unitBallSource :=
+      source.toUnitBallValuationHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource;
+    (∀ index : β, ∀ summand : γ,
+      ((padicFiniteLocalizedSource.localizedSource.localization index).bundle.valuationBallFactor
+          summand).compactOpenRadius = 1) ∧
+      (∀ index : β, ∀ summand : γ,
+        (source.unitBallLocalizedSource.toAdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toNormSquareLocalizedHullVectorBundleDecompositionSource.toLocalizedHullVectorBundleDecompositionSource.localizedSource.localization
+            index).bundle.directSummandLogVolume summand =
+          ((padicFiniteLocalizedSource.localizedSource.localization index).bundle.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+              summand).normalizedHaarLogVolume
+            ((padicFiniteLocalizedSource.localizedSource.localization index).bundle.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+              summand).compactOpenSubset) ∧
+      unitBallSource.positiveSummandNorm_ne_zero =
+        source.positiveSummandNorm_ne_zero ∧
+      unitBallSource.thetaMonoidDegree_eq_localizedAdjustedSum =
+        source.thetaMonoidDegree_eq_localizedAdjustedSum :=
+  by
+    intro unitBallSource
+    exact
+      ⟨fun index summand =>
+          (padicFiniteLocalizedSource.localizedSource.localization index).bundle
+            |>.valuationBallFactor_compactOpenRadius_eq_one summand,
+        source.directSummandLogVolume_eq_padicFiniteExtensionUnitBallNormalized,
+        rfl, rfl⟩
+
+end StepXIThetaLGPPadicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+
+set_option linter.style.longLine false in
+/--
 Localized single-place Ob7 source for the preferred public Step (xi) route.
 
 This specializes the localized product-formula construction to the one-summand
@@ -77276,6 +77435,61 @@ noncomputable def preferredPublicStepXIPaperSourceRouteAuditDiagonalUnitBallValu
       unitBallLocalizedSource.toAdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
       possibleRegion_eq
       (unitBallNormSquareDirectSummandSource.toAdditiveHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData))
+      iutIV_cTheta additive_haar_arithmetic_degree_padic audit
+
+set_option linter.style.longLine false in
+/--
+Preferred public Step (xi) paper-source route whose valuation-unit-ball
+compact-open norm-square determinant factors are constructed from
+finite-extension-over-`Q_p` local-field Haar data.
+
+This lowers the current strict route one level: callers provide concrete
+finite-extension local-field Haar factors with selected compact-open radius
+`1`; Lean projects them internally to the valuation-unit-ball, additive-Haar,
+compact-open norm-square, and Step (xi) routes.
+-/
+noncomputable def preferredPublicStepXIPaperSourceRouteAuditDiagonalPadicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (paperTrace : StepXIPaperTrace)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {F : Type z} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    {p : Nat} [Fact p.Prime] {K : Type y} {β : Type v} {γ : Type w}
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    [Fintype β] [Fintype γ]
+    (padicFiniteLocalizedSource :
+      IUTStage1Remark395PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) p K β γ
+        principalSource.toHolomorphicHullSystem)
+    (possibleRegion_eq :
+      padicFiniteLocalizedSource.toUnitBallValuationHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toAdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toNormSquareLocalizedHullVectorBundleDecompositionSource.toLocalizedHullVectorBundleDecompositionSource.possibleRegion =
+        principalProductPossibleRegion sourceData principalSource)
+    {V : Type v} {μ : Type w} [Fintype V]
+    (padicFiniteNormSquareDirectSummandSource :
+      StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPPadicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        (principalProductHullFormationData sourceData principalSource)
+        hodgeEvaluation padicFiniteLocalizedSource V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations) :=
+  fun audit =>
+    preferredPublicStepXIPaperSourceRouteAuditDiagonalUnitBallValuationHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7
+      sourceData paperTrace principalSource hodgeEvaluation
+      padicFiniteLocalizedSource.toUnitBallValuationHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+      possibleRegion_eq
+      (padicFiniteNormSquareDirectSummandSource.toUnitBallValuationHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
         (sourceData := sourceData))
       iutIV_cTheta additive_haar_arithmetic_degree_padic audit
 

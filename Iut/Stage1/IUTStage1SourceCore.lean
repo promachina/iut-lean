@@ -19797,6 +19797,458 @@ variable {α : Type u} {η : Type v} {K : Type w}
 variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
 variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
 
+noncomputable def toValuationBallAdditiveHaarNormalizationSourceCore
+    (data :
+      IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource
+        α η K hullSystem) :
+    IUTStage1ValuationBallAdditiveHaarNormalizationSource
+      α η K hullSystem :=
+  { localRing := data.localRing,
+    residuePrime := data.residuePrime,
+    residue_prime := data.residue_prime,
+    finiteExtensionDegree := data.finiteExtensionDegree,
+    finite_extension_degree_pos := data.finite_extension_degree_pos,
+    realization := data.realization,
+    realizedRegion := data.realizedRegion,
+    realizedRegion_eq_image := data.realizedRegion_eq_image,
+    valuationNorm := data.valuationNorm,
+    compactOpenRadius := data.compactOpenRadius,
+    compactOpenRadius_pos := data.compactOpenRadius_pos,
+    uniformizerScalePoint := data.uniformizerScalePoint,
+    haarMeasure := data.haarMeasure,
+    haar_isAddHaar := data.haar_isAddHaar,
+    valuationUnitBall_open := by
+      simpa [valuationNorm, IUTStage1PositiveRadiusValuationBallTopologySource.valuationBall] using
+        data.ringOfIntegers_compactOpen.1,
+    valuationUnitBall_compact := by
+      simpa [valuationNorm, IUTStage1PositiveRadiusValuationBallTopologySource.valuationBall] using
+        data.ringOfIntegers_compactOpen.2,
+    compactOpenBall_open := by
+      simpa [valuationNorm, IUTStage1PositiveRadiusValuationBallTopologySource.valuationBall] using
+        data.compactOpenSubset_compactOpen.1,
+    compactOpenBall_compact := by
+      simpa [valuationNorm, IUTStage1PositiveRadiusValuationBallTopologySource.valuationBall] using
+        data.compactOpenSubset_compactOpen.2,
+    uniformizerScale_preserves_open :=
+      data.uniformizerScale_preserves_open,
+    uniformizerScale_preserves_compact :=
+      data.uniformizerScale_preserves_compact,
+    valuationUnitBall_measure_one := by
+      simpa [valuationNorm, IUTStage1PositiveRadiusValuationBallTopologySource.valuationBall] using
+        data.valuationUnitBall_measure_one,
+    compactOpenBall_measure_pos := by
+      simpa [valuationNorm, IUTStage1PositiveRadiusValuationBallTopologySource.valuationBall] using
+        data.compactOpenBall_measure_pos,
+    uniformizerScaled_compactOpenBall_measure_toReal_eq := by
+      simpa [valuationNorm,
+        IUTStage1PositiveRadiusValuationBallTopologySource.valuationBall] using
+        data.uniformizerScaled_compactOpenBall_measure_toReal_eq,
+    hull_logVolume_eq_normalized :=
+      data.hull_logVolume_eq_normalized }
+
+end IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource
+
+set_option linter.style.longLine false in
+/--
+Finite-extension-over-`Q_p` construction of the valuation-unit-ball
+compact-open norm-square localized vector bundle.
+
+This lowers the unit-ball norm-square source to the local-field boundary used
+by the earlier Haar normalization stack.  Each factor is a finite-dimensional
+`Q_p`-local field with its valued-field integer unit ball; the selected compact
+open is forced to radius `1`, so projection through the existing
+proper-ultrametric and valuation-ball Haar constructors supplies the normalized
+valuation-unit-ball factor used by Step (xi).
+-/
+structure IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleSource
+    (α : Type u) (p : Nat) [Fact p.Prime] (K : Type w) (γ : Type x)
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    [Fintype γ]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  padicFiniteExtensionFactor :
+    γ -> IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource
+      α p K hullSystem
+  compactOpenRadius_eq_one :
+    ∀ summand : γ,
+      (padicFiniteExtensionFactor summand).compactOpenRadius = 1
+  rank_gt_one : 1 < Fintype.card γ
+
+namespace IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleSource
+
+variable {α : Type u} {p : Nat} [Fact p.Prime] {K : Type w}
+variable {γ : Type x}
+variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+variable [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+variable [Fintype γ]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+noncomputable def localRing
+    (_data :
+      IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleSource
+        α p K γ hullSystem) :
+    Subring K :=
+  ({} : IUTStage1ValuedFieldIntegerUnitBallSource K).integerSubring
+
+noncomputable def valuationBallFactor
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleSource
+        α p K γ hullSystem)
+    (summand : γ) :
+    IUTStage1ValuationBallAdditiveHaarNormalizationSource
+      α (Subring K) K hullSystem :=
+  (data.padicFiniteExtensionFactor summand)
+    |>.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+    |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+    |>.toUltrametricValuationBallAdditiveHaarNormalizationSource
+    |>.toValuationBallTopologyAdditiveHaarNormalizationSource
+    |>.toValuationBallAdditiveHaarNormalizationSourceCore
+
+theorem valuationBallFactor_localRing_eq
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleSource
+        α p K γ hullSystem)
+    (summand : γ) :
+    (data.valuationBallFactor summand).localRing = data.localRing := by
+  simp [valuationBallFactor, localRing,
+    IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource.toValuationBallAdditiveHaarNormalizationSourceCore,
+    IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource.toValuedFieldIntegerProperUltrametricHaarNormalizationSource,
+    IUTStage1ValuedFieldIntegerProperUltrametricHaarNormalizationSource.toProperUltrametricValuationBallAdditiveHaarNormalizationSource,
+    IUTStage1ProperUltrametricValuationBallAdditiveHaarNormalizationSource.toUltrametricValuationBallAdditiveHaarNormalizationSource,
+    IUTStage1UltrametricValuationBallAdditiveHaarNormalizationSource.toValuationBallTopologyAdditiveHaarNormalizationSource,
+    IUTStage1ValuedFieldIntegerUnitBallSource.integerSubring]
+
+theorem valuationBallFactor_compactOpenRadius_eq_one
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleSource
+        α p K γ hullSystem)
+    (summand : γ) :
+    (data.valuationBallFactor summand).compactOpenRadius = 1 := by
+  simpa [valuationBallFactor,
+    IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource.toValuedFieldIntegerProperUltrametricHaarNormalizationSource,
+    IUTStage1ValuedFieldIntegerProperUltrametricHaarNormalizationSource.toProperUltrametricValuationBallAdditiveHaarNormalizationSource,
+    IUTStage1ProperUltrametricValuationBallAdditiveHaarNormalizationSource.toUltrametricValuationBallAdditiveHaarNormalizationSource,
+    IUTStage1UltrametricValuationBallAdditiveHaarNormalizationSource.toValuationBallTopologyAdditiveHaarNormalizationSource,
+    IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource.toValuationBallAdditiveHaarNormalizationSourceCore] using
+    data.compactOpenRadius_eq_one summand
+
+noncomputable def toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleSource
+        α p K γ hullSystem) :
+    IUTStage1UnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource
+      α (Subring K) K γ hullSystem :=
+  { localRing := data.localRing,
+    valuationBallFactor := data.valuationBallFactor,
+    factor_localRing_eq := data.valuationBallFactor_localRing_eq,
+    compactOpenRadius_eq_one :=
+      data.valuationBallFactor_compactOpenRadius_eq_one,
+    rank_gt_one := data.rank_gt_one }
+
+set_option linter.style.longLine false in
+theorem projected_directSummandLogVolume_eq_padicFiniteExtensionUnitBallNormalized
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleSource
+        α p K γ hullSystem)
+    (summand : γ) :
+    data.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleSource.toCompactOpenNormSquareLocalizedVectorBundleSource.toNormSquareLocalizedArithmeticVectorBundle.toLocalizedArithmeticVectorBundle.directSummandLogVolume
+        summand =
+      (data.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+          summand).normalizedHaarLogVolume
+        (data.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+          summand).compactOpenSubset :=
+  data.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource
+    |>.projected_directSummandLogVolume_eq_unitBallValuationHaarNormalized
+      summand
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleSource
+        α p K γ hullSystem) :
+    (∀ summand : γ,
+      (data.valuationBallFactor summand).compactOpenRadius = 1) ∧
+      (∀ summand : γ,
+        ((data.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+            summand).haarMeasure
+          (data.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+            summand).compactOpenSubset).toReal = 1) ∧
+      (∀ summand : γ,
+        0 <=
+          (data.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleSource
+            |>.compactOpenTensorFactor summand).normalizedLogVolume) ∧
+      (∀ summand : γ,
+        data.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleSource.toCompactOpenNormSquareLocalizedVectorBundleSource.toNormSquareLocalizedArithmeticVectorBundle.toLocalizedArithmeticVectorBundle.directSummandLogVolume
+            summand =
+          (data.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+              summand).normalizedHaarLogVolume
+            (data.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+              summand).compactOpenSubset) :=
+  ⟨data.valuationBallFactor_compactOpenRadius_eq_one,
+    data.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource
+      |>.additiveHaarFactor_compactOpenMeasure_eq_one,
+    data.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource
+      |>.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleSource
+      |>.compactOpenTensorFactor_normalizedLogVolume_nonneg,
+    data.projected_directSummandLogVolume_eq_padicFiniteExtensionUnitBallNormalized⟩
+
+end IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleSource
+
+set_option linter.style.longLine false in
+/--
+Structure-sheaf-adjusted localized vector-bundle source whose unit-ball factors
+are constructed from finite-extension-over-`Q_p` local-field Haar data.
+-/
+structure IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+    (α : Type u) (p : Nat) [Fact p.Prime] (K : Type w) (γ : Type x)
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    [Fintype γ]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  bundle :
+    IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleSource
+      α p K γ hullSystem
+  structureSheafLogVolume : Real
+  adjustedRawLogVolume : Real
+  adjusted_raw_eq_padicFiniteExtensionUnitBall :
+    adjustedRawLogVolume =
+      (Finset.univ.sum fun summand : γ =>
+        (bundle.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+          summand).normalizedHaarLogVolume
+          (bundle.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+            summand).compactOpenSubset) -
+        structureSheafLogVolume
+  weight : Nat
+  weight_pos : 0 < weight
+
+namespace IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+
+variable {α : Type u} {p : Nat} [Fact p.Prime] {K : Type w}
+variable {γ : Type x}
+variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+variable [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+variable [Fintype γ]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+noncomputable def toUnitBallValuationHaarCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+        α p K γ hullSystem) :
+    IUTStage1UnitBallValuationHaarCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+      α (Subring K) K γ hullSystem :=
+  { bundle := data.bundle.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource,
+    structureSheafLogVolume := data.structureSheafLogVolume,
+    adjustedRawLogVolume := data.adjustedRawLogVolume,
+    adjusted_raw_eq_unitBallValuationHaar :=
+      data.adjusted_raw_eq_padicFiniteExtensionUnitBall,
+    weight := data.weight,
+    weight_pos := data.weight_pos }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+        α p K γ hullSystem) :
+    (∀ summand : γ,
+      (data.bundle.valuationBallFactor summand).compactOpenRadius = 1) ∧
+      data.toUnitBallValuationHaarCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource.toAdditiveHaarCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource.toCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource.toNormSquareStructureSheafAdjustedLocalizedVectorBundleSource.toStructureSheafAdjustedLocalizedVectorBundleSource.adjustedRawLogVolume =
+        (Finset.univ.sum fun summand : γ =>
+          (data.bundle.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+            summand).normalizedHaarLogVolume
+            (data.bundle.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+              summand).compactOpenSubset) -
+          data.structureSheafLogVolume :=
+  ⟨data.bundle.valuationBallFactor_compactOpenRadius_eq_one,
+    data.adjusted_raw_eq_padicFiniteExtensionUnitBall⟩
+
+end IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+
+set_option linter.style.longLine false in
+/--
+Ob3/Ob4 determinant source whose valuation-unit-ball compact-open factors are
+constructed from finite-extension-over-`Q_p` local-field Haar data.
+-/
+structure IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+    (α : Type u) (p : Nat) [Fact p.Prime] (K : Type y)
+    (β : Type w) (γ : Type x)
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    [Fintype β] [Fintype γ]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  localization :
+    β ->
+      IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+        α p K γ hullSystem
+  anchor : β
+  positiveTensorPower : Nat
+  tensor_power_pos : 0 < positiveTensorPower
+
+namespace IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+
+variable {α : Type u} {p : Nat} [Fact p.Prime] {K : Type y}
+variable {β : Type w} {γ : Type x}
+variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+variable [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+variable [Fintype β] [Fintype γ]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+noncomputable def toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+    (data :
+      IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+        α p K β γ hullSystem) :
+    IUTStage1Remark395Ob3Ob4UnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+      α (Subring K) K β γ hullSystem :=
+  { localization := fun index =>
+      (data.localization index).toUnitBallValuationHaarCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource,
+    anchor := data.anchor,
+    positiveTensorPower := data.positiveTensorPower,
+    tensor_power_pos := data.tensor_power_pos }
+
+set_option linter.style.longLine false in
+theorem projected_directSummandLogVolume_eq_padicFiniteExtensionUnitBallNormalized
+    (data :
+      IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+        α p K β γ hullSystem)
+    (index : β) (summand : γ) :
+    (data.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.localization
+        index).bundle.directSummandLogVolume summand =
+      ((data.localization index).bundle.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+          summand).normalizedHaarLogVolume
+        ((data.localization index).bundle.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+          summand).compactOpenSubset :=
+  (data.localization index).bundle
+    |>.projected_directSummandLogVolume_eq_padicFiniteExtensionUnitBallNormalized
+      summand
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+        α p K β γ hullSystem) :
+    data.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.anchor =
+        data.anchor ∧
+      (∀ index : β, ∀ summand : γ,
+        ((data.localization index).bundle.valuationBallFactor summand).compactOpenRadius =
+          1) ∧
+      (∀ index : β, ∀ summand : γ,
+        (data.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.localization
+            index).bundle.directSummandLogVolume summand =
+          ((data.localization index).bundle.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+              summand).normalizedHaarLogVolume
+            ((data.localization index).bundle.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+              summand).compactOpenSubset) :=
+  ⟨rfl,
+    fun index summand =>
+      (data.localization index).bundle
+        |>.valuationBallFactor_compactOpenRadius_eq_one summand,
+    data.projected_directSummandLogVolume_eq_padicFiniteExtensionUnitBallNormalized⟩
+
+end IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+
+set_option linter.style.longLine false in
+/--
+Localized hull/vector-bundle decomposition from finite-extension-over-`Q_p`
+valuation-unit-ball compact-open norm-square determinant data.
+-/
+structure IUTStage1Remark395PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+    (α : Type u) (ι : Type v) (p : Nat) [Fact p.Prime] (K : Type z)
+    (β : Type w) (γ : Type x)
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    [Fintype β] [Fintype γ]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  possibleRegion : ι -> Set α
+  localizedSource :
+    IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+      α p K β γ hullSystem
+  localizedRegion : β -> Set α
+  localizedRegion_subset_familyHull :
+    ∀ index : β,
+      localizedRegion index ⊆
+        hullSystem.phi (⋃ i, possibleRegion i)
+  familyHullLogVolume_eq_localizedLogVolumeSum :
+    hullSystem.logVolume (hullSystem.phi (⋃ i, possibleRegion i)) =
+      Finset.univ.sum fun index =>
+        hullSystem.logVolume (localizedRegion index)
+  localizedRegion_logVolume_eq_adjusted :
+    ∀ index : β,
+      hullSystem.logVolume (localizedRegion index) =
+        localizedSource.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.weightedAdjustedLogVolume
+          index
+
+namespace IUTStage1Remark395PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+
+variable {α : Type u} {ι : Type v} {p : Nat} [Fact p.Prime] {K : Type z}
+variable {β : Type w} {γ : Type x}
+variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+variable [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+variable [Fintype β] [Fintype γ]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+noncomputable def toUnitBallValuationHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+    (data :
+      IUTStage1Remark395PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+        α ι p K β γ hullSystem) :
+    IUTStage1Remark395UnitBallValuationHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+      α ι (Subring K) K β γ hullSystem :=
+  { possibleRegion := data.possibleRegion,
+    localizedSource :=
+      data.localizedSource.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource,
+    localizedRegion := data.localizedRegion,
+    localizedRegion_subset_familyHull :=
+      data.localizedRegion_subset_familyHull,
+    familyHullLogVolume_eq_localizedLogVolumeSum :=
+      data.familyHullLogVolume_eq_localizedLogVolumeSum,
+    localizedRegion_logVolume_eq_adjusted :=
+      data.localizedRegion_logVolume_eq_adjusted }
+
+set_option linter.style.longLine false in
+theorem projected_directSummandLogVolume_eq_padicFiniteExtensionUnitBallNormalized
+    (data :
+      IUTStage1Remark395PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+        α ι p K β γ hullSystem)
+    (index : β) (summand : γ) :
+    (data.toUnitBallValuationHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toAdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toNormSquareLocalizedHullVectorBundleDecompositionSource.toLocalizedHullVectorBundleDecompositionSource.localizedSource.localization
+        index).bundle.directSummandLogVolume summand =
+      ((data.localizedSource.localization index).bundle.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+          summand).normalizedHaarLogVolume
+        ((data.localizedSource.localization index).bundle.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+          summand).compactOpenSubset :=
+  data.localizedSource
+    |>.projected_directSummandLogVolume_eq_padicFiniteExtensionUnitBallNormalized
+      index summand
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+        α ι p K β γ hullSystem) :
+    data.toUnitBallValuationHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toAdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toNormSquareLocalizedHullVectorBundleDecompositionSource.hullOperator =
+        hullSystem.toHolomorphicHullOperator ∧
+      (∀ index : β, ∀ summand : γ,
+        ((data.localizedSource.localization index).bundle.valuationBallFactor summand).compactOpenRadius =
+          1) ∧
+      (∀ index : β, ∀ summand : γ,
+        (data.toUnitBallValuationHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toAdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toNormSquareLocalizedHullVectorBundleDecompositionSource.toLocalizedHullVectorBundleDecompositionSource.localizedSource.localization
+            index).bundle.directSummandLogVolume summand =
+          ((data.localizedSource.localization index).bundle.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+              summand).normalizedHaarLogVolume
+            ((data.localizedSource.localization index).bundle.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+              summand).compactOpenSubset) :=
+  ⟨rfl,
+    fun index summand =>
+      (data.localizedSource.localization index).bundle
+        |>.valuationBallFactor_compactOpenRadius_eq_one summand,
+    data.projected_directSummandLogVolume_eq_padicFiniteExtensionUnitBallNormalized⟩
+
+end IUTStage1Remark395PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+
+namespace IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource
+
+variable {α : Type u} {η : Type v} {K : Type w}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
 noncomputable def toValuationBallAdditiveHaarNormalizationSource
     (data :
       IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource
