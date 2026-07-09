@@ -730,17 +730,19 @@ degree.  The
 structure-sheaf log-volume is identified with a distinguished direct summand
 of each localized arithmetic vector bundle.  Each direct-summand log-volume is
 projected from the normalized log-volume of a local compact-open tensor factor
-constructed from additive Haar data.  In the strictest route this compact open
-is obtained by projecting a finite-extension \(\mathbb Q_p\)-local-field Haar
-factor through the valued-field integer, proper-ultrametric, valuation-ball, and
-additive-Haar normalization stack; the selected radius is forced to be \(1\).
-The source normalization \(\mu(O_v)=1\) proves the Haar lower bound
-\(1 \leq \mu(U)_{\mathbb R}\), and \(\log\)-monotonicity plus positive
-finite-extension degree gives nonnegative normalized log-volume.  Lean then
-constructs the corresponding square-root norm; one non-structure summand has
-nonzero norm.  Lean derives the compact-open norm-square source, the square
-presentation, all direct-summand nonnegativity, and the strict positive summand
-from that single finite-extension local-field Ob3/Ob4 source.  Finite
+constructed from additive Haar data.  The additive-Haar layer now has a strict
+factor constructor: from the source-level inequality \(1<\mu(U)_{\mathbb R}\)
+for the selected non-structure compact open, Lean proves positivity of
+\(\log(\mu(U)_{\mathbb R})/[K:\mathbb Q_p]\), then uses the norm-square
+projection to derive the nonzero direct-summand norm.  The valuation-unit-ball
+finite-extension branch remains a separate normalized boundary.  There the
+selected radius is forced to be \(1\), so \(\mu(O_v)=1\) constructs the weak
+Haar lower bound and nonnegative normalized log-volumes, but not the strict
+positive factor.  The current unit-ball compact-open factor route therefore
+lowers the structure-sheaf/direct-summand equality and projects a supplied
+strict factor through the norm-square layer; a non-unit compact-open or another
+lower source operation is still needed to construct that strict factor inside
+the finite-extension route.  Finite
 summation derives the Ob3-1 inequalities
 comparing the structure-sheaf log-volume with the localized bundle log-volume;
 the subtraction formula derives adjusted raw local positivity; positive
@@ -757,15 +759,15 @@ equality implies the family-hull/global calibration via theta/ordinary
 realified Frobenioid compatibility, and the localized determinant/family-hull
 equality then gives the determinant/global equality needed for the
 Gaussian-global nonzero proof.  The earlier
-structure-sheaf/direct-summand boundary has also been lowered at the strict
+structure-sheaf/direct-summand boundary has also been lowered at the
 finite-extension endpoint: instead of publicly supplying
-`structure-sheaf equals direct summand' and `positive summand norm is
-nonzero', the newest compact-open factor route supplies the valuation-unit-ball
-normalized log-volume identity for the distinguished structure-sheaf factor
-and strict positivity of the selected non-structure compact-open factor.  Lean
-then uses the norm-square projection to derive both the direct-summand equality
-and the nonzero norm internally before invoking the restriction-calibrated
-route.  The earlier structure-sheaf-positive, raw-positive, summand-positive,
+`structure-sheaf equals direct summand', the newest compact-open factor route
+uses the valuation-unit-ball normalized log-volume identity for the
+distinguished structure-sheaf factor and derives the direct-summand equality.
+For strict positivity, the additive-Haar route now has a genuine
+Haar-mass-to-norm constructor; the unit-ball finite-extension route still marks
+the strict selected factor as a remaining lower boundary.  The earlier
+structure-sheaf-positive, raw-positive, summand-positive,
 explicit-ratio, weighted-partition, and one-summand localized constructors
 remain as compatibility layers.
 This is progress below a free-floating obligation bundle.  What remains is to

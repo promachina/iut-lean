@@ -12759,6 +12759,46 @@ theorem compactOpenTensorFactor_normalizedLogVolume_nonneg
         Nat.zero_le
           (data.additiveHaarFactor summand).finiteExtensionDegree)
 
+theorem additiveHaarFactor_normalizedHaarLogVolume_pos_of_measure_gt_one
+    (data :
+      IUTStage1AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleSource
+        α η K γ hullSystem)
+    (summand : γ)
+    (hmeasure :
+      1 <
+        ((data.additiveHaarFactor summand).haarMeasure
+          (data.additiveHaarFactor summand).compactOpenSubset).toReal) :
+    0 <
+      (data.additiveHaarFactor summand).normalizedHaarLogVolume
+        (data.additiveHaarFactor summand).compactOpenSubset := by
+  dsimp [
+    IUTStage1AdditiveHaarCompactOpenNormalizationSource.normalizedHaarLogVolume,
+    IUTStage1AdditiveHaarCompactOpenNormalizationSource.rawHaarLogVolume,
+    IUTStage1AdditiveHaarCompactOpenNormalizationSource.rawHaarMeasure]
+  exact div_pos
+    (Real.log_pos hmeasure)
+    (by
+      exact_mod_cast
+        (data.additiveHaarFactor summand).finite_extension_degree_pos)
+
+theorem compactOpenTensorFactor_normalizedLogVolume_pos_of_measure_gt_one
+    (data :
+      IUTStage1AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleSource
+        α η K γ hullSystem)
+    (summand : γ)
+    (hmeasure :
+      1 <
+        ((data.additiveHaarFactor summand).haarMeasure
+          (data.additiveHaarFactor summand).compactOpenSubset).toReal) :
+    0 < (data.compactOpenTensorFactor summand).normalizedLogVolume := by
+  dsimp [compactOpenTensorFactor,
+    IUTStage1AdditiveHaarCompactOpenNormalizationSource.toCompactOpenTopologyHaarNormalizationSource,
+    IUTStage1FiniteExtensionCompactOpenTopologyHaarNormalizationSource.toFiniteExtensionHaarCompactOpenLogVolumeSource,
+    IUTStage1FiniteExtensionHaarCompactOpenLogVolumeSource.toNonarchimedeanLocalCompactOpenLogVolumeSource,
+    IUTStage1NonarchimedeanLocalCompactOpenLogVolumeSource.toLocalCompactOpenTensorFactorSource]
+  exact data.additiveHaarFactor_normalizedHaarLogVolume_pos_of_measure_gt_one
+    summand hmeasure
+
 noncomputable def toCompactOpenNormSquareLocalizedVectorBundleSource
     (data :
       IUTStage1AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleSource

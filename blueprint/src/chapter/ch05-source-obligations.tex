@@ -746,6 +746,10 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPAdditiveHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPAdditiveHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource.endpoint}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalAdditiveHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7}
+  \lean{Iut.Stage1.IUTStage1SourceCore.IUTStage1AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor_normalizedHaarLogVolume_pos_of_measure_gt_one}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPAdditiveHaarCompactOpenFactorDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPAdditiveHaarCompactOpenFactorDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource.positiveSummandNorm_ne_zero}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalAdditiveHaarCompactOpenFactorDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPUnitBallValuationHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPUnitBallValuationHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource.endpoint}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalUnitBallValuationHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7}
@@ -807,18 +811,17 @@
   structure-sheaf log-volume is identified with a distinguished direct summand
   of each localized arithmetic vector bundle.  Each direct-summand log-volume
   is projected from the normalized log-volume of a local compact-open tensor
-  factor constructed from additive Haar data.  In the strictest route this
-  compact open is now obtained by projecting a finite-extension
-  \(\mathbb Q_p\)-local-field Haar factor through the valued-field integer,
-  proper-ultrametric, valuation-ball, and additive-Haar normalization stack;
-  the selected radius is forced to be \(1\).  The source normalization
-  \(\mu(O_v)=1\) proves the Haar lower bound \(1 \leq \mu(U)_{\mathbb R}\), and
-  \(\log\)-monotonicity plus positive finite-extension degree gives
-  nonnegative normalized log-volume.  Lean then constructs the corresponding
-  square-root norm.  One non-structure summand has nonzero norm.  Lean derives
-  the compact-open norm-square source, square presentation, all direct-summand
-  nonnegativity, and the strict positive summand from that single
-  finite-extension local-field Ob3/Ob4 source.  Finite
+  factor constructed from additive Haar data.  The additive-Haar route now has
+  a strict compact-open factor constructor: the lower input
+  \(1 < \mu(U)_{\mathbb R}\) gives strict positivity of the normalized Haar
+  log-volume, and the norm-square projection gives the nonzero selected
+  direct-summand norm.  The finite-extension valuation-unit-ball route is
+  weaker: radius \(1\) and \(\mu(O_v)=1\) construct the weak lower bound and
+  nonnegative normalized log-volumes, but they do not construct the strict
+  selected factor.  Thus the unit-ball compact-open factor route lowers the
+  structure-sheaf/direct-summand equality while leaving strict selected-factor
+  positivity as a lower boundary unless a non-unit compact-open source is
+  supplied.  Finite
   summation derives the Ob3-1 inequalities comparing the structure-sheaf
   log-volume with the localized bundle log-volume; the subtraction formula
   derives adjusted raw local positivity; positive determinant weights derive
@@ -846,13 +849,12 @@
   equality through the localized Ob3/Ob5 identity.  Its restriction-calibrated
   variant also replaces the placewise Hodge canonical-degree/local-prime
   equalities by an anchored local-global restriction source plus one global
-  Hodge canonical-degree calibration.  The newest compact-open factor variant
-  lowers the structure-sheaf/direct-summand boundary as well: the
-  distinguished structure-sheaf summand is identified with its
-  valuation-unit-ball normalized compact-open factor, and strict positivity of
-  the selected non-structure factor derives the nonzero norm through the
-  norm-square projection before the older restriction-calibrated route is
-  invoked.
+  Hodge canonical-degree calibration.  The newest additive-Haar strict-factor
+  variant derives the selected nonzero norm from a concrete Haar-mass
+  inequality; the unit-ball compact-open factor variant separately identifies
+  the distinguished structure-sheaf summand with its valuation-unit-ball
+  normalized compact-open factor before invoking the older
+  restriction-calibrated route.
   The structure-sheaf-positive, raw-positive, summand-positive,
   weighted-partition, explicit raw-ratio, and one-summand routes remain as
   compatibility layers.  The Step (xi) source and
