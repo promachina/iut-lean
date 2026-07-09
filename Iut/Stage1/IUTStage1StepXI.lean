@@ -60250,6 +60250,139 @@ theorem ofThetaRegionDefinedPrincipalValuationBallSource_endpoint
         recordSource.familyHullLogVolume_eq_normalizedDeterminantLogVolume⟩
 
 set_option linter.style.longLine false in
+/--
+Construct the record-facing Ob3/Ob5 source from a lattice-image-law-backed
+valuation-ball comparison.
+
+This lowers the previous theta-region-defined boundary by one step.  The
+family equality between valuation regions and transported theta regions is
+derived from the supplied lattice-image law comparison together with the
+identification of that lattice-image law with the concrete fiber-transport law.
+-/
+noncomputable def ofLatticeImageLawBackedPrincipalValuationBallSource
+    {coric : Type u} {l : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {sourceData :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        recordConcrete indData}
+    {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+    {selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    {η : Type y} {K : Type z} {Λ : Type max u v w y z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {valuationSource :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        (Point target)
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric))
+        η K β γ Λ}
+    (imageLawBackedSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassLatticeImageLawBackedFamilyUnionSource
+        sourceData gluingTorsor selectedQChoice valuationSource)
+    (latticeImageLawSource_eq :
+      imageLawBackedSource.latticeImageLawSource =
+        sourceData.toFiberTransportSource.toLatticeImageLawSource) :
+    IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+      (β := β) (γ := γ) recordConcrete :=
+  ofThetaRegionDefinedPrincipalValuationBallSource
+    (β := β) (γ := γ)
+    (imageLawBackedSource.toThetaRegionDefinedPrincipalValuationBallSource
+      latticeImageLawSource_eq)
+
+set_option linter.style.longLine false in
+/--
+Construct the record-facing Ob3/Ob5 source from a fiber-transport-backed
+valuation-ball comparison.
+
+The pointwise fiber-transport law proves the theta-region/valuation-region
+family equality internally, so this route has no separate lattice-law equality
+argument.
+-/
+noncomputable def ofFiberTransportBackedPrincipalValuationBallSource
+    {coric : Type u} {l : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {sourceData :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        recordConcrete indData}
+    {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+    {selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    {η : Type y} {K : Type z} {Λ : Type max u v w y z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {valuationSource :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        (Point target)
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric))
+        η K β γ Λ}
+    (fiberBackedSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportBackedFamilyUnionSource
+        sourceData gluingTorsor selectedQChoice valuationSource) :
+    IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+      (β := β) (γ := γ) recordConcrete :=
+  ofThetaRegionDefinedPrincipalValuationBallSource
+    (β := β) (γ := γ)
+    fiberBackedSource.toThetaRegionDefinedPrincipalValuationBallSource
+
+set_option linter.style.longLine false in
+theorem ofFiberTransportBackedPrincipalValuationBallSource_endpoint
+    {coric : Type u} {l : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {sourceData :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        recordConcrete indData}
+    {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+    {selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    {η : Type y} {K : Type z} {Λ : Type max u v w y z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {valuationSource :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        (Point target)
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric))
+        η K β γ Λ}
+    (fiberBackedSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportBackedFamilyUnionSource
+        sourceData gluingTorsor selectedQChoice valuationSource) :
+    let recordSource :=
+      ofFiberTransportBackedPrincipalValuationBallSource
+        (β := β) (γ := γ) fiberBackedSource;
+    let principalSource :=
+      fiberBackedSource.toThetaRegionDefinedPrincipalValuationBallSource;
+    recordSource =
+        ofThetaRegionDefinedPrincipalValuationBallSource
+          (β := β) (γ := γ) principalSource ∧
+      recordSource.toSourceCoreAdjustedLogVolumeSource =
+        principalSource.toChoiceIndexedValuationCover.toOb3Ob5AdjustedDeterminantLogVolumeSource ∧
+      principalSource.toChoiceIndexedValuationCover.toOb3Ob5AdjustedDeterminantLogVolumeSource.possibleRegion =
+        recordThetaPossibleImage recordConcrete :=
+  by
+    intro recordSource principalSource
+    have hrecord :=
+      ofThetaRegionDefinedPrincipalValuationBallSource_endpoint
+        (β := β) (γ := γ) principalSource
+    exact ⟨rfl, hrecord.1, hrecord.2.2.2.1⟩
+
+set_option linter.style.longLine false in
 noncomputable def toConstructedHolomorphicHullDeterminantSource
     (sourceData :
       IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
@@ -60582,6 +60715,95 @@ noncomputable def toConstructedHolomorphicHullDeterminantSourceOfThetaRegionDefi
   let recordSource :=
     ofThetaRegionDefinedPrincipalValuationBallSource
       (β := β) (γ := γ) principalSource
+  recordSource.toConstructedHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolume
+    operation hullOperation determinantOperation qPilotRegion
+    q_subset_recordUnion measure_eq_hullLogVolume
+    thetaSigned_eq_familyHullLogVolume hullDetBridge_eq q_pilot_positive
+    normalization
+
+set_option linter.style.longLine false in
+/--
+Constructed Step (xi) hull/determinant source from a fiber-transport-backed
+valuation-ball comparison.
+
+This lowers the constructed-source boundary below the theta-region-defined
+principal source.  The theta-region/valuation-region equality is obtained from
+the pointwise fiber-transport law, then Lean constructs the record Ob3/Ob5
+adjusted determinant/log-volume source and enters the exact-theta
+hull/determinant constructor.
+-/
+noncomputable def toConstructedHolomorphicHullDeterminantSourceOfFiberTransportBackedPrincipalValuationBallSource
+    {coric : Type u} {l : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {actionPacketTransportSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        recordConcrete indData}
+    {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+    {selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    {η : Type y} {K : Type z} {Λ : Type max u v w y z}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    {valuationSource :
+      IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+        (Point target)
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.ThetaPilotClass
+          (coric := coric))
+        η K β γ Λ}
+    (fiberBackedSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportBackedFamilyUnionSource
+        actionPacketTransportSource gluingTorsor selectedQChoice
+        valuationSource)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (qPilotRegion : Set (Point target))
+    (q_subset_recordUnion :
+      qPilotRegion ⊆ recordThetaPossibleImageUnion recordConcrete)
+    (measure_eq_hullLogVolume :
+      packageConcrete.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          (ofFiberTransportBackedPrincipalValuationBallSource
+            (β := β) (γ := γ) fiberBackedSource).hullOperator).toRegionMeasure)
+    (thetaSigned_eq_familyHullLogVolume :
+      packageConcrete.preLedger.thetaSigned =
+        ((ofFiberTransportBackedPrincipalValuationBallSource
+            (β := β) (γ := γ) fiberBackedSource)
+          |>.toRecordOb3Ob5DeterminantCompatibilitySource
+          |>.toRecordBoundedFamilyHullDetLogVolumeSource).familyHullLogVolume)
+    (hullDetBridge_eq :
+      packageConcrete.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordConcrete)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            (ofFiberTransportBackedPrincipalValuationBallSource
+              (β := β) (γ := γ) fiberBackedSource).hullOperator)
+          qPilotRegion q_subset_recordUnion
+          (ofFiberTransportBackedPrincipalValuationBallSource
+              (β := β) (γ := γ) fiberBackedSource).ob3ob4Source.toWeightedDeterminantSource
+          (ofFiberTransportBackedPrincipalValuationBallSource
+              (β := β) (γ := γ) fiberBackedSource).toRecordOb3Ob5DeterminantCompatibilitySource.toCompatibility
+          measure_eq_hullLogVolume
+          (((ofFiberTransportBackedPrincipalValuationBallSource
+                (β := β) (γ := γ) fiberBackedSource)
+            |>.toRecordOb3Ob5DeterminantCompatibilitySource
+            |>.toRecordBoundedFamilyHullDetLogVolumeSource)
+            |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+                thetaSigned_eq_familyHullLogVolume))
+    (q_pilot_positive : 0 < -packageConcrete.preLedger.qSigned)
+    (normalization : packageConcrete.preLedger.normalization) :
+    IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+      (β := β) recordConcrete :=
+  let recordSource :=
+    ofFiberTransportBackedPrincipalValuationBallSource
+      (β := β) (γ := γ) fiberBackedSource
   recordSource.toConstructedHolomorphicHullDeterminantSourceOfThetaEqFamilyHullLogVolume
     operation hullOperation determinantOperation qPilotRegion
     q_subset_recordUnion measure_eq_hullLogVolume
