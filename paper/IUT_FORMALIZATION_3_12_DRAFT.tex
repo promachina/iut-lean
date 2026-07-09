@@ -832,11 +832,14 @@ valuation-cover fibers: the additive-Haar localization is built from the
 transported valuation-ball factors, the adjusted structure-sheaf data is
 copied from the transported local calibration, and Lean proves the projected
 vector-bundle and localized-region equalities consumed by the older route.
-The remaining analytic input at this layer is the explicit compact-open Haar
-lower estimate \(1 \leq \mu(U)_{\mathbb{R}}\) needed by the norm-square
-constructor.  Constructing that valuation-cover/Haar package directly from
-full Hodge-theater and log-theta-lattice source data remains the next
-boundary.
+An inverse-dilation refinement lowers the analytic input further: each
+transported valuation-ball Haar factor is identified with the inverse
+base-prime unit ball of a constructed finite-extension \(p\)-adic Haar
+source, and Lean derives \(1 \leq \mu(U)_{\mathbb{R}}\) from the strict mass
+theorem \(1 < \mu(p^{-1}O_K)_{\mathbb{R}}\).  Constructing the full
+valuation-cover/Haar package and these factorwise inverse-dilation
+identifications directly from Hodge-theater and log-theta-lattice source data
+remains the next boundary.
 The valuation-unit-ball finite-extension branch remains only a normalized
 legacy boundary: the selected radius is forced to be \(1\), so \(\mu(O_v)=1\)
 constructs weak nonnegativity but also proves that the normalized log-volume
