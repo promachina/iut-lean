@@ -822,9 +822,14 @@ determinant decomposition.  A principal-hull-aligned refinement removes the
 direct valuation-cover/public-hull equality from this boundary: Lean derives
 it from the lower principal valuation-ball cover's own principal-hull theorem
 and the equality between that principal hull system and the public Theorem
-3.11 principal-product hull system.  The possible-region and source-core
-localized determinant alignments remain explicit before constructing the cover
-itself from the full Hodge-theater and log-theta-lattice source data.
+3.11 principal-product hull system.  A hull-formation possible-region
+refinement lowers the remaining possible-region equality: the source-core and
+valuation-cover families are aligned with the concrete family inside
+`principalProductHullFormationData`, and Lean derives the public
+`principalProductPossibleRegion` equality by projection.  The source-core
+localized determinant and calibration alignments remain explicit before
+constructing the cover itself from the full Hodge-theater and log-theta-lattice
+source data.
 The valuation-unit-ball finite-extension branch remains only a normalized
 legacy boundary: the selected radius is forced to be \(1\), so \(\mu(O_v)=1\)
 constructs weak nonnegativity but also proves that the normalized log-volume
