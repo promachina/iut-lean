@@ -6490,6 +6490,76 @@ theorem endpoint
 
 end IUTStage1LocalizedArithmeticVectorBundle
 
+set_option linter.style.longLine false in
+/--
+Localized arithmetic vector bundle with square-presented direct-summand
+log-volumes.
+
+In the Step (xi) determinant passage, the direct summands arise from local
+factor readings of the tensor-packet/log-shell decomposition.  This source
+keeps the lower metric datum: a real norm attached to each direct summand.  The
+ordinary localized vector bundle is then constructed by taking each summand
+log-volume to be the corresponding square.
+-/
+structure IUTStage1NormSquareLocalizedArithmeticVectorBundle
+    (η : Type u) (γ : Type v) [Fintype γ] where
+  localRing : η
+  directSummandNorm : γ -> Real
+  rank_gt_one : 1 < Fintype.card γ
+
+namespace IUTStage1NormSquareLocalizedArithmeticVectorBundle
+
+variable {η : Type u} {γ : Type v} [Fintype γ]
+
+def directSummandLogVolume
+    (data : IUTStage1NormSquareLocalizedArithmeticVectorBundle η γ)
+    (summand : γ) :
+    Real :=
+  data.directSummandNorm summand ^ 2
+
+def toLocalizedArithmeticVectorBundle
+    (data : IUTStage1NormSquareLocalizedArithmeticVectorBundle η γ) :
+    IUTStage1LocalizedArithmeticVectorBundle η γ :=
+  { localRing := data.localRing,
+    directSummandLogVolume := data.directSummandLogVolume,
+    rank_gt_one := data.rank_gt_one }
+
+theorem toLocalized_directSummandLogVolume_eq_sq
+    (data : IUTStage1NormSquareLocalizedArithmeticVectorBundle η γ)
+    (summand : γ) :
+    data.toLocalizedArithmeticVectorBundle.directSummandLogVolume summand =
+      data.directSummandNorm summand ^ 2 :=
+  rfl
+
+theorem directSummandLogVolume_nonneg
+    (data : IUTStage1NormSquareLocalizedArithmeticVectorBundle η γ)
+    (summand : γ) :
+    0 <= data.toLocalizedArithmeticVectorBundle.directSummandLogVolume summand := by
+  rw [data.toLocalized_directSummandLogVolume_eq_sq summand]
+  exact sq_nonneg (data.directSummandNorm summand)
+
+theorem directSummandLogVolume_pos_of_norm_ne_zero
+    (data : IUTStage1NormSquareLocalizedArithmeticVectorBundle η γ)
+    {summand : γ}
+    (hnorm : data.directSummandNorm summand ≠ 0) :
+    0 < data.toLocalizedArithmeticVectorBundle.directSummandLogVolume summand := by
+  rw [data.toLocalized_directSummandLogVolume_eq_sq summand]
+  exact sq_pos_of_ne_zero hnorm
+
+theorem endpoint
+    (data : IUTStage1NormSquareLocalizedArithmeticVectorBundle η γ) :
+    data.toLocalizedArithmeticVectorBundle.localRing = data.localRing ∧
+      (∀ summand : γ,
+        data.toLocalizedArithmeticVectorBundle.directSummandLogVolume summand =
+          data.directSummandNorm summand ^ 2) ∧
+      (∀ summand : γ,
+        0 <= data.toLocalizedArithmeticVectorBundle.directSummandLogVolume summand) ∧
+      data.toLocalizedArithmeticVectorBundle.rank_gt_one = data.rank_gt_one :=
+  ⟨rfl, data.toLocalized_directSummandLogVolume_eq_sq,
+    data.directSummandLogVolume_nonneg, rfl⟩
+
+end IUTStage1NormSquareLocalizedArithmeticVectorBundle
+
 /--
 Localized vector-bundle source with the Ob3-1-2 structure-sheaf adjustment.
 
@@ -6660,6 +6730,108 @@ theorem endpoint
     data.bundle.rank_gt_one⟩
 
 end IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource
+
+set_option linter.style.longLine false in
+/--
+Structure-sheaf-adjusted localized vector-bundle source whose underlying
+localized arithmetic vector bundle is constructed from square-presented direct
+summand norms.
+
+The determinant/Ob3-1 adjustment data remain the same as in
+`IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource`; the new point is
+that the direct-summand log-volume family of the localized bundle is no longer
+arbitrary.  It is the square of the supplied norm family.
+-/
+structure IUTStage1NormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+    (η : Type u) (γ : Type v) [Fintype γ] where
+  bundle : IUTStage1NormSquareLocalizedArithmeticVectorBundle η γ
+  structureSheafLogVolume : Real
+  adjustedRawLogVolume : Real
+  adjusted_raw_eq :
+    adjustedRawLogVolume =
+      bundle.toLocalizedArithmeticVectorBundle.bundleLogVolume -
+        structureSheafLogVolume
+  weight : Nat
+  weight_pos : 0 < weight
+
+namespace IUTStage1NormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+
+variable {η : Type u} {γ : Type v} [Fintype γ]
+
+def toStructureSheafAdjustedLocalizedVectorBundleSource
+    (data :
+      IUTStage1NormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+        η γ) :
+    IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource η γ :=
+  { bundle := data.bundle.toLocalizedArithmeticVectorBundle,
+    structureSheafLogVolume := data.structureSheafLogVolume,
+    adjustedRawLogVolume := data.adjustedRawLogVolume,
+    adjusted_raw_eq := data.adjusted_raw_eq,
+    weight := data.weight,
+    weight_pos := data.weight_pos }
+
+def weightedAdjustedLogVolume
+    (data :
+      IUTStage1NormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+        η γ) :
+    Real :=
+  data.toStructureSheafAdjustedLocalizedVectorBundleSource.weightedAdjustedLogVolume
+
+theorem directSummandLogVolume_eq_sq
+    (data :
+      IUTStage1NormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+        η γ)
+    (summand : γ) :
+    data.toStructureSheafAdjustedLocalizedVectorBundleSource.bundle.directSummandLogVolume
+        summand =
+      data.bundle.directSummandNorm summand ^ 2 :=
+  rfl
+
+theorem directSummandLogVolume_nonneg
+    (data :
+      IUTStage1NormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+        η γ)
+    (summand : γ) :
+    0 <=
+      data.toStructureSheafAdjustedLocalizedVectorBundleSource.bundle.directSummandLogVolume
+        summand :=
+  data.bundle.directSummandLogVolume_nonneg summand
+
+theorem directSummandLogVolume_pos_of_norm_ne_zero
+    (data :
+      IUTStage1NormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+        η γ)
+    {summand : γ}
+    (hnorm : data.bundle.directSummandNorm summand ≠ 0) :
+    0 <
+      data.toStructureSheafAdjustedLocalizedVectorBundleSource.bundle.directSummandLogVolume
+        summand :=
+  data.bundle.directSummandLogVolume_pos_of_norm_ne_zero hnorm
+
+theorem endpoint
+    (data :
+      IUTStage1NormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+        η γ) :
+    data.toStructureSheafAdjustedLocalizedVectorBundleSource.bundle =
+        data.bundle.toLocalizedArithmeticVectorBundle ∧
+      data.toStructureSheafAdjustedLocalizedVectorBundleSource.structureSheafLogVolume =
+        data.structureSheafLogVolume ∧
+      (∀ summand : γ,
+        data.toStructureSheafAdjustedLocalizedVectorBundleSource.bundle.directSummandLogVolume
+            summand =
+          data.bundle.directSummandNorm summand ^ 2) ∧
+      data.toStructureSheafAdjustedLocalizedVectorBundleSource.adjustedRawLogVolume =
+        data.bundle.toLocalizedArithmeticVectorBundle.bundleLogVolume -
+          data.structureSheafLogVolume ∧
+      data.weightedAdjustedLogVolume =
+        data.toStructureSheafAdjustedLocalizedVectorBundleSource.weightedAdjustedLogVolume :=
+  ⟨rfl, rfl, data.directSummandLogVolume_eq_sq,
+    by
+      simpa [toStructureSheafAdjustedLocalizedVectorBundleSource] using
+        data.adjusted_raw_eq,
+    rfl⟩
+
+end IUTStage1NormSquareStructureSheafAdjustedLocalizedVectorBundleSource
 
 /--
 Finite determinant source for Remark 3.9.5(vii), (Ob3).
@@ -7217,6 +7389,108 @@ theorem endpoint
     data.normalizedDeterminantLogVolume_eq_determinant⟩
 
 end IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+
+set_option linter.style.longLine false in
+/--
+Remark 3.9.5(vii), (Ob3)/(Ob4), with square-presented localized vector
+bundles.
+
+This lowers the localized vector-bundle determinant source by constructing each
+localized arithmetic vector bundle from direct-summand norm squares.  The
+projection to the ordinary localized determinant source is used by the existing
+Step (xi) comparison, while the square presentation is retained as a theorem
+for the stricter direct-summand positivity route.
+-/
+structure IUTStage1Remark395Ob3Ob4NormSquareLocalizedVectorBundleDeterminantSource
+    (η : Type u) (β : Type v) (γ : Type w)
+    [Fintype β] [Fintype γ] where
+  localization :
+    β -> IUTStage1NormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+      η γ
+  anchor : β
+  positiveTensorPower : Nat
+  tensor_power_pos : 0 < positiveTensorPower
+
+namespace IUTStage1Remark395Ob3Ob4NormSquareLocalizedVectorBundleDeterminantSource
+
+variable {η : Type u} {β : Type v} {γ : Type w}
+variable [Fintype β] [Fintype γ]
+
+def toLocalizedVectorBundleDeterminantSource
+    (data :
+      IUTStage1Remark395Ob3Ob4NormSquareLocalizedVectorBundleDeterminantSource
+        η β γ) :
+    IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource η β γ :=
+  { localization := fun index =>
+      (data.localization index).toStructureSheafAdjustedLocalizedVectorBundleSource,
+    anchor := data.anchor,
+    positiveTensorPower := data.positiveTensorPower,
+    tensor_power_pos := data.tensor_power_pos }
+
+def directSummandNorm
+    (data :
+      IUTStage1Remark395Ob3Ob4NormSquareLocalizedVectorBundleDeterminantSource
+        η β γ)
+    (index : β) (summand : γ) :
+    Real :=
+  (data.localization index).bundle.directSummandNorm summand
+
+set_option linter.style.longLine false in
+theorem projected_directSummandLogVolume_eq_sq
+    (data :
+      IUTStage1Remark395Ob3Ob4NormSquareLocalizedVectorBundleDeterminantSource
+        η β γ)
+    (index : β) (summand : γ) :
+    (data.toLocalizedVectorBundleDeterminantSource.localization index).bundle.directSummandLogVolume
+        summand =
+      data.directSummandNorm index summand ^ 2 :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem projected_directSummandLogVolume_nonneg
+    (data :
+      IUTStage1Remark395Ob3Ob4NormSquareLocalizedVectorBundleDeterminantSource
+        η β γ)
+    (index : β) (summand : γ) :
+    0 <=
+      (data.toLocalizedVectorBundleDeterminantSource.localization index).bundle.directSummandLogVolume
+        summand := by
+  rw [data.projected_directSummandLogVolume_eq_sq index summand]
+  exact sq_nonneg (data.directSummandNorm index summand)
+
+set_option linter.style.longLine false in
+theorem projected_directSummandLogVolume_pos_of_norm_ne_zero
+    (data :
+      IUTStage1Remark395Ob3Ob4NormSquareLocalizedVectorBundleDeterminantSource
+        η β γ)
+    {index : β} {summand : γ}
+    (hnorm : data.directSummandNorm index summand ≠ 0) :
+    0 <
+      (data.toLocalizedVectorBundleDeterminantSource.localization index).bundle.directSummandLogVolume
+        summand := by
+  rw [data.projected_directSummandLogVolume_eq_sq index summand]
+  exact sq_pos_of_ne_zero hnorm
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395Ob3Ob4NormSquareLocalizedVectorBundleDeterminantSource
+        η β γ) :
+    data.toLocalizedVectorBundleDeterminantSource.anchor = data.anchor ∧
+      data.toLocalizedVectorBundleDeterminantSource.positiveTensorPower =
+        data.positiveTensorPower ∧
+      (∀ index : β, ∀ summand : γ,
+        (data.toLocalizedVectorBundleDeterminantSource.localization index).bundle.directSummandLogVolume
+            summand =
+          data.directSummandNorm index summand ^ 2) ∧
+      (∀ index : β, ∀ summand : γ,
+        0 <=
+          (data.toLocalizedVectorBundleDeterminantSource.localization index).bundle.directSummandLogVolume
+            summand) :=
+  ⟨rfl, rfl, data.projected_directSummandLogVolume_eq_sq,
+    data.projected_directSummandLogVolume_nonneg⟩
+
+end IUTStage1Remark395Ob3Ob4NormSquareLocalizedVectorBundleDeterminantSource
 
 /--
 Log-volume compatibility between a hull approximant and a weighted determinant
@@ -7831,6 +8105,126 @@ theorem endpoint
     (data.toOb3Ob5AdjustedDeterminantLogVolumeSource).familyHullLogVolume_eq_normalizedDeterminantLogVolume⟩
 
 end IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+
+set_option linter.style.longLine false in
+/--
+Localized hull/vector-bundle decomposition whose Ob3/Ob4 determinant source is
+constructed from square-presented direct-summand norms.
+
+This is the source-core object beneath the strictest Step (xi) diagonal route:
+the ordinary localized hull decomposition is projected from square-presented
+localized vector bundles, while the square presentation remains available for
+deriving direct-summand positivity without separate proof fields.
+-/
+structure IUTStage1Remark395NormSquareLocalizedHullVectorBundleDecompositionSource
+    (α : Type u) (ι : Type v) (η : Type y) (β : Type w) (γ : Type x)
+    [Fintype β] [Fintype γ] where
+  hullOperator : IUTStage1Remark395HolomorphicHullOperator α
+  possibleRegion : ι -> Set α
+  localizedSource :
+    IUTStage1Remark395Ob3Ob4NormSquareLocalizedVectorBundleDeterminantSource
+      η β γ
+  localizedRegion : β -> Set α
+  localizedRegion_subset_familyHull :
+    ∀ index : β,
+      localizedRegion index ⊆
+        hullOperator.phi (⋃ i, possibleRegion i)
+  familyHullLogVolume_eq_localizedLogVolumeSum :
+    hullOperator.logVolume
+        (hullOperator.phi (⋃ i, possibleRegion i)) =
+      Finset.univ.sum fun index =>
+        hullOperator.logVolume (localizedRegion index)
+  localizedRegion_logVolume_eq_adjusted :
+    ∀ index : β,
+      hullOperator.logVolume (localizedRegion index) =
+        localizedSource.toLocalizedVectorBundleDeterminantSource.weightedAdjustedLogVolume
+          index
+
+namespace IUTStage1Remark395NormSquareLocalizedHullVectorBundleDecompositionSource
+
+variable {α : Type u} {ι : Type v} {η : Type y}
+variable {β : Type w} {γ : Type x}
+variable [Fintype β] [Fintype γ]
+
+def toLocalizedHullVectorBundleDecompositionSource
+    (data :
+      IUTStage1Remark395NormSquareLocalizedHullVectorBundleDecompositionSource
+        α ι η β γ) :
+    IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+      α ι η β γ :=
+  { hullOperator := data.hullOperator,
+    possibleRegion := data.possibleRegion,
+    localizedSource :=
+      data.localizedSource.toLocalizedVectorBundleDeterminantSource,
+    localizedRegion := data.localizedRegion,
+    localizedRegion_subset_familyHull :=
+      data.localizedRegion_subset_familyHull,
+    familyHullLogVolume_eq_localizedLogVolumeSum :=
+      data.familyHullLogVolume_eq_localizedLogVolumeSum,
+    localizedRegion_logVolume_eq_adjusted :=
+      data.localizedRegion_logVolume_eq_adjusted }
+
+def directSummandNorm
+    (data :
+      IUTStage1Remark395NormSquareLocalizedHullVectorBundleDecompositionSource
+        α ι η β γ)
+    (index : β) (summand : γ) :
+    Real :=
+  data.localizedSource.directSummandNorm index summand
+
+theorem projected_directSummandLogVolume_eq_sq
+    (data :
+      IUTStage1Remark395NormSquareLocalizedHullVectorBundleDecompositionSource
+        α ι η β γ)
+    (index : β) (summand : γ) :
+    (data.toLocalizedHullVectorBundleDecompositionSource.localizedSource.localization
+        index).bundle.directSummandLogVolume summand =
+      data.directSummandNorm index summand ^ 2 :=
+  data.localizedSource.projected_directSummandLogVolume_eq_sq index summand
+
+theorem projected_directSummandLogVolume_nonneg
+    (data :
+      IUTStage1Remark395NormSquareLocalizedHullVectorBundleDecompositionSource
+        α ι η β γ)
+    (index : β) (summand : γ) :
+    0 <=
+      (data.toLocalizedHullVectorBundleDecompositionSource.localizedSource.localization
+        index).bundle.directSummandLogVolume summand :=
+  data.localizedSource.projected_directSummandLogVolume_nonneg index summand
+
+theorem projected_directSummandLogVolume_pos_of_norm_ne_zero
+    (data :
+      IUTStage1Remark395NormSquareLocalizedHullVectorBundleDecompositionSource
+        α ι η β γ)
+    {index : β} {summand : γ}
+    (hnorm : data.directSummandNorm index summand ≠ 0) :
+    0 <
+      (data.toLocalizedHullVectorBundleDecompositionSource.localizedSource.localization
+        index).bundle.directSummandLogVolume summand :=
+  data.localizedSource.projected_directSummandLogVolume_pos_of_norm_ne_zero hnorm
+
+theorem endpoint
+    (data :
+      IUTStage1Remark395NormSquareLocalizedHullVectorBundleDecompositionSource
+        α ι η β γ) :
+    data.toLocalizedHullVectorBundleDecompositionSource.hullOperator =
+        data.hullOperator ∧
+      data.toLocalizedHullVectorBundleDecompositionSource.possibleRegion =
+        data.possibleRegion ∧
+      data.toLocalizedHullVectorBundleDecompositionSource.localizedSource =
+        data.localizedSource.toLocalizedVectorBundleDeterminantSource ∧
+      (∀ index : β, ∀ summand : γ,
+        (data.toLocalizedHullVectorBundleDecompositionSource.localizedSource.localization
+            index).bundle.directSummandLogVolume summand =
+          data.directSummandNorm index summand ^ 2) ∧
+      (∀ index : β, ∀ summand : γ,
+        0 <=
+          (data.toLocalizedHullVectorBundleDecompositionSource.localizedSource.localization
+            index).bundle.directSummandLogVolume summand) :=
+  ⟨rfl, rfl, rfl, data.projected_directSummandLogVolume_eq_sq,
+    data.projected_directSummandLogVolume_nonneg⟩
+
+end IUTStage1Remark395NormSquareLocalizedHullVectorBundleDecompositionSource
 
 /--
 Localized hull-cover source for the Ob3-3 summand formula.
