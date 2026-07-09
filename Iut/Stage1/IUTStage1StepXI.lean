@@ -68029,6 +68029,172 @@ end StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluati
 
 set_option linter.style.longLine false in
 /--
+Constructed Gaussian/Hodge diagonal source with the finite Hodge summands fixed
+to be the localized weighted-adjusted determinant contributions.
+
+This removes the independent finite `hodgeThetaSummand` family from the
+constructed Gaussian/Hodge boundary.  The remaining lower calibration is the
+single scalar equality saying that the Hodge theta-monoid degree is the
+localized adjusted determinant sum.
+-/
+structure StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+    (hullData : StepXIHullFormationData sourceData.Core sourceData.Images)
+    {l : PrimeGeFive} {F : Type z} [Field F]
+    {X C : HyperbolicOrbicurveModel F}
+    (hodgeEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    {η : Type x} {β : Type v} {γ : Type w} [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point target) (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (V : Type v) (μ : Type w) [Fintype V] where
+  globalObject : IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean
+  localization : V -> IUTStage1GlobalToLocalRealifiedFrobenioidRestriction
+  localObjectId : V -> IUTStage1LocalObjectId IUTStage1PlaceKind.nonarchimedean
+  hodgeCanonicalDegree_eq_localPrime :
+    ∀ v : V,
+      hodgeEvaluation.toGaussianMonoidDegreeEvaluation.gaussianDegree
+          hodgeEvaluation.thetaRootSource.canonicalFullLabel =
+        (localization v).localPrimeLogVolume
+  summandPlace : β -> V
+  coricUnitCharacter : V -> μ
+  structureSheafSummand : β -> γ
+  structureSheaf_eq_directSummand :
+    ∀ index : β,
+      (localizedSource.localizedSource.localization index).structureSheafLogVolume =
+        (localizedSource.localizedSource.localization index).bundle.directSummandLogVolume
+          (structureSheafSummand index)
+  directSummand_nonneg :
+    ∀ index : β,
+      ∀ summand : γ,
+        0 <=
+          (localizedSource.localizedSource.localization index).bundle.directSummandLogVolume
+            summand
+  positiveIndex : β
+  positiveSummand : γ
+  positiveSummand_ne_structureSheaf :
+    positiveSummand ≠ structureSheafSummand positiveIndex
+  positiveSummand_pos :
+    0 <
+      (localizedSource.localizedSource.localization positiveIndex).bundle.directSummandLogVolume
+        positiveSummand
+  thetaMonoidDegree_eq_localizedAdjustedSum :
+    hodgeEvaluation.thetaMonoidDegree = localizedSource.localizedAdjustedSum
+
+namespace StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+
+variable {hullData : StepXIHullFormationData sourceData.Core sourceData.Images}
+variable {l : PrimeGeFive} {F : Type z} [Field F]
+variable {X C : HyperbolicOrbicurveModel F}
+variable {hodgeEvaluation :
+  IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+    l X C}
+variable {η : Type x} {β : Type v} {γ : Type w} [Fintype β] [Fintype γ]
+variable
+  {localizedSource :
+    IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+      (Point target) (Quot sourceData.Core.equalityQuotient.relation) η β γ}
+variable {V : Type v} {μ : Type w} [Fintype V]
+
+noncomputable def hodgeThetaSummand
+    (_source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData hodgeEvaluation localizedSource V μ)
+    (index : β) :
+    Real :=
+  localizedSource.localizedSource.weightedAdjustedLogVolume index
+
+theorem hodgeThetaSummand_eq_localizedWeightedAdjusted
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData hodgeEvaluation localizedSource V μ)
+    (index : β) :
+    source.hodgeThetaSummand index =
+      localizedSource.localizedSource.weightedAdjustedLogVolume index :=
+  rfl
+
+theorem thetaMonoidDegree_eq_hodgeThetaSummandSum
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData hodgeEvaluation localizedSource V μ) :
+    hodgeEvaluation.thetaMonoidDegree =
+      Finset.univ.sum fun index => source.hodgeThetaSummand index := by
+  simpa [hodgeThetaSummand,
+    IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource.localizedAdjustedSum]
+    using source.thetaMonoidDegree_eq_localizedAdjustedSum
+
+set_option linter.style.longLine false in
+noncomputable def toConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData hodgeEvaluation localizedSource V μ) :
+    StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+      (sourceData := sourceData) (β := β) (γ := γ)
+      hullData hodgeEvaluation localizedSource V μ :=
+  { globalObject := source.globalObject,
+    localization := source.localization,
+    localObjectId := source.localObjectId,
+    hodgeCanonicalDegree_eq_localPrime :=
+      source.hodgeCanonicalDegree_eq_localPrime,
+    summandPlace := source.summandPlace,
+    coricUnitCharacter := source.coricUnitCharacter,
+    structureSheafSummand := source.structureSheafSummand,
+    structureSheaf_eq_directSummand := source.structureSheaf_eq_directSummand,
+    directSummand_nonneg := source.directSummand_nonneg,
+    positiveIndex := source.positiveIndex,
+    positiveSummand := source.positiveSummand,
+    positiveSummand_ne_structureSheaf := source.positiveSummand_ne_structureSheaf,
+    positiveSummand_pos := source.positiveSummand_pos,
+    hodgeThetaSummand := source.hodgeThetaSummand,
+    thetaMonoidDegree_eq_hodgeThetaSummandSum :=
+      source.thetaMonoidDegree_eq_hodgeThetaSummandSum,
+    hodgeThetaSummand_eq_localizedWeightedAdjusted :=
+      source.hodgeThetaSummand_eq_localizedWeightedAdjusted }
+
+set_option linter.style.longLine false in
+noncomputable def toGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData hodgeEvaluation localizedSource V μ) :
+    StepXIThetaLGPLocalizedDiagonalDirectSummandEnvironmentThetaGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+      (sourceData := sourceData) (β := β) (γ := γ)
+      hullData hodgeEvaluation localizedSource V μ :=
+  source.toConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+    |>.toGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (source :
+      StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        hullData hodgeEvaluation localizedSource V μ) :
+    let summandSource :=
+      source.toConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource;
+    (∀ index : β,
+        source.hodgeThetaSummand index =
+          localizedSource.localizedSource.weightedAdjustedLogVolume index) ∧
+      hodgeEvaluation.thetaMonoidDegree =
+        (Finset.univ.sum fun index => source.hodgeThetaSummand index) ∧
+      summandSource.hodgeThetaSummand = source.hodgeThetaSummand ∧
+      summandSource.thetaMonoidDegree_eq_hodgeThetaSummandSum =
+        source.thetaMonoidDegree_eq_hodgeThetaSummandSum :=
+  by
+    intro summandSource
+    exact
+      ⟨source.hodgeThetaSummand_eq_localizedWeightedAdjusted,
+        source.thetaMonoidDegree_eq_hodgeThetaSummandSum,
+        rfl, rfl⟩
+
+end StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+
+set_option linter.style.longLine false in
+/--
 Localized single-place Ob7 source for the preferred public Step (xi) route.
 
 This specializes the localized product-formula construction to the one-summand
@@ -76018,6 +76184,60 @@ noncomputable def preferredPublicStepXIPaperSourceRouteAuditDiagonalDirectSumman
       sourceData paperTrace principalSource hodgeEvaluation localizedSource
       hullOperator_eq possibleRegion_eq
       (constructedGaussianHodgeSource.toGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData))
+      iutIV_cTheta additive_haar_arithmetic_degree_padic audit
+
+set_option linter.style.longLine false in
+/--
+Preferred public Step (xi) paper-source route with constructed Gaussian/Hodge
+divisor bridge and localized adjusted Hodge summands.
+
+This is stricter than the constructed-summand route: the caller no longer
+supplies an independent finite Hodge summand family.  The summands are fixed
+internally to be the localized weighted-adjusted determinant contributions,
+and the remaining scalar calibration is
+`hodgeEvaluation.thetaMonoidDegree = localizedSource.localizedAdjustedSum`.
+-/
+noncomputable def preferredPublicStepXIPaperSourceRouteAuditDiagonalDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (paperTrace : StepXIPaperTrace)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {F : Type z} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        principalProductHullOperator sourceData principalSource)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        principalProductPossibleRegion sourceData principalSource)
+    {V : Type v} {μ : Type w} [Fintype V]
+    (constructedLocalizedAdjustedSource :
+      StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        (principalProductHullFormationData sourceData principalSource)
+        hodgeEvaluation localizedSource V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations) :=
+  fun audit =>
+    preferredPublicStepXIPaperSourceRouteAuditDiagonalDirectSummandConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7
+      sourceData paperTrace principalSource hodgeEvaluation localizedSource
+      hullOperator_eq possibleRegion_eq
+      (constructedLocalizedAdjustedSource.toConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
         (sourceData := sourceData))
       iutIV_cTheta additive_haar_arithmetic_degree_padic audit
 

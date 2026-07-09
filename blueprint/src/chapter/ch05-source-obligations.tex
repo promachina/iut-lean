@@ -611,6 +611,10 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource.gaussianThetaLogVolume_eq_hodgeCanonicalDegree}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource.endpoint}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalDirectSummandConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource.thetaMonoidDegree_eq_hodgeThetaSummandSum}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource.endpoint}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7}
   \leanok
   The promoted public paper-trace route is now the strict principal-product
   localized wrapper.  It consumes the source spine, a principal product
@@ -637,15 +641,17 @@
   constructed internally.  The current strictest public diagonal wrapper now
   consumes finite direct-summand data, an audited Hodge--Arakelov theta
   evaluation, global-to-local restriction data calibrated at the Hodge
-  canonical full-label Gaussian degree, and finite Hodge theta summands.  The
+  canonical full-label Gaussian degree, and the scalar equality between the
+  Hodge theta-monoid degree and the localized adjusted determinant sum.  The
   environment/Gaussian realified Frobenioid evaluation is constructed
   internally from zero-divisor ordinary/theta/log-shell copies whose unit
   log-volume is the Hodge canonical degree; normalization proves that the
   Gaussian theta divisor log-volume is this Hodge canonical degree.  The Hodge
-  evaluation identifies the canonical degree with the theta-monoid degree; the
-  Hodge theta summands have this theta-monoid degree as their finite sum; and
-  each summand is identified pointwise with the corresponding localized
-  weighted adjusted determinant contribution.  The
+  evaluation identifies the canonical degree with the theta-monoid degree.  The
+  finite Hodge summands are no longer a public family: they are fixed
+  internally to be the localized weighted adjusted determinant contributions,
+  and the scalar equality proves that their finite sum is the theta-monoid
+  degree.  The
   structure-sheaf log-volume is identified with a distinguished direct summand
   of each localized arithmetic vector bundle, all direct summands are
   nonnegative, and one non-structure summand is strictly positive.  Finite
@@ -655,9 +661,10 @@
   localized adjusted summand positivity; finite summation gives localized
   family-hull positivity.  The theta scalar at the strict boundary is the
   environment theta divisor log-volume by definition.  The public route now
-  constructs the older Gaussian/Hodge, Hodge-evaluation, and Hodge-scalar
-  sources internally from the Hodge canonical-degree divisor construction,
-  audited evaluation, and finite summand calibration, then derives the
+  constructs the older Hodge-summand, Gaussian/Hodge, Hodge-evaluation, and
+  Hodge-scalar sources internally from the Hodge canonical-degree divisor
+  construction, audited evaluation, and localized adjusted-sum calibration,
+  then derives the
   environment-theta/localized adjusted-sum equality; Lean derives the equality
   with the family-hull log-volume from the localized Ob3/Ob5 identity.  This
   derived equality implies the
