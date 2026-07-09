@@ -625,11 +625,12 @@ evaluation from global-to-local restrictions and local object identifiers; the
 local realified objects are forced by the restricted global prime log-volumes.
 In the diagonal finite valuation-index route, the environment and Gaussian
 prime-place equivalences are identity maps constructed internally.  The
-strictest public diagonal wrapper now consumes finite direct-summand data, an
-audited Hodge--Arakelov theta evaluation, global-to-local restriction data
-calibrated at the Hodge canonical full-label Gaussian degree, and the scalar
-equality between the Hodge theta-monoid degree and the localized adjusted
-determinant sum.  The environment/Gaussian realified Frobenioid evaluation is
+strictest public diagonal wrapper now consumes square-presented finite
+direct-summand data, an audited Hodge--Arakelov theta evaluation,
+global-to-local restriction data calibrated at the Hodge canonical full-label
+Gaussian degree, and the scalar equality between the Hodge theta-monoid degree
+and the localized adjusted determinant sum.  The environment/Gaussian
+realified Frobenioid evaluation is
 constructed internally from zero-divisor ordinary/theta/log-shell copies whose
 unit log-volume is the Hodge canonical degree; normalization proves that the
 Gaussian theta divisor log-volume is this Hodge canonical degree.  The Hodge
@@ -639,8 +640,10 @@ internally to be the localized weighted adjusted determinant contributions,
 and the scalar equality proves that their finite sum is the theta-monoid
 degree.  The
 structure-sheaf log-volume is identified with a distinguished direct summand
-of each localized arithmetic vector bundle, all direct summands are
-nonnegative, and one non-structure summand is strictly positive.  Finite summation derives the Ob3-1 inequalities
+of each localized arithmetic vector bundle.  Each direct-summand log-volume is
+presented as a square, and one non-structure summand has nonzero root; Lean
+derives all direct-summand nonnegativity and the strict positive summand from
+these lower numerical witnesses.  Finite summation derives the Ob3-1 inequalities
 comparing the structure-sheaf log-volume with the localized bundle log-volume;
 the subtraction formula derives adjusted raw local positivity; positive
 determinant weights derive localized adjusted summand positivity; finite
@@ -668,11 +671,11 @@ construct, from the source papers, the actual lower operations corresponding to:
 \text{the analytic construction of the global-to-local restrictions and local-prime global equality},\\
 \text{the analytic construction of non-diagonal prime-place coordinates and the coric character},\\
 \text{the Hodge canonical-degree local-prime and localized adjusted-sum calibration},\\
-\text{the source construction of direct-summand positivity data}.
+\text{the analytic construction of the direct-summand square/root presentations}.
 \end{array}
 \]
-This is the next natural place to eliminate a family of \texttt{Prop}-level
-obligations and replace it by constructed Lean data.
+This is the next natural place to replace a remaining lower numerical source
+with constructed analytic data from the papers.
 
 \subsection{\IUT{} IV estimates}
 
