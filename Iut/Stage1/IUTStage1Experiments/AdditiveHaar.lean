@@ -24308,6 +24308,9 @@ structure ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDe
   oneSidedMultiradialSource :
     IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource
       (package := package) record l
+  possibleImageNonempty :
+    ∀ choice : index,
+      (record.thetaPossibleImages.images.region choice).toSet.Nonempty
   qPilotRegion_eq_selectedQRegion :
     sourceData.qPilotRegion =
       oneSidedMultiradialSource.selectedQRegion.toSet
@@ -24511,6 +24514,9 @@ structure RecordOb3Ob5ArithmeticDivisorBackedComponentSource
   oneSidedMultiradialSource :
     IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource
       (package := package) record l
+  possibleImageNonempty :
+    ∀ choice : index,
+      (record.thetaPossibleImages.images.region choice).toSet.Nonempty
   qPilotRegion_eq_selectedQRegion :
     sourceData.qPilotRegion =
       oneSidedMultiradialSource.selectedQRegion.toSet
@@ -24569,6 +24575,7 @@ noncomputable def RecordOb3Ob5ArithmeticDivisorBackedComponentSource.toArithmeti
       sourceData estimate l η γ localPrime localField αHaar hullSystem
       αLocal ηLocal localAnalyticHullSystem archIndex archSummand :=
   { oneSidedMultiradialSource := source.oneSidedMultiradialSource,
+    possibleImageNonempty := source.possibleImageNonempty,
     qPilotRegion_eq_selectedQRegion :=
       source.qPilotRegion_eq_selectedQRegion,
     matchedLocalDegreeArithmeticDivisorBackedComponentSource :=
@@ -32911,6 +32918,9 @@ structure ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedCo
           constructedHodgeIPLSource.iplConstructionSource.iplDatum.inputPrimeStrip ∧
         (constructedHodgeIPLSource.iplConstructionSource.choiceLink choice).target =
           constructedHodgeIPLSource.iplConstructionSource.iplDatum.choicePrimeStrip choice
+  possibleImageNonempty :
+    ∀ choice,
+      (record.thetaPossibleImages.images.region choice).toSet.Nonempty
   noAllowedSHEDomainToCodomain :
     ∀ mechanism : QualitativeData.TransportMechanismId,
       ¬ constructedBundle.sheTransportContext.transportSystem.Allows
@@ -33144,6 +33154,10 @@ structure ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedCo
                 possibleImageData :=
                   { quotientImages :=
                       arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.equalityQuotientPossibleImages,
+                    possibleImagePoint :=
+                      fun choice => Classical.choose (possibleImageNonempty choice),
+                    possibleImagePoint_mem :=
+                      fun choice => Classical.choose_spec (possibleImageNonempty choice),
                     selectedQChoice :=
                       arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice,
                     selectedQRegion :=
@@ -33153,19 +33167,19 @@ structure ConstructedQualitativeHodgeSHEIPLAdditiveHaarArithmeticDivisorBackedCo
                         remark395HullSource
                         arithmeticDivisorBackedComponentSource.qPilotRegion_eq_selectedQRegion).2.2.1 },
                   processionData :=
-                    { transitionIndex := ULift.{v, 0} (ZMod l.value),
+                    { transitionIndex := ZMod l.value,
                       transitionIndexFintype := inferInstance,
                       labelCardinality := l.value,
                       transition :=
                         fun t =>
                           arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.flProcessionAction.transition
-                            t.down,
+                            t,
                       labelCardinality_eq_transitionIndex_card := by
-                        simp,
+                        exact ZMod.card l.value,
                       transition_stays_in_equalityQuotient :=
                         fun t choice =>
                           arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.fl_procession_stays_in_equalityQuotient
-                            t.down choice },
+                            t choice },
                 theorem311_hodge_she_ipl_apt_source_bridge_constructed :=
                   QualitativeData.HasStructuredIPL package.preLedger.output.family ∧
                     QualitativeData.HasStructuredSHE package.preLedger.output.family ∧
@@ -34054,6 +34068,8 @@ theorem boundarySignedEqualityOrStrictCTheta_from_constructedQualitativeHodgeSHE
         constructedHodgeIPLSource.constructedIPLSHEAPTTransportLawAudit,
       choiceWiseIPLLinkAudit :=
         constructedHodgeIPLSource.iplConstructionSource.construction_choiceLink_endpoint.1,
+      possibleImageNonempty :=
+        arithmeticDivisorBackedComponentSource.possibleImageNonempty,
       noAllowedSHEDomainToCodomain :=
         constructedHodgeIPLSource.noAllowedSHEDomainToCodomain,
       sheForbiddenTransportAudit :=
@@ -34133,7 +34149,7 @@ theorem boundarySignedEqualityOrStrictCTheta_from_constructedQualitativeHodgeSHE
             arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.possibleImages_pullback_from_equalityQuotient,
               fun t choice =>
                 arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.fl_procession_stays_in_equalityQuotient
-                  t.down choice,
+                  t choice,
             arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.possibleImageCompatibility,
             arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.possibleImageCompatibility.ind1_region_eq,
             arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.possibleImageCompatibility.ind2_region_eq,
@@ -34151,10 +34167,10 @@ theorem boundarySignedEqualityOrStrictCTheta_from_constructedQualitativeHodgeSHE
                       arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice :=
                   arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.possibleImages_pullback_from_equalityQuotient
                     arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.selectedQChoice,
-              ⟨by simp,
+              ⟨ZMod.card l.value,
                 fun t choice =>
                   arithmeticDivisorBackedComponentSource.oneSidedMultiradialSource.oneSidedQuotientAudit.fl_procession_stays_in_equalityQuotient
-                    t.down choice⟩,
+                    t choice⟩,
             ⟨constructedBundle.hasStructuredIPL,
               constructedBundle.hasStructuredSHE_from_context,
               constructedBundle.hasStructuredAPT,
