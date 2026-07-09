@@ -78652,6 +78652,221 @@ noncomputable def preferredPublicStepXIPaperSourceRouteAuditDiagonalPadicFiniteE
         (sourceData := sourceData))
       iutIV_cTheta additive_haar_arithmetic_degree_padic audit
 
+set_option linter.style.longLine false in
+/--
+Construct the Step (xi)/Remark 3.9.5 paper trace at the strictest
+finite-extension public boundary.
+
+The trace is projected from the concrete finite-extension,
+valuation-unit-ball, compact-open norm-square, Hodge-evaluation, localized
+determinant, and coric Ob7 construction inputs used by the current strictest
+public Step (xi) route.
+-/
+noncomputable def padicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7PaperTrace
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {F : Type z} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    {p : Nat} [Fact p.Prime] {K : Type y} {β : Type v} {γ : Type w}
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    [Fintype β] [Fintype γ]
+    (padicFiniteLocalizedSource :
+      IUTStage1Remark395PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) p K β γ
+        principalSource.toHolomorphicHullSystem)
+    (possibleRegion_eq :
+      padicFiniteLocalizedSource.toUnitBallValuationHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toAdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toNormSquareLocalizedHullVectorBundleDecompositionSource.toLocalizedHullVectorBundleDecompositionSource.possibleRegion =
+        principalProductPossibleRegion sourceData principalSource)
+    {V : Type v} {μ : Type w} [Fintype V]
+    (padicFiniteNormSquareDirectSummandSource :
+      StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPPadicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        (principalProductHullFormationData sourceData principalSource)
+        hodgeEvaluation padicFiniteLocalizedSource V μ) :
+    StepXIPaperTrace :=
+  let localizedSource :=
+    padicFiniteLocalizedSource.toUnitBallValuationHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+      |>.toAdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+      |>.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+      |>.toNormSquareLocalizedHullVectorBundleDecompositionSource
+      |>.toLocalizedHullVectorBundleDecompositionSource
+  let unitBallNormSquareDirectSummandSource :=
+    padicFiniteNormSquareDirectSummandSource.toUnitBallValuationHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+      (sourceData := sourceData)
+  let additiveHaarNormSquareDirectSummandSource :=
+    unitBallNormSquareDirectSummandSource.toAdditiveHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+      (sourceData := sourceData)
+  let compactOpenNormSquareDirectSummandSource :=
+    additiveHaarNormSquareDirectSummandSource.toCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+      (sourceData := sourceData)
+  let normSquareDirectSummandSource :=
+    compactOpenNormSquareDirectSummandSource.toNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+      (sourceData := sourceData)
+  let squareDirectSummandSource :=
+    normSquareDirectSummandSource.toSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+      (sourceData := sourceData)
+  let constructedLocalizedAdjustedSource :=
+    squareDirectSummandSource.toConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+      (sourceData := sourceData)
+  let constructedGaussianHodgeSource :=
+    constructedLocalizedAdjustedSource.toConstructedGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+      (sourceData := sourceData)
+  let environmentThetaGaussianHodgeSource :=
+    constructedGaussianHodgeSource.toGaussianHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+      (sourceData := sourceData)
+  let environmentThetaHodgeEvaluationSource :=
+    environmentThetaGaussianHodgeSource.toEnvironmentThetaHodgeEvaluationSummandRestrictionAnchoredOb7ConstructionSource
+      (sourceData := sourceData)
+  let environmentThetaHodgeSource :=
+    environmentThetaHodgeEvaluationSource.toEnvironmentThetaHodgeSummandRestrictionAnchoredOb7ConstructionSource
+      (sourceData := sourceData)
+  let environmentThetaAdjustedSource :=
+    environmentThetaHodgeSource.toEnvironmentThetaLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+      (sourceData := sourceData)
+  let environmentThetaSource :=
+    environmentThetaAdjustedSource.toEnvironmentThetaRestrictionAnchoredOb7ConstructionSource
+      (sourceData := sourceData)
+  let environmentThetaLogVolume_eq_familyHullLogVolume :=
+    environmentThetaAdjustedSource.thetaSigned_eq_familyHullLogVolume
+      (sourceData := sourceData)
+  let thetaSigned := environmentThetaSource.thetaSigned
+  let thetaGlobalSource :=
+    environmentThetaSource.toDiagonalDirectSummandThetaGlobalRestrictionAnchoredOb7ConstructionSource
+      (sourceData := sourceData)
+  let familyHullGlobalSource :=
+    thetaGlobalSource.toDiagonalDirectSummandFamilyHullGlobalRestrictionAnchoredOb7ConstructionSource
+      (sourceData := sourceData) environmentThetaLogVolume_eq_familyHullLogVolume
+  let directSummandPositiveSource :=
+    familyHullGlobalSource.toDiagonalDirectSummandPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+      (sourceData := sourceData)
+  let structureSheafPositiveSource :=
+    directSummandPositiveSource.toDiagonalStructureSheafPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+      (sourceData := sourceData)
+  let rawPositiveSource :=
+    structureSheafPositiveSource.toDiagonalRawPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+      (sourceData := sourceData)
+  let summandPositiveSource :=
+    rawPositiveSource.toDiagonalSummandPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+      (sourceData := sourceData)
+  let positiveRestrictionSource :=
+    summandPositiveSource.toDiagonalPositiveRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+      (sourceData := sourceData)
+  let restrictionDiagonalSource :=
+    positiveRestrictionSource.toDiagonalRestrictionAnchoredGlobalNormalizedOb7ConstructionSource
+      (sourceData := sourceData)
+  let diagonalSource :=
+    restrictionDiagonalSource.toDiagonalAnchoredGlobalNormalizedOb7ConstructionSource
+      (sourceData := sourceData)
+  let anchoredSource :=
+    diagonalSource.toAnchoredCommonPlaceGlobalNormalizedOb7ConstructionSource
+      (sourceData := sourceData)
+  let sharedSource :=
+    anchoredSource.toSharedLocalGlobalCommonPlaceGlobalNormalizedOb7ConstructionSource
+      (sourceData := sourceData)
+  let commonPlaceSource :=
+    sharedSource.toCommonPlaceGlobalNormalizedOb7ConstructionSource
+      (sourceData := sourceData)
+  let normalizedSource :=
+    commonPlaceSource.toGlobalNormalizedRawAdjustedOb7ConstructionSource
+      (sourceData := sourceData)
+  let constructionSource :=
+    normalizedSource.toLocalizedProductFormulaOb7ConstructionSource
+      (sourceData := sourceData)
+  let tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          constructionSource.determinantProductFormulaSource.determinantSource).normalizedLogVolume <=
+        thetaSigned := by
+        have hlocalized :=
+          StepXIDeterminantComparisonData.localizedNormalizedLogVolume_le_thetaSigned_ofThetaEqFamilyHullLogVolume
+            localizedSource environmentThetaLogVolume_eq_familyHullLogVolume
+        calc
+          (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+              constructionSource.determinantProductFormulaSource.determinantSource).normalizedLogVolume =
+              constructionSource.determinantProductFormulaSource.determinantSource.determinantLogVolume :=
+            IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant_normalizedLogVolume_eq
+              constructionSource.determinantProductFormulaSource.determinantSource
+          _ =
+              constructionSource.determinantProductFormulaSource.determinantSource.normalizedLogVolume := by
+            rw [constructionSource.determinantProductFormulaSource.determinantSource.normalizedLogVolume_eq_determinantLogVolume]
+          _ =
+              localizedSource.localizedSource.normalizedDeterminantLogVolume := by
+            rw [constructionSource.determinantProductFormula_determinantSource_eq]
+            rfl
+          _ <= thetaSigned := hlocalized
+  let ob7Source :=
+    constructionSource.toThetaLGPOb7CompatibilitySource
+      (sourceData := sourceData)
+      thetaSigned (by rfl) possibleRegion_eq tensorPower_bound
+  principalProductLocalizedThetaEqFamilyHullPaperTrace
+    sourceData thetaSigned principalSource localizedSource
+    (by rfl) possibleRegion_eq
+    environmentThetaLogVolume_eq_familyHullLogVolume ob7Source
+
+set_option linter.style.longLine false in
+/--
+Strictest public Step (xi) route with the Step (xi)/Remark 3.9.5 paper trace
+constructed internally.
+
+This is the constructed-trace variant of
+`preferredPublicStepXIPaperSourceRouteAuditDiagonalPadicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7`.
+It keeps the same concrete finite-extension, valuation-unit-ball,
+compact-open norm-square, Hodge-evaluation, and Ob7 construction inputs, but
+does not accept a standalone `StepXIPaperTrace`.
+-/
+noncomputable def preferredPublicConstructedPaperTraceStepXIPaperSourceRouteAuditDiagonalPadicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {F : Type z} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    {p : Nat} [Fact p.Prime] {K : Type y} {β : Type v} {γ : Type w}
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    [Fintype β] [Fintype γ]
+    (padicFiniteLocalizedSource :
+      IUTStage1Remark395PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) p K β γ
+        principalSource.toHolomorphicHullSystem)
+    (possibleRegion_eq :
+      padicFiniteLocalizedSource.toUnitBallValuationHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toAdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toNormSquareLocalizedHullVectorBundleDecompositionSource.toLocalizedHullVectorBundleDecompositionSource.possibleRegion =
+        principalProductPossibleRegion sourceData principalSource)
+    {V : Type v} {μ : Type w} [Fintype V]
+    (padicFiniteNormSquareDirectSummandSource :
+      StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPPadicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+        (sourceData := sourceData) (β := β) (γ := γ)
+        (principalProductHullFormationData sourceData principalSource)
+        hodgeEvaluation padicFiniteLocalizedSource V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations) :=
+  let paperTrace :=
+    padicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7PaperTrace
+      sourceData principalSource hodgeEvaluation padicFiniteLocalizedSource
+      possibleRegion_eq padicFiniteNormSquareDirectSummandSource
+  preferredPublicStepXIPaperSourceRouteAuditDiagonalPadicFiniteExtensionUnitBallCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7
+    sourceData paperTrace principalSource hodgeEvaluation
+    padicFiniteLocalizedSource possibleRegion_eq
+    padicFiniteNormSquareDirectSummandSource iutIV_cTheta
+    additive_haar_arithmetic_degree_padic
+
 end Obligations
 
 end IUTStage1Theorem311ToCorollary312PaperTrace
