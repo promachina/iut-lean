@@ -452,7 +452,15 @@ removes the raw theta/family-hull scalar equality from this boundary: Lean
 derives \(\Theta_{\mathrm{signed}}\) = family-hull log-volume from
 `IUTStage1HodgeFamilyHullLogVolumeCalibration`, via the Hodge--Arakelov theta
 monoid degree.  The record-canonical bridge-data synchronization and measure
-calibration remain explicit lower inputs at this boundary.
+calibration remain explicit lower inputs at this boundary.  The same
+calibration now reaches the finite-divisor constructor-backed source: Lean
+converts the Hodge-calibrated data to the constructor-backed spine, forms the
+constructor-generated hull/determinant obligations, and builds the
+possible-image Step (xi) source without reintroducing a raw
+\(\Theta_{\mathrm{signed}}\)-to-family-hull equality at this boundary.  The
+target-charted exact-theta adjusted-summand source now enters this
+Hodge-calibrated finite-divisor constructor first and projects the older
+constructor-backed source only for legacy consumers.
 The principal-product hull source has also been connected to the lower
 upper-semi quotient formalism of Remark 3.9.5(v): the concrete hull source now
 projects to a bounded-family hull quotient source, proves that this quotient
@@ -492,10 +500,12 @@ measured adjusted-source boundary.  That measured boundary now has a
 Hodge-calibrated constructor: the package measure equality is projected from
 the measured source, and the \(\Theta_{\mathrm{signed}}\)-to-family-hull
 equality is derived from `IUTStage1HodgeFamilyHullLogVolumeCalibration`,
-instead of being supplied as a raw downstream argument.
-localized Ob3/Ob5 arithmetic-vector-bundle data before entering the legacy
-bridge.  The quotient-hull side of these variants has also been lowered: the
-route may now take the Theorem 3.11 possible-image quotient compatibility for
+instead of being supplied as a raw downstream argument.  This is still a
+boundary above the localized Ob3/Ob5 arithmetic-vector-bundle data used by the
+older compatibility routes, but the theta equality at that boundary is now
+Hodge-derived rather than asserted.  The quotient-hull side of these variants
+has also been lowered: the route may now take the Theorem 3.11 possible-image
+quotient compatibility for
 the source images, and Lean forms the Remark 3.9.5 equality-quotient
 hull/log-volume compatibility by applying the selected holomorphic hull
 operator.  Thus the deepest local selected route no longer needs to expose a
