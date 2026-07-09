@@ -633,6 +633,11 @@
   \lean{Iut.Stage1.IUTStage1AdditiveHaarCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource}
   \lean{Iut.Stage1.IUTStage1Remark395Ob3Ob4AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource}
   \lean{Iut.Stage1.IUTStage1Remark395AdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource}
+  \lean{Iut.Stage1.IUTStage1UnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource}
+  \lean{Iut.Stage1.IUTStage1UnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor_compactOpenMeasure_eq_one}
+  \lean{Iut.Stage1.IUTStage1UnitBallValuationHaarCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource}
+  \lean{Iut.Stage1.IUTStage1Remark395Ob3Ob4UnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource}
+  \lean{Iut.Stage1.IUTStage1Remark395UnitBallValuationHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPLocalizedDiagonalNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource.endpoint}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7}
@@ -642,6 +647,9 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPAdditiveHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPAdditiveHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource.endpoint}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalAdditiveHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPUnitBallValuationHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPUnitBallValuationHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource.endpoint}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditDiagonalUnitBallValuationHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7}
   \leanok
   The promoted public paper-trace route is now the strict principal-product
   localized wrapper.  It consumes the source spine, a principal product
@@ -666,7 +674,7 @@
   route, the environment primes, Gaussian primes, and places are all indexed
   by the same type, so the prime-place equivalences are identity maps
   constructed internally.  The current strictest public diagonal wrapper now
-  consumes an additive-Haar-backed compact-open norm-square localized
+  consumes a valuation-unit-ball Haar-backed compact-open norm-square localized
   Remark 3.9.5 vector-bundle decomposition over the principal product hull
   system, an audited Hodge--Arakelov theta
   evaluation, global-to-local restriction data calibrated at the Hodge
@@ -684,13 +692,15 @@
   structure-sheaf log-volume is identified with a distinguished direct summand
   of each localized arithmetic vector bundle.  Each direct-summand log-volume
   is projected from the normalized log-volume of a local compact-open tensor
-  factor constructed from additive Haar data.  The inequality
-  \(1 \leq \mu(U)_{\mathbb R}\) gives nonnegative normalized log-volume by
-  \(\log\)-monotonicity and positive finite-extension degree, so Lean constructs
-  the corresponding square-root norm.  One non-structure summand has nonzero
-  norm.  Lean derives the compact-open norm-square source, square presentation,
-  all direct-summand nonnegativity, and the strict positive summand from that
-  single additive-Haar-backed Ob3/Ob4 source.  Finite
+  factor constructed from additive Haar data.  In the strictest route this
+  compact open is the normalized valuation unit ball; the source normalization
+  \(\mu(O_v)=1\) proves the Haar lower bound
+  \(1 \leq \mu(U)_{\mathbb R}\), and \(\log\)-monotonicity plus positive
+  finite-extension degree gives nonnegative normalized log-volume.  Lean then
+  constructs the corresponding square-root norm.  One non-structure summand has
+  nonzero norm.  Lean derives the compact-open norm-square source, square
+  presentation, all direct-summand nonnegativity, and the strict positive
+  summand from that single valuation-unit-ball Ob3/Ob4 source.  Finite
   summation derives the Ob3-1 inequalities comparing the structure-sheaf
   log-volume with the localized bundle log-volume; the subtraction formula
   derives adjusted raw local positivity; positive determinant weights derive
