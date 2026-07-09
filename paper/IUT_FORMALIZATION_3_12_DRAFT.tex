@@ -524,6 +524,13 @@ A further principal-product compact-open-factor variant replaces the direct
 Hodge/family-hull equality by a localized adjusted-determinant sum
 calibration; Lean recovers the family-hull equality from the localized
 Remark 3.9.5 decomposition theorem.
+The additive-Haar principal-product branch now also has a cover-derived
+localized hull source: instead of taking the localized-region containment in
+the family hull and the family-hull log-volume sum as standalone fields, it
+assumes the explicit cover identity
+\(\phi(\bigcup_i\Theta_i)=\bigcup_\beta H_\beta\) and the finite additivity
+formula for this cover; Lean derives the old containment and volume-sum
+interface from these lower hull-cover statements.
 The strict positive determinant contribution has now been separated from the
 valuation-unit-ball normalization.  A principal-product additive-Haar route
 constructs the paper trace internally and derives the positive summand from the
@@ -771,6 +778,9 @@ has been instantiated by a concrete finite-extension local-field source:
 the selected factor is the inverse base-prime dilation \(p^{-1}O_K\), whose
 compact-openness and Haar mass \(p^{[K:\mathbb Q_p]}>1\) are proved in the
 source core and threaded through the preferred additive-Haar public wrapper.
+The same wrapper can now consume a localized hull-cover source, deriving the
+old family-hull containment and log-volume summation obligations from the cover
+identity and finite cover additivity.
 The valuation-unit-ball finite-extension branch remains only a normalized
 legacy boundary: the selected radius is forced to be \(1\), so \(\mu(O_v)=1\)
 constructs weak nonnegativity but also proves that the normalized log-volume
@@ -819,10 +829,11 @@ construct, from the source papers, the actual lower operations corresponding to:
 \]
 The strict route now derives the unit-ball tensor factors and one non-unit
 inverse-dilation strict factor from finite-extension local-field Haar data, and
-can build the record Ob3/Ob5 determinant/log-volume source from theta-region
-principal valuation-ball covers.  The remaining work is to construct the full
-theta-region valuation-cover family, its global bridge calibrations, and the
-Hodge-theater packet source that selects the appropriate non-unit local factors.
+can build the record Ob3/Ob5 determinant/log-volume source from a
+principal-product theta-region cover identity and its finite additivity formula.
+The remaining work is to construct the full analytic valuation-cover family, its
+global bridge calibrations, and the Hodge-theater packet source that selects the
+appropriate non-unit local factors.
 
 \subsection{\IUT{} IV estimates}
 
