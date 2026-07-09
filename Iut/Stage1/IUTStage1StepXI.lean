@@ -64657,6 +64657,195 @@ theorem toPossibleImageFamilyHullExactThetaHullDetObligationsBackedSource_endpoi
               thetaSigned_eq_familyHullLogVolume,
         hendpoint.2.2.2.2.2.2⟩
 
+set_option linter.style.longLine false in
+/--
+Hodge-calibrated constructed Step (xi) source from a compact-open log-Kummer
+correspondence possible-region source.
+
+This strengthens the correspondence/obligations constructor by replacing the
+raw equality `thetaSigned = familyHullLogVolume` with the typed
+Hodge--Arakelov calibration
+`IUTStage1HodgeFamilyHullLogVolumeCalibration`.  The finite Ob3/Ob5
+family-hull source is still constructed from the correspondence source, and
+the tensor-power bound used in the record-canonical bridge is derived from the
+Hodge calibration.
+-/
+noncomputable def toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogKummerCorrespondenceHodgeCalibratedSourceFromObligations
+    {coric : Type u} {l : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {actionPacketTransportSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        recordConcrete indData}
+    {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+    {selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    {η : Type y} {K : Type z} {Λ : Type max u v w y z}
+    [PseudoMetricSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    (correspondenceSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerCorrespondencePossibleRegionSource
+        actionPacketTransportSource gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ))
+    {F : Type x} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceHA :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaValueEvaluationSource
+        l X C)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (qPilotRegion : Set (Point target))
+    (q_subset_recordUnion :
+      qPilotRegion ⊆ recordThetaPossibleImageUnion recordConcrete)
+    (measure_eq_hullLogVolume :
+      packageConcrete.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          (ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+            (β := β) (γ := γ) correspondenceSource).hullOperator).toRegionMeasure)
+    (calibration :
+      IUTStage1HodgeFamilyHullLogVolumeCalibration
+        recordConcrete sourceHA
+        ((ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+            (β := β) (γ := γ) correspondenceSource)
+          |>.toRecordOb3Ob5DeterminantCompatibilitySource
+          |>.toRecordBoundedFamilyHullDetLogVolumeSource))
+    (obligations : IUTStage1SourceHullDetObligations packageConcrete)
+    (obligationsHullDetData_eq_recordCanonical :
+      obligations.hullDetData.bridgeData =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordConcrete)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            (ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+              (β := β) (γ := γ) correspondenceSource).hullOperator)
+          qPilotRegion q_subset_recordUnion
+          (ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+              (β := β) (γ := γ) correspondenceSource).ob3ob4Source.toWeightedDeterminantSource
+          (ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+              (β := β) (γ := γ) correspondenceSource).toRecordOb3Ob5DeterminantCompatibilitySource.toCompatibility
+          measure_eq_hullLogVolume
+          (((ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+                (β := β) (γ := γ) correspondenceSource)
+            |>.toRecordOb3Ob5DeterminantCompatibilitySource
+            |>.toRecordBoundedFamilyHullDetLogVolumeSource)
+            |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+                calibration.thetaSigned_eq_familyHullLogVolume)) :
+    IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+      (β := β) recordConcrete :=
+  toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogKummerCorrespondencePossibleRegionSourceFromObligations
+    (β := β) (γ := γ) correspondenceSource operation hullOperation
+    determinantOperation qPilotRegion q_subset_recordUnion
+    measure_eq_hullLogVolume calibration.thetaSigned_eq_familyHullLogVolume
+    obligations obligationsHullDetData_eq_recordCanonical
+
+set_option linter.style.longLine false in
+theorem toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogKummerCorrespondenceHodgeCalibratedSourceFromObligations_endpoint
+    {coric : Type u} {l : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    {actionPacketTransportSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        recordConcrete indData}
+    {gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l}
+    {selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    {η : Type y} {K : Type z} {Λ : Type max u v w y z}
+    [PseudoMetricSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    (correspondenceSource :
+      IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerCorrespondencePossibleRegionSource
+        actionPacketTransportSource gluingTorsor selectedQChoice
+        (η := η) (K := K) (β := β) (γ := γ) (Λ := Λ))
+    {F : Type x} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (sourceHA :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaValueEvaluationSource
+        l X C)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (qPilotRegion : Set (Point target))
+    (q_subset_recordUnion :
+      qPilotRegion ⊆ recordThetaPossibleImageUnion recordConcrete)
+    (measure_eq_hullLogVolume :
+      packageConcrete.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          (ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+            (β := β) (γ := γ) correspondenceSource).hullOperator).toRegionMeasure)
+    (calibration :
+      IUTStage1HodgeFamilyHullLogVolumeCalibration
+        recordConcrete sourceHA
+        ((ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+            (β := β) (γ := γ) correspondenceSource)
+          |>.toRecordOb3Ob5DeterminantCompatibilitySource
+          |>.toRecordBoundedFamilyHullDetLogVolumeSource))
+    (obligations : IUTStage1SourceHullDetObligations packageConcrete)
+    (obligationsHullDetData_eq_recordCanonical :
+      obligations.hullDetData.bridgeData =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := recordConcrete)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            (ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+              (β := β) (γ := γ) correspondenceSource).hullOperator)
+          qPilotRegion q_subset_recordUnion
+          (ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+              (β := β) (γ := γ) correspondenceSource).ob3ob4Source.toWeightedDeterminantSource
+          (ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+              (β := β) (γ := γ) correspondenceSource).toRecordOb3Ob5DeterminantCompatibilitySource.toCompatibility
+          measure_eq_hullLogVolume
+          (((ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+                (β := β) (γ := γ) correspondenceSource)
+            |>.toRecordOb3Ob5DeterminantCompatibilitySource
+            |>.toRecordBoundedFamilyHullDetLogVolumeSource)
+            |>.tensorPower_bound_of_theta_eq_familyHullLogVolume
+                calibration.thetaSigned_eq_familyHullLogVolume)) :
+    let recordSource :=
+      ofCompactOpenLogKummerCorrespondencePossibleRegionSource
+        (β := β) (γ := γ) correspondenceSource;
+    let familyHullSource :=
+      recordSource.toRecordOb3Ob5DeterminantCompatibilitySource
+        |>.toRecordBoundedFamilyHullDetLogVolumeSource;
+    let constructedSource :=
+      toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogKummerCorrespondenceHodgeCalibratedSourceFromObligations
+        (β := β) (γ := γ) correspondenceSource sourceHA operation
+        hullOperation determinantOperation qPilotRegion q_subset_recordUnion
+        measure_eq_hullLogVolume calibration obligations
+        obligationsHullDetData_eq_recordCanonical;
+    constructedSource.qPilotRegion = qPilotRegion ∧
+      packageConcrete.preLedger.thetaSigned = sourceHA.thetaMonoidDegree ∧
+      sourceHA.thetaMonoidDegree = familyHullSource.familyHullLogVolume ∧
+      packageConcrete.preLedger.thetaSigned =
+        familyHullSource.familyHullLogVolume ∧
+      constructedSource.determinantSource =
+        recordSource.ob3ob4Source.toWeightedDeterminantSource ∧
+      packageConcrete.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        obligations.hullDetData.bridgeData ∧
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          constructedSource.determinantSource).normalizedLogVolume <=
+        packageConcrete.preLedger.thetaSigned ∧
+      packageConcrete.preLedger.qSigned <= packageConcrete.preLedger.thetaSigned :=
+  by
+    intro recordSource familyHullSource constructedSource
+    exact
+      ⟨rfl,
+        calibration.thetaSigned_eq_thetaMonoidDegree,
+        calibration.thetaMonoidDegree_eq_familyHullLogVolume,
+        calibration.thetaSigned_eq_familyHullLogVolume,
+        rfl,
+        obligations.hullDetData.hullDetBridge_eq_bridgeData,
+        constructedSource.tensorPower_bound,
+        constructedSource.qSigned_le_thetaSigned⟩
+
 end IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
 
 end IUTStage1SourcePackage

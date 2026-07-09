@@ -372,6 +372,8 @@
   \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogKummerCorrespondencePossibleRegionSource}
   \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogKummerCorrespondencePossibleRegionSourceFromObligations}
   \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogKummerCorrespondencePossibleRegionSourceFromObligations_endpoint}
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogKummerCorrespondenceHodgeCalibratedSourceFromObligations}
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogKummerCorrespondenceHodgeCalibratedSourceFromObligations_endpoint}
   \leanok
   The determinant comparison record consumed by the paper-derived Step (xi)
   source can now be produced from the existing weighted arithmetic-vector-bundle
@@ -418,8 +420,12 @@
   record Ob3/Ob5 and constructed Step (xi) source.  The correspondence route
   also has an obligations-backed constructor: the package hull/det bridge
   equality, q-pilot positivity, and normalization are projected from
-  `IUTStage1SourceHullDetObligations`, leaving only the record-canonical
-  bridge-data synchronization and the measure/theta calibrations explicit.  On
+  `IUTStage1SourceHullDetObligations`.  Its Hodge-calibrated variant replaces
+  the raw theta/family-hull scalar equality with
+  `IUTStage1HodgeFamilyHullLogVolumeCalibration`, deriving
+  \(\Theta_{\mathrm{signed}}\) = family-hull log-volume through the
+  Hodge--Arakelov theta monoid degree.  The record-canonical bridge-data
+  synchronization and measure calibration remain explicit lower inputs.  On
   the stricter localized
   route, the final
   normalized determinant

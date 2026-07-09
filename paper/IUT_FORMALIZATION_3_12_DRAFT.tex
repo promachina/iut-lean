@@ -447,9 +447,12 @@ relation-level image laws, compact-open representatives, and the converse
 realization law before entering the principal valuation-ball constructor.  The
 correspondence route now also has an obligations-backed entry point: the
 package bridge equality, q-pilot positivity, and normalization are projected
-from `IUTStage1SourceHullDetObligations`.  The record-canonical bridge-data
-synchronization, measure calibration, and \(\Theta\)-scalar calibration remain
-explicit lower inputs at this boundary.
+from `IUTStage1SourceHullDetObligations`.  Its Hodge-calibrated variant
+removes the raw theta/family-hull scalar equality from this boundary: Lean
+derives \(\Theta_{\mathrm{signed}}\) = family-hull log-volume from
+`IUTStage1HodgeFamilyHullLogVolumeCalibration`, via the Hodge--Arakelov theta
+monoid degree.  The record-canonical bridge-data synchronization and measure
+calibration remain explicit lower inputs at this boundary.
 The principal-product hull source has also been connected to the lower
 upper-semi quotient formalism of Remark 3.9.5(v): the concrete hull source now
 projects to a bounded-family hull quotient source, proves that this quotient
