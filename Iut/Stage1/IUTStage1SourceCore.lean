@@ -12694,6 +12694,371 @@ theorem endpoint
 end IUTStage1AdditiveHaarCompactOpenNormalizationSource
 
 /--
+Additive-Haar construction of a compact-open norm-square localized arithmetic
+vector bundle.
+
+This lowers the compact-open norm-square source by deriving each local tensor
+factor from an additive Haar compact-open normalization source.  The
+nonnegativity required to take square roots is no longer a standalone field on
+the tensor factor: it follows from the concrete Haar lower bound
+`1 <= μ(U).toReal`, since the normalized local log-volume is
+`log(μ(U).toReal) / [K : Q_p]`.
+-/
+structure IUTStage1AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleSource
+    (α : Type u) (η : Type v) (K : Type w) (γ : Type x)
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [Fintype γ]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  localRing : η
+  additiveHaarFactor :
+    γ -> IUTStage1AdditiveHaarCompactOpenNormalizationSource
+      α η K hullSystem
+  factor_localRing_eq :
+    ∀ summand : γ, (additiveHaarFactor summand).localRing = localRing
+  compactOpenMeasure_ge_one :
+    ∀ summand : γ,
+      1 <=
+        ((additiveHaarFactor summand).haarMeasure
+          (additiveHaarFactor summand).compactOpenSubset).toReal
+  rank_gt_one : 1 < Fintype.card γ
+
+namespace IUTStage1AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleSource
+
+variable {α : Type u} {η : Type v} {K : Type w} {γ : Type x}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [Fintype γ]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+noncomputable def compactOpenTensorFactor
+    (data :
+      IUTStage1AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleSource
+        α η K γ hullSystem)
+    (summand : γ) :
+    IUTStage1LocalCompactOpenTensorFactorSource α η hullSystem :=
+  (data.additiveHaarFactor summand).toCompactOpenTopologyHaarNormalizationSource
+    |>.toFiniteExtensionHaarCompactOpenLogVolumeSource
+    |>.toNonarchimedeanLocalCompactOpenLogVolumeSource
+    |>.toLocalCompactOpenTensorFactorSource
+
+theorem compactOpenTensorFactor_normalizedLogVolume_nonneg
+    (data :
+      IUTStage1AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleSource
+        α η K γ hullSystem)
+    (summand : γ) :
+    0 <= (data.compactOpenTensorFactor summand).normalizedLogVolume := by
+  dsimp [compactOpenTensorFactor,
+    IUTStage1AdditiveHaarCompactOpenNormalizationSource.toCompactOpenTopologyHaarNormalizationSource,
+    IUTStage1FiniteExtensionCompactOpenTopologyHaarNormalizationSource.toFiniteExtensionHaarCompactOpenLogVolumeSource,
+    IUTStage1FiniteExtensionHaarCompactOpenLogVolumeSource.toNonarchimedeanLocalCompactOpenLogVolumeSource,
+    IUTStage1NonarchimedeanLocalCompactOpenLogVolumeSource.toLocalCompactOpenTensorFactorSource,
+    IUTStage1AdditiveHaarCompactOpenNormalizationSource.normalizedHaarLogVolume,
+    IUTStage1AdditiveHaarCompactOpenNormalizationSource.rawHaarLogVolume,
+    IUTStage1AdditiveHaarCompactOpenNormalizationSource.rawHaarMeasure]
+  exact div_nonneg
+    (Real.log_nonneg (data.compactOpenMeasure_ge_one summand))
+    (by
+      exact_mod_cast
+        Nat.zero_le
+          (data.additiveHaarFactor summand).finiteExtensionDegree)
+
+noncomputable def toCompactOpenNormSquareLocalizedVectorBundleSource
+    (data :
+      IUTStage1AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleSource
+        α η K γ hullSystem) :
+    IUTStage1CompactOpenNormSquareLocalizedVectorBundleSource
+      α η γ hullSystem :=
+  { localRing := data.localRing,
+    factor := data.compactOpenTensorFactor,
+    factor_localRing_eq := by
+      intro summand
+      simpa [compactOpenTensorFactor,
+        IUTStage1AdditiveHaarCompactOpenNormalizationSource.toCompactOpenTopologyHaarNormalizationSource,
+        IUTStage1FiniteExtensionCompactOpenTopologyHaarNormalizationSource.toFiniteExtensionHaarCompactOpenLogVolumeSource,
+        IUTStage1FiniteExtensionHaarCompactOpenLogVolumeSource.toNonarchimedeanLocalCompactOpenLogVolumeSource,
+        IUTStage1NonarchimedeanLocalCompactOpenLogVolumeSource.toLocalCompactOpenTensorFactorSource] using
+        data.factor_localRing_eq summand,
+    normalizedLogVolume_nonneg :=
+      data.compactOpenTensorFactor_normalizedLogVolume_nonneg,
+    rank_gt_one := data.rank_gt_one }
+
+set_option linter.style.longLine false in
+theorem projected_directSummandLogVolume_eq_additiveHaarNormalized
+    (data :
+      IUTStage1AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleSource
+        α η K γ hullSystem)
+    (summand : γ) :
+    data.toCompactOpenNormSquareLocalizedVectorBundleSource.toNormSquareLocalizedArithmeticVectorBundle.toLocalizedArithmeticVectorBundle.directSummandLogVolume
+        summand =
+      (data.additiveHaarFactor summand).normalizedHaarLogVolume
+        (data.additiveHaarFactor summand).compactOpenSubset := by
+  simpa [toCompactOpenNormSquareLocalizedVectorBundleSource,
+    compactOpenTensorFactor,
+    IUTStage1AdditiveHaarCompactOpenNormalizationSource.toCompactOpenTopologyHaarNormalizationSource,
+    IUTStage1FiniteExtensionCompactOpenTopologyHaarNormalizationSource.toFiniteExtensionHaarCompactOpenLogVolumeSource,
+    IUTStage1FiniteExtensionHaarCompactOpenLogVolumeSource.toNonarchimedeanLocalCompactOpenLogVolumeSource,
+    IUTStage1NonarchimedeanLocalCompactOpenLogVolumeSource.toLocalCompactOpenTensorFactorSource] using
+    data.toCompactOpenNormSquareLocalizedVectorBundleSource
+      |>.projected_directSummandLogVolume_eq_normalizedLogVolume summand
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleSource
+        α η K γ hullSystem) :
+    (∀ summand : γ,
+      1 <=
+        ((data.additiveHaarFactor summand).haarMeasure
+          (data.additiveHaarFactor summand).compactOpenSubset).toReal) ∧
+      (∀ summand : γ,
+        0 <= (data.compactOpenTensorFactor summand).normalizedLogVolume) ∧
+      (∀ summand : γ,
+        data.toCompactOpenNormSquareLocalizedVectorBundleSource.toNormSquareLocalizedArithmeticVectorBundle.toLocalizedArithmeticVectorBundle.directSummandLogVolume
+            summand =
+          (data.additiveHaarFactor summand).normalizedHaarLogVolume
+            (data.additiveHaarFactor summand).compactOpenSubset) ∧
+      data.toCompactOpenNormSquareLocalizedVectorBundleSource.localRing =
+        data.localRing :=
+  ⟨data.compactOpenMeasure_ge_one,
+    data.compactOpenTensorFactor_normalizedLogVolume_nonneg,
+    data.projected_directSummandLogVolume_eq_additiveHaarNormalized,
+    rfl⟩
+
+end IUTStage1AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleSource
+
+set_option linter.style.longLine false in
+/--
+Structure-sheaf-adjusted compact-open norm-square localized vector-bundle source
+constructed from additive Haar compact-open factors.
+-/
+structure IUTStage1AdditiveHaarCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+    (α : Type u) (η : Type v) (K : Type w) (γ : Type x)
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [Fintype γ]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  bundle :
+    IUTStage1AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleSource
+      α η K γ hullSystem
+  structureSheafLogVolume : Real
+  adjustedRawLogVolume : Real
+  adjusted_raw_eq_additiveHaar :
+    adjustedRawLogVolume =
+      (Finset.univ.sum fun summand : γ =>
+        (bundle.additiveHaarFactor summand).normalizedHaarLogVolume
+          (bundle.additiveHaarFactor summand).compactOpenSubset) -
+        structureSheafLogVolume
+  weight : Nat
+  weight_pos : 0 < weight
+
+namespace IUTStage1AdditiveHaarCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+
+variable {α : Type u} {η : Type v} {K : Type w} {γ : Type x}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [Fintype γ]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+noncomputable def toCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+    (data :
+      IUTStage1AdditiveHaarCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+        α η K γ hullSystem) :
+    IUTStage1CompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+      α η γ hullSystem :=
+  { bundle := data.bundle.toCompactOpenNormSquareLocalizedVectorBundleSource,
+    structureSheafLogVolume := data.structureSheafLogVolume,
+    adjustedRawLogVolume := data.adjustedRawLogVolume,
+    adjusted_raw_eq_compactOpen := by
+      calc
+        data.adjustedRawLogVolume =
+            (Finset.univ.sum fun summand : γ =>
+              (data.bundle.additiveHaarFactor summand).normalizedHaarLogVolume
+                (data.bundle.additiveHaarFactor summand).compactOpenSubset) -
+              data.structureSheafLogVolume :=
+          data.adjusted_raw_eq_additiveHaar
+        _ =
+            (Finset.univ.sum fun summand : γ =>
+              ((data.bundle.toCompactOpenNormSquareLocalizedVectorBundleSource).factor
+                  summand).normalizedLogVolume) -
+              data.structureSheafLogVolume := by
+          rfl,
+    weight := data.weight,
+    weight_pos := data.weight_pos }
+
+set_option linter.style.longLine false in
+theorem projected_adjustedRawLogVolume_eq_additiveHaar
+    (data :
+      IUTStage1AdditiveHaarCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+        α η K γ hullSystem) :
+    data.toCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource.toNormSquareStructureSheafAdjustedLocalizedVectorBundleSource.toStructureSheafAdjustedLocalizedVectorBundleSource.adjustedRawLogVolume =
+      (Finset.univ.sum fun summand : γ =>
+        (data.bundle.additiveHaarFactor summand).normalizedHaarLogVolume
+          (data.bundle.additiveHaarFactor summand).compactOpenSubset) -
+        data.structureSheafLogVolume :=
+  data.adjusted_raw_eq_additiveHaar
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1AdditiveHaarCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+        α η K γ hullSystem) :
+    (∀ summand : γ,
+      0 <= (data.bundle.compactOpenTensorFactor summand).normalizedLogVolume) ∧
+      data.toCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource.toNormSquareStructureSheafAdjustedLocalizedVectorBundleSource.toStructureSheafAdjustedLocalizedVectorBundleSource.adjustedRawLogVolume =
+        (Finset.univ.sum fun summand : γ =>
+          (data.bundle.additiveHaarFactor summand).normalizedHaarLogVolume
+            (data.bundle.additiveHaarFactor summand).compactOpenSubset) -
+          data.structureSheafLogVolume :=
+  ⟨data.bundle.compactOpenTensorFactor_normalizedLogVolume_nonneg,
+    data.projected_adjustedRawLogVolume_eq_additiveHaar⟩
+
+end IUTStage1AdditiveHaarCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+
+set_option linter.style.longLine false in
+/--
+Ob3/Ob4 determinant source whose compact-open norm-square localizations are
+constructed from additive Haar normalized compact-open factors.
+-/
+structure IUTStage1Remark395Ob3Ob4AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+    (α : Type u) (η : Type v) (K : Type y) (β : Type w) (γ : Type x)
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+    [Fintype β] [Fintype γ]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  localization :
+    β ->
+      IUTStage1AdditiveHaarCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+        α η K γ hullSystem
+  anchor : β
+  positiveTensorPower : Nat
+  tensor_power_pos : 0 < positiveTensorPower
+
+namespace IUTStage1Remark395Ob3Ob4AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+
+variable {α : Type u} {η : Type v} {K : Type y}
+variable {β : Type w} {γ : Type x}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+variable [Fintype β] [Fintype γ]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+noncomputable def toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+    (data :
+      IUTStage1Remark395Ob3Ob4AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+        α η K β γ hullSystem) :
+    IUTStage1Remark395Ob3Ob4CompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+      α η β γ hullSystem :=
+  { localization := fun index =>
+      (data.localization index).toCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource,
+    anchor := data.anchor,
+    positiveTensorPower := data.positiveTensorPower,
+    tensor_power_pos := data.tensor_power_pos }
+
+set_option linter.style.longLine false in
+theorem projected_directSummandLogVolume_eq_additiveHaarNormalized
+    (data :
+      IUTStage1Remark395Ob3Ob4AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+        α η K β γ hullSystem)
+    (index : β) (summand : γ) :
+    (data.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.localization
+        index).bundle.directSummandLogVolume summand =
+      ((data.localization index).bundle.additiveHaarFactor summand).normalizedHaarLogVolume
+        ((data.localization index).bundle.additiveHaarFactor summand).compactOpenSubset :=
+  (data.localization index).bundle.projected_directSummandLogVolume_eq_additiveHaarNormalized
+    summand
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395Ob3Ob4AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+        α η K β γ hullSystem) :
+    data.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.anchor =
+        data.anchor ∧
+      (∀ index : β, ∀ summand : γ,
+        (data.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.localization
+            index).bundle.directSummandLogVolume summand =
+          ((data.localization index).bundle.additiveHaarFactor summand).normalizedHaarLogVolume
+            ((data.localization index).bundle.additiveHaarFactor summand).compactOpenSubset) :=
+  ⟨rfl, data.projected_directSummandLogVolume_eq_additiveHaarNormalized⟩
+
+end IUTStage1Remark395Ob3Ob4AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+
+set_option linter.style.longLine false in
+/--
+Localized hull/vector-bundle decomposition constructed from additive-Haar-backed
+compact-open norm-square determinant data.
+-/
+structure IUTStage1Remark395AdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+    (α : Type u) (ι : Type v) (η : Type y) (K : Type z)
+    (β : Type w) (γ : Type x)
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+    [Fintype β] [Fintype γ]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  possibleRegion : ι -> Set α
+  localizedSource :
+    IUTStage1Remark395Ob3Ob4AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+      α η K β γ hullSystem
+  localizedRegion : β -> Set α
+  localizedRegion_subset_familyHull :
+    ∀ index : β,
+      localizedRegion index ⊆
+        hullSystem.phi (⋃ i, possibleRegion i)
+  familyHullLogVolume_eq_localizedLogVolumeSum :
+    hullSystem.logVolume (hullSystem.phi (⋃ i, possibleRegion i)) =
+      Finset.univ.sum fun index =>
+        hullSystem.logVolume (localizedRegion index)
+  localizedRegion_logVolume_eq_adjusted :
+    ∀ index : β,
+      hullSystem.logVolume (localizedRegion index) =
+        localizedSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.weightedAdjustedLogVolume
+          index
+
+namespace IUTStage1Remark395AdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+
+variable {α : Type u} {ι : Type v} {η : Type y} {K : Type z}
+variable {β : Type w} {γ : Type x}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
+variable [Fintype β] [Fintype γ]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+noncomputable def toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+    (data :
+      IUTStage1Remark395AdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+        α ι η K β γ hullSystem) :
+    IUTStage1Remark395CompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+      α ι η β γ hullSystem :=
+  { possibleRegion := data.possibleRegion,
+    localizedSource :=
+      data.localizedSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource,
+    localizedRegion := data.localizedRegion,
+    localizedRegion_subset_familyHull :=
+      data.localizedRegion_subset_familyHull,
+    familyHullLogVolume_eq_localizedLogVolumeSum :=
+      data.familyHullLogVolume_eq_localizedLogVolumeSum,
+    localizedRegion_logVolume_eq_adjusted :=
+      data.localizedRegion_logVolume_eq_adjusted }
+
+set_option linter.style.longLine false in
+theorem projected_directSummandLogVolume_eq_additiveHaarNormalized
+    (data :
+      IUTStage1Remark395AdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+        α ι η K β γ hullSystem)
+    (index : β) (summand : γ) :
+    (data.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toNormSquareLocalizedHullVectorBundleDecompositionSource.toLocalizedHullVectorBundleDecompositionSource.localizedSource.localization
+        index).bundle.directSummandLogVolume summand =
+      ((data.localizedSource.localization index).bundle.additiveHaarFactor summand).normalizedHaarLogVolume
+        ((data.localizedSource.localization index).bundle.additiveHaarFactor summand).compactOpenSubset :=
+  data.localizedSource.projected_directSummandLogVolume_eq_additiveHaarNormalized
+    index summand
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395AdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+        α ι η K β γ hullSystem) :
+    data.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toNormSquareLocalizedHullVectorBundleDecompositionSource.hullOperator =
+        hullSystem.toHolomorphicHullOperator ∧
+      (∀ index : β, ∀ summand : γ,
+        (data.toCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource.toNormSquareLocalizedHullVectorBundleDecompositionSource.toLocalizedHullVectorBundleDecompositionSource.localizedSource.localization
+            index).bundle.directSummandLogVolume summand =
+          ((data.localizedSource.localization index).bundle.additiveHaarFactor summand).normalizedHaarLogVolume
+            ((data.localizedSource.localization index).bundle.additiveHaarFactor summand).compactOpenSubset) :=
+  ⟨rfl, data.projected_directSummandLogVolume_eq_additiveHaarNormalized⟩
+
+end IUTStage1Remark395AdditiveHaarCompactOpenNormSquareLocalizedHullVectorBundleDecompositionSource
+
+/--
 Positive-radius valuation-ball compact-open topology source.
 
 This is the local analytic topological input behind the valuation-ball Haar
