@@ -807,7 +807,14 @@ A charted local-ring refinement lowers the factor interface itself: the local
 factors are no longer an arbitrary region family, but the regions of
 per-place local-ring/vector-bundle calibration objects whose chart log-volumes
 are identified with the corresponding direct-summand log-volumes.  The cover
-identity and factor separation are still explicit geometric inputs.
+identity and factor separation are still explicit geometric inputs.  A
+valuation-ball charted refinement now lowers the factor calibration one step
+further: each local-ring chart is projected from a valuation-ball/additive-Haar
+factor calibration, and Lean derives the charted local-ring cover interface
+from the valuation-ball regions, their separation, and the valuation-ball
+family-hull identity.  The remaining geometric boundary is the construction of
+those valuation-ball cover identities from the full Hodge-theater and
+log-theta-lattice source data.
 The valuation-unit-ball finite-extension branch remains only a normalized
 legacy boundary: the selected radius is forced to be \(1\), so \(\mu(O_v)=1\)
 constructs weak nonnegativity but also proves that the normalized log-volume
