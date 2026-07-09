@@ -827,9 +827,12 @@ refinement lowers the remaining possible-region equality: the source-core and
 valuation-cover families are aligned with the concrete family inside
 `principalProductHullFormationData`, and Lean derives the public
 `principalProductPossibleRegion` equality by projection.  The source-core
-localized determinant and calibration alignments remain explicit before
-constructing the cover itself from the full Hodge-theater and log-theta-lattice
-source data.
+localized determinant equality remains explicit, but the localized calibration
+family and the valuation-ball factor calibration family are no longer
+independent inputs at the deepest additive-Haar boundary: they are transported
+from the principal valuation cover across the derived hull-system equality.
+Constructing the source-core determinant equality itself from the full
+Hodge-theater and log-theta-lattice source data remains the next boundary.
 The valuation-unit-ball finite-extension branch remains only a normalized
 legacy boundary: the selected radius is forced to be \(1\), so \(\mu(O_v)=1\)
 constructs weak nonnegativity but also proves that the normalized log-volume
