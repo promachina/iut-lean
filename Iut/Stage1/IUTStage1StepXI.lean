@@ -13372,6 +13372,92 @@ theorem possibleImageNonempty
     sourceData.possibleImagePoint_mem thetaClass⟩
 
 set_option linter.style.longLine false in
+/--
+Possible-image point for an arbitrary theta-pilot choice.
+
+IUT III Theorem 3.11 supplies possible images classwise; the concrete
+choice-indexed family is the pullback along `thetaPilotClass`.  This is the
+all-choice form needed by downstream Step (xi) hull records.
+-/
+def possibleImagePointOfChoice
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotPossibleImageWitnessSource record)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    Point target :=
+  sourceData.thetaPossibleImageSource.classImagePoint
+    (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice)
+
+set_option linter.style.longLine false in
+theorem record_region_eq_source_choice_region
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotPossibleImageWitnessSource record)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    record.thetaPossibleImages.images.region choice =
+      sourceData.thetaPossibleImageSource.choiceImages.region choice := by
+  exact
+    congrArg
+      (fun images :
+          RegionFamily target
+            (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) =>
+        images.region choice)
+      sourceData.record_images_eq_source
+
+set_option linter.style.longLine false in
+theorem record_region_eq_source_choice_class_region
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotPossibleImageWitnessSource record)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    record.thetaPossibleImages.images.region choice =
+      sourceData.thetaPossibleImageSource.classImages.region
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice) := by
+  calc
+    record.thetaPossibleImages.images.region choice =
+        sourceData.thetaPossibleImageSource.choiceImages.region choice :=
+      sourceData.record_region_eq_source_choice_region choice
+    _ =
+        sourceData.thetaPossibleImageSource.classImages.region
+          (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice) :=
+      sourceData.thetaPossibleImageSource.choiceImages_region choice
+
+set_option linter.style.longLine false in
+theorem possibleImagePointOfChoice_mem
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotPossibleImageWitnessSource record)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (record.thetaPossibleImages.images.region choice).Contains
+      (sourceData.possibleImagePointOfChoice choice) := by
+  rw [sourceData.record_region_eq_source_choice_class_region choice]
+  exact
+    sourceData.thetaPossibleImageSource.classImagePoint_mem
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice)
+
+set_option linter.style.longLine false in
+theorem possibleImageNonemptyOfChoice
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotPossibleImageWitnessSource record)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (record.thetaPossibleImages.images.region choice).toSet.Nonempty :=
+  ⟨sourceData.possibleImagePointOfChoice choice,
+    sourceData.possibleImagePointOfChoice_mem choice⟩
+
+set_option linter.style.longLine false in
+theorem choiceEndpoint
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotPossibleImageWitnessSource record) :
+    (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      record.thetaPossibleImages.images.region choice =
+        sourceData.thetaPossibleImageSource.classImages.region
+          (IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice)) ∧
+      (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        (record.thetaPossibleImages.images.region choice).Contains
+          (sourceData.possibleImagePointOfChoice choice)) ∧
+      (∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+        (record.thetaPossibleImages.images.region choice).toSet.Nonempty) :=
+  ⟨sourceData.record_region_eq_source_choice_class_region,
+    sourceData.possibleImagePointOfChoice_mem,
+    sourceData.possibleImageNonemptyOfChoice⟩
+
+set_option linter.style.longLine false in
 theorem endpoint
     (sourceData :
       ConcreteHodgeTheaterLogThetaThetaPilotPossibleImageWitnessSource record) :
