@@ -13458,6 +13458,56 @@ theorem choiceEndpoint
     sourceData.possibleImageNonemptyOfChoice⟩
 
 set_option linter.style.longLine false in
+/--
+Central Theorem 3.11 possible-image source data built from the concrete
+record/source witness bridge.
+
+This packages the all-choice point witnesses proved above in the same
+`Theorem311PossibleImageSourceData` record used by the public Theorem 3.11
+ledger, so the record/source equality can feed the central possible-image
+nonemptiness audit without using downstream choice operators.
+-/
+def toTheorem311PossibleImageSourceData
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotPossibleImageWitnessSource record)
+    (core :
+      IUTStage1Theorem311TypedIndeterminacyCore
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l))
+    (quotientImages :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientPossibleImages
+        core record.thetaPossibleImages.images)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311PossibleImageSourceData
+      core record.thetaPossibleImages.images :=
+  { quotientImages := quotientImages,
+    possibleImagePoint := sourceData.possibleImagePointOfChoice,
+    possibleImagePoint_mem := sourceData.possibleImagePointOfChoice_mem,
+    selectedQChoice := selectedQChoice,
+    selectedQRegion :=
+      quotientImages.quotientImages.region
+        (core.equalityQuotientMap selectedQChoice),
+    selectedQRegion_eq_quotientRegion := rfl }
+
+set_option linter.style.longLine false in
+theorem toTheorem311PossibleImageSourceData_nonemptyAudit
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotPossibleImageWitnessSource record)
+    (core :
+      IUTStage1Theorem311TypedIndeterminacyCore
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l))
+    (quotientImages :
+      IUTStage1Theorem311TypedIndeterminacyCore.EqualityQuotientPossibleImages
+        core record.thetaPossibleImages.images)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311PossibleImageSourceData.NonemptyAudit
+      (sourceData.toTheorem311PossibleImageSourceData
+        core quotientImages selectedQChoice) :=
+  (sourceData.toTheorem311PossibleImageSourceData
+    core quotientImages selectedQChoice).nonemptyAudit
+
+set_option linter.style.longLine false in
 theorem endpoint
     (sourceData :
       ConcreteHodgeTheaterLogThetaThetaPilotPossibleImageWitnessSource record) :
