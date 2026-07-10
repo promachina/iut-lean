@@ -1095,9 +1095,16 @@ valuation-cover side from the intrinsic finite-extension valuation-cover
   radius \(p\).  Lean proves that the corresponding normed finite-extension
   match source is locally contradictory, via
   \texttt{NormedFiniteExtensionInverseBasePrimeValuationBallMatchedSource.no\_unitBallCover\_factor}.
-  Thus the remaining local construction is not a mere transport equality to
-  the old unit-ball factor; it must construct an inverse-dilated valuation-cover
-  layer whose local selected factor has radius \(p\) from the outset.  The
+  The replacement local cover has now been added: SourceCore constructs a
+  finite-extension inverse-base-prime valuation-cover packet whose local
+  selected factors have radius \(p\) from the outset, projects it to the generic
+  valuation-ball tensor packet, and proves the inverse-base-prime component
+  match for every local factor.  Step (xi) also has a hull-formation-selected
+  public principal-product sibling route for this radius-\(p\) cover, so the
+  unit-ball branch and the inverse-dilated branch are separated explicitly.
+  What remains is to migrate the downstream residue-module/preferred public
+  route onto this inverse-dilated cover rather than the legacy unit-ball
+  intrinsic cover.  The
   full-boundary audit for the current route also ties the
   IUT IV arithmetic residual to the same public wrapper.  The remaining
   principal-hull boundary is now to derive the coordinate scalar-image

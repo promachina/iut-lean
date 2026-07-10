@@ -1437,10 +1437,18 @@
 	  that this wrapper cannot be populated against the current intrinsic
 	  valuation-unit-ball cover at any actual local factor:
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductPadicFiniteExtensionIntrinsicResidueModuleUnitBallHaarCharacterInverseDilationValuationCoverConstructedSourceCoreHullFormationPossibleRegionAlignedValuationBallChartedTensorMeasureDirectProductCalibratedLocalizedHullCoverSource.NormedFiniteExtensionInverseBasePrimeValuationBallMatchedSource.no_unitBallCover_factor}
-	  derives contradiction from the radius comparison \(1=p_v\).  The next
-	  construction must therefore replace the unit-ball valuation-cover factor
-	  by an inverse-dilated radius-\(p_v\) valuation-cover factor, rather than
-	  adding another compatibility equality to the old unit-ball cover.
+	  derives contradiction from the radius comparison \(1=p_v\).  The
+	  replacement factor cover is now implemented in
+	  \lean{Iut.Stage1.IUTStage1Remark395PadicFiniteExtensionInverseBasePrimeValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource}:
+	  its local factors are constructed from inverse-dilation mass sources,
+	  SourceCore proves their radius is \(p_v\), and the cover projects to the
+	  generic valuation-ball tensor packet.  Step (xi) also exposes the
+	  hull-formation-selected public principal-product version
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductPadicFiniteExtensionHullFormationSelectedInverseBasePrimeIntrinsicValuationCoverSource},
+	  which keeps the inverse-dilated branch separate from the legacy
+	  radius-one unit-ball branch.  The remaining work is to migrate the
+	  downstream residue-module and preferred-public route consumers onto this
+	  inverse-dilated cover.
 	  The same scale-component
 	  match is now exposed below the residue wrapper as well: the intrinsic
 	  Haar-modulus source
