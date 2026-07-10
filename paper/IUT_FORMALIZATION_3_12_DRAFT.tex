@@ -645,11 +645,12 @@ The resulting endpoint identifies the selected scalar image with the
 valuation-ball direct-product cell union and with the adjusted Ob3/Ob5
 determinant handoff.  The same selected-scalar source now also constructs the
 possible-image exact-\(\Xi(P_B)\) source from the valuation-ball direct-product
-cell equality \(P_B=\bigcup_\beta \prod_v B_{\beta,v}\).  Lean then identifies
+cell cover: it proves \(P_B=\bigcup_\beta \prod_v B_{\beta,v}\) from the
+local inclusions \(\prod_v B_{\beta,v}\subseteq P_B\), and then identifies
 this cell union with the selected scalar image \(\lambda\cdot O\).  Thus the
-exact-\(\Xi\) calibration is no longer an independent field at this boundary,
-while construction of the direct-product-cell equality from transported
-theta/valuation local data remains an explicit remaining obligation.
+exact-\(\Xi\) calibration is no longer an independent field at this boundary;
+the remaining public-route obligation is to construct those local cell-cover
+inclusions from transported theta/valuation local exactness.
 For the stricter localized route, the final normalized localized determinant
 bound by \(\Theta_{\mathrm{signed}}\) is no longer supplied as a standalone
 inequality: Lean derives it from the identification of

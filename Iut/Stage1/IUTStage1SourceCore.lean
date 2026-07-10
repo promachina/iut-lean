@@ -26491,6 +26491,91 @@ theorem endpoint
 end DirectProductCellUnionExactSource
 
 set_option linter.style.longLine false in
+structure DirectProductCellCoverSource
+    (data :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ) : Prop where
+  directProductCell_subset_possibleImageUnion :
+    ∀ index : β,
+      data.valuationCover.directProductCell index ⊆ data.possibleImageUnion
+
+namespace DirectProductCellCoverSource
+
+variable
+  {data :
+    IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+      δ A S ι η K β γ}
+
+set_option linter.style.longLine false in
+theorem possibleImageUnion_subset_directProductCellUnion
+    (_cellCoverSource : DirectProductCellCoverSource data) :
+    data.possibleImageUnion ⊆ data.valuationCover.directProductCellUnion := by
+  intro point hpoint
+  have hphi :
+      point ∈ data.valuationCover.hullSystem.phi data.possibleImageUnion :=
+    data.valuationCover.hullSystem.region_subset_phi
+      data.possibleImageUnion hpoint
+  rw [data.familyHull_eq_selectedScalarParameterHull,
+    data.selectedScalarParameterHull_eq_valuationBallDirectProductCellUnion] at hphi
+  exact hphi
+
+set_option linter.style.longLine false in
+theorem directProductCellUnion_subset_possibleImageUnion
+    (cellCoverSource : DirectProductCellCoverSource data) :
+    data.valuationCover.directProductCellUnion ⊆ data.possibleImageUnion := by
+  intro point hpoint
+  rcases Set.mem_iUnion.mp hpoint with ⟨index, hcell⟩
+  exact cellCoverSource.directProductCell_subset_possibleImageUnion index hcell
+
+set_option linter.style.longLine false in
+theorem possibleImageUnion_eq_directProductCellUnion
+    (cellCoverSource : DirectProductCellCoverSource data) :
+    data.possibleImageUnion = data.valuationCover.directProductCellUnion :=
+  Set.Subset.antisymm
+    cellCoverSource.possibleImageUnion_subset_directProductCellUnion
+    cellCoverSource.directProductCellUnion_subset_possibleImageUnion
+
+def toDirectProductCellUnionExactSource
+    (cellCoverSource : DirectProductCellCoverSource data) :
+    DirectProductCellUnionExactSource data where
+  possibleImageUnion_eq_directProductCellUnion :=
+    cellCoverSource.possibleImageUnion_eq_directProductCellUnion
+
+def toExactXiSource
+    (cellCoverSource : DirectProductCellCoverSource data) :
+    ExactXiSource data :=
+  cellCoverSource.toDirectProductCellUnionExactSource.toExactXiSource
+
+noncomputable def toPossibleImageExactXiFamilySource
+    (cellCoverSource : DirectProductCellCoverSource data) :
+    IUTStage1Remark395PossibleImageExactXiFamilySource
+      data.toPossibleImageFamilySource :=
+  cellCoverSource.toDirectProductCellUnionExactSource
+    |>.toPossibleImageExactXiFamilySource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (cellCoverSource : DirectProductCellCoverSource data) :
+    (∀ index : β,
+        data.valuationCover.directProductCell index ⊆
+          data.possibleImageUnion) ∧
+      data.possibleImageUnion ⊆ data.valuationCover.directProductCellUnion ∧
+      data.valuationCover.directProductCellUnion ⊆ data.possibleImageUnion ∧
+      data.possibleImageUnion = data.valuationCover.directProductCellUnion ∧
+      data.possibleImageUnion = data.selectedScalarParameterHull ∧
+      data.toPossibleImageFamilySource.canonicalHull =
+        data.toPossibleImageFamilySource.familyUnion :=
+  let exactSource := cellCoverSource.toDirectProductCellUnionExactSource
+  ⟨cellCoverSource.directProductCell_subset_possibleImageUnion,
+    cellCoverSource.possibleImageUnion_subset_directProductCellUnion,
+    cellCoverSource.directProductCellUnion_subset_possibleImageUnion,
+    cellCoverSource.possibleImageUnion_eq_directProductCellUnion,
+    exactSource.toExactXiSource.valuationUnion_eq_selectedScalarParameterHull,
+    exactSource.toExactXiSource.endpoint.2.2.1⟩
+
+end DirectProductCellCoverSource
+
+set_option linter.style.longLine false in
 theorem endpoint
     (data :
       IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
@@ -26887,6 +26972,71 @@ theorem endpoint
         rfl⟩
 
 end DirectProductCellUnionExactSource
+
+set_option linter.style.longLine false in
+structure DirectProductCellCoverSource
+    (data :
+      IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource
+        δ A ι η K β γ) : Prop where
+  directProductCell_subset_possibleImageUnion :
+    ∀ index : β,
+      data.valuationCover.directProductCell index ⊆ data.possibleImageUnion
+
+namespace DirectProductCellCoverSource
+
+variable
+  {data :
+    IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource
+      δ A ι η K β γ}
+
+def toSelectedScalarParameterDirectProductCellCoverSource
+    (cellCoverSource : DirectProductCellCoverSource data) :
+    IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource.DirectProductCellCoverSource
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource where
+  directProductCell_subset_possibleImageUnion := by
+    intro index point hpoint
+    simpa [
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource.possibleImageUnion,
+      toSelectedScalarParameterValuationBallProductHullCoverSource,
+      possibleImageUnion]
+      using cellCoverSource.directProductCell_subset_possibleImageUnion index hpoint
+
+def toDirectProductCellUnionExactSource
+    (cellCoverSource : DirectProductCellCoverSource data) :
+    DirectProductCellUnionExactSource data where
+  possibleImageUnion_eq_directProductCellUnion :=
+    cellCoverSource.toSelectedScalarParameterDirectProductCellCoverSource
+      |>.possibleImageUnion_eq_directProductCellUnion
+
+def toExactXiSource
+    (cellCoverSource : DirectProductCellCoverSource data) :
+    ExactXiSource data :=
+  cellCoverSource.toDirectProductCellUnionExactSource.toExactXiSource
+
+noncomputable def toPossibleImageExactXiFamilySource
+    (cellCoverSource : DirectProductCellCoverSource data) :
+    IUTStage1Remark395PossibleImageExactXiFamilySource
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource :=
+  cellCoverSource.toSelectedScalarParameterDirectProductCellCoverSource
+    |>.toPossibleImageExactXiFamilySource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (cellCoverSource : DirectProductCellCoverSource data) :
+    (∀ index : β,
+        data.valuationCover.directProductCell index ⊆
+          data.possibleImageUnion) ∧
+      data.possibleImageUnion = data.valuationCover.directProductCellUnion ∧
+      data.possibleImageUnion = data.selectedScalarImageHull ∧
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource.canonicalHull =
+        data.toSelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource.familyUnion :=
+  let exactSource := cellCoverSource.toDirectProductCellUnionExactSource
+  ⟨cellCoverSource.directProductCell_subset_possibleImageUnion,
+    exactSource.possibleImageUnion_eq_directProductCellUnion,
+    exactSource.toExactXiSource.valuationUnion_eq_selectedScalarImageHull,
+    cellCoverSource.toSelectedScalarParameterDirectProductCellCoverSource.endpoint.2.2.2.2.2⟩
+
+end DirectProductCellCoverSource
 
 set_option linter.style.longLine false in
 theorem endpoint
@@ -27293,6 +27443,71 @@ theorem endpoint
         rfl⟩
 
 end DirectProductCellUnionExactSource
+
+set_option linter.style.longLine false in
+structure DirectProductCellCoverSource
+    (data :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A ι η K β γ) : Prop where
+  directProductCell_subset_possibleImageUnion :
+    ∀ index : β,
+      data.valuationCover.directProductCell index ⊆ data.possibleImageUnion
+
+namespace DirectProductCellCoverSource
+
+variable
+  {data :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+      δ A ι η K β γ}
+
+def toNonzeroScalarMultiplicationDirectProductCellCoverSource
+    (cellCoverSource : DirectProductCellCoverSource data) :
+    IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource.DirectProductCellCoverSource
+      data.toNonzeroScalarMultiplicationValuationBallProductHullCoverSource where
+  directProductCell_subset_possibleImageUnion := by
+    intro index point hpoint
+    simpa [
+      possibleImageUnion,
+      toNonzeroScalarMultiplicationValuationBallProductHullCoverSource,
+      IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource.possibleImageUnion]
+      using cellCoverSource.directProductCell_subset_possibleImageUnion index hpoint
+
+def toDirectProductCellUnionExactSource
+    (cellCoverSource : DirectProductCellCoverSource data) :
+    DirectProductCellUnionExactSource data where
+  possibleImageUnion_eq_directProductCellUnion :=
+    (cellCoverSource.toNonzeroScalarMultiplicationDirectProductCellCoverSource
+      |>.toDirectProductCellUnionExactSource).possibleImageUnion_eq_directProductCellUnion
+
+def toExactXiSource
+    (cellCoverSource : DirectProductCellCoverSource data) :
+    ExactXiSource data :=
+  cellCoverSource.toDirectProductCellUnionExactSource.toExactXiSource
+
+noncomputable def toPossibleImageExactXiFamilySource
+    (cellCoverSource : DirectProductCellCoverSource data) :
+    IUTStage1Remark395PossibleImageExactXiFamilySource
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource :=
+  cellCoverSource.toNonzeroScalarMultiplicationDirectProductCellCoverSource
+    |>.toPossibleImageExactXiFamilySource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (cellCoverSource : DirectProductCellCoverSource data) :
+    (∀ index : β,
+        data.valuationCover.directProductCell index ⊆
+          data.possibleImageUnion) ∧
+      data.possibleImageUnion = data.valuationCover.directProductCellUnion ∧
+      data.possibleImageUnion = data.selectedScalarImageHull ∧
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource.canonicalHull =
+        data.toSelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource.familyUnion :=
+  let exactSource := cellCoverSource.toDirectProductCellUnionExactSource
+  ⟨cellCoverSource.directProductCell_subset_possibleImageUnion,
+    exactSource.possibleImageUnion_eq_directProductCellUnion,
+    exactSource.toExactXiSource.valuationUnion_eq_selectedScalarImageHull,
+    cellCoverSource.toNonzeroScalarMultiplicationDirectProductCellCoverSource.endpoint.2.2.2⟩
+
+end DirectProductCellCoverSource
 
 set_option linter.style.longLine false in
 theorem endpoint
