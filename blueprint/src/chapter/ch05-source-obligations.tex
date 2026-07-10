@@ -1103,7 +1103,13 @@
   valuation-cover wrapper now lowers the source of the valuation-cover factors
   themselves: the lower principal valuation cover is projected from
   finite-extension p-adic Haar data before entering the constructed source-core
-  route.  The cross-hull matching between these transported valuation-cover
+  route.  A hull-formation-selected intrinsic cover constructor now fixes the
+  lower p-adic cover's hull system to the public principal-product hull system
+  and its possible-region family to
+  \texttt{principalProductHullFormationData}; the intrinsic possible-region
+  comparison is therefore constructed rather than supplied, while the remaining
+  principal-hull comparison is the lower equality between the p-adic principal
+  hull source and the public hull system.  The cross-hull matching between these transported valuation-cover
   fibers and the public-hull finite-extension factors is now derived at the
   intrinsic wrapper: Lean transports the lower cover's finite-extension
   factors across the same hull-system equality used for the valuation-cover

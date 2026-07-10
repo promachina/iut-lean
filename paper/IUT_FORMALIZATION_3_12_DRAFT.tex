@@ -879,8 +879,14 @@ the factor-level equality between each projected finite-extension valuation
 ball and the transported valuation-cover factor.  A finite-extension-backed
 valuation-cover wrapper now lowers the valuation-cover side itself: the lower
 principal valuation cover is projected from finite-extension p-adic Haar data
-before it enters the constructed source-core route.  The intrinsic wrapper
-removes the separate public finite-extension factor family: Lean transports
+before it enters the constructed source-core route.  A hull-formation-selected
+intrinsic cover constructor fixes the lower p-adic cover's hull system to the
+public principal-product hull system and fixes its possible-region family to
+\texttt{principalProductHullFormationData}; the intrinsic possible-region
+comparison is therefore produced by construction, while the principal-hull
+comparison is exposed as the lower equality between the p-adic principal hull
+source and the public principal-product hull system.  The intrinsic wrapper
+also removes the separate public finite-extension factor family: Lean transports
 the lower cover's finite-extension factors across the same hull-system equality
 used for the valuation-cover calibration fiber and derives the old
 factor-matching field internally.
@@ -915,9 +921,9 @@ Haar-character data.  The latter is now itself constructed from residue-module
 quotient data: \(O_v/p_vO_v\), \(\#\kappa_v=p_v\), and
 \(\dim_{\kappa_v}(O_v/p_vO_v)=[K_v:\mathbb Q_p]\) give the coset
 decomposition and \(\mu(p_vO_v)=p_v^{-[K_v:\mathbb Q_p]}\).  Constructing the
-intrinsic finite-extension valuation-cover package and the remaining
-factorwise inverse-dilation identifications directly from Hodge-theater and
-log-theta-lattice source data remains the next boundary.
+lower p-adic principal-hull source directly from Hodge-theater/log-theta-lattice
+data, and deriving the remaining factorwise inverse-dilation identifications
+from the same data, remains the next boundary.
 The valuation-unit-ball finite-extension branch remains only a normalized
 legacy boundary: the selected radius is forced to be \(1\), so \(\mu(O_v)=1\)
 constructs weak nonnegativity but also proves that the normalized log-volume
