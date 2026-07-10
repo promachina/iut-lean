@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: IUT Lean formalization contributors
 -/
 import Iut.Stage1.IUTStage1Source
+import Iut.Stage1.IUTStage1StepXI
 
 /-!
 Diagnostic and first-pass endpoint surface for the IUT III Corollary 3.12 corridor.
@@ -27,6 +28,7 @@ open IUTStage1StructuredSHEFactoredSquareFullLabelObligations
 open IUTStage1HullDetPilotUpperRayLogVolume
 open IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor
 open IUTStage1Theorem311OneSidedMultiradialConstructionSource
+open ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource
 open scoped BigOperators
 open scoped NormedField
 open scoped Valued
@@ -59907,6 +59909,65 @@ theorem remark395PossibleImageExactXiFamilySource_transport_endpoint
       (data.transport carrierEquiv).hullOperator.logVolume
         (data.transport carrierEquiv).familyUnion :=
   exactSource.transport_endpoint carrierEquiv
+
+set_option linter.style.longLine false in
+/--
+Experiment-surface public adapter for transported selected valuation-ball
+exact `Xi(P_B)`.
+
+This checks the new public Step (xi) lowering: exactness is obtained from a
+selected valuation-ball radius cover on a product carrier, transported to the
+public carrier, and then aligned with the Theorem 3.11 quotient family by
+pointwise possible-region matching.
+-/
+theorem concreteTransportedSelectedValuationBallExactXiSource_endpoint
+    {source target : Copy} {coric : Type u} {l : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        recordConcrete indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    {δ : Type u} {A : δ -> Type v} {S : δ -> Type ac}
+    {ι : Type y} {η : Type x} {K : Type z}
+    {β : Type w} {γ : Type max u v w x y z ac}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (selectedCover :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ)
+    (carrierEquiv : Point target ≃ ((d : δ) -> A d))
+    (transportedSource :
+      ConcreteTransportedSelectedValuationBallExactXiSource
+        (δ := δ) (A := A) (S := S)
+        (ι := ι) (η := η) (K := K) (β := β) (γ := γ)
+        sourceData gluingTorsor selectedQChoice hullOperator
+        selectedCover carrierEquiv) :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let publicFamilySource :=
+      quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator;
+    let transportedFamilySource :=
+      selectedCover.toPossibleImageFamilySource.transport carrierEquiv;
+    publicFamilySource.familyUnion =
+        transportedFamilySource.familyUnion ∧
+      publicFamilySource.canonicalHull =
+        transportedFamilySource.canonicalHull ∧
+      publicFamilySource.hullOperator.logVolume publicFamilySource.canonicalHull =
+        publicFamilySource.hullOperator.logVolume publicFamilySource.familyUnion :=
+  transportedSource.endpoint
 
 set_option linter.style.longLine false in
 /--
