@@ -889,8 +889,11 @@ source and the public principal-product hull system.  A public-principal
 specialization now constructs this lower p-adic principal source as the
 \texttt{ULift} copy of the public principal-product source and proves the
 product-hull intersection law by transport through the public intersection
-theorem; the remaining lower theorem is the invariance of the induced
-holomorphic hull system under this \texttt{ULift}.  The intrinsic wrapper also
+theorem.  Lean now also proves that the induced holomorphic hull system is
+unchanged by this \texttt{ULift}: the proof reduces equality of
+\texttt{IUTStage1Remark395HolomorphicHullSystem} records to equality of the
+\texttt{isHull} predicate and \texttt{logVolume} field via the generated
+constructor-injectivity theorem.  The intrinsic wrapper also
 removes the separate public finite-extension factor family: Lean transports the
 lower cover's finite-extension factors across the same hull-system equality used
 for the valuation-cover calibration fiber and derives the old factor-matching
@@ -926,9 +929,8 @@ Haar-character data.  The latter is now itself constructed from residue-module
 quotient data: \(O_v/p_vO_v\), \(\#\kappa_v=p_v\), and
 \(\dim_{\kappa_v}(O_v/p_vO_v)=[K_v:\mathbb Q_p]\) give the coset
 decomposition and \(\mu(p_vO_v)=p_v^{-[K_v:\mathbb Q_p]}\).  The remaining
-principal-hull boundary is now the \texttt{ULift}-invariance theorem for the
-public principal-product hull system, followed by constructing that public
-principal source from Hodge-theater/log-theta-lattice data and deriving the
+principal-hull boundary is now to construct the public principal-product hull
+source itself from Hodge-theater/log-theta-lattice data and to derive the
 remaining factorwise inverse-dilation identifications from the same data.
 The valuation-unit-ball finite-extension branch remains only a normalized
 legacy boundary: the selected radius is forced to be \(1\), so \(\mu(O_v)=1\)

@@ -1112,9 +1112,13 @@
   hull source and the public hull system.  A public-principal specialization
   now constructs this p-adic principal source as the \texttt{ULift} copy of the
   public principal-product source and proves the product-hull intersection law
-  by transport through the public intersection theorem; the remaining lower
-  theorem is the \texttt{ULift}-invariance of the induced holomorphic hull
-  system.  The cross-hull matching between these transported valuation-cover
+  by transport through the public intersection theorem.  Lean now also proves
+  the \texttt{ULift}-invariance of the induced holomorphic hull system by
+  reducing record equality to the \texttt{isHull} predicate and
+  \texttt{logVolume} field.  The remaining principal-hull boundary is to
+  construct the public principal-product hull source from Hodge-theater and
+  log-theta-lattice data.  The cross-hull matching between these transported
+  valuation-cover
   fibers and the public-hull finite-extension factors is now derived at the
   intrinsic wrapper: Lean transports the lower cover's finite-extension
   factors across the same hull-system equality used for the valuation-cover
