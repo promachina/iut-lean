@@ -24072,6 +24072,409 @@ theorem endpoint
 
 end IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
 
+set_option linter.style.longLine false in
+/--
+Finite-extension-backed valuation-ball factor cover.
+
+This is the p-adic local-field refinement of
+`IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource`.
+The valuation-ball factors are not arbitrary Haar-normalization records: each
+one is projected from a finite-dimensional extension of `ℚ_[p]`, with compact
+open radius forced to the valuation unit ball.  The older valuation-ball cover
+is then obtained by projection.
+-/
+structure IUTStage1Remark395PadicFiniteExtensionValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    (α : Type u) (ι : Type v) (p : Nat) [Fact p.Prime]
+    (K : Type z) (β : Type w) (γ : Type x)
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    [Fintype β] [Fintype γ] where
+  hullSystem : IUTStage1Remark395HolomorphicHullSystem α
+  possibleRegion : ι -> Set α
+  localizedCalibration :
+    β -> IUTStage1LocalizedHullRegionVectorBundleCalibrationSource
+      hullSystem (Subring K) γ
+  anchor : β
+  positiveTensorPower : Nat
+  tensor_power_pos : 0 < positiveTensorPower
+  padicFiniteExtensionFactor :
+    β -> γ ->
+      IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource
+        α p K hullSystem
+  compactOpenRadius_eq_one :
+    ∀ index : β, ∀ place : γ,
+      (padicFiniteExtensionFactor index place).compactOpenRadius = 1
+  valuationBall_ring_eq_bundle :
+    ∀ index : β, ∀ place : γ,
+      (((padicFiniteExtensionFactor index place)
+          |>.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+          |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+          |>.toUltrametricValuationBallAdditiveHaarNormalizationSource
+          |>.toValuationBallTopologyAdditiveHaarNormalizationSource
+          |>.toValuationBallAdditiveHaarNormalizationSourceCore).localRing) =
+        (localizedCalibration index).localizedVectorBundle.bundle.localRing
+  directSummand_eq_padicFiniteExtensionNormalized :
+    ∀ index : β, ∀ place : γ,
+      (localizedCalibration index).localizedVectorBundle.bundle.directSummandLogVolume
+          place =
+        ((((padicFiniteExtensionFactor index place)
+            |>.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+            |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+            |>.toUltrametricValuationBallAdditiveHaarNormalizationSource
+            |>.toValuationBallTopologyAdditiveHaarNormalizationSource
+            |>.toValuationBallAdditiveHaarNormalizationSourceCore)
+          |>.toAdditiveHaarCompactOpenNormalizationSource)
+          |>.normalizedHaarLogVolume
+            (((padicFiniteExtensionFactor index place)
+              |>.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+              |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+              |>.toUltrametricValuationBallAdditiveHaarNormalizationSource
+              |>.toValuationBallTopologyAdditiveHaarNormalizationSource
+              |>.toValuationBallAdditiveHaarNormalizationSourceCore).compactOpenSubset))
+  localizedRegion_eq_padicFiniteExtensionDirectProductCell :
+    ∀ index : β,
+      (localizedCalibration index).localizedRegion =
+        { point : α |
+          ∀ place : γ,
+            point ∈
+              (((padicFiniteExtensionFactor index place)
+                |>.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+                |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+                |>.toUltrametricValuationBallAdditiveHaarNormalizationSource
+                |>.toValuationBallTopologyAdditiveHaarNormalizationSource
+                |>.toValuationBallAdditiveHaarNormalizationSourceCore).realizedRegion
+                  (((padicFiniteExtensionFactor index place)
+                    |>.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+                    |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+                    |>.toUltrametricValuationBallAdditiveHaarNormalizationSource
+                    |>.toValuationBallTopologyAdditiveHaarNormalizationSource
+                    |>.toValuationBallAdditiveHaarNormalizationSourceCore).compactOpenSubset)) }
+  localFactor_separates_index :
+    ∀ ⦃index₁ index₂ : β⦄,
+      index₁ ≠ index₂ ->
+        ∃ place : γ,
+          Disjoint
+            (((padicFiniteExtensionFactor index₁ place)
+              |>.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+              |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+              |>.toUltrametricValuationBallAdditiveHaarNormalizationSource
+              |>.toValuationBallTopologyAdditiveHaarNormalizationSource
+              |>.toValuationBallAdditiveHaarNormalizationSourceCore).realizedRegion
+                (((padicFiniteExtensionFactor index₁ place)
+                  |>.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+                  |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+                  |>.toUltrametricValuationBallAdditiveHaarNormalizationSource
+                  |>.toValuationBallTopologyAdditiveHaarNormalizationSource
+                  |>.toValuationBallAdditiveHaarNormalizationSourceCore).compactOpenSubset))
+            (((padicFiniteExtensionFactor index₂ place)
+              |>.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+              |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+              |>.toUltrametricValuationBallAdditiveHaarNormalizationSource
+              |>.toValuationBallTopologyAdditiveHaarNormalizationSource
+              |>.toValuationBallAdditiveHaarNormalizationSourceCore).realizedRegion
+                (((padicFiniteExtensionFactor index₂ place)
+                  |>.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+                  |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+                  |>.toUltrametricValuationBallAdditiveHaarNormalizationSource
+                  |>.toValuationBallTopologyAdditiveHaarNormalizationSource
+                  |>.toValuationBallAdditiveHaarNormalizationSourceCore).compactOpenSubset))
+  familyHull_eq_padicFiniteExtensionDirectProductCellUnion :
+    hullSystem.phi (⋃ i, possibleRegion i) =
+      ⋃ index,
+        { point : α |
+          ∀ place : γ,
+            point ∈
+              (((padicFiniteExtensionFactor index place)
+                |>.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+                |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+                |>.toUltrametricValuationBallAdditiveHaarNormalizationSource
+                |>.toValuationBallTopologyAdditiveHaarNormalizationSource
+                |>.toValuationBallAdditiveHaarNormalizationSourceCore).realizedRegion
+                  (((padicFiniteExtensionFactor index place)
+                    |>.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+                    |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+                    |>.toUltrametricValuationBallAdditiveHaarNormalizationSource
+                    |>.toValuationBallTopologyAdditiveHaarNormalizationSource
+                    |>.toValuationBallAdditiveHaarNormalizationSourceCore).compactOpenSubset)) }
+  tensorProductRegion : β -> Set α
+  tensorProductRegion_eq_padicFiniteExtensionIntersection :
+    ∀ index : β,
+      tensorProductRegion index =
+        { point : α |
+          ∀ place : γ,
+            point ∈
+              (((padicFiniteExtensionFactor index place)
+                |>.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+                |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+                |>.toUltrametricValuationBallAdditiveHaarNormalizationSource
+                |>.toValuationBallTopologyAdditiveHaarNormalizationSource
+                |>.toValuationBallAdditiveHaarNormalizationSourceCore).realizedRegion
+                  (((padicFiniteExtensionFactor index place)
+                    |>.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+                    |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+                    |>.toUltrametricValuationBallAdditiveHaarNormalizationSource
+                    |>.toValuationBallTopologyAdditiveHaarNormalizationSource
+                    |>.toValuationBallAdditiveHaarNormalizationSourceCore).compactOpenSubset)) }
+  tensorProductRawLogVolume : β -> Real
+  tensorProductNormalizedLogVolume : β -> Real
+  tensorProductNormalizedLogVolume_eq_region :
+    ∀ index : β,
+      tensorProductNormalizedLogVolume index =
+        hullSystem.logVolume (tensorProductRegion index)
+  tensorProductNormalizedLogVolume_eq_padicFiniteExtensionSum :
+    ∀ index : β,
+      tensorProductNormalizedLogVolume index =
+        Finset.univ.sum fun place : γ =>
+          ((((padicFiniteExtensionFactor index place)
+              |>.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+              |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+              |>.toUltrametricValuationBallAdditiveHaarNormalizationSource
+              |>.toValuationBallTopologyAdditiveHaarNormalizationSource
+              |>.toValuationBallAdditiveHaarNormalizationSourceCore)
+            |>.toAdditiveHaarCompactOpenNormalizationSource)
+            |>.normalizedHaarLogVolume
+              (((padicFiniteExtensionFactor index place)
+                |>.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+                |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+                |>.toUltrametricValuationBallAdditiveHaarNormalizationSource
+                |>.toValuationBallTopologyAdditiveHaarNormalizationSource
+                |>.toValuationBallAdditiveHaarNormalizationSourceCore).compactOpenSubset))
+  finiteAdditive :
+    IUTStage1FiniteAdditiveHullLogVolumeSource hullSystem β
+
+namespace IUTStage1Remark395PadicFiniteExtensionValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+
+variable {α : Type u} {ι : Type v} {p : Nat} [Fact p.Prime]
+variable {K : Type z} {β : Type w} {γ : Type x}
+variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+variable [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+variable [Fintype β] [Fintype γ]
+
+set_option linter.style.longLine false in
+noncomputable def valuationBallFactor
+    (data :
+      IUTStage1Remark395PadicFiniteExtensionValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι p K β γ)
+    (index : β) (place : γ) :
+    IUTStage1ValuationBallAdditiveHaarNormalizationSource
+      α (Subring K) K data.hullSystem :=
+  (data.padicFiniteExtensionFactor index place)
+    |>.toValuedFieldIntegerProperUltrametricHaarNormalizationSource
+    |>.toProperUltrametricValuationBallAdditiveHaarNormalizationSource
+    |>.toUltrametricValuationBallAdditiveHaarNormalizationSource
+    |>.toValuationBallTopologyAdditiveHaarNormalizationSource
+    |>.toValuationBallAdditiveHaarNormalizationSourceCore
+
+def localFactorRegion
+    (data :
+      IUTStage1Remark395PadicFiniteExtensionValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι p K β γ)
+    (index : β) (place : γ) :
+    Set α :=
+  (data.valuationBallFactor index place).realizedRegion
+    (data.valuationBallFactor index place).compactOpenSubset
+
+def directProductCell
+    (data :
+      IUTStage1Remark395PadicFiniteExtensionValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι p K β γ)
+    (index : β) :
+    Set α :=
+  { point : α | ∀ place : γ, point ∈ data.localFactorRegion index place }
+
+def directProductCellUnion
+    (data :
+      IUTStage1Remark395PadicFiniteExtensionValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι p K β γ) :
+    Set α :=
+  ⋃ index, data.directProductCell index
+
+set_option linter.style.longLine false in
+noncomputable def factorValuationCalibration
+    (data :
+      IUTStage1Remark395PadicFiniteExtensionValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι p K β γ)
+    (index : β) (place : γ) :
+    IUTStage1ValuationBallVectorBundleFactorCalibrationSource
+      α (Subring K) K γ data.hullSystem
+      (data.localizedCalibration index) place :=
+  { valuationBallFactor := data.valuationBallFactor index place,
+    valuationBall_ring_eq_bundle :=
+      data.valuationBall_ring_eq_bundle index place,
+    directSummand_eq_normalizedHaarLogVolume :=
+      data.directSummand_eq_padicFiniteExtensionNormalized index place }
+
+set_option linter.style.longLine false in
+noncomputable def cellValuationBallTensor
+    (data :
+      IUTStage1Remark395PadicFiniteExtensionValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι p K β γ)
+    (index : β) :
+    IUTStage1ValuationBallTensorProductDirectSumSource
+      α (Subring K) K γ data.hullSystem :=
+  { valuationBallFactor := data.valuationBallFactor index,
+    tensorProductRegion := data.tensorProductRegion index,
+    tensorProductRegion_eq_valuationBallIntersection := by
+      simpa [valuationBallFactor] using
+        data.tensorProductRegion_eq_padicFiniteExtensionIntersection index,
+    tensorProductRawLogVolume := data.tensorProductRawLogVolume index,
+    tensorProductNormalizedLogVolume :=
+      data.tensorProductNormalizedLogVolume index,
+    tensorProductNormalizedLogVolume_eq_region :=
+      data.tensorProductNormalizedLogVolume_eq_region index,
+    tensorProductNormalizedLogVolume_eq_valuationBallSum := by
+      simpa [valuationBallFactor] using
+        data.tensorProductNormalizedLogVolume_eq_padicFiniteExtensionSum index }
+
+set_option linter.style.longLine false in
+noncomputable def toValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+    (data :
+      IUTStage1Remark395PadicFiniteExtensionValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι p K β γ) :
+    IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+      α ι (Subring K) K β γ :=
+  { hullSystem := data.hullSystem,
+    possibleRegion := data.possibleRegion,
+    localizedCalibration := data.localizedCalibration,
+    anchor := data.anchor,
+    positiveTensorPower := data.positiveTensorPower,
+    tensor_power_pos := data.tensor_power_pos,
+    factorValuationCalibration := data.factorValuationCalibration,
+    localizedRegion_eq_valuationBallDirectProductCell := by
+      intro index
+      simpa [factorValuationCalibration,
+        IUTStage1ValuationBallVectorBundleFactorCalibrationSource.region,
+        localFactorRegion, valuationBallFactor] using
+        data.localizedRegion_eq_padicFiniteExtensionDirectProductCell index,
+    localFactor_separates_index := by
+      intro index₁ index₂ hne
+      rcases data.localFactor_separates_index hne with ⟨place, hdisjoint⟩
+      exact ⟨place, by
+        simpa [factorValuationCalibration,
+          IUTStage1ValuationBallVectorBundleFactorCalibrationSource.region,
+          localFactorRegion, valuationBallFactor] using hdisjoint⟩,
+    familyHull_eq_valuationBallDirectProductCellUnion := by
+      simpa [factorValuationCalibration,
+        IUTStage1ValuationBallVectorBundleFactorCalibrationSource.region,
+        localFactorRegion, valuationBallFactor] using
+        data.familyHull_eq_padicFiniteExtensionDirectProductCellUnion,
+    cellValuationBallTensor := data.cellValuationBallTensor,
+    cellValuationBall_factor_eq_calibration := by
+      intro index place
+      rfl,
+    finiteAdditive := data.finiteAdditive }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395PadicFiniteExtensionValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+        α ι p K β γ) :
+    let valuationCover :=
+      data.toValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource;
+    (∀ index : β, ∀ place : γ,
+      (data.valuationBallFactor index place).compactOpenRadius = 1) ∧
+      (∀ index : β, ∀ place : γ,
+        (valuationCover.factorValuationCalibration index place).valuationBallFactor =
+          data.valuationBallFactor index place) ∧
+      (∀ index : β, ∀ place : γ,
+        (valuationCover.cellValuationBallTensor index).valuationBallFactor place =
+          data.valuationBallFactor index place) ∧
+      (∀ index : β,
+        valuationCover.directProductCell index =
+          data.directProductCell index) ∧
+      valuationCover.directProductCellUnion =
+        data.directProductCellUnion :=
+  by
+    intro valuationCover
+    exact
+      ⟨data.compactOpenRadius_eq_one,
+        by intro index place; rfl,
+        by intro index place; rfl,
+        by intro index; rfl,
+        rfl⟩
+
+end IUTStage1Remark395PadicFiniteExtensionValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+
+set_option linter.style.longLine false in
+/--
+Principal valuation-ball product-hull cover backed by finite-extension
+`p`-adic Haar factors.
+
+This projects to the older principal valuation-ball cover, but its valuation
+cover is first constructed from finite-extension unit-ball Haar sources.
+-/
+structure IUTStage1Remark395PadicFiniteExtensionPrincipalValuationBallProductHullCoverSource
+    (α : Type u) (ι : Type v) (p : Nat) [Fact p.Prime]
+    (K : Type z) (β : Type w) (γ : Type x)
+    (Λ : Type max u v w x z)
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    [Fintype β] [Fintype γ] where
+  valuationCover :
+    IUTStage1Remark395PadicFiniteExtensionValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+      α ι p K β γ
+  principalHullSource :
+    IUTStage1Remark395PrincipalProductHullSystemSource α Λ
+  hullSystem_eq_principal :
+    valuationCover.hullSystem = principalHullSource.toHolomorphicHullSystem
+  localIntegerRegion_eq_anchorCell :
+    principalHullSource.localIntegerRegion =
+      valuationCover.directProductCell valuationCover.anchor
+
+namespace IUTStage1Remark395PadicFiniteExtensionPrincipalValuationBallProductHullCoverSource
+
+variable {α : Type u} {ι : Type v} {p : Nat} [Fact p.Prime]
+variable {K : Type z} {β : Type w} {γ : Type x}
+variable {Λ : Type max u v w x z}
+variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+variable [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+variable [Fintype β] [Fintype γ]
+
+set_option linter.style.longLine false in
+noncomputable def toPrincipalValuationBallProductHullCoverSource
+    (data :
+      IUTStage1Remark395PadicFiniteExtensionPrincipalValuationBallProductHullCoverSource
+        α ι p K β γ Λ) :
+    IUTStage1Remark395PrincipalValuationBallProductHullCoverSource
+      α ι (Subring K) K β γ Λ :=
+  { valuationCover :=
+      data.valuationCover.toValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource,
+    principalHullSource := data.principalHullSource,
+    hullSystem_eq_principal := data.hullSystem_eq_principal,
+    localIntegerRegion_eq_anchorCell := by
+      simpa [
+        IUTStage1Remark395PadicFiniteExtensionValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource.toValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource,
+        IUTStage1Remark395PadicFiniteExtensionValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource.directProductCell,
+        IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource.directProductCell,
+        IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource.localFactorRegion,
+        IUTStage1ValuationBallVectorBundleFactorCalibrationSource.region,
+        IUTStage1Remark395PadicFiniteExtensionValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource.factorValuationCalibration,
+        IUTStage1Remark395PadicFiniteExtensionValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource.localFactorRegion] using
+        data.localIntegerRegion_eq_anchorCell }
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395PadicFiniteExtensionPrincipalValuationBallProductHullCoverSource
+        α ι p K β γ Λ) :
+    let principalCover := data.toPrincipalValuationBallProductHullCoverSource;
+    principalCover.valuationCover.hullSystem =
+        data.principalHullSource.toHolomorphicHullSystem ∧
+      principalCover.principalHullSource = data.principalHullSource ∧
+      principalCover.valuationCover.directProductCell principalCover.valuationCover.anchor =
+        data.valuationCover.directProductCell data.valuationCover.anchor ∧
+      principalCover.principalHullSource.localIntegerRegion =
+        principalCover.valuationCover.directProductCell principalCover.valuationCover.anchor :=
+  by
+    intro principalCover
+    exact
+      ⟨data.hullSystem_eq_principal,
+        rfl,
+        rfl,
+        principalCover.localIntegerRegion_eq_anchorCell⟩
+
+end IUTStage1Remark395PadicFiniteExtensionPrincipalValuationBallProductHullCoverSource
+
 /--
 Direct-product backed principal valuation-ball product-hull cover source.
 

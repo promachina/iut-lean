@@ -876,7 +876,11 @@ from transported local calibration data and finite-extension unit-ball Haar
 factors, and Lean proves the projected vector-bundle and localized-region
 equalities consumed by the older route.  The remaining lower matching datum is
 the factor-level equality between each projected finite-extension valuation
-ball and the transported valuation-cover factor.
+ball and the transported valuation-cover factor.  A finite-extension-backed
+valuation-cover wrapper now lowers the valuation-cover side itself: the lower
+principal valuation cover is projected from finite-extension p-adic Haar data
+before it enters the constructed source-core route.  The cross-hull matching
+with the public finite-extension factors remains explicit.
 An inverse-dilation refinement lowers the analytic input further: each
 transported valuation-ball Haar factor is identified with the inverse
 base-prime unit ball of a constructed finite-extension \(p\)-adic Haar
