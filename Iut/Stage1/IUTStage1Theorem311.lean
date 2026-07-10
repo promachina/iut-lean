@@ -24228,6 +24228,296 @@ theorem preferredTransportedScalarParameterPrincipalProductLocalizedThetaEqFamil
 
 set_option linter.style.longLine false in
 /--
+Representability-backed transported scalar-parameter public hull source.
+
+This is the same public carrier route as
+`transportedScalarParameterPrincipalProductSource`, but the scalar parameter
+chosen for the intersection hull is no longer supplied independently.  It is
+constructed from representability of direct-product parameters.
+-/
+noncomputable def transportedRepresentableScalarParameterPrincipalProductSource
+    {targetCopy : Copy}
+    {δ : Type x} {A : δ -> Type y} {S : δ -> Type z}
+    (transportedRepresentableSource :
+      IUTStage1Remark395TransportedRepresentableScalarParameterPrincipalProductHullSystemSource
+        (Point targetCopy) δ A S) :
+    IUTStage1Remark395PrincipalProductHullSystemSource
+      (Point targetCopy) ((d : δ) -> S d) :=
+  transportedScalarParameterPrincipalProductSource
+    transportedRepresentableSource.toTransportedScalarParameterPrincipalProductHullSystemSource
+
+set_option linter.style.longLine false in
+noncomputable def transportedRepresentableScalarParameterPrincipalProductConcreteHullSource
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {δ : Type x} {A : δ -> Type y} {S : δ -> Type z}
+    (transportedRepresentableSource :
+      IUTStage1Remark395TransportedRepresentableScalarParameterPrincipalProductHullSystemSource
+        (Point targetCopy) δ A S) :
+    StepXIHullFormationData.ConcreteHolomorphicHullSystemSource
+      sourceData.Core sourceData.Images :=
+  transportedScalarParameterPrincipalProductConcreteHullSource sourceData
+    transportedRepresentableSource.toTransportedScalarParameterPrincipalProductHullSystemSource
+
+set_option linter.style.longLine false in
+noncomputable def transportedRepresentableScalarParameterPrincipalProductHullFormationData
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {δ : Type x} {A : δ -> Type y} {S : δ -> Type z}
+    (transportedRepresentableSource :
+      IUTStage1Remark395TransportedRepresentableScalarParameterPrincipalProductHullSystemSource
+        (Point targetCopy) δ A S) :
+    StepXIHullFormationData sourceData.Core sourceData.Images :=
+  (transportedRepresentableScalarParameterPrincipalProductConcreteHullSource
+    sourceData transportedRepresentableSource).toHullFormationData
+
+set_option linter.style.longLine false in
+noncomputable def transportedRepresentableScalarParameterPrincipalProductHullOperator
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {δ : Type x} {A : δ -> Type y} {S : δ -> Type z}
+    (transportedRepresentableSource :
+      IUTStage1Remark395TransportedRepresentableScalarParameterPrincipalProductHullSystemSource
+        (Point targetCopy) δ A S) :
+    IUTStage1Remark395HolomorphicHullOperator (Point targetCopy) :=
+  (transportedRepresentableScalarParameterPrincipalProductHullFormationData
+    sourceData transportedRepresentableSource).hullOperator
+
+set_option linter.style.longLine false in
+noncomputable def transportedRepresentableScalarParameterPrincipalProductPossibleRegion
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {δ : Type x} {A : δ -> Type y} {S : δ -> Type z}
+    (transportedRepresentableSource :
+      IUTStage1Remark395TransportedRepresentableScalarParameterPrincipalProductHullSystemSource
+        (Point targetCopy) δ A S) :
+    Quot sourceData.Core.equalityQuotient.relation -> Set (Point targetCopy) :=
+  ((transportedRepresentableScalarParameterPrincipalProductHullFormationData
+      sourceData transportedRepresentableSource).quotientHullCompatibility)
+    |>.familySource.possibleRegion
+
+set_option linter.style.longLine false in
+/--
+Audit for the representability-backed transported scalar hull route.
+
+The first two fields expose the removed assumption: the scalar parameter for
+the intersection direct-product region is obtained by choosing a representative
+from `productParameter_has_scalarParameter`; the rest is the existing
+transported scalar hull route applied to that constructed source.
+-/
+structure TransportedRepresentableScalarParameterPrincipalProductHullRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {δ : Type x} {A : δ -> Type y} {S : δ -> Type z}
+    (transportedRepresentableSource :
+      IUTStage1Remark395TransportedRepresentableScalarParameterPrincipalProductHullSystemSource
+        (Point targetCopy) δ A S) : Prop where
+  intersection_scalar_constructed_from_representability :
+    ∀ region : Set (Point targetCopy),
+      let productRegion :=
+        transportedRepresentableSource.carrierEquiv '' region;
+      transportedRepresentableSource.representableSource.scalarParameterSource.parameterRegion
+          (transportedRepresentableSource.representableSource.intersectionScalarParameter
+            productRegion) =
+        transportedRepresentableSource.representableSource.scalarParameterSource.directProductSource.intersectionParameter
+          productRegion
+  direct_product_parameters_represented_by_scalars :
+    ∀ productParameter : (d : δ) -> Set (A d),
+      transportedRepresentableSource.representableSource.scalarParameterSource.parameterRegion
+          (transportedRepresentableSource.representableSource.scalarParameterOfProductParameter
+            productParameter) =
+        productParameter
+  transported_hull_route :
+    TransportedScalarParameterPrincipalProductHullRouteAudit
+      sourceData
+      transportedRepresentableSource.toTransportedScalarParameterPrincipalProductHullSystemSource
+  principal_source_constructed_from_representability :
+    transportedRepresentableScalarParameterPrincipalProductSource
+        transportedRepresentableSource =
+      transportedRepresentableSource.toPrincipalProductHullSystemSource
+  concrete_hull_source_constructed_from_representability :
+    transportedRepresentableScalarParameterPrincipalProductConcreteHullSource
+        sourceData transportedRepresentableSource =
+      principalProductConcreteHullSource sourceData
+        transportedRepresentableSource.toPrincipalProductHullSystemSource
+  concrete_hull_constructed_from_source_spine :
+    (transportedRepresentableScalarParameterPrincipalProductConcreteHullSource
+        sourceData transportedRepresentableSource).quotientImages =
+      sourceData.theorem311PossibleImageSourceData.quotientImages
+  selected_q_choice_from_source_spine :
+    (transportedRepresentableScalarParameterPrincipalProductConcreteHullSource
+        sourceData transportedRepresentableSource).selectedQChoice =
+      sourceData.selectedQChoice
+
+set_option linter.style.longLine false in
+theorem transportedRepresentableScalarParameterPrincipalProductHullRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {δ : Type x} {A : δ -> Type y} {S : δ -> Type z}
+    (transportedRepresentableSource :
+      IUTStage1Remark395TransportedRepresentableScalarParameterPrincipalProductHullSystemSource
+        (Point targetCopy) δ A S) :
+    TransportedRepresentableScalarParameterPrincipalProductHullRouteAudit
+      sourceData transportedRepresentableSource :=
+  { intersection_scalar_constructed_from_representability :=
+      fun region => by
+        simpa using
+          transportedRepresentableSource.representableSource.intersectionParameterRegion_eq
+            (transportedRepresentableSource.carrierEquiv '' region),
+    direct_product_parameters_represented_by_scalars :=
+      transportedRepresentableSource.representableSource.parameterRegion_scalarParameterOfProductParameter_eq,
+    transported_hull_route :=
+      transportedScalarParameterPrincipalProductHullRouteAudit
+        sourceData
+        transportedRepresentableSource.toTransportedScalarParameterPrincipalProductHullSystemSource,
+    principal_source_constructed_from_representability := rfl,
+    concrete_hull_source_constructed_from_representability := rfl,
+    concrete_hull_constructed_from_source_spine := rfl,
+    selected_q_choice_from_source_spine := rfl }
+
+set_option linter.style.longLine false in
+/--
+Preferred localized theta-equals-family-hull route whose transported scalar
+hull source is itself constructed from direct-product scalar representability.
+
+This is stricter than the transported scalar route: callers supply
+representability of direct-product parameters, not an independent scalar
+selector for the intersection hull parameter.
+-/
+structure PreferredTransportedRepresentableScalarParameterPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    {δ : Type x} {A : δ -> Type y} {S : δ -> Type z}
+    (transportedRepresentableSource :
+      IUTStage1Remark395TransportedRepresentableScalarParameterPrincipalProductHullSystemSource
+        (Point targetCopy) δ A S)
+    {η : Type x} {β : Type (max x z)} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        transportedRepresentableScalarParameterPrincipalProductHullOperator
+          sourceData transportedRepresentableSource)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        transportedRepresentableScalarParameterPrincipalProductPossibleRegion
+          sourceData transportedRepresentableSource)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned = localizedSource.familyHullLogVolume)
+    {Penv Pgau V : Type (max x z)} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (transportedRepresentableScalarParameterPrincipalProductHullFormationData
+          sourceData transportedRepresentableSource)
+        β Penv Pgau V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations) : Prop where
+  representable_hull_route :
+    TransportedRepresentableScalarParameterPrincipalProductHullRouteAudit
+      sourceData transportedRepresentableSource
+  transported_scalar_theta_route :
+    PreferredTransportedScalarParameterPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+      sourceData paperTrace thetaSigned
+      transportedRepresentableSource.toTransportedScalarParameterPrincipalProductHullSystemSource
+      localizedSource hullOperator_eq possibleRegion_eq
+      thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
+      additive_haar_arithmetic_degree_padic
+
+set_option linter.style.longLine false in
+theorem preferredTransportedRepresentableScalarParameterPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    {δ : Type x} {A : δ -> Type y} {S : δ -> Type z}
+    (transportedRepresentableSource :
+      IUTStage1Remark395TransportedRepresentableScalarParameterPrincipalProductHullSystemSource
+        (Point targetCopy) δ A S)
+    {η : Type x} {β : Type (max x z)} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        transportedRepresentableScalarParameterPrincipalProductHullOperator
+          sourceData transportedRepresentableSource)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        transportedRepresentableScalarParameterPrincipalProductPossibleRegion
+          sourceData transportedRepresentableSource)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned = localizedSource.familyHullLogVolume)
+    {Penv Pgau V : Type (max x z)} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (transportedRepresentableScalarParameterPrincipalProductHullFormationData
+          sourceData transportedRepresentableSource)
+        β Penv Pgau V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations)
+    (audit :
+      let principalSource :=
+        transportedRepresentableSource.toPrincipalProductHullSystemSource;
+      let concreteHullSource :=
+        principalProductConcreteHullSource sourceData principalSource;
+      let stepXI :=
+        StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaEqFamilyHullThetaLGPOb7Source
+            (sourceData := sourceData)
+            paperTrace thetaSigned concreteHullSource
+            rfl localizedSource hullOperator_eq possibleRegion_eq
+            thetaSigned_eq_familyHullLogVolume ob7Source;
+      NonStepXIRemainingPayloadAudit
+        (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+          sourceData stepXI iutIV_cTheta
+          additive_haar_arithmetic_degree_padic)) :
+    PreferredTransportedRepresentableScalarParameterPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+      sourceData paperTrace thetaSigned transportedRepresentableSource
+      localizedSource hullOperator_eq possibleRegion_eq
+      thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
+      additive_haar_arithmetic_degree_padic := by
+  exact
+    { representable_hull_route :=
+        transportedRepresentableScalarParameterPrincipalProductHullRouteAudit
+          sourceData transportedRepresentableSource,
+      transported_scalar_theta_route :=
+        preferredTransportedScalarParameterPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+          sourceData paperTrace thetaSigned
+          transportedRepresentableSource.toTransportedScalarParameterPrincipalProductHullSystemSource
+          localizedSource hullOperator_eq possibleRegion_eq
+          thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
+          additive_haar_arithmetic_degree_padic audit }
+
+set_option linter.style.longLine false in
+/--
 Construct the Corollary 3.12 Step (xi)/Remark 3.9.5 paper trace from the
 same lower sources used by the strongest principal-product localized route.
 

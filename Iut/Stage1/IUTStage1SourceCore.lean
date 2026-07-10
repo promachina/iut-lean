@@ -4661,6 +4661,146 @@ theorem endpoint
 end IUTStage1Remark395ScalarParameterPrincipalProductHullSystemSource
 
 /--
+Representability-backed scalar-parameter principal product-hull source.
+
+The previous scalar-parameter principal source asked separately for an
+intersection scalar selector and for representability of all direct-product
+parameters.  The selector is not independent: the intersection parameter is a
+direct-product parameter, hence it may be represented by the same
+representability datum.  This constructor builds the selector by choosing a
+scalar representative of the direct-product intersection parameter.
+-/
+structure IUTStage1Remark395RepresentableScalarParameterPrincipalProductHullSystemSource
+    (δ : Type u) (A : δ -> Type v) (S : δ -> Type w) where
+  scalarParameterSource :
+    IUTStage1Remark395ScalarParameterDirectProductHullSource δ A S
+  productParameter_has_scalarParameter :
+    ∀ productParameter : (d : δ) -> Set (A d),
+      ∃ scalarParameter : (d : δ) -> S d,
+        scalarParameterSource.parameterRegion scalarParameter =
+          productParameter
+
+namespace IUTStage1Remark395RepresentableScalarParameterPrincipalProductHullSystemSource
+
+variable {δ : Type u} {A : δ -> Type v} {S : δ -> Type w}
+
+noncomputable def scalarParameterOfProductParameter
+    (data :
+      IUTStage1Remark395RepresentableScalarParameterPrincipalProductHullSystemSource
+        δ A S)
+    (productParameter : (d : δ) -> Set (A d)) :
+    (d : δ) -> S d :=
+  Classical.choose (data.productParameter_has_scalarParameter productParameter)
+
+theorem parameterRegion_scalarParameterOfProductParameter_eq
+    (data :
+      IUTStage1Remark395RepresentableScalarParameterPrincipalProductHullSystemSource
+        δ A S)
+    (productParameter : (d : δ) -> Set (A d)) :
+    data.scalarParameterSource.parameterRegion
+        (data.scalarParameterOfProductParameter productParameter) =
+      productParameter :=
+  Classical.choose_spec (data.productParameter_has_scalarParameter productParameter)
+
+noncomputable def intersectionScalarParameter
+    (data :
+      IUTStage1Remark395RepresentableScalarParameterPrincipalProductHullSystemSource
+        δ A S)
+    (region : Set ((d : δ) -> A d)) :
+    (d : δ) -> S d :=
+  data.scalarParameterOfProductParameter
+    (data.scalarParameterSource.directProductSource.intersectionParameter
+      region)
+
+theorem intersectionParameterRegion_eq
+    (data :
+      IUTStage1Remark395RepresentableScalarParameterPrincipalProductHullSystemSource
+        δ A S)
+    (region : Set ((d : δ) -> A d)) :
+    data.scalarParameterSource.parameterRegion
+        (data.intersectionScalarParameter region) =
+      data.scalarParameterSource.directProductSource.intersectionParameter
+        region :=
+  data.parameterRegion_scalarParameterOfProductParameter_eq
+    (data.scalarParameterSource.directProductSource.intersectionParameter
+      region)
+
+noncomputable def toScalarParameterPrincipalProductHullSystemSource
+    (data :
+      IUTStage1Remark395RepresentableScalarParameterPrincipalProductHullSystemSource
+        δ A S) :
+    IUTStage1Remark395ScalarParameterPrincipalProductHullSystemSource δ A S :=
+  { scalarParameterSource := data.scalarParameterSource,
+    intersectionScalarParameter := data.intersectionScalarParameter,
+    intersectionParameterRegion_eq := data.intersectionParameterRegion_eq,
+    productParameter_has_scalarParameter :=
+      data.productParameter_has_scalarParameter }
+
+noncomputable def toPrincipalProductHullSystemSource
+    (data :
+      IUTStage1Remark395RepresentableScalarParameterPrincipalProductHullSystemSource
+        δ A S) :
+    IUTStage1Remark395PrincipalProductHullSystemSource
+      ((d : δ) -> A d) ((d : δ) -> S d) :=
+  data.toScalarParameterPrincipalProductHullSystemSource
+    |>.toPrincipalProductHullSystemSource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395RepresentableScalarParameterPrincipalProductHullSystemSource
+        δ A S)
+    (region : Set ((d : δ) -> A d)) :
+    let scalarPrincipalSource :=
+      data.toScalarParameterPrincipalProductHullSystemSource;
+    let principalSource :=
+      data.toPrincipalProductHullSystemSource;
+    data.scalarParameterSource.parameterRegion
+        (data.intersectionScalarParameter region) =
+      data.scalarParameterSource.directProductSource.intersectionParameter
+        region ∧
+      (∀ productParameter : (d : δ) -> Set (A d),
+        data.scalarParameterSource.parameterRegion
+            (data.scalarParameterOfProductParameter productParameter) =
+          productParameter) ∧
+      (∀ parameter : (d : δ) -> S d,
+        principalSource.parameter_nonzero parameter) ∧
+      scalarPrincipalSource.principalHull
+          (scalarPrincipalSource.intersectionScalarParameter region) =
+        { point : (d : δ) -> A d |
+          ∀ parameter : (d : δ) -> S d,
+            region ⊆ scalarPrincipalSource.principalHull parameter ->
+              point ∈ scalarPrincipalSource.principalHull parameter } ∧
+      principalSource.toHolomorphicHullSystem.phi region =
+        principalSource.principalHull
+          (principalSource.intersectionParameter region) ∧
+      region ⊆
+        principalSource.principalHull
+          (principalSource.intersectionParameter region) ∧
+      principalSource.toProductHullSystemSource.logVolume
+          (principalSource.toProductHullSystemSource.productHull
+            (principalSource.toProductHullSystemSource.intersectionParameter
+              region)) =
+        principalSource.toProductHullSystemSource.productHullLogVolume
+          (principalSource.toProductHullSystemSource.intersectionParameter
+            region) :=
+  by
+    intro scalarPrincipalSource principalSource
+    have hendpoint := scalarPrincipalSource.endpoint region
+    rcases hendpoint with
+      ⟨hnonzero, _, hintersection, hminimal, hphi, hregion, hlog⟩
+    exact
+      ⟨hintersection,
+        data.parameterRegion_scalarParameterOfProductParameter_eq,
+        hnonzero,
+        hminimal,
+        hphi,
+        hregion,
+        hlog⟩
+
+end IUTStage1Remark395RepresentableScalarParameterPrincipalProductHullSystemSource
+
+/--
 Carrier-transported scalar-parameter principal product-hull source.
 
 The scalar-parameter construction above lives on the literal dependent product
@@ -4778,6 +4918,92 @@ theorem endpoint
         hlog⟩
 
 end IUTStage1Remark395TransportedScalarParameterPrincipalProductHullSystemSource
+
+/--
+Carrier-transported representability-backed scalar-parameter principal source.
+
+This combines the two previous reductions: the intersection scalar selector is
+constructed from scalar representability of direct-product parameters, and the
+resulting product-carrier principal hull is transported to the public carrier.
+-/
+structure IUTStage1Remark395TransportedRepresentableScalarParameterPrincipalProductHullSystemSource
+    (α : Type u) (δ : Type v) (A : δ -> Type w) (S : δ -> Type x) where
+  representableSource :
+    IUTStage1Remark395RepresentableScalarParameterPrincipalProductHullSystemSource
+      δ A S
+  carrierEquiv : α ≃ ((d : δ) -> A d)
+
+namespace IUTStage1Remark395TransportedRepresentableScalarParameterPrincipalProductHullSystemSource
+
+variable {α : Type u} {δ : Type v} {A : δ -> Type w} {S : δ -> Type x}
+
+noncomputable def toTransportedScalarParameterPrincipalProductHullSystemSource
+    (data :
+      IUTStage1Remark395TransportedRepresentableScalarParameterPrincipalProductHullSystemSource
+        α δ A S) :
+    IUTStage1Remark395TransportedScalarParameterPrincipalProductHullSystemSource
+      α δ A S :=
+  { scalarParameterSource :=
+      data.representableSource.toScalarParameterPrincipalProductHullSystemSource,
+    carrierEquiv := data.carrierEquiv }
+
+noncomputable def toPrincipalProductHullSystemSource
+    (data :
+      IUTStage1Remark395TransportedRepresentableScalarParameterPrincipalProductHullSystemSource
+        α δ A S) :
+    IUTStage1Remark395PrincipalProductHullSystemSource
+      α ((d : δ) -> S d) :=
+  data.toTransportedScalarParameterPrincipalProductHullSystemSource
+    |>.toPrincipalProductHullSystemSource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395TransportedRepresentableScalarParameterPrincipalProductHullSystemSource
+        α δ A S)
+    (region : Set α) :
+    let transportedSource :=
+      data.toTransportedScalarParameterPrincipalProductHullSystemSource;
+    let productRegion := data.carrierEquiv '' region;
+    let principalSource := data.toPrincipalProductHullSystemSource;
+    data.representableSource.scalarParameterSource.parameterRegion
+        (data.representableSource.intersectionScalarParameter productRegion) =
+      data.representableSource.scalarParameterSource.directProductSource.intersectionParameter
+        productRegion ∧
+      (∀ productParameter : (d : δ) -> Set (A d),
+        data.representableSource.scalarParameterSource.parameterRegion
+            (data.representableSource.scalarParameterOfProductParameter
+              productParameter) =
+          productParameter) ∧
+      (∀ parameter : (d : δ) -> S d,
+        principalSource.parameter_nonzero parameter) ∧
+      (∀ parameter : (d : δ) -> S d,
+        data.carrierEquiv ''
+            principalSource.principalHull parameter =
+          transportedSource.productPrincipalSource.principalHull parameter) ∧
+      region ⊆
+        principalSource.principalHull
+          (principalSource.intersectionParameter region) ∧
+      principalSource.toProductHullSystemSource.logVolume
+          (principalSource.toProductHullSystemSource.productHull
+            (principalSource.toProductHullSystemSource.intersectionParameter
+              region)) =
+        principalSource.toProductHullSystemSource.productHullLogVolume
+          (principalSource.toProductHullSystemSource.intersectionParameter
+            region) :=
+  by
+    intro transportedSource productRegion principalSource
+    have hrepr := data.representableSource.endpoint productRegion
+    have htransport := transportedSource.endpoint region
+    exact
+      ⟨hrepr.1,
+        hrepr.2.1,
+        htransport.1,
+        htransport.2.1,
+        htransport.2.2.2.2.2.1,
+        htransport.2.2.2.2.2.2⟩
+
+end IUTStage1Remark395TransportedRepresentableScalarParameterPrincipalProductHullSystemSource
 
 /--
 Nonzero scalar-multiplication direct-product hull source.

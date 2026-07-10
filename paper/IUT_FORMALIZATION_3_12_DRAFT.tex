@@ -585,11 +585,14 @@ quotient-indexed possible regions have the same collapsed quotient image.  For
 equality-orbit choices, Lean packages this with region equality, log-volume
 equality, quotient-image equality, and containment in the family hull.
 The principal-product source boundary has been lowered again in source-core:
-a scalar-parameter direct-product hull source, together with an intersection
-scalar selector and scalar representability of product parameters, now
+a scalar-parameter direct-product hull source, together with scalar
+representability of product parameters, now
 constructs the full Remark 3.9.5 principal product-hull system and its minimal
-intersection theorem.  This replaces the principal intersection law by the
-direct-product hull theorem plus explicit scalar-region data.
+intersection theorem.  Lean chooses the scalar representative of the
+direct-product intersection parameter from this same representability datum, so
+the intersection scalar selector is no longer an independent public input.
+This replaces the principal intersection law by the direct-product hull theorem
+plus explicit scalar-region data.
 This scalar construction has now been transported onto the public Step (xi)
 carrier: a generic equivalence transport theorem carries principal
 \(\lambda\cdot O\) hull systems across carrier equivalences, and the
@@ -597,7 +600,8 @@ transported scalar-parameter source constructs the
 \(\mathrm{Point}(\mathsf{target})\)-level principal product hull source consumed by the
 localized theta-equals-family-hull route.  Thus this route no longer needs a
 standalone principal product-hull source on the public carrier; it needs the
-local scalar product construction and the carrier equivalence.
+local scalar product construction, scalar representability, and the carrier
+equivalence.
 For the stricter localized route, the final normalized localized determinant
 bound by \(\Theta_{\mathrm{signed}}\) is no longer supplied as a standalone
 inequality: Lean derives it from the identification of
