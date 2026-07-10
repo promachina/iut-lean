@@ -1110,10 +1110,17 @@ valuation-cover side from the intrinsic finite-extension valuation-cover
   normalization.  The preferred-public normalized additive-Haar route has now
   been migrated to this inverse-cover projection as well: its Haar-modulus
   valuation-cover argument is definitionally the radius-\(p\) residue-module
-  inverse-cover source, rather than the legacy unit-ball intrinsic cover.  What
-  remains below this route is to replace the normalized structure-sheaf/Hodge
-  calibration fields by constructors from the lower Hodge-theater and
-  log-theta-lattice data.  The
+  inverse-cover source, rather than the legacy unit-ball intrinsic cover.  The
+  non-normalized additive-Haar/Gaussian-Hodge route has now been added for the
+  same inverse-cover source: the residue-module wrapper supplies the localized
+  structure-sheaf/direct-summand comparison, projects the Haar-modulus
+  valuation-cover argument from the radius-\(p\) inverse cover, and then reuses
+  the generic additive-Haar compact-open ladder to construct the
+  Gaussian/Hodge localized-adjusted Ob7 source.  Thus the normalized public
+  wrapper is no longer the only residue-module inverse-cover entry point.  What
+  remains below this route is to construct the direct-summand, Hodge
+  local-global, and localized adjusted theta fields from the lower
+  Hodge-theater and log-theta-lattice data.  The
   full-boundary audit for the current route also ties the
   IUT IV arithmetic residual to the same public wrapper.  The remaining
   principal-hull boundary is now to derive the coordinate scalar-image
