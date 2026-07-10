@@ -59875,9 +59875,14 @@ theorem remark395SelectedScalarParameterValuationBallProductHullCoverSource_endp
         data.selectedScalarParameterHull ∧
       data.selectedScalarParameterHull =
         data.valuationCover.directProductCellUnion ∧
+      data.selectedScalarParameterHull =
+        data.scalarParameterSource.scalarMultiple data.selectedScalarParameter ''
+          data.scalarParameterSource.localIntegerRegion ∧
       data.valuationCover.hullSystem.logVolume
           data.selectedScalarParameterHull =
         data.valuationCover.calibratedCellLogVolumeSum ∧
+      data.toPossibleImageFamilySource.canonicalHull =
+        data.selectedScalarParameterHull ∧
       data.toOb3Ob5AdjustedDeterminantLogVolumeSource.hullOperator =
         data.scalarParameterSource.directProductSource.toHolomorphicHullSystem.toHolomorphicHullOperator ∧
       data.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =

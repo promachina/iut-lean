@@ -26576,6 +26576,321 @@ theorem endpoint
 end DirectProductCellCoverSource
 
 set_option linter.style.longLine false in
+structure IndexedDirectProductCellCoverSource
+    (data :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ) : Type _ where
+  cellIndex : β -> ι
+  directProductCell_subset_possibleRegion :
+    ∀ index : β,
+      data.valuationCover.directProductCell index ⊆
+        data.valuationCover.possibleRegion (cellIndex index)
+
+namespace IndexedDirectProductCellCoverSource
+
+variable
+  {data :
+    IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+      δ A S ι η K β γ}
+
+def toDirectProductCellCoverSource
+    (indexedCoverSource : IndexedDirectProductCellCoverSource data) :
+    DirectProductCellCoverSource data where
+  directProductCell_subset_possibleImageUnion := by
+    intro index point hpoint
+    exact Set.mem_iUnion.mpr
+      ⟨indexedCoverSource.cellIndex index,
+        indexedCoverSource.directProductCell_subset_possibleRegion
+          index hpoint⟩
+
+def toDirectProductCellUnionExactSource
+    (indexedCoverSource : IndexedDirectProductCellCoverSource data) :
+    DirectProductCellUnionExactSource data :=
+  indexedCoverSource.toDirectProductCellCoverSource
+    |>.toDirectProductCellUnionExactSource
+
+def toExactXiSource
+    (indexedCoverSource : IndexedDirectProductCellCoverSource data) :
+    ExactXiSource data :=
+  indexedCoverSource.toDirectProductCellUnionExactSource.toExactXiSource
+
+noncomputable def toPossibleImageExactXiFamilySource
+    (indexedCoverSource : IndexedDirectProductCellCoverSource data) :
+    IUTStage1Remark395PossibleImageExactXiFamilySource
+      data.toPossibleImageFamilySource :=
+  indexedCoverSource.toDirectProductCellUnionExactSource
+    |>.toPossibleImageExactXiFamilySource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (indexedCoverSource : IndexedDirectProductCellCoverSource data) :
+    (∀ index : β,
+        data.valuationCover.directProductCell index ⊆
+          data.valuationCover.possibleRegion
+            (indexedCoverSource.cellIndex index)) ∧
+      (∀ index : β,
+        data.valuationCover.directProductCell index ⊆
+          data.possibleImageUnion) ∧
+      data.possibleImageUnion = data.valuationCover.directProductCellUnion ∧
+      data.possibleImageUnion = data.selectedScalarParameterHull ∧
+      data.toPossibleImageFamilySource.canonicalHull =
+        data.toPossibleImageFamilySource.familyUnion :=
+  by
+    let cellCoverSource :=
+      indexedCoverSource.toDirectProductCellCoverSource
+    exact
+      ⟨indexedCoverSource.directProductCell_subset_possibleRegion,
+        cellCoverSource.directProductCell_subset_possibleImageUnion,
+        cellCoverSource.possibleImageUnion_eq_directProductCellUnion,
+        indexedCoverSource.toExactXiSource
+          |>.valuationUnion_eq_selectedScalarParameterHull,
+        indexedCoverSource.toExactXiSource.endpoint.2.2.1⟩
+
+end IndexedDirectProductCellCoverSource
+
+set_option linter.style.longLine false in
+structure LocalFactorDirectProductCellCoverSource
+    (data :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ) : Type _ where
+  cellIndex : β -> ι
+  coverPlace : β -> γ
+  localFactorRegion_subset_possibleRegion :
+    ∀ index : β,
+      data.valuationCover.localFactorRegion index (coverPlace index) ⊆
+        data.valuationCover.possibleRegion (cellIndex index)
+
+namespace LocalFactorDirectProductCellCoverSource
+
+variable
+  {data :
+    IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+      δ A S ι η K β γ}
+
+set_option linter.style.longLine false in
+theorem directProductCell_subset_possibleRegion
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data)
+    (index : β) :
+    data.valuationCover.directProductCell index ⊆
+      data.valuationCover.possibleRegion
+        (localFactorCoverSource.cellIndex index) := by
+  intro point hpoint
+  exact
+    localFactorCoverSource.localFactorRegion_subset_possibleRegion
+      index (hpoint (localFactorCoverSource.coverPlace index))
+
+def toIndexedDirectProductCellCoverSource
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data) :
+    IndexedDirectProductCellCoverSource data where
+  cellIndex := localFactorCoverSource.cellIndex
+  directProductCell_subset_possibleRegion :=
+    localFactorCoverSource.directProductCell_subset_possibleRegion
+
+def toDirectProductCellCoverSource
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data) :
+    DirectProductCellCoverSource data :=
+  localFactorCoverSource.toIndexedDirectProductCellCoverSource
+    |>.toDirectProductCellCoverSource
+
+def toDirectProductCellUnionExactSource
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data) :
+    DirectProductCellUnionExactSource data :=
+  localFactorCoverSource.toIndexedDirectProductCellCoverSource
+    |>.toDirectProductCellUnionExactSource
+
+def toExactXiSource
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data) :
+    ExactXiSource data :=
+  localFactorCoverSource.toIndexedDirectProductCellCoverSource
+    |>.toExactXiSource
+
+noncomputable def toPossibleImageExactXiFamilySource
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data) :
+    IUTStage1Remark395PossibleImageExactXiFamilySource
+      data.toPossibleImageFamilySource :=
+  localFactorCoverSource.toIndexedDirectProductCellCoverSource
+    |>.toPossibleImageExactXiFamilySource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data) :
+    (∀ index : β,
+        data.valuationCover.localFactorRegion index
+            (localFactorCoverSource.coverPlace index) ⊆
+          data.valuationCover.possibleRegion
+            (localFactorCoverSource.cellIndex index)) ∧
+      (∀ index : β,
+        data.valuationCover.directProductCell index ⊆
+          data.valuationCover.possibleRegion
+            (localFactorCoverSource.cellIndex index)) ∧
+      data.possibleImageUnion = data.valuationCover.directProductCellUnion ∧
+      data.possibleImageUnion = data.selectedScalarParameterHull ∧
+      data.toPossibleImageFamilySource.canonicalHull =
+        data.toPossibleImageFamilySource.familyUnion :=
+  by
+    let indexedCoverSource :=
+      localFactorCoverSource.toIndexedDirectProductCellCoverSource
+    exact
+      ⟨localFactorCoverSource.localFactorRegion_subset_possibleRegion,
+        localFactorCoverSource.directProductCell_subset_possibleRegion,
+        indexedCoverSource.endpoint.2.2.1,
+        indexedCoverSource.endpoint.2.2.2.1,
+        indexedCoverSource.endpoint.2.2.2.2⟩
+
+end LocalFactorDirectProductCellCoverSource
+
+set_option linter.style.longLine false in
+structure ValuationBallRadiusDirectProductCellCoverSource
+    (data :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ) : Type _ where
+  cellIndex : β -> ι
+  coverPlace : β -> γ
+  valuationBallRadius_subset_possibleRegion :
+    ∀ index : β,
+      let factor :=
+        data.valuationCover.valuationBallFactor index (coverPlace index)
+      factor.realizedRegion
+          (factor.valuationBall factor.compactOpenRadius) ⊆
+        data.valuationCover.possibleRegion (cellIndex index)
+
+namespace ValuationBallRadiusDirectProductCellCoverSource
+
+variable
+  {data :
+    IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+      δ A S ι η K β γ}
+
+set_option linter.style.longLine false in
+theorem localFactorRegion_subset_possibleRegion
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data)
+    (index : β) :
+    data.valuationCover.localFactorRegion index
+        (radiusCoverSource.coverPlace index) ⊆
+      data.valuationCover.possibleRegion
+        (radiusCoverSource.cellIndex index) := by
+  let factor :=
+    data.valuationCover.valuationBallFactor index
+      (radiusCoverSource.coverPlace index)
+  have hregion :
+      factor.realizedRegion factor.compactOpenSubset =
+        data.valuationCover.localFactorRegion index
+          (radiusCoverSource.coverPlace index) := by
+    simpa [factor] using
+      data.valuationCover.valuationBallFactor_region_eq_localFactorRegion
+        index (radiusCoverSource.coverPlace index)
+  have hcompact :
+      factor.compactOpenSubset =
+        factor.valuationBall factor.compactOpenRadius := by
+    simpa [factor] using
+      factor.valuationBallAdditiveHaarNormalizationAudit
+        |>.compactOpenSubset_eq_valuationBall_radius
+  intro point hpoint
+  have hball :
+      point ∈
+        factor.realizedRegion
+          (factor.valuationBall factor.compactOpenRadius) := by
+    rw [← hcompact]
+    rw [hregion]
+    exact hpoint
+  exact
+    radiusCoverSource.valuationBallRadius_subset_possibleRegion
+      index hball
+
+def toLocalFactorDirectProductCellCoverSource
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    LocalFactorDirectProductCellCoverSource data where
+  cellIndex := radiusCoverSource.cellIndex
+  coverPlace := radiusCoverSource.coverPlace
+  localFactorRegion_subset_possibleRegion :=
+    radiusCoverSource.localFactorRegion_subset_possibleRegion
+
+def toIndexedDirectProductCellCoverSource
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    IndexedDirectProductCellCoverSource data :=
+  radiusCoverSource.toLocalFactorDirectProductCellCoverSource
+    |>.toIndexedDirectProductCellCoverSource
+
+def toDirectProductCellCoverSource
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    DirectProductCellCoverSource data :=
+  radiusCoverSource.toIndexedDirectProductCellCoverSource
+    |>.toDirectProductCellCoverSource
+
+def toDirectProductCellUnionExactSource
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    DirectProductCellUnionExactSource data :=
+  radiusCoverSource.toIndexedDirectProductCellCoverSource
+    |>.toDirectProductCellUnionExactSource
+
+def toExactXiSource
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    ExactXiSource data :=
+  radiusCoverSource.toIndexedDirectProductCellCoverSource
+    |>.toExactXiSource
+
+noncomputable def toPossibleImageExactXiFamilySource
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    IUTStage1Remark395PossibleImageExactXiFamilySource
+      data.toPossibleImageFamilySource :=
+  radiusCoverSource.toIndexedDirectProductCellCoverSource
+    |>.toPossibleImageExactXiFamilySource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    (∀ index : β,
+        let factor :=
+          data.valuationCover.valuationBallFactor index
+            (radiusCoverSource.coverPlace index)
+        factor.realizedRegion
+            (factor.valuationBall factor.compactOpenRadius) ⊆
+          data.valuationCover.possibleRegion
+            (radiusCoverSource.cellIndex index)) ∧
+      (∀ index : β,
+        data.valuationCover.localFactorRegion index
+            (radiusCoverSource.coverPlace index) ⊆
+          data.valuationCover.possibleRegion
+            (radiusCoverSource.cellIndex index)) ∧
+      (∀ index : β,
+        data.valuationCover.directProductCell index ⊆
+          data.valuationCover.possibleRegion
+            (radiusCoverSource.cellIndex index)) ∧
+      data.possibleImageUnion = data.valuationCover.directProductCellUnion ∧
+      data.possibleImageUnion = data.selectedScalarParameterHull ∧
+      data.toPossibleImageFamilySource.canonicalHull =
+        data.toPossibleImageFamilySource.familyUnion :=
+  by
+    let localFactorCoverSource :=
+      radiusCoverSource.toLocalFactorDirectProductCellCoverSource
+    let indexedCoverSource :=
+      radiusCoverSource.toIndexedDirectProductCellCoverSource
+    exact
+      ⟨radiusCoverSource.valuationBallRadius_subset_possibleRegion,
+        radiusCoverSource.localFactorRegion_subset_possibleRegion,
+        localFactorCoverSource.directProductCell_subset_possibleRegion,
+        indexedCoverSource.endpoint.2.2.1,
+        indexedCoverSource.endpoint.2.2.2.1,
+        indexedCoverSource.endpoint.2.2.2.2⟩
+
+end ValuationBallRadiusDirectProductCellCoverSource
+
+set_option linter.style.longLine false in
 theorem endpoint
     (data :
       IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
@@ -27037,6 +27352,330 @@ theorem endpoint
     cellCoverSource.toSelectedScalarParameterDirectProductCellCoverSource.endpoint.2.2.2.2.2⟩
 
 end DirectProductCellCoverSource
+
+set_option linter.style.longLine false in
+structure IndexedDirectProductCellCoverSource
+    (data :
+      IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource
+        δ A ι η K β γ) : Type _ where
+  cellIndex : β -> ι
+  directProductCell_subset_possibleRegion :
+    ∀ index : β,
+      data.valuationCover.directProductCell index ⊆
+        data.valuationCover.possibleRegion (cellIndex index)
+
+namespace IndexedDirectProductCellCoverSource
+
+variable
+  {data :
+    IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource
+      δ A ι η K β γ}
+
+def toSelectedScalarParameterIndexedDirectProductCellCoverSource
+    (indexedCoverSource : IndexedDirectProductCellCoverSource data) :
+    IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource.IndexedDirectProductCellCoverSource
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource where
+  cellIndex := indexedCoverSource.cellIndex
+  directProductCell_subset_possibleRegion := by
+    intro index point hpoint
+    simpa [toSelectedScalarParameterValuationBallProductHullCoverSource]
+      using indexedCoverSource.directProductCell_subset_possibleRegion
+        index hpoint
+
+def toDirectProductCellCoverSource
+    (indexedCoverSource : IndexedDirectProductCellCoverSource data) :
+    DirectProductCellCoverSource data where
+  directProductCell_subset_possibleImageUnion := by
+    intro index point hpoint
+    exact Set.mem_iUnion.mpr
+      ⟨indexedCoverSource.cellIndex index,
+        indexedCoverSource.directProductCell_subset_possibleRegion
+          index hpoint⟩
+
+def toDirectProductCellUnionExactSource
+    (indexedCoverSource : IndexedDirectProductCellCoverSource data) :
+    DirectProductCellUnionExactSource data :=
+  indexedCoverSource.toDirectProductCellCoverSource
+    |>.toDirectProductCellUnionExactSource
+
+def toExactXiSource
+    (indexedCoverSource : IndexedDirectProductCellCoverSource data) :
+    ExactXiSource data :=
+  indexedCoverSource.toDirectProductCellUnionExactSource.toExactXiSource
+
+noncomputable def toPossibleImageExactXiFamilySource
+    (indexedCoverSource : IndexedDirectProductCellCoverSource data) :
+    IUTStage1Remark395PossibleImageExactXiFamilySource
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource :=
+  indexedCoverSource.toSelectedScalarParameterIndexedDirectProductCellCoverSource
+    |>.toPossibleImageExactXiFamilySource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (indexedCoverSource : IndexedDirectProductCellCoverSource data) :
+    (∀ index : β,
+        data.valuationCover.directProductCell index ⊆
+          data.valuationCover.possibleRegion
+            (indexedCoverSource.cellIndex index)) ∧
+      data.possibleImageUnion = data.valuationCover.directProductCellUnion ∧
+      data.possibleImageUnion = data.selectedScalarImageHull ∧
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource.canonicalHull =
+        data.toSelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource.familyUnion :=
+  let exactSource := indexedCoverSource.toDirectProductCellUnionExactSource
+  ⟨indexedCoverSource.directProductCell_subset_possibleRegion,
+    exactSource.possibleImageUnion_eq_directProductCellUnion,
+    exactSource.toExactXiSource.valuationUnion_eq_selectedScalarImageHull,
+    indexedCoverSource.toSelectedScalarParameterIndexedDirectProductCellCoverSource.endpoint.2.2.2.2⟩
+
+end IndexedDirectProductCellCoverSource
+
+set_option linter.style.longLine false in
+structure LocalFactorDirectProductCellCoverSource
+    (data :
+      IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource
+        δ A ι η K β γ) : Type _ where
+  cellIndex : β -> ι
+  coverPlace : β -> γ
+  localFactorRegion_subset_possibleRegion :
+    ∀ index : β,
+      data.valuationCover.localFactorRegion index (coverPlace index) ⊆
+        data.valuationCover.possibleRegion (cellIndex index)
+
+namespace LocalFactorDirectProductCellCoverSource
+
+variable
+  {data :
+    IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource
+      δ A ι η K β γ}
+
+set_option linter.style.longLine false in
+theorem directProductCell_subset_possibleRegion
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data)
+    (index : β) :
+    data.valuationCover.directProductCell index ⊆
+      data.valuationCover.possibleRegion
+        (localFactorCoverSource.cellIndex index) := by
+  intro point hpoint
+  exact
+    localFactorCoverSource.localFactorRegion_subset_possibleRegion
+      index (hpoint (localFactorCoverSource.coverPlace index))
+
+def toIndexedDirectProductCellCoverSource
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data) :
+    IndexedDirectProductCellCoverSource data where
+  cellIndex := localFactorCoverSource.cellIndex
+  directProductCell_subset_possibleRegion :=
+    localFactorCoverSource.directProductCell_subset_possibleRegion
+
+def toSelectedScalarParameterLocalFactorDirectProductCellCoverSource
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data) :
+    IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource.LocalFactorDirectProductCellCoverSource
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource where
+  cellIndex := localFactorCoverSource.cellIndex
+  coverPlace := localFactorCoverSource.coverPlace
+  localFactorRegion_subset_possibleRegion := by
+    intro index point hpoint
+    simpa [toSelectedScalarParameterValuationBallProductHullCoverSource]
+      using localFactorCoverSource.localFactorRegion_subset_possibleRegion
+        index hpoint
+
+def toDirectProductCellCoverSource
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data) :
+    DirectProductCellCoverSource data :=
+  localFactorCoverSource.toIndexedDirectProductCellCoverSource
+    |>.toDirectProductCellCoverSource
+
+def toDirectProductCellUnionExactSource
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data) :
+    DirectProductCellUnionExactSource data :=
+  localFactorCoverSource.toDirectProductCellCoverSource
+    |>.toDirectProductCellUnionExactSource
+
+def toExactXiSource
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data) :
+    ExactXiSource data :=
+  localFactorCoverSource.toDirectProductCellUnionExactSource.toExactXiSource
+
+noncomputable def toPossibleImageExactXiFamilySource
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data) :
+    IUTStage1Remark395PossibleImageExactXiFamilySource
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource :=
+  localFactorCoverSource.toSelectedScalarParameterLocalFactorDirectProductCellCoverSource
+    |>.toPossibleImageExactXiFamilySource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data) :
+    (∀ index : β,
+        data.valuationCover.localFactorRegion index
+            (localFactorCoverSource.coverPlace index) ⊆
+          data.valuationCover.possibleRegion
+            (localFactorCoverSource.cellIndex index)) ∧
+      (∀ index : β,
+        data.valuationCover.directProductCell index ⊆
+          data.valuationCover.possibleRegion
+            (localFactorCoverSource.cellIndex index)) ∧
+      data.possibleImageUnion = data.valuationCover.directProductCellUnion ∧
+      data.possibleImageUnion = data.selectedScalarImageHull :=
+  let indexedCoverSource :=
+    localFactorCoverSource.toIndexedDirectProductCellCoverSource
+  ⟨localFactorCoverSource.localFactorRegion_subset_possibleRegion,
+    localFactorCoverSource.directProductCell_subset_possibleRegion,
+    indexedCoverSource.endpoint.2.1,
+    indexedCoverSource.endpoint.2.2.1⟩
+
+end LocalFactorDirectProductCellCoverSource
+
+set_option linter.style.longLine false in
+structure ValuationBallRadiusDirectProductCellCoverSource
+    (data :
+      IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource
+        δ A ι η K β γ) : Type _ where
+  cellIndex : β -> ι
+  coverPlace : β -> γ
+  valuationBallRadius_subset_possibleRegion :
+    ∀ index : β,
+      let factor :=
+        data.valuationCover.valuationBallFactor index (coverPlace index)
+      factor.realizedRegion
+          (factor.valuationBall factor.compactOpenRadius) ⊆
+        data.valuationCover.possibleRegion (cellIndex index)
+
+namespace ValuationBallRadiusDirectProductCellCoverSource
+
+variable
+  {data :
+    IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource
+      δ A ι η K β γ}
+
+set_option linter.style.longLine false in
+theorem localFactorRegion_subset_possibleRegion
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data)
+    (index : β) :
+    data.valuationCover.localFactorRegion index
+        (radiusCoverSource.coverPlace index) ⊆
+      data.valuationCover.possibleRegion
+        (radiusCoverSource.cellIndex index) := by
+  let factor :=
+    data.valuationCover.valuationBallFactor index
+      (radiusCoverSource.coverPlace index)
+  have hregion :
+      factor.realizedRegion factor.compactOpenSubset =
+        data.valuationCover.localFactorRegion index
+          (radiusCoverSource.coverPlace index) := by
+    simpa [factor] using
+      data.valuationCover.valuationBallFactor_region_eq_localFactorRegion
+        index (radiusCoverSource.coverPlace index)
+  have hcompact :
+      factor.compactOpenSubset =
+        factor.valuationBall factor.compactOpenRadius := by
+    simpa [factor] using
+      factor.valuationBallAdditiveHaarNormalizationAudit
+        |>.compactOpenSubset_eq_valuationBall_radius
+  intro point hpoint
+  have hball :
+      point ∈
+        factor.realizedRegion
+          (factor.valuationBall factor.compactOpenRadius) := by
+    rw [← hcompact]
+    rw [hregion]
+    exact hpoint
+  exact
+    radiusCoverSource.valuationBallRadius_subset_possibleRegion
+      index hball
+
+def toLocalFactorDirectProductCellCoverSource
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    LocalFactorDirectProductCellCoverSource data where
+  cellIndex := radiusCoverSource.cellIndex
+  coverPlace := radiusCoverSource.coverPlace
+  localFactorRegion_subset_possibleRegion :=
+    radiusCoverSource.localFactorRegion_subset_possibleRegion
+
+def toSelectedScalarParameterValuationBallRadiusDirectProductCellCoverSource
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource.ValuationBallRadiusDirectProductCellCoverSource
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource where
+  cellIndex := radiusCoverSource.cellIndex
+  coverPlace := radiusCoverSource.coverPlace
+  valuationBallRadius_subset_possibleRegion := by
+    intro index
+    simpa [toSelectedScalarParameterValuationBallProductHullCoverSource]
+      using radiusCoverSource.valuationBallRadius_subset_possibleRegion index
+
+def toIndexedDirectProductCellCoverSource
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    IndexedDirectProductCellCoverSource data :=
+  radiusCoverSource.toLocalFactorDirectProductCellCoverSource
+    |>.toIndexedDirectProductCellCoverSource
+
+def toDirectProductCellCoverSource
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    DirectProductCellCoverSource data :=
+  radiusCoverSource.toIndexedDirectProductCellCoverSource
+    |>.toDirectProductCellCoverSource
+
+def toDirectProductCellUnionExactSource
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    DirectProductCellUnionExactSource data :=
+  radiusCoverSource.toDirectProductCellCoverSource
+    |>.toDirectProductCellUnionExactSource
+
+def toExactXiSource
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    ExactXiSource data :=
+  radiusCoverSource.toDirectProductCellUnionExactSource.toExactXiSource
+
+noncomputable def toPossibleImageExactXiFamilySource
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    IUTStage1Remark395PossibleImageExactXiFamilySource
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource :=
+  radiusCoverSource.toSelectedScalarParameterValuationBallRadiusDirectProductCellCoverSource
+    |>.toPossibleImageExactXiFamilySource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    (∀ index : β,
+        let factor :=
+          data.valuationCover.valuationBallFactor index
+            (radiusCoverSource.coverPlace index)
+        factor.realizedRegion
+            (factor.valuationBall factor.compactOpenRadius) ⊆
+          data.valuationCover.possibleRegion
+            (radiusCoverSource.cellIndex index)) ∧
+      (∀ index : β,
+        data.valuationCover.localFactorRegion index
+            (radiusCoverSource.coverPlace index) ⊆
+          data.valuationCover.possibleRegion
+            (radiusCoverSource.cellIndex index)) ∧
+      data.possibleImageUnion = data.valuationCover.directProductCellUnion ∧
+      data.possibleImageUnion = data.selectedScalarImageHull :=
+  let localFactorCoverSource :=
+    radiusCoverSource.toLocalFactorDirectProductCellCoverSource
+  ⟨radiusCoverSource.valuationBallRadius_subset_possibleRegion,
+    radiusCoverSource.localFactorRegion_subset_possibleRegion,
+    localFactorCoverSource.endpoint.2.2.1,
+    localFactorCoverSource.endpoint.2.2.2⟩
+
+end ValuationBallRadiusDirectProductCellCoverSource
 
 set_option linter.style.longLine false in
 theorem endpoint
@@ -27508,6 +28147,328 @@ theorem endpoint
     cellCoverSource.toNonzeroScalarMultiplicationDirectProductCellCoverSource.endpoint.2.2.2⟩
 
 end DirectProductCellCoverSource
+
+set_option linter.style.longLine false in
+structure IndexedDirectProductCellCoverSource
+    (data :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A ι η K β γ) : Type _ where
+  cellIndex : β -> ι
+  directProductCell_subset_possibleRegion :
+    ∀ index : β,
+      data.valuationCover.directProductCell index ⊆
+        data.valuationCover.possibleRegion (cellIndex index)
+
+namespace IndexedDirectProductCellCoverSource
+
+variable
+  {data :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+      δ A ι η K β γ}
+
+def toNonzeroScalarMultiplicationIndexedDirectProductCellCoverSource
+    (indexedCoverSource : IndexedDirectProductCellCoverSource data) :
+    IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource.IndexedDirectProductCellCoverSource
+      data.toNonzeroScalarMultiplicationValuationBallProductHullCoverSource where
+  cellIndex := indexedCoverSource.cellIndex
+  directProductCell_subset_possibleRegion := by
+    intro index point hpoint
+    simpa [toNonzeroScalarMultiplicationValuationBallProductHullCoverSource]
+      using indexedCoverSource.directProductCell_subset_possibleRegion
+        index hpoint
+
+def toDirectProductCellCoverSource
+    (indexedCoverSource : IndexedDirectProductCellCoverSource data) :
+    DirectProductCellCoverSource data where
+  directProductCell_subset_possibleImageUnion := by
+    intro index point hpoint
+    exact Set.mem_iUnion.mpr
+      ⟨indexedCoverSource.cellIndex index,
+        indexedCoverSource.directProductCell_subset_possibleRegion
+          index hpoint⟩
+
+def toDirectProductCellUnionExactSource
+    (indexedCoverSource : IndexedDirectProductCellCoverSource data) :
+    DirectProductCellUnionExactSource data :=
+  indexedCoverSource.toDirectProductCellCoverSource
+    |>.toDirectProductCellUnionExactSource
+
+def toExactXiSource
+    (indexedCoverSource : IndexedDirectProductCellCoverSource data) :
+    ExactXiSource data :=
+  indexedCoverSource.toDirectProductCellUnionExactSource.toExactXiSource
+
+noncomputable def toPossibleImageExactXiFamilySource
+    (indexedCoverSource : IndexedDirectProductCellCoverSource data) :
+    IUTStage1Remark395PossibleImageExactXiFamilySource
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource :=
+  indexedCoverSource.toNonzeroScalarMultiplicationIndexedDirectProductCellCoverSource
+    |>.toPossibleImageExactXiFamilySource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (indexedCoverSource : IndexedDirectProductCellCoverSource data) :
+    (∀ index : β,
+        data.valuationCover.directProductCell index ⊆
+          data.valuationCover.possibleRegion
+            (indexedCoverSource.cellIndex index)) ∧
+      data.possibleImageUnion = data.valuationCover.directProductCellUnion ∧
+      data.possibleImageUnion = data.selectedScalarImageHull :=
+  let exactSource := indexedCoverSource.toDirectProductCellUnionExactSource
+  ⟨indexedCoverSource.directProductCell_subset_possibleRegion,
+    exactSource.possibleImageUnion_eq_directProductCellUnion,
+    exactSource.toExactXiSource.valuationUnion_eq_selectedScalarImageHull⟩
+
+end IndexedDirectProductCellCoverSource
+
+set_option linter.style.longLine false in
+structure LocalFactorDirectProductCellCoverSource
+    (data :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A ι η K β γ) : Type _ where
+  cellIndex : β -> ι
+  coverPlace : β -> γ
+  localFactorRegion_subset_possibleRegion :
+    ∀ index : β,
+      data.valuationCover.localFactorRegion index (coverPlace index) ⊆
+        data.valuationCover.possibleRegion (cellIndex index)
+
+namespace LocalFactorDirectProductCellCoverSource
+
+variable
+  {data :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+      δ A ι η K β γ}
+
+set_option linter.style.longLine false in
+theorem directProductCell_subset_possibleRegion
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data)
+    (index : β) :
+    data.valuationCover.directProductCell index ⊆
+      data.valuationCover.possibleRegion
+        (localFactorCoverSource.cellIndex index) := by
+  intro point hpoint
+  exact
+    localFactorCoverSource.localFactorRegion_subset_possibleRegion
+      index (hpoint (localFactorCoverSource.coverPlace index))
+
+def toIndexedDirectProductCellCoverSource
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data) :
+    IndexedDirectProductCellCoverSource data where
+  cellIndex := localFactorCoverSource.cellIndex
+  directProductCell_subset_possibleRegion :=
+    localFactorCoverSource.directProductCell_subset_possibleRegion
+
+def toNonzeroScalarMultiplicationLocalFactorDirectProductCellCoverSource
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data) :
+    IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource.LocalFactorDirectProductCellCoverSource
+      data.toNonzeroScalarMultiplicationValuationBallProductHullCoverSource where
+  cellIndex := localFactorCoverSource.cellIndex
+  coverPlace := localFactorCoverSource.coverPlace
+  localFactorRegion_subset_possibleRegion := by
+    intro index point hpoint
+    simpa [toNonzeroScalarMultiplicationValuationBallProductHullCoverSource]
+      using localFactorCoverSource.localFactorRegion_subset_possibleRegion
+        index hpoint
+
+def toDirectProductCellCoverSource
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data) :
+    DirectProductCellCoverSource data :=
+  localFactorCoverSource.toIndexedDirectProductCellCoverSource
+    |>.toDirectProductCellCoverSource
+
+def toDirectProductCellUnionExactSource
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data) :
+    DirectProductCellUnionExactSource data :=
+  localFactorCoverSource.toDirectProductCellCoverSource
+    |>.toDirectProductCellUnionExactSource
+
+def toExactXiSource
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data) :
+    ExactXiSource data :=
+  localFactorCoverSource.toDirectProductCellUnionExactSource.toExactXiSource
+
+noncomputable def toPossibleImageExactXiFamilySource
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data) :
+    IUTStage1Remark395PossibleImageExactXiFamilySource
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource :=
+  localFactorCoverSource.toNonzeroScalarMultiplicationLocalFactorDirectProductCellCoverSource
+    |>.toPossibleImageExactXiFamilySource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (localFactorCoverSource :
+      LocalFactorDirectProductCellCoverSource data) :
+    (∀ index : β,
+        data.valuationCover.localFactorRegion index
+            (localFactorCoverSource.coverPlace index) ⊆
+          data.valuationCover.possibleRegion
+            (localFactorCoverSource.cellIndex index)) ∧
+      (∀ index : β,
+        data.valuationCover.directProductCell index ⊆
+          data.valuationCover.possibleRegion
+            (localFactorCoverSource.cellIndex index)) ∧
+      data.possibleImageUnion = data.valuationCover.directProductCellUnion ∧
+      data.possibleImageUnion = data.selectedScalarImageHull :=
+  let indexedCoverSource :=
+    localFactorCoverSource.toIndexedDirectProductCellCoverSource
+  ⟨localFactorCoverSource.localFactorRegion_subset_possibleRegion,
+    localFactorCoverSource.directProductCell_subset_possibleRegion,
+    indexedCoverSource.endpoint.2.1,
+    indexedCoverSource.endpoint.2.2⟩
+
+end LocalFactorDirectProductCellCoverSource
+
+set_option linter.style.longLine false in
+structure ValuationBallRadiusDirectProductCellCoverSource
+    (data :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A ι η K β γ) : Type _ where
+  cellIndex : β -> ι
+  coverPlace : β -> γ
+  valuationBallRadius_subset_possibleRegion :
+    ∀ index : β,
+      let factor :=
+        data.valuationCover.valuationBallFactor index (coverPlace index)
+      factor.realizedRegion
+          (factor.valuationBall factor.compactOpenRadius) ⊆
+        data.valuationCover.possibleRegion (cellIndex index)
+
+namespace ValuationBallRadiusDirectProductCellCoverSource
+
+variable
+  {data :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+      δ A ι η K β γ}
+
+set_option linter.style.longLine false in
+theorem localFactorRegion_subset_possibleRegion
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data)
+    (index : β) :
+    data.valuationCover.localFactorRegion index
+        (radiusCoverSource.coverPlace index) ⊆
+      data.valuationCover.possibleRegion
+        (radiusCoverSource.cellIndex index) := by
+  let factor :=
+    data.valuationCover.valuationBallFactor index
+      (radiusCoverSource.coverPlace index)
+  have hregion :
+      factor.realizedRegion factor.compactOpenSubset =
+        data.valuationCover.localFactorRegion index
+          (radiusCoverSource.coverPlace index) := by
+    simpa [factor] using
+      data.valuationCover.valuationBallFactor_region_eq_localFactorRegion
+        index (radiusCoverSource.coverPlace index)
+  have hcompact :
+      factor.compactOpenSubset =
+        factor.valuationBall factor.compactOpenRadius := by
+    simpa [factor] using
+      factor.valuationBallAdditiveHaarNormalizationAudit
+        |>.compactOpenSubset_eq_valuationBall_radius
+  intro point hpoint
+  have hball :
+      point ∈
+        factor.realizedRegion
+          (factor.valuationBall factor.compactOpenRadius) := by
+    rw [← hcompact]
+    rw [hregion]
+    exact hpoint
+  exact
+    radiusCoverSource.valuationBallRadius_subset_possibleRegion
+      index hball
+
+def toLocalFactorDirectProductCellCoverSource
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    LocalFactorDirectProductCellCoverSource data where
+  cellIndex := radiusCoverSource.cellIndex
+  coverPlace := radiusCoverSource.coverPlace
+  localFactorRegion_subset_possibleRegion :=
+    radiusCoverSource.localFactorRegion_subset_possibleRegion
+
+def toNonzeroScalarMultiplicationValuationBallRadiusDirectProductCellCoverSource
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource.ValuationBallRadiusDirectProductCellCoverSource
+      data.toNonzeroScalarMultiplicationValuationBallProductHullCoverSource where
+  cellIndex := radiusCoverSource.cellIndex
+  coverPlace := radiusCoverSource.coverPlace
+  valuationBallRadius_subset_possibleRegion := by
+    intro index
+    simpa [toNonzeroScalarMultiplicationValuationBallProductHullCoverSource]
+      using radiusCoverSource.valuationBallRadius_subset_possibleRegion
+        index
+
+def toIndexedDirectProductCellCoverSource
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    IndexedDirectProductCellCoverSource data :=
+  radiusCoverSource.toLocalFactorDirectProductCellCoverSource
+    |>.toIndexedDirectProductCellCoverSource
+
+def toDirectProductCellCoverSource
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    DirectProductCellCoverSource data :=
+  radiusCoverSource.toIndexedDirectProductCellCoverSource
+    |>.toDirectProductCellCoverSource
+
+def toDirectProductCellUnionExactSource
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    DirectProductCellUnionExactSource data :=
+  radiusCoverSource.toDirectProductCellCoverSource
+    |>.toDirectProductCellUnionExactSource
+
+def toExactXiSource
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    ExactXiSource data :=
+  radiusCoverSource.toDirectProductCellUnionExactSource.toExactXiSource
+
+noncomputable def toPossibleImageExactXiFamilySource
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    IUTStage1Remark395PossibleImageExactXiFamilySource
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource :=
+  radiusCoverSource.toNonzeroScalarMultiplicationValuationBallRadiusDirectProductCellCoverSource
+    |>.toPossibleImageExactXiFamilySource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data) :
+    (∀ index : β,
+        let factor :=
+          data.valuationCover.valuationBallFactor index
+            (radiusCoverSource.coverPlace index)
+        factor.realizedRegion
+            (factor.valuationBall factor.compactOpenRadius) ⊆
+          data.valuationCover.possibleRegion
+            (radiusCoverSource.cellIndex index)) ∧
+      (∀ index : β,
+        data.valuationCover.localFactorRegion index
+            (radiusCoverSource.coverPlace index) ⊆
+          data.valuationCover.possibleRegion
+            (radiusCoverSource.cellIndex index)) ∧
+      data.possibleImageUnion = data.valuationCover.directProductCellUnion ∧
+      data.possibleImageUnion = data.selectedScalarImageHull :=
+  let localFactorCoverSource :=
+    radiusCoverSource.toLocalFactorDirectProductCellCoverSource
+  ⟨radiusCoverSource.valuationBallRadius_subset_possibleRegion,
+    radiusCoverSource.localFactorRegion_subset_possibleRegion,
+    localFactorCoverSource.endpoint.2.2.1,
+    localFactorCoverSource.endpoint.2.2.2⟩
+
+end ValuationBallRadiusDirectProductCellCoverSource
 
 set_option linter.style.longLine false in
 theorem endpoint

@@ -1178,14 +1178,20 @@
   inherits the same selected-scalar source.  The endpoint records equality of
   the selected scalar image with the valuation-ball direct-product cell union
   and the adjusted Ob3/Ob5 determinant handoff.  The selected-scalar exact
-  route now constructs the possible-image exact-\(\Xi(P_B)\) source from the
-  valuation-ball direct-product-cell cover: Lean proves
-  \(P_B=\bigcup_\beta\prod_v B_{\beta,v}\) from the local inclusions
-  \(\prod_v B_{\beta,v}\subseteq P_B\), then identifies this cell union with
-  \(\lambda\cdot O\).  The exact-\(\Xi\) calibration is therefore derived
-  rather than stored independently at this boundary.  The remaining paper task
-  is to construct these local cell-cover inclusions from transported
-  theta/valuation local exactness data in the public route.
+  route now constructs the possible-image exact-\(\Xi(P_B)\) source from
+  increasingly local cover data.  Lean first proves
+  \(P_B=\bigcup_\beta\prod_v B_{\beta,v}\) from indexed inclusions
+  \(\prod_v B_{\beta,v}\subseteq P_i\), then lowers those inclusions to a
+  single local factor and finally to the compact-open valuation ball
+  \(B_{\beta,v}(r_{\beta,v})\) using the additive-Haar normalization audit.
+  The nonzero-scalar and valuation-unit-ball wrappers inherit the same
+  radius-to-exact-\(\Xi\) route.  The exact-\(\Xi\) calibration is therefore
+  derived rather than stored independently at this boundary.  The remaining
+  paper task is to construct these local valuation-ball containments from
+  transported theta/valuation local exactness data in the public route.
+  \lean{Iut.Stage1.IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource.ValuationBallRadiusDirectProductCellCoverSource.toPossibleImageExactXiFamilySource}
+  \lean{Iut.Stage1.IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource.ValuationBallRadiusDirectProductCellCoverSource.toPossibleImageExactXiFamilySource}
+  \lean{Iut.Stage1.IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource.ValuationBallRadiusDirectProductCellCoverSource.toPossibleImageExactXiFamilySource}
   \lean{Iut.Stage1.IUTStage1Remark395PrincipalProductHullSystemSource.transport}
   \lean{Iut.Stage1.IUTStage1Remark395PrincipalProductHullSystemSource.transport_principalHull_mem_iff}
   \lean{Iut.Stage1.IUTStage1Remark395PrincipalProductHullSystemSource.transport_principalHull_image_eq}
