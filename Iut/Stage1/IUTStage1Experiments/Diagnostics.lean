@@ -57451,6 +57451,50 @@ theorem remark395ScalarParameterDirectProductHullSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface scalar-parameter principal product-hull construction.
+
+This is the full Remark 3.9.5 principal-hull boundary below the public
+principal-product source: scalar-parameter local image laws and scalar
+representability of product parameters construct the principal product-hull
+system and its minimal intersection theorem.
+-/
+theorem remark395ScalarParameterPrincipalProductHullSystemSource_endpoint
+    {δ : Type u} {A : δ -> Type v} {S : δ -> Type w}
+    (data :
+      IUTStage1Remark395ScalarParameterPrincipalProductHullSystemSource δ A S)
+    (region : Set ((d : δ) -> A d)) :
+    let principalSource := data.toPrincipalProductHullSystemSource;
+    (∀ parameter : (d : δ) -> S d,
+        principalSource.parameter_nonzero parameter) ∧
+      (∀ parameter : (d : δ) -> S d,
+        data.principalHull parameter =
+          data.scalarParameterSource.directProductSource.productHull
+            (data.parameterRegion parameter)) ∧
+      data.parameterRegion (data.intersectionScalarParameter region) =
+        data.scalarParameterSource.directProductSource.intersectionParameter
+          region ∧
+      data.principalHull (data.intersectionScalarParameter region) =
+        { point : (d : δ) -> A d |
+          ∀ parameter : (d : δ) -> S d,
+            region ⊆ data.principalHull parameter ->
+              point ∈ data.principalHull parameter } ∧
+      principalSource.toHolomorphicHullSystem.phi region =
+        principalSource.principalHull
+          (principalSource.intersectionParameter region) ∧
+      region ⊆
+        principalSource.principalHull
+          (principalSource.intersectionParameter region) ∧
+      principalSource.toProductHullSystemSource.logVolume
+          (principalSource.toProductHullSystemSource.productHull
+            (principalSource.toProductHullSystemSource.intersectionParameter
+              region)) =
+        principalSource.toProductHullSystemSource.productHullLogVolume
+          (principalSource.toProductHullSystemSource.intersectionParameter
+            region) :=
+  data.endpoint region
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface nonzero scalar-multiplication direct-product hull
 construction.
 

@@ -1115,9 +1115,14 @@
   by transport through the public intersection theorem.  Lean now also proves
   the \texttt{ULift}-invariance of the induced holomorphic hull system by
   reducing record equality to the \texttt{isHull} predicate and
-  \texttt{logVolume} field.  The remaining principal-hull boundary is to
-  construct the public principal-product hull source from Hodge-theater and
-  log-theta-lattice data.  The cross-hull matching between these transported
+  \texttt{logVolume} field.  Source-core now lowers the public
+  principal-product hull source itself to a scalar-parameter direct-product
+  hull source with an intersection scalar selector and scalar representability
+  of product parameters; these data construct the full principal product-hull
+  system and its minimal intersection law.  The remaining principal-hull
+  boundary is to derive that scalar selector and representability data from
+  Hodge-theater/log-theta-lattice inputs and wire the constructor into the
+  preferred route.  The cross-hull matching between these transported
   valuation-cover
   fibers and the public-hull finite-extension factors is now derived at the
   intrinsic wrapper: Lean transports the lower cover's finite-extension

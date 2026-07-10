@@ -4271,6 +4271,223 @@ theorem endpoint
 end IUTStage1Remark395ScalarParameterDirectProductHullSource
 
 /--
+Scalar-parameter principal product-hull system source.
+
+This is the full principal-hull version of the scalar-parameter construction.
+The scalar-parameter source proves the coordinate image/preimage law
+`H_v(lambda_v) = lambda_v O_v`.  To recover the Remark 3.9.5 principal
+intersection operator for every region, the source also supplies:
+
+* an intersection scalar parameter whose coordinate regions are the
+  direct-product intersection parameter, and
+* representability of every direct-product hull parameter by a scalar parameter.
+
+Lean then proves the previous principal product-hull source, including the
+minimal intersection law, from the direct-product hull theorem instead of
+accepting the principal law as an opaque field.
+-/
+structure IUTStage1Remark395ScalarParameterPrincipalProductHullSystemSource
+    (δ : Type u) (A : δ -> Type v) (S : δ -> Type w) where
+  scalarParameterSource :
+    IUTStage1Remark395ScalarParameterDirectProductHullSource δ A S
+  intersectionScalarParameter : Set ((d : δ) -> A d) -> (d : δ) -> S d
+  intersectionParameterRegion_eq :
+    ∀ region : Set ((d : δ) -> A d),
+      scalarParameterSource.parameterRegion
+          (intersectionScalarParameter region) =
+        scalarParameterSource.directProductSource.intersectionParameter region
+  productParameter_has_scalarParameter :
+    ∀ productParameter : (d : δ) -> Set (A d),
+      ∃ scalarParameter : (d : δ) -> S d,
+        scalarParameterSource.parameterRegion scalarParameter =
+          productParameter
+
+namespace IUTStage1Remark395ScalarParameterPrincipalProductHullSystemSource
+
+variable {δ : Type u} {A : δ -> Type v} {S : δ -> Type w}
+
+def localIntegerRegion
+    (data :
+      IUTStage1Remark395ScalarParameterPrincipalProductHullSystemSource δ A S) :
+    Set ((d : δ) -> A d) :=
+  data.scalarParameterSource.localIntegerRegion
+
+def parameterRegion
+    (data :
+      IUTStage1Remark395ScalarParameterPrincipalProductHullSystemSource δ A S)
+    (parameter : (d : δ) -> S d) :
+    (d : δ) -> Set (A d) :=
+  data.scalarParameterSource.parameterRegion parameter
+
+def scalarMultiple
+    (data :
+      IUTStage1Remark395ScalarParameterPrincipalProductHullSystemSource δ A S)
+    (parameter : (d : δ) -> S d)
+    (base : (d : δ) -> A d) :
+    (d : δ) -> A d :=
+  data.scalarParameterSource.scalarMultiple parameter base
+
+def principalHull
+    (data :
+      IUTStage1Remark395ScalarParameterPrincipalProductHullSystemSource δ A S)
+    (parameter : (d : δ) -> S d) :
+    Set ((d : δ) -> A d) :=
+  data.scalarParameterSource.principalHull parameter
+
+theorem parameter_nonzero
+    (data :
+      IUTStage1Remark395ScalarParameterPrincipalProductHullSystemSource δ A S)
+    (parameter : (d : δ) -> S d) :
+    ∀ d : δ,
+      data.scalarParameterSource.parameter_nonzero_coordinate d
+        (parameter d) :=
+  data.scalarParameterSource.parameter_nonzero parameter
+
+theorem principalHull_eq_productHull
+    (data :
+      IUTStage1Remark395ScalarParameterPrincipalProductHullSystemSource δ A S)
+    (parameter : (d : δ) -> S d) :
+    data.principalHull parameter =
+      data.scalarParameterSource.directProductSource.productHull
+        (data.parameterRegion parameter) :=
+  data.scalarParameterSource.principalHull_eq_productHull parameter
+
+theorem intersectionPrincipalHull_eq_directProductIntersection
+    (data :
+      IUTStage1Remark395ScalarParameterPrincipalProductHullSystemSource δ A S)
+    (region : Set ((d : δ) -> A d)) :
+    data.principalHull (data.intersectionScalarParameter region) =
+      data.scalarParameterSource.directProductSource.productHull
+        (data.scalarParameterSource.directProductSource.intersectionParameter
+          region) := by
+  rw [data.principalHull_eq_productHull]
+  exact congrArg data.scalarParameterSource.directProductSource.productHull
+    (by
+      simpa [parameterRegion] using
+        data.intersectionParameterRegion_eq region)
+
+set_option linter.style.longLine false in
+theorem principalHull_intersection_eq
+    (data :
+      IUTStage1Remark395ScalarParameterPrincipalProductHullSystemSource δ A S)
+    (region : Set ((d : δ) -> A d)) :
+    data.principalHull (data.intersectionScalarParameter region) =
+      { point : (d : δ) -> A d |
+        ∀ parameter : (d : δ) -> S d,
+          region ⊆ data.principalHull parameter ->
+            point ∈ data.principalHull parameter } := by
+  ext point
+  rw [data.intersectionPrincipalHull_eq_directProductIntersection region]
+  rw [data.scalarParameterSource.directProductSource.productHull_intersection_eq
+    region]
+  constructor
+  · intro hpoint parameter hsubset
+    rw [data.principalHull_eq_productHull parameter]
+    rw [data.principalHull_eq_productHull parameter] at hsubset
+    exact hpoint (data.parameterRegion parameter) hsubset
+  · intro hpoint productParameter hsubset
+    rcases data.productParameter_has_scalarParameter productParameter with
+      ⟨parameter, hparameter⟩
+    rw [← hparameter] at hsubset ⊢
+    have hsubset' : region ⊆ data.principalHull parameter := by
+      rw [data.principalHull_eq_productHull parameter]
+      exact hsubset
+    have hmem := hpoint parameter hsubset'
+    rw [data.principalHull_eq_productHull parameter] at hmem
+    exact hmem
+
+set_option linter.style.longLine false in
+def toPrincipalProductHullSystemSource
+    (data :
+      IUTStage1Remark395ScalarParameterPrincipalProductHullSystemSource δ A S) :
+    IUTStage1Remark395PrincipalProductHullSystemSource
+      ((d : δ) -> A d) ((d : δ) -> S d) :=
+  { localIntegerRegion := data.localIntegerRegion,
+    scalarMultiple := data.scalarMultiple,
+    parameter_nonzero :=
+      fun parameter =>
+        ∀ d : δ,
+          data.scalarParameterSource.parameter_nonzero_coordinate d
+            (parameter d),
+    all_parameters_nonzero := data.parameter_nonzero,
+    intersectionParameter := data.intersectionScalarParameter,
+    principalHull_intersection_eq := data.principalHull_intersection_eq,
+    logVolume := data.scalarParameterSource.directProductSource.logVolume,
+    principalHullLogVolume :=
+      fun parameter =>
+        data.scalarParameterSource.directProductSource.productHullLogVolume
+          (data.parameterRegion parameter),
+    logVolume_principalHull_eq := by
+      intro parameter
+      change
+        data.scalarParameterSource.directProductSource.logVolume
+            (data.principalHull parameter) =
+          data.scalarParameterSource.directProductSource.productHullLogVolume
+            (data.parameterRegion parameter)
+      rw [data.principalHull_eq_productHull parameter]
+      exact
+        data.scalarParameterSource.directProductSource
+          |>.logVolume_productHull_eq_source (data.parameterRegion parameter),
+    logVolume_mono :=
+      fun hsubset =>
+        data.scalarParameterSource.directProductSource.logVolume_mono hsubset }
+
+def toHolomorphicHullSystem
+    (data :
+      IUTStage1Remark395ScalarParameterPrincipalProductHullSystemSource δ A S) :
+    IUTStage1Remark395HolomorphicHullSystem ((d : δ) -> A d) :=
+  data.toPrincipalProductHullSystemSource.toHolomorphicHullSystem
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395ScalarParameterPrincipalProductHullSystemSource δ A S)
+    (region : Set ((d : δ) -> A d)) :
+    let principalSource := data.toPrincipalProductHullSystemSource;
+    (∀ parameter : (d : δ) -> S d,
+        principalSource.parameter_nonzero parameter) ∧
+      (∀ parameter : (d : δ) -> S d,
+        data.principalHull parameter =
+          data.scalarParameterSource.directProductSource.productHull
+            (data.parameterRegion parameter)) ∧
+      data.parameterRegion (data.intersectionScalarParameter region) =
+        data.scalarParameterSource.directProductSource.intersectionParameter
+          region ∧
+      data.principalHull (data.intersectionScalarParameter region) =
+        { point : (d : δ) -> A d |
+          ∀ parameter : (d : δ) -> S d,
+            region ⊆ data.principalHull parameter ->
+              point ∈ data.principalHull parameter } ∧
+      principalSource.toHolomorphicHullSystem.phi region =
+        principalSource.principalHull
+          (principalSource.intersectionParameter region) ∧
+      region ⊆
+        principalSource.principalHull
+          (principalSource.intersectionParameter region) ∧
+      principalSource.toProductHullSystemSource.logVolume
+          (principalSource.toProductHullSystemSource.productHull
+            (principalSource.toProductHullSystemSource.intersectionParameter
+              region)) =
+        principalSource.toProductHullSystemSource.productHullLogVolume
+          (principalSource.toProductHullSystemSource.intersectionParameter
+            region) :=
+  by
+    intro principalSource
+    have hprincipal := principalSource.endpoint region
+    rcases hprincipal with
+      ⟨hnonzero, _, hphi, hregion, _, _, hlog⟩
+    exact
+      ⟨hnonzero,
+        data.principalHull_eq_productHull,
+        data.intersectionParameterRegion_eq region,
+        data.principalHull_intersection_eq region,
+        hphi,
+        hregion,
+        hlog⟩
+
+end IUTStage1Remark395ScalarParameterPrincipalProductHullSystemSource
+
+/--
 Nonzero scalar-multiplication direct-product hull source.
 
 This lowers the scalar-parameter source by taking local parameters to be

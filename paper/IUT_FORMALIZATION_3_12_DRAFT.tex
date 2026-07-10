@@ -584,6 +584,12 @@ hull is the canonical/principal family hull, and proves that any two nonempty
 quotient-indexed possible regions have the same collapsed quotient image.  For
 equality-orbit choices, Lean packages this with region equality, log-volume
 equality, quotient-image equality, and containment in the family hull.
+The principal-product source boundary has been lowered again in source-core:
+a scalar-parameter direct-product hull source, together with an intersection
+scalar selector and scalar representability of product parameters, now
+constructs the full Remark 3.9.5 principal product-hull system and its minimal
+intersection theorem.  This replaces the principal intersection law by the
+direct-product hull theorem plus explicit scalar-region data.
 For the stricter localized route, the final normalized localized determinant
 bound by \(\Theta_{\mathrm{signed}}\) is no longer supplied as a standalone
 inequality: Lean derives it from the identification of
@@ -929,9 +935,11 @@ Haar-character data.  The latter is now itself constructed from residue-module
 quotient data: \(O_v/p_vO_v\), \(\#\kappa_v=p_v\), and
 \(\dim_{\kappa_v}(O_v/p_vO_v)=[K_v:\mathbb Q_p]\) give the coset
 decomposition and \(\mu(p_vO_v)=p_v^{-[K_v:\mathbb Q_p]}\).  The remaining
-principal-hull boundary is now to construct the public principal-product hull
-source itself from Hodge-theater/log-theta-lattice data and to derive the
-remaining factorwise inverse-dilation identifications from the same data.
+principal-hull boundary is now to derive the scalar selector and scalar
+representability data for the public principal-product hull source from
+Hodge-theater/log-theta-lattice data, wire that constructor into the preferred
+route, and derive the remaining factorwise inverse-dilation identifications
+from the same data.
 The valuation-unit-ball finite-extension branch remains only a normalized
 legacy boundary: the selected radius is forced to be \(1\), so \(\mu(O_v)=1\)
 constructs weak nonnegativity but also proves that the normalized log-volume
