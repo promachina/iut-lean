@@ -1186,10 +1186,24 @@
   \(B_{\beta,v}(r_{\beta,v})\) using the additive-Haar normalization audit.
   The nonzero-scalar and valuation-unit-ball wrappers inherit the same
   radius-to-exact-\(\Xi\) route.  The exact-\(\Xi\) calibration is therefore
-  derived rather than stored independently at this boundary.  The remaining
-  paper task is to construct these local valuation-ball containments from
-  transported theta/valuation local exactness data in the public route.
+  derived rather than stored independently at this boundary.  Lean also proves
+  that holomorphic hull operators, possible-image families, and exact
+  \(\Xi(P_B)\) witnesses transport across carrier equivalences; the selected
+  radius-cover exact-\(\Xi\) source can therefore be moved from the direct
+  product carrier to any equivalent public carrier without adding a new
+  compatibility assumption.  The remaining paper task is to specialize this
+  transported exact-\(\Xi\) source to the public Theorem 3.11 family from
+  transported theta/valuation local exactness data.
+  \lean{Iut.Stage1.IUTStage1Remark395HolomorphicHullOperator.transport}
+  \lean{Iut.Stage1.IUTStage1Remark395HolomorphicHullOperator.transport_phi_image_eq}
+  \lean{Iut.Stage1.IUTStage1Remark395PossibleImageFamilySource.transport}
+  \lean{Iut.Stage1.IUTStage1Remark395PossibleImageFamilySource.transport_familyUnion_image_eq}
+  \lean{Iut.Stage1.IUTStage1Remark395PossibleImageFamilySource.transport_canonicalHull_image_eq}
+  \lean{Iut.Stage1.IUTStage1Remark395PossibleImageExactXiFamilySource.transport}
+  \lean{Iut.Stage1.IUTStage1Remark395PossibleImageExactXiFamilySource.transport_endpoint}
   \lean{Iut.Stage1.IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource.ValuationBallRadiusDirectProductCellCoverSource.toPossibleImageExactXiFamilySource}
+  \lean{Iut.Stage1.IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource.ValuationBallRadiusDirectProductCellCoverSource.toTransportedPossibleImageExactXiFamilySource}
+  \lean{Iut.Stage1.IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource.ValuationBallRadiusDirectProductCellCoverSource.transported_exactXi_endpoint}
   \lean{Iut.Stage1.IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource.ValuationBallRadiusDirectProductCellCoverSource.toPossibleImageExactXiFamilySource}
   \lean{Iut.Stage1.IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource.ValuationBallRadiusDirectProductCellCoverSource.toPossibleImageExactXiFamilySource}
   \lean{Iut.Stage1.IUTStage1Remark395PrincipalProductHullSystemSource.transport}

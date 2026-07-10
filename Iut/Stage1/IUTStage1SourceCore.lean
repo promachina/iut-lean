@@ -3003,6 +3003,88 @@ theorem remark395_hullMap_laws
     data.phi_mono hsubset,
     data.phi_idempotent region⟩
 
+theorem image_preimage_equiv
+    {β : Type v} (carrierEquiv : α ≃ β) (region : Set β) :
+    carrierEquiv '' (carrierEquiv ⁻¹' region) = region := by
+  ext y
+  constructor
+  · rintro ⟨x, hx, rfl⟩
+    exact hx
+  · intro hy
+    exact ⟨carrierEquiv.symm y, by simpa using hy, by simp⟩
+
+theorem preimage_image_equiv
+    {β : Type v} (carrierEquiv : α ≃ β) (region : Set α) :
+    carrierEquiv ⁻¹' (carrierEquiv '' region) = region := by
+  ext x
+  constructor
+  · rintro ⟨y, hy, hxy⟩
+    have hyx : y = x := carrierEquiv.injective hxy
+    simpa [hyx] using hy
+  · intro hx
+    exact ⟨x, hx, rfl⟩
+
+private theorem image_mono_equiv
+    {β : Type v} {region₁ region₂ : Set α}
+    (carrierEquiv : α ≃ β) (hsubset : region₁ ⊆ region₂) :
+    carrierEquiv '' region₁ ⊆ carrierEquiv '' region₂ := by
+  rintro y ⟨x, hx, rfl⟩
+  exact ⟨x, hsubset hx, rfl⟩
+
+/--
+Transport a holomorphic hull operator across an equivalence of carriers.
+
+This is the carrier-change form of the Step (xi) hull laws: a hull on the
+source carrier gives a hull on the target carrier by pushing regions forward,
+taking the source hull, and pulling back.  Closedness and log-volume are
+transported by the same forward image.
+-/
+noncomputable def transport
+    {β : Type v}
+    (data : IUTStage1Remark395HolomorphicHullOperator β)
+    (carrierEquiv : α ≃ β) :
+    IUTStage1Remark395HolomorphicHullOperator α :=
+  { phi := fun region => carrierEquiv ⁻¹' data.phi (carrierEquiv '' region),
+    isClosed := fun region => data.isClosed (carrierEquiv '' region),
+    phi_closed := by
+      intro region
+      rw [image_preimage_equiv carrierEquiv
+        (data.phi (carrierEquiv '' region))]
+      exact data.phi_closed (carrierEquiv '' region)
+    phi_fix_closed := by
+      intro region hclosed
+      rw [data.phi_fix_closed hclosed]
+      exact preimage_image_equiv carrierEquiv region
+    region_subset_phi := by
+      intro region x hx
+      change carrierEquiv x ∈ data.phi (carrierEquiv '' region)
+      exact data.region_subset_phi (carrierEquiv '' region) ⟨x, hx, rfl⟩
+    phi_mono := by
+      intro region₁ region₂ hsubset x hx
+      change carrierEquiv x ∈ data.phi (carrierEquiv '' region₂)
+      exact data.phi_mono (image_mono_equiv carrierEquiv hsubset) hx
+    phi_idempotent := by
+      intro region
+      rw [image_preimage_equiv carrierEquiv
+        (data.phi (carrierEquiv '' region))]
+      rw [data.phi_idempotent (carrierEquiv '' region)]
+    logVolume := fun region => data.logVolume (carrierEquiv '' region),
+    logVolume_mono := by
+      intro region₁ region₂ hsubset
+      exact data.logVolume_mono (image_mono_equiv carrierEquiv hsubset) }
+
+theorem transport_phi_image_eq
+    {β : Type v}
+    (data : IUTStage1Remark395HolomorphicHullOperator β)
+    (carrierEquiv : α ≃ β) (region : Set α) :
+    carrierEquiv '' ((data.transport carrierEquiv).phi region) =
+      data.phi (carrierEquiv '' region) := by
+  change carrierEquiv ''
+      (carrierEquiv ⁻¹' data.phi (carrierEquiv '' region)) =
+    data.phi (carrierEquiv '' region)
+  exact image_preimage_equiv carrierEquiv
+    (data.phi (carrierEquiv '' region))
+
 end IUTStage1Remark395HolomorphicHullOperator
 
 /--
@@ -7216,6 +7298,89 @@ theorem ofHullSystem_endpoint
         data.canonicalPhi_approximant_eq_phi,
         data.quotientMap_images_eq i j hnei hnej⟩
 
+set_option linter.style.longLine false in
+/--
+Transport a possible-image family across an equivalence of carriers.
+
+The possible regions are inverse images of the source regions, while the hull
+operator is the transported hull operator.  This records that `P_B`, `phi(P_B)`,
+and their log-volumes are invariant under changing the carrier presentation.
+-/
+noncomputable def transport
+    {β : Type w}
+    (data : IUTStage1Remark395PossibleImageFamilySource β ι)
+    (carrierEquiv : α ≃ β) :
+    IUTStage1Remark395PossibleImageFamilySource α ι :=
+  { hullOperator := data.hullOperator.transport carrierEquiv,
+    possibleRegion := fun i => carrierEquiv ⁻¹' data.possibleRegion i }
+
+theorem transport_familyUnion_eq_preimage
+    {β : Type w}
+    (data : IUTStage1Remark395PossibleImageFamilySource β ι)
+    (carrierEquiv : α ≃ β) :
+    (data.transport carrierEquiv).familyUnion =
+      carrierEquiv ⁻¹' data.familyUnion := by
+  ext x
+  simp [transport, familyUnion]
+
+theorem transport_familyUnion_image_eq
+    {β : Type w}
+    (data : IUTStage1Remark395PossibleImageFamilySource β ι)
+    (carrierEquiv : α ≃ β) :
+    carrierEquiv '' (data.transport carrierEquiv).familyUnion =
+      data.familyUnion := by
+  rw [transport_familyUnion_eq_preimage]
+  exact
+    IUTStage1Remark395HolomorphicHullOperator.image_preimage_equiv
+      carrierEquiv data.familyUnion
+
+theorem transport_canonicalHull_eq_preimage
+    {β : Type w}
+    (data : IUTStage1Remark395PossibleImageFamilySource β ι)
+    (carrierEquiv : α ≃ β) :
+    (data.transport carrierEquiv).canonicalHull =
+      carrierEquiv ⁻¹' data.canonicalHull := by
+  change carrierEquiv ⁻¹'
+      data.hullOperator.phi
+        (carrierEquiv '' (data.transport carrierEquiv).familyUnion) =
+    carrierEquiv ⁻¹' data.hullOperator.phi data.familyUnion
+  rw [transport_familyUnion_image_eq data carrierEquiv]
+
+theorem transport_canonicalHull_image_eq
+    {β : Type w}
+    (data : IUTStage1Remark395PossibleImageFamilySource β ι)
+    (carrierEquiv : α ≃ β) :
+    carrierEquiv '' (data.transport carrierEquiv).canonicalHull =
+      data.canonicalHull := by
+  rw [transport_canonicalHull_eq_preimage]
+  exact
+    IUTStage1Remark395HolomorphicHullOperator.image_preimage_equiv
+      carrierEquiv data.canonicalHull
+
+theorem transport_logVolume_familyUnion_eq
+    {β : Type w}
+    (data : IUTStage1Remark395PossibleImageFamilySource β ι)
+    (carrierEquiv : α ≃ β) :
+    (data.transport carrierEquiv).hullOperator.logVolume
+        (data.transport carrierEquiv).familyUnion =
+      data.hullOperator.logVolume data.familyUnion := by
+  change data.hullOperator.logVolume
+      (carrierEquiv '' (data.transport carrierEquiv).familyUnion) =
+    data.hullOperator.logVolume data.familyUnion
+  rw [transport_familyUnion_image_eq data carrierEquiv]
+
+theorem transport_logVolume_canonicalHull_eq
+    {β : Type w}
+    (data : IUTStage1Remark395PossibleImageFamilySource β ι)
+    (carrierEquiv : α ≃ β) :
+    (data.transport carrierEquiv).hullOperator.logVolume
+        (data.transport carrierEquiv).canonicalHull =
+      data.hullOperator.logVolume data.canonicalHull := by
+  change data.hullOperator.logVolume
+      (carrierEquiv '' (data.transport carrierEquiv).canonicalHull) =
+    data.hullOperator.logVolume data.canonicalHull
+  rw [transport_canonicalHull_image_eq data carrierEquiv]
+
 end IUTStage1Remark395PossibleImageFamilySource
 
 /--
@@ -7238,6 +7403,43 @@ namespace IUTStage1Remark395PossibleImageExactXiFamilySource
 
 variable {α : Type u} {ι : Type v} {κ : Type w}
 variable {data : IUTStage1Remark395PossibleImageFamilySource α ι}
+
+set_option linter.style.longLine false in
+/--
+Transport an exact `Xi(P_B)` source across a carrier equivalence.
+
+Exactness is not re-assumed: it is obtained by identifying the transported
+canonical hull and transported family union with the source carrier versions
+under forward image, then reusing the source log-volume equality.
+-/
+noncomputable def transport
+    {β : Type w}
+    {sourceData : IUTStage1Remark395PossibleImageFamilySource β ι}
+    (source :
+      IUTStage1Remark395PossibleImageExactXiFamilySource sourceData)
+    (carrierEquiv : α ≃ β) :
+    IUTStage1Remark395PossibleImageExactXiFamilySource
+      (sourceData.transport carrierEquiv) :=
+  { familyHullLogVolume_eq_familyUnion := by
+      rw [
+        IUTStage1Remark395PossibleImageFamilySource.transport_logVolume_canonicalHull_eq
+          sourceData carrierEquiv,
+        IUTStage1Remark395PossibleImageFamilySource.transport_logVolume_familyUnion_eq
+          sourceData carrierEquiv]
+      exact source.familyHullLogVolume_eq_familyUnion }
+
+set_option linter.style.longLine false in
+theorem transport_endpoint
+    {β : Type w}
+    {sourceData : IUTStage1Remark395PossibleImageFamilySource β ι}
+    (source :
+      IUTStage1Remark395PossibleImageExactXiFamilySource sourceData)
+    (carrierEquiv : α ≃ β) :
+    (sourceData.transport carrierEquiv).hullOperator.logVolume
+        (sourceData.transport carrierEquiv).canonicalHull =
+      (sourceData.transport carrierEquiv).hullOperator.logVolume
+        (sourceData.transport carrierEquiv).familyUnion :=
+  (source.transport carrierEquiv).familyHullLogVolume_eq_familyUnion
 
 noncomputable def exactApproximant
     (source :
@@ -26849,6 +27051,37 @@ noncomputable def toPossibleImageExactXiFamilySource
       data.toPossibleImageFamilySource :=
   radiusCoverSource.toIndexedDirectProductCellCoverSource
     |>.toPossibleImageExactXiFamilySource
+
+set_option linter.style.longLine false in
+/--
+Transport the selected valuation-ball exact-`Xi(P_B)` source to an equivalent
+carrier.
+
+The product-carrier exactness is still derived from valuation-ball radius
+containment.  This definition only changes presentation of the carrier, using
+the generic possible-image transport theorem above.
+-/
+noncomputable def toTransportedPossibleImageExactXiFamilySource
+    {α' : Type _}
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data)
+    (carrierEquiv : α' ≃ ((d : δ) -> A d)) :
+    IUTStage1Remark395PossibleImageExactXiFamilySource
+      (data.toPossibleImageFamilySource.transport carrierEquiv) :=
+  radiusCoverSource.toPossibleImageExactXiFamilySource.transport carrierEquiv
+
+set_option linter.style.longLine false in
+theorem transported_exactXi_endpoint
+    {α' : Type _}
+    (radiusCoverSource :
+      ValuationBallRadiusDirectProductCellCoverSource data)
+    (carrierEquiv : α' ≃ ((d : δ) -> A d)) :
+    (data.toPossibleImageFamilySource.transport carrierEquiv).hullOperator.logVolume
+        (data.toPossibleImageFamilySource.transport carrierEquiv).canonicalHull =
+      (data.toPossibleImageFamilySource.transport carrierEquiv).hullOperator.logVolume
+        (data.toPossibleImageFamilySource.transport carrierEquiv).familyUnion :=
+  (radiusCoverSource.toTransportedPossibleImageExactXiFamilySource carrierEquiv)
+    |>.familyHullLogVolume_eq_familyUnion
 
 set_option linter.style.longLine false in
 theorem endpoint

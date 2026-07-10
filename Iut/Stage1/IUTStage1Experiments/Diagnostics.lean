@@ -59891,6 +59891,25 @@ theorem remark395SelectedScalarParameterValuationBallProductHullCoverSource_endp
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface carrier transport for exact possible-image `Xi(P_B)`.
+
+This checks that exactness of the possible-image family hull is preserved when
+the carrier is replaced by an equivalent presentation.
+-/
+theorem remark395PossibleImageExactXiFamilySource_transport_endpoint
+    {α : Type u} {β : Type v} {ι : Type w}
+    (data : IUTStage1Remark395PossibleImageFamilySource β ι)
+    (exactSource :
+      IUTStage1Remark395PossibleImageExactXiFamilySource data)
+    (carrierEquiv : α ≃ β) :
+    (data.transport carrierEquiv).hullOperator.logVolume
+        (data.transport carrierEquiv).canonicalHull =
+      (data.transport carrierEquiv).hullOperator.logVolume
+        (data.transport carrierEquiv).familyUnion :=
+  exactSource.transport_endpoint carrierEquiv
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface nonzero scalar-multiplication valuation/principal hull
 cover.
 
