@@ -1128,11 +1128,14 @@
   calibrated wrapper lowers the structure-sheaf input as well: it supplies
   the localized equality with the chosen direct summand, and Lean derives the
   additive-Haar normalized compact-open equality by the projection theorem for
-  the constructed additive-Haar localized source.  The hardened non-vacuous
-  public wrapper is
-  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousInverseDilationDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRoute},
+  the constructed additive-Haar localized source.  The current hardened
+  non-vacuous public wrapper lowers this boundary again: the restriction
+  local-global object, ordinary-log-volume/Hodge-degree calibration, direct
+  summand data, and Hodge/family-hull scalar equality are projected from the
+  constructed Gaussian/Hodge localized-adjusted source.  The public wrapper is
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousInverseDilationConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRoute},
   with audit
-  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousInverseDilationDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRouteBoundaryAudit}.
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousInverseDilationConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRouteBoundaryAudit}.
   The
   finite-extension valuation-unit-ball route is only a normalized legacy
   boundary: radius \(1\) and \(\mu(O_v)=1\) construct weak nonnegativity, and
