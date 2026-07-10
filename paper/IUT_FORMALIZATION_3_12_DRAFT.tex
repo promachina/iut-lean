@@ -1061,7 +1061,14 @@ valuation-cover side from the intrinsic finite-extension valuation-cover
   factors.  This handoff is threaded through the additive-Haar residue audit,
   the normalized residue audit, and the strongest CTheta full-boundary audit,
   so the public audit object exposes the determinant-factor match directly.
-  The full-boundary audit for this route also ties the
+  The equality boundary has also been lowered one step: a component-matched
+  residue source now asks for equality of the defining additive-Haar
+  compact-open data fields, and Lean reconstructs the previous full source
+  equality by additive-Haar extensionality.  Thus this part of the interface no
+  longer needs to be entered as a single opaque equality of normalization
+  records, although the component matching itself is still a local-field input
+  to be constructed from the lower Hodge-theater/log-theta package.  The
+  full-boundary audit for this route also ties the
   IUT IV arithmetic residual to the same public wrapper.  The remaining
   principal-hull boundary is now to derive the coordinate scalar-image
   landing/preimage laws for the generic public principal-product hull source

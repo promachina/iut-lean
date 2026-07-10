@@ -13913,6 +13913,92 @@ variable {α : Type u} {η : Type v} {K : Type w}
 variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K]
 variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
 
+set_option linter.style.longLine false in
+/--
+Extensionality for additive Haar compact-open normalization sources by their
+mathematical data fields.
+
+The remaining fields are laws about these data.  They live in `Prop`, so after
+the data fields are identified, Lean closes them by proof irrelevance.  This
+is useful for Step (xi) constructors that should provide local-field component
+matching data rather than a single opaque equality of normalization records.
+-/
+theorem ext_of_components
+    {left right :
+      IUTStage1AdditiveHaarCompactOpenNormalizationSource
+        α η K hullSystem}
+    (localRing_eq : left.localRing = right.localRing)
+    (residuePrime_eq : left.residuePrime = right.residuePrime)
+    (finiteExtensionDegree_eq :
+      left.finiteExtensionDegree = right.finiteExtensionDegree)
+    (realization_eq : left.realization = right.realization)
+    (realizedRegion_eq : left.realizedRegion = right.realizedRegion)
+    (haarMeasure_eq : left.haarMeasure = right.haarMeasure)
+    (isCompactOpen_eq : left.isCompactOpen = right.isCompactOpen)
+    (ringOfIntegers_eq : left.ringOfIntegers = right.ringOfIntegers)
+    (compactOpenSubset_eq :
+      left.compactOpenSubset = right.compactOpenSubset)
+    (uniformizerScale_eq : left.uniformizerScale = right.uniformizerScale) :
+    left = right := by
+  cases left
+  cases right
+  cases localRing_eq
+  cases residuePrime_eq
+  cases finiteExtensionDegree_eq
+  cases realization_eq
+  cases realizedRegion_eq
+  cases haarMeasure_eq
+  cases isCompactOpen_eq
+  cases ringOfIntegers_eq
+  cases compactOpenSubset_eq
+  cases uniformizerScale_eq
+  simp
+
+set_option linter.style.longLine false in
+/--
+Componentwise equality of additive Haar compact-open normalization sources.
+
+This is the lower boundary used by Step (xi): the source must match the
+chosen compact-open normalization by local-field data, not by handing Lean a
+single equality of the whole record.
+-/
+structure ComponentwiseEqual
+    (left right :
+      IUTStage1AdditiveHaarCompactOpenNormalizationSource
+        α η K hullSystem) :
+    Prop where
+  localRing_eq : left.localRing = right.localRing
+  residuePrime_eq : left.residuePrime = right.residuePrime
+  finiteExtensionDegree_eq :
+    left.finiteExtensionDegree = right.finiteExtensionDegree
+  realization_eq : left.realization = right.realization
+  realizedRegion_eq : left.realizedRegion = right.realizedRegion
+  haarMeasure_eq : left.haarMeasure = right.haarMeasure
+  isCompactOpen_eq : left.isCompactOpen = right.isCompactOpen
+  ringOfIntegers_eq : left.ringOfIntegers = right.ringOfIntegers
+  compactOpenSubset_eq :
+    left.compactOpenSubset = right.compactOpenSubset
+  uniformizerScale_eq : left.uniformizerScale = right.uniformizerScale
+
+set_option linter.style.longLine false in
+theorem ComponentwiseEqual.eq
+    {left right :
+      IUTStage1AdditiveHaarCompactOpenNormalizationSource
+        α η K hullSystem}
+    (matching : ComponentwiseEqual left right) :
+    left = right :=
+  ext_of_components
+    matching.localRing_eq
+    matching.residuePrime_eq
+    matching.finiteExtensionDegree_eq
+    matching.realization_eq
+    matching.realizedRegion_eq
+    matching.haarMeasure_eq
+    matching.isCompactOpen_eq
+    matching.ringOfIntegers_eq
+    matching.compactOpenSubset_eq
+    matching.uniformizerScale_eq
+
 def rawHaarMeasure
     (data :
       IUTStage1AdditiveHaarCompactOpenNormalizationSource
