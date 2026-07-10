@@ -1280,7 +1280,15 @@
   and Lean derives the older localized adjusted determinant equality by
   composing with the localized hull decomposition theorem
 	  \(\operatorname{vol}_{\log}(\operatorname{Hull}_{\mathrm{fam}})
-	  =\sum_{\mathrm{loc}}\operatorname{vol}_{\log}\).  The direct-summand
+	  =\sum_{\mathrm{loc}}\operatorname{vol}_{\log}\).  The summand-calibrated
+	  wrapper
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductInverseDilationValuationCoverConstructedSourceCoreHodgeSummandCalibratedLocalizedAdjustedCalibrationSource}
+	  lowers this once more by taking
+	  \(\deg_{\Theta}=\sum_\beta\operatorname{vol}_{\log,\beta}^{\mathrm{adj}}\)
+	  as source data and deriving the Hodge/family-hull equality.  Its public
+	  route is
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousInverseDilationHodgeSummandCalibratedConstructedStepXIRoute}.
+	  The direct-summand
 	  calibrated wrapper lowers the structure-sheaf input as well: it supplies
 	  the localized equality with the chosen direct summand, and Lean derives the
 	  additive-Haar normalized compact-open equality by the projection theorem for
