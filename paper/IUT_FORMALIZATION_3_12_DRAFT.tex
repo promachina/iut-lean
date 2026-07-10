@@ -885,11 +885,16 @@ public principal-product hull system and fixes its possible-region family to
 \texttt{principalProductHullFormationData}; the intrinsic possible-region
 comparison is therefore produced by construction, while the principal-hull
 comparison is exposed as the lower equality between the p-adic principal hull
-source and the public principal-product hull system.  The intrinsic wrapper
-also removes the separate public finite-extension factor family: Lean transports
-the lower cover's finite-extension factors across the same hull-system equality
-used for the valuation-cover calibration fiber and derives the old
-factor-matching field internally.
+source and the public principal-product hull system.  A public-principal
+specialization now constructs this lower p-adic principal source as the
+\texttt{ULift} copy of the public principal-product source and proves the
+product-hull intersection law by transport through the public intersection
+theorem; the remaining lower theorem is the invariance of the induced
+holomorphic hull system under this \texttt{ULift}.  The intrinsic wrapper also
+removes the separate public finite-extension factor family: Lean transports the
+lower cover's finite-extension factors across the same hull-system equality used
+for the valuation-cover calibration fiber and derives the old factor-matching
+field internally.
 An inverse-dilation refinement lowers the analytic input further: each
 transported valuation-ball Haar factor is identified with the inverse
 base-prime unit ball of a constructed finite-extension \(p\)-adic Haar
@@ -920,10 +925,11 @@ source, and derives the inverse-dilation Haar-modulus family from unit-ball
 Haar-character data.  The latter is now itself constructed from residue-module
 quotient data: \(O_v/p_vO_v\), \(\#\kappa_v=p_v\), and
 \(\dim_{\kappa_v}(O_v/p_vO_v)=[K_v:\mathbb Q_p]\) give the coset
-decomposition and \(\mu(p_vO_v)=p_v^{-[K_v:\mathbb Q_p]}\).  Constructing the
-lower p-adic principal-hull source directly from Hodge-theater/log-theta-lattice
-data, and deriving the remaining factorwise inverse-dilation identifications
-from the same data, remains the next boundary.
+decomposition and \(\mu(p_vO_v)=p_v^{-[K_v:\mathbb Q_p]}\).  The remaining
+principal-hull boundary is now the \texttt{ULift}-invariance theorem for the
+public principal-product hull system, followed by constructing that public
+principal source from Hodge-theater/log-theta-lattice data and deriving the
+remaining factorwise inverse-dilation identifications from the same data.
 The valuation-unit-ball finite-extension branch remains only a normalized
 legacy boundary: the selected radius is forced to be \(1\), so \(\mu(O_v)=1\)
 constructs weak nonnegativity but also proves that the normalized log-volume
