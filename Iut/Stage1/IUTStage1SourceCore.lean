@@ -4801,6 +4801,152 @@ theorem endpoint
 end IUTStage1Remark395RepresentableScalarParameterPrincipalProductHullSystemSource
 
 /--
+Locally representable scalar-parameter principal product-hull source.
+
+The representability-backed source above asked for a global representative of
+every direct-product parameter.  Remark 3.9.5 is local in its construction of
+the factors `H_v(lambda_v)`: a product parameter is represented by choosing,
+at each place `v`, a local scalar parameter whose coordinate region is the
+given local factor.  This source records that one-place representability and
+constructs the global product representative by dependent choice.
+-/
+structure IUTStage1Remark395LocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+    (δ : Type u) (A : δ -> Type v) (S : δ -> Type w) where
+  scalarParameterSource :
+    IUTStage1Remark395ScalarParameterDirectProductHullSource δ A S
+  coordinateParameter_has_scalarParameter :
+    ∀ (d : δ) (coordinateParameter : Set (A d)),
+      ∃ scalarParameter : S d,
+        scalarParameterSource.coordinateParameterRegion d scalarParameter =
+          coordinateParameter
+
+namespace IUTStage1Remark395LocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+
+variable {δ : Type u} {A : δ -> Type v} {S : δ -> Type w}
+
+noncomputable def scalarParameterOfCoordinateParameter
+    (data :
+      IUTStage1Remark395LocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+        δ A S)
+    (d : δ)
+    (coordinateParameter : Set (A d)) :
+    S d :=
+  Classical.choose
+    (data.coordinateParameter_has_scalarParameter d coordinateParameter)
+
+theorem coordinateParameterRegion_scalarParameterOfCoordinateParameter_eq
+    (data :
+      IUTStage1Remark395LocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+        δ A S)
+    (d : δ)
+    (coordinateParameter : Set (A d)) :
+    data.scalarParameterSource.coordinateParameterRegion d
+        (data.scalarParameterOfCoordinateParameter d coordinateParameter) =
+      coordinateParameter :=
+  Classical.choose_spec
+    (data.coordinateParameter_has_scalarParameter d coordinateParameter)
+
+noncomputable def scalarParameterOfProductParameter
+    (data :
+      IUTStage1Remark395LocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+        δ A S)
+    (productParameter : (d : δ) -> Set (A d)) :
+    (d : δ) -> S d :=
+  fun d => data.scalarParameterOfCoordinateParameter d (productParameter d)
+
+set_option linter.style.longLine false in
+theorem parameterRegion_scalarParameterOfProductParameter_eq
+    (data :
+      IUTStage1Remark395LocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+        δ A S)
+    (productParameter : (d : δ) -> Set (A d)) :
+    data.scalarParameterSource.parameterRegion
+        (data.scalarParameterOfProductParameter productParameter) =
+      productParameter := by
+  funext d
+  exact
+    data.coordinateParameterRegion_scalarParameterOfCoordinateParameter_eq
+      d (productParameter d)
+
+theorem productParameter_has_scalarParameter
+    (data :
+      IUTStage1Remark395LocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+        δ A S)
+    (productParameter : (d : δ) -> Set (A d)) :
+    ∃ scalarParameter : (d : δ) -> S d,
+      data.scalarParameterSource.parameterRegion scalarParameter =
+        productParameter :=
+  ⟨data.scalarParameterOfProductParameter productParameter,
+    data.parameterRegion_scalarParameterOfProductParameter_eq
+      productParameter⟩
+
+noncomputable def toRepresentableScalarParameterPrincipalProductHullSystemSource
+    (data :
+      IUTStage1Remark395LocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+        δ A S) :
+    IUTStage1Remark395RepresentableScalarParameterPrincipalProductHullSystemSource
+      δ A S :=
+  { scalarParameterSource := data.scalarParameterSource,
+    productParameter_has_scalarParameter :=
+      data.productParameter_has_scalarParameter }
+
+noncomputable def toPrincipalProductHullSystemSource
+    (data :
+      IUTStage1Remark395LocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+        δ A S) :
+    IUTStage1Remark395PrincipalProductHullSystemSource
+      ((d : δ) -> A d) ((d : δ) -> S d) :=
+  data.toRepresentableScalarParameterPrincipalProductHullSystemSource
+    |>.toPrincipalProductHullSystemSource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395LocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+        δ A S)
+    (region : Set ((d : δ) -> A d)) :
+    let representableSource :=
+      data.toRepresentableScalarParameterPrincipalProductHullSystemSource;
+    let principalSource := data.toPrincipalProductHullSystemSource;
+    (∀ (d : δ) (coordinateParameter : Set (A d)),
+        data.scalarParameterSource.coordinateParameterRegion d
+            (data.scalarParameterOfCoordinateParameter d
+              coordinateParameter) =
+          coordinateParameter) ∧
+      (∀ productParameter : (d : δ) -> Set (A d),
+        data.scalarParameterSource.parameterRegion
+            (data.scalarParameterOfProductParameter productParameter) =
+          productParameter) ∧
+      data.scalarParameterSource.parameterRegion
+          (representableSource.intersectionScalarParameter region) =
+        data.scalarParameterSource.directProductSource.intersectionParameter
+          region ∧
+      (∀ parameter : (d : δ) -> S d,
+        principalSource.parameter_nonzero parameter) ∧
+      region ⊆
+        principalSource.principalHull
+          (principalSource.intersectionParameter region) ∧
+      principalSource.toProductHullSystemSource.logVolume
+          (principalSource.toProductHullSystemSource.productHull
+            (principalSource.toProductHullSystemSource.intersectionParameter
+              region)) =
+        principalSource.toProductHullSystemSource.productHullLogVolume
+          (principalSource.toProductHullSystemSource.intersectionParameter
+            region) :=
+  by
+    intro representableSource principalSource
+    have hrepr := representableSource.endpoint region
+    exact
+      ⟨data.coordinateParameterRegion_scalarParameterOfCoordinateParameter_eq,
+        data.parameterRegion_scalarParameterOfProductParameter_eq,
+        hrepr.1,
+        hrepr.2.2.1,
+        hrepr.2.2.2.2.2.1,
+        hrepr.2.2.2.2.2.2⟩
+
+end IUTStage1Remark395LocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+
+/--
 Carrier-transported scalar-parameter principal product-hull source.
 
 The scalar-parameter construction above lives on the literal dependent product
@@ -5004,6 +5150,116 @@ theorem endpoint
         htransport.2.2.2.2.2.2⟩
 
 end IUTStage1Remark395TransportedRepresentableScalarParameterPrincipalProductHullSystemSource
+
+set_option linter.style.longLine false
+
+/--
+Carrier-transported locally representable scalar-parameter principal source.
+
+This is the strictest scalar-parameter public-carrier reduction in this layer:
+the scalar representative of a product hull parameter is built coordinate by
+coordinate from local representability data, then the resulting product-carrier
+principal hull is transported to the public carrier.
+-/
+structure IUTStage1Remark395TransportedLocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+    (α : Type u) (δ : Type v) (A : δ -> Type w) (S : δ -> Type x) where
+  locallyRepresentableSource :
+    IUTStage1Remark395LocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+      δ A S
+  carrierEquiv : α ≃ ((d : δ) -> A d)
+
+namespace IUTStage1Remark395TransportedLocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+
+variable {α : Type u} {δ : Type v} {A : δ -> Type w} {S : δ -> Type x}
+
+noncomputable def toTransportedRepresentableScalarParameterPrincipalProductHullSystemSource
+    (data :
+      IUTStage1Remark395TransportedLocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+        α δ A S) :
+    IUTStage1Remark395TransportedRepresentableScalarParameterPrincipalProductHullSystemSource
+      α δ A S :=
+  { representableSource :=
+      data.locallyRepresentableSource
+        |>.toRepresentableScalarParameterPrincipalProductHullSystemSource,
+    carrierEquiv := data.carrierEquiv }
+
+noncomputable def toTransportedScalarParameterPrincipalProductHullSystemSource
+    (data :
+      IUTStage1Remark395TransportedLocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+        α δ A S) :
+    IUTStage1Remark395TransportedScalarParameterPrincipalProductHullSystemSource
+      α δ A S :=
+  data.toTransportedRepresentableScalarParameterPrincipalProductHullSystemSource
+    |>.toTransportedScalarParameterPrincipalProductHullSystemSource
+
+noncomputable def toPrincipalProductHullSystemSource
+    (data :
+      IUTStage1Remark395TransportedLocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+        α δ A S) :
+    IUTStage1Remark395PrincipalProductHullSystemSource
+      α ((d : δ) -> S d) :=
+  data.toTransportedRepresentableScalarParameterPrincipalProductHullSystemSource
+    |>.toPrincipalProductHullSystemSource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395TransportedLocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+        α δ A S)
+    (region : Set α) :
+    let productRegion := data.carrierEquiv '' region;
+    let representableTransport :=
+      data.toTransportedRepresentableScalarParameterPrincipalProductHullSystemSource;
+    let principalSource := data.toPrincipalProductHullSystemSource;
+    (∀ (d : δ) (coordinateParameter : Set (A d)),
+        data.locallyRepresentableSource.scalarParameterSource.coordinateParameterRegion d
+            (data.locallyRepresentableSource.scalarParameterOfCoordinateParameter
+              d coordinateParameter) =
+          coordinateParameter) ∧
+      (∀ productParameter : (d : δ) -> Set (A d),
+        data.locallyRepresentableSource.scalarParameterSource.parameterRegion
+            (data.locallyRepresentableSource.scalarParameterOfProductParameter
+              productParameter) =
+          productParameter) ∧
+      data.locallyRepresentableSource.scalarParameterSource.parameterRegion
+          (data.locallyRepresentableSource.toRepresentableScalarParameterPrincipalProductHullSystemSource.intersectionScalarParameter
+            productRegion) =
+        data.locallyRepresentableSource.scalarParameterSource.directProductSource.intersectionParameter
+          productRegion ∧
+      (∀ parameter : (d : δ) -> S d,
+        principalSource.parameter_nonzero parameter) ∧
+      (∀ parameter : (d : δ) -> S d,
+        data.carrierEquiv ''
+            principalSource.principalHull parameter =
+          (representableTransport
+            |>.toTransportedScalarParameterPrincipalProductHullSystemSource
+            |>.productPrincipalSource).principalHull parameter) ∧
+      region ⊆
+        principalSource.principalHull
+          (principalSource.intersectionParameter region) ∧
+      principalSource.toProductHullSystemSource.logVolume
+          (principalSource.toProductHullSystemSource.productHull
+            (principalSource.toProductHullSystemSource.intersectionParameter
+              region)) =
+        principalSource.toProductHullSystemSource.productHullLogVolume
+          (principalSource.toProductHullSystemSource.intersectionParameter
+            region) :=
+  by
+    intro productRegion representableTransport principalSource
+    have hlocal := data.locallyRepresentableSource.endpoint productRegion
+    have htransport := representableTransport.endpoint region
+    exact
+      ⟨hlocal.1,
+        hlocal.2.1,
+        hlocal.2.2.1,
+        htransport.2.2.1,
+        htransport.2.2.2.1,
+        htransport.2.2.2.2.1,
+        htransport.2.2.2.2.2⟩
+
+end IUTStage1Remark395TransportedLocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+
+set_option linter.style.longLine true
 
 /--
 Nonzero scalar-multiplication direct-product hull source.

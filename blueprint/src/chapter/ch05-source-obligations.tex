@@ -1150,17 +1150,20 @@
   reducing record equality to the \texttt{isHull} predicate and
   \texttt{logVolume} field.  Source-core now lowers the public
   principal-product hull source itself to a scalar-parameter direct-product
-  hull source with scalar representability of product parameters; Lean now
-  constructs the intersection scalar selector from the representative of the
-  direct-product intersection parameter.  These data construct the full
-  principal product-hull system and its minimal intersection law.  Lean also
-  transports this constructed product-carrier hull source across a carrier
-  equivalence to the public Step (xi) carrier and exposes a localized
-  theta-equals-family-hull route that consumes this transported
-  representability-backed scalar-parameter source instead of an independently
-  supplied public-carrier principal source.  The remaining principal-hull
-  boundary is to derive scalar representability data and the carrier
-  equivalence from Hodge-theater/log-theta lattice inputs.
+  hull source.  Product-parameter representability is now itself lowered to
+  one-place local representability: Lean chooses, for each place, a scalar
+  representative of the coordinate product region, assembles these choices
+  into the global product scalar parameter, and constructs the intersection
+  scalar selector from the represented direct-product intersection parameter.
+  These data construct the full principal product-hull system and its minimal
+  intersection law.  Lean also transports this constructed product-carrier
+  hull source across a carrier equivalence to the public Step (xi) carrier and
+  exposes a localized theta-equals-family-hull route that consumes this
+  locally representable transported scalar-parameter source instead of an
+  independently supplied public-carrier principal source or global product
+  representability field.  The remaining principal-hull boundary is to derive
+  the local coordinate scalar representatives and the carrier equivalence from
+  Hodge-theater/log-theta lattice inputs.
   \lean{Iut.Stage1.IUTStage1Remark395PrincipalProductHullSystemSource.transport}
   \lean{Iut.Stage1.IUTStage1Remark395PrincipalProductHullSystemSource.transport_principalHull_mem_iff}
   \lean{Iut.Stage1.IUTStage1Remark395PrincipalProductHullSystemSource.transport_principalHull_image_eq}
@@ -1178,6 +1181,11 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredTransportedScalarParameterPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.transportedRepresentableScalarParameterPrincipalProductHullRouteAudit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredTransportedRepresentableScalarParameterPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit}
+  \lean{Iut.Stage1.IUTStage1Remark395LocallyRepresentableScalarParameterPrincipalProductHullSystemSource}
+  \lean{Iut.Stage1.IUTStage1Remark395LocallyRepresentableScalarParameterPrincipalProductHullSystemSource.productParameter_has_scalarParameter}
+  \lean{Iut.Stage1.IUTStage1Remark395TransportedLocallyRepresentableScalarParameterPrincipalProductHullSystemSource}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.transportedLocallyRepresentableScalarParameterPrincipalProductHullRouteAudit}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredTransportedLocallyRepresentableScalarParameterPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit}
   The cross-hull matching between these transported
   valuation-cover
   fibers and the public-hull finite-extension factors is now derived at the
