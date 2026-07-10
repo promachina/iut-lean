@@ -32,7 +32,7 @@ open scoped BigOperators
 open scoped NormedField
 open scoped Valued
 
-universe u v w x y z
+universe u v w x y z a
 
 /-- A prime `l ≥ 5` is nonzero, so `ZMod l.value` has its finite model. -/
 instance primeGeFiveValueNeZero (l : PrimeGeFive) : NeZero l.value :=
@@ -26201,9 +26201,9 @@ the current possible-image union, and Lean proves that its principal scalar
 image is the valuation-ball direct-product family hull used by Ob3/Ob5.
 -/
 structure IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
-    (δ : Type u) (A : δ -> Type v) (S : δ -> Type x)
+    (δ : Type u) (A : δ -> Type v) (S : δ -> Type a)
     (ι : Type y) (η : Type x) (K : Type z)
-    (β : Type w) (γ : Type max u v w x y z)
+    (β : Type w) (γ : Type max u v w x y z a)
     [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
     [Fintype β] [Fintype γ] where
   valuationCover :
@@ -26225,9 +26225,9 @@ structure IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCover
 
 namespace IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
 
-variable {δ : Type u} {A : δ -> Type v} {S : δ -> Type x}
+variable {δ : Type u} {A : δ -> Type v} {S : δ -> Type a}
 variable {ι : Type y} {η : Type x} {K : Type z}
-variable {β : Type w} {γ : Type max u v w x y z}
+variable {β : Type w} {γ : Type max u v w x y z a}
 variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
 variable [Fintype β] [Fintype γ]
 
@@ -26561,6 +26561,47 @@ theorem adjustedHullOperator_eq_nonzeroScalarProduct
     data.nonzeroScalarSource.directProductSource.toHolomorphicHullSystem.toHolomorphicHullOperator
   rw [data.hullSystem_eq_nonzeroScalarProduct]
 
+noncomputable def toSelectedScalarParameterValuationBallProductHullCoverSource
+    (data :
+      IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource
+        δ A ι η K β γ) :
+    IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+      δ A data.nonzeroScalarSource.nonzeroScalar ι η K β γ :=
+  { valuationCover := data.valuationCover,
+    scalarParameterSource :=
+      data.nonzeroScalarSource.toScalarParameterDirectProductHullSource,
+    selectedScalarParameter := data.selectedNonzeroScalar,
+    hullSystem_eq_scalarParameterProduct :=
+      data.hullSystem_eq_nonzeroScalarProduct,
+    localIntegerRegion_eq_anchorCell :=
+      data.localIntegerRegion_eq_anchorCell,
+    selectedParameterRegion_eq_intersection :=
+      data.selectedParameterRegion_eq_intersection }
+
+set_option linter.style.longLine false in
+theorem selectedScalarParameterValuation_endpoint
+    (data :
+      IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource
+        δ A ι η K β γ) :
+    data.toSelectedScalarParameterValuationBallProductHullCoverSource.selectedScalarParameterHull =
+        data.selectedScalarImageHull ∧
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.selectedParameterRegion =
+        data.selectedParameterRegion ∧
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.selectedScalarParameterHull =
+        data.nonzeroScalarSource.scalarMultiple data.selectedNonzeroScalar ''
+          data.nonzeroScalarSource.localIntegerRegion ∧
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.selectedScalarParameterHull =
+        data.valuationCover.directProductCellUnion ∧
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.toOb3Ob5AdjustedDeterminantLogVolumeSource =
+        data.toOb3Ob5AdjustedDeterminantLogVolumeSource :=
+  by
+    exact
+      ⟨rfl,
+        rfl,
+        data.selectedScalarImageHull_eq_selectedNonzeroScalar_image,
+        data.selectedScalarImageHull_eq_valuationBallDirectProductCellUnion,
+        rfl⟩
+
 set_option linter.style.longLine false in
 theorem endpoint
     (data :
@@ -26768,6 +26809,15 @@ noncomputable def toNonzeroScalarMultiplicationValuationBallProductHullCoverSour
     selectedParameterRegion_eq_intersection :=
       data.selectedParameterRegion_eq_intersection }
 
+noncomputable def toSelectedScalarParameterValuationBallProductHullCoverSource
+    (data :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A ι η K β γ) :
+    IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+      δ A data.nonzeroScalarSource.nonzeroScalar ι η K β γ :=
+  data.toNonzeroScalarMultiplicationValuationBallProductHullCoverSource
+    |>.toSelectedScalarParameterValuationBallProductHullCoverSource
+
 def possibleImageUnion
     (data :
       IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
@@ -26812,6 +26862,26 @@ theorem selectedScalarImageHull_eq_selectedNonzeroScalar_image
         data.nonzeroScalarSource.localIntegerRegion :=
   data.toNonzeroScalarMultiplicationValuationBallProductHullCoverSource
     |>.selectedScalarImageHull_eq_selectedNonzeroScalar_image
+
+set_option linter.style.longLine false in
+theorem selectedScalarParameterValuation_endpoint
+    (data :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A ι η K β γ) :
+    data.toSelectedScalarParameterValuationBallProductHullCoverSource.selectedScalarParameterHull =
+        data.selectedScalarImageHull ∧
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.selectedScalarParameterHull =
+        data.nonzeroScalarSource.scalarMultiple data.selectedNonzeroScalar ''
+          data.nonzeroScalarSource.localIntegerRegion ∧
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.selectedScalarParameterHull =
+        data.valuationCover.directProductCellUnion ∧
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.toOb3Ob5AdjustedDeterminantLogVolumeSource =
+        data.toOb3Ob5AdjustedDeterminantLogVolumeSource :=
+  by
+    have hendpoint :=
+      data.toNonzeroScalarMultiplicationValuationBallProductHullCoverSource
+        |>.selectedScalarParameterValuation_endpoint
+    exact ⟨hendpoint.1, hendpoint.2.2.1, hendpoint.2.2.2.1, hendpoint.2.2.2.2⟩
 
 set_option linter.style.longLine false in
 theorem endpoint

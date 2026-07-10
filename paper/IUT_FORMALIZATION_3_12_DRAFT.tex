@@ -637,6 +637,13 @@ needs coordinate scalar-image data and an explicit carrier equivalence.  In
 the one-coordinate real-line specialization, even this carrier equivalence is
 not supplied: \(\mathrm{Point}(\mathsf{target})\) is canonically equivalent to
 its real coordinate and to the product carrier \(\mathrm{Unit}\to\mathbb R\).
+For the selected valuation-ball family-hull route, the implementation now
+uses the more faithful scalar boundary: a nonzero local multiplication source
+\(\lambda_v\cdot O_v\) constructs the selected scalar-parameter valuation
+source, and the unit-ball valuation wrapper inherits this selected source.
+The resulting endpoint identifies the selected scalar image with the
+valuation-ball direct-product cell union and with the adjusted Ob3/Ob5
+determinant handoff.
 For the stricter localized route, the final normalized localized determinant
 bound by \(\Theta_{\mathrm{signed}}\) is no longer supplied as a standalone
 inequality: Lean derives it from the identification of
@@ -1027,9 +1034,12 @@ valuation-cover side from the intrinsic finite-extension valuation-cover
   comparison route.  The new full-boundary audit for this route also ties the
   IUT IV arithmetic residual to the same public wrapper.  The remaining
   principal-hull boundary is now to derive the coordinate scalar-image
-  landing/preimage laws for the public principal-product hull source from
-  Hodge-theater/log-theta-lattice data, and to derive the remaining factorwise
-  inverse-dilation identifications from the same data.
+  landing/preimage laws for the generic public principal-product hull source
+  from Hodge-theater/log-theta-lattice data.  For the selected valuation-ball
+  hull, the nonzero-scalar multiplication route now constructs the selected
+  scalar-parameter source and its Ob3/Ob5 handoff; the remaining work is to
+  derive the remaining factorwise inverse-dilation identifications from the
+  same data.
 The valuation-unit-ball finite-extension branch remains only a normalized
 legacy boundary: the selected radius is forced to be \(1\), so \(\mu(O_v)=1\)
 constructs weak nonnegativity but also proves that the normalized log-volume

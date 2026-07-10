@@ -1171,6 +1171,13 @@
   to derive the coordinate scalar-image landing/preimage laws from
   Hodge-theater/log-theta lattice inputs, and to construct the localized
   determinant/Ob7 data from the same source.
+  For the selected valuation-ball family-hull route, Lean now avoids the
+  stronger all-coordinate-subsets interface: a nonzero local scalar
+  multiplication source \(\lambda_v\cdot O_v\) constructs the selected
+  scalar-parameter valuation source, and the unit-ball valuation wrapper
+  inherits the same selected-scalar source.  The endpoint records equality of
+  the selected scalar image with the valuation-ball direct-product cell union
+  and the adjusted Ob3/Ob5 determinant handoff.
   \lean{Iut.Stage1.IUTStage1Remark395PrincipalProductHullSystemSource.transport}
   \lean{Iut.Stage1.IUTStage1Remark395PrincipalProductHullSystemSource.transport_principalHull_mem_iff}
   \lean{Iut.Stage1.IUTStage1Remark395PrincipalProductHullSystemSource.transport_principalHull_image_eq}
@@ -1201,6 +1208,10 @@
   \lean{Iut.RealLineCopy.Point.equivSingleRealProduct}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.transportedRealLineCoordinateScalarImagePrincipalProductHullRouteAudit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredTransportedRealLineCoordinateScalarImagePrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit}
+  \lean{Iut.Stage1.IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource.toSelectedScalarParameterValuationBallProductHullCoverSource}
+  \lean{Iut.Stage1.IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource.selectedScalarParameterValuation_endpoint}
+  \lean{Iut.Stage1.IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource.toSelectedScalarParameterValuationBallProductHullCoverSource}
+  \lean{Iut.Stage1.IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource.selectedScalarParameterValuation_endpoint}
   The cross-hull matching between these transported
   valuation-cover
   fibers and the public-hull finite-extension factors is now derived at the
