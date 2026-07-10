@@ -879,8 +879,11 @@ the factor-level equality between each projected finite-extension valuation
 ball and the transported valuation-cover factor.  A finite-extension-backed
 valuation-cover wrapper now lowers the valuation-cover side itself: the lower
 principal valuation cover is projected from finite-extension p-adic Haar data
-before it enters the constructed source-core route.  The cross-hull matching
-with the public finite-extension factors remains explicit.
+before it enters the constructed source-core route.  The intrinsic wrapper
+removes the separate public finite-extension factor family: Lean transports
+the lower cover's finite-extension factors across the same hull-system equality
+used for the valuation-cover calibration fiber and derives the old
+factor-matching field internally.
 An inverse-dilation refinement lowers the analytic input further: each
 transported valuation-ball Haar factor is identified with the inverse
 base-prime unit ball of a constructed finite-extension \(p\)-adic Haar
