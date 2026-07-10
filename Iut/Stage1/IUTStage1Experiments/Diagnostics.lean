@@ -59971,6 +59971,67 @@ theorem concreteTransportedSelectedValuationBallExactXiSource_endpoint
 
 set_option linter.style.longLine false in
 /--
+Experiment-surface choice-level adapter for transported selected valuation-ball
+exact `Xi(P_B)`.
+
+This checks that the public exact-`Xi` calibration no longer needs a supplied
+quotient-index equivalence: it is constructed from concrete
+Hodge-theater/log-theta choices, invariance under the Theorem 3.11 equality
+quotient, and representatives over selected valuation-ball indices.
+-/
+theorem concreteTransportedSelectedValuationBallChoiceExactXiSource_endpoint
+    {source target : Copy} {coric : Type u} {l : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {recordConcrete :
+      IUTStage1Theorem311MultiradialSourceRecord packageConcrete}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaThetaPilotFiberInd2ActionPacketTransportSource
+        recordConcrete indData)
+    (gluingTorsor : IUTStage1ThetaNFBridgeGluingTorsor l)
+    (selectedQChoice :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    {δ : Type u} {A : δ -> Type v} {S : δ -> Type ac}
+    {ι : Type y} {η : Type x} {K : Type z}
+    {β : Type w} {γ : Type max u v w x y z ac}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (selectedCover :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ)
+    (carrierEquiv : Point target ≃ ((d : δ) -> A d))
+    (choiceExactSource :
+      ConcreteTransportedSelectedValuationBallChoiceExactXiSource
+        (δ := δ) (A := A) (S := S)
+        (ι := ι) (η := η) (K := K) (β := β) (γ := γ)
+        sourceData gluingTorsor selectedQChoice hullOperator
+        selectedCover carrierEquiv) :
+    let quotientSource :=
+      ofFiberInd2ActionPacketTransportSource
+        (record := recordConcrete) (indData := indData)
+        sourceData gluingTorsor selectedQChoice;
+    let publicFamilySource :=
+      quotientSource.toConstruction.equalityQuotientPossibleImages
+        |>.toRemark395PossibleImageFamilySource hullOperator;
+    let transportedFamilySource :=
+      selectedCover.toPossibleImageFamilySource.transport carrierEquiv;
+    choiceExactSource.toTransportedSelectedValuationBallExactXiSource.quotientIndexEquiv =
+        choiceExactSource.quotientIndexEquiv ∧
+      publicFamilySource.familyUnion =
+        transportedFamilySource.familyUnion ∧
+      publicFamilySource.canonicalHull =
+        transportedFamilySource.canonicalHull ∧
+      publicFamilySource.hullOperator.logVolume publicFamilySource.canonicalHull =
+        publicFamilySource.hullOperator.logVolume publicFamilySource.familyUnion :=
+  choiceExactSource.endpoint
+
+set_option linter.style.longLine false in
+/--
 Experiment-surface nonzero scalar-multiplication valuation/principal hull
 cover.
 
