@@ -1068,10 +1068,13 @@ valuation-cover side from the intrinsic finite-extension valuation-cover
   scale-component residue source matches the transported factor directly
   against the finite-extension inverse-dilation mass source: local ring,
   residue prime, finite degree, realization, Haar measure, \(p^{-1}O_K\), and
-  base-prime dilation.  Thus this part of the interface no longer needs to be
-  entered as a single opaque equality of normalization records, although this
-  scale matching is still a local-field input to be constructed from the lower
-  Hodge-theater/log-theta package.  The
+  base-prime dilation.  This scale match now projects through the unit-ball
+  Haar-character and intrinsic Haar-modulus wrappers, so the lower valuation
+  ladder consumes the same concrete inverse-dilation components rather than a
+  fresh equality at each layer.  Thus this part of the interface no longer needs
+  to be entered as a single opaque equality of normalization records, although
+  this scale matching is still a local-field input to be constructed from the
+  lower Hodge-theater/log-theta package.  The
   full-boundary audit for this route also ties the
   IUT IV arithmetic residual to the same public wrapper.  The remaining
   principal-hull boundary is now to derive the coordinate scalar-image
