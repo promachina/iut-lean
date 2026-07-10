@@ -22550,6 +22550,67 @@ def NonStepXIRemainingPayloadAudit
     obligations.additive_haar_arithmetic_degree_padic.RemainingPayloadAudit
 
 set_option linter.style.longLine false in
+/--
+Construct the non-Step-(xi) payload audit from the proof-carrying source
+records, leaving only the additive-Haar arithmetic-degree payload as an
+explicit lower-level assumption.
+
+The Theorem 3.11/Step (x)/IUT IV entries are projections of the source data
+already carried by `obligations`; the additive-Haar audit is still the separate
+IUT IV/Theorem 1.10 local arithmetic payload below the present Step (xi)
+boundary.
+-/
+theorem nonStepXIRemainingPayloadAudit_of_additiveHaar
+    (obligations : Obligations core images)
+    (additiveAudit :
+      obligations.additive_haar_arithmetic_degree_padic.RemainingPayloadAudit) :
+    NonStepXIRemainingPayloadAudit obligations := by
+  dsimp [NonStepXIRemainingPayloadAudit]
+  exact
+    ⟨obligations.theorem311_and_remarks.sourceData
+        |>.typed_indeterminacy_nonvacuity_witness_constructed_proof,
+      obligations.theorem311_and_remarks
+        |>.theorem311MultiradialRepresentationConstructed,
+      obligations.theorem311_and_remarks
+        |>.remark3112InputPrimeStripLinkConstructed,
+      obligations.theorem311_and_remarks
+        |>.remark3113ThetaPilotPossibleImagesConstructed,
+      obligations.theorem311_and_remarks
+        |>.remark3114LogThetaLatticeProcessionConstructed,
+      obligations.theorem311_and_remarks.possible_images_depend_on_equality_quotient,
+      obligations.theorem311_and_remarks.possible_images_depend_on_equality_quotient.ind1_region_eq,
+      obligations.theorem311_and_remarks.possible_images_depend_on_equality_quotient.ind2_region_eq,
+      obligations.theorem311_and_remarks.possible_images_depend_on_equality_quotient.ind3_logVolume_upper,
+      obligations.theorem311_and_remarks
+        |>.selectedQRegionIsTheorem311PossibleImage,
+      obligations.theorem311_and_remarks
+        |>.flCardinalityAndProcessionLabelTransitionsConstructed,
+      obligations.theorem311_and_remarks
+        |>.theorem311HodgeSHEIPLAPTSourceBridgeConstructed,
+      obligations.stepX_finite_divisor.finiteDivisorPacketSourceConstructed,
+      obligations.stepX_finite_divisor.realifiedFrobenioidLogKummerSourceConstructed,
+      obligations.stepX_finite_divisor.kummerForgettingCompatibilityConstructed,
+      obligations.stepX_finite_divisor.verticalIQTargetSourceConstructed,
+      obligations.stepX_finite_divisor.packetSourceTargetLogVolumeCalibrationConstructed,
+      obligations.iutIV_cTheta.sourceData.proposition14_distinguished_log_shell_inclusions_constructed_proof,
+      obligations.iutIV_cTheta.sourceData.proposition14_distinguished_numerical_bounds_constructed_proof,
+      obligations.iutIV_cTheta.sourceData.proposition14_nondistinguished_zero_log_volume_constructed_proof,
+      obligations.iutIV_cTheta.sourceData.proposition15_archimedean_metric_containment_constructed_proof,
+      obligations.iutIV_cTheta.sourceData.theorem110_arithmetic_divisor_source_constructed_proof,
+      obligations.iutIV_cTheta.sourceData.theorem110_distinguished_formula_to_gap_constructed_proof,
+      obligations.iutIV_cTheta.sourceData.theorem110_archimedean_formula_to_gap_constructed_proof,
+      obligations.iutIV_cTheta.sourceData.additive_haar_local_normalization_constructed_proof,
+      obligations.iutIV_cTheta.sourceData.finite_place_scale_and_gap_sum_identifications_constructed_proof,
+      obligations.iutIV_cTheta.sourceData.finite_place_summed_stepxi_haar_bound_constructed_proof,
+      obligations.iutIV_cTheta.sourceData.finite_place_total_haar_defect_ge_one_constructed_proof,
+      obligations.iutIV_cTheta.sourceData.iutiv_cTheta_plus_one_eq_arithmetic_gap_constructed_proof,
+      obligations.iutIV_cTheta.sourceData.ordered_real_plus_one_cancellation_constructed_proof,
+      obligations.iutIV_cTheta.sourceData.local_stepxi_term_matches_iutiv_arithmetic_upper_minus_main_constructed_proof,
+      obligations.iutIV_cTheta.sourceData.finite_place_arithmetic_gap_constructed_proof,
+      obligations.iutIV_cTheta.sourceData.local_to_global_canonicalCThetaScale_le_cTheta_constructed_proof,
+      additiveAudit⟩
+
+set_option linter.style.longLine false in
 theorem remainingPayloadAuditOfNonStepXI
     (obligations : Obligations core images)
     (audit : NonStepXIRemainingPayloadAudit obligations) :
@@ -25705,6 +25766,85 @@ theorem preferredPublicConstructedPaperTraceStepXIRouteBoundaryAudit
         sourceData thetaSigned principalSource localizedSource hullOperator_eq
         possibleRegion_eq thetaSigned_eq_familyHullLogVolume ob7Source
         iutIV_cTheta additive_haar_arithmetic_degree_padic audit }
+
+set_option linter.style.longLine false in
+/--
+Strict constructed-paper-trace route with the non-Step-(xi) audit derived from
+source records.
+
+The only remaining audit argument is the explicitly lower-level additive-Haar
+arithmetic-degree payload.  The Theorem 3.11 source-spine, Step (x)
+finite-divisor/log-Kummer data, and IUT IV local-to-global `C_\Theta` data are
+read from their proof-carrying source records.
+-/
+theorem preferredPublicConstructedPaperTraceStepXIRouteBoundaryAudit_fromAdditiveHaarPayload
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (thetaSigned : Real)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        principalProductHullOperator sourceData principalSource)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        principalProductPossibleRegion sourceData principalSource)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned = localizedSource.familyHullLogVolume)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (principalProductHullFormationData sourceData principalSource)
+        β Penv Pgau V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations)
+    (additiveAudit :
+      additive_haar_arithmetic_degree_padic.RemainingPayloadAudit) :
+    PreferredPublicConstructedPaperTraceStepXIRouteBoundaryAudit
+      sourceData thetaSigned principalSource localizedSource hullOperator_eq
+      possibleRegion_eq thetaSigned_eq_familyHullLogVolume ob7Source
+      iutIV_cTheta additive_haar_arithmetic_degree_padic := by
+  let paperTrace :=
+    principalProductLocalizedThetaEqFamilyHullPaperTrace
+      sourceData thetaSigned principalSource localizedSource
+      hullOperator_eq possibleRegion_eq
+      thetaSigned_eq_familyHullLogVolume ob7Source
+  let concreteHullSource :=
+    principalProductConcreteHullSource sourceData principalSource
+  let stepXI :=
+    StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaEqFamilyHullThetaLGPOb7Source
+      (sourceData := sourceData)
+      paperTrace thetaSigned concreteHullSource
+      rfl localizedSource hullOperator_eq possibleRegion_eq
+      thetaSigned_eq_familyHullLogVolume ob7Source
+  have audit :
+      NonStepXIRemainingPayloadAudit
+        (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+          sourceData stepXI iutIV_cTheta
+          additive_haar_arithmetic_degree_padic) :=
+    nonStepXIRemainingPayloadAudit_of_additiveHaar
+      (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+        sourceData stepXI iutIV_cTheta
+        additive_haar_arithmetic_degree_padic)
+      additiveAudit
+  simpa [paperTrace, concreteHullSource, stepXI] using
+    preferredPublicConstructedPaperTraceStepXIRouteBoundaryAudit
+      sourceData thetaSigned principalSource localizedSource hullOperator_eq
+      possibleRegion_eq thetaSigned_eq_familyHullLogVolume ob7Source
+      iutIV_cTheta additive_haar_arithmetic_degree_padic audit
 
 end Obligations
 
