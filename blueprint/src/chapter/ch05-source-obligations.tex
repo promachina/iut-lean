@@ -1433,7 +1433,14 @@
 	  supplies the inverse base-prime valuation-ball source without a separate
 	  radius field, and the residue wrapper
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductPadicFiniteExtensionIntrinsicResidueModuleUnitBallHaarCharacterInverseDilationValuationCoverConstructedSourceCoreHullFormationPossibleRegionAlignedValuationBallChartedTensorMeasureDirectProductCalibratedLocalizedHullCoverSource.NormedFiniteExtensionInverseBasePrimeValuationBallMatchedSource}
-	  exposes the resulting handoff audit.
+	  exposes the resulting handoff audit.  Lean now also records the obstruction
+	  that this wrapper cannot be populated against the current intrinsic
+	  valuation-unit-ball cover at any actual local factor:
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductPadicFiniteExtensionIntrinsicResidueModuleUnitBallHaarCharacterInverseDilationValuationCoverConstructedSourceCoreHullFormationPossibleRegionAlignedValuationBallChartedTensorMeasureDirectProductCalibratedLocalizedHullCoverSource.NormedFiniteExtensionInverseBasePrimeValuationBallMatchedSource.no_unitBallCover_factor}
+	  derives contradiction from the radius comparison \(1=p_v\).  The next
+	  construction must therefore replace the unit-ball valuation-cover factor
+	  by an inverse-dilated radius-\(p_v\) valuation-cover factor, rather than
+	  adding another compatibility equality to the old unit-ball cover.
 	  The same scale-component
 	  match is now exposed below the residue wrapper as well: the intrinsic
 	  Haar-modulus source

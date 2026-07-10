@@ -1088,9 +1088,17 @@ valuation-cover side from the intrinsic finite-extension valuation-cover
   \(\lVert\operatorname{algebraMap}(p)\rVert=\lVert p\rVert_p=p^{-1}\) that
   the inverse base-prime unit ball is exactly the valuation ball of radius
   \(p\), and constructs the corresponding inverse base-prime valuation-ball
-  source.  The remaining local input is the transport equality identifying the
-  Hodge-theater/log-theta local factor with this constructed source.  The
-  full-boundary audit for this route also ties the
+  source.  This radius computation also exposed a hard obstruction in the
+  surrounding Step (xi) interface: if the transported intrinsic
+  finite-extension factor is still the valuation-unit-ball cover, then its
+  selected radius is \(1\), while the constructed inverse base-prime factor has
+  radius \(p\).  Lean proves that the corresponding normed finite-extension
+  match source is locally contradictory, via
+  \texttt{NormedFiniteExtensionInverseBasePrimeValuationBallMatchedSource.no\_unitBallCover\_factor}.
+  Thus the remaining local construction is not a mere transport equality to
+  the old unit-ball factor; it must construct an inverse-dilated valuation-cover
+  layer whose local selected factor has radius \(p\) from the outset.  The
+  full-boundary audit for the current route also ties the
   IUT IV arithmetic residual to the same public wrapper.  The remaining
   principal-hull boundary is now to derive the coordinate scalar-image
   landing/preimage laws for the generic public principal-product hull source
