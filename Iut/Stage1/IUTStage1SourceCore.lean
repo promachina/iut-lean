@@ -21512,6 +21512,116 @@ theorem inverseBasePrime_componentwiseEqual
 
 end InverseBasePrimeValuationBallSource
 
+set_option linter.style.longLine false in
+/--
+Base-field radius computation for the inverse base-prime unit ball.
+
+For the concrete local field `ℚ_[p]`, multiplication by the base prime has
+norm factor `p^{-1}`.  Hence its inverse image of the normalized valuation unit
+ball is precisely the closed valuation ball of radius `p`.
+-/
+theorem inverseBasePrimeUnitBall_eq_valuationBall_baseField
+    [MeasurableSpace ℚ_[p]]
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p ℚ_[p] hullSystem) :
+    data.inverseBasePrimeUnitBall =
+      data.integerSource.valuationTopology.valuationBall (p : Real) := by
+  ext point
+  constructor
+  · intro hpoint
+    rcases hpoint with ⟨unitPoint, hunitPoint, hunitPoint_eq⟩
+    have hunit_norm : ‖unitPoint‖ <= 1 := by
+      simpa [
+        IUTStage1ValuedFieldIntegerUnitBallSource.ringOfIntegers,
+        IUTStage1ValuedFieldIntegerUnitBallSource.integerSubring,
+        Valued.integer.mem_iff] using hunitPoint
+    have hunit_eq : unitPoint = data.basePrimeDilation point := by
+      rw [← hunitPoint_eq]
+      simp
+    have hscaled_norm :
+        ‖(p : ℚ_[p]) * point‖ <= 1 := by
+      simpa [hunit_eq, data.basePrimeDilation_apply point] using hunit_norm
+    have hp_pos : 0 < (p : Real) := by
+      exact_mod_cast (Fact.out : p.Prime).pos
+    have hnorm_eq :
+        ‖(p : ℚ_[p]) * point‖ = (p : Real)⁻¹ * ‖point‖ := by
+      rw [norm_mul, Padic.norm_p]
+    rw [hnorm_eq] at hscaled_norm
+    have hmul :
+        (p : Real) * ((p : Real)⁻¹ * ‖point‖) <= (p : Real) * 1 :=
+      mul_le_mul_of_nonneg_left hscaled_norm hp_pos.le
+    have hpoint_norm_le : ‖point‖ <= (p : Real) := by
+      calc
+        ‖point‖ = (p : Real) * ((p : Real)⁻¹ * ‖point‖) := by
+          field_simp [hp_pos.ne']
+        _ <= (p : Real) * 1 := hmul
+        _ = (p : Real) := by ring
+    simpa [
+      IUTStage1ProperUltrametricValuationBallTopologySource.valuationBall,
+      IUTStage1ProperUltrametricValuationBallTopologySource.valuationNorm,
+      dist_eq_norm] using hpoint_norm_le
+  · intro hpoint
+    have hpoint_norm : ‖point‖ <= (p : Real) := by
+      simpa [
+        IUTStage1ProperUltrametricValuationBallTopologySource.valuationBall,
+        IUTStage1ProperUltrametricValuationBallTopologySource.valuationNorm,
+        dist_eq_norm] using hpoint
+    refine ⟨data.basePrimeDilation point, ?_, by simp⟩
+    have hp_pos : 0 < (p : Real) := by
+      exact_mod_cast (Fact.out : p.Prime).pos
+    have hscaled_norm :
+        ‖(p : ℚ_[p]) * point‖ <= 1 := by
+      rw [norm_mul, Padic.norm_p]
+      calc
+        (p : Real)⁻¹ * ‖point‖ <= (p : Real)⁻¹ * (p : Real) :=
+          mul_le_mul_of_nonneg_left hpoint_norm (inv_nonneg.mpr hp_pos.le)
+        _ = 1 := by
+          field_simp [hp_pos.ne']
+    simpa [
+      IUTStage1ValuedFieldIntegerUnitBallSource.ringOfIntegers,
+      IUTStage1ValuedFieldIntegerUnitBallSource.integerSubring,
+      Valued.integer.mem_iff,
+      data.basePrimeDilation_apply point] using hscaled_norm
+
+set_option linter.style.longLine false in
+/--
+Construct the inverse base-prime valuation-ball source in the base field case.
+
+This removes the radius-identification field for `ℚ_[p]`: the radius is the
+base prime itself, and the equality follows from `‖p‖ = p^{-1}`.
+-/
+noncomputable def baseFieldInverseBasePrimeValuationBallSource
+    [MeasurableSpace ℚ_[p]]
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p ℚ_[p] hullSystem) :
+    InverseBasePrimeValuationBallSource data :=
+  { inverseBasePrimeRadius := (p : Real),
+    inverseBasePrimeRadius_pos := by
+      exact_mod_cast (Fact.out : p.Prime).pos,
+    inverseBasePrimeUnitBall_eq_valuationBall :=
+      data.inverseBasePrimeUnitBall_eq_valuationBall_baseField }
+
+set_option linter.style.longLine false in
+theorem baseFieldInverseBasePrimeValuationBallSource_endpoint
+    [MeasurableSpace ℚ_[p]]
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p ℚ_[p] hullSystem) :
+    let source := data.baseFieldInverseBasePrimeValuationBallSource;
+    source.inverseBasePrimeRadius = (p : Real) ∧
+      data.inverseBasePrimeUnitBall =
+        data.integerSource.valuationTopology.valuationBall (p : Real) ∧
+      ValuationBallInverseBasePrimeComponentMatch
+        source.toValuationBallAdditiveHaarNormalizationSource data :=
+  by
+    intro source
+    exact
+      ⟨rfl,
+        data.inverseBasePrimeUnitBall_eq_valuationBall_baseField,
+        source.inverseBasePrime_match⟩
+
 end IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
 
 set_option linter.style.longLine false in

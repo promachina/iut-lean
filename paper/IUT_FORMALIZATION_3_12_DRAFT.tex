@@ -1083,8 +1083,12 @@ valuation-cover side from the intrinsic finite-extension valuation-cover
   additive-Haar source and proves the inverse base-prime component match.  Thus
   this part of the interface no longer needs to be entered as a single opaque
   equality of normalization records; the remaining local-field input is the
-  radius identification and its transport from the Hodge-theater/log-theta
-  package.  The
+  finite-extension radius identification and its transport from the
+  Hodge-theater/log-theta package.  In the base field case \(K=\mathbb Q_p\),
+  this radius boundary is no longer assumed: Lean proves from
+  \(\lVert p\rVert_p=p^{-1}\) that the inverse base-prime unit ball is exactly
+  the valuation ball of radius \(p\), and constructs the corresponding
+  inverse base-prime valuation-ball source.  The
   full-boundary audit for this route also ties the
   IUT IV arithmetic residual to the same public wrapper.  The remaining
   principal-hull boundary is now to derive the coordinate scalar-image

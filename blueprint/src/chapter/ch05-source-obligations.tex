@@ -1421,7 +1421,15 @@
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductPadicFiniteExtensionIntrinsicResidueModuleUnitBallHaarCharacterInverseDilationValuationCoverConstructedSourceCoreHullFormationPossibleRegionAlignedValuationBallChartedTensorMeasureDirectProductCalibratedLocalizedHullCoverSource.ConstructedInverseBasePrimeValuationBallMatchedSource.residueModuleTransportedFactorHandoffAudit}
 	  from the constructed inverse-base-prime valuation-ball source rather than
 	  an independently supplied component match.  The remaining lower input is
-	  the local-field radius identification and its transport to the local factor.
+	  the finite-extension local-field radius identification and its transport
+	  to the local factor.  In the base field case this radius identity is now
+	  proved by
+	  \lean{Iut.Stage1.IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource.inverseBasePrimeUnitBall_eq_valuationBall_baseField}:
+	  using \(\lVert p\rVert_p=p^{-1}\), the inverse base-prime unit ball is
+	  the radius-\(p_v\) valuation ball.  The constructor
+	  \lean{Iut.Stage1.IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource.baseFieldInverseBasePrimeValuationBallSource}
+	  then supplies the inverse base-prime valuation-ball source without a
+	  separate radius field for \(K=\mathbb Q_p\).
 	  The same scale-component
 	  match is now exposed below the residue wrapper as well: the intrinsic
 	  Haar-modulus source
