@@ -869,12 +869,14 @@ and the equality between that principal hull system and the public Theorem
 refinement lowers the remaining possible-region equality: the source-core and
 valuation-cover families are aligned with the concrete family inside
 `principalProductHullFormationData`, and Lean derives the public
-`principalProductPossibleRegion` equality by projection.  The source-core
-localized determinant alignment is now constructed from these transported
-valuation-cover fibers: the additive-Haar localization is built from the
-transported valuation-ball factors, the adjusted structure-sheaf data is
-copied from the transported local calibration, and Lean proves the projected
-vector-bundle and localized-region equalities consumed by the older route.
+`principalProductPossibleRegion` equality by projection.  The p-adic
+source-core localized determinant alignment is now constructed from these
+transported valuation-cover fibers: the finite-extension source core is built
+from transported local calibration data and finite-extension unit-ball Haar
+factors, and Lean proves the projected vector-bundle and localized-region
+equalities consumed by the older route.  The remaining lower matching datum is
+the factor-level equality between each projected finite-extension valuation
+ball and the transported valuation-cover factor.
 An inverse-dilation refinement lowers the analytic input further: each
 transported valuation-ball Haar factor is identified with the inverse
 base-prime unit ball of a constructed finite-extension \(p\)-adic Haar
