@@ -38,6 +38,39 @@ variable {line : Copy}
 theorem point_coord (x : Real) : (point line x).coord = x :=
   rfl
 
+/-- A point of a labeled real-line copy is canonically equivalent to its coordinate. -/
+def equivReal (line : Copy) : Point line ≃ Real where
+  toFun x := x.coord
+  invFun x := point line x
+  left_inv := by
+    intro x
+    cases x
+    rfl
+  right_inv := by
+    intro x
+    rfl
+
+/--
+The one-coordinate product presentation of a point of a labeled real-line copy.
+
+This is the concrete carrier bridge used by the Stage 1 Step (xi) route when a
+principal product has a single real coordinate.  The equivalence is not a
+mathematical assumption: both inverse laws are proved by reducing `Point` to
+its real coordinate and by case-splitting on `Unit`.
+-/
+def equivSingleRealProduct (line : Copy) : Point line ≃ (Unit -> Real) :=
+  (equivReal line).trans
+    { toFun := fun x _ => x
+      invFun := fun f => f ()
+      left_inv := by
+        intro x
+        rfl
+      right_inv := by
+        intro f
+        funext u
+        cases u
+        rfl }
+
 end Point
 
 /-- A positive scaling factor. Positivity records preservation of orientation/order. -/

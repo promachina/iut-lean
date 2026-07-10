@@ -22,7 +22,7 @@ namespace Stage1
 open RealLineCopy
 open scoped BigOperators
 
-universe u v w x
+universe u v w x y z a b c
 
 /--
 Source-shaped choice data for Theorem 3.11.
@@ -23390,7 +23390,7 @@ structure PreferredConcreteLocalizedStepXIPaperSourceRouteAudit
         sourceData.Core sourceData.Images)
     (selectedQChoice_eq_source :
       concreteHullSource.selectedQChoice = sourceData.selectedQChoice)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -23405,7 +23405,7 @@ structure PreferredConcreteLocalizedStepXIPaperSourceRouteAudit
     (normalizedLogVolume_le_thetaSigned :
       localizedSource.localizedSource.normalizedDeterminantLogVolume <=
         thetaSigned)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -23467,7 +23467,7 @@ theorem preferredConcreteLocalizedStepXIPaperSourceRouteAudit
         sourceData.Core sourceData.Images)
     (selectedQChoice_eq_source :
       concreteHullSource.selectedQChoice = sourceData.selectedQChoice)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -23482,7 +23482,7 @@ theorem preferredConcreteLocalizedStepXIPaperSourceRouteAudit
     (normalizedLogVolume_le_thetaSigned :
       localizedSource.localizedSource.normalizedDeterminantLogVolume <=
         thetaSigned)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -23550,7 +23550,7 @@ structure PreferredConcreteLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
         sourceData.Core sourceData.Images)
     (selectedQChoice_eq_source :
       concreteHullSource.selectedQChoice = sourceData.selectedQChoice)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -23564,7 +23564,7 @@ structure PreferredConcreteLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
         concreteHullSource.toHullFormationData.quotientHullCompatibility.familySource.possibleRegion)
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned = localizedSource.familyHullLogVolume)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -23626,7 +23626,7 @@ theorem preferredConcreteLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
         sourceData.Core sourceData.Images)
     (selectedQChoice_eq_source :
       concreteHullSource.selectedQChoice = sourceData.selectedQChoice)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -23640,7 +23640,7 @@ theorem preferredConcreteLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
         concreteHullSource.toHullFormationData.quotientHullCompatibility.familySource.possibleRegion)
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned = localizedSource.familyHullLogVolume)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -23961,7 +23961,7 @@ structure PreferredPrincipalProductLocalizedStepXIPaperSourceRouteAudit
     (principalSource :
       IUTStage1Remark395PrincipalProductHullSystemSource
         (Point targetCopy) Λ)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -23976,7 +23976,7 @@ structure PreferredPrincipalProductLocalizedStepXIPaperSourceRouteAudit
     (normalizedLogVolume_le_thetaSigned :
       localizedSource.localizedSource.normalizedDeterminantLogVolume <=
         thetaSigned)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -24016,7 +24016,7 @@ theorem preferredPrincipalProductLocalizedStepXIPaperSourceRouteAudit
     (principalSource :
       IUTStage1Remark395PrincipalProductHullSystemSource
         (Point targetCopy) Λ)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -24031,7 +24031,7 @@ theorem preferredPrincipalProductLocalizedStepXIPaperSourceRouteAudit
     (normalizedLogVolume_le_thetaSigned :
       localizedSource.localizedSource.normalizedDeterminantLogVolume <=
         thetaSigned)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -24095,7 +24095,7 @@ structure PreferredPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRo
     (principalSource :
       IUTStage1Remark395PrincipalProductHullSystemSource
         (Point targetCopy) Λ)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -24109,7 +24109,7 @@ structure PreferredPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRo
         principalProductPossibleRegion sourceData principalSource)
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned = localizedSource.familyHullLogVolume)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -24163,7 +24163,7 @@ theorem preferredPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRout
     (principalSource :
       IUTStage1Remark395PrincipalProductHullSystemSource
         (Point targetCopy) Λ)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -24177,7 +24177,7 @@ theorem preferredPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRout
         principalProductPossibleRegion sourceData principalSource)
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned = localizedSource.familyHullLogVolume)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -24271,7 +24271,7 @@ structure PrincipalProductLocalizedHullCoverVectorBundleSource
     (principalSource :
       IUTStage1Remark395PrincipalProductHullSystemSource
         (Point targetCopy) Λ)
-    (η : Type x) (β : Type v) (γ : Type w)
+    (η : Type a) (β : Type b) (γ : Type c)
     [Fintype β] [Fintype γ] where
   localizedSource :
     IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
@@ -24303,7 +24303,7 @@ variable {Λ : Type v}
 variable {principalSource :
   IUTStage1Remark395PrincipalProductHullSystemSource
     (Point targetCopy) Λ}
-variable {η : Type x} {β : Type v} {γ : Type w}
+variable {η : Type a} {β : Type b} {γ : Type c}
 variable [Fintype β] [Fintype γ]
 
 def hullSystem
@@ -24410,7 +24410,7 @@ structure PrincipalProductLocalizedHullCoverRouteAudit
     (principalSource :
       IUTStage1Remark395PrincipalProductHullSystemSource
         (Point targetCopy) Λ)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (coverSource :
       PrincipalProductLocalizedHullCoverVectorBundleSource
@@ -24450,7 +24450,7 @@ theorem principalProductLocalizedHullCoverRouteAudit
     (principalSource :
       IUTStage1Remark395PrincipalProductHullSystemSource
         (Point targetCopy) Λ)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (coverSource :
       PrincipalProductLocalizedHullCoverVectorBundleSource
@@ -24494,7 +24494,7 @@ structure PreferredPrincipalProductLocalizedCoverThetaEqFamilyHullStepXIPaperSou
     (principalSource :
       IUTStage1Remark395PrincipalProductHullSystemSource
         (Point targetCopy) Λ)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (coverSource :
       PrincipalProductLocalizedHullCoverVectorBundleSource
@@ -24502,7 +24502,7 @@ structure PreferredPrincipalProductLocalizedCoverThetaEqFamilyHullStepXIPaperSou
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned =
         coverSource.toLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -24534,7 +24534,7 @@ theorem preferredPrincipalProductLocalizedCoverThetaEqFamilyHullStepXIPaperSourc
     (principalSource :
       IUTStage1Remark395PrincipalProductHullSystemSource
         (Point targetCopy) Λ)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (coverSource :
       PrincipalProductLocalizedHullCoverVectorBundleSource
@@ -24542,7 +24542,7 @@ theorem preferredPrincipalProductLocalizedCoverThetaEqFamilyHullStepXIPaperSourc
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned =
         coverSource.toLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -24601,12 +24601,12 @@ structure PreferredPrincipalProductLocalizedCoverCanonicalThetaStepXIPaperSource
     (principalSource :
       IUTStage1Remark395PrincipalProductHullSystemSource
         (Point targetCopy) Λ)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (coverSource :
       PrincipalProductLocalizedHullCoverVectorBundleSource
         sourceData principalSource η β γ)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -24637,12 +24637,12 @@ theorem preferredPrincipalProductLocalizedCoverCanonicalThetaStepXIPaperSourceRo
     (principalSource :
       IUTStage1Remark395PrincipalProductHullSystemSource
         (Point targetCopy) Λ)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (coverSource :
       PrincipalProductLocalizedHullCoverVectorBundleSource
         sourceData principalSource η β γ)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -24703,7 +24703,7 @@ structure PreferredTransportedScalarParameterPrincipalProductLocalizedThetaEqFam
     (transportedSource :
       IUTStage1Remark395TransportedScalarParameterPrincipalProductHullSystemSource
         (Point targetCopy) δ A S)
-    {η : Type x} {β : Type (max x z)} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -24719,7 +24719,7 @@ structure PreferredTransportedScalarParameterPrincipalProductLocalizedThetaEqFam
           sourceData transportedSource)
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned = localizedSource.familyHullLogVolume)
-    {Penv Pgau V : Type (max x z)} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -24752,7 +24752,7 @@ theorem preferredTransportedScalarParameterPrincipalProductLocalizedThetaEqFamil
     (transportedSource :
       IUTStage1Remark395TransportedScalarParameterPrincipalProductHullSystemSource
         (Point targetCopy) δ A S)
-    {η : Type x} {β : Type (max x z)} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -24768,7 +24768,7 @@ theorem preferredTransportedScalarParameterPrincipalProductLocalizedThetaEqFamil
           sourceData transportedSource)
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned = localizedSource.familyHullLogVolume)
-    {Penv Pgau V : Type (max x z)} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -24991,7 +24991,7 @@ structure PreferredTransportedRepresentableScalarParameterPrincipalProductLocali
     (transportedRepresentableSource :
       IUTStage1Remark395TransportedRepresentableScalarParameterPrincipalProductHullSystemSource
         (Point targetCopy) δ A S)
-    {η : Type x} {β : Type (max x z)} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -25007,7 +25007,7 @@ structure PreferredTransportedRepresentableScalarParameterPrincipalProductLocali
           sourceData transportedRepresentableSource)
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned = localizedSource.familyHullLogVolume)
-    {Penv Pgau V : Type (max x z)} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -25041,7 +25041,7 @@ theorem preferredTransportedRepresentableScalarParameterPrincipalProductLocalize
     (transportedRepresentableSource :
       IUTStage1Remark395TransportedRepresentableScalarParameterPrincipalProductHullSystemSource
         (Point targetCopy) δ A S)
-    {η : Type x} {β : Type (max x z)} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -25057,7 +25057,7 @@ theorem preferredTransportedRepresentableScalarParameterPrincipalProductLocalize
           sourceData transportedRepresentableSource)
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned = localizedSource.familyHullLogVolume)
-    {Penv Pgau V : Type (max x z)} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -25290,7 +25290,7 @@ structure PreferredTransportedLocallyRepresentableScalarParameterPrincipalProduc
     (transportedLocalSource :
       IUTStage1Remark395TransportedLocallyRepresentableScalarParameterPrincipalProductHullSystemSource
         (Point targetCopy) δ A S)
-    {η : Type x} {β : Type (max x z)} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -25306,7 +25306,7 @@ structure PreferredTransportedLocallyRepresentableScalarParameterPrincipalProduc
           sourceData transportedLocalSource)
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned = localizedSource.familyHullLogVolume)
-    {Penv Pgau V : Type (max x z)} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -25340,7 +25340,7 @@ theorem preferredTransportedLocallyRepresentableScalarParameterPrincipalProductL
     (transportedLocalSource :
       IUTStage1Remark395TransportedLocallyRepresentableScalarParameterPrincipalProductHullSystemSource
         (Point targetCopy) δ A S)
-    {η : Type x} {β : Type (max x z)} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -25356,7 +25356,7 @@ theorem preferredTransportedLocallyRepresentableScalarParameterPrincipalProductL
           sourceData transportedLocalSource)
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned = localizedSource.familyHullLogVolume)
-    {Penv Pgau V : Type (max x z)} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -25588,7 +25588,7 @@ structure PreferredTransportedCoordinateScalarImagePrincipalProductLocalizedThet
     (coordinateSource :
       IUTStage1Remark395CoordinateScalarImageDirectProductHullSource δ A)
     (carrierEquiv : Point targetCopy ≃ ((d : δ) -> A d))
-    {η : Type x} {β : Type (max x y)} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -25604,7 +25604,7 @@ structure PreferredTransportedCoordinateScalarImagePrincipalProductLocalizedThet
           sourceData coordinateSource carrierEquiv)
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned = localizedSource.familyHullLogVolume)
-    {Penv Pgau V : Type (max x y)} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -25640,7 +25640,7 @@ theorem preferredTransportedCoordinateScalarImagePrincipalProductLocalizedThetaE
     (coordinateSource :
       IUTStage1Remark395CoordinateScalarImageDirectProductHullSource δ A)
     (carrierEquiv : Point targetCopy ≃ ((d : δ) -> A d))
-    {η : Type x} {β : Type (max x y)} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -25656,7 +25656,7 @@ theorem preferredTransportedCoordinateScalarImagePrincipalProductLocalizedThetaE
           sourceData coordinateSource carrierEquiv)
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned = localizedSource.familyHullLogVolume)
-    {Penv Pgau V : Type (max x y)} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -25703,6 +25703,272 @@ theorem preferredTransportedCoordinateScalarImagePrincipalProductLocalizedThetaE
 
 set_option linter.style.longLine false in
 /--
+Real-line one-coordinate specialization of the coordinate scalar-image
+principal-product hull source.
+
+The carrier equivalence is no longer supplied by the caller: it is the
+canonical equivalence between a point of the target real-line copy and its
+single real coordinate product.
+-/
+noncomputable def transportedRealLineCoordinateScalarImagePrincipalProductSource
+    {targetCopy : Copy}
+    (coordinateSource :
+      IUTStage1Remark395CoordinateScalarImageDirectProductHullSource
+        Unit (fun _ => Real)) :
+    IUTStage1Remark395PrincipalProductHullSystemSource
+      (Point targetCopy) (Unit -> Set Real) :=
+  transportedCoordinateScalarImagePrincipalProductSource
+    (targetCopy := targetCopy) (δ := Unit) (A := fun _ => Real)
+    coordinateSource (RealLineCopy.Point.equivSingleRealProduct targetCopy)
+
+set_option linter.style.longLine false in
+noncomputable def transportedRealLineCoordinateScalarImagePrincipalProductConcreteHullSource
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (coordinateSource :
+      IUTStage1Remark395CoordinateScalarImageDirectProductHullSource
+        Unit (fun _ => Real)) :
+    StepXIHullFormationData.ConcreteHolomorphicHullSystemSource
+      sourceData.Core sourceData.Images :=
+  transportedCoordinateScalarImagePrincipalProductConcreteHullSource
+    (targetCopy := targetCopy) (δ := Unit) (A := fun _ => Real)
+    sourceData coordinateSource (RealLineCopy.Point.equivSingleRealProduct targetCopy)
+
+set_option linter.style.longLine false in
+noncomputable def transportedRealLineCoordinateScalarImagePrincipalProductHullFormationData
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (coordinateSource :
+      IUTStage1Remark395CoordinateScalarImageDirectProductHullSource
+        Unit (fun _ => Real)) :
+    StepXIHullFormationData sourceData.Core sourceData.Images :=
+  (transportedRealLineCoordinateScalarImagePrincipalProductConcreteHullSource
+    sourceData coordinateSource).toHullFormationData
+
+set_option linter.style.longLine false in
+noncomputable def transportedRealLineCoordinateScalarImagePrincipalProductHullOperator
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (coordinateSource :
+      IUTStage1Remark395CoordinateScalarImageDirectProductHullSource
+        Unit (fun _ => Real)) :
+    IUTStage1Remark395HolomorphicHullOperator (Point targetCopy) :=
+  (transportedRealLineCoordinateScalarImagePrincipalProductHullFormationData
+    sourceData coordinateSource).hullOperator
+
+set_option linter.style.longLine false in
+noncomputable def transportedRealLineCoordinateScalarImagePrincipalProductPossibleRegion
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (coordinateSource :
+      IUTStage1Remark395CoordinateScalarImageDirectProductHullSource
+        Unit (fun _ => Real)) :
+    Quot sourceData.Core.equalityQuotient.relation -> Set (Point targetCopy) :=
+  ((transportedRealLineCoordinateScalarImagePrincipalProductHullFormationData
+      sourceData coordinateSource).quotientHullCompatibility)
+    |>.familySource.possibleRegion
+
+set_option linter.style.longLine false in
+/--
+Audit for the real-line one-coordinate coordinate scalar-image hull route.
+
+This records that the route is the coordinate scalar-image route specialized
+with the canonical real-line carrier/product equivalence, not with a supplied
+identification.
+-/
+structure TransportedRealLineCoordinateScalarImagePrincipalProductHullRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (coordinateSource :
+      IUTStage1Remark395CoordinateScalarImageDirectProductHullSource
+        Unit (fun _ => Real)) : Prop where
+  coordinate_scalar_image_hull_route :
+    TransportedCoordinateScalarImagePrincipalProductHullRouteAudit
+      sourceData coordinateSource
+        (RealLineCopy.Point.equivSingleRealProduct targetCopy)
+  principal_source_uses_canonical_real_line_product :
+    transportedRealLineCoordinateScalarImagePrincipalProductSource
+        coordinateSource =
+      transportedCoordinateScalarImagePrincipalProductSource
+        (targetCopy := targetCopy) (δ := Unit) (A := fun _ => Real)
+        coordinateSource (RealLineCopy.Point.equivSingleRealProduct targetCopy)
+  concrete_hull_source_uses_canonical_real_line_product :
+    transportedRealLineCoordinateScalarImagePrincipalProductConcreteHullSource
+        sourceData coordinateSource =
+      transportedCoordinateScalarImagePrincipalProductConcreteHullSource
+        (targetCopy := targetCopy) (δ := Unit) (A := fun _ => Real)
+        sourceData coordinateSource
+        (RealLineCopy.Point.equivSingleRealProduct targetCopy)
+  concrete_hull_constructed_from_source_spine :
+    (transportedRealLineCoordinateScalarImagePrincipalProductConcreteHullSource
+        sourceData coordinateSource).quotientImages =
+      sourceData.theorem311PossibleImageSourceData.quotientImages
+  selected_q_choice_from_source_spine :
+    (transportedRealLineCoordinateScalarImagePrincipalProductConcreteHullSource
+        sourceData coordinateSource).selectedQChoice =
+      sourceData.selectedQChoice
+
+set_option linter.style.longLine false in
+theorem transportedRealLineCoordinateScalarImagePrincipalProductHullRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (coordinateSource :
+      IUTStage1Remark395CoordinateScalarImageDirectProductHullSource
+        Unit (fun _ => Real)) :
+    TransportedRealLineCoordinateScalarImagePrincipalProductHullRouteAudit
+      sourceData coordinateSource :=
+  { coordinate_scalar_image_hull_route :=
+      transportedCoordinateScalarImagePrincipalProductHullRouteAudit
+        sourceData coordinateSource
+        (RealLineCopy.Point.equivSingleRealProduct targetCopy),
+    principal_source_uses_canonical_real_line_product := rfl,
+    concrete_hull_source_uses_canonical_real_line_product := rfl,
+    concrete_hull_constructed_from_source_spine := rfl,
+    selected_q_choice_from_source_spine := rfl }
+
+set_option linter.style.longLine false in
+/--
+Preferred localized theta-equals-family-hull route for the one-coordinate
+real-line carrier.
+
+Compared with the general coordinate scalar-image route, this endpoint removes
+the caller-supplied carrier/product equivalence.  The carrier bridge is the
+canonical `Point targetCopy ≃ (Unit -> Real)` equivalence from
+`RealLineCopy.Point`.
+-/
+structure PreferredTransportedRealLineCoordinateScalarImagePrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    (coordinateSource :
+      IUTStage1Remark395CoordinateScalarImageDirectProductHullSource
+        Unit (fun _ => Real))
+    {η : Type a} {β : Type b} {γ : Type c}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        transportedRealLineCoordinateScalarImagePrincipalProductHullOperator
+          sourceData coordinateSource)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        transportedRealLineCoordinateScalarImagePrincipalProductPossibleRegion
+          sourceData coordinateSource)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned = localizedSource.familyHullLogVolume)
+    {Penv Pgau V : Type b} {μ : Type c}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (transportedRealLineCoordinateScalarImagePrincipalProductHullFormationData
+          sourceData coordinateSource)
+        β Penv Pgau V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations) : Prop where
+  real_line_coordinate_hull_route :
+    TransportedRealLineCoordinateScalarImagePrincipalProductHullRouteAudit
+      sourceData coordinateSource
+  coordinate_scalar_image_theta_route :
+    PreferredTransportedCoordinateScalarImagePrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+      sourceData paperTrace thetaSigned coordinateSource
+        (RealLineCopy.Point.equivSingleRealProduct targetCopy)
+      localizedSource hullOperator_eq possibleRegion_eq
+      thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
+      additive_haar_arithmetic_degree_padic
+
+set_option linter.style.longLine false in
+theorem preferredTransportedRealLineCoordinateScalarImagePrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    (coordinateSource :
+      IUTStage1Remark395CoordinateScalarImageDirectProductHullSource
+        Unit (fun _ => Real))
+    {η : Type a} {β : Type b} {γ : Type c}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        transportedRealLineCoordinateScalarImagePrincipalProductHullOperator
+          sourceData coordinateSource)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        transportedRealLineCoordinateScalarImagePrincipalProductPossibleRegion
+          sourceData coordinateSource)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned = localizedSource.familyHullLogVolume)
+    {Penv Pgau V : Type b} {μ : Type c}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (transportedRealLineCoordinateScalarImagePrincipalProductHullFormationData
+          sourceData coordinateSource)
+        β Penv Pgau V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations)
+    (audit :
+      let principalSource :=
+        transportedRealLineCoordinateScalarImagePrincipalProductSource
+          coordinateSource;
+      let concreteHullSource :=
+        principalProductConcreteHullSource sourceData principalSource;
+      let stepXI :=
+        StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaEqFamilyHullThetaLGPOb7Source
+            (sourceData := sourceData)
+            paperTrace thetaSigned concreteHullSource
+            rfl localizedSource hullOperator_eq possibleRegion_eq
+            thetaSigned_eq_familyHullLogVolume ob7Source;
+      NonStepXIRemainingPayloadAudit
+        (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+          sourceData stepXI iutIV_cTheta
+          additive_haar_arithmetic_degree_padic)) :
+    PreferredTransportedRealLineCoordinateScalarImagePrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+      sourceData paperTrace thetaSigned coordinateSource
+      localizedSource hullOperator_eq possibleRegion_eq
+      thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
+      additive_haar_arithmetic_degree_padic := by
+  exact
+    { real_line_coordinate_hull_route :=
+        transportedRealLineCoordinateScalarImagePrincipalProductHullRouteAudit
+          sourceData coordinateSource,
+      coordinate_scalar_image_theta_route :=
+        preferredTransportedCoordinateScalarImagePrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+          sourceData paperTrace thetaSigned coordinateSource
+          (RealLineCopy.Point.equivSingleRealProduct targetCopy)
+          localizedSource hullOperator_eq possibleRegion_eq
+          thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
+          additive_haar_arithmetic_degree_padic audit }
+
+set_option linter.style.longLine false in
+/--
 Construct the Corollary 3.12 Step (xi)/Remark 3.9.5 paper trace from the
 same lower sources used by the strongest principal-product localized route.
 
@@ -25723,7 +25989,7 @@ def principalProductLocalizedThetaEqFamilyHullPaperTrace
     (principalSource :
       IUTStage1Remark395PrincipalProductHullSystemSource
         (Point targetCopy) Λ)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -25737,7 +26003,7 @@ def principalProductLocalizedThetaEqFamilyHullPaperTrace
         principalProductPossibleRegion sourceData principalSource)
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned = localizedSource.familyHullLogVolume)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -25872,7 +26138,7 @@ noncomputable def principalProductLocalizedCoverThetaEqFamilyHullPaperTrace
     (principalSource :
       IUTStage1Remark395PrincipalProductHullSystemSource
         (Point targetCopy) Λ)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (coverSource :
       PrincipalProductLocalizedHullCoverVectorBundleSource
@@ -25880,7 +26146,7 @@ noncomputable def principalProductLocalizedCoverThetaEqFamilyHullPaperTrace
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned =
         coverSource.toLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -25907,12 +26173,12 @@ noncomputable def principalProductLocalizedCoverCanonicalThetaPaperTrace
     (principalSource :
       IUTStage1Remark395PrincipalProductHullSystemSource
         (Point targetCopy) Λ)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (coverSource :
       PrincipalProductLocalizedHullCoverVectorBundleSource
         sourceData principalSource η β γ)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -25940,7 +26206,7 @@ theorem preferredPublicPrincipalProductLocalizedCoverConstructedPaperTraceStepXI
     (principalSource :
       IUTStage1Remark395PrincipalProductHullSystemSource
         (Point targetCopy) Λ)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (coverSource :
       PrincipalProductLocalizedHullCoverVectorBundleSource
@@ -25948,7 +26214,7 @@ theorem preferredPublicPrincipalProductLocalizedCoverConstructedPaperTraceStepXI
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned =
         coverSource.toLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -26006,12 +26272,12 @@ theorem preferredPublicPrincipalProductLocalizedCoverCanonicalThetaConstructedPa
     (principalSource :
       IUTStage1Remark395PrincipalProductHullSystemSource
         (Point targetCopy) Λ)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (coverSource :
       PrincipalProductLocalizedHullCoverVectorBundleSource
         sourceData principalSource η β γ)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -26076,7 +26342,7 @@ theorem preferredPublicStepXIPaperSourceRouteAudit
     (principalSource :
       IUTStage1Remark395PrincipalProductHullSystemSource
         (Point targetCopy) Λ)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -26090,7 +26356,7 @@ theorem preferredPublicStepXIPaperSourceRouteAudit
         principalProductPossibleRegion sourceData principalSource)
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned = localizedSource.familyHullLogVolume)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -26144,7 +26410,7 @@ theorem preferredPublicConstructedPaperTraceStepXIPaperSourceRouteAudit
     (principalSource :
       IUTStage1Remark395PrincipalProductHullSystemSource
         (Point targetCopy) Λ)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -26158,7 +26424,7 @@ theorem preferredPublicConstructedPaperTraceStepXIPaperSourceRouteAudit
         principalProductPossibleRegion sourceData principalSource)
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned = localizedSource.familyHullLogVolume)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -26226,7 +26492,7 @@ structure PreferredPublicConstructedPaperTraceStepXIRouteBoundaryAudit
     (principalSource :
       IUTStage1Remark395PrincipalProductHullSystemSource
         (Point targetCopy) Λ)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -26240,7 +26506,7 @@ structure PreferredPublicConstructedPaperTraceStepXIRouteBoundaryAudit
         principalProductPossibleRegion sourceData principalSource)
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned = localizedSource.familyHullLogVolume)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -26307,7 +26573,7 @@ theorem preferredPublicConstructedPaperTraceStepXIRouteBoundaryAudit
     (principalSource :
       IUTStage1Remark395PrincipalProductHullSystemSource
         (Point targetCopy) Λ)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -26321,7 +26587,7 @@ theorem preferredPublicConstructedPaperTraceStepXIRouteBoundaryAudit
         principalProductPossibleRegion sourceData principalSource)
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned = localizedSource.familyHullLogVolume)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
@@ -26388,7 +26654,7 @@ theorem preferredPublicConstructedPaperTraceStepXIRouteBoundaryAudit_fromAdditiv
     (principalSource :
       IUTStage1Remark395PrincipalProductHullSystemSource
         (Point targetCopy) Λ)
-    {η : Type x} {β : Type v} {γ : Type w}
+    {η : Type a} {β : Type b} {γ : Type c}
     [Fintype β] [Fintype γ]
     (localizedSource :
       IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
@@ -26402,7 +26668,7 @@ theorem preferredPublicConstructedPaperTraceStepXIRouteBoundaryAudit_fromAdditiv
         principalProductPossibleRegion sourceData principalSource)
     (thetaSigned_eq_familyHullLogVolume :
       thetaSigned = localizedSource.familyHullLogVolume)
-    {Penv Pgau V : Type v} {μ : Type w}
+    {Penv Pgau V : Type b} {μ : Type c}
     [Fintype Penv] [Fintype Pgau] [Fintype V]
     (ob7Source :
       StepXIThetaLGPOb7CompatibilitySource
