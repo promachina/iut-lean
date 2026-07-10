@@ -21369,6 +21369,149 @@ theorem ValuationBallInverseBasePrimeComponentMatch.toComponentwiseEqual
       data.toInverseBasePrimeUnitBallAdditiveHaarCompactOpenNormalizationSource :=
   matching.toAdditiveHaarInverseBasePrimeComponentMatch.toComponentwiseEqual
 
+set_option linter.style.longLine false in
+/--
+Constructed inverse base-prime valuation-ball source.
+
+The dilation-mass source constructs the compact open \(p^{-1}O_K\) as the
+inverse image of the normalized valuation unit ball under multiplication by
+the base prime.  To regard this compact open as a valuation-ball Haar source,
+we still need the local-field radius identification
+`p^{-1}O_K = {x | v(x) <= r}` for a positive radius `r`.  Once that radius
+identification is supplied, all Haar and scaling fields of the valuation-ball
+source are derived from the constructed dilation-mass source.
+-/
+structure InverseBasePrimeValuationBallSource
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem) where
+  inverseBasePrimeRadius : Real
+  inverseBasePrimeRadius_pos : 0 < inverseBasePrimeRadius
+  inverseBasePrimeUnitBall_eq_valuationBall :
+    data.inverseBasePrimeUnitBall =
+      data.integerSource.valuationTopology.valuationBall
+        inverseBasePrimeRadius
+
+namespace InverseBasePrimeValuationBallSource
+
+set_option linter.style.longLine false in
+noncomputable def toValuationBallAdditiveHaarNormalizationSource
+    {data :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem}
+    (source : InverseBasePrimeValuationBallSource data) :
+    IUTStage1ValuationBallAdditiveHaarNormalizationSource
+      α (Subring K) K hullSystem :=
+  { localRing := data.integerSource.integerSubring,
+    residuePrime := p,
+    residue_prime := Fact.out,
+    finiteExtensionDegree := Module.finrank ℚ_[p] K,
+    finite_extension_degree_pos := Module.finrank_pos,
+    realization := data.realization,
+    realizedRegion := data.realizedRegion,
+    realizedRegion_eq_image := data.realizedRegion_eq_image,
+    valuationNorm := data.integerSource.valuationTopology.valuationNorm,
+    compactOpenRadius := source.inverseBasePrimeRadius,
+    compactOpenRadius_pos := source.inverseBasePrimeRadius_pos,
+    uniformizerScalePoint := data.basePrimeDilation,
+    haarMeasure := data.haarMeasure,
+    haar_isAddHaar := data.haar_isAddHaar,
+    valuationUnitBall_open := by
+      simpa [IUTStage1ProperUltrametricValuationBallTopologySource.valuationBall] using
+        data.integerSource.valuationTopology.unitBall_compactOpen.1,
+    valuationUnitBall_compact := by
+      simpa [IUTStage1ProperUltrametricValuationBallTopologySource.valuationBall] using
+        data.integerSource.valuationTopology.unitBall_compactOpen.2,
+    compactOpenBall_open := by
+      simpa [IUTStage1ProperUltrametricValuationBallTopologySource.valuationBall] using
+        data.integerSource.valuationTopology.positiveRadiusBall_open
+          source.inverseBasePrimeRadius_pos,
+    compactOpenBall_compact := by
+      simpa [IUTStage1ProperUltrametricValuationBallTopologySource.valuationBall] using
+        data.integerSource.valuationTopology.valuationBall_compact
+          source.inverseBasePrimeRadius,
+    uniformizerScale_preserves_open := by
+      intro subset hsubset
+      exact data.basePrimeDilation.isOpenMap subset hsubset,
+    uniformizerScale_preserves_compact := by
+      intro subset hsubset
+      exact hsubset.image data.basePrimeDilation.continuous,
+    valuationUnitBall_measure_one := by
+      have hball :
+          { point : K |
+              data.integerSource.valuationTopology.valuationNorm point <= 1 } =
+            data.integerSource.ringOfIntegers := by
+        simpa [IUTStage1ProperUltrametricValuationBallTopologySource.valuationBall] using
+          data.integerSource.valuationTopology_valuationBall_one_eq_ringOfIntegers
+      rw [hball]
+      exact data.valuationUnitBall_measure_one,
+    compactOpenBall_measure_pos := by
+      have hball :
+          { point : K |
+              data.integerSource.valuationTopology.valuationNorm point <=
+                source.inverseBasePrimeRadius } =
+            data.inverseBasePrimeUnitBall := by
+        simpa [IUTStage1ProperUltrametricValuationBallTopologySource.valuationBall] using
+          source.inverseBasePrimeUnitBall_eq_valuationBall.symm
+      rw [hball]
+      exact zero_lt_one.trans data.one_lt_inverseBasePrimeUnitBall_measure_toReal,
+    uniformizerScaled_compactOpenBall_measure_toReal_eq := by
+      have hball :
+          { point : K |
+              data.integerSource.valuationTopology.valuationNorm point <=
+                source.inverseBasePrimeRadius } =
+            data.inverseBasePrimeUnitBall := by
+        simpa [IUTStage1ProperUltrametricValuationBallTopologySource.valuationBall] using
+          source.inverseBasePrimeUnitBall_eq_valuationBall.symm
+      rw [hball]
+      exact data.basePrimeDilation_measure_toReal_eq
+        data.inverseBasePrimeUnitBall,
+    hull_logVolume_eq_normalized := by
+      intro subset
+      simpa using data.hull_logVolume_eq_normalized subset }
+
+set_option linter.style.longLine false in
+theorem inverseBasePrime_match
+    {data :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem}
+    (source : InverseBasePrimeValuationBallSource data) :
+    ValuationBallInverseBasePrimeComponentMatch
+      source.toValuationBallAdditiveHaarNormalizationSource data :=
+  { localRing_eq := rfl,
+    residuePrime_eq := rfl,
+    finiteExtensionDegree_eq := rfl,
+    realization_eq := rfl,
+    realizedRegion_eq := rfl,
+    valuationNorm_eq := rfl,
+    haarMeasure_eq := rfl,
+    ringOfIntegers_eq := by
+      simpa [
+        toValuationBallAdditiveHaarNormalizationSource,
+        IUTStage1ValuationBallAdditiveHaarNormalizationSource.ringOfIntegers,
+        IUTStage1ValuationBallAdditiveHaarNormalizationSource.valuationBall] using
+        data.integerSource.valuationTopology_valuationBall_one_eq_ringOfIntegers,
+    compactOpenBall_eq_inverseBasePrimeUnitBall := by
+      simpa [
+        toValuationBallAdditiveHaarNormalizationSource,
+        IUTStage1ValuationBallAdditiveHaarNormalizationSource.valuationBall,
+        IUTStage1ProperUltrametricValuationBallTopologySource.valuationBall] using
+        source.inverseBasePrimeUnitBall_eq_valuationBall.symm,
+    uniformizerScalePoint_eq := rfl }
+
+set_option linter.style.longLine false in
+theorem inverseBasePrime_componentwiseEqual
+    {data :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem}
+    (source : InverseBasePrimeValuationBallSource data) :
+    IUTStage1AdditiveHaarCompactOpenNormalizationSource.ComponentwiseEqual
+      source.toValuationBallAdditiveHaarNormalizationSource.toAdditiveHaarCompactOpenNormalizationSource
+      data.toInverseBasePrimeUnitBallAdditiveHaarCompactOpenNormalizationSource :=
+  source.inverseBasePrime_match.toComponentwiseEqual
+
+end InverseBasePrimeValuationBallSource
+
 end IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
 
 set_option linter.style.longLine false in
