@@ -1378,13 +1378,23 @@
 	  invariants consumed downstream: the compact-open subset is \(p_v^{-1}O_v\),
 	  its Haar mass is \(p_v^{[K_v:\mathbb Q_p]}\), and its normalized
 	  log-volume is strictly positive, for both the transported factor and the
-	  localized additive-Haar factor.  The equality boundary has been split one
-	  step further by the component-matched source
+	  localized additive-Haar factor.  The equality boundary has been split in
+	  two lower stages.  First, the component-matched source
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductPadicFiniteExtensionIntrinsicResidueModuleUnitBallHaarCharacterInverseDilationValuationCoverConstructedSourceCoreHullFormationPossibleRegionAlignedValuationBallChartedTensorMeasureDirectProductCalibratedLocalizedHullCoverSource.ComponentMatchedSource};
 	  it supplies equality of the defining additive-Haar compact-open data
 	  fields, and the constructor
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductPadicFiniteExtensionIntrinsicResidueModuleUnitBallHaarCharacterInverseDilationValuationCoverConstructedSourceCoreHullFormationPossibleRegionAlignedValuationBallChartedTensorMeasureDirectProductCalibratedLocalizedHullCoverSource.ComponentMatchedSource.toResidueModuleUnitBallHaarCharacterValuationCoverSource}
-	  recovers the full source equality by additive-Haar extensionality.  This
+	  recovers the full source equality by additive-Haar extensionality.
+	  Second, the scale-component source
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductPadicFiniteExtensionIntrinsicResidueModuleUnitBallHaarCharacterInverseDilationValuationCoverConstructedSourceCoreHullFormationPossibleRegionAlignedValuationBallChartedTensorMeasureDirectProductCalibratedLocalizedHullCoverSource.ScaleComponentMatchedSource}
+	  matches the transported factor directly against the finite-extension
+	  inverse-dilation mass source: the local ring, residue prime, finite
+	  degree, realization, Haar measure, compact open \(p_v^{-1}O_v\), and
+	  base-prime scale map.  Its constructor
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductPadicFiniteExtensionIntrinsicResidueModuleUnitBallHaarCharacterInverseDilationValuationCoverConstructedSourceCoreHullFormationPossibleRegionAlignedValuationBallChartedTensorMeasureDirectProductCalibratedLocalizedHullCoverSource.ScaleComponentMatchedSource.toComponentMatchedSource}
+	  derives the generic component-matched source, and its audit
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductPadicFiniteExtensionIntrinsicResidueModuleUnitBallHaarCharacterInverseDilationValuationCoverConstructedSourceCoreHullFormationPossibleRegionAlignedValuationBallChartedTensorMeasureDirectProductCalibratedLocalizedHullCoverSource.ScaleComponentMatchedSource.residueModuleTransportedFactorHandoffAudit}
+	  recovers the same determinant-factor handoff.  This
 	  handoff is now a field of the
 	  additive-Haar residue
 	  audit, the normalized residue audit, and the combined CTheta full-boundary

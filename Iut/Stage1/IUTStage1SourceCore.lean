@@ -16687,6 +16687,83 @@ theorem inverseBasePrimeUnitBall_additiveHaar_endpoint
         (by exact_mod_cast (Module.finrank_pos : 0 < Module.finrank ℚ_[p] K))
     exact ⟨rfl, rfl, hmeasure, hgt, hpos⟩
 
+set_option linter.style.longLine false in
+/--
+Component matching of an additive-Haar compact-open factor with the inverse
+base-prime unit-ball normalization constructed from a finite-extension
+dilation-mass source.
+
+This is lower than equality of additive-Haar source records: it names the
+local-field data that must agree with the inverse-dilation source, including
+the selected compact open \(p^{-1}O_K\) and the base-prime scale map.
+-/
+structure AdditiveHaarInverseBasePrimeComponentMatch
+    (left :
+      IUTStage1AdditiveHaarCompactOpenNormalizationSource
+        α (Subring K) K hullSystem)
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem) :
+    Prop where
+  localRing_eq : left.localRing = data.integerSource.integerSubring
+  residuePrime_eq : left.residuePrime = p
+  finiteExtensionDegree_eq :
+    left.finiteExtensionDegree = Module.finrank ℚ_[p] K
+  realization_eq : left.realization = data.realization
+  realizedRegion_eq : left.realizedRegion = data.realizedRegion
+  haarMeasure_eq : left.haarMeasure = data.haarMeasure
+  isCompactOpen_eq :
+    left.isCompactOpen = fun subset : Set K => IsOpen subset ∧ IsCompact subset
+  ringOfIntegers_eq :
+    left.ringOfIntegers = data.integerSource.ringOfIntegers
+  compactOpenSubset_eq :
+    left.compactOpenSubset = data.inverseBasePrimeUnitBall
+  uniformizerScale_eq :
+    left.uniformizerScale = fun subset : Set K => data.basePrimeDilation '' subset
+
+set_option linter.style.longLine false in
+theorem AdditiveHaarInverseBasePrimeComponentMatch.toComponentwiseEqual
+    {left :
+      IUTStage1AdditiveHaarCompactOpenNormalizationSource
+        α (Subring K) K hullSystem}
+    {data :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem}
+    (matching : AdditiveHaarInverseBasePrimeComponentMatch left data) :
+    IUTStage1AdditiveHaarCompactOpenNormalizationSource.ComponentwiseEqual
+      left
+      data.toInverseBasePrimeUnitBallAdditiveHaarCompactOpenNormalizationSource :=
+  { localRing_eq := by
+      simpa [toInverseBasePrimeUnitBallAdditiveHaarCompactOpenNormalizationSource] using
+        matching.localRing_eq,
+    residuePrime_eq := by
+      simpa [toInverseBasePrimeUnitBallAdditiveHaarCompactOpenNormalizationSource] using
+        matching.residuePrime_eq,
+    finiteExtensionDegree_eq := by
+      simpa [toInverseBasePrimeUnitBallAdditiveHaarCompactOpenNormalizationSource] using
+        matching.finiteExtensionDegree_eq,
+    realization_eq := by
+      simpa [toInverseBasePrimeUnitBallAdditiveHaarCompactOpenNormalizationSource] using
+        matching.realization_eq,
+    realizedRegion_eq := by
+      simpa [toInverseBasePrimeUnitBallAdditiveHaarCompactOpenNormalizationSource] using
+        matching.realizedRegion_eq,
+    haarMeasure_eq := by
+      simpa [toInverseBasePrimeUnitBallAdditiveHaarCompactOpenNormalizationSource] using
+        matching.haarMeasure_eq,
+    isCompactOpen_eq := by
+      simpa [toInverseBasePrimeUnitBallAdditiveHaarCompactOpenNormalizationSource] using
+        matching.isCompactOpen_eq,
+    ringOfIntegers_eq := by
+      simpa [toInverseBasePrimeUnitBallAdditiveHaarCompactOpenNormalizationSource] using
+        matching.ringOfIntegers_eq,
+    compactOpenSubset_eq := by
+      simpa [toInverseBasePrimeUnitBallAdditiveHaarCompactOpenNormalizationSource] using
+        matching.compactOpenSubset_eq,
+    uniformizerScale_eq := by
+      simpa [toInverseBasePrimeUnitBallAdditiveHaarCompactOpenNormalizationSource] using
+        matching.uniformizerScale_eq }
+
 end IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
 
 /--
