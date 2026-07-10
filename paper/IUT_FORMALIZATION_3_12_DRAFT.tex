@@ -1027,7 +1027,11 @@ preferred wrapper lowers the theta scalar input one more step: it takes the
   unified inverse-dilation route.  This wrapper has now been lowered again:
   the inverse-dilation branch can start from the finite localized Hodge-summand
   formula and derive the Hodge/family-hull comparison from the same
-  Remark 3.9.5 decomposition.  It now also lowers the structure-sheaf input:
+  Remark 3.9.5 decomposition.  Lean also proves the converse source-facing
+  expansion needed by the public route: a localized-adjusted inverse-dilation
+  source projects to the finite Hodge-summand source by unfolding the
+  localized adjusted sum as the finite sum of weighted adjusted log-volumes.
+  It now also lowers the structure-sheaf input:
   the hardened wrapper takes localized direct-summand calibration and derives
   the additive-Haar normalized compact-open equality by the additive-Haar
   projection theorem.  A complementary non-vacuous Haar-modulus wrapper now

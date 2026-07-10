@@ -1288,6 +1288,13 @@
 	  as source data and deriving the Hodge/family-hull equality.  Its public
 	  route is
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousInverseDilationHodgeSummandCalibratedConstructedStepXIRoute}.
+	  Conversely, the localized-adjusted inverse-dilation source now projects
+	  to this finite summand source by unfolding
+	  \(\operatorname{localizedAdjustedSum}\) as the finite sum of weighted
+	  adjusted log-volumes:
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductInverseDilationValuationCoverConstructedSourceCoreLocalizedAdjustedCalibrationSource.toHodgeSummandCalibratedLocalizedAdjustedCalibrationSource}
+	  and
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousInverseDilationLocalizedAdjustedHodgeSummandExpansionConstructedStepXIRoute}.
 	  The direct-summand
 	  calibrated wrapper lowers the structure-sheaf input as well: it supplies
 	  the localized equality with the chosen direct summand, and Lean derives the
@@ -1506,9 +1513,10 @@
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductPadicFiniteExtensionResidueModuleInverseBasePrimeHaarModulusConstructedGaussianHodgeProjectedAdditiveHaarLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedSource.toResidueModuleInverseBasePrimeHaarModulusRestrictionAdditiveHaarConstructedGaussianHodgeSource}
 	  and the public route
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousPadicFiniteExtensionResidueModuleInverseBasePrimeHaarModulusConstructedGaussianHodgeRestrictionAdditiveHaarConstructedStepXIRoute_fromIUTIVCThetaArithmeticSource}.
-	  The remaining migration is therefore to construct this
-	  finite Hodge-summand formula itself from the lower
-	  Hodge-theater and log-theta-lattice data.
+	  The remaining migration is therefore to construct the
+	  localized-adjusted theta equality itself from the lower Hodge-theater
+	  and log-theta-lattice data, rather than supplying it as the last scalar
+	  calibration of the inverse-dilation source.
 	  The same scale-component
 	  match is now exposed below the residue wrapper as well: the intrinsic
 	  Haar-modulus source
