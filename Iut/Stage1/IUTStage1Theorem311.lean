@@ -20255,6 +20255,96 @@ theorem endpoint
     source.targetPrimeStrip_eq,
     source.logKummerColumn_eq_selected⟩
 
+set_option linter.style.longLine false in
+/--
+Structured audit for the Step (xi) Ob7 source.
+
+This decomposes the legacy `compatibilityRetained` projection into the actual
+Remark 3.9.5(vii) data: the selected q-region lies in the hull, Gaussian and
+environment prime-strip readings agree placewise, unit characters agree with
+the coric character, and the Ob7 bridge is aligned with the same Step (xi)
+hull data.  The final fields record that the legacy projection is exactly this
+retained statement with the source-spine prime-strip/log-theta labels.
+-/
+structure Audit
+    (source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData hullData β Penv Pgau V μ) : Prop where
+  q_region_subset_family_hull :
+    source.ob7Source.bridgeSource.qRegion ⊆
+      source.ob7Source.bridgeSource.familyHull
+  gaussian_environment_place_compatibility :
+    ∀ p : Penv,
+      source.ob7Source.coricInvariant.lift.base.gaussianPrimeToPlace
+          (source.ob7Source.coricInvariant.lift.base.primeEvaluation p) =
+        source.ob7Source.coricInvariant.lift.base.environmentPrimeToPlace p ∧
+      (source.ob7Source.coricInvariant.lift.base.localEvaluation.gaussianLocal.localObject
+          (source.ob7Source.coricInvariant.lift.base.gaussianPrimeToPlace
+            (source.ob7Source.coricInvariant.lift.base.primeEvaluation p))).realifiedLogVolume =
+        (source.ob7Source.coricInvariant.lift.base.localEvaluation.environmentLocal.localObject
+          (source.ob7Source.coricInvariant.lift.base.environmentPrimeToPlace p)).realifiedLogVolume
+  coric_unit_character_compatibility :
+    ∀ p : Penv,
+      source.ob7Source.coricInvariant.lift.environmentUnitCharacter p =
+        source.ob7Source.coricInvariant.coricUnitCharacter
+          (source.ob7Source.coricInvariant.lift.base.environmentPrimeToPlace p) ∧
+      source.ob7Source.coricInvariant.lift.gaussianUnitCharacter
+          (source.ob7Source.coricInvariant.lift.base.primeEvaluation p) =
+        source.ob7Source.coricInvariant.coricUnitCharacter
+          (source.ob7Source.coricInvariant.lift.base.gaussianPrimeToPlace
+            (source.ob7Source.coricInvariant.lift.base.primeEvaluation p)) ∧
+      source.ob7Source.coricInvariant.lift.environmentUnitCharacter p =
+        source.ob7Source.coricInvariant.lift.gaussianUnitCharacter
+          (source.ob7Source.coricInvariant.lift.base.primeEvaluation p)
+  bridge_possibleRegion_eq_hullSource :
+    source.ob7Source.bridgeSource.possibleRegion =
+      hullData.quotientHullCompatibility.familySource.possibleRegion
+  bridge_hullOperator_eq :
+    source.ob7Source.bridgeSource.hullOperator = hullData.hullOperator
+  bridge_qRegion_eq_selected :
+    source.ob7Source.bridgeSource.qRegion = hullData.selectedQRegion
+  projected_legacy_retained_eq :
+    source.toPrimeStripLogKummerCompatibilityData.compatibilityRetained =
+      source.retainedStatement
+  projected_legacy_labels :
+    source.toPrimeStripLogKummerCompatibilityData.sourcePrimeStrip =
+        sourceData.inputPrimeStrip ∧
+      source.toPrimeStripLogKummerCompatibilityData.targetPrimeStrip =
+        sourceData.outputPrimeStrip ∧
+      source.toPrimeStripLogKummerCompatibilityData.logKummerColumn =
+        sourceData.selectedQChoice.coordinate.logThetaColumn
+
+set_option linter.style.longLine false in
+theorem audit
+    (source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData hullData β Penv Pgau V μ) :
+    Audit source :=
+  { q_region_subset_family_hull :=
+      source.ob7Source.endpoint.1,
+    gaussian_environment_place_compatibility := by
+      intro p
+      exact
+        ⟨(source.ob7Source.endpoint.2.2.2.2.2 p).1,
+          (source.ob7Source.endpoint.2.2.2.2.2 p).2.1⟩,
+    coric_unit_character_compatibility := by
+      intro p
+      exact
+        ⟨(source.ob7Source.endpoint.2.2.2.2.2 p).2.2.1,
+          (source.ob7Source.endpoint.2.2.2.2.2 p).2.2.2.1,
+          (source.ob7Source.endpoint.2.2.2.2.2 p).2.2.2.2⟩,
+    bridge_possibleRegion_eq_hullSource :=
+      source.bridge_possibleRegion_eq_hullSource,
+    bridge_hullOperator_eq :=
+      source.bridge_hullOperator_eq,
+    bridge_qRegion_eq_selected :=
+      source.bridge_qRegion_eq_selected,
+    projected_legacy_retained_eq := rfl,
+    projected_legacy_labels :=
+      ⟨source.sourcePrimeStrip_eq,
+        source.targetPrimeStrip_eq,
+        source.logKummerColumn_eq_selected⟩ }
+
 end StepXIThetaLGPOb7CompatibilitySource
 
 /--
@@ -23271,6 +23361,8 @@ structure PreferredConcreteLocalizedStepXIPaperSourceRouteAudit
       (hullData := concreteHullSource.toHullFormationData)
       localizedSource hullOperator_eq possibleRegion_eq
       normalizedLogVolume_le_thetaSigned
+  ob7_source :
+    StepXIThetaLGPOb7CompatibilitySource.Audit ob7Source
   constructed_step_xi_source :
     let stepXI :=
       StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaLGPOb7Source
@@ -23367,6 +23459,8 @@ theorem preferredConcreteLocalizedStepXIPaperSourceRouteAudit
             (hullData := concreteHullSource.toHullFormationData)
             localizedSource hullOperator_eq possibleRegion_eq
             normalizedLogVolume_le_thetaSigned,
+      ob7_source :=
+        ob7Source.audit,
       constructed_step_xi_source := stepXI.audit,
       preferred_route :=
         preferredStepXIPaperSourceRouteAudit
