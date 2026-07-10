@@ -18136,6 +18136,7 @@ variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
 variable [MeasurableSpace K] [BorelSpace K] [LocallyCompactSpace K]
 variable [IsTopologicalAddGroup K]
 variable [NormedAlgebra ℚ_[p] K]
+variable [FiniteDimensional ℚ_[p] K]
 variable [Field κ] [Fintype κ]
 variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
 
@@ -18254,11 +18255,25 @@ theorem representative_spec
 noncomputable def toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
     (data :
       IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueModuleQuotientCosetHaarCharacterNormalizationSource
-        α p K κ hullSystem) := by
+        α p K κ hullSystem) :
+    IUTStage1PadicFiniteExtensionValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+      α p K hullSystem :=
+  data.toNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource
+    |>.toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+
+noncomputable def toUnitBallHaarCharacterNormalizationSource
+    (data :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueModuleQuotientCosetHaarCharacterNormalizationSource
+        α p K κ hullSystem) :
+    IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+      α p K hullSystem := by
   haveI : FiniteDimensional ℚ_[p] K := data.finiteDimensional
   exact
-    data.toNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource
-      |>.toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+    data.toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource
+      |>.toUnitBallDilationQuotientCosetHaarCharacterNormalizationSource
+      |>.toUnitBallQuotientCosetHaarCharacterNormalizationSource
+      |>.toUnitBallCosetHaarCharacterNormalizationSource
+      |>.toUnitBallHaarCharacterNormalizationSource
 
 theorem endpoint
     (data :
@@ -18374,6 +18389,31 @@ theorem quotientCosetHaarCharacterEndpoint
       hvalued.2.2.2.2.2.2.2.2.1,
       hvalued.2.2.2.2.2.2.2.2.2.1,
       hvalued.2.2.2.2.2.2.2.2.2.2⟩
+
+theorem unitBallHaarCharacterEndpoint
+    (data :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueModuleQuotientCosetHaarCharacterNormalizationSource
+        α p K κ hullSystem) :
+    letI := data.finiteDimensional
+    data.toUnitBallHaarCharacterNormalizationSource.haarMeasure
+        data.toUnitBallHaarCharacterNormalizationSource.integerSource.ringOfIntegers = 1 ∧
+      data.toUnitBallHaarCharacterNormalizationSource.haarMeasure
+          ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+            data.toUnitBallHaarCharacterNormalizationSource.integerSource.ringOfIntegers) =
+        ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) ∧
+      (MeasureTheory.addEquivAddHaarChar
+          data.toUnitBallHaarCharacterNormalizationSource.basePrimeContinuousAddEquiv :
+          ENNReal) =
+        ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) ∧
+      (∀ subset : Set K,
+        data.toUnitBallHaarCharacterNormalizationSource.haarMeasure
+            ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+              subset) =
+          ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) *
+            data.toUnitBallHaarCharacterNormalizationSource.haarMeasure
+              subset) := by
+  letI := data.finiteDimensional
+  exact data.toUnitBallHaarCharacterNormalizationSource.endpoint
 
 end IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueModuleQuotientCosetHaarCharacterNormalizationSource
 
