@@ -1051,15 +1051,17 @@ valuation-cover side from the intrinsic finite-extension valuation-cover
   source supplies the structure-sheaf equality with the normalized
   additive-Haar compact-open factor, and Lean derives the Step (xi)
   structure-sheaf/direct-summand equality before invoking the non-vacuous
-  comparison route.  A new transported-factor handoff audit follows the
-  residue-module source into the actual localized additive-Haar vector-bundle
-  factor: the transported valuation-ball factor is identified with the inverse
-  base-prime unit-ball source constructed from the residue quotient data, and
-  the same equality is projected to the additive-Haar factor used by the
-  determinant layer.  This handoff is now threaded through the additive-Haar
-  residue audit, the normalized residue audit, and the strongest CTheta
-  full-boundary audit, so the public audit object exposes the determinant-factor
-  match directly.  The full-boundary audit for this route also ties the
+  comparison route.  The transported-factor handoff audit follows the
+  residue-module source into the localized additive-Haar vector-bundle factor:
+  the transported valuation-ball factor and the localized determinant factor
+  are both identified with the inverse base-prime unit ball \(p^{-1}O_K\)
+  constructed from the residue quotient data.  Lean now also projects this
+  equality to the concrete scale invariants used downstream: Haar mass
+  \(p^{[K:\mathbb Q_p]}\) and strictly positive normalized log-volume for both
+  factors.  This handoff is threaded through the additive-Haar residue audit,
+  the normalized residue audit, and the strongest CTheta full-boundary audit,
+  so the public audit object exposes the determinant-factor match directly.
+  The full-boundary audit for this route also ties the
   IUT IV arithmetic residual to the same public wrapper.  The remaining
   principal-hull boundary is now to derive the coordinate scalar-image
   landing/preimage laws for the generic public principal-product hull source
