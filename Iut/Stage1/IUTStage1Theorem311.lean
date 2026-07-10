@@ -24098,6 +24098,337 @@ theorem preferredPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRout
 
 set_option linter.style.longLine false in
 /--
+Principal-product localized hull-cover source.
+
+This fixes the localized Ob3/Ob4 cover to the same principal-product
+Remark 3.9.5 hull system and equality-quotient possible-image family used by
+the preferred Step (xi) route.  The older route accepted a localized
+decomposition plus separate equalities identifying its hull operator and
+possible regions with the principal-product source.  Here those alignments are
+definitionally built into the source.
+-/
+structure PrincipalProductLocalizedHullCoverVectorBundleSource
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    (η : Type x) (β : Type v) (γ : Type w)
+    [Fintype β] [Fintype γ] where
+  localizedSource :
+    IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+      η β γ
+  localizedRegion : β -> Set (Point targetCopy)
+  familyHull_eq_localizedRegionUnion :
+    (principalProductConcreteHullSource sourceData principalSource).hullSystem.phi
+        (⋃ i, principalProductPossibleRegion sourceData principalSource i) =
+      ⋃ index, localizedRegion index
+  localizedCoverLogVolume_eq_sum :
+    (principalProductConcreteHullSource sourceData principalSource).hullSystem.logVolume
+        (⋃ index, localizedRegion index) =
+      Finset.univ.sum fun index =>
+        (principalProductConcreteHullSource sourceData principalSource).hullSystem.logVolume
+          (localizedRegion index)
+  localizedRegion_logVolume_eq_adjusted :
+    ∀ index : β,
+      (principalProductConcreteHullSource sourceData principalSource).hullSystem.logVolume
+          (localizedRegion index) =
+        localizedSource.weightedAdjustedLogVolume index
+
+namespace PrincipalProductLocalizedHullCoverVectorBundleSource
+
+variable {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+variable {sourceData :
+  Theorem311HodgeTheaterLogThetaLogKummerSource
+    (target := targetCopy) coric l}
+variable {Λ : Type v}
+variable {principalSource :
+  IUTStage1Remark395PrincipalProductHullSystemSource
+    (Point targetCopy) Λ}
+variable {η : Type x} {β : Type v} {γ : Type w}
+variable [Fintype β] [Fintype γ]
+
+def hullSystem
+    (_data :
+      PrincipalProductLocalizedHullCoverVectorBundleSource
+        sourceData principalSource η β γ) :
+    IUTStage1Remark395HolomorphicHullSystem (Point targetCopy) :=
+  (principalProductConcreteHullSource sourceData principalSource).hullSystem
+
+def possibleRegion
+    (_data :
+      PrincipalProductLocalizedHullCoverVectorBundleSource
+        sourceData principalSource η β γ) :
+    Quot sourceData.Core.equalityQuotient.relation -> Set (Point targetCopy) :=
+  principalProductPossibleRegion sourceData principalSource
+
+set_option linter.style.longLine false in
+noncomputable def toLocalizedHullCoverVectorBundleSource
+    (data :
+      PrincipalProductLocalizedHullCoverVectorBundleSource
+        sourceData principalSource η β γ) :
+    IUTStage1Remark395LocalizedHullCoverVectorBundleSource
+      (Point targetCopy)
+      (Quot sourceData.Core.equalityQuotient.relation) η β γ :=
+  { hullSystem := data.hullSystem,
+    possibleRegion := data.possibleRegion,
+    localizedSource := data.localizedSource,
+    localizedRegion := data.localizedRegion,
+    familyHull_eq_localizedRegionUnion := by
+      simpa [hullSystem, possibleRegion] using
+        data.familyHull_eq_localizedRegionUnion,
+    localizedCoverLogVolume_eq_sum := by
+      simpa [hullSystem] using data.localizedCoverLogVolume_eq_sum,
+    localizedRegion_logVolume_eq_adjusted := by
+      intro index
+      simpa [hullSystem] using
+        data.localizedRegion_logVolume_eq_adjusted index }
+
+set_option linter.style.longLine false in
+noncomputable def toLocalizedHullVectorBundleDecompositionSource
+    (data :
+      PrincipalProductLocalizedHullCoverVectorBundleSource
+        sourceData principalSource η β γ) :
+    IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+      (Point targetCopy)
+      (Quot sourceData.Core.equalityQuotient.relation) η β γ :=
+  data.toLocalizedHullCoverVectorBundleSource
+    |>.toLocalizedHullVectorBundleDecompositionSource
+
+theorem hullOperator_eq_principalProductHullOperator
+    (data :
+      PrincipalProductLocalizedHullCoverVectorBundleSource
+        sourceData principalSource η β γ) :
+    data.toLocalizedHullVectorBundleDecompositionSource.hullOperator =
+      principalProductHullOperator sourceData principalSource :=
+  rfl
+
+theorem possibleRegion_eq_principalProductPossibleRegion
+    (data :
+      PrincipalProductLocalizedHullCoverVectorBundleSource
+        sourceData principalSource η β γ) :
+    data.toLocalizedHullVectorBundleDecompositionSource.possibleRegion =
+      principalProductPossibleRegion sourceData principalSource :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      PrincipalProductLocalizedHullCoverVectorBundleSource
+        sourceData principalSource η β γ) :
+    data.toLocalizedHullVectorBundleDecompositionSource.hullOperator =
+        principalProductHullOperator sourceData principalSource ∧
+      data.toLocalizedHullVectorBundleDecompositionSource.possibleRegion =
+        principalProductPossibleRegion sourceData principalSource ∧
+      data.toLocalizedHullVectorBundleDecompositionSource.localizedSource =
+        data.localizedSource ∧
+      data.toLocalizedHullCoverVectorBundleSource.familyHull =
+        data.toLocalizedHullCoverVectorBundleSource.localizedRegionUnion ∧
+      data.toLocalizedHullCoverVectorBundleSource.toLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume =
+        data.toLocalizedHullCoverVectorBundleSource.localizedAdjustedSum :=
+  ⟨data.hullOperator_eq_principalProductHullOperator,
+    data.possibleRegion_eq_principalProductPossibleRegion,
+    rfl,
+    data.toLocalizedHullCoverVectorBundleSource.endpoint.1,
+    data.toLocalizedHullCoverVectorBundleSource.endpoint.2.2.2.2.2.2.2.2⟩
+
+end PrincipalProductLocalizedHullCoverVectorBundleSource
+
+set_option linter.style.longLine false in
+/--
+Audit for the principal-product localized cover route.
+
+This records that the localized determinant decomposition is projected from a
+cover whose hull system and possible-region family are fixed by the
+principal-product Step (xi) source, so the route no longer takes
+`hullOperator_eq` and `possibleRegion_eq` as standalone caller inputs.
+-/
+structure PrincipalProductLocalizedHullCoverRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (coverSource :
+      PrincipalProductLocalizedHullCoverVectorBundleSource
+        sourceData principalSource η β γ) : Prop where
+  localized_source_projected_from_cover :
+    coverSource.toLocalizedHullVectorBundleDecompositionSource.localizedSource =
+      coverSource.localizedSource
+  hull_operator_fixed_by_principal_product :
+    coverSource.toLocalizedHullVectorBundleDecompositionSource.hullOperator =
+      principalProductHullOperator sourceData principalSource
+  possible_region_fixed_by_principal_product :
+    coverSource.toLocalizedHullVectorBundleDecompositionSource.possibleRegion =
+      principalProductPossibleRegion sourceData principalSource
+  cover_endpoint :
+    coverSource.toLocalizedHullCoverVectorBundleSource.familyHull =
+        coverSource.toLocalizedHullCoverVectorBundleSource.localizedRegionUnion ∧
+      coverSource.toLocalizedHullCoverVectorBundleSource.toLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume =
+        coverSource.toLocalizedHullCoverVectorBundleSource.localizedAdjustedSum
+  localized_decomposition_endpoint :
+    (∀ index : β,
+      coverSource.toLocalizedHullVectorBundleDecompositionSource.localizedRegion index ⊆
+        coverSource.toLocalizedHullVectorBundleDecompositionSource.familyHull) ∧
+      coverSource.toLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume =
+        coverSource.toLocalizedHullVectorBundleDecompositionSource.localizedLogVolumeSum ∧
+      coverSource.toLocalizedHullVectorBundleDecompositionSource.localizedLogVolumeSum =
+        coverSource.toLocalizedHullVectorBundleDecompositionSource.localizedAdjustedSum ∧
+      coverSource.toLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume =
+        coverSource.toLocalizedHullVectorBundleDecompositionSource.localizedAdjustedSum
+
+set_option linter.style.longLine false in
+theorem principalProductLocalizedHullCoverRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (coverSource :
+      PrincipalProductLocalizedHullCoverVectorBundleSource
+        sourceData principalSource η β γ) :
+    PrincipalProductLocalizedHullCoverRouteAudit
+      sourceData principalSource coverSource :=
+  { localized_source_projected_from_cover := rfl,
+    hull_operator_fixed_by_principal_product :=
+      coverSource.hullOperator_eq_principalProductHullOperator,
+    possible_region_fixed_by_principal_product :=
+      coverSource.possibleRegion_eq_principalProductPossibleRegion,
+    cover_endpoint :=
+      ⟨coverSource.toLocalizedHullCoverVectorBundleSource.endpoint.1,
+        coverSource.toLocalizedHullCoverVectorBundleSource.endpoint.2.2.2.2.2.2.2.2⟩,
+    localized_decomposition_endpoint :=
+      let endpoint :=
+        coverSource.toLocalizedHullVectorBundleDecompositionSource.endpoint
+      ⟨endpoint.1,
+        endpoint.2.1,
+        endpoint.2.2.1,
+        endpoint.2.2.2.1⟩ }
+
+set_option linter.style.longLine false in
+/--
+Preferred principal-product Step (xi) route through a localized cover source.
+
+Compared with
+`preferredPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit`,
+this theorem does not accept separate hull-operator or possible-region
+alignment proofs.  They are definitional consequences of
+`PrincipalProductLocalizedHullCoverVectorBundleSource`.
+-/
+structure PreferredPrincipalProductLocalizedCoverThetaEqFamilyHullStepXIPaperSourceRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (coverSource :
+      PrincipalProductLocalizedHullCoverVectorBundleSource
+        sourceData principalSource η β γ)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned =
+        coverSource.toLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (principalProductHullFormationData sourceData principalSource)
+        β Penv Pgau V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations) : Prop where
+  localized_cover_route :
+    PrincipalProductLocalizedHullCoverRouteAudit
+      sourceData principalSource coverSource
+  principal_product_theta_route :
+    PreferredPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+      sourceData paperTrace thetaSigned principalSource
+      coverSource.toLocalizedHullVectorBundleDecompositionSource
+      rfl rfl thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
+      additive_haar_arithmetic_degree_padic
+
+set_option linter.style.longLine false in
+theorem preferredPrincipalProductLocalizedCoverThetaEqFamilyHullStepXIPaperSourceRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (coverSource :
+      PrincipalProductLocalizedHullCoverVectorBundleSource
+        sourceData principalSource η β γ)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned =
+        coverSource.toLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (principalProductHullFormationData sourceData principalSource)
+        β Penv Pgau V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations)
+    (audit :
+      let localizedSource :=
+        coverSource.toLocalizedHullVectorBundleDecompositionSource;
+      let concreteHullSource :=
+        principalProductConcreteHullSource sourceData principalSource;
+      let stepXI :=
+        StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaEqFamilyHullThetaLGPOb7Source
+            (sourceData := sourceData)
+            paperTrace thetaSigned concreteHullSource
+            rfl localizedSource rfl rfl
+            thetaSigned_eq_familyHullLogVolume ob7Source;
+      NonStepXIRemainingPayloadAudit
+        (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+          sourceData stepXI iutIV_cTheta
+          additive_haar_arithmetic_degree_padic)) :
+    PreferredPrincipalProductLocalizedCoverThetaEqFamilyHullStepXIPaperSourceRouteAudit
+      sourceData paperTrace thetaSigned principalSource coverSource
+      thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
+      additive_haar_arithmetic_degree_padic := by
+  exact
+    { localized_cover_route :=
+        principalProductLocalizedHullCoverRouteAudit
+          sourceData principalSource coverSource,
+      principal_product_theta_route :=
+        preferredPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+          sourceData paperTrace thetaSigned principalSource
+          coverSource.toLocalizedHullVectorBundleDecompositionSource
+          rfl rfl thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
+          additive_haar_arithmetic_degree_padic audit }
+
+set_option linter.style.longLine false in
+/--
 Preferred localized theta-equals-family-hull route whose principal product
 hull source is constructed from transported scalar-parameter local product
 data.
@@ -24672,6 +25003,108 @@ def principalProductLocalizedThetaEqFamilyHullPaperTrace
         ob7Source.ob7Source.primeStripGlobalLogVolume,
     ob9_realified_semisimplification_log_volume_compatibility_proof :=
       ob7Source.ob7Source.determinantNormalizedLogVolume_eq_primeStripGlobal }
+
+set_option linter.style.longLine false in
+/--
+Construct the Step (xi) paper trace from a principal-product localized cover.
+-/
+noncomputable def principalProductLocalizedCoverThetaEqFamilyHullPaperTrace
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (thetaSigned : Real)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (coverSource :
+      PrincipalProductLocalizedHullCoverVectorBundleSource
+        sourceData principalSource η β γ)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned =
+        coverSource.toLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (principalProductHullFormationData sourceData principalSource)
+        β Penv Pgau V μ) :
+    StepXIPaperTrace :=
+  principalProductLocalizedThetaEqFamilyHullPaperTrace
+    sourceData thetaSigned principalSource
+    coverSource.toLocalizedHullVectorBundleDecompositionSource
+    rfl rfl thetaSigned_eq_familyHullLogVolume ob7Source
+
+set_option linter.style.longLine false in
+/--
+Strict public principal-product Step (xi) route through a localized cover, with
+the paper trace constructed internally.
+-/
+theorem preferredPublicPrincipalProductLocalizedCoverConstructedPaperTraceStepXIPaperSourceRouteAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (thetaSigned : Real)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {η : Type x} {β : Type v} {γ : Type w}
+    [Fintype β] [Fintype γ]
+    (coverSource :
+      PrincipalProductLocalizedHullCoverVectorBundleSource
+        sourceData principalSource η β γ)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned =
+        coverSource.toLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume)
+    {Penv Pgau V : Type v} {μ : Type w}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (principalProductHullFormationData sourceData principalSource)
+        β Penv Pgau V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations)
+    (audit :
+      let paperTrace :=
+        principalProductLocalizedCoverThetaEqFamilyHullPaperTrace
+          sourceData thetaSigned principalSource coverSource
+          thetaSigned_eq_familyHullLogVolume ob7Source;
+      let localizedSource :=
+        coverSource.toLocalizedHullVectorBundleDecompositionSource;
+      let concreteHullSource :=
+        principalProductConcreteHullSource sourceData principalSource;
+      let stepXI :=
+        StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaEqFamilyHullThetaLGPOb7Source
+            (sourceData := sourceData)
+            paperTrace thetaSigned concreteHullSource
+            rfl localizedSource rfl rfl
+            thetaSigned_eq_familyHullLogVolume ob7Source;
+      NonStepXIRemainingPayloadAudit
+        (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+          sourceData stepXI iutIV_cTheta
+          additive_haar_arithmetic_degree_padic)) :
+    PreferredPrincipalProductLocalizedCoverThetaEqFamilyHullStepXIPaperSourceRouteAudit
+      sourceData
+      (principalProductLocalizedCoverThetaEqFamilyHullPaperTrace
+        sourceData thetaSigned principalSource coverSource
+        thetaSigned_eq_familyHullLogVolume ob7Source)
+      thetaSigned principalSource coverSource thetaSigned_eq_familyHullLogVolume
+      ob7Source iutIV_cTheta additive_haar_arithmetic_degree_padic :=
+  preferredPrincipalProductLocalizedCoverThetaEqFamilyHullStepXIPaperSourceRouteAudit
+    sourceData
+    (principalProductLocalizedCoverThetaEqFamilyHullPaperTrace
+      sourceData thetaSigned principalSource coverSource
+      thetaSigned_eq_familyHullLogVolume ob7Source)
+    thetaSigned principalSource coverSource thetaSigned_eq_familyHullLogVolume
+    ob7Source iutIV_cTheta additive_haar_arithmetic_degree_padic audit
 
 set_option linter.style.longLine false in
 /--
