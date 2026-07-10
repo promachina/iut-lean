@@ -21260,6 +21260,117 @@ theorem valuationBallAdditiveHaarNormalizationAudit
 
 end IUTStage1ValuationBallAdditiveHaarNormalizationSource
 
+namespace IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+
+variable {α : Type u} {p : Nat} [Fact p.Prime] {K : Type w}
+variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+variable [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+set_option linter.style.longLine false in
+/--
+Valuation-ball level matching of a local factor with the inverse base-prime
+unit-ball normalization.
+
+This is one layer below `AdditiveHaarInverseBasePrimeComponentMatch`: the left
+side is still the valuation-ball source before projection to an additive-Haar
+compact-open record.  The selected valuation ball must be the constructed
+inverse image \(p^{-1}O_K\), and the pointwise uniformizer action must be the
+base-prime dilation.
+-/
+structure ValuationBallInverseBasePrimeComponentMatch
+    (left :
+      IUTStage1ValuationBallAdditiveHaarNormalizationSource
+        α (Subring K) K hullSystem)
+    (data :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem) :
+    Prop where
+  localRing_eq : left.localRing = data.integerSource.integerSubring
+  residuePrime_eq : left.residuePrime = p
+  finiteExtensionDegree_eq :
+    left.finiteExtensionDegree = Module.finrank ℚ_[p] K
+  realization_eq : left.realization = data.realization
+  realizedRegion_eq : left.realizedRegion = data.realizedRegion
+  valuationNorm_eq :
+    left.valuationNorm = data.integerSource.valuationTopology.valuationNorm
+  haarMeasure_eq : left.haarMeasure = data.haarMeasure
+  ringOfIntegers_eq :
+    left.ringOfIntegers = data.integerSource.ringOfIntegers
+  compactOpenBall_eq_inverseBasePrimeUnitBall :
+    left.valuationBall left.compactOpenRadius = data.inverseBasePrimeUnitBall
+  uniformizerScalePoint_eq :
+    left.uniformizerScalePoint = data.basePrimeDilation
+
+set_option linter.style.longLine false in
+theorem ValuationBallInverseBasePrimeComponentMatch.toAdditiveHaarInverseBasePrimeComponentMatch
+    {left :
+      IUTStage1ValuationBallAdditiveHaarNormalizationSource
+        α (Subring K) K hullSystem}
+    {data :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem}
+    (matching : ValuationBallInverseBasePrimeComponentMatch left data) :
+    AdditiveHaarInverseBasePrimeComponentMatch
+      left.toAdditiveHaarCompactOpenNormalizationSource data :=
+  { localRing_eq := by
+      simpa [
+        IUTStage1ValuationBallAdditiveHaarNormalizationSource.toAdditiveHaarCompactOpenNormalizationSource] using
+        matching.localRing_eq,
+    residuePrime_eq := by
+      simpa [
+        IUTStage1ValuationBallAdditiveHaarNormalizationSource.toAdditiveHaarCompactOpenNormalizationSource] using
+        matching.residuePrime_eq,
+    finiteExtensionDegree_eq := by
+      simpa [
+        IUTStage1ValuationBallAdditiveHaarNormalizationSource.toAdditiveHaarCompactOpenNormalizationSource] using
+        matching.finiteExtensionDegree_eq,
+    realization_eq := by
+      simpa [
+        IUTStage1ValuationBallAdditiveHaarNormalizationSource.toAdditiveHaarCompactOpenNormalizationSource] using
+        matching.realization_eq,
+    realizedRegion_eq := by
+      simpa [
+        IUTStage1ValuationBallAdditiveHaarNormalizationSource.toAdditiveHaarCompactOpenNormalizationSource] using
+        matching.realizedRegion_eq,
+    haarMeasure_eq := by
+      simpa [
+        IUTStage1ValuationBallAdditiveHaarNormalizationSource.toAdditiveHaarCompactOpenNormalizationSource] using
+        matching.haarMeasure_eq,
+    isCompactOpen_eq := by
+      rfl,
+    ringOfIntegers_eq := by
+      simpa [
+        IUTStage1ValuationBallAdditiveHaarNormalizationSource.toAdditiveHaarCompactOpenNormalizationSource] using
+        matching.ringOfIntegers_eq,
+    compactOpenSubset_eq := by
+      simpa [
+        IUTStage1ValuationBallAdditiveHaarNormalizationSource.toAdditiveHaarCompactOpenNormalizationSource,
+        IUTStage1ValuationBallAdditiveHaarNormalizationSource.compactOpenSubset] using
+        matching.compactOpenBall_eq_inverseBasePrimeUnitBall,
+    uniformizerScale_eq := by
+      funext subset
+      simp [
+        IUTStage1ValuationBallAdditiveHaarNormalizationSource.toAdditiveHaarCompactOpenNormalizationSource,
+        IUTStage1ValuationBallAdditiveHaarNormalizationSource.uniformizerScale,
+        matching.uniformizerScalePoint_eq] }
+
+set_option linter.style.longLine false in
+theorem ValuationBallInverseBasePrimeComponentMatch.toComponentwiseEqual
+    {left :
+      IUTStage1ValuationBallAdditiveHaarNormalizationSource
+        α (Subring K) K hullSystem}
+    {data :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem}
+    (matching : ValuationBallInverseBasePrimeComponentMatch left data) :
+    IUTStage1AdditiveHaarCompactOpenNormalizationSource.ComponentwiseEqual
+      left.toAdditiveHaarCompactOpenNormalizationSource
+      data.toInverseBasePrimeUnitBallAdditiveHaarCompactOpenNormalizationSource :=
+  matching.toAdditiveHaarInverseBasePrimeComponentMatch.toComponentwiseEqual
+
+end IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+
 set_option linter.style.longLine false in
 /--
 Unit-ball valuation-Haar construction of a compact-open norm-square localized
