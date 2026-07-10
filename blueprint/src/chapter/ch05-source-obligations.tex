@@ -1177,7 +1177,12 @@
   scalar-parameter valuation source, and the unit-ball valuation wrapper
   inherits the same selected-scalar source.  The endpoint records equality of
   the selected scalar image with the valuation-ball direct-product cell union
-  and the adjusted Ob3/Ob5 determinant handoff.
+  and the adjusted Ob3/Ob5 determinant handoff.  The selected-scalar exact
+  route now constructs the possible-image exact-\(\Xi(P_B)\) source from the
+  exact-union equality \(P_B=\lambda\cdot O\), so the exact-\(\Xi\)
+  calibration is derived rather than stored independently at this boundary.
+  The remaining paper task is to construct this exact-union equality from the
+  transported theta/valuation local exactness data in the public route.
   \lean{Iut.Stage1.IUTStage1Remark395PrincipalProductHullSystemSource.transport}
   \lean{Iut.Stage1.IUTStage1Remark395PrincipalProductHullSystemSource.transport_principalHull_mem_iff}
   \lean{Iut.Stage1.IUTStage1Remark395PrincipalProductHullSystemSource.transport_principalHull_image_eq}

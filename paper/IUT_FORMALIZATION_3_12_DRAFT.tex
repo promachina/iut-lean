@@ -643,7 +643,12 @@ uses the more faithful scalar boundary: a nonzero local multiplication source
 source, and the unit-ball valuation wrapper inherits this selected source.
 The resulting endpoint identifies the selected scalar image with the
 valuation-ball direct-product cell union and with the adjusted Ob3/Ob5
-determinant handoff.
+determinant handoff.  The same selected-scalar source now also constructs the
+possible-image exact-\(\Xi(P_B)\) source once the exact-union equality
+\(P_B=\lambda\cdot O\) is supplied; thus the exact-\(\Xi\) calibration is no
+longer an independent field at this boundary, while the construction of the
+exact-union equality from transported theta/valuation local data remains an
+explicit remaining obligation.
 For the stricter localized route, the final normalized localized determinant
 bound by \(\Theta_{\mathrm{signed}}\) is no longer supplied as a standalone
 inequality: Lean derives it from the identification of

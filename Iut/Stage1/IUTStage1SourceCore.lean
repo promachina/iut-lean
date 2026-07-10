@@ -4342,6 +4342,21 @@ def principalHull
       base ∈ data.localIntegerRegion ∧
         data.scalarMultiple parameter base = point }
 
+theorem principalHull_eq_scalarMultiple_image
+    (data :
+      IUTStage1Remark395ScalarParameterDirectProductHullSource δ A S)
+    (parameter : (d : δ) -> S d) :
+    data.principalHull parameter =
+      data.scalarMultiple parameter '' data.localIntegerRegion := by
+  ext point
+  constructor
+  · intro hpoint
+    rcases hpoint with ⟨base, hbase, hscale⟩
+    exact ⟨base, hbase, hscale⟩
+  · intro hpoint
+    rcases hpoint with ⟨base, hbase, hscale⟩
+    exact ⟨base, hbase, hscale⟩
+
 theorem parameter_nonzero
     (data :
       IUTStage1Remark395ScalarParameterDirectProductHullSource δ A S)
@@ -26330,6 +26345,101 @@ theorem adjustedHullOperator_eq_scalarParameterProduct
     data.scalarParameterSource.directProductSource.toHolomorphicHullSystem.toHolomorphicHullOperator
   rw [data.hullSystem_eq_scalarParameterProduct]
 
+noncomputable def toPossibleImageFamilySource
+    (data :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ) :
+    IUTStage1Remark395PossibleImageFamilySource ((d : δ) -> A d) ι :=
+  { hullOperator := data.valuationCover.hullSystem.toHolomorphicHullOperator,
+    possibleRegion := data.valuationCover.possibleRegion }
+
+theorem toPossibleImageFamilySource_familyUnion
+    (data :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ) :
+    data.toPossibleImageFamilySource.familyUnion =
+      data.possibleImageUnion :=
+  rfl
+
+theorem toPossibleImageFamilySource_canonicalHull_eq_selectedScalarParameterHull
+    (data :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ) :
+    data.toPossibleImageFamilySource.canonicalHull =
+      data.selectedScalarParameterHull := by
+  change data.valuationCover.hullSystem.phi data.possibleImageUnion =
+    data.selectedScalarParameterHull
+  exact data.familyHull_eq_selectedScalarParameterHull
+
+set_option linter.style.longLine false in
+theorem selectedScalarParameterHull_eq_scalarMultiple_image
+    (data :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ) :
+    data.selectedScalarParameterHull =
+      data.scalarParameterSource.scalarMultiple data.selectedScalarParameter ''
+        data.scalarParameterSource.localIntegerRegion :=
+  data.scalarParameterSource.principalHull_eq_scalarMultiple_image
+    data.selectedScalarParameter
+
+set_option linter.style.longLine false in
+structure ExactXiSource
+    (data :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+        δ A S ι η K β γ) : Prop where
+  valuationUnion_eq_selectedScalarParameterHull :
+    data.possibleImageUnion = data.selectedScalarParameterHull
+
+namespace ExactXiSource
+
+variable
+  {data :
+    IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+      δ A S ι η K β γ}
+
+noncomputable def toPossibleImageExactXiFamilySource
+    (exactSource : ExactXiSource data) :
+    IUTStage1Remark395PossibleImageExactXiFamilySource
+      data.toPossibleImageFamilySource where
+  familyHullLogVolume_eq_familyUnion := by
+    rw [
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource_canonicalHull_eq_selectedScalarParameterHull,
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource_familyUnion,
+      exactSource.valuationUnion_eq_selectedScalarParameterHull]
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (exactSource : ExactXiSource data) :
+    data.possibleImageUnion = data.selectedScalarParameterHull ∧
+      data.selectedScalarParameterHull =
+        data.scalarParameterSource.scalarMultiple data.selectedScalarParameter ''
+          data.scalarParameterSource.localIntegerRegion ∧
+      data.toPossibleImageFamilySource.canonicalHull =
+        data.toPossibleImageFamilySource.familyUnion ∧
+      data.toPossibleImageFamilySource.hullOperator.logVolume
+          data.toPossibleImageFamilySource.canonicalHull =
+        data.toPossibleImageFamilySource.hullOperator.logVolume
+          data.toPossibleImageFamilySource.familyUnion ∧
+      exactSource.toPossibleImageExactXiFamilySource.familyHullLogVolume_eq_familyUnion =
+        (by
+          rw [
+            IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource_canonicalHull_eq_selectedScalarParameterHull,
+            IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource_familyUnion,
+            exactSource.valuationUnion_eq_selectedScalarParameterHull]) :=
+  by
+    exact
+      ⟨exactSource.valuationUnion_eq_selectedScalarParameterHull,
+        data.selectedScalarParameterHull_eq_scalarMultiple_image,
+        by
+          rw [
+            data.toPossibleImageFamilySource_canonicalHull_eq_selectedScalarParameterHull,
+            data.toPossibleImageFamilySource_familyUnion,
+            exactSource.valuationUnion_eq_selectedScalarParameterHull],
+        exactSource.toPossibleImageExactXiFamilySource.familyHullLogVolume_eq_familyUnion,
+        rfl⟩
+
+end ExactXiSource
+
 set_option linter.style.longLine false in
 theorem endpoint
     (data :
@@ -26369,9 +26479,14 @@ theorem endpoint
         data.selectedScalarParameterHull ∧
       data.selectedScalarParameterHull =
         data.valuationCover.directProductCellUnion ∧
+      data.selectedScalarParameterHull =
+        data.scalarParameterSource.scalarMultiple data.selectedScalarParameter ''
+          data.scalarParameterSource.localIntegerRegion ∧
       data.valuationCover.hullSystem.logVolume
           data.selectedScalarParameterHull =
         data.valuationCover.calibratedCellLogVolumeSum ∧
+      data.toPossibleImageFamilySource.canonicalHull =
+        data.selectedScalarParameterHull ∧
       data.toOb3Ob5AdjustedDeterminantLogVolumeSource.hullOperator =
         data.scalarParameterSource.directProductSource.toHolomorphicHullSystem.toHolomorphicHullOperator ∧
       data.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
@@ -26392,9 +26507,11 @@ theorem endpoint
         data.selectedScalarParameterHull_eq_directProductHull,
         data.familyHull_eq_selectedScalarParameterHull,
         data.selectedScalarParameterHull_eq_valuationBallDirectProductCellUnion,
+        data.selectedScalarParameterHull_eq_scalarMultiple_image,
         by
           rw [data.selectedScalarParameterHull_eq_valuationBallDirectProductCellUnion]
           exact data.valuationCover.directProductCoverLogVolume_eq_calibratedCellSum,
+        data.toPossibleImageFamilySource_canonicalHull_eq_selectedScalarParameterHull,
         data.adjustedHullOperator_eq_scalarParameterProduct,
         data.toOb3Ob5AdjustedDeterminantLogVolumeSource
           |>.familyHullLogVolume_eq_normalizedDeterminantLogVolume⟩
@@ -26601,6 +26718,61 @@ theorem selectedScalarParameterValuation_endpoint
         data.selectedScalarImageHull_eq_selectedNonzeroScalar_image,
         data.selectedScalarImageHull_eq_valuationBallDirectProductCellUnion,
         rfl⟩
+
+set_option linter.style.longLine false in
+structure ExactXiSource
+    (data :
+      IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource
+        δ A ι η K β γ) : Prop where
+  valuationUnion_eq_selectedScalarImageHull :
+    data.possibleImageUnion = data.selectedScalarImageHull
+
+namespace ExactXiSource
+
+variable
+  {data :
+    IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource
+      δ A ι η K β γ}
+
+noncomputable def toSelectedScalarParameterExactXiSource
+    (exactSource : ExactXiSource data) :
+    IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource.ExactXiSource
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource where
+  valuationUnion_eq_selectedScalarParameterHull := by
+    simpa [
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource.possibleImageUnion,
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource.selectedScalarParameterHull,
+      toSelectedScalarParameterValuationBallProductHullCoverSource,
+      selectedScalarImageHull]
+      using exactSource.valuationUnion_eq_selectedScalarImageHull
+
+noncomputable def toPossibleImageExactXiFamilySource
+    (exactSource : ExactXiSource data) :
+    IUTStage1Remark395PossibleImageExactXiFamilySource
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource :=
+  exactSource.toSelectedScalarParameterExactXiSource
+    |>.toPossibleImageExactXiFamilySource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (exactSource : ExactXiSource data) :
+    data.possibleImageUnion = data.selectedScalarImageHull ∧
+      data.selectedScalarImageHull =
+        data.nonzeroScalarSource.scalarMultiple data.selectedNonzeroScalar ''
+          data.nonzeroScalarSource.localIntegerRegion ∧
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource.canonicalHull =
+        data.toSelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource.familyUnion ∧
+      exactSource.toPossibleImageExactXiFamilySource.familyHullLogVolume_eq_familyUnion =
+        (exactSource.toSelectedScalarParameterExactXiSource
+          |>.toPossibleImageExactXiFamilySource).familyHullLogVolume_eq_familyUnion :=
+  by
+    exact
+      ⟨exactSource.valuationUnion_eq_selectedScalarImageHull,
+        data.selectedScalarImageHull_eq_selectedNonzeroScalar_image,
+        (exactSource.toSelectedScalarParameterExactXiSource.endpoint).2.2.1,
+        rfl⟩
+
+end ExactXiSource
 
 set_option linter.style.longLine false in
 theorem endpoint
@@ -26882,6 +27054,67 @@ theorem selectedScalarParameterValuation_endpoint
       data.toNonzeroScalarMultiplicationValuationBallProductHullCoverSource
         |>.selectedScalarParameterValuation_endpoint
     exact ⟨hendpoint.1, hendpoint.2.2.1, hendpoint.2.2.2.1, hendpoint.2.2.2.2⟩
+
+set_option linter.style.longLine false in
+structure ExactXiSource
+    (data :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A ι η K β γ) : Prop where
+  valuationUnion_eq_selectedScalarImageHull :
+    data.possibleImageUnion = data.selectedScalarImageHull
+
+namespace ExactXiSource
+
+variable
+  {data :
+    IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+      δ A ι η K β γ}
+
+noncomputable def toNonzeroScalarMultiplicationExactXiSource
+    (exactSource : ExactXiSource data) :
+    IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource.ExactXiSource
+      data.toNonzeroScalarMultiplicationValuationBallProductHullCoverSource where
+  valuationUnion_eq_selectedScalarImageHull := by
+    simpa [
+      possibleImageUnion,
+      selectedScalarImageHull,
+      toNonzeroScalarMultiplicationValuationBallProductHullCoverSource]
+      using exactSource.valuationUnion_eq_selectedScalarImageHull
+
+noncomputable def toSelectedScalarParameterExactXiSource
+    (exactSource : ExactXiSource data) :
+    IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource.ExactXiSource
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource :=
+  exactSource.toNonzeroScalarMultiplicationExactXiSource
+    |>.toSelectedScalarParameterExactXiSource
+
+noncomputable def toPossibleImageExactXiFamilySource
+    (exactSource : ExactXiSource data) :
+    IUTStage1Remark395PossibleImageExactXiFamilySource
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource :=
+  exactSource.toSelectedScalarParameterExactXiSource
+    |>.toPossibleImageExactXiFamilySource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (exactSource : ExactXiSource data) :
+    data.possibleImageUnion = data.selectedScalarImageHull ∧
+      data.selectedScalarImageHull =
+        data.nonzeroScalarSource.scalarMultiple data.selectedNonzeroScalar ''
+          data.nonzeroScalarSource.localIntegerRegion ∧
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource.canonicalHull =
+        data.toSelectedScalarParameterValuationBallProductHullCoverSource.toPossibleImageFamilySource.familyUnion ∧
+      exactSource.toPossibleImageExactXiFamilySource.familyHullLogVolume_eq_familyUnion =
+        (exactSource.toSelectedScalarParameterExactXiSource
+          |>.toPossibleImageExactXiFamilySource).familyHullLogVolume_eq_familyUnion :=
+  by
+    exact
+      ⟨exactSource.valuationUnion_eq_selectedScalarImageHull,
+        data.selectedScalarImageHull_eq_selectedNonzeroScalar_image,
+        (exactSource.toSelectedScalarParameterExactXiSource.endpoint).2.2.1,
+        rfl⟩
+
+end ExactXiSource
 
 set_option linter.style.longLine false in
 theorem endpoint
