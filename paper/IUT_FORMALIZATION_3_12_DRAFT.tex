@@ -942,12 +942,18 @@ inverse-dilation source and equality.  A boundary audit theorem now exposes
 this dependency shape by proving both the all-factor and selected-summand
 inverse-base-prime unit-ball equalities from the same family.  The hardened
 preferred wrapper lowers the theta scalar input one more step: it takes the
-Hodge/family-hull equality and derives the localized adjusted determinant-sum
-equality by the localized hull decomposition theorem before invoking the
-unified inverse-dilation route.  It now also lowers the structure-sheaf input:
-the hardened wrapper takes localized direct-summand calibration and derives
-the additive-Haar normalized compact-open equality by the additive-Haar
-projection theorem.  The current preferred wrapper lowers this boundary again:
+  Hodge/family-hull equality and derives the localized adjusted determinant-sum
+  equality by the localized hull decomposition theorem before invoking the
+  unified inverse-dilation route.  It now also lowers the structure-sheaf input:
+  the hardened wrapper takes localized direct-summand calibration and derives
+  the additive-Haar normalized compact-open equality by the additive-Haar
+  projection theorem.  A complementary non-vacuous Haar-modulus wrapper now
+  uses the opposite, source-level direction required for the additive-Haar
+  construction: it takes the localized structure-sheaf equality with the
+  normalized compact-open Haar factor and derives the Step (xi)
+  structure-sheaf/direct-summand equality from the additive-Haar localized
+  vector-bundle decomposition theorem.  The current preferred wrapper lowers
+  the surrounding Gaussian/Hodge boundary again:
 the restriction local-global object, ordinary-log-volume/Hodge-degree
 calibration, direct-summand data, and Hodge/family-hull equality are projected
 from the constructed Gaussian/Hodge localized-adjusted source.  It now lowers
@@ -987,11 +993,14 @@ equality implies the family-hull/global calibration via theta/ordinary
 realified Frobenioid compatibility, and the localized determinant/family-hull
 equality then gives the determinant/global equality needed for the
 Gaussian-global nonzero proof.  The earlier
-structure-sheaf/direct-summand boundary has also been lowered at the
-finite-extension endpoint: instead of publicly supplying
-`structure-sheaf equals direct summand', the newest compact-open factor route
-uses the valuation-unit-ball normalized log-volume identity for the
-distinguished structure-sheaf factor and derives the direct-summand equality.
+  structure-sheaf/direct-summand boundary has also been lowered at the
+  finite-extension endpoint: instead of publicly supplying
+  `structure-sheaf equals direct summand', the newest compact-open factor route
+  uses the valuation-unit-ball normalized log-volume identity for the
+  distinguished structure-sheaf factor and derives the direct-summand equality.
+  The non-vacuous Haar-modulus/additive-Haar branch now has the same
+  normalized-Haar-to-direct-summand handoff without passing through the vacuous
+  unit-ball endpoint.
 For strict positivity, the additive-Haar route now has a genuine
 Haar-mass-to-norm constructor, and the inverse-dilation finite-extension branch
 constructs a non-unit selected factor with strict Haar mass.  The unit-ball

@@ -1191,15 +1191,25 @@
   \(\deg_{\Theta}=\operatorname{vol}_{\log}(\operatorname{Hull}_{\mathrm{fam}})\),
   and Lean derives the older localized adjusted determinant equality by
   composing with the localized hull decomposition theorem
-  \(\operatorname{vol}_{\log}(\operatorname{Hull}_{\mathrm{fam}})
-  =\sum_{\mathrm{loc}}\operatorname{vol}_{\log}\).  The direct-summand
-  calibrated wrapper lowers the structure-sheaf input as well: it supplies
-  the localized equality with the chosen direct summand, and Lean derives the
-  additive-Haar normalized compact-open equality by the projection theorem for
-  the constructed additive-Haar localized source.  The current hardened
-  non-vacuous public wrapper lowers this boundary again: the restriction
-  local-global object, ordinary-log-volume/Hodge-degree calibration, direct
-  summand data, and Hodge/family-hull scalar equality are projected from the
+	  \(\operatorname{vol}_{\log}(\operatorname{Hull}_{\mathrm{fam}})
+	  =\sum_{\mathrm{loc}}\operatorname{vol}_{\log}\).  The direct-summand
+	  calibrated wrapper lowers the structure-sheaf input as well: it supplies
+	  the localized equality with the chosen direct summand, and Lean derives the
+	  additive-Haar normalized compact-open equality by the projection theorem for
+	  the constructed additive-Haar localized source.  The non-vacuous
+	  Haar-modulus/additive-Haar wrapper now also implements the source-level
+	  direction needed by the compact-open construction: it supplies the equality
+	  with the normalized additive-Haar compact-open factor and derives the
+	  structure-sheaf/direct-summand equality by
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductHaarModulusInverseDilationAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedSource.structureSheaf_eq_directSummand}.
+	  The corresponding public wrapper is
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousHaarModulusAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRoute},
+	  with audit
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousHaarModulusAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRouteBoundaryAudit}.
+	  The current hardened
+	  non-vacuous public wrapper lowers this boundary again: the restriction
+	  local-global object, ordinary-log-volume/Hodge-degree calibration, direct
+	  summand data, and Hodge/family-hull scalar equality are projected from the
   constructed Gaussian/Hodge localized-adjusted source.  The current public
   wrapper lowers this boundary further: the Gaussian/Hodge localized-adjusted
   Ob7 source is constructed from additive-Haar compact-open factors, the
@@ -1247,15 +1257,17 @@
   variant also replaces the raw Hodge theta-monoid/localized-adjusted sum
   equality by the Hodge/family-hull equality, then derives the adjusted-sum
   equality through the localized Ob3/Ob5 identity.  Its restriction-calibrated
-  variant also replaces the placewise Hodge canonical-degree/local-prime
-  equalities by an anchored local-global restriction source plus one global
-  Hodge canonical-degree calibration.  The newest additive-Haar strict-factor
-  variant derives the selected nonzero norm from the concrete inverse-dilation
-  Haar factor \(p^{-1}O_K\), and its cover wrapper derives the localized
-  hull-containment and volume-sum fields from a cover identity; the unit-ball
-  compact-open factor variant
-  separately identifies the distinguished structure-sheaf summand with its
-  valuation-unit-ball normalized compact-open factor before invoking the older
+	  variant also replaces the placewise Hodge canonical-degree/local-prime
+	  equalities by an anchored local-global restriction source plus one global
+	  Hodge canonical-degree calibration.  The newest additive-Haar strict-factor
+	  variant derives the selected nonzero norm from the concrete inverse-dilation
+	  Haar factor \(p^{-1}O_K\), and its cover wrapper derives the localized
+	  hull-containment and volume-sum fields from a cover identity.  Its
+	  normalized-structure-sheaf variant derives the direct-summand handoff from
+	  the additive-Haar compact-open normalized log-volume identity; the unit-ball
+	  compact-open factor variant
+	  separately identifies the distinguished structure-sheaf summand with its
+	  valuation-unit-ball normalized compact-open factor before invoking the older
   restriction-calibrated route.
   The structure-sheaf-positive, raw-positive, summand-positive,
   weighted-partition, explicit raw-ratio, and one-summand routes remain as
