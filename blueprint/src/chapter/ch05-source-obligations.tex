@@ -1446,9 +1446,15 @@
 	  hull-formation-selected public principal-product version
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductPadicFiniteExtensionHullFormationSelectedInverseBasePrimeIntrinsicValuationCoverSource},
 	  which keeps the inverse-dilated branch separate from the legacy
-	  radius-one unit-ball branch.  The remaining work is to migrate the
-	  downstream residue-module and preferred-public route consumers onto this
-	  inverse-dilated cover.
+	  radius-one unit-ball branch.  The residue-module handoff is now also
+	  attached to this inverse cover by
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductPadicFiniteExtensionResidueModuleInverseBasePrimeHaarModulusValuationCoverSource}:
+	  it identifies the cover's inverse-dilation mass source with the
+	  residue-module constructed mass source and derives the additive-Haar
+	  inverse-base-prime unit-ball equality at each radius-\(p_v\) local
+	  factor.  The remaining migration is the preferred-public route projection,
+	  which should use a public-principal specialization of this inverse-dilated
+	  cover.
 	  The same scale-component
 	  match is now exposed below the residue wrapper as well: the intrinsic
 	  Haar-modulus source
