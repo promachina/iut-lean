@@ -1217,12 +1217,19 @@
 	  The corresponding additive-Haar arithmetic-degree payload has also been
 	  split at this boundary:
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.AdditiveHaarArithmeticDegreePadicResidualPayload}
-	  keeps the lower Theorem 1.10/IUT IV and IPL/SHE/APT assumptions, while
+	  kept the lower Theorem 1.10/IUT IV and IPL/SHE/APT assumptions, while
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.additiveHaarArithmeticDegreePadicObligationsOfNormalizedSource}
 	  reconstructs the Step (xi) determinant/calibration slots from the
 	  normalized source audit and
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.additiveHaarArithmeticDegreePadicRemainingPayloadAudit_ofNormalizedSource}
 	  proves the old remaining-payload audit for the constructed obligations.
+	  The newer boundary removes the Step (x) and \(\IPL/\SHE/\APT\) fields from
+	  the residual as well:
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.AdditiveHaarArithmeticDegreePadicArithmeticResidualPayload}
+	  contains only seven arithmetic/formula fields, and
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.additiveHaarResidualPayloadOfArithmeticSource}
+	  reconstructs the older residual payload from the vertical log-Kummer
+	  package and Theorem 3.11 bridge package.
 	  This audit now also records the paper trace constructed from the same
 	  additive-Haar compact-open factor source and exposes its Ob7--Ob9
 	  log-Kummer, vertical-shift, and realified-log-volume components.
