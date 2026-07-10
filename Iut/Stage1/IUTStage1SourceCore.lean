@@ -3643,6 +3643,179 @@ theorem endpoint
 
 end IUTStage1Remark395PrincipalProductHullSystemSource
 
+namespace IUTStage1Remark395PrincipalProductHullSystemSource
+
+variable {α : Type u} {β : Type v} {Λ : Type w}
+
+set_option linter.style.longLine false in
+/--
+Transport a principal `lambda * O` hull system across an equivalence of
+carriers.
+
+This is the carrier-change step needed when the paper-level direct product
+of local factors has already constructed the principal hull, but the public
+Theorem 3.11/Step (xi) route is expressed on a real-line copy or other
+target carrier.  The transported hull is the inverse image of the source hull;
+the intersection parameter is computed after pushing the tested region forward.
+-/
+def transport
+    (data : IUTStage1Remark395PrincipalProductHullSystemSource β Λ)
+    (carrierEquiv : α ≃ β) :
+    IUTStage1Remark395PrincipalProductHullSystemSource α Λ :=
+  { localIntegerRegion := carrierEquiv ⁻¹' data.localIntegerRegion,
+    scalarMultiple :=
+      fun parameter point =>
+        carrierEquiv.symm (data.scalarMultiple parameter (carrierEquiv point)),
+    parameter_nonzero := data.parameter_nonzero,
+    all_parameters_nonzero := data.all_parameters_nonzero,
+    intersectionParameter :=
+      fun region => data.intersectionParameter (carrierEquiv '' region),
+    principalHull_intersection_eq := by
+      intro region
+      let transportedHull : Λ -> Set α :=
+        fun parameter =>
+          { point : α |
+            ∃ base : α,
+              base ∈ carrierEquiv ⁻¹' data.localIntegerRegion ∧
+                carrierEquiv.symm
+                    (data.scalarMultiple parameter (carrierEquiv base)) =
+                  point }
+      have hmem :
+          ∀ (parameter : Λ) (point : α),
+            point ∈ transportedHull parameter ↔
+              carrierEquiv point ∈ data.principalHull parameter := by
+        intro parameter point
+        constructor
+        · intro hpoint
+          rcases hpoint with ⟨base, hbase, hscale⟩
+          refine ⟨carrierEquiv base, hbase, ?_⟩
+          have hscale' := congrArg carrierEquiv hscale
+          simpa using hscale'
+        · intro hpoint
+          rcases hpoint with ⟨base, hbase, hscale⟩
+          refine ⟨carrierEquiv.symm base, ?_, ?_⟩
+          · simpa using hbase
+          · simp [hscale]
+      ext point
+      change
+        point ∈
+            transportedHull
+              (data.intersectionParameter (carrierEquiv '' region)) ↔
+          point ∈
+            { point : α |
+              ∀ parameter : Λ,
+                region ⊆ transportedHull parameter ->
+                  point ∈ transportedHull parameter }
+      constructor
+      · intro hpoint parameter hsubset
+        apply (hmem parameter point).mpr
+        have hsource :
+            carrierEquiv point ∈
+              data.principalHull
+                (data.intersectionParameter (carrierEquiv '' region)) :=
+          (hmem
+            (data.intersectionParameter (carrierEquiv '' region))
+            point).mp hpoint
+        rw [data.principalHull_intersection_eq_source
+          (carrierEquiv '' region)] at hsource
+        exact hsource parameter
+          (by
+            intro imagePoint himage
+            rcases himage with ⟨preimagePoint, hpreimage, rfl⟩
+            exact (hmem parameter preimagePoint).mp
+              (hsubset hpreimage))
+      · intro hpoint
+        apply
+          (hmem
+            (data.intersectionParameter (carrierEquiv '' region))
+            point).mpr
+        rw [data.principalHull_intersection_eq_source
+          (carrierEquiv '' region)]
+        intro parameter hsubset
+        exact (hmem parameter point).mp
+          (hpoint parameter
+            (by
+              intro preimagePoint hpreimage
+              apply (hmem parameter preimagePoint).mpr
+              exact hsubset ⟨preimagePoint, hpreimage, rfl⟩)),
+    logVolume := fun region => data.logVolume (carrierEquiv '' region),
+    principalHullLogVolume := data.principalHullLogVolume,
+    logVolume_principalHull_eq := by
+      intro parameter
+      have himage :
+          carrierEquiv ''
+              { point : α |
+                ∃ base : α,
+                  base ∈ carrierEquiv ⁻¹' data.localIntegerRegion ∧
+                    carrierEquiv.symm
+                        (data.scalarMultiple parameter (carrierEquiv base)) =
+                      point } =
+            data.principalHull parameter := by
+        ext imagePoint
+        constructor
+        · intro hpoint
+          rcases hpoint with ⟨point, hpoint, rfl⟩
+          rcases hpoint with ⟨base, hbase, hscale⟩
+          refine ⟨carrierEquiv base, hbase, ?_⟩
+          have hscale' := congrArg carrierEquiv hscale
+          simpa using hscale'
+        · intro hpoint
+          rcases hpoint with ⟨base, hbase, hscale⟩
+          refine
+            ⟨carrierEquiv.symm imagePoint,
+              ⟨carrierEquiv.symm base, ?_, ?_⟩, ?_⟩
+          · simpa using hbase
+          · simp [hscale]
+          · simp
+      rw [himage]
+      exact data.logVolume_principalHull_eq_source parameter,
+    logVolume_mono := by
+      intro region₁ region₂ hsubset
+      exact data.logVolume_mono (Set.image_mono hsubset) }
+
+set_option linter.style.longLine false in
+theorem transport_principalHull_mem_iff
+    (data : IUTStage1Remark395PrincipalProductHullSystemSource β Λ)
+    (carrierEquiv : α ≃ β) (parameter : Λ) (point : α) :
+    point ∈ (data.transport carrierEquiv).principalHull parameter ↔
+      carrierEquiv point ∈ data.principalHull parameter := by
+  constructor
+  · intro hpoint
+    rcases hpoint with ⟨base, hbase, hscale⟩
+    refine ⟨carrierEquiv base, hbase, ?_⟩
+    have hscale' := congrArg carrierEquiv hscale
+    simpa [transport] using hscale'
+  · intro hpoint
+    rcases hpoint with ⟨base, hbase, hscale⟩
+    refine ⟨carrierEquiv.symm base, ?_, ?_⟩
+    · simpa [transport] using hbase
+    · simp [transport, hscale]
+
+set_option linter.style.longLine false in
+theorem transport_principalHull_image_eq
+    (data : IUTStage1Remark395PrincipalProductHullSystemSource β Λ)
+    (carrierEquiv : α ≃ β) (parameter : Λ) :
+    carrierEquiv '' (data.transport carrierEquiv).principalHull parameter =
+      data.principalHull parameter := by
+  ext point
+  constructor
+  · intro hpoint
+    rcases hpoint with ⟨preimagePoint, hpreimage, rfl⟩
+    exact
+      (data.transport_principalHull_mem_iff
+        carrierEquiv parameter preimagePoint).mp hpreimage
+  · intro hpoint
+    refine
+      ⟨carrierEquiv.symm point,
+        ?_,
+        by simp⟩
+    exact
+      (data.transport_principalHull_mem_iff
+        carrierEquiv parameter (carrierEquiv.symm point)).mpr
+        (by simpa using hpoint)
+
+end IUTStage1Remark395PrincipalProductHullSystemSource
+
 /--
 Direct-product backed principal product-hull source.
 
@@ -4486,6 +4659,125 @@ theorem endpoint
         hlog⟩
 
 end IUTStage1Remark395ScalarParameterPrincipalProductHullSystemSource
+
+/--
+Carrier-transported scalar-parameter principal product-hull source.
+
+The scalar-parameter construction above lives on the literal dependent product
+of local factors.  Step (xi), however, is usually stated on a public target
+carrier such as a real-line copy.  This record supplies only the carrier
+equivalence and transports the already proved principal hull theorem across it.
+Thus the public principal source is still constructed from scalar/local data,
+not assumed as a standalone Remark 3.9.5 hull system.
+-/
+structure IUTStage1Remark395TransportedScalarParameterPrincipalProductHullSystemSource
+    (α : Type u) (δ : Type v) (A : δ -> Type w) (S : δ -> Type x) where
+  scalarParameterSource :
+    IUTStage1Remark395ScalarParameterPrincipalProductHullSystemSource δ A S
+  carrierEquiv : α ≃ ((d : δ) -> A d)
+
+namespace IUTStage1Remark395TransportedScalarParameterPrincipalProductHullSystemSource
+
+variable {α : Type u} {δ : Type v} {A : δ -> Type w} {S : δ -> Type x}
+
+def productPrincipalSource
+    (data :
+      IUTStage1Remark395TransportedScalarParameterPrincipalProductHullSystemSource
+        α δ A S) :
+    IUTStage1Remark395PrincipalProductHullSystemSource
+      ((d : δ) -> A d) ((d : δ) -> S d) :=
+  data.scalarParameterSource.toPrincipalProductHullSystemSource
+
+set_option linter.style.longLine false in
+def toPrincipalProductHullSystemSource
+    (data :
+      IUTStage1Remark395TransportedScalarParameterPrincipalProductHullSystemSource
+        α δ A S) :
+    IUTStage1Remark395PrincipalProductHullSystemSource
+      α ((d : δ) -> S d) :=
+  data.productPrincipalSource.transport data.carrierEquiv
+
+def toHolomorphicHullSystem
+    (data :
+      IUTStage1Remark395TransportedScalarParameterPrincipalProductHullSystemSource
+        α δ A S) :
+    IUTStage1Remark395HolomorphicHullSystem α :=
+  data.toPrincipalProductHullSystemSource.toHolomorphicHullSystem
+
+set_option linter.style.longLine false in
+theorem principalHull_mem_iff_productPrincipalHull
+    (data :
+      IUTStage1Remark395TransportedScalarParameterPrincipalProductHullSystemSource
+        α δ A S)
+    (parameter : (d : δ) -> S d) (point : α) :
+    point ∈ data.toPrincipalProductHullSystemSource.principalHull parameter ↔
+      data.carrierEquiv point ∈
+        data.productPrincipalSource.principalHull parameter :=
+  data.productPrincipalSource.transport_principalHull_mem_iff
+    data.carrierEquiv parameter point
+
+set_option linter.style.longLine false in
+theorem principalHull_image_eq_productPrincipalHull
+    (data :
+      IUTStage1Remark395TransportedScalarParameterPrincipalProductHullSystemSource
+        α δ A S)
+    (parameter : (d : δ) -> S d) :
+    data.carrierEquiv ''
+        data.toPrincipalProductHullSystemSource.principalHull parameter =
+      data.productPrincipalSource.principalHull parameter :=
+  data.productPrincipalSource.transport_principalHull_image_eq
+    data.carrierEquiv parameter
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395TransportedScalarParameterPrincipalProductHullSystemSource
+        α δ A S)
+    (region : Set α) :
+    let principalSource := data.toPrincipalProductHullSystemSource;
+    let productRegion := data.carrierEquiv '' region;
+    (∀ parameter : (d : δ) -> S d,
+        principalSource.parameter_nonzero parameter) ∧
+      (∀ parameter : (d : δ) -> S d,
+        data.carrierEquiv ''
+            principalSource.principalHull parameter =
+          data.productPrincipalSource.principalHull parameter) ∧
+      principalSource.intersectionParameter region =
+        data.productPrincipalSource.intersectionParameter productRegion ∧
+      principalSource.principalHull
+          (principalSource.intersectionParameter region) =
+        { point : α |
+          ∀ parameter : (d : δ) -> S d,
+            region ⊆ principalSource.principalHull parameter ->
+              point ∈ principalSource.principalHull parameter } ∧
+      principalSource.toHolomorphicHullSystem.phi region =
+        principalSource.principalHull
+          (principalSource.intersectionParameter region) ∧
+      region ⊆
+        principalSource.principalHull
+          (principalSource.intersectionParameter region) ∧
+      principalSource.toProductHullSystemSource.logVolume
+          (principalSource.toProductHullSystemSource.productHull
+            (principalSource.toProductHullSystemSource.intersectionParameter
+              region)) =
+        principalSource.toProductHullSystemSource.productHullLogVolume
+          (principalSource.toProductHullSystemSource.intersectionParameter
+            region) :=
+  by
+    intro principalSource productRegion
+    have hprincipal := principalSource.endpoint region
+    rcases hprincipal with
+      ⟨hnonzero, _, hphi, hregion, _, _, hlog⟩
+    exact
+      ⟨hnonzero,
+        data.principalHull_image_eq_productPrincipalHull,
+        rfl,
+        principalSource.principalHull_intersection_eq_source region,
+        hphi,
+        hregion,
+        hlog⟩
+
+end IUTStage1Remark395TransportedScalarParameterPrincipalProductHullSystemSource
 
 /--
 Nonzero scalar-multiplication direct-product hull source.
