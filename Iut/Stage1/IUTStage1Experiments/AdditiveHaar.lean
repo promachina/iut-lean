@@ -696,6 +696,114 @@ noncomputable def concreteHodgeTheaterLogThetaQuotientThetaPilotSource_toOneSide
 
 set_option linter.style.longLine false in
 /--
+Localized-determinant constructor for the concrete Hodge-theater/log-theta
+Step~(xi) local-term `C_Theta` source.
+
+Compared with
+`concreteHodgeTheaterLogThetaQuotientThetaPilotSource_toOneSidedStepXILocalTermCThetaSource`,
+this route does not accept the determinant-source handoff as a separate input.
+The constructed Remark 3.9.5 hull/determinant source is itself built from the
+localized vector-bundle determinant source, so the handoff to
+`toAdjustedDeterminantSource.toWeightedDeterminantSource` is reflexive.
+-/
+noncomputable def concreteHodgeTheaterLogThetaQuotientThetaPilotSource_toOneSidedLocalizedDeterminantStepXILocalTermCThetaSource
+    {source target : Copy} {coric : Type u}
+    {l : PrimeGeFive}
+    {package :
+      IUTStage1SourcePackage source target
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l}
+    (sourceData :
+      ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource record indData)
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (hullOperator :
+      IUTStage1Remark395HolomorphicHullOperator (Point target))
+    {β : Type v} [Fintype β]
+    {η : Type y} {γ : Type w} [Fintype γ]
+    (localizedStepXISource :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ)
+    (compatibility :
+      IUTStage1HullApproximantWeightedDeterminantCompatibility
+        (IUTStage1HullLogVolumeApproximant.canonical
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          (recordThetaPossibleImageUnion record))
+        localizedStepXISource.toAdjustedDeterminantSource.toWeightedDeterminantSource)
+    (measure_eq_hullLogVolume :
+      package.preLedger.measure =
+        (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+          hullOperator).toRegionMeasure)
+    (tensorPower_bound :
+      (IUTStage1NaiveFrobeniusTensorPowerLogVolume.ofWeightedDeterminant
+          localizedStepXISource.toAdjustedDeterminantSource.toWeightedDeterminantSource).normalizedLogVolume <=
+        package.preLedger.thetaSigned)
+    (hullDetBridge_eq :
+      package.preLedger.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge =
+        recordCanonicalHullTensorPowerHullDetDataOfQSubsetUnion
+          (record := record)
+          operation hullOperation determinantOperation
+          (IUTStage1HolomorphicHullLogVolumeShadow.ofRemark395Operator
+            hullOperator)
+          sourceData.toConstruction.selectedQRegion.toSet
+          sourceData.toConstruction.selectedQRegion_subset_recordUnion
+          localizedStepXISource.toAdjustedDeterminantSource.toWeightedDeterminantSource
+          compatibility measure_eq_hullLogVolume tensorPower_bound)
+    (q_pilot_positive : 0 < -package.preLedger.qSigned)
+    (normalization : package.preLedger.normalization)
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    (canonicalCThetaScale_eq_stepXISum :
+      (IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.ofLocalizedVectorBundleDeterminantSource
+        (record := record)
+        operation hullOperation determinantOperation hullOperator
+        sourceData.toConstruction.selectedQRegion.toSet
+        sourceData.toConstruction.selectedQRegion_subset_recordUnion
+        localizedStepXISource compatibility measure_eq_hullLogVolume
+        tensorPower_bound hullDetBridge_eq q_pilot_positive
+        normalization).canonicalCThetaScale =
+          ∑ place : β, localizedStepXISource.weightedAdjustedLogVolume place)
+    (localMainLogContribution : β -> Real)
+    (localHaarNormalizationDefect : β -> Real)
+    (arithmeticUpperTerm_eq_stepXI_haar_main_sum :
+      estimate.arithmeticUpperTerm =
+        ∑ place : β,
+          (localizedStepXISource.weightedAdjustedLogVolume place +
+            localHaarNormalizationDefect place +
+              localMainLogContribution place))
+    (mainLogTerm_eq_sum :
+      estimate.mainLogTerm =
+        ∑ place : β, localMainLogContribution place)
+    (total_haar_defect_ge_one :
+      (1 : Real) <= ∑ place : β, localHaarNormalizationDefect place) :
+    ConstructedTheorem311OneSidedStepXILocalTermCThetaSource
+      (IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.ofLocalizedVectorBundleDeterminantSource
+        (record := record)
+        operation hullOperation determinantOperation hullOperator
+        sourceData.toConstruction.selectedQRegion.toSet
+        sourceData.toConstruction.selectedQRegion_subset_recordUnion
+        localizedStepXISource compatibility measure_eq_hullLogVolume
+        tensorPower_bound hullDetBridge_eq q_pilot_positive normalization)
+      estimate l η γ :=
+  { oneSidedMultiradialSource := sourceData.toConstruction,
+    qPilotRegion_eq_selectedQRegion := rfl,
+    localizedStepXISource := localizedStepXISource,
+    determinantSource_eq_stepXI := rfl,
+    canonicalCThetaScale_eq_stepXISum :=
+      canonicalCThetaScale_eq_stepXISum,
+    localMainLogContribution := localMainLogContribution,
+    localHaarNormalizationDefect := localHaarNormalizationDefect,
+    arithmeticUpperTerm_eq_stepXI_haar_main_sum :=
+      arithmeticUpperTerm_eq_stepXI_haar_main_sum,
+    mainLogTerm_eq_sum := mainLogTerm_eq_sum,
+    total_haar_defect_ge_one := total_haar_defect_ge_one }
+
+set_option linter.style.longLine false in
+/--
 Endpoint audit for the concrete Hodge-theater/log-theta Step~(xi)
 local-term source.
 

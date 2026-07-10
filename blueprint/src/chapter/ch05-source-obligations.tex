@@ -939,7 +939,11 @@
   hull-operator and possible-region alignments by reflexivity, rather than
   accepting those alignments as separate public inputs.  Its canonical-theta
   refinement sets the signed theta value to the projected family-hull
-  log-volume, so the theta/family-hull equality is also reflexive.
+  log-volume, so the theta/family-hull equality is also reflexive.  The
+  localized determinant handoff has also been lowered: the Remark~3.9.5
+  hull/determinant source can be constructed from the localized vector-bundle
+  determinant source, so the local \(C_\Theta\) constructor no longer takes the
+  determinant-source equality as an independent field in this route.
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductLocalizedHullCoverVectorBundleSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductLocalizedHullCoverVectorBundleSource.toLocalizedHullVectorBundleDecompositionSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductLocalizedHullCoverVectorBundleSource.endpoint}
@@ -948,6 +952,9 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPrincipalProductLocalizedCoverCanonicalThetaStepXIPaperSourceRouteAudit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.principalProductLocalizedCoverThetaEqFamilyHullPaperTrace}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.principalProductLocalizedCoverCanonicalThetaPaperTrace}
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.ofLocalizedVectorBundleDeterminantSource}
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.ofLocalizedVectorBundleDeterminantSource_endpoint}
+  \lean{Iut.Stage1.Experiments.concreteHodgeTheaterLogThetaQuotientThetaPilotSource_toOneSidedLocalizedDeterminantStepXILocalTermCThetaSource}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductLocalizedCoverConstructedPaperTraceStepXIPaperSourceRouteAudit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductLocalizedCoverCanonicalThetaConstructedPaperTraceStepXIPaperSourceRouteAudit}
   At the deepest

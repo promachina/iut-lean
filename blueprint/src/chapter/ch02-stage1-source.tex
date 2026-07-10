@@ -147,14 +147,19 @@
   determinant source: its weighted adjusted local terms give the Step~(xi)
   finite sum for the canonical \(C_\Theta\)-scale, while the local arithmetic
   upper term is decomposed into the Step~(xi) term, a Haar normalization
-  defect, and a main-log term.
+  defect, and a main-log term.  The localized-determinant constructor removes
+  the separate determinant-source handoff: the constructed Remark~3.9.5 source
+  is projected from the same localized vector-bundle determinant source.
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.ofLocalizedVectorBundleDeterminantSource}
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.ofLocalizedVectorBundleDeterminantSource_endpoint}
+  \lean{Iut.Stage1.Experiments.concreteHodgeTheaterLogThetaQuotientThetaPilotSource_toOneSidedLocalizedDeterminantStepXILocalTermCThetaSource}
 \end{proposition}
 
 \begin{proof}
   Lean first carries the compact-open log-Kummer source through the
   source-derived exact-\(\Xi(P_B)\) global \(C_\Theta\) audit.  At the
   local-term boundary it identifies the localized determinant source with the
-  formula-matching Step~(xi) source, derives the displayed Ob3/Ob4 and
-  valuation-cover handoffs, and invokes the finite-sum closed
+  formula-matching Step~(xi) source by construction, derives the displayed
+  Ob3/Ob4 and valuation-cover handoffs, and invokes the finite-sum closed
   Corollary~3.12 endpoint.
 \end{proof}
