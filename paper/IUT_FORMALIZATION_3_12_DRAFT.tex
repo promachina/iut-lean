@@ -356,6 +356,11 @@ finite-place Haar defects, formula-gap matching, and Step (xi) local terms into
 the endpoint.  For this preferred route, the canonical \(\CTheta\)-scale
 comparison is derived from the finite-place arithmetic gap and the IUT IV
 handoff identity, rather than supplied as a raw endpoint hypothesis.
+At the Step (xi) source layer, Lean now also proves the sharper handoff for both
+the constructed Remark 3.9.5 hull/determinant source and the constructor-built
+exact-theta source: once the local canonical Step (xi) scale is identified with
+the finite-place scale in the IUT IV summation record, the global
+\(\CTheta\)-dominance follows from the IUT IV plus-one cancellation theorem.
 
 The phrase ``proof-carrying'' is deliberate.  The route no longer consumes a
 single unstructured numerical inequality at the public endpoint.  It consumes a
@@ -1042,8 +1047,10 @@ The current formalization organizes the route through additive-Haar
 arithmetic-degree and \(p\)-adic formula objects, but the deepest estimates are
 still source obligations.  What is now checked for the preferred route is the
 ordered-real and finite-sum handoff from the arithmetic gap to the canonical
-\(\CTheta\)-scale comparison.  What remains to construct from first principles
-is the lower IUT IV source of that arithmetic gap:
+\(\CTheta\)-scale comparison, together with the source-level bridge that
+identifies the constructed Step (xi) canonical scale with the finite-place IUT IV
+scale before applying plus-one cancellation.  What remains to construct from
+first principles is the lower IUT IV source of that arithmetic gap:
 \[
 \begin{array}{l}
 \text{the distinguished log-shell inclusions and numerical bounds},\\
