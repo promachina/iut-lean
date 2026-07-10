@@ -834,13 +834,16 @@ arithmetic-divisor split, the finite-place Haar defect, the arithmetic-gap
 estimate, and the local-to-global \(C_{\Theta}\) comparison are read from
 \(\mathrm{IUTIVCThetaObligations}\), not supplied as a separate residual record.
 This CTheta-derived arithmetic boundary has also been lifted through the
-intrinsic finite-extension and residue-module/unit-ball normalized public
-routes, so those stronger p-adic endpoints can now use the same source-derived
-arithmetic payload.  The strongest residue-module/unit-ball wrapper now has a
-single full-boundary audit combining its Step (xi) residue-module source audit,
-the projected normalized additive-Haar audit, the IUT IV arithmetic-residual
-audit, and the definitional equality with the projected normalized public
-route.  The parallel non-normalized unit-ball Haar-character and
+intrinsic finite-extension, unit-ball Haar-character, and
+residue-module/unit-ball normalized public routes, so those stronger p-adic
+endpoints can now use the same source-derived arithmetic payload.  The
+unit-ball normalized wrapper has its own full-boundary audit, and the strongest
+residue-module/unit-ball wrapper now factors through it before projecting to
+the intrinsic Haar-modulus normalized route.  Its audit combines the Step (xi)
+residue-module source audit, the transported residue-module factor handoff,
+the projected unit-ball normalized audit, the IUT IV arithmetic-residual audit,
+and the definitional equality with the projected normalized public route.
+The parallel non-normalized unit-ball Haar-character and
 residue-module/unit-ball Haar-character finite-summand routes now have the same
 CTheta-derived arithmetic handoff: their public wrappers project to the
 intrinsic Haar-modulus/additive-Haar finite-summand route, and their full
@@ -1061,7 +1064,11 @@ preferred wrapper lowers the theta scalar input one more step: it takes the
   The same finite-summand endpoint has now been lifted through the intrinsic
   finite-extension Haar-modulus, unit-ball Haar-character, and residue-module
   quotient wrappers, so those local arithmetic sources no longer expose only
-  the family-hull route at their public boundary.  The non-normalized
+  the family-hull route at their public boundary.  On the normalized branch,
+  the unit-ball Haar-character wrapper now has its own CTheta-derived endpoint
+  and full boundary audit, and the residue-module normalized route now factors
+  through that unit-ball audit before the intrinsic Haar-modulus normalized
+  boundary.  The non-normalized
   unit-ball Haar-character wrapper and the residue-module/unit-ball
   Haar-character wrapper now also have CTheta-derived finite-summand endpoints
   and full boundary audits, so their remaining additive-Haar arithmetic
