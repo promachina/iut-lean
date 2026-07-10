@@ -5259,6 +5259,200 @@ theorem endpoint
 
 end IUTStage1Remark395TransportedLocallyRepresentableScalarParameterPrincipalProductHullSystemSource
 
+/-
+Coordinate scalar-image sources produce locally representable scalar-parameter
+sources once local coordinate points can be extended to product points.
+
+For p-adic local factors this extension is supplied by the distinguished zero
+element.  Abstractly we record it as `Inhabited (A d)`.  The scalar parameter
+at a place is the coordinate region itself, so local representability is
+definitionally trivial; the nontrivial content is the equality between the
+coordinate region and the image of the local integer factor under the supplied
+coordinate scalar map, proved from the coordinate landing/preimage laws.
+-/
+namespace IUTStage1Remark395CoordinateScalarImageDirectProductHullSource
+
+variable {δ : Type u} {A : δ -> Type v}
+
+noncomputable def singleCoordinateParameter
+    [DecidableEq δ]
+    (_data :
+      IUTStage1Remark395CoordinateScalarImageDirectProductHullSource δ A)
+    (d : δ)
+    (coordinateParameter : Set (A d)) :
+    (e : δ) -> Set (A e) :=
+  fun e =>
+    if h : e = d then
+      h.symm ▸ coordinateParameter
+    else
+      Set.univ
+
+@[simp]
+theorem singleCoordinateParameter_self
+    [DecidableEq δ]
+    (data :
+      IUTStage1Remark395CoordinateScalarImageDirectProductHullSource δ A)
+    (d : δ)
+    (coordinateParameter : Set (A d)) :
+    data.singleCoordinateParameter d coordinateParameter d =
+      coordinateParameter := by
+  simp [singleCoordinateParameter]
+
+noncomputable def singleCoordinatePoint
+    [DecidableEq δ] [∀ d : δ, Inhabited (A d)]
+    (_data :
+      IUTStage1Remark395CoordinateScalarImageDirectProductHullSource δ A)
+    (d : δ)
+    (coordinatePoint : A d) :
+    (e : δ) -> A e :=
+  fun e =>
+    if h : e = d then
+      h.symm ▸ coordinatePoint
+    else
+      default
+
+@[simp]
+theorem singleCoordinatePoint_self
+    [DecidableEq δ] [∀ d : δ, Inhabited (A d)]
+    (data :
+      IUTStage1Remark395CoordinateScalarImageDirectProductHullSource δ A)
+    (d : δ)
+    (coordinatePoint : A d) :
+    data.singleCoordinatePoint d coordinatePoint d =
+      coordinatePoint := by
+  simp [singleCoordinatePoint]
+
+set_option linter.style.longLine false in
+theorem coordinateParameterRegion_eq_scalarImage
+    [∀ d : δ, Inhabited (A d)]
+    (data :
+      IUTStage1Remark395CoordinateScalarImageDirectProductHullSource δ A)
+    (d : δ)
+    (coordinateParameter : Set (A d)) :
+    coordinateParameter =
+      data.scalarMultipleCoordinate d coordinateParameter ''
+        data.localIntegerFactorRegion d := by
+  classical
+  ext coordinatePoint
+  constructor
+  · intro hpoint
+    let productParameter :=
+      data.singleCoordinateParameter d coordinateParameter
+    let productPoint :=
+      data.singleCoordinatePoint d coordinatePoint
+    have hmem :
+        productPoint d ∈ productParameter d := by
+      simpa [productPoint, productParameter] using hpoint
+    rcases
+      data.parameter_has_coordinateScalarPreimage
+        productParameter productPoint d hmem with
+      ⟨base, hbase, hscale⟩
+    refine ⟨base, hbase, ?_⟩
+    simpa [productPoint, productParameter] using hscale
+  · rintro ⟨base, hbase, hscale⟩
+    let productParameter :=
+      data.singleCoordinateParameter d coordinateParameter
+    let productBase :=
+      data.singleCoordinatePoint d base
+    have hbase' :
+        productBase d ∈ data.localIntegerFactorRegion d := by
+      simpa [productBase] using hbase
+    have hmem :=
+      data.coordinateScalar_mem_parameter
+        productParameter productBase d hbase'
+    have hmem' :
+        data.scalarMultipleCoordinate d coordinateParameter base ∈
+          coordinateParameter := by
+      simpa [productParameter, productBase] using hmem
+    rwa [hscale] at hmem'
+
+set_option linter.style.longLine false in
+noncomputable def toSetScalarParameterDirectProductHullSource
+    [∀ d : δ, Inhabited (A d)]
+    (data :
+      IUTStage1Remark395CoordinateScalarImageDirectProductHullSource δ A) :
+    IUTStage1Remark395ScalarParameterDirectProductHullSource
+      δ A (fun d => Set (A d)) :=
+  { directProductSource := data.directProductSource,
+    localIntegerFactorRegion := data.localIntegerFactorRegion,
+    coordinateParameterRegion := fun _ coordinateParameter =>
+      coordinateParameter,
+    scalarMultipleCoordinate := data.scalarMultipleCoordinate,
+    parameter_nonzero_coordinate := fun _ _ => True,
+    all_parameters_nonzero_coordinate := by
+      intro _ _
+      trivial,
+    coordinateParameterRegion_eq_scalarImage := by
+      intro d coordinateParameter
+      exact
+        data.coordinateParameterRegion_eq_scalarImage
+          d coordinateParameter }
+
+set_option linter.style.longLine false in
+noncomputable def toLocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+    [∀ d : δ, Inhabited (A d)]
+    (data :
+      IUTStage1Remark395CoordinateScalarImageDirectProductHullSource δ A) :
+    IUTStage1Remark395LocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+      δ A (fun d => Set (A d)) :=
+  { scalarParameterSource := data.toSetScalarParameterDirectProductHullSource,
+    coordinateParameter_has_scalarParameter := by
+      intro d coordinateParameter
+      exact ⟨coordinateParameter, rfl⟩ }
+
+set_option linter.style.longLine false in
+noncomputable def toTransportedLocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+    [∀ d : δ, Inhabited (A d)]
+    (data :
+      IUTStage1Remark395CoordinateScalarImageDirectProductHullSource δ A)
+    (carrierEquiv : α ≃ ((d : δ) -> A d)) :
+    IUTStage1Remark395TransportedLocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+      α δ A (fun d => Set (A d)) :=
+  { locallyRepresentableSource :=
+      data.toLocallyRepresentableScalarParameterPrincipalProductHullSystemSource,
+    carrierEquiv := carrierEquiv }
+
+set_option linter.style.longLine false in
+theorem setScalarParameter_endpoint
+    [∀ d : δ, Inhabited (A d)]
+    (data :
+      IUTStage1Remark395CoordinateScalarImageDirectProductHullSource δ A)
+    (region : Set ((d : δ) -> A d)) :
+    let localSource :=
+      data.toLocallyRepresentableScalarParameterPrincipalProductHullSystemSource;
+    (∀ (d : δ) (coordinateParameter : Set (A d)),
+        localSource.scalarParameterSource.coordinateParameterRegion d
+            (localSource.scalarParameterOfCoordinateParameter d
+              coordinateParameter) =
+          coordinateParameter) ∧
+      (∀ productParameter : (d : δ) -> Set (A d),
+        localSource.scalarParameterSource.parameterRegion
+            (localSource.scalarParameterOfProductParameter productParameter) =
+          productParameter) ∧
+      localSource.scalarParameterSource.parameterRegion
+          (localSource.toRepresentableScalarParameterPrincipalProductHullSystemSource.intersectionScalarParameter
+            region) =
+        localSource.scalarParameterSource.directProductSource.intersectionParameter
+          region ∧
+      (∀ parameter : (d : δ) -> Set (A d),
+        localSource.toPrincipalProductHullSystemSource.parameter_nonzero
+          parameter) ∧
+      region ⊆
+        localSource.toPrincipalProductHullSystemSource.principalHull
+          (localSource.toPrincipalProductHullSystemSource.intersectionParameter
+            region) :=
+  by
+    intro localSource
+    have hendpoint := localSource.endpoint region
+    exact
+      ⟨hendpoint.1,
+        hendpoint.2.1,
+        hendpoint.2.2.1,
+        hendpoint.2.2.2.1,
+        hendpoint.2.2.2.2.1⟩
+
+end IUTStage1Remark395CoordinateScalarImageDirectProductHullSource
+
 set_option linter.style.longLine true
 
 /--

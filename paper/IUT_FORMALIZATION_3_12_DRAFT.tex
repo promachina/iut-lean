@@ -617,12 +617,15 @@ The principal-product source boundary has been lowered again in source-core:
 a scalar-parameter direct-product hull source now constructs the full
 Remark 3.9.5 principal product-hull system and its minimal intersection
 theorem.  Product-parameter representability is no longer a global
-assumption: Lean derives it from one-place local representability by choosing,
-for each place, a scalar representative of the coordinate product region and
-assembling these choices into the product scalar parameter.  The intersection
-scalar selector is then obtained from the represented direct-product
-intersection parameter.  This replaces the principal intersection law by the
-direct-product hull theorem plus explicit local scalar-region data.
+assumption: Lean derives it from coordinate scalar-image data.  Once local
+coordinate points can be extended to product points, the coordinate
+landing/preimage laws prove that each coordinate product region is the image
+of the local integer factor under the coordinate scalar map.  Lean then uses
+the coordinate region itself as the local scalar parameter and assembles these
+choices into the product scalar parameter.  The intersection scalar selector
+is obtained from the represented direct-product intersection parameter.  This
+replaces the principal intersection law by the direct-product hull theorem
+plus explicit coordinate scalar-image data.
 This scalar construction has now been transported onto the public Step (xi)
 carrier: a generic equivalence transport theorem carries principal
 \(\lambda\cdot O\) hull systems across carrier equivalences, and the
@@ -630,8 +633,7 @@ transported scalar-parameter source constructs the
 \(\mathrm{Point}(\mathsf{target})\)-level principal product hull source consumed by the
 localized theta-equals-family-hull route.  Thus this route no longer needs a
 standalone principal product-hull source on the public carrier; it needs the
-local scalar product construction, local scalar representability, and the
-carrier equivalence.
+coordinate scalar-image construction and the carrier equivalence.
 For the stricter localized route, the final normalized localized determinant
 bound by \(\Theta_{\mathrm{signed}}\) is no longer supplied as a standalone
 inequality: Lean derives it from the identification of
@@ -1021,10 +1023,11 @@ valuation-cover side from the intrinsic finite-extension valuation-cover
   structure-sheaf/direct-summand equality before invoking the non-vacuous
   comparison route.  The new full-boundary audit for this route also ties the
   IUT IV arithmetic residual to the same public wrapper.  The remaining
-  principal-hull boundary is now to derive the local coordinate scalar
-  representatives and the carrier equivalence for the public principal-product
-  hull source from Hodge-theater/log-theta-lattice data, and to derive the
-  remaining factorwise inverse-dilation identifications from the same data.
+  principal-hull boundary is now to derive the coordinate scalar-image
+  landing/preimage laws and the carrier equivalence for the public
+  principal-product hull source from Hodge-theater/log-theta-lattice data, and
+  to derive the remaining factorwise inverse-dilation identifications from the
+  same data.
 The valuation-unit-ball finite-extension branch remains only a normalized
 legacy boundary: the selected radius is forced to be \(1\), so \(\mu(O_v)=1\)
 constructs weak nonnegativity but also proves that the normalized log-volume
