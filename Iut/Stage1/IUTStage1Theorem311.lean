@@ -17433,6 +17433,43 @@ variable
     PackageTargetRegionLatticeFormulaSource (target := target) package}
 
 set_option linter.style.longLine false in
+/--
+Construct the package theta-region scalar-image source from an exact
+coordinate image formula.
+
+This specializes the local paper-facing equality
+`H_v(lambda_v) = lambda_v O_v` to the coordinate projection attached to each
+formula-backed theta-region parameter.  Thus the package-level coordinate
+theta equality is no longer an independent field: Lean obtains it by applying
+the exact-image direct-product source to
+`targetSource.coordinateThetaRegion carrierEquiv d parameter`.
+-/
+def ofExactImageDirectProductHullSource
+    {δ : Type x} {A : δ -> Type y}
+    (carrierEquiv : Point target ≃ ((d : δ) -> A d))
+    (exactImageSource :
+      IUTStage1Remark395CoordinateScalarImageExactImageDirectProductHullSource
+        δ A) :
+    CoordinateThetaRegionScalarImageSource
+      (target := target) (package := package) A targetSource :=
+  { carrierEquiv := carrierEquiv,
+    directProductSource := exactImageSource.directProductSource,
+    localIntegerFactorRegion := exactImageSource.localIntegerFactorRegion,
+    scalarMultipleCoordinate := fun d parameter localPoint =>
+      exactImageSource.scalarMultipleCoordinate d
+        (targetSource.coordinateThetaRegion carrierEquiv d parameter)
+        localPoint,
+    parameter_nonzero_coordinate := fun _ _ => True,
+    all_parameters_nonzero_coordinate := by
+      intro _ _
+      trivial,
+    coordinateThetaRegion_eq_scalarImage := by
+      intro d parameter
+      exact
+        exactImageSource.coordinateParameter_eq_scalarImage d
+          (targetSource.coordinateThetaRegion carrierEquiv d parameter) }
+
+set_option linter.style.longLine false in
 def toScalarParameterDirectProductHullSource
     {δ : Type x} {A : δ -> Type y}
     (source :
@@ -17501,6 +17538,37 @@ theorem endpoint
       source.all_parameters_nonzero_coordinate d
         (PackageThetaRegionScalarParameter.ofChoice choice),
     source.selectedParameterRegion_eq_choiceTargetRegion choice⟩
+
+set_option linter.style.longLine false in
+theorem ofExactImageDirectProductHullSource_endpoint
+    {δ : Type x} {A : δ -> Type y}
+    (carrierEquiv : Point target ≃ ((d : δ) -> A d))
+    (exactImageSource :
+      IUTStage1Remark395CoordinateScalarImageExactImageDirectProductHullSource
+        δ A)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    let source :=
+      ofExactImageDirectProductHullSource
+        (targetSource := targetSource) carrierEquiv exactImageSource
+    (∀ (d : δ) (parameter : PackageThetaRegionScalarParameter coric l),
+        targetSource.coordinateThetaRegion carrierEquiv d parameter =
+          exactImageSource.scalarMultipleCoordinate d
+            (targetSource.coordinateThetaRegion carrierEquiv d parameter) ''
+            exactImageSource.localIntegerFactorRegion d) ∧
+      (∀ d : δ,
+        source.parameter_nonzero_coordinate d
+          (PackageThetaRegionScalarParameter.ofChoice choice)) ∧
+      source.toScalarParameterDirectProductHullSource.parameterRegion
+          (source.selectedParameterOfChoice choice) =
+        fun d =>
+          targetSource.choiceCoordinateTargetRegion carrierEquiv d choice := by
+  intro source
+  exact
+    ⟨fun d parameter =>
+      exactImageSource.coordinateParameter_eq_scalarImage d
+        (targetSource.coordinateThetaRegion carrierEquiv d parameter),
+      fun _ => trivial,
+      source.selectedParameterRegion_eq_choiceTargetRegion choice⟩
 
 end CoordinateThetaRegionScalarImageSource
 
