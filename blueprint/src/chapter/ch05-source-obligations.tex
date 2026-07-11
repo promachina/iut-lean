@@ -505,8 +505,16 @@
   `IUTStage1HodgeFamilyHullLogVolumeCalibration`, deriving
   \(\Theta_{\mathrm{signed}}\) = family-hull log-volume through the
   Hodge--Arakelov theta monoid degree.  The record-canonical bridge-data
-  synchronization and measure calibration remain explicit lower inputs.  The
-  same calibration now reaches the finite-divisor constructor-backed source:
+  synchronization and measure calibration remain explicit lower inputs.  At
+  the compact-open map boundary, Lean also provides the side-conditioned
+  constructor
+  \lean{IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogKummerMapHodgeCalibratedSourceFromSideConditions}
+  and endpoint
+  \lean{IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogKummerMapHodgeCalibratedSourceFromSideConditions_endpoint},
+  where q-pilot positivity and source normalization are projected from
+  `IUTStage1SourceSideConditions` rather than passed as loose scalar
+  hypotheses.  The same calibration now reaches the finite-divisor
+  constructor-backed source:
   Lean converts the Hodge-calibrated data to the constructor-backed spine,
   forms the constructor-generated hull/determinant obligations, and builds the
   possible-image Step (xi) source without reintroducing a raw
