@@ -1063,6 +1063,14 @@ The exact-theta variant also uses
 \(\theta_{\mathrm{signed}}=\mu_{\log}(\varphi(P_B))\) to derive the Ob4
 tensor-power bound, so that bound is no longer a separate input on this
 constructor path.
+The constructor-built possible-image Step (xi) source now has the same lowered
+entry point: from a Remark 3.9.5 hull operator, adjusted Ob3/Ob4 determinant
+data, and these two log-volume equalities, Lean reconstructs the Ob3/Ob5
+compatibility and tensor-power bound internally before entering the
+record-canonical hull/tensor bridge.  The minimal-hull-system and product-hull
+variants expose this path without a prebuilt hull shadow; the bridge equality,
+measure synchronization, q-positivity, and normalization remain explicit lower
+inputs.
 The concrete-localized route wrapper takes the minimal-hull source, localized vector-bundle
 determinant decomposition, and \(\Theta^{\times\mu}\) Ob7 source directly,
 constructs the paper-derived Step (xi) source internally, and then invokes the
