@@ -111,6 +111,57 @@ theorem localizedCThetaBoundaryInventory_count_eq :
     localizedCThetaBoundaryInventory_count = 10 :=
   rfl
 
+/-- Public Step (xi) hull-construction boundaries currently audited. -/
+inductive PublicStepXIHullConstructionBoundary where
+  | coordinateScalarImageConstructedTrace
+  | realLineCoordinateScalarImageConstructedTrace
+  | valuationUnitBallNonzeroScalarSelected
+  deriving DecidableEq, Repr
+
+/--
+Textual inventory entry for public Step (xi) hull construction boundaries.
+
+The first two entries are full constructed-paper-trace routes whose principal
+hull source is constructed from coordinate scalar-image data.  The valuation
+entry is the selected-parameter exact-`Xi` layer below the full principal
+source.
+-/
+structure PublicStepXIHullConstructionEntry where
+  boundary : PublicStepXIHullConstructionBoundary
+  auditTypeName : String
+  constructorName : String
+  keyField : String
+  deriving Repr
+
+/-- Human-readable inventory of constructor-built public Step (xi) hull boundaries. -/
+def publicStepXIHullConstructionInventory :
+    List PublicStepXIHullConstructionEntry :=
+  [ { boundary := .coordinateScalarImageConstructedTrace,
+      auditTypeName :=
+        "PreferredPublicTransportedCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit",
+      constructorName :=
+        "preferredPublicTransportedCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit",
+      keyField := "coordinate_hull_route" },
+    { boundary := .realLineCoordinateScalarImageConstructedTrace,
+      auditTypeName :=
+        "PreferredPublicTransportedRealLineCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit",
+      constructorName :=
+        "preferredPublicTransportedRealLineCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit",
+      keyField := "real_line_coordinate_hull_route" },
+    { boundary := .valuationUnitBallNonzeroScalarSelected,
+      auditTypeName :=
+        "ValuationUnitBallNonzeroScalarStepXIPublicAudit",
+      constructorName := "valuationUnitBallNonzeroScalarStepXIPublicAudit",
+      keyField := "transported_public_exact_xi_source" } ]
+
+/-- Number of audited public Step (xi) hull-construction boundaries. -/
+def publicStepXIHullConstructionInventory_count : Nat :=
+  publicStepXIHullConstructionInventory.length
+
+theorem publicStepXIHullConstructionInventory_count_eq :
+    publicStepXIHullConstructionInventory_count = 3 :=
+  rfl
+
 def genericStructureSheafNormalizedAuditType : String :=
   "HaarModulusStructureSheafNormalizedConstructorBuiltLocalizedCThetaFullBoundaryAudit"
 
@@ -261,6 +312,43 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.residueModuleInverseBasePrimeHaarModulusAdditiveHaarConstructorBuiltLocalizedCThetaFullBoundaryAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ResidueModuleInverseBasePrimeHaarModulusAdditiveHaarConstructorBuiltLocalizedCThetaFullBoundaryAudit.route_eq_projected_localized_route
+
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.transportedCoordinateScalarImageLocalizedThetaEqFamilyHullPaperTrace
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicTransportedCoordinateScalarImageConstructedPaperTraceStepXIPaperSourceRouteAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredPublicTransportedCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicTransportedCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredPublicTransportedCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit.coordinate_hull_route
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredPublicTransportedCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit.constructed_paper_trace
+
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.transportedRealLineCoordinateScalarImageLocalizedThetaEqFamilyHullPaperTrace
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicTransportedRealLineCoordinateScalarImageConstructedPaperTraceStepXIPaperSourceRouteAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredPublicTransportedRealLineCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicTransportedRealLineCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredPublicTransportedRealLineCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit.real_line_coordinate_hull_route
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredPublicTransportedRealLineCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit.constructed_paper_trace
+
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ValuationUnitBallNonzeroScalarStepXIPublicAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.valuationUnitBallNonzeroScalarStepXIPublicAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ValuationUnitBallNonzeroScalarStepXIPublicAudit.selected_hull_eq_valuation_cell_union
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ValuationUnitBallNonzeroScalarStepXIPublicAudit.adjusted_family_hull_eq_normalized_determinant
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ValuationUnitBallNonzeroScalarStepXIPublicAudit.transported_public_exact_xi_source
 
 end IUTStage1StepXIDependencyAudit
 end Stage1

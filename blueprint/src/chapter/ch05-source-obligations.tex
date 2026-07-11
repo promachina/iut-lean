@@ -1402,6 +1402,12 @@
   \lean{Iut.RealLineCopy.Point.equivSingleRealProduct}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.transportedRealLineCoordinateScalarImagePrincipalProductHullRouteAudit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredTransportedRealLineCoordinateScalarImagePrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.transportedCoordinateScalarImageLocalizedThetaEqFamilyHullPaperTrace}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicTransportedCoordinateScalarImageConstructedPaperTraceStepXIPaperSourceRouteAudit}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicTransportedCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.transportedRealLineCoordinateScalarImageLocalizedThetaEqFamilyHullPaperTrace}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicTransportedRealLineCoordinateScalarImageConstructedPaperTraceStepXIPaperSourceRouteAudit}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicTransportedRealLineCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit}
   \lean{Iut.Stage1.IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource.toSelectedScalarParameterValuationBallProductHullCoverSource}
   \lean{Iut.Stage1.IUTStage1Remark395NonzeroScalarMultiplicationValuationBallProductHullCoverSource.selectedScalarParameterValuation_endpoint}
   \lean{Iut.Stage1.IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource.toSelectedScalarParameterValuationBallProductHullCoverSource}
@@ -1412,7 +1418,12 @@
   intrinsic wrapper: Lean transports the lower cover's finite-extension
   factors across the same hull-system equality used for the valuation-cover
   calibration fiber, then proves the old factor-matching field by a generic
-  transport lemma.  The
+  transport lemma.  The coordinate scalar-image and real-line public routes
+  now also construct their Step (xi) paper trace internally from the same
+  constructed principal hull, localized determinant, theta-family-hull, and
+  Ob7 data; the remaining principal-hull work below this wrapper is the
+  derivation of the coordinate landing/preimage laws from the Hodge-theater
+  and log-theta-lattice source.  The
   inverse-dilation wrapper lowers the analytic input further: transported
   valuation-ball factors are identified with constructed inverse base-prime
   unit balls, and Lean derives \(1 \leq \mu(U)_{\mathbb{R}}\) from

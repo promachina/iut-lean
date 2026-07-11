@@ -693,6 +693,11 @@ needs coordinate scalar-image data and an explicit carrier equivalence.  In
 the one-coordinate real-line specialization, even this carrier equivalence is
 not supplied: \(\mathrm{Point}(\mathsf{target})\) is canonically equivalent to
 its real coordinate and to the product carrier \(\mathrm{Unit}\to\mathbb R\).
+The strict public coordinate and real-line endpoints now also construct the
+Step (xi) paper trace internally from the same coordinate scalar-image hull,
+localized determinant, theta-family-hull, and Ob7 data, so these endpoints no
+longer expose either a bare public principal-hull source or a standalone
+paper-trace argument.
 For the selected valuation-ball family-hull route, the implementation now
 uses the more faithful scalar boundary: a nonzero local multiplication source
 \(\lambda_v\cdot O_v\) constructs the selected scalar-parameter valuation
@@ -707,8 +712,13 @@ additive-Haar normalization audit
 \(B_{\beta,v}=B_{\beta,v}(r_{\beta,v})\).  The nonzero-scalar and
 valuation-unit-ball wrappers inherit this radius-to-exact-\(\Xi\) route.
 Thus the exact-\(\Xi\) calibration is no longer an independent field at this
-boundary; the remaining public-route obligation is to construct those
-valuation-ball containments from transported theta/valuation local exactness.
+boundary.  The public audit packages the selected hull/cell-union equality,
+calibrated log-volume, normalized determinant handoff, and transported
+exact-\(\Xi\) source.  This is still selected-parameter evidence; the
+remaining public-route obligation is to construct those valuation-ball
+containments from transported theta/valuation local exactness and to derive
+the coordinate scalar-image landing/preimage laws from the Hodge-theater and
+log-theta-lattice source.
 For the stricter localized route, the final normalized localized determinant
 bound by \(\Theta_{\mathrm{signed}}\) is no longer supplied as a standalone
 inequality: Lean derives it from the identification of
@@ -1411,9 +1421,11 @@ valuation-cover side from the intrinsic finite-extension valuation-cover
   formula itself from the lower Hodge-theater and log-theta-lattice data.  The
   full-boundary audit for the current route also ties the
   IUT IV arithmetic residual to the same public wrapper.  The remaining
-  principal-hull boundary is now to derive the coordinate scalar-image
-  landing/preimage laws for the generic public principal-product hull source
-  from Hodge-theater/log-theta-lattice data.  For the selected valuation-ball
+  principal-hull boundary is now lower than the public route wrapper: the
+  coordinate and real-line public endpoints construct the principal source and
+  paper trace internally, but the coordinate scalar-image landing/preimage
+  laws themselves still have to be derived from Hodge-theater/log-theta-lattice
+  data.  For the selected valuation-ball
   hull, the nonzero-scalar multiplication route now constructs the selected
   scalar-parameter source and its Ob3/Ob5 handoff; the remaining work is to
   construct the lower transported-factor/residue-module matching data directly
