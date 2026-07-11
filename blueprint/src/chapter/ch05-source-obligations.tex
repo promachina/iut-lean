@@ -779,6 +779,7 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAudit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConstructedPaperTraceStepXIPaperSourceRouteAudit}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditProductFormulaOb7}
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditProductFormulaOb7DeterminantCalibrated}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditRawAdjustedProductFormulaOb7}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditGlobalNormalizedRawAdjustedOb7}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicStepXIPaperSourceRouteAuditCommonPlaceGlobalNormalizedOb7}
@@ -1908,10 +1909,13 @@
   and Ob7 at one route boundary.  At the localized Ob7 constructor boundary,
   the tensor-power upper bound is derived from the theta/family-hull equality
   and localized determinant comparison, not supplied beside the product-formula
-  source.  The constructed additive-Haar and finite-extension paper-trace
-  routes now invoke this determinant-calibrated constructor directly, so their
-  Ob7 trace no longer carries a separate inline tensor-power proof.  The local
-  product-formula and coric prime-strip data remain
+  source.  The public product-formula route now also has a determinant-
+  calibrated theorem whose audit boundary uses this constructor directly; the
+  older tensor-bound theorem remains as a compatibility layer.  The constructed
+  additive-Haar and finite-extension paper-trace routes likewise invoke this
+  determinant-calibrated constructor directly, so their Ob7 trace no longer
+  carries a separate inline tensor-power proof.  The local product-formula and
+  coric prime-strip data remain
   explicit lower source inputs.  The looser route
   theorems remain as compatibility layers underneath this promoted boundary.
   The \(C_\Theta\) handoff is now tied to the constructed Step (xi) source as
