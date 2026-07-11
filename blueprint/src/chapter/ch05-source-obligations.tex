@@ -1927,9 +1927,15 @@
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductInverseDilationValuationCoverConstructedSourceCoreConstructedGaussianHodgeSquareWeightLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedSource}:
 	  the total localized-adjusted theta equality is derived by summing
 	  normalized Hodge weights whose pointwise contributions equal the localized
-	  weighted adjusted determinant terms.  The remaining migration below this
-	  branch is therefore to construct those normalized weights and pointwise
-	  local determinant identities from the lower Hodge-theater and
+	  weighted adjusted determinant terms.  The stricter normalized-summand
+	  wrapper
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductInverseDilationValuationCoverConstructedSourceCoreConstructedGaussianHodgeNormalizedSummandSquareWeightLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedSource}
+	  no longer accepts these weights independently: it defines each weight as
+	  the constructed Hodge summand divided by the nonzero theta-monoid degree,
+	  proves that the weights sum to \(1\), and projects to the square-weight
+	  route.  The remaining migration below this branch is therefore to
+	  construct the finite Hodge summands, the theta nonvanishing input, and the
+	  pointwise local determinant identities from the lower Hodge-theater and
 	  log-theta-lattice data.
 	  The same scale-component
 	  match is now exposed below the residue wrapper as well: the intrinsic
