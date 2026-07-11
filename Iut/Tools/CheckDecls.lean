@@ -1,4 +1,5 @@
 import Iut.Stage1.IUTStage1Experiments
+import Iut.Stage1.IUTStage1StepXIDependencyAudit
 
 namespace Iut.Tools.CheckDecls
 
@@ -13,7 +14,9 @@ def cleanLine (line : String) : Option String :=
     some line
 
 def leanInput (decls : Array String) : String := Id.run do
-  let mut input := "import Iut.Stage1.IUTStage1Experiments\n"
+  let mut input :=
+    "import Iut.Stage1.IUTStage1Experiments\n\
+    import Iut.Stage1.IUTStage1StepXIDependencyAudit\n"
   for decl in decls do
     input := input ++ s!"#check {decl}\n"
   return input

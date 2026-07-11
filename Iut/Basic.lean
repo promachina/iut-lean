@@ -20,6 +20,7 @@ import Iut.Stage1.SourceObligations
 import Iut.Stage1.IUTSourceScaffold
 import Iut.Stage1.IUTStage1Data
 import Iut.Stage1.IUTStage1Source
+import Iut.Stage1.IUTStage1StepXIDependencyAudit
 
 /-!
 Root module for the IUT formalization corridor.
