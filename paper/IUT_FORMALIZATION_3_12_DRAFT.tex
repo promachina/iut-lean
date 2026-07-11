@@ -709,6 +709,13 @@ boundary: an exact formula \(H_v(\lambda_v)=\lambda_v O_v\) constructs the
 older coordinate landing and preimage laws, and the valuation-ball public
 audit now has an exact-image variant that projects through the coordinate
 valuation source before transporting exact-\(\Xi\) to the public carrier.
+Below this boundary, Lean now constructs a source-facing scalar-parameter
+hull system from the Hodge-theater/log-theta lattice key itself: the parameter
+is the tuple consisting of the Hodge theater, history label, theta-pilot
+lattice coordinate, and coric datum, and the local region \(H_v(\lambda_v)\)
+is the coordinate projection of the formula-backed theta region along the
+public carrier equivalence.  The scalar-image equality for these projected
+theta regions feeds the existing scalar-parameter direct-product hull source.
 For the selected valuation-ball family-hull route, the implementation now
 uses the more faithful scalar boundary: a nonzero local multiplication source
 \(\lambda_v\cdot O_v\) constructs the selected scalar-parameter valuation
@@ -728,8 +735,8 @@ calibrated log-volume, normalized determinant handoff, and transported
 exact-\(\Xi\) source.  This is still selected-parameter evidence; the
 remaining public-route obligation is to construct those valuation-ball
 containments from transported theta/valuation local exactness and to derive
-the local exact image formula \(H_v(\lambda_v)=\lambda_v O_v\) from the
-Hodge-theater and log-theta-lattice source.
+the projected theta-region scalar-image equality from still lower analytic
+Frobenioid/log-Kummer data.
 For the stricter localized route, the final normalized localized determinant
 bound by \(\Theta_{\mathrm{signed}}\) is no longer supplied as a standalone
 inequality: Lean derives it from the identification of

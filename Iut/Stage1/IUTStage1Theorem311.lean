@@ -17269,6 +17269,243 @@ theorem endpoint
 
 end PackageTargetRegionLatticeFormulaSource
 
+/--
+The local scalar parameter determined by the Theorem 3.11
+Hodge-theater/log-theta lattice key.
+
+This is the source-facing parameter below the coordinate exact-image boundary:
+the local region is no longer an arbitrary set parameter, but the coordinate
+projection of the theta region attached to a concrete Hodge theater, history
+label, theta-pilot lattice coordinate, and coric datum.
+-/
+structure PackageThetaRegionScalarParameter
+    (coric : Type u) (_l : PrimeGeFive) where
+  hodgeTheater : QualitativeData.HodgeTheaterId
+  historyLabel : String
+  lattice : IUTStage1Theorem311ThetaPilotLatticeCoordinate
+  coricDatum : coric
+
+namespace PackageThetaRegionScalarParameter
+
+variable {coric : Type u} {l : PrimeGeFive}
+
+def ofChoice
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    PackageThetaRegionScalarParameter coric l :=
+  { hodgeTheater := choice.hodgeTheater,
+    historyLabel := choice.historyLabel,
+    lattice := thetaPilotLatticeCoordinate choice,
+    coricDatum := choice.coric }
+
+def ofThetaClass
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    PackageThetaRegionScalarParameter coric l :=
+  { hodgeTheater := thetaClass.hodgeTheater,
+    historyLabel := thetaClass.historyLabel,
+    lattice := thetaClass.latticeCoordinate,
+    coricDatum := thetaClass.coric }
+
+theorem ofChoice_eq_ofThetaClass
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    ofChoice choice = ofThetaClass (thetaPilotClass choice) := by
+  rfl
+
+end PackageThetaRegionScalarParameter
+
+namespace PackageTargetRegionLatticeFormulaSource
+
+variable {source : Copy}
+variable
+  {package :
+    IUTStage1SourcePackage source target
+      (IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l)}
+
+set_option linter.style.longLine false in
+/--
+Coordinate projection of the formula-backed theta region.
+
+The carrier equivalence presents the public target copy as a product of local
+coordinate carriers.  For a Hodge/log-theta lattice key, this is the local
+factor \(H_v(\lambda_v)\) obtained by projecting the corresponding theta
+region to coordinate `d`.
+-/
+def coordinateThetaRegion
+    {δ : Type x} {A : δ -> Type y}
+    (targetSource :
+      PackageTargetRegionLatticeFormulaSource (target := target) package)
+    (carrierEquiv : Point target ≃ ((d : δ) -> A d))
+    (d : δ)
+    (parameter : PackageThetaRegionScalarParameter coric l) :
+    Set (A d) :=
+  { coordinate |
+    ∃ point : Point target,
+      (targetSource.thetaRegion parameter.hodgeTheater
+        parameter.historyLabel parameter.lattice
+        parameter.coricDatum).Contains point ∧
+        carrierEquiv point d = coordinate }
+
+set_option linter.style.longLine false in
+/--
+Coordinate projection of the package target region of a concrete choice.
+-/
+def choiceCoordinateTargetRegion
+    {δ : Type x} {A : δ -> Type y}
+    (targetSource :
+      PackageTargetRegionLatticeFormulaSource (target := target) package)
+    (carrierEquiv : Point target ≃ ((d : δ) -> A d))
+    (d : δ)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    Set (A d) :=
+  { coordinate |
+    ∃ point : Point target,
+      (package.preLedger.output.comparisons.targetRegions.region choice).Contains
+        point ∧
+        carrierEquiv point d = coordinate }
+
+set_option linter.style.longLine false in
+theorem coordinateThetaRegion_ofChoice_eq_targetRegion
+    {δ : Type x} {A : δ -> Type y}
+    (targetSource :
+      PackageTargetRegionLatticeFormulaSource (target := target) package)
+    (carrierEquiv : Point target ≃ ((d : δ) -> A d))
+    (d : δ)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    targetSource.coordinateThetaRegion carrierEquiv d
+        (PackageThetaRegionScalarParameter.ofChoice choice) =
+      targetSource.choiceCoordinateTargetRegion carrierEquiv d choice := by
+  ext coordinate
+  constructor
+  · rintro ⟨point, hpoint, hcoordinate⟩
+    exact
+      ⟨point, by
+        rw [targetSource.targetRegions_region_eq choice]
+        simpa [PackageThetaRegionScalarParameter.ofChoice] using hpoint,
+        hcoordinate⟩
+  · rintro ⟨point, hpoint, hcoordinate⟩
+    have hformula :
+        (targetSource.thetaRegion choice.hodgeTheater choice.historyLabel
+          (thetaPilotLatticeCoordinate choice) choice.coric).Contains
+          point := by
+      rw [← targetSource.targetRegions_region_eq choice]
+      exact hpoint
+    exact
+      ⟨point,
+        by
+          simpa [PackageThetaRegionScalarParameter.ofChoice] using hformula,
+        hcoordinate⟩
+
+set_option linter.style.longLine false in
+/--
+Formula-backed scalar-image source for the coordinate projections of theta
+regions.
+
+The exact local image law is now attached to the Hodge/log-theta lattice key:
+for each key and place, the projected theta region \(H_v(\lambda_v)\) is the
+image of the local integer region \(O_v\) under the corresponding scalar map.
+Lean turns this into the scalar-parameter direct-product hull source used
+below Step (xi).
+-/
+structure CoordinateThetaRegionScalarImageSource
+    {δ : Type x} (A : δ -> Type y)
+    (targetSource :
+      PackageTargetRegionLatticeFormulaSource (target := target) package) where
+  carrierEquiv : Point target ≃ ((d : δ) -> A d)
+  directProductSource :
+    IUTStage1Remark395DirectProductHullSystemSource δ A
+  localIntegerFactorRegion : (d : δ) -> Set (A d)
+  scalarMultipleCoordinate :
+    (d : δ) -> PackageThetaRegionScalarParameter coric l -> A d -> A d
+  parameter_nonzero_coordinate :
+    (d : δ) -> PackageThetaRegionScalarParameter coric l -> Prop
+  all_parameters_nonzero_coordinate :
+    ∀ (d : δ) (parameter : PackageThetaRegionScalarParameter coric l),
+      parameter_nonzero_coordinate d parameter
+  coordinateThetaRegion_eq_scalarImage :
+    ∀ (d : δ) (parameter : PackageThetaRegionScalarParameter coric l),
+      targetSource.coordinateThetaRegion carrierEquiv d parameter =
+        scalarMultipleCoordinate d parameter ''
+          localIntegerFactorRegion d
+
+namespace CoordinateThetaRegionScalarImageSource
+
+variable
+  {targetSource :
+    PackageTargetRegionLatticeFormulaSource (target := target) package}
+
+set_option linter.style.longLine false in
+def toScalarParameterDirectProductHullSource
+    {δ : Type x} {A : δ -> Type y}
+    (source :
+      CoordinateThetaRegionScalarImageSource
+        (target := target) (package := package) A targetSource) :
+    IUTStage1Remark395ScalarParameterDirectProductHullSource
+      δ A (fun _ => PackageThetaRegionScalarParameter coric l) :=
+  { directProductSource := source.directProductSource,
+    localIntegerFactorRegion := source.localIntegerFactorRegion,
+    coordinateParameterRegion := by
+      intro d parameter
+      exact targetSource.coordinateThetaRegion source.carrierEquiv d parameter,
+    scalarMultipleCoordinate := source.scalarMultipleCoordinate,
+    parameter_nonzero_coordinate := source.parameter_nonzero_coordinate,
+    all_parameters_nonzero_coordinate :=
+      source.all_parameters_nonzero_coordinate,
+    coordinateParameterRegion_eq_scalarImage :=
+      source.coordinateThetaRegion_eq_scalarImage }
+
+def selectedParameterOfChoice
+    {δ : Type x} {A : δ -> Type y}
+    (_source :
+      CoordinateThetaRegionScalarImageSource
+        (target := target) (package := package) A targetSource)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (d : δ) -> PackageThetaRegionScalarParameter coric l :=
+  fun _ => PackageThetaRegionScalarParameter.ofChoice choice
+
+set_option linter.style.longLine false in
+theorem selectedParameterRegion_eq_choiceTargetRegion
+    {δ : Type x} {A : δ -> Type y}
+    (source :
+      CoordinateThetaRegionScalarImageSource
+        (target := target) (package := package) A targetSource)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    source.toScalarParameterDirectProductHullSource.parameterRegion
+        (source.selectedParameterOfChoice choice) =
+      fun d =>
+        targetSource.choiceCoordinateTargetRegion source.carrierEquiv d choice := by
+  funext d
+  exact
+    targetSource.coordinateThetaRegion_ofChoice_eq_targetRegion
+      source.carrierEquiv d choice
+
+set_option linter.style.longLine false in
+theorem endpoint
+    {δ : Type x} {A : δ -> Type y}
+    (source :
+      CoordinateThetaRegionScalarImageSource
+        (target := target) (package := package) A targetSource)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (∀ (d : δ) (parameter : PackageThetaRegionScalarParameter coric l),
+        targetSource.coordinateThetaRegion source.carrierEquiv d parameter =
+          source.scalarMultipleCoordinate d parameter ''
+            source.localIntegerFactorRegion d) ∧
+      (∀ d : δ,
+        source.parameter_nonzero_coordinate d
+          (PackageThetaRegionScalarParameter.ofChoice choice)) ∧
+      source.toScalarParameterDirectProductHullSource.parameterRegion
+          (source.selectedParameterOfChoice choice) =
+        fun d =>
+          targetSource.choiceCoordinateTargetRegion source.carrierEquiv d
+            choice :=
+  ⟨source.coordinateThetaRegion_eq_scalarImage,
+    fun d =>
+      source.all_parameters_nonzero_coordinate d
+        (PackageThetaRegionScalarParameter.ofChoice choice),
+    source.selectedParameterRegion_eq_choiceTargetRegion choice⟩
+
+end CoordinateThetaRegionScalarImageSource
+
+end PackageTargetRegionLatticeFormulaSource
+
 theorem choiceImages_region
     (source : ThetaPilotClassPossibleImageSource
       (target := target) coric l)
