@@ -538,6 +538,15 @@
   source and the resulting Remark 3.9.5 Ob1--Ob5 bridge audit, so the
   possible-image hull absorption and determinant compatibility chain is
   visible at the route boundary rather than only in the lower source namespace.
+  At the constructor-built boundary itself, Lean now has the conversion
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.toConstructedHolomorphicHullDeterminantSource}
+  and endpoint
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.toConstructedHolomorphicHullDeterminantSource_endpoint};
+  the record-canonical bridge equality used by the constructed Remark 3.9.5
+  source is recovered by
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.hullDetBridge_eq_recordCanonical_fromConstructorSplit},
+  i.e. through the built hull/determinant constructor bridge datum rather than
+  a fresh synchronization argument.
   A parameterized Ob5 quotient audit is now projected through the same route:
   for any nonempty comparison possible image, Lean records the bounded-family
   hull inclusions, collapsed upper-semi quotient equality, determinant bound,
