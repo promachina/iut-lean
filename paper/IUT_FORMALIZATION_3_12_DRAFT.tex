@@ -372,6 +372,11 @@ the constructed Remark 3.9.5 hull/determinant source and the constructor-built
 exact-theta source: once the local canonical Step (xi) scale is identified with
 the finite-place scale in the IUT IV summation record, the global
 \(\CTheta\)-dominance follows from the IUT IV plus-one cancellation theorem.
+The constructor-built finite-place source lowers this boundary again.  It
+records local canonical scales, local arithmetic and main-log contributions,
+and local Haar normalization defects; Lean sums the local Step (xi) inequalities
+and uses the total defect bound to derive the global arithmetic gap consumed by
+the coupled IUT IV \(C_\Theta\) ledger.
 
 The phrase ``proof-carrying'' is deliberate.  The route no longer consumes a
 single unstructured numerical inequality at the public endpoint.  It consumes a
@@ -899,6 +904,10 @@ IUT IV finite-place ledger with the constructor-built canonical scale as the
 finite-place canonical scale, so the public handoff no longer asks for a
 separate scale equality.  Its remaining numerical input is the lower arithmetic
 gap inequality \(C_{\Theta,\mathrm{can}}+1\leq \mathrm{upper}-\mathrm{main}\).
+The finite-place local-to-global constructor now lowers this numerical input:
+local canonical scales, arithmetic/log contributions, and Haar normalization
+defects are summed to derive the arithmetic gap before the coupled IUT IV
+ledger is constructed.
 This stronger residual handoff now also feeds the base normalized and
 non-normalized additive-Haar public route constructors, so those boundaries can
 be instantiated from the constructor-built Step (xi) source instead of
@@ -1358,8 +1367,11 @@ before plus-one cancellation is applied.  In the newer coupled bridge, the
 finite-place IUT IV scale is defined from the constructor-built Step (xi)
 canonical scale itself, so the exposed source assumption is the arithmetic gap
 inequality rather than a separate scale-identification equality.  What remains
-to construct from first principles is the lower IUT IV source of that arithmetic
-gap:
+The latest constructor lowers this further: the arithmetic gap is derived from
+finite local Step (xi) summation data, namely local canonical scales,
+arithmetic/log contributions, local Haar defects, the local inequalities, and a
+global defect lower bound.  What remains to construct from first principles is
+the lower IUT IV source of those local estimates:
 \[
 \begin{array}{l}
 \text{the distinguished log-shell inclusions and numerical bounds},\\
@@ -1367,7 +1379,7 @@ gap:
 \text{the archimedean metric containment},\\
 \text{the arithmetic divisor source for Theorem 1.10},\\
 \text{the distinguished and archimedean formula-to-gap bounds},\\
-\text{the finite-place summation comparison}.
+\text{the local finite-place Step (xi) inequalities and Haar defect bound}.
 \end{array}
 \]
 Until these estimates and the upstream source spine are constructed from the

@@ -1464,10 +1464,22 @@
 	  canonical scale as its finite-place scale and requires the lower arithmetic
 	  gap estimate
 	  \(C_{\Theta,\mathrm{can}}+1\leq \mathrm{upper}-\mathrm{main}\).
+	  The latest finite-place source lowers this once more:
+	  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltFinitePlaceLocalGlobalCThetaSource}
+	  records local canonical scales, arithmetic/log contributions, and Haar
+	  normalization defects, proves
+	  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltFinitePlaceLocalGlobalCThetaSource.arithmeticGap_dominates_constructorCanonicalCThetaScale}
+	  by summing the local Step (xi) bounds, and constructs the coupled IUT IV
+	  arithmetic source via
+	  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltFinitePlaceLocalGlobalCThetaSource.toConstructorBuiltIUTIVCThetaArithmeticSource}.
 	  Consequently
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.additiveHaarArithmeticResidualPayloadOfConstructorBuiltIUTIVCThetaArithmeticSource}
 	  and
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.additiveHaarArithmeticResidualPayloadOfConstructorBuiltFinitePlaceLocalGlobalCThetaSource}
+	  and
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousHaarModulusAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRoute_fromConstructorBuiltIUTIVCThetaCoupledArithmeticSource}
+	  and
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousHaarModulusAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRoute_fromConstructorBuiltFinitePlaceLocalGlobalCThetaSource}
 	  no longer expose a standalone finite-place scale equality at the public
 	  boundary.  The older source-specific residual also reaches the base public
 	  normalized and additive-Haar route boundaries via
@@ -1492,6 +1504,8 @@
 	  with the normalized residue-module route also exposing the coupled
 	  no-standalone-scale-equality endpoint
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousPadicFiniteExtensionIntrinsicResidueModuleUnitBallHaarCharacterAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRoute_fromConstructorBuiltIUTIVCThetaCoupledArithmeticSource},
+	  together with the direct finite-place local-to-global endpoint
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousPadicFiniteExtensionIntrinsicResidueModuleUnitBallHaarCharacterAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRoute_fromConstructorBuiltFinitePlaceLocalGlobalCThetaSource},
 	  while
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousHaarModulusAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRoute_fromIUTIVCThetaArithmeticSource}
 	  exposes the corresponding public route.  The same CTheta-derived
