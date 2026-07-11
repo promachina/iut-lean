@@ -1535,7 +1535,11 @@
 	  residue-module/unit-ball wrappers now construct their additive-Haar
 	  p-adic arithmetic-degree obligations at their own projected source
 	  boundary, rather than obtaining that construction by delegation to a
-	  lower generic wrapper.
+	  lower generic wrapper.  Their finite-place local-global and localized
+	  Step (xi) \(\CTheta\) entry points now use the corresponding
+	  finite-place/localized arithmetic residual payload constructors directly,
+	  rather than first collapsing to the coupled IUT-IV arithmetic-source
+	  projection.
 	  The same no-external-scale constructor entry points are now exposed one
 	  layer higher in the intrinsic and unit-ball Haar-character normalized
 	  wrappers, with localized source data entering through

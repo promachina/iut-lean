@@ -1240,7 +1240,10 @@ preferred wrapper lowers the theta scalar input one more step: it takes the
   payload is projected from the IUT IV ledger rather than supplied separately;
   these endpoints now build the p-adic arithmetic-degree obligations at their
   own projected finite-summand boundary instead of delegating that construction
-  to a lower generic Haar-modulus wrapper.
+  to a lower generic Haar-modulus wrapper.  The finite-place local-global and
+  localized Step (xi) \(\CTheta\) wrappers now use their own residual payload
+  constructors at the same boundary, instead of first collapsing to the coupled
+  IUT-IV arithmetic-source projection.
   It now also lowers the structure-sheaf input:
   the hardened wrapper takes localized direct-summand calibration and derives
   the additive-Haar normalized compact-open equality by the additive-Haar
