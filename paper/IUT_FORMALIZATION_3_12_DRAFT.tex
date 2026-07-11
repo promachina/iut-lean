@@ -1073,7 +1073,13 @@ measure synchronization, q-positivity, and normalization remain explicit lower
 inputs.  The product-hull exact-theta endpoint now packages the source endpoint,
 product-hull provenance, reconstructed compatibility, derived tensor-power
 bound, selected-product-hull containment, and the resulting signed comparison
-as checked consequences of that lowered constructor.
+as checked consequences of that lowered constructor.  An obligations-backed
+variant lowers the remaining side-condition surface: bridge equality, q-pilot
+positivity, and source normalization are projected from a single
+\(\lean{IUTStage1SourceHullDetObligations}\) object.  The explicit
+synchronization left at this boundary is now the equality between that
+obligations bridge datum and the record-canonical product-hull/tensor-power
+datum.
 The concrete-localized route wrapper takes the minimal-hull source, localized vector-bundle
 determinant decomposition, and \(\Theta^{\times\mu}\) Ob7 source directly,
 constructs the paper-derived Step (xi) source internally, and then invokes the
