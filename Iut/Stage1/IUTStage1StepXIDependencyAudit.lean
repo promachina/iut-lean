@@ -563,6 +563,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.HardenedIntrinsicPadicNormSquarePreferredRouteBoundaryAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.hardenedIntrinsicPadicNormSquarePreferredRouteBoundaryAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.HardenedIntrinsicPadicNormSquareFromAdditivePayloadRouteAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.hardenedIntrinsicPadicNormSquareFromAdditivePayloadRouteAudit
 
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ValuationUnitBallNonzeroScalarStepXIPublicAudit
