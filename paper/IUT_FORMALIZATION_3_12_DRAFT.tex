@@ -476,6 +476,10 @@ sources construct both the record Ob3/Ob5 source and the exact-theta Step (xi)
 hull/determinant source.  Lean passes through the local log-Kummer graph or
 relation-level image laws, compact-open representatives, and the converse
 realization law before entering the principal valuation-ball constructor.  The
+exact possible-region, log-Kummer map, image, and correspondence endpoints now
+also have a Record Ob3/Ob5 valuation-ball source form: the Ob3/Ob4-to-Step
+(xi) determinant equality is projected from the record-canonical source rather
+than passed as a separate endpoint hypothesis.  The
 correspondence route now also has an obligations-backed entry point: the
 package bridge equality, q-pilot positivity, and normalization are projected
 from `IUTStage1SourceHullDetObligations`.  Its Hodge-calibrated variant
@@ -1322,6 +1326,9 @@ The strict route now derives the unit-ball tensor factors and one non-unit
 inverse-dilation strict factor from finite-extension local-field Haar data, and
 can build the record Ob3/Ob5 determinant/log-volume source from a
 principal-product theta-region cover identity and its finite additivity formula.
+The compact-open valuation-ball handoff now projects the final determinant
+identification from that record source at the exact possible-region, map,
+image, and correspondence boundaries.
 The exact-theta source-spine handoff can also construct its record Ob3/Ob5
 determinant source from localized hull/vector-bundle data once the localized
 family is identified with the source-spine possible-image family; this now
