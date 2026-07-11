@@ -1218,6 +1218,11 @@ preferred wrapper lowers the theta scalar input one more step: it takes the
   an IUT-IV arithmetic-source wrapper for the finite-summand endpoint, so its
   determinant/calibration payload is no longer tied only to the older
   family-hull route.
+  The residue inverse-base-prime normalized finite-summand branch now uses this
+  same direct construction in its IUT IV and constructor-built arithmetic
+  wrappers: Lean builds the normalized additive-Haar arithmetic obligations
+  from the finite-summand audit instead of routing these wrappers through the
+  older direct-summand public endpoint.
   The same finite-summand endpoint has now been lifted through the intrinsic
   finite-extension Haar-modulus, unit-ball Haar-character, and residue-module
   quotient wrappers, so those local arithmetic sources no longer expose only
