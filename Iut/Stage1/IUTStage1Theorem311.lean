@@ -26195,6 +26195,108 @@ theorem coordinateScalarImageStepXIPublicAudit
 
 set_option linter.style.longLine false in
 /--
+Public Step (xi) audit for exact-image coordinate scalar valuation data.
+
+This lowers the coordinate public audit one step: instead of consuming
+coordinate landing and preimage laws directly, the source supplies the exact
+local image formula `H_v(lambda_v) = lambda_v O_v`; Lean constructs the
+coordinate valuation source and then reuses the selected scalar-parameter
+valuation-ball exact-`Xi(P_B)` route.
+-/
+structure CoordinateScalarImageExactImageStepXIPublicAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {δ : Type x} {A : δ -> Type y}
+    [∀ d : δ, Inhabited (A d)]
+    {η : Type z} {K : Type a} {β : Type b}
+    {γ : Type (max x y b z u a)}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (valuationSource :
+      IUTStage1Remark395CoordinateScalarImageExactImageValuationBallProductHullCoverSource
+        δ A (Quot sourceData.Core.equalityQuotient.relation) η K β γ)
+    (carrierEquiv : Point targetCopy ≃ ((d : δ) -> A d))
+    (radiusCoverSource :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource.ValuationBallRadiusDirectProductCellCoverSource
+        (valuationSource.toCoordinateScalarImageValuationBallProductHullCoverSource
+          |>.toSelectedScalarParameterValuationBallProductHullCoverSource)) :
+    Prop where
+  local_coordinate_exact_image :
+    ∀ (d : δ) (coordinateParameter : Set (A d)),
+      coordinateParameter =
+        valuationSource.exactImageSource.scalarMultipleCoordinate
+            d coordinateParameter ''
+          valuationSource.exactImageSource.localIntegerFactorRegion d
+  coordinate_source_constructed_from_exact_image :
+    valuationSource.toCoordinateScalarImageValuationBallProductHullCoverSource.coordinateSource =
+      valuationSource.exactImageSource.toCoordinateScalarImageDirectProductHullSource
+  exact_image_landing_law :
+    ∀ (parameter : (d : δ) -> Set (A d)) (base : (d : δ) -> A d)
+        (d : δ),
+      base d ∈ valuationSource.exactImageSource.localIntegerFactorRegion d ->
+        valuationSource.exactImageSource.scalarMultipleCoordinate
+            d (parameter d) (base d) ∈
+          parameter d
+  exact_image_preimage_law :
+    ∀ (parameter : (d : δ) -> Set (A d)) (point : (d : δ) -> A d)
+        (d : δ),
+      point d ∈ parameter d ->
+        ∃ base : A d,
+          base ∈ valuationSource.exactImageSource.localIntegerFactorRegion d ∧
+            valuationSource.exactImageSource.scalarMultipleCoordinate
+              d (parameter d) base = point d
+  coordinate_public_audit :
+    CoordinateScalarImageStepXIPublicAudit sourceData
+      valuationSource.toCoordinateScalarImageValuationBallProductHullCoverSource
+      carrierEquiv radiusCoverSource
+  transported_public_exact_xi_source :
+    IUTStage1Remark395PossibleImageExactXiFamilySource
+      (((valuationSource.toCoordinateScalarImageValuationBallProductHullCoverSource
+          |>.toSelectedScalarParameterValuationBallProductHullCoverSource)
+          |>.toPossibleImageFamilySource).transport carrierEquiv)
+
+set_option linter.style.longLine false in
+theorem coordinateScalarImageExactImageStepXIPublicAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {δ : Type x} {A : δ -> Type y}
+    [∀ d : δ, Inhabited (A d)]
+    {η : Type z} {K : Type a} {β : Type b}
+    {γ : Type (max x y b z u a)}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (valuationSource :
+      IUTStage1Remark395CoordinateScalarImageExactImageValuationBallProductHullCoverSource
+        δ A (Quot sourceData.Core.equalityQuotient.relation) η K β γ)
+    (carrierEquiv : Point targetCopy ≃ ((d : δ) -> A d))
+    (radiusCoverSource :
+      IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource.ValuationBallRadiusDirectProductCellCoverSource
+        (valuationSource.toCoordinateScalarImageValuationBallProductHullCoverSource
+          |>.toSelectedScalarParameterValuationBallProductHullCoverSource)) :
+    CoordinateScalarImageExactImageStepXIPublicAudit
+      sourceData valuationSource carrierEquiv radiusCoverSource :=
+  { local_coordinate_exact_image :=
+      valuationSource.exactImageSource.coordinateParameter_eq_scalarImage,
+    coordinate_source_constructed_from_exact_image :=
+      rfl,
+    exact_image_landing_law :=
+      valuationSource.exactImageSource.coordinateScalar_mem_parameter,
+    exact_image_preimage_law :=
+      valuationSource.exactImageSource.parameter_has_coordinateScalarPreimage,
+    coordinate_public_audit :=
+      coordinateScalarImageStepXIPublicAudit sourceData
+        valuationSource.toCoordinateScalarImageValuationBallProductHullCoverSource
+        carrierEquiv radiusCoverSource,
+    transported_public_exact_xi_source :=
+      radiusCoverSource.toTransportedPossibleImageExactXiFamilySource
+        carrierEquiv }
+
+set_option linter.style.longLine false in
+/--
 Construct the Corollary 3.12 Step (xi)/Remark 3.9.5 paper trace from the
 same lower sources used by the strongest principal-product localized route.
 

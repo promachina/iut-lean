@@ -115,6 +115,7 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 inductive PublicStepXIHullConstructionBoundary where
   | coordinateScalarImageConstructedTrace
   | realLineCoordinateScalarImageConstructedTrace
+  | coordinateScalarImageExactImageValuationSelected
   | coordinateScalarImageValuationSelected
   | valuationUnitBallNonzeroScalarSelected
   deriving DecidableEq, Repr
@@ -149,6 +150,10 @@ def publicStepXIHullConstructionInventory :
       constructorName :=
         "preferredPublicTransportedRealLineCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit",
       keyField := "real_line_coordinate_hull_route" },
+    { boundary := .coordinateScalarImageExactImageValuationSelected,
+      auditTypeName := "CoordinateScalarImageExactImageStepXIPublicAudit",
+      constructorName := "coordinateScalarImageExactImageStepXIPublicAudit",
+      keyField := "transported_public_exact_xi_source" },
     { boundary := .coordinateScalarImageValuationSelected,
       auditTypeName := "CoordinateScalarImageStepXIPublicAudit",
       constructorName := "coordinateScalarImageStepXIPublicAudit",
@@ -164,7 +169,7 @@ def publicStepXIHullConstructionInventory_count : Nat :=
   publicStepXIHullConstructionInventory.length
 
 theorem publicStepXIHullConstructionInventory_count_eq :
-    publicStepXIHullConstructionInventory_count = 4 :=
+    publicStepXIHullConstructionInventory_count = 5 :=
   rfl
 
 def genericStructureSheafNormalizedAuditType : String :=
@@ -358,6 +363,21 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.CoordinateScalarImageStepXIPublicAudit.adjusted_family_hull_eq_normalized_determinant
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.CoordinateScalarImageStepXIPublicAudit.transported_public_exact_xi_source
+
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.CoordinateScalarImageExactImageStepXIPublicAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.coordinateScalarImageExactImageStepXIPublicAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.CoordinateScalarImageExactImageStepXIPublicAudit.local_coordinate_exact_image
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.CoordinateScalarImageExactImageStepXIPublicAudit.coordinate_source_constructed_from_exact_image
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.CoordinateScalarImageExactImageStepXIPublicAudit.exact_image_landing_law
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.CoordinateScalarImageExactImageStepXIPublicAudit.exact_image_preimage_law
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.CoordinateScalarImageExactImageStepXIPublicAudit.transported_public_exact_xi_source
 
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ValuationUnitBallNonzeroScalarStepXIPublicAudit

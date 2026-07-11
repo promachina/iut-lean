@@ -4384,6 +4384,154 @@ theorem endpoint
 end IUTStage1Remark395CoordinateScalarImageDirectProductHullSource
 
 /--
+Coordinate scalar-image direct-product hull source from exact local images.
+
+This is the paper-facing form of the local statement
+`H_v(lambda_v) = lambda_v O_v`: for every coordinate region used as a local
+scalar parameter, the region is exactly the image of the local integer factor
+under the corresponding coordinate scalar map.  The older coordinate source's
+landing and preimage laws are derived from this one equality.
+-/
+structure IUTStage1Remark395CoordinateScalarImageExactImageDirectProductHullSource
+    (δ : Type u) (A : δ -> Type v) where
+  directProductSource :
+    IUTStage1Remark395DirectProductHullSystemSource δ A
+  localIntegerFactorRegion : (d : δ) -> Set (A d)
+  scalarMultipleCoordinate :
+    (d : δ) -> Set (A d) -> A d -> A d
+  coordinateParameter_eq_scalarImage :
+    ∀ (d : δ) (coordinateParameter : Set (A d)),
+      coordinateParameter =
+        scalarMultipleCoordinate d coordinateParameter ''
+          localIntegerFactorRegion d
+
+namespace IUTStage1Remark395CoordinateScalarImageExactImageDirectProductHullSource
+
+variable {δ : Type u} {A : δ -> Type v}
+
+def localIntegerRegion
+    (data :
+      IUTStage1Remark395CoordinateScalarImageExactImageDirectProductHullSource
+        δ A) :
+    Set ((d : δ) -> A d) :=
+  { base | ∀ d : δ, base d ∈ data.localIntegerFactorRegion d }
+
+def scalarMultiple
+    (data :
+      IUTStage1Remark395CoordinateScalarImageExactImageDirectProductHullSource
+        δ A)
+    (parameter : (d : δ) -> Set (A d))
+    (base : (d : δ) -> A d) :
+    (d : δ) -> A d :=
+  fun d => data.scalarMultipleCoordinate d (parameter d) (base d)
+
+theorem coordinateScalar_mem_parameter
+    (data :
+      IUTStage1Remark395CoordinateScalarImageExactImageDirectProductHullSource
+        δ A)
+    (parameter : (d : δ) -> Set (A d))
+    (base : (d : δ) -> A d)
+    (d : δ)
+    (hbase : base d ∈ data.localIntegerFactorRegion d) :
+    data.scalarMultipleCoordinate d (parameter d) (base d) ∈
+      parameter d := by
+  have himage :
+      data.scalarMultipleCoordinate d (parameter d) (base d) ∈
+        data.scalarMultipleCoordinate d (parameter d) ''
+          data.localIntegerFactorRegion d :=
+    ⟨base d, hbase, rfl⟩
+  rw [← data.coordinateParameter_eq_scalarImage d (parameter d)] at himage
+  exact himage
+
+theorem parameter_has_coordinateScalarPreimage
+    (data :
+      IUTStage1Remark395CoordinateScalarImageExactImageDirectProductHullSource
+        δ A)
+    (parameter : (d : δ) -> Set (A d))
+    (point : (d : δ) -> A d)
+    (d : δ)
+    (hpoint : point d ∈ parameter d) :
+    ∃ base : A d,
+      base ∈ data.localIntegerFactorRegion d ∧
+        data.scalarMultipleCoordinate d (parameter d) base = point d := by
+  have himage :
+      point d ∈
+        data.scalarMultipleCoordinate d (parameter d) ''
+          data.localIntegerFactorRegion d := by
+    rw [← data.coordinateParameter_eq_scalarImage d (parameter d)]
+    exact hpoint
+  exact himage
+
+def toCoordinateScalarImageDirectProductHullSource
+    (data :
+      IUTStage1Remark395CoordinateScalarImageExactImageDirectProductHullSource
+        δ A) :
+    IUTStage1Remark395CoordinateScalarImageDirectProductHullSource δ A :=
+  { directProductSource := data.directProductSource,
+    localIntegerFactorRegion := data.localIntegerFactorRegion,
+    scalarMultipleCoordinate := data.scalarMultipleCoordinate,
+    parameter_nonzero := fun _ => True,
+    all_parameters_nonzero := by
+      intro _
+      trivial,
+    coordinateScalar_mem_parameter :=
+      data.coordinateScalar_mem_parameter,
+    parameter_has_coordinateScalarPreimage :=
+      data.parameter_has_coordinateScalarPreimage }
+
+theorem toCoordinateScalarImageDirectProductHullSource_localIntegerRegion
+    (data :
+      IUTStage1Remark395CoordinateScalarImageExactImageDirectProductHullSource
+        δ A) :
+    data.toCoordinateScalarImageDirectProductHullSource.localIntegerRegion =
+      data.localIntegerRegion :=
+  rfl
+
+theorem toCoordinateScalarImageDirectProductHullSource_scalarMultiple
+    (data :
+      IUTStage1Remark395CoordinateScalarImageExactImageDirectProductHullSource
+        δ A)
+    (parameter : (d : δ) -> Set (A d))
+    (base : (d : δ) -> A d) :
+    data.toCoordinateScalarImageDirectProductHullSource.scalarMultiple
+        parameter base =
+      data.scalarMultiple parameter base :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395CoordinateScalarImageExactImageDirectProductHullSource
+        δ A) :
+    (∀ (d : δ) (coordinateParameter : Set (A d)),
+        coordinateParameter =
+          data.scalarMultipleCoordinate d coordinateParameter ''
+            data.localIntegerFactorRegion d) ∧
+      (∀ (parameter : (d : δ) -> Set (A d)) (base : (d : δ) -> A d)
+          (d : δ),
+        base d ∈ data.localIntegerFactorRegion d ->
+          data.scalarMultipleCoordinate d (parameter d) (base d) ∈
+            parameter d) ∧
+      (∀ (parameter : (d : δ) -> Set (A d)) (point : (d : δ) -> A d)
+          (d : δ),
+        point d ∈ parameter d ->
+          ∃ base : A d,
+            base ∈ data.localIntegerFactorRegion d ∧
+              data.scalarMultipleCoordinate d (parameter d) base =
+                point d) ∧
+      data.toCoordinateScalarImageDirectProductHullSource.directProductSource =
+        data.directProductSource ∧
+      data.toCoordinateScalarImageDirectProductHullSource.localIntegerRegion =
+        data.localIntegerRegion :=
+  ⟨data.coordinateParameter_eq_scalarImage,
+    data.coordinateScalar_mem_parameter,
+    data.parameter_has_coordinateScalarPreimage,
+    rfl,
+    rfl⟩
+
+end IUTStage1Remark395CoordinateScalarImageExactImageDirectProductHullSource
+
+/--
 Scalar-parameter direct-product hull source.
 
 This is the source-facing version of the coordinate scalar-image boundary.
@@ -27343,6 +27491,116 @@ theorem endpoint
           |>.familyHullLogVolume_eq_normalizedDeterminantLogVolume⟩
 
 end IUTStage1Remark395CoordinateScalarImageValuationBallProductHullCoverSource
+
+/--
+Coordinate scalar-image valuation-ball cover from exact local images.
+
+This is the valuation-cover version of the exact local formula
+`H_v(lambda_v) = lambda_v O_v`.  The previous coordinate valuation cover is
+constructed internally, so its coordinate landing/preimage laws are no longer
+independent valuation-level inputs.
+-/
+structure IUTStage1Remark395CoordinateScalarImageExactImageValuationBallProductHullCoverSource
+    (δ : Type u) (A : δ -> Type v) (ι : Type y) (η : Type x) (K : Type z)
+    (β : Type w) (γ : Type max u v w x y z)
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ] where
+  valuationCover :
+    IUTStage1Remark395ValuationBallFactorCalibratedHaarTensorPacketFiniteAdditiveCalibratedLocalRingChartedVectorBundleHullCoverSource
+      ((d : δ) -> A d) ι η K β γ
+  exactImageSource :
+    IUTStage1Remark395CoordinateScalarImageExactImageDirectProductHullSource
+      δ A
+  hullSystem_eq_exactImagePrincipal :
+    valuationCover.hullSystem =
+      IUTStage1Remark395DirectProductPrincipalHullSystemSource.toHolomorphicHullSystem
+        (IUTStage1Remark395ScalarImageDirectProductHullSource.toDirectProductPrincipalHullSystemSource
+          (IUTStage1Remark395CoordinateScalarImageDirectProductHullSource.toScalarImageDirectProductHullSource
+            exactImageSource.toCoordinateScalarImageDirectProductHullSource))
+  localIntegerRegion_eq_anchorCell :
+    exactImageSource.localIntegerRegion =
+      valuationCover.directProductCell valuationCover.anchor
+
+namespace IUTStage1Remark395CoordinateScalarImageExactImageValuationBallProductHullCoverSource
+
+variable {δ : Type u} {A : δ -> Type v} {ι : Type y} {η : Type x} {K : Type z}
+variable {β : Type w} {γ : Type max u v w x y z}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+variable [Fintype β] [Fintype γ]
+
+def toCoordinateScalarImageValuationBallProductHullCoverSource
+    (data :
+      IUTStage1Remark395CoordinateScalarImageExactImageValuationBallProductHullCoverSource
+        δ A ι η K β γ) :
+    IUTStage1Remark395CoordinateScalarImageValuationBallProductHullCoverSource
+      δ A ι η K β γ :=
+  { valuationCover := data.valuationCover,
+    coordinateSource :=
+      data.exactImageSource.toCoordinateScalarImageDirectProductHullSource,
+    hullSystem_eq_coordinatePrincipal :=
+      data.hullSystem_eq_exactImagePrincipal,
+    localIntegerRegion_eq_anchorCell := by
+      simpa [
+        IUTStage1Remark395CoordinateScalarImageExactImageDirectProductHullSource.toCoordinateScalarImageDirectProductHullSource_localIntegerRegion]
+        using data.localIntegerRegion_eq_anchorCell }
+
+def possibleImageUnion
+    (data :
+      IUTStage1Remark395CoordinateScalarImageExactImageValuationBallProductHullCoverSource
+        δ A ι η K β γ) :
+    Set ((d : δ) -> A d) :=
+  data.toCoordinateScalarImageValuationBallProductHullCoverSource.possibleImageUnion
+
+def selectedParameter
+    (data :
+      IUTStage1Remark395CoordinateScalarImageExactImageValuationBallProductHullCoverSource
+        δ A ι η K β γ) :
+    (d : δ) -> Set (A d) :=
+  data.toCoordinateScalarImageValuationBallProductHullCoverSource.selectedParameter
+
+def selectedCoordinateScalarImageHull
+    (data :
+      IUTStage1Remark395CoordinateScalarImageExactImageValuationBallProductHullCoverSource
+        δ A ι η K β γ) :
+    Set ((d : δ) -> A d) :=
+  data.toCoordinateScalarImageValuationBallProductHullCoverSource.selectedCoordinateScalarImageHull
+
+theorem selectedCoordinateScalarImageHull_eq_valuationBallDirectProductCellUnion
+    (data :
+      IUTStage1Remark395CoordinateScalarImageExactImageValuationBallProductHullCoverSource
+        δ A ι η K β γ) :
+    data.selectedCoordinateScalarImageHull =
+      data.valuationCover.directProductCellUnion :=
+  data.toCoordinateScalarImageValuationBallProductHullCoverSource
+    |>.selectedCoordinateScalarImageHull_eq_valuationBallDirectProductCellUnion
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (data :
+      IUTStage1Remark395CoordinateScalarImageExactImageValuationBallProductHullCoverSource
+        δ A ι η K β γ) :
+    (∀ (d : δ) (coordinateParameter : Set (A d)),
+        coordinateParameter =
+          data.exactImageSource.scalarMultipleCoordinate d
+              coordinateParameter ''
+            data.exactImageSource.localIntegerFactorRegion d) ∧
+      data.exactImageSource.localIntegerRegion =
+        data.valuationCover.directProductCell data.valuationCover.anchor ∧
+      data.toCoordinateScalarImageValuationBallProductHullCoverSource.coordinateSource =
+        data.exactImageSource.toCoordinateScalarImageDirectProductHullSource ∧
+      data.selectedCoordinateScalarImageHull =
+        data.valuationCover.directProductCellUnion ∧
+      data.toCoordinateScalarImageValuationBallProductHullCoverSource.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
+        data.toCoordinateScalarImageValuationBallProductHullCoverSource.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source.normalizedDeterminantLogVolume :=
+  ⟨data.exactImageSource.coordinateParameter_eq_scalarImage,
+    data.localIntegerRegion_eq_anchorCell,
+    rfl,
+    data.selectedCoordinateScalarImageHull_eq_valuationBallDirectProductCellUnion,
+    data.toCoordinateScalarImageValuationBallProductHullCoverSource
+      |>.toOb3Ob5AdjustedDeterminantLogVolumeSource
+      |>.familyHullLogVolume_eq_normalizedDeterminantLogVolume⟩
+
+end IUTStage1Remark395CoordinateScalarImageExactImageValuationBallProductHullCoverSource
 
 /--
 Selected scalar-parameter valuation-ball product-hull cover source.
