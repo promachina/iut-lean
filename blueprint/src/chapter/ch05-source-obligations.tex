@@ -1464,7 +1464,7 @@
 	  canonical scale as its finite-place scale and requires the lower arithmetic
 	  gap estimate
 	  \(C_{\Theta,\mathrm{can}}+1\leq \mathrm{upper}-\mathrm{main}\).
-	  The latest finite-place source lowers this once more:
+	  The finite-place source lowers this once more:
 	  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltFinitePlaceLocalGlobalCThetaSource}
 	  records local canonical scales, arithmetic/log contributions, and Haar
 	  normalization defects, proves
@@ -1472,14 +1472,26 @@
 	  by summing the local Step (xi) bounds, and constructs the coupled IUT IV
 	  arithmetic source via
 	  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltFinitePlaceLocalGlobalCThetaSource.toConstructorBuiltIUTIVCThetaArithmeticSource}.
+	  The localized local-term source lowers the local inequality itself:
+	  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltLocalizedStepXILocalTermCThetaSource}
+	  takes the localized Ob3/Ob4 vector-bundle determinant source as the local
+	  canonical scale, decomposes each arithmetic upper contribution as Step
+	  (xi) log-volume plus Haar defect plus main-log term, proves
+	  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltLocalizedStepXILocalTermCThetaSource.local_stepXI_haar_bound}
+	  by ordered-ring arithmetic, and constructs the finite-place source via
+	  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltLocalizedStepXILocalTermCThetaSource.toConstructorBuiltFinitePlaceLocalGlobalCThetaSource}.
 	  Consequently
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.additiveHaarArithmeticResidualPayloadOfConstructorBuiltIUTIVCThetaArithmeticSource}
 	  and
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.additiveHaarArithmeticResidualPayloadOfConstructorBuiltFinitePlaceLocalGlobalCThetaSource}
 	  and
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.additiveHaarArithmeticResidualPayloadOfConstructorBuiltLocalizedStepXILocalTermCThetaSource}
+	  and
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousHaarModulusAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRoute_fromConstructorBuiltIUTIVCThetaCoupledArithmeticSource}
 	  and
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousHaarModulusAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRoute_fromConstructorBuiltFinitePlaceLocalGlobalCThetaSource}
+	  and
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousHaarModulusAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRoute_fromConstructorBuiltLocalizedStepXILocalTermCThetaSource}
 	  no longer expose a standalone finite-place scale equality at the public
 	  boundary.  The older source-specific residual also reaches the base public
 	  normalized and additive-Haar route boundaries via
@@ -1506,6 +1518,8 @@
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousPadicFiniteExtensionIntrinsicResidueModuleUnitBallHaarCharacterAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRoute_fromConstructorBuiltIUTIVCThetaCoupledArithmeticSource},
 	  together with the direct finite-place local-to-global endpoint
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousPadicFiniteExtensionIntrinsicResidueModuleUnitBallHaarCharacterAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRoute_fromConstructorBuiltFinitePlaceLocalGlobalCThetaSource},
+	  and the localized local-term endpoint
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousPadicFiniteExtensionIntrinsicResidueModuleUnitBallHaarCharacterAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRoute_fromConstructorBuiltLocalizedStepXILocalTermCThetaSource},
 	  while
 	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousHaarModulusAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRoute_fromIUTIVCThetaArithmeticSource}
 	  exposes the corresponding public route.  The same CTheta-derived

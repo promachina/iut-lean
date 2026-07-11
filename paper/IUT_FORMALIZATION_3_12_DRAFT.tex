@@ -908,6 +908,10 @@ The finite-place local-to-global constructor now lowers this numerical input:
 local canonical scales, arithmetic/log contributions, and Haar normalization
 defects are summed to derive the arithmetic gap before the coupled IUT IV
 ledger is constructed.
+The localized local-term constructor lowers this one step further: the local
+canonical scales are the weighted adjusted log-volumes of the localized
+Ob3/Ob4 determinant source, and each local upper term is decomposed as Step
+(xi) log-volume plus Haar defect plus main-log contribution.
 This stronger residual handoff now also feeds the base normalized and
 non-normalized additive-Haar public route constructors, so those boundaries can
 be instantiated from the constructor-built Step (xi) source instead of
@@ -1366,12 +1370,16 @@ Step (xi) canonical scale is identified with the finite-place IUT IV scale
 before plus-one cancellation is applied.  In the newer coupled bridge, the
 finite-place IUT IV scale is defined from the constructor-built Step (xi)
 canonical scale itself, so the exposed source assumption is the arithmetic gap
-inequality rather than a separate scale-identification equality.  What remains
-The latest constructor lowers this further: the arithmetic gap is derived from
-finite local Step (xi) summation data, namely local canonical scales,
+inequality rather than a separate scale-identification equality.  The
+finite-place constructor lowers this further: the arithmetic gap is derived
+from finite local Step (xi) summation data, namely local canonical scales,
 arithmetic/log contributions, local Haar defects, the local inequalities, and a
-global defect lower bound.  What remains to construct from first principles is
-the lower IUT IV source of those local estimates:
+global defect lower bound.  The localized local-term constructor then lowers the
+local inequalities themselves by taking each local canonical scale to be the
+weighted adjusted log-volume of the localized Ob3/Ob4 determinant source and
+each local upper term to be Step (xi) log-volume plus Haar defect plus main-log
+contribution.  What remains to construct from first principles is the lower IUT
+IV source of the remaining local estimates:
 \[
 \begin{array}{l}
 \text{the distinguished log-shell inclusions and numerical bounds},\\
