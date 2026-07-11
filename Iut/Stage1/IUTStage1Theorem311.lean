@@ -25969,6 +25969,105 @@ theorem preferredTransportedRealLineCoordinateScalarImagePrincipalProductLocaliz
 
 set_option linter.style.longLine false in
 /--
+Public Step (xi) audit for valuation-unit-ball nonzero scalar product data.
+
+This is the selected-parameter layer below the principal-product public route.
+It records the paper-level fact that the local integer factor `O` is the anchor
+valuation-unit-ball direct-product cell, that the selected nonzero scalars form
+the `lambda * O` hull used by the valuation-ball cover, and that the exact
+`Xi(P_B)` assertion is transported to the public `Point targetCopy` carrier
+without being re-assumed.
+-/
+structure ValuationUnitBallNonzeroScalarStepXIPublicAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {δ : Type x} {A : δ -> Type y}
+    [∀ d : δ, Mul (A d)] [∀ d : δ, Zero (A d)]
+    {η : Type z} {K : Type a} {β : Type b}
+    {γ : Type (max x y b z u a)}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (valuationSource :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A (Quot sourceData.Core.equalityQuotient.relation) η K β γ)
+    (carrierEquiv : Point targetCopy ≃ ((d : δ) -> A d))
+    (radiusCoverSource :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource.ValuationBallRadiusDirectProductCellCoverSource
+        valuationSource) : Prop where
+  anchor_unit_ball_local_integer :
+    valuationSource.nonzeroScalarSource.localIntegerRegion =
+      valuationSource.valuationCover.directProductCell
+        valuationSource.valuationCover.anchor
+  selected_scalars_nonzero :
+    ∀ d : δ, (valuationSource.selectedNonzeroScalar d).1 ≠ 0
+  selected_hull_eq_scalar_image :
+    valuationSource.selectedScalarImageHull =
+      valuationSource.nonzeroScalarSource.scalarMultiple
+          valuationSource.selectedNonzeroScalar ''
+        valuationSource.nonzeroScalarSource.localIntegerRegion
+  selected_hull_eq_valuation_cell_union :
+    valuationSource.selectedScalarImageHull =
+      valuationSource.valuationCover.directProductCellUnion
+  valuation_cover_log_volume_eq_calibrated_sum :
+    valuationSource.valuationCover.hullSystem.logVolume
+        valuationSource.selectedScalarImageHull =
+      valuationSource.valuationCover.calibratedCellLogVolumeSum
+  adjusted_family_hull_eq_normalized_determinant :
+    valuationSource.toOb3Ob5AdjustedDeterminantLogVolumeSource.familyHullLogVolume =
+      valuationSource.toOb3Ob5AdjustedDeterminantLogVolumeSource.ob3ob4Source.normalizedDeterminantLogVolume
+  radius_cover_exact_xi :
+    valuationSource.possibleImageUnion =
+      valuationSource.selectedScalarImageHull
+  transported_public_exact_xi_source :
+    IUTStage1Remark395PossibleImageExactXiFamilySource
+      ((valuationSource.toSelectedScalarParameterValuationBallProductHullCoverSource
+          |>.toPossibleImageFamilySource).transport carrierEquiv)
+
+set_option linter.style.longLine false in
+theorem valuationUnitBallNonzeroScalarStepXIPublicAudit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {δ : Type x} {A : δ -> Type y}
+    [∀ d : δ, Mul (A d)] [∀ d : δ, Zero (A d)]
+    {η : Type z} {K : Type a} {β : Type b}
+    {γ : Type (max x y b z u a)}
+    [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+    [Fintype β] [Fintype γ]
+    (valuationSource :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource
+        δ A (Quot sourceData.Core.equalityQuotient.relation) η K β γ)
+    (carrierEquiv : Point targetCopy ≃ ((d : δ) -> A d))
+    (radiusCoverSource :
+      IUTStage1Remark395ValuationUnitBallNonzeroScalarMultiplicationProductHullCoverSource.ValuationBallRadiusDirectProductCellCoverSource
+        valuationSource) :
+    ValuationUnitBallNonzeroScalarStepXIPublicAudit
+      sourceData valuationSource carrierEquiv radiusCoverSource :=
+  { anchor_unit_ball_local_integer :=
+      valuationSource.localIntegerRegion_eq_anchorCell,
+    selected_scalars_nonzero :=
+      valuationSource.nonzeroScalarSource.selectedScalarParameter_nonzero
+        valuationSource.selectedNonzeroScalar,
+    selected_hull_eq_scalar_image :=
+      valuationSource.selectedScalarImageHull_eq_selectedNonzeroScalar_image,
+    selected_hull_eq_valuation_cell_union :=
+      valuationSource.selectedScalarImageHull_eq_valuationBallDirectProductCellUnion,
+    valuation_cover_log_volume_eq_calibrated_sum := by
+      rw [valuationSource.selectedScalarImageHull_eq_valuationBallDirectProductCellUnion]
+      exact valuationSource.valuationCover.directProductCoverLogVolume_eq_calibratedCellSum,
+    adjusted_family_hull_eq_normalized_determinant :=
+      valuationSource.toOb3Ob5AdjustedDeterminantLogVolumeSource
+        |>.familyHullLogVolume_eq_normalizedDeterminantLogVolume,
+    radius_cover_exact_xi :=
+      radiusCoverSource.toExactXiSource.valuationUnion_eq_selectedScalarImageHull,
+    transported_public_exact_xi_source :=
+      radiusCoverSource.toPossibleImageExactXiFamilySource.transport carrierEquiv }
+
+set_option linter.style.longLine false in
+/--
 Construct the Corollary 3.12 Step (xi)/Remark 3.9.5 paper trace from the
 same lower sources used by the strongest principal-product localized route.
 
