@@ -893,17 +893,23 @@ When a constructor-built Step (xi) hull/determinant source is present and its
 canonical scale is identified with the IUT IV finite-place scale, the residual
 endpoint is strengthened further: the final \(C_{\Theta}\) comparison is
 threaded through the constructor-built Step (xi)/IUT IV local-to-global audit
-rather than through the generic ledger proposition alone.  This stronger
-residual handoff now also feeds the base normalized and non-normalized
-additive-Haar public route constructors, so those boundaries can be instantiated
-from the constructor-built Step (xi) source instead of reverting to the generic
-IUT IV residual.  The same constructor-built handoff now lifts through the
+rather than through the generic ledger proposition alone.  The newer
+constructor-coupled arithmetic source goes one layer lower: it constructs the
+IUT IV finite-place ledger with the constructor-built canonical scale as the
+finite-place canonical scale, so the public handoff no longer asks for a
+separate scale equality.  Its remaining numerical input is the lower arithmetic
+gap inequality \(C_{\Theta,\mathrm{can}}+1\leq \mathrm{upper}-\mathrm{main}\).
+This stronger residual handoff now also feeds the base normalized and
+non-normalized additive-Haar public route constructors, so those boundaries can
+be instantiated from the constructor-built Step (xi) source instead of
+reverting to the generic IUT IV residual.  The same constructor-built handoff
+now lifts through the
 intrinsic finite-extension Haar-modulus normalized and finite-summand
 additive-Haar routes, and through the corresponding unit-ball Haar-character
 normalized and finite-summand wrappers.  It now also reaches the
-residue-module/unit-ball normalized and finite-summand wrappers, so the top
-residue quotient routes can consume the constructor-built Step (xi) source
-instead of falling back to the generic IUT IV residual.
+residue-module/unit-ball normalized and finite-summand wrappers; the normalized
+residue-module route has the same constructor-coupled no-standalone-scale-
+equality endpoint.
 This CTheta-derived arithmetic boundary has also been lifted through the
 intrinsic finite-extension, unit-ball Haar-character, and
 residue-module/unit-ball normalized public routes, so those stronger p-adic
@@ -1345,10 +1351,15 @@ The current formalization organizes the route through additive-Haar
 arithmetic-degree and \(p\)-adic formula objects, but the deepest estimates are
 still source obligations.  What is now checked for the preferred route is the
 ordered-real and finite-sum handoff from the arithmetic gap to the canonical
-\(\CTheta\)-scale comparison, together with the source-level bridge that
-identifies the constructed Step (xi) canonical scale with the finite-place IUT IV
-scale before applying plus-one cancellation.  What remains to construct from
-first principles is the lower IUT IV source of that arithmetic gap:
+\(\CTheta\)-scale comparison, together with a constructor-built source-level
+bridge for the local-to-global handoff.  In the older bridge, the constructed
+Step (xi) canonical scale is identified with the finite-place IUT IV scale
+before plus-one cancellation is applied.  In the newer coupled bridge, the
+finite-place IUT IV scale is defined from the constructor-built Step (xi)
+canonical scale itself, so the exposed source assumption is the arithmetic gap
+inequality rather than a separate scale-identification equality.  What remains
+to construct from first principles is the lower IUT IV source of that arithmetic
+gap:
 \[
 \begin{array}{l}
 \text{the distinguished log-shell inclusions and numerical bounds},\\
