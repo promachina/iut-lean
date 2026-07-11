@@ -908,12 +908,19 @@ The finite-place local-to-global constructor now lowers this numerical input:
 local canonical scales, arithmetic/log contributions, and Haar normalization
 defects are summed to derive the arithmetic gap before the coupled IUT IV
 ledger is constructed.
-The localized local-term constructor lowers this one step further: the local
-canonical scales are the weighted adjusted log-volumes of the localized
-Ob3/Ob4 determinant source, and each local upper term is decomposed as Step
-(xi) log-volume plus Haar defect plus main-log contribution.
-This stronger residual handoff now also feeds the base normalized and
-non-normalized additive-Haar public route constructors, so those boundaries can
+	The localized local-term constructor lowers this one step further: the local
+	canonical scales are the weighted adjusted log-volumes of the localized
+	Ob3/Ob4 determinant source, and each local upper term is decomposed as Step
+	(xi) log-volume plus Haar defect plus main-log contribution.  The
+	arithmetic-divisor-backed additive-Haar source now projects the reusable IUT IV
+	local-analytic and Theorem 1.10 \(C_{\Theta}\) data from its matched
+	local-degree, formula-gap, and local-global audits.  After the
+	constructor-built determinant is synchronized with the localized Step (xi)
+	determinant, this source constructs the localized local-term \(C_{\Theta}\)
+	source and derives the residual-payload audit, the constructor-built arithmetic
+	gap, and the final \(C_{\Theta}\) comparison.
+	This stronger residual handoff now also feeds the base normalized and
+	non-normalized additive-Haar public route constructors, so those boundaries can
 be instantiated from the constructor-built Step (xi) source instead of
 reverting to the generic IUT IV residual.  The same constructor-built handoff
 now lifts through the
@@ -1371,15 +1378,18 @@ before plus-one cancellation is applied.  In the newer coupled bridge, the
 finite-place IUT IV scale is defined from the constructor-built Step (xi)
 canonical scale itself, so the exposed source assumption is the arithmetic gap
 inequality rather than a separate scale-identification equality.  The
-finite-place constructor lowers this further: the arithmetic gap is derived
-from finite local Step (xi) summation data, namely local canonical scales,
-arithmetic/log contributions, local Haar defects, the local inequalities, and a
-global defect lower bound.  The localized local-term constructor then lowers the
-local inequalities themselves by taking each local canonical scale to be the
-weighted adjusted log-volume of the localized Ob3/Ob4 determinant source and
-each local upper term to be Step (xi) log-volume plus Haar defect plus main-log
-contribution.  What remains to construct from first principles is the lower IUT
-IV source of the remaining local estimates:
+	finite-place constructor lowers this further: the arithmetic gap is derived
+	from finite local Step (xi) summation data, namely local canonical scales,
+	arithmetic/log contributions, local Haar defects, the local inequalities, and a
+	global defect lower bound.  The localized local-term constructor then lowers the
+	local inequalities themselves by taking each local canonical scale to be the
+	weighted adjusted log-volume of the localized Ob3/Ob4 determinant source and
+	each local upper term to be Step (xi) log-volume plus Haar defect plus main-log
+	contribution.  This constructor is now fed directly by the arithmetic-divisor-
+	backed additive-Haar source, which projects the local analytic and Theorem 1.10
+	\(C_{\Theta}\) records from lower audits rather than assembling them only
+	inside the final finite-divisor route.  What remains to construct from first principles is the lower IUT
+	IV source of the remaining local estimates:
 \[
 \begin{array}{l}
 \text{the distinguished log-shell inclusions and numerical bounds},\\

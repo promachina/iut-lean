@@ -25555,6 +25555,266 @@ theorem theorem311MultiradialFinitePlaceCThetaAudit
 
 set_option linter.style.longLine false in
 /--
+IUT IV local-analytic `C_Theta` data projected from the
+arithmetic-divisor-backed additive-Haar Step (xi) source.
+
+This extracts the data that was previously assembled only inside the large
+finite-divisor audit: distinguished Proposition 1.4 log-shell inclusions and
+nonnegativity, nondistinguished zero log-volume endpoints, and the
+archimedean Proposition 1.5 metric endpoints.
+-/
+noncomputable def toIUTIVLocalAnalyticCThetaSourceData
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    IUTStage1Theorem311ToCorollary312PaperTrace.IUTIVLocalAnalyticCThetaSourceData :=
+  let matchedLocalDegreeSource :=
+    source.matchedLocalDegreeArithmeticDivisorBackedComponentSource
+  let formulaMatchingSource :=
+    matchedLocalDegreeSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+  let formulaSource := formulaMatchingSource.toArithmeticFormulaMatchingSource
+  let localConstructionSource :=
+    formulaSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+      |>.additiveHaarLocalAnalyticConstructionFormulaSource
+  let distinguishedComponent :=
+    matchedLocalDegreeSource.distinguishedArithmeticDivisorBackedDegreeComponent
+  let distinguishedLogShellInclusions : Prop :=
+    ∀ (place : β)
+      (hkind :
+        localConstructionSource.localKind place =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean),
+        (distinguishedComponent place hkind).Endpoint
+  { proposition14_distinguished_log_shell_inclusions_constructed :=
+      distinguishedLogShellInclusions,
+    proposition14_distinguished_log_shell_inclusions_constructed_proof :=
+      matchedLocalDegreeSource.arithmeticDivisorLocalDegreeAudit
+        |>.distinguishedComponentEndpoint,
+    proposition14_distinguished_numerical_bounds_constructed :=
+      ∀ (place : β)
+        (_hkind :
+          localConstructionSource.localKind place =
+            IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean),
+          0 <=
+              (formulaSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.arithmeticDivisorSource
+                |>.localDifferentDegree place) ∧
+            0 <=
+              (formulaSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.arithmeticDivisorSource
+                |>.localConductorDegree place),
+    proposition14_distinguished_numerical_bounds_constructed_proof :=
+      fun place hkind =>
+        ⟨matchedLocalDegreeSource.arithmeticDivisorLocalDegreeAudit
+            |>.localDifferentDegree_nonneg place hkind,
+          matchedLocalDegreeSource.arithmeticDivisorLocalDegreeAudit
+            |>.localConductorDegree_nonneg place hkind⟩,
+    proposition14_nondistinguished_zero_log_volume_constructed :=
+      ∀ (place : β)
+        (hkind :
+          localConstructionSource.localKind place =
+            IUTStage1IUTIVTheorem110LocalEstimateKind.nondistinguishedNonarchimedean),
+          (localConstructionSource.nondistinguishedAdditiveHaarLogShellConstruction place hkind
+            |>.Endpoint),
+    proposition14_nondistinguished_zero_log_volume_constructed_proof :=
+      fun place hkind =>
+        (localConstructionSource.nondistinguishedAdditiveHaarLogShellConstruction place hkind
+          |>.endpoint),
+    proposition15_archimedean_metric_containment_constructed :=
+      ∀ (place : β)
+        (hkind :
+          localConstructionSource.localKind place =
+            IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean),
+          (localConstructionSource.archimedeanMetricConstruction place hkind
+            |>.Endpoint),
+    proposition15_archimedean_metric_containment_constructed_proof :=
+      fun place hkind =>
+        (localConstructionSource.archimedeanMetricConstruction place hkind
+          |>.endpoint) }
+
+set_option linter.style.longLine false in
+/--
+IUT IV Theorem 1.10 `C_Theta` data projected from the
+arithmetic-divisor-backed additive-Haar Step (xi) source.
+
+The formula-to-gap comparisons, arithmetic-divisor endpoint, and local
+additive-Haar normalization are all read from the lower source and its audits.
+-/
+noncomputable def toIUTIVTheorem110CThetaSourceData
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    IUTStage1Theorem311ToCorollary312PaperTrace.IUTIVTheorem110CThetaSourceData :=
+  let matchedLocalDegreeSource :=
+    source.matchedLocalDegreeArithmeticDivisorBackedComponentSource
+  let formulaMatchingSource :=
+    matchedLocalDegreeSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+  let formulaGapSource :=
+    formulaMatchingSource.formulaGapMatchedPrimeErrorPadicDefectMainSource
+      |>.theorem110FormulaGapMatchedArithmeticDivisorEvaluationSource
+  { theorem110_arithmetic_divisor_source_constructed :=
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.Endpoint
+        source,
+    theorem110_arithmetic_divisor_source_constructed_proof :=
+      source.endpoint,
+    theorem110_distinguished_formula_to_gap_constructed :=
+      ∀ (place : β)
+        (hkind :
+          formulaGapSource.additiveHaarLocalAnalyticConstructionFormulaSource.localKind place =
+            IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean),
+          (formulaGapSource.distinguishedGapComparison place hkind).Endpoint,
+    theorem110_distinguished_formula_to_gap_constructed_proof :=
+      fun place hkind =>
+        (formulaGapSource.distinguishedGapComparison place hkind
+          |>.endpoint),
+    theorem110_archimedean_formula_to_gap_constructed :=
+      ∀ (place : β)
+        (hkind :
+          formulaGapSource.additiveHaarLocalAnalyticConstructionFormulaSource.localKind place =
+            IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean),
+          (formulaGapSource.archimedeanGapComparison place hkind).Endpoint,
+    theorem110_archimedean_formula_to_gap_constructed_proof :=
+      fun place hkind =>
+        (formulaGapSource.archimedeanGapComparison place hkind
+          |>.endpoint),
+    additive_haar_local_normalization_constructed :=
+      ConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource.LocalGlobalCThetaDerivationAudit
+        (source.toFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXISource
+          |>.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+          |>.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource),
+    additive_haar_local_normalization_constructed_proof :=
+      source.localGlobalCThetaDerivationAudit }
+
+set_option linter.style.longLine false in
+/--
+Projection from the arithmetic-divisor-backed additive-Haar source to the
+constructor-built localized Step (xi) local-term `C_Theta` source.
+
+The only extra synchronization is the determinant identity between the
+constructor-built possible-image source and the localized Step (xi) determinant.
+The canonical scale equality is not supplied: both source scales reduce to the
+same signed \(q\)-normalized expression, and the finite Step (xi) sum is read
+from the arithmetic-divisor-backed source.
+-/
+noncomputable def toConstructorBuiltLocalizedStepXILocalTermCThetaSource
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record)
+    (constructorBuilt_determinantSource_eq_stepXI :
+      constructorBuiltSource.determinantSource =
+        source.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.localizedStepXISource.toAdjustedDeterminantSource.toWeightedDeterminantSource) :
+    IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltLocalizedStepXILocalTermCThetaSource
+      constructorBuiltSource estimate η γ :=
+  let arithmeticDegreePadicSource :=
+    source.toFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXISource
+      |>.toConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+  let finiteSource :=
+    arithmeticDegreePadicSource.toConstructedTheorem311OneSidedFinitePlaceLocalGlobalCThetaSource
+  { localAnalyticData := source.toIUTIVLocalAnalyticCThetaSourceData,
+    theorem110Data := source.toIUTIVTheorem110CThetaSourceData,
+    localizedStepXISource :=
+      source.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.localizedStepXISource,
+    determinantSource_eq_localizedStepXI :=
+      constructorBuilt_determinantSource_eq_stepXI,
+    canonicalCThetaScale_eq_localizedStepXISum := by
+      simpa [
+        IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.canonicalCThetaScale,
+        IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.canonicalCThetaScale
+      ] using source.canonicalCThetaScale_eq_stepXISum,
+    localMainLogContribution := finiteSource.localMainLogContribution,
+    localHaarNormalizationDefect := finiteSource.localHaarNormalizationDefect,
+    arithmeticUpperTerm_eq_stepXI_haar_main_sum := by
+      have hupper := finiteSource.arithmeticUpperTerm_eq_sum
+      have hpoint :
+          ∀ place : β,
+            finiteSource.localArithmeticUpperContribution place =
+              source.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.localizedStepXISource.weightedAdjustedLogVolume place +
+                finiteSource.localHaarNormalizationDefect place +
+                  finiteSource.localMainLogContribution place := by
+        intro place
+        simpa [finiteSource, arithmeticDegreePadicSource] using
+          arithmeticDegreePadicSource.localArithmeticUpperContribution_eq_stepXI_iutIVDefect_main place
+      calc
+        estimate.arithmeticUpperTerm =
+            ∑ place : β, finiteSource.localArithmeticUpperContribution place :=
+          hupper
+        _ =
+            ∑ place : β,
+              (source.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.localizedStepXISource.weightedAdjustedLogVolume place +
+                finiteSource.localHaarNormalizationDefect place +
+                  finiteSource.localMainLogContribution place) := by
+          exact Finset.sum_congr rfl (fun place _hplace => hpoint place),
+    mainLogTerm_eq_sum := finiteSource.mainLogTerm_eq_sum,
+    total_haar_defect_ge_one := finiteSource.total_haar_defect_ge_one }
+
+set_option linter.style.longLine false in
+theorem constructorBuiltLocalizedStepXILocalTermCThetaSource_endpoint
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record)
+    (constructorBuilt_determinantSource_eq_stepXI :
+      constructorBuiltSource.determinantSource =
+        source.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.localizedStepXISource.toAdjustedDeterminantSource.toWeightedDeterminantSource) :
+    (source.toConstructorBuiltLocalizedStepXILocalTermCThetaSource
+      constructorBuiltSource constructorBuilt_determinantSource_eq_stepXI).Endpoint :=
+  (source.toConstructorBuiltLocalizedStepXILocalTermCThetaSource
+    constructorBuiltSource constructorBuilt_determinantSource_eq_stepXI).endpoint
+
+set_option linter.style.longLine false in
+/--
+Residual-payload audit for the arithmetic-divisor-backed source after
+projection to the constructor-built localized Step (xi) local-term boundary.
+
+This is the source-level handoff into the hardened public route: the localized
+constructor supplies the residual arithmetic payload, its local finite-place
+summation derives the constructor-built arithmetic gap, and the IUT IV
+plus-one identity gives the constructor-built \(C_\Theta\) comparison.
+-/
+theorem constructorBuiltLocalizedStepXIHandoffAudit
+    (source :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record)
+    (constructorBuilt_determinantSource_eq_stepXI :
+      constructorBuiltSource.determinantSource =
+        source.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.localizedStepXISource.toAdjustedDeterminantSource.toWeightedDeterminantSource) :
+    let localizedSource :=
+      source.toConstructorBuiltLocalizedStepXILocalTermCThetaSource
+        constructorBuiltSource constructorBuilt_determinantSource_eq_stepXI
+    localizedSource.Endpoint ∧
+      (IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.additiveHaarArithmeticResidualPayloadOfConstructorBuiltLocalizedStepXILocalTermCThetaSource
+        constructorBuiltSource localizedSource).Audit ∧
+      constructorBuiltSource.canonicalCThetaScale + 1 <=
+        estimate.arithmeticUpperTerm - estimate.mainLogTerm ∧
+      constructorBuiltSource.canonicalCThetaScale <= estimate.cTheta := by
+  intro localizedSource
+  have hgap :
+      constructorBuiltSource.canonicalCThetaScale + 1 <=
+        estimate.arithmeticUpperTerm - estimate.mainLogTerm :=
+    localizedSource.arithmeticGap_dominates_constructorCanonicalCThetaScale
+  have hplus :
+      estimate.cTheta + 1 =
+        estimate.arithmeticUpperTerm - estimate.mainLogTerm :=
+    estimate.cTheta_add_one_eq_arithmetic_minus_main
+  exact
+    ⟨localizedSource.endpoint,
+      IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.additiveHaarArithmeticResidualPayloadAudit_ofConstructorBuiltLocalizedStepXILocalTermCThetaSource
+        constructorBuiltSource localizedSource,
+      hgap,
+      by linarith⟩
+
+set_option linter.style.longLine false in
+/--
 Definition-of-done audit for the source-level preferred corridor.
 
 It records, for the arithmetic-divisor-backed source, the exact current route
