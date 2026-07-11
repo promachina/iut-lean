@@ -1556,7 +1556,13 @@ hull/determinant constructor.  The obligations-backed variant projects the
 bridge equality, q-pilot positivity, and normalization from a single
 \(\texttt{IUTStage1SourceHullDetObligations}\) object, leaving only the
 identification of that bridge datum with the record-canonical
-product-hull/tensor-power construction explicit.  The older norm-square
+product-hull/tensor-power construction explicit.  The stricter canonical-HDD
+wrapper now moves that synchronization below the preferred route into
+\(\texttt{ProductHullCanonicalHDDCommonContainerSource}\): its endpoint records
+that the package HDD hull/determinant bridge equals the constructor-generated
+obligations bridge and hence the record-canonical product-hull/tensor-power
+bridge, while the preferred route itself consumes this lower source object and
+the localized \(C_\Theta\) source.  The older norm-square
 public-surface and goal-scope evidence
 audits remain checked compatibility evidence, including the non-vacuous
 norm-square determinant boundary and compact-open legacy quarantine, but are
