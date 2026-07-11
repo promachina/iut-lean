@@ -17504,6 +17504,172 @@ theorem endpoint
 
 end CoordinateThetaRegionScalarImageSource
 
+set_option linter.style.longLine false in
+/--
+Realized local image source for coordinate projections of theta regions.
+
+This is one layer below `CoordinateThetaRegionScalarImageSource`.  Instead of
+assuming the coordinate projection \(H_v(\lambda_v)=\lambda_v O_v\) directly,
+it supplies a local realization map: the whole theta region is the realized
+image of the local integer factor, and projecting that realized point to the
+chosen local coordinate is exactly the scalar multiple.  Lean derives the
+coordinate scalar-image law from these two local log-Kummer image laws.
+-/
+structure CoordinateThetaRegionRealizedLocalImageSource
+    {δ : Type x} (A : δ -> Type y)
+    (targetSource :
+      PackageTargetRegionLatticeFormulaSource (target := target) package) where
+  carrierEquiv : Point target ≃ ((d : δ) -> A d)
+  directProductSource :
+    IUTStage1Remark395DirectProductHullSystemSource δ A
+  localIntegerFactorRegion : (d : δ) -> Set (A d)
+  scalarMultipleCoordinate :
+    (d : δ) -> PackageThetaRegionScalarParameter coric l -> A d -> A d
+  localRealization :
+    (d : δ) -> PackageThetaRegionScalarParameter coric l -> A d -> Point target
+  parameter_nonzero_coordinate :
+    (d : δ) -> PackageThetaRegionScalarParameter coric l -> Prop
+  all_parameters_nonzero_coordinate :
+    ∀ (d : δ) (parameter : PackageThetaRegionScalarParameter coric l),
+      parameter_nonzero_coordinate d parameter
+  thetaRegion_eq_realizedLocalImage :
+    ∀ (d : δ) (parameter : PackageThetaRegionScalarParameter coric l),
+      (targetSource.thetaRegion parameter.hodgeTheater
+        parameter.historyLabel parameter.lattice parameter.coricDatum).toSet =
+        localRealization d parameter '' localIntegerFactorRegion d
+  realization_coordinate_eq_scalar :
+    ∀ (d : δ) (parameter : PackageThetaRegionScalarParameter coric l)
+      (localPoint : A d),
+      carrierEquiv (localRealization d parameter localPoint) d =
+        scalarMultipleCoordinate d parameter localPoint
+
+namespace CoordinateThetaRegionRealizedLocalImageSource
+
+variable
+  {targetSource :
+    PackageTargetRegionLatticeFormulaSource (target := target) package}
+
+set_option linter.style.longLine false in
+theorem coordinateThetaRegion_eq_scalarImage
+    {δ : Type x} {A : δ -> Type y}
+    (source :
+      CoordinateThetaRegionRealizedLocalImageSource
+        (target := target) (package := package) A targetSource)
+    (d : δ)
+    (parameter : PackageThetaRegionScalarParameter coric l) :
+    targetSource.coordinateThetaRegion source.carrierEquiv d parameter =
+      source.scalarMultipleCoordinate d parameter ''
+        source.localIntegerFactorRegion d := by
+  ext coordinate
+  constructor
+  · rintro ⟨point, hpoint, hcoordinate⟩
+    have hrealized :
+        point ∈ source.localRealization d parameter ''
+          source.localIntegerFactorRegion d := by
+      rw [← source.thetaRegion_eq_realizedLocalImage d parameter]
+      simpa [Region.toSet] using hpoint
+    rcases hrealized with ⟨localPoint, hlocalPoint, hpoint_eq⟩
+    refine ⟨localPoint, hlocalPoint, ?_⟩
+    calc
+      source.scalarMultipleCoordinate d parameter localPoint =
+          source.carrierEquiv
+            (source.localRealization d parameter localPoint) d := by
+        exact (source.realization_coordinate_eq_scalar d parameter localPoint).symm
+      _ = source.carrierEquiv point d := by
+        rw [hpoint_eq]
+      _ = coordinate := hcoordinate
+  · rintro ⟨localPoint, hlocalPoint, hcoordinate⟩
+    refine
+      ⟨source.localRealization d parameter localPoint, ?_, ?_⟩
+    · have hrealized :
+          source.localRealization d parameter localPoint ∈
+            source.localRealization d parameter ''
+              source.localIntegerFactorRegion d :=
+        ⟨localPoint, hlocalPoint, rfl⟩
+      have htheta :
+          source.localRealization d parameter localPoint ∈
+            (targetSource.thetaRegion parameter.hodgeTheater
+              parameter.historyLabel parameter.lattice
+              parameter.coricDatum).toSet := by
+        rw [source.thetaRegion_eq_realizedLocalImage d parameter]
+        exact hrealized
+      simpa [Region.toSet] using htheta
+    · calc
+        source.carrierEquiv
+            (source.localRealization d parameter localPoint) d =
+            source.scalarMultipleCoordinate d parameter localPoint :=
+          source.realization_coordinate_eq_scalar d parameter localPoint
+        _ = coordinate := hcoordinate
+
+set_option linter.style.longLine false in
+def toCoordinateThetaRegionScalarImageSource
+    {δ : Type x} {A : δ -> Type y}
+    (source :
+      CoordinateThetaRegionRealizedLocalImageSource
+        (target := target) (package := package) A targetSource) :
+    CoordinateThetaRegionScalarImageSource
+      (target := target) (package := package) A targetSource :=
+  { carrierEquiv := source.carrierEquiv,
+    directProductSource := source.directProductSource,
+    localIntegerFactorRegion := source.localIntegerFactorRegion,
+    scalarMultipleCoordinate := source.scalarMultipleCoordinate,
+    parameter_nonzero_coordinate := source.parameter_nonzero_coordinate,
+    all_parameters_nonzero_coordinate :=
+      source.all_parameters_nonzero_coordinate,
+    coordinateThetaRegion_eq_scalarImage :=
+      source.coordinateThetaRegion_eq_scalarImage }
+
+set_option linter.style.longLine false in
+def toScalarParameterDirectProductHullSource
+    {δ : Type x} {A : δ -> Type y}
+    (source :
+      CoordinateThetaRegionRealizedLocalImageSource
+        (target := target) (package := package) A targetSource) :
+    IUTStage1Remark395ScalarParameterDirectProductHullSource
+      δ A (fun _ => PackageThetaRegionScalarParameter coric l) :=
+  source.toCoordinateThetaRegionScalarImageSource
+    |>.toScalarParameterDirectProductHullSource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    {δ : Type x} {A : δ -> Type y}
+    (source :
+      CoordinateThetaRegionRealizedLocalImageSource
+        (target := target) (package := package) A targetSource)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (∀ (d : δ) (parameter : PackageThetaRegionScalarParameter coric l),
+        (targetSource.thetaRegion parameter.hodgeTheater
+          parameter.historyLabel parameter.lattice
+          parameter.coricDatum).toSet =
+          source.localRealization d parameter ''
+            source.localIntegerFactorRegion d) ∧
+      (∀ (d : δ) (parameter : PackageThetaRegionScalarParameter coric l)
+        (localPoint : A d),
+        source.carrierEquiv (source.localRealization d parameter localPoint) d =
+          source.scalarMultipleCoordinate d parameter localPoint) ∧
+      (∀ (d : δ) (parameter : PackageThetaRegionScalarParameter coric l),
+        targetSource.coordinateThetaRegion source.carrierEquiv d parameter =
+          source.scalarMultipleCoordinate d parameter ''
+            source.localIntegerFactorRegion d) ∧
+      (∀ d : δ,
+        source.parameter_nonzero_coordinate d
+          (PackageThetaRegionScalarParameter.ofChoice choice)) ∧
+      source.toScalarParameterDirectProductHullSource.parameterRegion
+          (fun _ => PackageThetaRegionScalarParameter.ofChoice choice) =
+        fun d =>
+          targetSource.choiceCoordinateTargetRegion source.carrierEquiv d
+            choice :=
+  ⟨source.thetaRegion_eq_realizedLocalImage,
+    source.realization_coordinate_eq_scalar,
+    source.coordinateThetaRegion_eq_scalarImage,
+    fun d =>
+      source.all_parameters_nonzero_coordinate d
+        (PackageThetaRegionScalarParameter.ofChoice choice),
+    source.toCoordinateThetaRegionScalarImageSource
+      |>.selectedParameterRegion_eq_choiceTargetRegion choice⟩
+
+end CoordinateThetaRegionRealizedLocalImageSource
+
 end PackageTargetRegionLatticeFormulaSource
 
 theorem choiceImages_region
