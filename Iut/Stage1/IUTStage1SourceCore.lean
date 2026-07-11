@@ -4005,6 +4005,30 @@ def toHolomorphicHullSystem
   data.toPrincipalProductHullSystemSource.toHolomorphicHullSystem
 
 set_option linter.style.longLine false in
+theorem toHolomorphicHullSystem_eq_directProductSource
+    (data : IUTStage1Remark395DirectProductPrincipalHullSystemSource δ A) :
+    data.toHolomorphicHullSystem =
+      data.directProductSource.toHolomorphicHullSystem := by
+  rw [IUTStage1Remark395HolomorphicHullSystem.mk.injEq]
+  constructor
+  · funext region
+    apply propext
+    constructor
+    · intro hregion
+      rcases hregion with ⟨parameter, hparameter⟩
+      exact
+        ⟨parameter,
+          (data.principalHull_eq_directProductHull parameter).symm.trans
+            hparameter⟩
+    · intro hregion
+      rcases hregion with ⟨parameter, hparameter⟩
+      exact
+        ⟨parameter,
+          (data.principalHull_eq_directProductHull parameter).trans
+            hparameter⟩
+  · rfl
+
+set_option linter.style.longLine false in
 theorem endpoint
     (data : IUTStage1Remark395DirectProductPrincipalHullSystemSource δ A)
     (region : Set ((d : δ) -> A d)) :
@@ -28113,6 +28137,75 @@ theorem endpoint
           |>.familyHullLogVolume_eq_normalizedDeterminantLogVolume⟩
 
 end IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+
+namespace IUTStage1Remark395CoordinateScalarImageValuationBallProductHullCoverSource
+
+variable {δ : Type u} {A : δ -> Type v} {ι : Type y} {η : Type x} {K : Type z}
+variable {β : Type w} {γ : Type max u v w x y z}
+variable [TopologicalSpace K] [MeasurableSpace K] [AddGroup K] [T2Space K]
+variable [Fintype β] [Fintype γ]
+
+set_option linter.style.longLine false in
+/--
+Convert a coordinate scalar-image valuation-ball cover to the selected
+scalar-parameter valuation cover with scalar parameters `Set (A d)`.
+
+The selected scalar parameter is the coordinate intersection parameter itself.
+Thus the exact-`Xi(P_B)` radius-cover machinery for selected scalar parameters
+can be reused without assuming a separate selected scalar record.
+-/
+noncomputable def toSelectedScalarParameterValuationBallProductHullCoverSource
+    [∀ d : δ, Inhabited (A d)]
+    (data :
+      IUTStage1Remark395CoordinateScalarImageValuationBallProductHullCoverSource
+        δ A ι η K β γ) :
+    IUTStage1Remark395SelectedScalarParameterValuationBallProductHullCoverSource
+      δ A (fun d => Set (A d)) ι η K β γ :=
+  { valuationCover := data.valuationCover,
+    scalarParameterSource :=
+      data.coordinateSource.toSetScalarParameterDirectProductHullSource,
+    selectedScalarParameter := data.selectedParameter,
+    hullSystem_eq_scalarParameterProduct := by
+      rw [data.hullSystem_eq_coordinatePrincipal]
+      exact
+        data.coordinateSource.toScalarImageDirectProductHullSource
+          |>.toDirectProductPrincipalHullSystemSource
+          |>.toHolomorphicHullSystem_eq_directProductSource,
+    localIntegerRegion_eq_anchorCell := by
+      simpa [
+        IUTStage1Remark395CoordinateScalarImageDirectProductHullSource.toSetScalarParameterDirectProductHullSource,
+        IUTStage1Remark395CoordinateScalarImageDirectProductHullSource.localIntegerRegion]
+        using data.localIntegerRegion_eq_anchorCell,
+    selectedParameterRegion_eq_intersection := by
+      rfl }
+
+set_option linter.style.longLine false in
+theorem selectedScalarParameterCover_endpoint
+    [∀ d : δ, Inhabited (A d)]
+    (data :
+      IUTStage1Remark395CoordinateScalarImageValuationBallProductHullCoverSource
+        δ A ι η K β γ) :
+    let selectedSource :=
+      data.toSelectedScalarParameterValuationBallProductHullCoverSource;
+    selectedSource.scalarParameterSource =
+        data.coordinateSource.toSetScalarParameterDirectProductHullSource ∧
+      selectedSource.selectedScalarParameter = data.selectedParameter ∧
+      selectedSource.selectedScalarParameterHull =
+        data.selectedCoordinateScalarImageHull ∧
+      selectedSource.selectedScalarParameterHull =
+        data.valuationCover.directProductCellUnion ∧
+      selectedSource.toOb3Ob5AdjustedDeterminantLogVolumeSource =
+        data.toOb3Ob5AdjustedDeterminantLogVolumeSource :=
+  by
+    intro selectedSource
+    exact
+      ⟨rfl,
+        rfl,
+        rfl,
+        data.selectedCoordinateScalarImageHull_eq_valuationBallDirectProductCellUnion,
+        rfl⟩
+
+end IUTStage1Remark395CoordinateScalarImageValuationBallProductHullCoverSource
 
 /--
 Nonzero scalar-multiplication valuation-ball product-hull cover source.

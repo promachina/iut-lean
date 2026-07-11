@@ -115,6 +115,7 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 inductive PublicStepXIHullConstructionBoundary where
   | coordinateScalarImageConstructedTrace
   | realLineCoordinateScalarImageConstructedTrace
+  | coordinateScalarImageValuationSelected
   | valuationUnitBallNonzeroScalarSelected
   deriving DecidableEq, Repr
 
@@ -148,6 +149,10 @@ def publicStepXIHullConstructionInventory :
       constructorName :=
         "preferredPublicTransportedRealLineCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit",
       keyField := "real_line_coordinate_hull_route" },
+    { boundary := .coordinateScalarImageValuationSelected,
+      auditTypeName := "CoordinateScalarImageStepXIPublicAudit",
+      constructorName := "coordinateScalarImageStepXIPublicAudit",
+      keyField := "transported_public_exact_xi_source" },
     { boundary := .valuationUnitBallNonzeroScalarSelected,
       auditTypeName :=
         "ValuationUnitBallNonzeroScalarStepXIPublicAudit",
@@ -159,7 +164,7 @@ def publicStepXIHullConstructionInventory_count : Nat :=
   publicStepXIHullConstructionInventory.length
 
 theorem publicStepXIHullConstructionInventory_count_eq :
-    publicStepXIHullConstructionInventory_count = 3 :=
+    publicStepXIHullConstructionInventory_count = 4 :=
   rfl
 
 def genericStructureSheafNormalizedAuditType : String :=
@@ -338,6 +343,21 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredPublicTransportedRealLineCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit.real_line_coordinate_hull_route
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredPublicTransportedRealLineCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit.constructed_paper_trace
+
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.CoordinateScalarImageStepXIPublicAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.coordinateScalarImageStepXIPublicAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.CoordinateScalarImageStepXIPublicAudit.coordinate_scalar_landing
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.CoordinateScalarImageStepXIPublicAudit.coordinate_scalar_preimage
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.CoordinateScalarImageStepXIPublicAudit.selected_hull_eq_valuation_cell_union
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.CoordinateScalarImageStepXIPublicAudit.adjusted_family_hull_eq_normalized_determinant
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.CoordinateScalarImageStepXIPublicAudit.transported_public_exact_xi_source
 
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ValuationUnitBallNonzeroScalarStepXIPublicAudit

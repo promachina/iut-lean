@@ -698,6 +698,12 @@ Step (xi) paper trace internally from the same coordinate scalar-image hull,
 localized determinant, theta-family-hull, and Ob7 data, so these endpoints no
 longer expose either a bare public principal-hull source or a standalone
 paper-trace argument.
+The valuation-ball selected exact-\(\Xi\) boundary has also been tied to this
+coordinate source: Lean converts a coordinate scalar-image valuation-ball
+cover to the selected scalar-parameter cover by taking the local scalar
+parameter to be the coordinate region itself, proves that the induced
+holomorphic hull system agrees with the direct-product hull system, and then
+reuses the selected radius-cover exact-\(\Xi\) transport theorem.
 For the selected valuation-ball family-hull route, the implementation now
 uses the more faithful scalar boundary: a nonzero local multiplication source
 \(\lambda_v\cdot O_v\) constructs the selected scalar-parameter valuation
@@ -1425,7 +1431,9 @@ valuation-cover side from the intrinsic finite-extension valuation-cover
   coordinate and real-line public endpoints construct the principal source and
   paper trace internally, but the coordinate scalar-image landing/preimage
   laws themselves still have to be derived from Hodge-theater/log-theta-lattice
-  data.  For the selected valuation-ball
+  data.  The selected valuation-ball exact-\(\Xi\) audit now consumes the same
+  coordinate scalar-image source, rather than a parallel selected scalar
+  wrapper.  For the selected valuation-ball
   hull, the nonzero-scalar multiplication route now constructs the selected
   scalar-parameter source and its Ob3/Ob5 handoff; the remaining work is to
   construct the lower transported-factor/residue-module matching data directly
