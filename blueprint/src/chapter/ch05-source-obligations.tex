@@ -2070,7 +2070,16 @@
   hull/determinant bridge first equals the constructor-generated obligations
   bridge and then the record-canonical product-hull/tensor-power bridge; the
   route itself consumes this lower source object and the localized \(C_\Theta\)
-  source only.  The norm-square boundary audit
+  source only.  One layer below this, Lean now has the common-container update
+  constructor
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.CanonicalHDDCommonContainer.withHDDHullDetBridge}
+  and the product-hull audit
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ProductHullCanonicalHDDCommonContainerSource.definitionalHDDPackageAudit}.
+  This constructs a package whose HDD hull/determinant bridge is definitionally
+  the record-canonical product-hull/tensor-power bridge while preserving the
+  chart and signed q/\(\Theta\) endpoints; the remaining mathematical boundary
+  is to transport or construct the full Theorem 3.11 source record over this
+  canonical-HDD package.  The norm-square boundary audit
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312RouteBoundaryAudit}
   records the equality with the hardened endpoint.
   The closed-input audit
