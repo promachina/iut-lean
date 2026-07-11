@@ -491,12 +491,14 @@ from `IUTStage1SourceHullDetObligations`.  Its Hodge-calibrated variant
 removes the raw theta/family-hull scalar equality from this boundary: Lean
 derives \(\Theta_{\mathrm{signed}}\) = family-hull log-volume from
 `IUTStage1HodgeFamilyHullLogVolumeCalibration`, via the Hodge--Arakelov theta
-monoid degree.  This Hodge-calibrated obligations route now also has a
-compact-open log-Kummer map entry point: the realization map and local sections
-construct the correspondence relation internally before the Hodge-calibrated
-Step (xi) constructor is invoked.  The record-canonical bridge-data
-synchronization and measure calibration remain explicit lower inputs at this
-boundary.  The same
+monoid degree.  There is also a direct bridge-based compact-open log-Kummer map
+entry point for this Hodge-calibrated route: the realization map and local
+sections construct the correspondence relation internally, and the constructor
+uses the Hodge-derived theta/family-hull equality without an ambient
+`IUTStage1SourceHullDetObligations` object.  The record-canonical bridge
+equality, q-positivity, normalization, and measure calibration remain explicit
+lower inputs at this boundary.  The older obligations-backed map entry point is
+retained as a compatibility projection.  The same
 calibration now reaches the finite-divisor constructor-backed source: Lean
 converts the Hodge-calibrated data to the constructor-backed spine, forms the
 constructor-generated hull/determinant obligations, and builds the
