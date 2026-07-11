@@ -1194,8 +1194,10 @@ preferred wrapper lowers the theta scalar input one more step: it takes the
   source projects to the finite Hodge-summand source by unfolding the
   localized adjusted sum as the finite sum of weighted adjusted log-volumes.
   This expansion is now also available from the constructed Gaussian/Hodge
-  inverse-dilation wrapper itself: Lean projects its localized-adjusted theta
-  equality to the lower source and then invokes the finite summand route.
+  inverse-dilation wrapper itself: Lean reads the constructed
+  Hodge theta-summand family, proves its pointwise equality with the localized
+  weighted adjusted log-volumes, and then constructs the finite Hodge-summand
+  calibrated source directly.
   The Haar-modulus-backed inverse-dilation wrapper now exposes the same
   finite-summand expansion boundary after projecting its measure-level
   inverse-base-prime cover to the generic inverse-dilation source.
