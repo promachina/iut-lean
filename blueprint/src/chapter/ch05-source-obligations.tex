@@ -2316,6 +2316,16 @@
   layer: the formula-gap matched Theorem~1.10 valuation-ball source is now
   constructed internally from the Proposition~1.4 valuation-ball additive-Haar
   local analytic source and its local formula-gap bounds.  The strongest
+  valuation-ball local-analytic source now also has constructor-projected
+  \(C_\Theta\) paper-trace data:
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.iutIVLocalAnalyticCThetaSourceDataOfValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource},
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.iutIVTheorem110CThetaSourceDataOfValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource},
+  and
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallTheorem110ValuationBallLocalAnalyticIUTIVLocalizedStepXISource.ofValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource}.
+  Thus the local-analytic and Theorem~1.10 \(C_\Theta\) source-data records are
+  no longer independent inputs at this wrapper; they are read from the
+  valuation-ball additive-Haar arithmetic-divisor source itself.
+  The strongest
   pointwise branch now also accepts the compact-open log-Kummer map
   possible-region source directly and constructs the principal pointwise
   log-shell/valuation-ball theta-region source internally.  The current
