@@ -568,28 +568,38 @@ theorem auditOfConstructedQualitativeCertificate_qSignedLeThetaSigned
 Constructed common-container provenance for a pre-ledger.
 
 The qualitative certificate already pins the certificate's SHE datum to a
-structured Hodge-theater transport context. This record additionally pins the
-pre-ledger common container to the constructor that uses the same SHE transport
-context for its `HDD o SHE` arrow. Thus the later
-`she_matches_certificate` ledger obligation is derived from construction data,
-not supplied as an unrelated compatibility equality.
+structured Hodge-theater transport context. This record additionally requires
+the pre-ledger common container's SHE arrow and shared context to be aligned
+with that same transport context. Thus the later `she_matches_certificate`
+ledger obligation is derived from construction data, not supplied as an
+unrelated compatibility equality.
 -/
 structure ConstructedQualitativeCommonContainerData
     (data : IUTStage1PreLedgerData source target index) where
   qualitativeSource : ConstructedQualitativeCertificateData data
-  common_container_eq :
-    data.chartedContainer.commonContainer =
-      RealLineCopy.AlgorithmicOutput.CommonContainerData.ofStructuredSHETransportContext
-        (output := data.output) (measure := data.measure)
-        (bound := data.thetaSigned)
-        data.chartedContainer.commonContainer.container
-        data.chartedContainer.commonContainer.hddShe.sheArrow.arrow
-        data.chartedContainer.commonContainer.hddShe.hdd
-        qualitativeSource.sheTransportContext
+  she_arrow_datum_eq_transport :
+    data.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+      qualitativeSource.sheTransportContext.sheDatum
+  common_container_context_eq_transport :
+    data.chartedContainer.commonContainer.context =
+      qualitativeSource.sheTransportContext.baseContext.sharedContext
 
 namespace ConstructedQualitativeCommonContainerData
 
 variable {data : IUTStage1PreLedgerData source target index}
+
+def ofSHEDatumAndContext
+    (qualitativeSource : ConstructedQualitativeCertificateData data)
+    (she_datum_eq :
+      data.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+        qualitativeSource.sheTransportContext.sheDatum)
+    (context_eq :
+      data.chartedContainer.commonContainer.context =
+        qualitativeSource.sheTransportContext.baseContext.sharedContext) :
+    ConstructedQualitativeCommonContainerData data :=
+  { qualitativeSource := qualitativeSource,
+    she_arrow_datum_eq_transport := she_datum_eq,
+    common_container_context_eq_transport := context_eq }
 
 theorem certificateShe_eq_transportDatum
     (sourceData : ConstructedQualitativeCommonContainerData data) :
@@ -607,16 +617,7 @@ theorem sheArrowDatum_eq_transportDatum
     (sourceData : ConstructedQualitativeCommonContainerData data) :
     data.chartedContainer.commonContainer.hddShe.sheArrow.datum =
       sourceData.qualitativeSource.sheTransportContext.sheDatum := by
-  have hdatum :=
-    congrArg
-      (fun commonContainer =>
-        commonContainer.hddShe.sheArrow.datum)
-      sourceData.common_container_eq
-  simpa [
-    RealLineCopy.AlgorithmicOutput.CommonContainerData.ofStructuredSHETransportContext,
-    RealLineCopy.AlgorithmicOutput.HDDSHECompositeData.ofStructuredSHETransportContext,
-    RealLineCopy.AlgorithmicOutput.SHEArrowData.ofStructuredSHETransportContext
-  ] using hdatum
+  exact sourceData.she_arrow_datum_eq_transport
 
 theorem sheArrowMatchesCertificate
     (sourceData : ConstructedQualitativeCommonContainerData data) :
@@ -629,13 +630,7 @@ theorem commonContainerContext_eq_transportBase
     (sourceData : ConstructedQualitativeCommonContainerData data) :
     data.chartedContainer.commonContainer.context =
       sourceData.qualitativeSource.sheTransportContext.baseContext.sharedContext := by
-  have hcontext :=
-    congrArg
-      (fun commonContainer => commonContainer.context)
-      sourceData.common_container_eq
-  simpa [
-    RealLineCopy.AlgorithmicOutput.CommonContainerData.ofStructuredSHETransportContext
-  ] using hcontext
+  exact sourceData.common_container_context_eq_transport
 
 theorem commonContainerContextMatchesCertificate
     (sourceData : ConstructedQualitativeCommonContainerData data) :

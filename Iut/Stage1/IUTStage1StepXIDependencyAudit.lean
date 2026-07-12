@@ -133,6 +133,12 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #check IUTStage1PreLedgerData.ConstructedLedgerPromotionObligations.toSourceObligationLedger
 #guard_msgs (drop info) in
 #check IUTStage1PreLedgerData.ConstructedLedgerPromotionObligations.toSourceObligationProvider_publicAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ConstructedQualitativeInputsWithSHE.constructedCommonContainerData
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ConstructedQualitativeInputsWithSHE.constructedLedgerPromotionObligations
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ConstructedQualitativeInputsWithSHE.constructedLedgerPromotion_publicAudit
 
 /-- Public Step (xi) hull-construction boundaries currently audited. -/
 inductive PublicStepXIHullConstructionBoundary where
