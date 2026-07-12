@@ -2204,8 +2204,10 @@
   the Theorem 3.11 bridge package is derived from the package-aligned
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311AlignedBridgeComponentSource},
   so the packet no longer supplies separate bridge source-copy or output-family
-  alignment fields; and the Theorem 3.11 subclaim record is derived from the
-  explicit certified-output and HDD-SHE/certificate alignment fields.
+  alignment fields; and the Theorem 3.11 subclaim record is derived from
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311SubclaimComponentSource}, whose
+  SHE alignment is projected from the bridge's structured SHE transport context
+  rather than supplied as a separate packet field.
   The packet route audit
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ConcretePacketTheorem311PrimitiveConstructorAudit}
   records that this projected constructor satisfies the primitive source audit.
