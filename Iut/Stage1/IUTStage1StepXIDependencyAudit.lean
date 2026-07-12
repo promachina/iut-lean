@@ -158,6 +158,14 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #guard_msgs (drop info) in
 #check IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.constructedTransportGuardedPromotionAudit
 #guard_msgs (drop info) in
+#check IUTStage1PrimitiveTheorem311ConstructedQualitativeSource
+#guard_msgs (drop info) in
+#check IUTStage1PrimitiveTheorem311ConstructedQualitativeSource.toConstructedQualitativeInputs
+#guard_msgs (drop info) in
+#check IUTStage1PrimitiveTheorem311ConstructedQualitativeSource.Audit
+#guard_msgs (drop info) in
+#check IUTStage1PrimitiveTheorem311ConstructedQualitativeSource.audit
+#guard_msgs (drop info) in
 #check IUTStage1PrimitiveTheorem311SourceConstructor
 #guard_msgs (drop info) in
 #check IUTStage1PrimitiveTheorem311SourceConstructor.record
