@@ -288,6 +288,10 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #guard_msgs (drop info) in
 #check IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.verticalLogKummerPacketAlignedOneSidedSource_endpoint
 #guard_msgs (drop info) in
+#check IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.PacketAlignedFiberTransportOneSidedComparisonAudit
+#guard_msgs (drop info) in
+#check IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.packetAlignedFiberTransportOneSidedComparisonAudit
+#guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.Audit
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.audit
