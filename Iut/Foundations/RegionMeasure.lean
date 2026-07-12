@@ -26,6 +26,17 @@ namespace RegionMeasure
 
 variable {line source target : Copy} {index : Type u}
 
+@[ext]
+theorem ext {measure₁ measure₂ : RegionMeasure line}
+    (hvolume : ∀ region : Region line,
+      measure₁.volume region = measure₂.volume region) :
+    measure₁ = measure₂ := by
+  cases measure₁
+  cases measure₂
+  simp only at hvolume
+  cases funext hvolume
+  rfl
+
 theorem le_of_subset (measure : RegionMeasure line) {small large : Region line}
     (hsubset : Region.Subset small large) :
     measure.volume small <= measure.volume large :=

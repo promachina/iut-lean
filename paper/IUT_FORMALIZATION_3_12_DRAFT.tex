@@ -1644,8 +1644,12 @@ lowers the Hodge-family calibration one step further: the supplied Hodge input
 is the charted equality between the Hodge theta-monoid degree and the finite
 adjusted determinant summand sum, from which Lean derives the determinant,
 normalized determinant, and family-hull equalities internally.  The remaining
-input at this constructor boundary is the pre-ledger/product-hull measure
-identity.  On the
+measure input is now represented by
+\(\texttt{IUTStage1PreLedgerHolomorphicHullMeasureCalibration}\), a pointwise
+calibration saying that every target-region volume in the pre-ledger is the
+Remark 3.9.5 holomorphic-hull log-volume for the principal hull operator; Lean
+derives the equality of region-measure records consumed by the older route.
+On the
 qualitative side,
 \(\texttt{IUTStage1SourceObligationGap}\) can now be constructed from a
 strengthened structured-SHE Theorem 3.11 bundle together with the q-positivity
