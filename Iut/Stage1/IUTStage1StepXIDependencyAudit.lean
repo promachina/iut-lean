@@ -180,6 +180,18 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #guard_msgs (drop info) in
 #check IUTStage1PrimitiveTheorem311SourceConstructor
 #guard_msgs (drop info) in
+#check IUTStage1PrimitiveTheorem311BridgeCertificateSourceConstructor
+#guard_msgs (drop info) in
+#check IUTStage1PrimitiveTheorem311BridgeCertificateSourceConstructor.qualitativeSource
+#guard_msgs (drop info) in
+#check IUTStage1PrimitiveTheorem311BridgeCertificateSourceConstructor.toPrimitiveConstructor
+#guard_msgs (drop info) in
+#check IUTStage1PrimitiveTheorem311BridgeCertificateSourceConstructor.primitiveConstructor_qualitativeSource_eq
+#guard_msgs (drop info) in
+#check IUTStage1PrimitiveTheorem311BridgeCertificateSourceConstructor.Audit
+#guard_msgs (drop info) in
+#check IUTStage1PrimitiveTheorem311BridgeCertificateSourceConstructor.audit
+#guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311TargetRegionClassFormulaSource
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311TargetRegionClassFormulaSource.toPackageTargetRegionLatticeFormulaSource
@@ -261,6 +273,12 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.bridgeCertificateSource
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.bridgeCertificateSource_audit
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.bridgeCertificateConstructor
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.bridgeCertificateConstructor_audit
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.primitiveConstructor_qualitativeSource_eq_bridgeCertificate
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.primitiveConstructor
 #guard_msgs (drop info) in
