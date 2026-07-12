@@ -186,6 +186,12 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311TargetRegionClassFormulaSource.endpoint
 #guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311StepXLogKummerComponentSource
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311StepXLogKummerComponentSource.toStepXVerticalLogKummerFiniteDivisorPackage
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311StepXLogKummerComponentSource.endpoint
+#guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.sourceData
@@ -193,6 +199,10 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.targetRegionFormulaSource
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.targetRegionClassFormulaSource_endpoint
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.stepXLogKummerPackage
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.stepXLogKummerPackage_endpoint
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.qualitativeSource
 #guard_msgs (drop info) in
