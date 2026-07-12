@@ -123,6 +123,16 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #check IUTStage1SourceObligationGap.StructuredInputsWithSHEAndSideConditionsAudit
 #guard_msgs (drop info) in
 #check IUTStage1SourceObligationGap.structuredInputsWithSHEAndSideConditionsAudit
+#guard_msgs (drop info) in
+#check RealLineCopy.AlgorithmicOutput.SHEArrowData.ofStructuredSHETransportContext
+#guard_msgs (drop info) in
+#check RealLineCopy.AlgorithmicOutput.CommonContainerData.ofStructuredSHETransportContext
+#guard_msgs (drop info) in
+#check IUTStage1PreLedgerData.ConstructedQualitativeCommonContainerData.sheArrowMatchesCertificate
+#guard_msgs (drop info) in
+#check IUTStage1PreLedgerData.ConstructedLedgerPromotionObligations.toSourceObligationLedger
+#guard_msgs (drop info) in
+#check IUTStage1PreLedgerData.ConstructedLedgerPromotionObligations.toSourceObligationProvider_publicAudit
 
 /-- Public Step (xi) hull-construction boundaries currently audited. -/
 inductive PublicStepXIHullConstructionBoundary where

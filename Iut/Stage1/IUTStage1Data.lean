@@ -565,6 +565,101 @@ theorem auditOfConstructedQualitativeCertificate_qSignedLeThetaSigned
   (auditOfConstructedQualitativeCertificate data sourceData).qSignedLeThetaSigned
 
 /--
+Constructed common-container provenance for a pre-ledger.
+
+The qualitative certificate already pins the certificate's SHE datum to a
+structured Hodge-theater transport context. This record additionally pins the
+pre-ledger common container to the constructor that uses the same SHE transport
+context for its `HDD o SHE` arrow. Thus the later
+`she_matches_certificate` ledger obligation is derived from construction data,
+not supplied as an unrelated compatibility equality.
+-/
+structure ConstructedQualitativeCommonContainerData
+    (data : IUTStage1PreLedgerData source target index) where
+  qualitativeSource : ConstructedQualitativeCertificateData data
+  common_container_eq :
+    data.chartedContainer.commonContainer =
+      RealLineCopy.AlgorithmicOutput.CommonContainerData.ofStructuredSHETransportContext
+        (output := data.output) (measure := data.measure)
+        (bound := data.thetaSigned)
+        data.chartedContainer.commonContainer.container
+        data.chartedContainer.commonContainer.hddShe.sheArrow.arrow
+        data.chartedContainer.commonContainer.hddShe.hdd
+        qualitativeSource.sheTransportContext
+
+namespace ConstructedQualitativeCommonContainerData
+
+variable {data : IUTStage1PreLedgerData source target index}
+
+theorem certificateShe_eq_transportDatum
+    (sourceData : ConstructedQualitativeCommonContainerData data) :
+    data.certificate.she =
+      sourceData.qualitativeSource.sheTransportContext.sheDatum := by
+  simpa [
+    ConstructedQualitativeCertificateData.constructedCertificate,
+    QualitativeData.StructuredCertificate.ofConstructedIPLSHEAPT,
+    QualitativeData.StructuredSHETransportContext.sheDatum
+  ] using
+    congrArg (fun certificate => certificate.she)
+      sourceData.qualitativeSource.certificate_eq_constructed
+
+theorem sheArrowDatum_eq_transportDatum
+    (sourceData : ConstructedQualitativeCommonContainerData data) :
+    data.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+      sourceData.qualitativeSource.sheTransportContext.sheDatum := by
+  have hdatum :=
+    congrArg
+      (fun commonContainer =>
+        commonContainer.hddShe.sheArrow.datum)
+      sourceData.common_container_eq
+  simpa [
+    RealLineCopy.AlgorithmicOutput.CommonContainerData.ofStructuredSHETransportContext,
+    RealLineCopy.AlgorithmicOutput.HDDSHECompositeData.ofStructuredSHETransportContext,
+    RealLineCopy.AlgorithmicOutput.SHEArrowData.ofStructuredSHETransportContext
+  ] using hdatum
+
+theorem sheArrowMatchesCertificate
+    (sourceData : ConstructedQualitativeCommonContainerData data) :
+    data.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+      data.certificate.she :=
+  sourceData.sheArrowDatum_eq_transportDatum.trans
+    sourceData.certificateShe_eq_transportDatum.symm
+
+theorem commonContainerContext_eq_transportBase
+    (sourceData : ConstructedQualitativeCommonContainerData data) :
+    data.chartedContainer.commonContainer.context =
+      sourceData.qualitativeSource.sheTransportContext.baseContext.sharedContext := by
+  have hcontext :=
+    congrArg
+      (fun commonContainer => commonContainer.context)
+      sourceData.common_container_eq
+  simpa [
+    RealLineCopy.AlgorithmicOutput.CommonContainerData.ofStructuredSHETransportContext
+  ] using hcontext
+
+theorem commonContainerContextMatchesCertificate
+    (sourceData : ConstructedQualitativeCommonContainerData data) :
+    data.chartedContainer.commonContainer.context =
+      data.certificate.she.sharedContext := by
+  rw [sourceData.commonContainerContext_eq_transportBase]
+  rw [sourceData.certificateShe_eq_transportDatum]
+  rfl
+
+def sheArrowStructuredTransportAudit
+    (sourceData : ConstructedQualitativeCommonContainerData data) :
+    data.chartedContainer.commonContainer.hddShe.sheArrow.StructuredTransportAudit
+      sourceData.qualitativeSource.sheTransportContext :=
+  { datum_eq_context_she := sourceData.sheArrowDatum_eq_transportDatum,
+    shared_context_eq_base := by
+      rw [sourceData.sheArrowDatum_eq_transportDatum]
+      rfl,
+    forbidden_transport :=
+      sourceData.qualitativeSource.sheTransportContext
+        |>.domainCodomainForbiddenTransportAudit }
+
+end ConstructedQualitativeCommonContainerData
+
+/--
 Optional source-side evidence that the pre-ledger's named hull+det bridge comes
 from split hull and determinant/log-volume data.
 
@@ -759,6 +854,97 @@ structure LedgerPromotionObligations
       data.certificate.she
   q_positive : 0 < -data.qSigned
   normalization_proof : data.normalization
+
+/--
+Promotion obligations whose SHE/certificate alignment is derived from the
+constructed qualitative common-container source.
+
+This is the constructor-backed promotion path for the 3.11-to-3.12 ledger:
+certification, q-positivity, and normalization remain explicit lower-level
+obligations, while the previous standalone `she_matches_certificate` equality
+is obtained from the constructed IPL/SHE/APT certificate and common container.
+-/
+structure ConstructedLedgerPromotionObligations
+    (data : IUTStage1PreLedgerData source target index) where
+  certified : data.output.Certified
+  constructedCommonContainer :
+    ConstructedQualitativeCommonContainerData data
+  q_positive : 0 < -data.qSigned
+  normalization_proof : data.normalization
+
+namespace ConstructedLedgerPromotionObligations
+
+variable {data : IUTStage1PreLedgerData source target index}
+
+theorem sheMatchesCertificate
+    (obligations : ConstructedLedgerPromotionObligations data) :
+    data.chartedContainer.commonContainer.hddShe.sheArrow.datum =
+      data.certificate.she :=
+  obligations.constructedCommonContainer.sheArrowMatchesCertificate
+
+theorem commonContainerContextMatchesCertificate
+    (obligations : ConstructedLedgerPromotionObligations data) :
+    data.chartedContainer.commonContainer.context =
+      data.certificate.she.sharedContext :=
+  obligations.constructedCommonContainer.commonContainerContextMatchesCertificate
+
+def toLedgerPromotionObligations
+    (obligations : ConstructedLedgerPromotionObligations data) :
+    LedgerPromotionObligations data :=
+  { certified := obligations.certified,
+    she_matches_certificate := obligations.sheMatchesCertificate,
+    q_positive := obligations.q_positive,
+    normalization_proof := obligations.normalization_proof }
+
+theorem toLedgerPromotionObligations_she_matches_certificate
+    (obligations : ConstructedLedgerPromotionObligations data) :
+    obligations.toLedgerPromotionObligations.she_matches_certificate =
+      obligations.sheMatchesCertificate :=
+  rfl
+
+def toSourceObligationLedger
+    (obligations : ConstructedLedgerPromotionObligations data) :
+    SourceObligationLedger
+      data.output data.measure data.thetaSigned data.qSigned data.normalization :=
+  { certified := obligations.certified,
+    certificate := data.certificate,
+    chartedContainer := data.chartedContainer,
+    she_matches_certificate := obligations.sheMatchesCertificate,
+    qValue := data.qValue,
+    thetaBound := data.thetaBound,
+    theta_commonBound := data.chartedContainer.apply data.certificate,
+    theta_commonBound_eq_charted := rfl,
+    chosenOutput := data.chosenOutput,
+    targetVolume := data.targetVolume,
+    membership := data.membership,
+    q_positive := obligations.q_positive,
+    normalization_proof := obligations.normalization_proof }
+
+theorem toSourceObligationLedger_sheMatchesCertificate
+    (obligations : ConstructedLedgerPromotionObligations data) :
+    obligations.toSourceObligationLedger.sheMatchesCertificate =
+      obligations.sheMatchesCertificate :=
+  rfl
+
+def toSourceObligationProvider
+    (obligations : ConstructedLedgerPromotionObligations data) :
+    IUTSourceObligationProvider
+      data.output data.measure data.thetaSigned data.qSigned data.normalization :=
+  { ledger := obligations.toSourceObligationLedger }
+
+theorem toSourceObligationProvider_publicAudit
+    (obligations : ConstructedLedgerPromotionObligations data) :
+    data.qSigned <= data.thetaSigned ∧
+      Corollary312Inequality
+        (signedPilotLogVolume PilotSide.theta data.thetaSigned)
+        (signedPilotLogVolume PilotSide.q data.qSigned) ∧
+      corollary312_from_stage1_comparison
+          obligations.toSourceObligationProvider.ledger.stage1Comparison =
+        corollary312_of_signed_le
+          obligations.toSourceObligationProvider.ledger.qSigned_le_thetaSigned :=
+  obligations.toSourceObligationProvider.ledger.publicAudit
+
+end ConstructedLedgerPromotionObligations
 
 def toSourceObligationLedger
     (data : IUTStage1PreLedgerData source target index)

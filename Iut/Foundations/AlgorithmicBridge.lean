@@ -921,6 +921,62 @@ structure SHEArrowData
   arrow : SHEArrowId
   datum : QualitativeData.SHEDatum output.family
 
+namespace SHEArrowData
+
+variable {output : AlgorithmicOutput source target index}
+
+/--
+Construct the SHE arrow from an actual structured SHE transport context.
+
+This is the non-inert entry point for the fourth-triangle SHE component: the
+arrow still has a bookkeeping name, but its datum is no longer an arbitrary
+`SHEDatum`; it is projected from the Hodge-theater transport context that also
+records the forbidden domain-to-codomain identification.
+-/
+def ofStructuredSHETransportContext
+    (arrow : SHEArrowId)
+    (context : QualitativeData.StructuredSHETransportContext output.family) :
+    SHEArrowData output :=
+  { arrow := arrow,
+    datum := context.sheDatum }
+
+theorem ofStructuredSHETransportContext_datum
+    (arrow : SHEArrowId)
+    (context : QualitativeData.StructuredSHETransportContext output.family) :
+    (ofStructuredSHETransportContext (output := output) arrow context).datum =
+      context.sheDatum :=
+  rfl
+
+theorem ofStructuredSHETransportContext_sharedContext
+    (arrow : SHEArrowId)
+    (context : QualitativeData.StructuredSHETransportContext output.family) :
+    (ofStructuredSHETransportContext (output := output) arrow context).datum.sharedContext =
+      context.baseContext.sharedContext :=
+  rfl
+
+/-- Audit that a SHE arrow really came from the structured transport context. -/
+structure StructuredTransportAudit
+    (data : SHEArrowData output)
+    (context : QualitativeData.StructuredSHETransportContext output.family) :
+    Prop where
+  datum_eq_context_she : data.datum = context.sheDatum
+  shared_context_eq_base :
+    data.datum.sharedContext = context.baseContext.sharedContext
+  forbidden_transport :
+    QualitativeData.StructuredSHETransportContext.DomainCodomainForbiddenTransportAudit
+      context
+
+theorem structuredTransportAudit_ofStructuredSHETransportContext
+    (arrow : SHEArrowId)
+    (context : QualitativeData.StructuredSHETransportContext output.family) :
+    (ofStructuredSHETransportContext (output := output) arrow context)
+      |>.StructuredTransportAudit context :=
+  { datum_eq_context_she := rfl,
+    shared_context_eq_base := rfl,
+    forbidden_transport := context.domainCodomainForbiddenTransportAudit }
+
+end SHEArrowData
+
 /--
 The fourth-triangle composite `(HDD) o (SHE)`.
 
@@ -938,6 +994,43 @@ namespace HDDSHECompositeData
 variable {measure : RegionMeasure target}
 variable {output : AlgorithmicOutput source target index}
 variable {bound : Real}
+
+/--
+Construct `(HDD) o (SHE)` from a structured SHE transport context and an HDD
+composite.
+
+The HDD bound is still supplied by the separate hull/determinant bridge; this
+constructor only hardens the SHE half of the composite by deriving the
+`SHEArrowData` datum from the structured Hodge-theater transport source.
+-/
+def ofStructuredSHETransportContext
+    (arrow : SHEArrowId)
+    (context : QualitativeData.StructuredSHETransportContext output.family)
+    (hdd : output.HDDCompositeData measure bound) :
+    HDDSHECompositeData output measure bound :=
+  { sheArrow :=
+      SHEArrowData.ofStructuredSHETransportContext
+        (output := output) arrow context,
+    hdd := hdd }
+
+theorem ofStructuredSHETransportContext_sheArrowDatum
+    (arrow : SHEArrowId)
+    (context : QualitativeData.StructuredSHETransportContext output.family)
+    (hdd : output.HDDCompositeData measure bound) :
+    (ofStructuredSHETransportContext
+      (output := output) (measure := measure) (bound := bound)
+      arrow context hdd).sheArrow.datum = context.sheDatum :=
+  rfl
+
+theorem ofStructuredSHETransportContext_sheAudit
+    (arrow : SHEArrowId)
+    (context : QualitativeData.StructuredSHETransportContext output.family)
+    (hdd : output.HDDCompositeData measure bound) :
+    (ofStructuredSHETransportContext
+      (output := output) (measure := measure) (bound := bound)
+      arrow context hdd).sheArrow.StructuredTransportAudit context :=
+  SHEArrowData.structuredTransportAudit_ofStructuredSHETransportContext
+    (output := output) arrow context
 
 def structuredBridge (data : HDDSHECompositeData output measure bound) :
     output.StructuredCommonTargetBoundBridge measure bound :=
@@ -1046,6 +1139,78 @@ namespace CommonContainerData
 variable {measure : RegionMeasure target}
 variable {output : AlgorithmicOutput source target index}
 variable {bound : Real}
+
+/--
+Construct the common container directly from structured SHE transport data.
+
+This pins the container context to the shared context of the SHE transport
+source, so the common-container/SHE alignment proof is produced by the
+constructor rather than supplied as an independent compatibility field.
+-/
+def ofStructuredSHETransportContext
+    (container : CommonContainerId)
+    (arrow : SHEArrowId)
+    (hdd : output.HDDCompositeData measure bound)
+    (context : QualitativeData.StructuredSHETransportContext output.family) :
+    CommonContainerData output measure bound :=
+  { container := container,
+    context := context.baseContext.sharedContext,
+    hddShe :=
+      HDDSHECompositeData.ofStructuredSHETransportContext
+        (output := output)
+        (measure := measure) (bound := bound) arrow context hdd,
+    she_context_matches := by
+      simp [
+        HDDSHECompositeData.ofStructuredSHETransportContext,
+        SHEArrowData.ofStructuredSHETransportContext,
+        QualitativeData.StructuredSHETransportContext.sheDatum,
+        QualitativeData.StructuredSHEContext.sheDatum] }
+
+theorem ofStructuredSHETransportContext_sheArrowDatum
+    (container : CommonContainerId)
+    (arrow : SHEArrowId)
+    (hdd : output.HDDCompositeData measure bound)
+    (context : QualitativeData.StructuredSHETransportContext output.family) :
+    (ofStructuredSHETransportContext
+      (output := output) (measure := measure) (bound := bound)
+      container arrow hdd context).hddShe.sheArrow.datum =
+      context.sheDatum :=
+  by
+    simp [
+      ofStructuredSHETransportContext,
+      HDDSHECompositeData.ofStructuredSHETransportContext,
+      SHEArrowData.ofStructuredSHETransportContext]
+
+theorem ofStructuredSHETransportContext_context
+    (container : CommonContainerId)
+    (arrow : SHEArrowId)
+    (hdd : output.HDDCompositeData measure bound)
+    (context : QualitativeData.StructuredSHETransportContext output.family) :
+    (ofStructuredSHETransportContext
+      (output := output) (measure := measure) (bound := bound)
+      container arrow hdd context).context =
+      context.baseContext.sharedContext :=
+  by
+    simp [ofStructuredSHETransportContext]
+
+theorem ofStructuredSHETransportContext_sheContextMatches
+    (container : CommonContainerId)
+    (arrow : SHEArrowId)
+    (hdd : output.HDDCompositeData measure bound)
+    (context : QualitativeData.StructuredSHETransportContext output.family) :
+    (ofStructuredSHETransportContext
+      (output := output) (measure := measure) (bound := bound)
+      container arrow hdd context).hddShe.sheArrow.datum.sharedContext =
+      (ofStructuredSHETransportContext
+        (output := output) (measure := measure) (bound := bound)
+        container arrow hdd context).context :=
+  by
+    simp [
+      ofStructuredSHETransportContext,
+      HDDSHECompositeData.ofStructuredSHETransportContext,
+      SHEArrowData.ofStructuredSHETransportContext,
+      QualitativeData.StructuredSHETransportContext.sheDatum,
+      QualitativeData.StructuredSHEContext.sheDatum]
 
 def structuredBridge (data : CommonContainerData output measure bound) :
     output.StructuredCommonTargetBoundBridge measure bound :=
