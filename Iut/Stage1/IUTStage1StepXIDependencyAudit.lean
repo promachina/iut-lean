@@ -111,6 +111,19 @@ theorem localizedCThetaBoundaryInventory_count_eq :
     localizedCThetaBoundaryInventory_count = 10 :=
   rfl
 
+#guard_msgs (drop info) in
+#check IUTStage1SourceObligationGap.ofStructuredInputsWithSHEAndSideConditions
+#guard_msgs (drop info) in
+#check IUTStage1SourceObligationGap.ofStructuredInputsWithSHEAndSideConditions_sheAlignment
+#guard_msgs (drop info) in
+#check IUTStage1SourceObligationGap.ofStructuredInputsWithSHEAndSideConditions_commonContainerCompatibility
+#guard_msgs (drop info) in
+#check IUTStage1SourceObligationGap.ofStructuredInputsWithSHEAndSideConditions_toSourceObligations_eq_structured
+#guard_msgs (drop info) in
+#check IUTStage1SourceObligationGap.StructuredInputsWithSHEAndSideConditionsAudit
+#guard_msgs (drop info) in
+#check IUTStage1SourceObligationGap.structuredInputsWithSHEAndSideConditionsAudit
+
 /-- Public Step (xi) hull-construction boundaries currently audited. -/
 inductive PublicStepXIHullConstructionBoundary where
   | coordinateScalarImageConstructedTrace
