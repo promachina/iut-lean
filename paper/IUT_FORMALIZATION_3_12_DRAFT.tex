@@ -436,7 +436,11 @@ residue-module/unit-ball/additive-Haar local arithmetic source.  The
 local-analytic Theorem~1.10 refinement now keeps this proof-carrying pointwise
 Ob7 source as the public local-arithmetic boundary, so the
 structure-sheaf/direct-summand and nonzero norm-square projection facts are
-internal fields of that source rather than separate endpoint arguments.  A
+internal fields of that source rather than separate endpoint arguments.  The
+newer product-handoff refinement constructs the packet-facing pointwise Ob7
+source internally from the principal-product restriction-calibrated handoff,
+so the local-analytic Hodge-formula route can expose that lower product
+handoff instead of the pointwise wrapper.  A
 constructor route from the lower restriction-calibrated residue-module/unit-
 ball/additive-Haar source remains available; at that lower boundary those two
 projection facts are still explicit local arithmetic bridge fields.  A
@@ -1093,11 +1097,12 @@ summand-charted calibrations from these formulas.  The local arithmetic side
 is now lowered in parallel: the restriction-calibrated Frobenioid/residue-
 module source, the structure-sheaf/direct-summand synchronization, and the
 nonzero norm-square Ob7 summand first define an audited local handoff source;
-the strict pointwise local-analytic route uses this audited handoff source
-directly while projecting the formula-gap matched IUT IV source from the local
-analytic valuation-ball source.  Its compact-open companion constructs the
-principal pointwise valuation-ball source from compact-open log-Kummer map
-data and still exposes only the single pointwise local-arithmetic source.  The
+the strict pointwise local-analytic route now constructs the packet-facing Ob7
+source from this product handoff while projecting the formula-gap matched IUT
+IV source from the local analytic valuation-ball source.  Its compact-open
+companion constructs the principal pointwise valuation-ball source from
+compact-open log-Kummer map data and uses the same product-handoff local
+arithmetic boundary.  The
 lower constructor route can rebuild that pointwise source from the
 restriction-calibrated residue-module/unit-ball/additive-Haar source plus the
 two projection facts before the localized route is entered.  The
