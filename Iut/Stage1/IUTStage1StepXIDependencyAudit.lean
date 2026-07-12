@@ -306,6 +306,8 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ConcretePacketTheorem311PrimitiveConstructorAudit
 #guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelTheorem311ConstructedThetaRegionGoalCompletionAudit
+#guard_msgs (drop info) in
 #check IUTStage1PrimitiveTheorem311SourceConstructor.record
 #guard_msgs (drop info) in
 #check IUTStage1PrimitiveTheorem311SourceConstructor.transportGuard
