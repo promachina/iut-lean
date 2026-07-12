@@ -1638,8 +1638,14 @@ theta-region-defined principal valuation-ball cover.  Its structured-SHE
 variant
 \(\texttt{principalProductHullConstructedOb3Ob5SourceOfThetaRegionDefinedPrincipalValuationBallStructuredSHESource}\)
 also derives the source-obligation gap from the structured Theorem 3.11/SHE
-bundle and side conditions, leaving only the measure identity and Hodge-family
-calibration as inputs at this constructor boundary.  On the
+bundle and side conditions.  Its summand-charted Hodge variant
+\(\texttt{principalProductHullConstructedOb3Ob5SourceOfThetaRegionDefinedPrincipalValuationBallStructuredSHESummandChartedHodgeSource}\)
+lowers the Hodge-family calibration one step further: the supplied Hodge input
+is the charted equality between the Hodge theta-monoid degree and the finite
+adjusted determinant summand sum, from which Lean derives the determinant,
+normalized determinant, and family-hull equalities internally.  The remaining
+input at this constructor boundary is the pre-ledger/product-hull measure
+identity.  On the
 qualitative side,
 \(\texttt{IUTStage1SourceObligationGap}\) can now be constructed from a
 strengthened structured-SHE Theorem 3.11 bundle together with the q-positivity
