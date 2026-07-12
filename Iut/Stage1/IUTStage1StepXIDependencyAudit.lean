@@ -180,11 +180,19 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #guard_msgs (drop info) in
 #check IUTStage1PrimitiveTheorem311SourceConstructor
 #guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311TargetRegionClassFormulaSource
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311TargetRegionClassFormulaSource.toPackageTargetRegionLatticeFormulaSource
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311TargetRegionClassFormulaSource.endpoint
+#guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.sourceData
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.targetRegionFormulaSource
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.targetRegionClassFormulaSource_endpoint
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.qualitativeSource
 #guard_msgs (drop info) in
