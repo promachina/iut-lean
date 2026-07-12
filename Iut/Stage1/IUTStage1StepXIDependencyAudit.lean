@@ -157,6 +157,18 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #check IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.ConstructedTransportGuardedPromotionAudit
 #guard_msgs (drop info) in
 #check IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.constructedTransportGuardedPromotionAudit
+#guard_msgs (drop info) in
+#check IUTStage1PrimitiveTheorem311SourceConstructor
+#guard_msgs (drop info) in
+#check IUTStage1PrimitiveTheorem311SourceConstructor.record
+#guard_msgs (drop info) in
+#check IUTStage1PrimitiveTheorem311SourceConstructor.transportGuard
+#guard_msgs (drop info) in
+#check IUTStage1PrimitiveTheorem311SourceConstructor.synchronizedTransportGuard
+#guard_msgs (drop info) in
+#check IUTStage1PrimitiveTheorem311SourceConstructor.Audit
+#guard_msgs (drop info) in
+#check IUTStage1PrimitiveTheorem311SourceConstructor.audit
 
 /-- Public Step (xi) hull-construction boundaries currently audited. -/
 inductive PublicStepXIHullConstructionBoundary where
