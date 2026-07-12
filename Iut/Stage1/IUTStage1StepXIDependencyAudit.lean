@@ -206,6 +206,12 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311AlgorithmicOutputComponentSource
 #guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311AlgorithmicOutputComponentSource.structuredIPL
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311AlgorithmicOutputComponentSource.structuredSHE
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311AlgorithmicOutputComponentSource.structuredAPT
+#guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311AlgorithmicOutputComponentSource.certified
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311AlgorithmicOutputComponentSource.endpoint

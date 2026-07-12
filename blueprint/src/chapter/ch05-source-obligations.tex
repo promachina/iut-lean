@@ -2206,8 +2206,9 @@
   so the packet no longer supplies separate bridge source-copy or output-family
   alignment fields; and the Theorem 3.11 subclaim record is derived from
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311SubclaimComponentSource}.  Its
-  algorithmic-output certificate is assembled from the three explicit
-  output-side IPL/SHE/APT witnesses in
+  algorithmic-output certificate is assembled by first deriving structured
+  IPL/SHE/APT witnesses from the bridge, then applying the three output-flag
+  calibration maps recorded in
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311AlgorithmicOutputComponentSource},
   while its SHE alignment is projected from the bridge's structured SHE transport
   context rather than supplied as a separate packet field.
