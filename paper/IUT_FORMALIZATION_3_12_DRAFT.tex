@@ -432,7 +432,11 @@ the hull-volume identity, the Hodge-Arakelov theta-degree charting identity,
 and the finite adjusted-summand formula.  Thus the packaged pointwise
 calibration record is no longer a public endpoint object.  The same route now
 constructs the restriction-calibrated norm-square Ob7 handoff from a pointwise
-residue-module/unit-ball/additive-Haar local arithmetic source.  A
+residue-module/unit-ball/additive-Haar local arithmetic source.  The current
+strongest refinement no longer takes that pointwise local-arithmetic wrapper
+as a public object: it constructs it from the restriction-calibrated
+residue-module/unit-ball/additive-Haar source plus the still explicit
+structure-sheaf/direct-summand and nonzero norm-square projection facts.  A
 localized Step (xi) refinement now also packages the localized determinant
 source, its determinant and canonical-scale identifications, local main-log
 terms, Haar defects, and finite-place summation identities into a single
@@ -1047,8 +1051,10 @@ adjusted determinant summand sum, and Lean projects the older measure and
 summand-charted calibrations from these formulas.  The local arithmetic side
 is now lowered in parallel: the restriction-calibrated Frobenioid/residue-
 module source, the structure-sheaf/direct-summand synchronization, and the
-nonzero norm-square Ob7 summand are consumed through one audited local
-handoff source before the localized route is entered.  The localized-data
+nonzero norm-square Ob7 summand first define an audited local handoff source;
+the newest pointwise route constructs the packet-level wrapper for this handoff
+internally from those lower fields before the localized route is entered.  The
+localized-data
 constructor then constructs the localized \(C_\Theta\) source itself from the
 localized Ob3/Ob4 determinant source, Haar-normalization defects, main-log
 contributions, and finite-place summation identities before running the same
