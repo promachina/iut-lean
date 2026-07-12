@@ -654,6 +654,8 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredPublicConcreteStepXI311312RestrictionCalibratedRouteAudit.restriction_endpoint
 #guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredPublicConcreteStepXI311312RestrictionCalibratedRouteAudit.inverse_dilation_strict_selected
+#guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312RestrictionCalibratedRouteAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ProductHullLocalizedCThetaRoute
