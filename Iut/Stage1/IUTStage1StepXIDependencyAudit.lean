@@ -204,6 +204,12 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311AlignedBridgeComponentSource.endpoint
 #guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311AlgorithmicOutputComponentSource
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311AlgorithmicOutputComponentSource.certified
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311AlgorithmicOutputComponentSource.endpoint
+#guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311SubclaimComponentSource
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311SubclaimComponentSource.theorem311Subclaims
