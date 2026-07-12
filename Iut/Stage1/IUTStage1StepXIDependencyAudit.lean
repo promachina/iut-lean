@@ -166,6 +166,12 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #guard_msgs (drop info) in
 #check IUTStage1PrimitiveTheorem311ConstructedQualitativeSource.audit
 #guard_msgs (drop info) in
+#check IUTStage1PrimitiveTheorem311BridgeCertificateSource
+#guard_msgs (drop info) in
+#check IUTStage1PrimitiveTheorem311BridgeCertificateSource.toPrimitiveQualitativeSource
+#guard_msgs (drop info) in
+#check IUTStage1PrimitiveTheorem311BridgeCertificateSource.audit
+#guard_msgs (drop info) in
 #check IUTStage1PrimitiveTheorem311SourceConstructor
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket
@@ -175,6 +181,10 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.targetRegionFormulaSource
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.qualitativeSource
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.bridgeCertificateSource
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.bridgeCertificateSource_audit
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.primitiveConstructor
 #guard_msgs (drop info) in
