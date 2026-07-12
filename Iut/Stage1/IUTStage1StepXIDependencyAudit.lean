@@ -204,6 +204,18 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311AlignedBridgeComponentSource.endpoint
 #guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311StructuredFlagOutput
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311StructuredOutputFlagCalibrationSource
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311StructuredOutputFlagCalibrationSource.outputHasIPL_of_structured
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311StructuredOutputFlagCalibrationSource.outputHasSHE_of_structured
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311StructuredOutputFlagCalibrationSource.outputHasAPT_of_structured
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311StructuredOutputFlagCalibrationSource.endpoint
+#guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311AlgorithmicOutputComponentSource
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311AlgorithmicOutputComponentSource.structuredIPL
