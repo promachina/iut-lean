@@ -30786,6 +30786,169 @@ noncomputable def RecordOb3Ob5ValuationBallNamedHDDBoundaryData.preferredPublicC
 
 set_option linter.style.longLine false in
 /--
+Canonical-HDD compact-open inverse-base-prime route with the valuation-ball
+Record-Ob3/Ob5 source lowered to the component source plus the valuation-ball
+formula-matching refinement.
+
+This is the inverse-base-prime analogue of
+`preferredPublicCompactOpenLogKummerMapCanonicalHDDComponentValuationBallFormulaRestrictionCalibratedHandoffRoute`.
+The route still exposes the inverse-base-prime valuation cover and the
+additive-Haar compact-open direct-summand source, but the Theorem~1.10
+valuation-ball local-analytic source, Haar defect, local Step~(xi) equality,
+and valuation-ball Record-Ob3/Ob5 source are all projected internally from the
+component/formula bridge.
+-/
+noncomputable def RecordOb3Ob5ValuationBallNamedHDDBoundaryData.preferredPublicCompactOpenLogKummerMapCanonicalHDDComponentValuationBallFormulaInverseBasePrimeRoute
+    {sourceCopy constructorTargetCopy : Copy}
+    {coricConcrete : Type u} {lConcrete : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage sourceCopy constructorTargetCopy
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coricConcrete lConcrete)}
+    (packet :
+      IUTStage1ConcreteTheorem311PrimitiveSourcePacket packageConcrete)
+    (sourceWithSymmetry :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.WithSymmetryLabelTransport
+        packet)
+    {βStepXI : Type a} [Fintype βStepXI]
+    {γStepXI : Type w} [Fintype γStepXI]
+    {ηConcrete : Type w} {KConcrete : Type z}
+    {ΛStepXI : Type max u a z w}
+    [PseudoMetricSpace KConcrete] [MeasurableSpace KConcrete]
+    [AddGroup KConcrete] [T2Space KConcrete]
+    (compactOpenLogKummerMapSource :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+        sourceWithSymmetry.fiberInd2ActionPacketTransportSource
+        packet.gluingTorsor packet.selectedQChoice
+        (η := ηConcrete) (K := KConcrete)
+        (β := βStepXI) (γ := γStepXI) (Λ := ΛStepXI))
+    {Λv : Type (max u a z w)}
+    {F : Type z} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        lConcrete X C)
+    {p : Nat} [Fact p.Prime]
+    {K : Type w} {βHaar : Type (max u a z w)} {γHaar : Type w}
+    {κ : βHaar -> γHaar -> Type (max u a z w)}
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [BorelSpace K] [LocallyCompactSpace K]
+    [IsTopologicalAddGroup K]
+    [NormedAlgebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    [T2Space K] [Fintype βHaar] [Fintype γHaar]
+    [∀ index : βHaar, ∀ place : γHaar, Field (κ index place)]
+    [∀ index : βHaar, ∀ place : γHaar, Fintype (κ index place)]
+    {V : Type (max u a z w)} {μ : Type w} [Fintype V]
+    (residueModuleInverseBasePrimeValuationCoverSource :
+      let principalPointwiseSource :=
+        compactOpenLogKummerMapSource.toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource;
+      let thetaRegionSource :=
+        concretePacketThetaRegionSourceOfPrincipalPointwiseValuationBall
+          packet sourceWithSymmetry principalPointwiseSource;
+      PrincipalProductPadicFiniteExtensionResidueModuleInverseBasePrimeHaarModulusValuationCoverSource
+        packet.primitiveConstructor.sourceDataWithTargetRegions
+        thetaRegionSource.principalHullSource Λv p K βHaar γHaar κ)
+    (additiveHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeSource :
+      let principalPointwiseSource :=
+        compactOpenLogKummerMapSource.toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource;
+      let thetaRegionSource :=
+        concretePacketThetaRegionSourceOfPrincipalPointwiseValuationBall
+          packet sourceWithSymmetry principalPointwiseSource;
+      StepXIPaperDerivedHullDeterminantSource.StepXIThetaLGPAdditiveHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeEvaluationLocalizedAdjustedRestrictionAnchoredOb7ConstructionSource
+        (sourceData := packet.primitiveConstructor.sourceDataWithTargetRegions)
+        (β := βHaar) (γ := γHaar)
+        (principalProductHullFormationData
+          packet.primitiveConstructor.sourceDataWithTargetRegions
+          thetaRegionSource.principalHullSource)
+        hodgeEvaluation
+        ((((residueModuleInverseBasePrimeValuationCoverSource.toHaarModulusInverseDilationValuationCoverSource
+            (sourceData := packet.primitiveConstructor.sourceDataWithTargetRegions)
+            (principalSource := thetaRegionSource.principalHullSource)
+            Λv).toInverseDilationValuationCoverConstructedSourceCoreSource
+            (sourceData := packet.primitiveConstructor.sourceDataWithTargetRegions)
+            (principalSource := thetaRegionSource.principalHullSource)
+            Λv).toPrincipalProductAdditiveHaarLocalizedHullVectorBundleDecompositionSource
+            (sourceData := packet.primitiveConstructor.sourceDataWithTargetRegions)
+            (principalSource := thetaRegionSource.principalHullSource)
+            Λv).toAdditiveHaarLocalizedSource)
+        V μ)
+    {lStepXI : PrimeGeFive} {FStepXI : Type z} [Field FStepXI]
+    {XStepXI CStepXI : HyperbolicOrbicurveModel FStepXI}
+    {sourceHA :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaValueEvaluationSource
+        lStepXI XStepXI CStepXI}
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (pointwiseFormulaSource :
+      let principalPointwiseSource :=
+        compactOpenLogKummerMapSource.toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource;
+      PrincipalPointwiseValuationBallMeasureSummandFormulaSource
+        packet sourceWithSymmetry principalPointwiseSource sourceHA)
+    (sideConditions : IUTStage1SourceSideConditions packageConcrete)
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {ηStep : Type w} {γLocal : Type w} [Fintype γLocal]
+    {recordAdjustedSource :
+      let principalHDDSource :=
+        concretePacketCompactOpenLogKummerMapPrincipalHDDSource
+          packet sourceWithSymmetry compactOpenLogKummerMapSource operation
+          hullOperation determinantOperation pointwiseFormulaSource sideConditions;
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := βStepXI) (γ := γLocal)
+        principalHDDSource.toDirectCommonContainerSource.canonicalHDDRecord}
+    {localPrime : βStepXI -> Nat}
+    [∀ place : βStepXI, Fact (Nat.Prime (localPrime place))]
+    {localField : βStepXI -> Type x}
+    [(place : βStepXI) -> NontriviallyNormedField (localField place)]
+    [∀ place : βStepXI, ProperSpace (localField place)]
+    [∀ place : βStepXI, IsUltrametricDist (localField place)]
+    [(place : βStepXI) -> MeasurableSpace (localField place)]
+    [∀ place : βStepXI, BorelSpace (localField place)]
+    [∀ place : βStepXI, LocallyCompactSpace (localField place)]
+    [∀ place : βStepXI, IsTopologicalAddGroup (localField place)]
+    [∀ place : βStepXI, T2Space (localField place)]
+    [(place : βStepXI) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : βStepXI,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type w}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : βStepXI -> Type z}
+    [∀ place : βStepXI, Fintype (archIndex place)]
+    [∀ place : βStepXI, Fintype (archSummand place)]
+    (componentSource :
+      let constructorBuiltSource :=
+        concretePacketCompactOpenLogKummerMapConstructorBuiltSource
+          packet sourceWithSymmetry compactOpenLogKummerMapSource operation
+          hullOperation determinantOperation pointwiseFormulaSource sideConditions;
+      RecordOb3Ob5ArithmeticDivisorBackedComponentSource
+        recordAdjustedSource
+        constructorBuiltSource.toConstructedHolomorphicHullDeterminantSource
+        estimate lStepXI ηStep localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand)
+    (valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource :
+      IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+        βStepXI estimate ηStep γLocal localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (arithmeticDivisorBackedComponent_eq_valuationBallFormulaMatching :
+      componentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource =
+        IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.toAdditiveHaarFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+          valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource) :=
+  let valuationBallSource :=
+    componentSource.toRecordOb3Ob5ArithmeticDivisorBackedValuationBallSource
+      valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+      arithmeticDivisorBackedComponent_eq_valuationBallFormulaMatching
+  RecordOb3Ob5ValuationBallNamedHDDBoundaryData.preferredPublicCompactOpenLogKummerMapCanonicalHDDValuationBallInverseBasePrimeRoute
+    packet sourceWithSymmetry compactOpenLogKummerMapSource hodgeEvaluation
+    residueModuleInverseBasePrimeValuationCoverSource
+    additiveHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeSource
+    operation hullOperation determinantOperation pointwiseFormulaSource
+    sideConditions valuationBallSource
+
+set_option linter.style.longLine false in
+/--
 Audit for the canonical-HDD compact-open valuation-ball route.
 
 The compact-open endpoint reconstructs the named-HDD boundary from the
