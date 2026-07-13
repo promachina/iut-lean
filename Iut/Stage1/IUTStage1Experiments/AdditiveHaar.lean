@@ -30227,6 +30227,11 @@ theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.preferredPublicCompactOpen
         estimate lStepXI ηStep localPrime localField
         αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
         archIndex archSummand) :
+    let constructorBuiltSource :=
+      concretePacketCompactOpenLogKummerMapConstructorBuiltSource
+        packet sourceWithSymmetry compactOpenLogKummerMapSource operation
+        hullOperation determinantOperation pointwiseFormulaSource sideConditions;
+    let sourceData := constructorBuiltSource.toConstructedHolomorphicHullDeterminantSource;
     let boundary :=
       RecordOb3Ob5ValuationBallNamedHDDBoundaryData.ofCompactOpenLogKummerMapCanonicalHDDValuationBallSource
         packet sourceWithSymmetry compactOpenLogKummerMapSource operation
@@ -30236,22 +30241,39 @@ theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.preferredPublicCompactOpen
     routeInput.localizedSynchronizationSource.Endpoint ∧
       ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallSourceDODAudit
         valuationBallSource ∧
-      RecordOb3Ob5ValuationBallNamedHDDBoundaryData.preferredPublicCompactOpenLogKummerMapCanonicalHDDValuationBallInverseBasePrimeRoute
-          packet sourceWithSymmetry compactOpenLogKummerMapSource hodgeEvaluation
-          residueModuleInverseBasePrimeValuationCoverSource
-          additiveHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeSource
-          operation hullOperation determinantOperation pointwiseFormulaSource
-          sideConditions valuationBallSource =
-        routeInput.preferredPublicCompactOpenLogKummerMapInverseBasePrimeRoute
-          packet sourceWithSymmetry compactOpenLogKummerMapSource hodgeEvaluation
-          residueModuleInverseBasePrimeValuationCoverSource
-          additiveHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeSource
-          operation hullOperation determinantOperation pointwiseFormulaSource
-          sideConditions := by
-  intro boundary routeInput
+        sourceData.canonicalCThetaScale <=
+          estimate.cTheta ∧
+          packageConcrete.preLedger.thetaSigned <=
+            estimate.cTheta *
+              (-packageConcrete.preLedger.qSigned) ∧
+            sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+              estimate.cTheta *
+                (-packageConcrete.preLedger.qSigned) ∧
+              ((packageConcrete.preLedger.qSigned =
+                  packageConcrete.preLedger.thetaSigned ∧
+                  packageConcrete.preLedger.thetaSigned < 0) ∨
+                (-1 : Real) < estimate.cTheta) ∧
+                RecordOb3Ob5ValuationBallNamedHDDBoundaryData.preferredPublicCompactOpenLogKummerMapCanonicalHDDValuationBallInverseBasePrimeRoute
+                    packet sourceWithSymmetry compactOpenLogKummerMapSource hodgeEvaluation
+                    residueModuleInverseBasePrimeValuationCoverSource
+                    additiveHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeSource
+                    operation hullOperation determinantOperation pointwiseFormulaSource
+                    sideConditions valuationBallSource =
+                  routeInput.preferredPublicCompactOpenLogKummerMapInverseBasePrimeRoute
+                    packet sourceWithSymmetry compactOpenLogKummerMapSource hodgeEvaluation
+                    residueModuleInverseBasePrimeValuationCoverSource
+                    additiveHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeSource
+                    operation hullOperation determinantOperation pointwiseFormulaSource
+                    sideConditions := by
+  intro constructorBuiltSource sourceData boundary routeInput
+  let dod := valuationBallSource.recordOb3Ob5ValuationBallSourceDODAudit
   exact
     ⟨routeInput.localizedSynchronizationSource_endpoint,
-      valuationBallSource.recordOb3Ob5ValuationBallSourceDODAudit,
+      dod,
+      dod.canonicalCThetaScale_le_iutIVCTheta,
+      dod.thetaSigned_le_iutIVCTheta_absLogQ,
+      dod.sourceBridge_to_iutIVCTheta_chain,
+      dod.dichotomy,
       rfl⟩
 
 set_option linter.style.longLine false in
