@@ -26199,6 +26199,208 @@ theorem RecordOb3Ob5ArithmeticDivisorBackedComponentSource.constructorBuiltLocal
 
 set_option linter.style.longLine false in
 /--
+Normalized public Step (xi) route from the Record-Ob3/Ob5
+arithmetic-divisor-backed source.
+
+This threads the Record-Ob3/Ob5 determinant handoff into the existing
+localized constructor-built \(C_\Theta\) route.  The public surface no longer
+requires a prebuilt localized Step (xi) \(C_\Theta\) source at this boundary:
+it is constructed from the Record-Ob3/Ob5 source and the single
+constructor-built-to-record-Ob3/Ob4 determinant equality.
+-/
+noncomputable def RecordOb3Ob5ArithmeticDivisorBackedComponentSource.preferredPublicPrincipalProductNonvacuousHaarModulusAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRoute
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (stageSourceData :
+      IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {Λv : Type (max u v w y)}
+    {F : Type z} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    {p : Nat} [Fact p.Prime] {K : Type y} {βHaar : Type v} {γHaar : Type w}
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    [Fintype βHaar] [Fintype γHaar]
+    {V : Type v} {μ : Type w} [Fintype V]
+    (haarSource :
+      IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductHaarModulusInverseDilationAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedSource
+        (Λv := Λv) (p := p) (K := K) (β := βHaar) (γ := γHaar)
+        stageSourceData principalSource hodgeEvaluation V μ)
+    {constructorSourceCopy constructorTargetCopy : Copy}
+    {constructorIndex : Type u}
+    {constructorPackage :
+      IUTStage1SourcePackage constructorSourceCopy constructorTargetCopy
+        constructorIndex}
+    {constructorRecord :
+      IUTStage1Theorem311MultiradialSourceRecord constructorPackage}
+    {βStepXI : Type a} [Fintype βStepXI]
+    {γStep : Type w} [Fintype γStep]
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := βStepXI) (γ := γStep) constructorRecord}
+    (constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := βStepXI) constructorRecord)
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {lStepXI : PrimeGeFive}
+    {ηStep : Type y}
+    {localPrime : βStepXI -> Nat}
+    [∀ place : βStepXI, Fact (Nat.Prime (localPrime place))]
+    {localField : βStepXI -> Type x}
+    [(place : βStepXI) -> NontriviallyNormedField (localField place)]
+    [∀ place : βStepXI, ProperSpace (localField place)]
+    [∀ place : βStepXI, IsUltrametricDist (localField place)]
+    [(place : βStepXI) -> MeasurableSpace (localField place)]
+    [∀ place : βStepXI, BorelSpace (localField place)]
+    [∀ place : βStepXI, LocallyCompactSpace (localField place)]
+    [∀ place : βStepXI, IsTopologicalAddGroup (localField place)]
+    [(place : βStepXI) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : βStepXI,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : βStepXI -> Type z}
+    [∀ place : βStepXI, Fintype (archIndex place)]
+    [∀ place : βStepXI, Fintype (archSummand place)]
+    (recordOb3Ob5Source :
+      RecordOb3Ob5ArithmeticDivisorBackedComponentSource
+        recordAdjustedSource
+        constructorBuiltSource.toConstructedHolomorphicHullDeterminantSource
+        estimate lStepXI ηStep localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand)
+    (constructorBuilt_determinantSource_eq_recordOb3Ob4 :
+      constructorBuiltSource.determinantSource =
+        recordAdjustedSource.ob3ob4Source.toWeightedDeterminantSource) :=
+  let localizedSource :=
+    recordOb3Ob5Source.toConstructorBuiltLocalizedStepXILocalTermCThetaSource
+      constructorBuiltSource constructorBuilt_determinantSource_eq_recordOb3Ob4
+  IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousHaarModulusAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRoute_fromConstructorBuiltLocalizedStepXILocalTermCThetaSource
+    stageSourceData principalSource hodgeEvaluation haarSource
+    constructorBuiltSource localizedSource
+
+set_option linter.style.longLine false in
+/--
+Boundary audit for the Record-Ob3/Ob5 normalized public route above.
+
+The audit exposes both sides of the handoff: the localized \(C_\Theta\) source
+is built from the Record-Ob3/Ob5 data, and the resulting route agrees
+definitionally with the established localized-source public route.
+-/
+theorem RecordOb3Ob5ArithmeticDivisorBackedComponentSource.preferredPublicPrincipalProductNonvacuousHaarModulusAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRoute_audit
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (stageSourceData :
+      IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {Λv : Type (max u v w y)}
+    {F : Type z} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        l X C)
+    {p : Nat} [Fact p.Prime] {K : Type y} {βHaar : Type v} {γHaar : Type w}
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    [Fintype βHaar] [Fintype γHaar]
+    {V : Type v} {μ : Type w} [Fintype V]
+    (haarSource :
+      IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductHaarModulusInverseDilationAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedSource
+        (Λv := Λv) (p := p) (K := K) (β := βHaar) (γ := γHaar)
+        stageSourceData principalSource hodgeEvaluation V μ)
+    {constructorSourceCopy constructorTargetCopy : Copy}
+    {constructorIndex : Type u}
+    {constructorPackage :
+      IUTStage1SourcePackage constructorSourceCopy constructorTargetCopy
+        constructorIndex}
+    {constructorRecord :
+      IUTStage1Theorem311MultiradialSourceRecord constructorPackage}
+    {βStepXI : Type a} [Fintype βStepXI]
+    {γStep : Type w} [Fintype γStep]
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := βStepXI) (γ := γStep) constructorRecord}
+    (constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := βStepXI) constructorRecord)
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {lStepXI : PrimeGeFive}
+    {ηStep : Type y}
+    {localPrime : βStepXI -> Nat}
+    [∀ place : βStepXI, Fact (Nat.Prime (localPrime place))]
+    {localField : βStepXI -> Type x}
+    [(place : βStepXI) -> NontriviallyNormedField (localField place)]
+    [∀ place : βStepXI, ProperSpace (localField place)]
+    [∀ place : βStepXI, IsUltrametricDist (localField place)]
+    [(place : βStepXI) -> MeasurableSpace (localField place)]
+    [∀ place : βStepXI, BorelSpace (localField place)]
+    [∀ place : βStepXI, LocallyCompactSpace (localField place)]
+    [∀ place : βStepXI, IsTopologicalAddGroup (localField place)]
+    [(place : βStepXI) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : βStepXI,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : βStepXI -> Type z}
+    [∀ place : βStepXI, Fintype (archIndex place)]
+    [∀ place : βStepXI, Fintype (archSummand place)]
+    (recordOb3Ob5Source :
+      RecordOb3Ob5ArithmeticDivisorBackedComponentSource
+        recordAdjustedSource
+        constructorBuiltSource.toConstructedHolomorphicHullDeterminantSource
+        estimate lStepXI ηStep localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand)
+    (constructorBuilt_determinantSource_eq_recordOb3Ob4 :
+      constructorBuiltSource.determinantSource =
+        recordAdjustedSource.ob3ob4Source.toWeightedDeterminantSource) :
+    let localizedSource :=
+      recordOb3Ob5Source.toConstructorBuiltLocalizedStepXILocalTermCThetaSource
+        constructorBuiltSource constructorBuilt_determinantSource_eq_recordOb3Ob4
+    localizedSource.Endpoint ∧
+      IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.HaarModulusStructureSheafNormalizedConstructorBuiltLocalizedCThetaFullBoundaryAudit
+        stageSourceData principalSource hodgeEvaluation haarSource
+        constructorBuiltSource localizedSource ∧
+      (IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.additiveHaarArithmeticResidualPayloadOfConstructorBuiltLocalizedStepXILocalTermCThetaSource
+        constructorBuiltSource localizedSource).Audit ∧
+      constructorBuiltSource.canonicalCThetaScale + 1 <=
+        estimate.arithmeticUpperTerm - estimate.mainLogTerm ∧
+      constructorBuiltSource.canonicalCThetaScale <= estimate.cTheta ∧
+      recordOb3Ob5Source.preferredPublicPrincipalProductNonvacuousHaarModulusAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRoute
+          stageSourceData principalSource hodgeEvaluation haarSource
+          constructorBuiltSource constructorBuilt_determinantSource_eq_recordOb3Ob4 =
+        IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalProductNonvacuousHaarModulusAdditiveHaarStructureSheafNormalizedConstructedGaussianHodgeLocalizedAdjustedDirectSummandHodgeFamilyHullCalibratedConstructedStepXIRoute_fromConstructorBuiltLocalizedStepXILocalTermCThetaSource
+          stageSourceData principalSource hodgeEvaluation haarSource
+          constructorBuiltSource localizedSource := by
+  intro localizedSource
+  have hhandoff :=
+    recordOb3Ob5Source.constructorBuiltLocalizedStepXIHandoffAudit
+      constructorBuiltSource constructorBuilt_determinantSource_eq_recordOb3Ob4
+  exact
+    ⟨localizedSource.endpoint,
+      IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.haarModulusStructureSheafNormalizedConstructorBuiltLocalizedCThetaFullBoundaryAudit
+        stageSourceData principalSource hodgeEvaluation haarSource
+        constructorBuiltSource localizedSource,
+      hhandoff.2.1,
+      hhandoff.2.2.1,
+      hhandoff.2.2.2,
+      rfl⟩
+
+set_option linter.style.longLine false in
+/--
 Definition-of-done audit for the source-level preferred corridor.
 
 It records, for the arithmetic-divisor-backed source, the exact current route
