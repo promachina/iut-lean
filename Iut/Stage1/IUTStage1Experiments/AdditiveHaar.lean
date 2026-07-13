@@ -26856,6 +26856,83 @@ theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.localArithmeticUpperContri
     boundary.valuationBallSource.localArithmeticUpperContribution_eq_stepXI_haar_main place
 
 set_option linter.style.longLine false in
+theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.componentLocalArithmeticUpperContribution_eq_stepXI_haar_main
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {l : PrimeGeFive}
+    {η : Type y}
+    {localPrime : β -> Nat}
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    {localField : β -> Type x}
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [∀ place : β, T2Space (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : β -> Type z}
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)]
+    {constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record}
+    (boundary :
+      RecordOb3Ob5ValuationBallNamedHDDBoundaryData
+        (recordAdjustedSource := recordAdjustedSource)
+        (sourceData := sourceData) (estimate := estimate) (l := l)
+        (η := η) (localPrime := localPrime) (localField := localField)
+        (αHaar := αHaar) (hullSystem := hullSystem)
+        (αLocal := αLocal) (ηLocal := ηLocal)
+        (localAnalyticHullSystem := localAnalyticHullSystem)
+        (archIndex := archIndex) (archSummand := archSummand)
+        constructorBuiltSource)
+    (place : β) :
+    (boundary.theorem110ValuationBallLocalAnalyticSource
+      |>.toThetaPilotArithmeticDivisorLocalEvaluationSource).localArithmeticUpperContribution place =
+      boundary.toComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.localizedStepXISource.weightedAdjustedLogVolume place +
+        boundary.localHaarNormalizationDefect place +
+          (boundary.theorem110ValuationBallLocalAnalyticSource
+            |>.toThetaPilotArithmeticDivisorLocalEvaluationSource).localMainLogContribution place := by
+  have h :=
+    boundary.valuationBallSource.localArithmeticUpperContribution_eq_stepXI_haar_main place
+  have hweight :
+      boundary.valuationBallSource.valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.localizedStepXISource.weightedAdjustedLogVolume place =
+        boundary.toComponentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.localizedStepXISource.weightedAdjustedLogVolume place := by
+    have hmatch :=
+      congrArg
+        (fun formulaSource =>
+          formulaSource.arithmeticDegreeCalibrationSource.localizedStepXISource.weightedAdjustedLogVolume place)
+        boundary.valuationBallSource.arithmeticDivisorBackedComponent_eq_valuationBallFormulaMatching
+    symm
+    simpa [
+      RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toComponentSource,
+      RecordOb3Ob5ArithmeticDivisorBackedComponentSource.ofValuationBallSource,
+      IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.toAdditiveHaarFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+    ] using hmatch
+  rw [hweight] at h
+  simpa [
+    RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toComponentSource,
+    RecordOb3Ob5ValuationBallNamedHDDBoundaryData.theorem110ValuationBallLocalAnalyticSource,
+    RecordOb3Ob5ValuationBallNamedHDDBoundaryData.localHaarNormalizationDefect,
+    RecordOb3Ob5ArithmeticDivisorBackedComponentSource.ofValuationBallSource
+  ] using h
+
+set_option linter.style.longLine false in
 /--
 Projection audit for the valuation-ball named-HDD boundary.
 
@@ -26916,6 +26993,13 @@ theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.projectionAudit
       (componentSource.toConstructorBuiltLocalizedStepXIDeterminantScaleSynchronizationSource
         constructorBuiltSource
         boundary.constructorBuilt_determinantSource_eq_recordOb3Ob4).Endpoint ∧
+      (∀ place : β,
+        (boundary.theorem110ValuationBallLocalAnalyticSource
+          |>.toThetaPilotArithmeticDivisorLocalEvaluationSource).localArithmeticUpperContribution place =
+          componentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.localizedStepXISource.weightedAdjustedLogVolume place +
+            boundary.localHaarNormalizationDefect place +
+              (boundary.theorem110ValuationBallLocalAnalyticSource
+                |>.toThetaPilotArithmeticDivisorLocalEvaluationSource).localMainLogContribution place) ∧
       (1 : Real) <= ∑ place : β, boundary.localHaarNormalizationDefect place ∧
       ∀ place : β,
         (boundary.theorem110ValuationBallLocalAnalyticSource
@@ -26930,6 +27014,8 @@ theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.projectionAudit
       componentSource.constructorBuiltLocalizedStepXIDeterminantScaleSynchronizationSource_endpoint
         constructorBuiltSource
         boundary.constructorBuilt_determinantSource_eq_recordOb3Ob4,
+      fun place =>
+        boundary.componentLocalArithmeticUpperContribution_eq_stepXI_haar_main place,
       boundary.total_haar_defect_ge_one,
       fun place =>
         boundary.localArithmeticUpperContribution_eq_stepXI_haar_main place⟩
