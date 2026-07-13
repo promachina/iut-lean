@@ -27170,28 +27170,17 @@ noncomputable def RecordOb3Ob5ArithmeticDivisorBackedComponentSource.preferredPu
                 |>.toThetaPilotArithmeticDivisorLocalEvaluationSource).localMainLogContribution place)
     (total_haar_defect_ge_one :
       (1 : Real) <= ∑ place : βStepXI, localHaarNormalizationDefect place) :=
-  let principalPointwiseSource :=
-    compactOpenLogKummerMapSource.toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource;
-  let calibrationSource :=
-    pointwiseFormulaSource.toPointwiseCalibrationSource.toThetaRegionCalibrationSource;
-  let thetaRegionSource :=
-    concretePacketThetaRegionSourceOfPrincipalPointwiseValuationBall
-      packet sourceWithSymmetry principalPointwiseSource;
-  let thetaRegionPrincipalSource := thetaRegionSource.thetaRegionPrincipalSource;
-  let measureCalibration := calibrationSource.toMeasureCalibration;
-  let summandChartedCalibration := calibrationSource.toSummandChartedCalibration;
   let principalHDDSource :
     IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.PrincipalProductHullConstructedOb3Ob5AdjustedLogVolumeMeasureHodgeGapCanonicalHDDDirectCommonContainerSource
       (β := βStepXI) (γ := γStepXI)
       packet.primitiveConstructor.record sourceHA ΛStepXI :=
-    primitiveThetaRegionCurrentProductHullPrincipalHDDSource
-      (βStepXI := βStepXI) (γStepXI := γStepXI)
-      (sourceHA := sourceHA)
-      packet.primitiveConstructor operation hullOperation determinantOperation
-      thetaRegionPrincipalSource packet.selectedQChoice
-      measureCalibration sideConditions summandChartedCalibration;
+    concretePacketCompactOpenLogKummerMapPrincipalHDDSource
+      packet sourceWithSymmetry compactOpenLogKummerMapSource operation
+      hullOperation determinantOperation pointwiseFormulaSource sideConditions;
   let constructorBuiltSource :=
-    principalHDDSource.toDirectCommonContainerSource.toCanonicalHDDConstructorBuiltSource;
+    concretePacketCompactOpenLogKummerMapConstructorBuiltSource
+      packet sourceWithSymmetry compactOpenLogKummerMapSource operation
+      hullOperation determinantOperation pointwiseFormulaSource sideConditions;
   let localizedSynchronizationSource :=
     recordOb3Ob5Source.toConstructorBuiltLocalizedStepXIDeterminantScaleSynchronizationSource
       constructorBuiltSource constructorBuilt_determinantSource_eq_recordOb3Ob4;
