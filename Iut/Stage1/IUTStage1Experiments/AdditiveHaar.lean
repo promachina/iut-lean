@@ -20375,6 +20375,141 @@ theorem RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.localArithmeticUp
     IUTStage1IUTIVTheorem110AdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource,
     hdefect] using h
 
+set_option linter.style.longLine false in
+/--
+Record-Ob3/Ob5 valuation-ball projection to the constructor-built/localized
+Step~(xi) determinant-scale synchronization source.
+
+This is the valuation-ball analogue of the component-level synchronization
+projection.  The constructor-built determinant is synchronized with the
+record-canonical Ob3/Ob4 determinant, and the valuation-ball source identifies
+that determinant with the localized Step~(xi) arithmetic-degree determinant.
+The canonical finite-sum equality is read through the Record Ob3/Ob5 adjusted
+summand log-volume.
+-/
+noncomputable def RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.toConstructorBuiltLocalizedStepXIDeterminantScaleSynchronizationSource
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {l : PrimeGeFive}
+    {η : Type y}
+    {localPrime : β -> Nat}
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    {localField : β -> Type x}
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [∀ place : β, T2Space (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : β -> Type z}
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)]
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand)
+    (constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record)
+    (constructorBuilt_determinantSource_eq_recordOb3Ob4 :
+      constructorBuiltSource.determinantSource =
+        recordAdjustedSource.ob3ob4Source.toWeightedDeterminantSource) :
+    IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltLocalizedStepXIDeterminantScaleSynchronizationSource
+      constructorBuiltSource η γ :=
+  { localizedStepXISource :=
+      source.valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.localizedStepXISource,
+    determinantSource_eq_localizedStepXI :=
+      calc
+        constructorBuiltSource.determinantSource =
+            recordAdjustedSource.ob3ob4Source.toWeightedDeterminantSource :=
+          constructorBuilt_determinantSource_eq_recordOb3Ob4
+        _ =
+            source.valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.localizedStepXISource.toAdjustedDeterminantSource.toWeightedDeterminantSource := by
+          rw [source.recordOb3Ob4_eq_stepXI],
+    canonicalCThetaScale_eq_localizedStepXISum := by
+      calc
+        constructorBuiltSource.canonicalCThetaScale =
+            recordAdjustedSource.adjustedSummandLogVolume := by
+          simpa [
+            IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.canonicalCThetaScale,
+            IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.canonicalCThetaScale
+          ] using source.canonicalCThetaScale_eq_recordAdjustedSummandLogVolume
+        _ =
+            ∑ place : β,
+              source.valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.localizedStepXISource.weightedAdjustedLogVolume place := by
+          simp only [
+            IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.adjustedSummandLogVolume]
+          rw [source.recordOb3Ob4_eq_stepXI]
+          simp [
+            IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.localization_projected_weightedAdjustedLogVolume_eq] }
+
+set_option linter.style.longLine false in
+theorem RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.constructorBuiltLocalizedStepXIDeterminantScaleSynchronizationSource_endpoint
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {l : PrimeGeFive}
+    {η : Type y}
+    {localPrime : β -> Nat}
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    {localField : β -> Type x}
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [∀ place : β, T2Space (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : β -> Type z}
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)]
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand)
+    (constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record)
+    (constructorBuilt_determinantSource_eq_recordOb3Ob4 :
+      constructorBuiltSource.determinantSource =
+        recordAdjustedSource.ob3ob4Source.toWeightedDeterminantSource) :
+    (source.toConstructorBuiltLocalizedStepXIDeterminantScaleSynchronizationSource
+      constructorBuiltSource
+      constructorBuilt_determinantSource_eq_recordOb3Ob4).Endpoint :=
+  (source.toConstructorBuiltLocalizedStepXIDeterminantScaleSynchronizationSource
+    constructorBuiltSource
+    constructorBuilt_determinantSource_eq_recordOb3Ob4).endpoint
+
 end ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource
 
 set_option linter.style.longLine false in
