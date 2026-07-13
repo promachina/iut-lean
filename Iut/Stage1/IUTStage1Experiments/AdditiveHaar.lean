@@ -30397,6 +30397,8 @@ theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.preferredPublicCompactOpen
         estimate lStepXI ηStep localPrime localField
         αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
         archIndex archSummand) :
+    let principalPointwiseSource :=
+      compactOpenLogKummerMapSource.toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource;
     let constructorBuiltSource :=
       concretePacketCompactOpenLogKummerMapConstructorBuiltSource
         packet sourceWithSymmetry compactOpenLogKummerMapSource operation
@@ -30408,7 +30410,15 @@ theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.preferredPublicCompactOpen
         hullOperation determinantOperation pointwiseFormulaSource sideConditions
         valuationBallSource;
     let routeInput := boundary.toSynchronizedRouteInputData;
+    let localAnalyticSource :=
+      routeInput.toPrincipalPointwiseValuationBallTheorem110ValuationBallLocalAnalyticIUTIVLocalizedStepXISource
+        packet sourceWithSymmetry principalPointwiseSource operation
+        hullOperation determinantOperation
+        pointwiseFormulaSource.toPointwiseCalibrationSource sideConditions;
     routeInput.localizedSynchronizationSource.Endpoint ∧
+      localAnalyticSource.Endpoint ∧
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltLocalizedStepXILocalTermCThetaSource.LocalTermIUTIVCThetaHandoffAudit
+        localAnalyticSource.toLocalizedCThetaSource ∧
       ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallSourceDODAudit
         valuationBallSource ∧
         sourceData.canonicalCThetaScale <=
@@ -30435,15 +30445,18 @@ theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.preferredPublicCompactOpen
                     additiveHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeSource
                     operation hullOperation determinantOperation pointwiseFormulaSource
                     sideConditions := by
-  intro constructorBuiltSource sourceData boundary routeInput
+  intro principalPointwiseSource constructorBuiltSource sourceData boundary
+    routeInput localAnalyticSource
   let dod := valuationBallSource.recordOb3Ob5ValuationBallSourceDODAudit
   exact
     ⟨routeInput.localizedSynchronizationSource_endpoint,
+      localAnalyticSource.endpoint,
+      localAnalyticSource.localTermIUTIVCThetaHandoffAudit,
       dod,
       dod.canonicalCThetaScale_le_iutIVCTheta,
-      dod.thetaSigned_le_iutIVCTheta_absLogQ,
+      localAnalyticSource.thetaSigned_le_iutiv_cTheta_absLogQ,
       dod.sourceBridge_to_iutIVCTheta_chain,
-      dod.dichotomy,
+      localAnalyticSource.dichotomy,
       rfl⟩
 
 set_option linter.style.longLine false in
