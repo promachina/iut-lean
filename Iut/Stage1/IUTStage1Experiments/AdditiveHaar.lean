@@ -20510,6 +20510,237 @@ theorem RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.constructorBuiltL
     constructorBuiltSource
     constructorBuilt_determinantSource_eq_recordOb3Ob4).endpoint
 
+set_option linter.style.longLine false in
+/--
+Projection from the Record-Ob3/Ob5 valuation-ball arithmetic-divisor source to
+the closed valuation-ball formula-gap source.
+
+The Record-Ob3/Ob5 source contains more provenance than the formula-gap
+surface needs: it remembers the record-canonical Ob3/Ob4 determinant, the
+arithmetic-divisor-backed matched local-degree component, and the bridge from
+that record determinant to the localized valuation-ball Step (xi) determinant.
+For the local-to-global \(C_\Theta\) calculation we may forget the extra
+matched-component witness, because the determinant and canonical-scale
+identifications are already projected by
+`toArithmeticDivisorBackedValuationBallSource`.
+-/
+noncomputable def RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.toValuationBallFormulaGapMatchedSource
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {l : PrimeGeFive}
+    {η : Type y}
+    {localPrime : β -> Nat}
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    {localField : β -> Type x}
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [∀ place : β, T2Space (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : β -> Type z}
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)]
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :
+    ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource
+      sourceData estimate l η γ localPrime localField αHaar hullSystem
+      αLocal ηLocal localAnalyticHullSystem archIndex archSummand :=
+  { oneSidedMultiradialSource := source.oneSidedMultiradialSource,
+    qPilotRegion_eq_selectedQRegion :=
+      source.qPilotRegion_eq_selectedQRegion,
+    valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource :=
+      source.valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource,
+    determinantSource_eq_stepXI :=
+      source.toArithmeticDivisorBackedValuationBallSource.determinantSource_eq_stepXI,
+    canonicalCThetaScale_eq_stepXISum :=
+      source.toArithmeticDivisorBackedValuationBallSource.canonicalCThetaScale_eq_stepXISum }
+
+set_option linter.style.longLine false in
+/--
+Definition-of-done audit for the Record-Ob3/Ob5 valuation-ball source.
+
+This is the Record-Ob3/Ob5 version of the valuation-ball formula-gap DOD
+audit.  It proves that the closed local-to-global \(C_\Theta\) chain is already
+available from the record-canonical determinant handoff and the p-adic
+valuation-ball arithmetic-divisor source: the local Haar defects and
+Step (xi)/Theorem~1.10 local arithmetic equality are projected from the source,
+the finite-place arithmetic gap is inherited from the closed valuation-ball
+formula-gap route, and the final signed comparison/dichotomy are read without
+introducing a raw `thetaSigned <= cTheta * (-qSigned)` premise.
+-/
+structure RecordOb3Ob5ValuationBallSourceDODAudit
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {l : PrimeGeFive}
+    {η : Type y}
+    {localPrime : β -> Nat}
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    {localField : β -> Type x}
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [∀ place : β, T2Space (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : β -> Type z}
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)]
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) : Prop where
+  recordOb3Ob5HandoffAudit :
+    RecordOb3Ob5ValuationBallStepXIDeterminantHandoffAudit source
+  projectedArithmeticDivisorBackedEndpoint :
+    ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.Endpoint
+      source.toArithmeticDivisorBackedValuationBallSource
+  projectedArithmeticDivisorBackedAudit :
+    ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.ArithmeticDivisorBackedValuationBallSourceAudit
+      source.toArithmeticDivisorBackedValuationBallSource
+  projectedValuationBallFormulaGapDODAudit :
+    ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarFormulaGapMatchedArithmeticDegreePadicFormulaMatchedStepXILocalTermCThetaSource.ValuationBallFormulaGapSourceDODAudit
+      source.toValuationBallFormulaGapMatchedSource
+  synchronizedDeterminantScaleEndpoint :
+    ∀ (constructorBuiltSource :
+        IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+          (β := β) record),
+      ∀ (constructorBuilt_determinantSource_eq_recordOb3Ob4 :
+        constructorBuiltSource.determinantSource =
+          recordAdjustedSource.ob3ob4Source.toWeightedDeterminantSource),
+        (source.toConstructorBuiltLocalizedStepXIDeterminantScaleSynchronizationSource
+          constructorBuiltSource constructorBuilt_determinantSource_eq_recordOb3Ob4).Endpoint
+  total_haar_defect_ge_one :
+    (1 : Real) <=
+      ∑ place : β, source.localHaarNormalizationDefect place
+  localArithmeticUpperContribution_eq_stepXI_haar_main :
+    ∀ place : β,
+      (source.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        |>.toThetaPilotArithmeticDivisorLocalEvaluationSource).localArithmeticUpperContribution place =
+        source.valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.localizedStepXISource.weightedAdjustedLogVolume place +
+          source.localHaarNormalizationDefect place +
+            (source.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+              |>.toThetaPilotArithmeticDivisorLocalEvaluationSource).localMainLogContribution place
+  arithmeticGap_dominates_canonicalCThetaScale :
+    sourceData.canonicalCThetaScale + 1 <=
+      estimate.arithmeticUpperTerm - estimate.mainLogTerm
+  canonicalCThetaScale_le_iutIVCTheta :
+    sourceData.canonicalCThetaScale <= estimate.cTheta
+  thetaSigned_le_iutIVCTheta_absLogQ :
+    package.preLedger.thetaSigned <=
+      estimate.cTheta * (-package.preLedger.qSigned)
+  sourceBridge_to_iutIVCTheta_chain :
+    sourceData.hullOperator.logVolume sourceData.qPilotRegion <=
+      estimate.cTheta * (-package.preLedger.qSigned)
+  dichotomy :
+    (package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+        package.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < estimate.cTheta
+
+set_option linter.style.longLine false in
+theorem RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.recordOb3Ob5ValuationBallSourceDODAudit
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {l : PrimeGeFive}
+    {η : Type y}
+    {localPrime : β -> Nat}
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    {localField : β -> Type x}
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [∀ place : β, T2Space (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : β -> Type z}
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)]
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :
+    RecordOb3Ob5ValuationBallSourceDODAudit source := by
+  let projectedDOD :=
+    source.toValuationBallFormulaGapMatchedSource.valuationBallFormulaGapSourceDODAudit
+  exact
+    { recordOb3Ob5HandoffAudit :=
+        source.recordOb3Ob5ValuationBallStepXIDeterminantHandoffAudit,
+      projectedArithmeticDivisorBackedEndpoint :=
+        source.toArithmeticDivisorBackedValuationBallSource.endpoint,
+      projectedArithmeticDivisorBackedAudit :=
+        source.toArithmeticDivisorBackedValuationBallSource.arithmeticDivisorBackedValuationBallSourceAudit,
+      projectedValuationBallFormulaGapDODAudit :=
+        projectedDOD,
+      synchronizedDeterminantScaleEndpoint := by
+        intro constructorBuiltSource hdet
+        exact
+          source.constructorBuiltLocalizedStepXIDeterminantScaleSynchronizationSource_endpoint
+            constructorBuiltSource hdet,
+      total_haar_defect_ge_one :=
+        source.total_haar_defect_ge_one,
+      localArithmeticUpperContribution_eq_stepXI_haar_main :=
+        source.localArithmeticUpperContribution_eq_stepXI_haar_main,
+      arithmeticGap_dominates_canonicalCThetaScale :=
+        projectedDOD.arithmeticGap_dominates_canonicalCThetaScale,
+      canonicalCThetaScale_le_iutIVCTheta :=
+        projectedDOD.canonicalCThetaScale_le_iutIVCTheta,
+      thetaSigned_le_iutIVCTheta_absLogQ :=
+        projectedDOD.thetaSigned_le_iutIVCTheta_absLogQ,
+      sourceBridge_to_iutIVCTheta_chain :=
+        projectedDOD.sourceBridge_to_iutIVCTheta_chain,
+      dichotomy :=
+        projectedDOD.dichotomy }
+
 end ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource
 
 set_option linter.style.longLine false in
