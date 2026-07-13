@@ -30533,9 +30533,11 @@ set_option linter.style.longLine false in
 /--
 Audit for the concrete-packet Record-Ob3/Ob5 synchronized route.
 
-It records the constructed synchronization endpoint and that the new route is
-definitionally the established synchronized concrete endpoint after projecting
-the localized Step (xi) synchronization from Record-Ob3/Ob5 data.
+It records the constructed synchronization endpoint, exposes the signed
+`C_Theta` comparison and Corollary 3.12 dichotomy at this Record-Ob3/Ob5
+boundary, and checks that the route is definitionally the established
+synchronized concrete endpoint after projecting the localized Step (xi)
+synchronization from Record-Ob3/Ob5 data.
 -/
 theorem RecordOb3Ob5ArithmeticDivisorBackedComponentSource.preferredPublicConcreteStepXI311312CompactOpenAdditiveHaarRecordOb3Ob5SynchronizedRoute_audit
     {sourceCopy constructorTargetCopy : Copy}
@@ -30775,7 +30777,7 @@ theorem RecordOb3Ob5ArithmeticDivisorBackedComponentSource.preferredPublicConcre
     let localizedSynchronizationSource :=
       recordOb3Ob5Source.toConstructorBuiltLocalizedStepXIDeterminantScaleSynchronizationSource
         constructorBuiltSource constructorBuilt_determinantSource_eq_recordOb3Ob4;
-    localizedSynchronizationSource.Endpoint ∧
+    let routeEvidence :=
       recordOb3Ob5Source.preferredPublicConcreteStepXI311312CompactOpenAdditiveHaarRecordOb3Ob5SynchronizedRoute
           packet sourceWithSymmetry compactOpenLogKummerMapSource hodgeEvaluation
           residueModuleInverseBasePrimeValuationCoverSource
@@ -30785,7 +30787,15 @@ theorem RecordOb3Ob5ArithmeticDivisorBackedComponentSource.preferredPublicConcre
           theorem110ValuationBallLocalAnalyticSource
           localHaarNormalizationDefect
           localArithmeticUpperContribution_eq_stepXI_haar_main
-          total_haar_defect_ge_one =
+          total_haar_defect_ge_one;
+    localizedSynchronizationSource.Endpoint ∧
+      packageConcrete.preLedger.thetaSigned <=
+        estimateConcrete.cTheta * (-packageConcrete.preLedger.qSigned) ∧
+      ((packageConcrete.preLedger.qSigned =
+          packageConcrete.preLedger.thetaSigned ∧
+        packageConcrete.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < estimateConcrete.cTheta) ∧
+      routeEvidence =
         preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelCompactOpenLogKummerMapHodgeFormulaInverseBasePrimeValuationCoverAdditiveHaarCompactOpenNormSquareDirectSummandSynchronizedConstructedTheorem110ValuationBallLocalAnalyticIUTIVLocalizedStepXIConstructedHDDDataGoalCompletionAudit
           packet sourceWithSymmetry compactOpenLogKummerMapSource hodgeEvaluation
           residueModuleInverseBasePrimeValuationCoverSource
@@ -30802,8 +30812,12 @@ theorem RecordOb3Ob5ArithmeticDivisorBackedComponentSource.preferredPublicConcre
   intro principalPointwiseSource calibrationSource thetaRegionSource
     thetaRegionPrincipalSource measureCalibration summandChartedCalibration
     principalHDDSource constructorBuiltSource localizedSynchronizationSource
+    routeEvidence
   exact
-    ⟨localizedSynchronizationSource.endpoint, rfl⟩
+    ⟨localizedSynchronizationSource.endpoint,
+      routeEvidence.2.2.2.1,
+      routeEvidence.2.2.2.2,
+      rfl⟩
 
 set_option linter.style.longLine false in
 /--
