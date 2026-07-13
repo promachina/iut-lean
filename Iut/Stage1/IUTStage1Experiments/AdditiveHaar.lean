@@ -26491,6 +26491,212 @@ structure RecordOb3Ob5ValuationBallNamedHDDBoundaryData
       recordAdjustedSource.ob3ob4Source.toWeightedDeterminantSource
 
 set_option linter.style.longLine false in
+theorem compactOpenLogKummerMapRecordThetaPossibleImageNonempty
+    {sourceCopy constructorTargetCopy : Copy}
+    {coricConcrete : Type u} {lConcrete : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage sourceCopy constructorTargetCopy
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coricConcrete lConcrete)}
+    (packet :
+      IUTStage1ConcreteTheorem311PrimitiveSourcePacket packageConcrete)
+    (sourceWithSymmetry :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.WithSymmetryLabelTransport
+        packet)
+    {βStepXI : Type a} [Fintype βStepXI]
+    {γStepXI : Type w} [Fintype γStepXI]
+    {ηConcrete : Type y} {KConcrete : Type z}
+    {ΛStepXI : Type max u a w y z}
+    [PseudoMetricSpace KConcrete] [MeasurableSpace KConcrete]
+    [AddGroup KConcrete] [T2Space KConcrete]
+    (compactOpenLogKummerMapSource :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+        sourceWithSymmetry.fiberInd2ActionPacketTransportSource
+        packet.gluingTorsor packet.selectedQChoice
+        (η := ηConcrete) (K := KConcrete)
+        (β := βStepXI) (γ := γStepXI) (Λ := ΛStepXI)) :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coricConcrete lConcrete,
+      (packet.primitiveConstructor.record.thetaPossibleImages.images.region choice).toSet.Nonempty := by
+  intro choice
+  let thetaClass :=
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice
+  have hfiber :
+      (sourceWithSymmetry.fiberInd2ActionPacketTransportSource.toFiberTransportSource.toLatticeImageLawSource.latticeFormula.toClassFormula.thetaRegion
+        thetaClass).toSet.Nonempty :=
+    ⟨compactOpenLogKummerMapSource.principalSource.fiberTransportRegionPoint
+        thetaClass,
+      compactOpenLogKummerMapSource.principalSource.fiberTransportRegionPoint_mem
+        thetaClass⟩
+  change
+    (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.recordThetaPossibleImage
+      packet.primitiveConstructor.record choice).Nonempty
+  rw [
+    sourceWithSymmetry.fiberInd2ActionPacketTransportSource.recordThetaPossibleImage_eq_fiberThetaRegion]
+  exact hfiber
+
+set_option linter.style.longLine false in
+noncomputable def RecordOb3Ob5ValuationBallNamedHDDBoundaryData.ofCompactOpenLogKummerMapSource
+    {sourceCopy constructorTargetCopy : Copy}
+    {coricConcrete : Type u} {lConcrete : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage sourceCopy constructorTargetCopy
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coricConcrete lConcrete)}
+    (packet :
+      IUTStage1ConcreteTheorem311PrimitiveSourcePacket packageConcrete)
+    (sourceWithSymmetry :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.WithSymmetryLabelTransport
+        packet)
+    {βStepXI : Type a} [Fintype βStepXI]
+    {γStepXI : Type w} [Fintype γStepXI]
+    {ηConcrete : Type y} {KConcrete : Type z}
+    {ΛStepXI : Type max u a w y z}
+    [PseudoMetricSpace KConcrete] [MeasurableSpace KConcrete]
+    [AddGroup KConcrete] [T2Space KConcrete]
+    (compactOpenLogKummerMapSource :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+        sourceWithSymmetry.fiberInd2ActionPacketTransportSource
+        packet.gluingTorsor packet.selectedQChoice
+        (η := ηConcrete) (K := KConcrete)
+        (β := βStepXI) (γ := γStepXI) (Λ := ΛStepXI))
+    {γLocal : Type w} [Fintype γLocal]
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {lStepXI : PrimeGeFive}
+    {ηStep : Type y}
+    {localPrime : βStepXI -> Nat}
+    [∀ place : βStepXI, Fact (Nat.Prime (localPrime place))]
+    {localField : βStepXI -> Type x}
+    [(place : βStepXI) -> NontriviallyNormedField (localField place)]
+    [∀ place : βStepXI, ProperSpace (localField place)]
+    [∀ place : βStepXI, IsUltrametricDist (localField place)]
+    [(place : βStepXI) -> MeasurableSpace (localField place)]
+    [∀ place : βStepXI, BorelSpace (localField place)]
+    [∀ place : βStepXI, LocallyCompactSpace (localField place)]
+    [∀ place : βStepXI, IsTopologicalAddGroup (localField place)]
+    [∀ place : βStepXI, T2Space (localField place)]
+    [(place : βStepXI) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : βStepXI,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : βStepXI -> Type z}
+    [∀ place : βStepXI, Fintype (archIndex place)]
+    [∀ place : βStepXI, Fintype (archSummand place)]
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := βStepXI) (γ := γLocal) packet.primitiveConstructor.record}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := βStepXI) packet.primitiveConstructor.record}
+    {constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := βStepXI) packet.primitiveConstructor.record}
+    (valuationBallSource :
+      ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource
+        recordAdjustedSource sourceData estimate lStepXI ηStep localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand)
+    (constructorBuilt_determinantSource_eq_recordOb3Ob4 :
+      constructorBuiltSource.determinantSource =
+        recordAdjustedSource.ob3ob4Source.toWeightedDeterminantSource) :
+    RecordOb3Ob5ValuationBallNamedHDDBoundaryData
+      (recordAdjustedSource := recordAdjustedSource)
+      (sourceData := sourceData) (estimate := estimate) (l := lStepXI)
+      (η := ηStep) (localPrime := localPrime) (localField := localField)
+      (αHaar := αHaar) (hullSystem := hullSystem)
+      (αLocal := αLocal) (ηLocal := ηLocal)
+      (localAnalyticHullSystem := localAnalyticHullSystem)
+      (archIndex := archIndex) (archSummand := archSummand)
+      constructorBuiltSource :=
+  { valuationBallSource := valuationBallSource,
+    possibleImageNonempty :=
+      compactOpenLogKummerMapRecordThetaPossibleImageNonempty
+        packet sourceWithSymmetry compactOpenLogKummerMapSource,
+    constructorBuilt_determinantSource_eq_recordOb3Ob4 :=
+      constructorBuilt_determinantSource_eq_recordOb3Ob4 }
+
+set_option linter.style.longLine false in
+theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.ofCompactOpenLogKummerMapSource_projectionAudit
+    {sourceCopy constructorTargetCopy : Copy}
+    {coricConcrete : Type u} {lConcrete : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage sourceCopy constructorTargetCopy
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coricConcrete lConcrete)}
+    (packet :
+      IUTStage1ConcreteTheorem311PrimitiveSourcePacket packageConcrete)
+    (sourceWithSymmetry :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.WithSymmetryLabelTransport
+        packet)
+    {βStepXI : Type a} [Fintype βStepXI]
+    {γStepXI : Type w} [Fintype γStepXI]
+    {ηConcrete : Type y} {KConcrete : Type z}
+    {ΛStepXI : Type max u a w y z}
+    [PseudoMetricSpace KConcrete] [MeasurableSpace KConcrete]
+    [AddGroup KConcrete] [T2Space KConcrete]
+    (compactOpenLogKummerMapSource :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+        sourceWithSymmetry.fiberInd2ActionPacketTransportSource
+        packet.gluingTorsor packet.selectedQChoice
+        (η := ηConcrete) (K := KConcrete)
+        (β := βStepXI) (γ := γStepXI) (Λ := ΛStepXI))
+    {γLocal : Type w} [Fintype γLocal]
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {lStepXI : PrimeGeFive}
+    {ηStep : Type y}
+    {localPrime : βStepXI -> Nat}
+    [∀ place : βStepXI, Fact (Nat.Prime (localPrime place))]
+    {localField : βStepXI -> Type x}
+    [(place : βStepXI) -> NontriviallyNormedField (localField place)]
+    [∀ place : βStepXI, ProperSpace (localField place)]
+    [∀ place : βStepXI, IsUltrametricDist (localField place)]
+    [(place : βStepXI) -> MeasurableSpace (localField place)]
+    [∀ place : βStepXI, BorelSpace (localField place)]
+    [∀ place : βStepXI, LocallyCompactSpace (localField place)]
+    [∀ place : βStepXI, IsTopologicalAddGroup (localField place)]
+    [∀ place : βStepXI, T2Space (localField place)]
+    [(place : βStepXI) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : βStepXI,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : βStepXI -> Type z}
+    [∀ place : βStepXI, Fintype (archIndex place)]
+    [∀ place : βStepXI, Fintype (archSummand place)]
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := βStepXI) (γ := γLocal) packet.primitiveConstructor.record}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := βStepXI) packet.primitiveConstructor.record}
+    {constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := βStepXI) packet.primitiveConstructor.record}
+    (valuationBallSource :
+      ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource
+        recordAdjustedSource sourceData estimate lStepXI ηStep localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand)
+    (constructorBuilt_determinantSource_eq_recordOb3Ob4 :
+      constructorBuiltSource.determinantSource =
+        recordAdjustedSource.ob3ob4Source.toWeightedDeterminantSource) :
+    let boundary :=
+      RecordOb3Ob5ValuationBallNamedHDDBoundaryData.ofCompactOpenLogKummerMapSource
+        packet sourceWithSymmetry compactOpenLogKummerMapSource
+        valuationBallSource constructorBuilt_determinantSource_eq_recordOb3Ob4;
+    boundary.valuationBallSource = valuationBallSource ∧
+      boundary.possibleImageNonempty =
+        compactOpenLogKummerMapRecordThetaPossibleImageNonempty
+          packet sourceWithSymmetry compactOpenLogKummerMapSource ∧
+      boundary.constructorBuilt_determinantSource_eq_recordOb3Ob4 =
+        constructorBuilt_determinantSource_eq_recordOb3Ob4 := by
+  intro boundary
+  exact ⟨rfl, rfl, rfl⟩
+
+set_option linter.style.longLine false in
 noncomputable def RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toComponentSource
     {recordAdjustedSource :
       IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
