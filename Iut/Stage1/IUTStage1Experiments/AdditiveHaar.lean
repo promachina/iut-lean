@@ -27054,6 +27054,59 @@ noncomputable def RecordOb3Ob5ValuationBallNamedHDDBoundaryData.theorem110Valuat
   boundary.valuationBallSource.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
 
 set_option linter.style.longLine false in
+noncomputable def RecordOb3Ob5ValuationBallNamedHDDBoundaryData.theorem110ValuationBallFormulaGapSource
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {l : PrimeGeFive}
+    {η : Type y}
+    {localPrime : β -> Nat}
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    {localField : β -> Type x}
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [∀ place : β, T2Space (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : β -> Type z}
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)]
+    {constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record}
+    (boundary :
+      RecordOb3Ob5ValuationBallNamedHDDBoundaryData
+        (recordAdjustedSource := recordAdjustedSource)
+        (sourceData := sourceData) (estimate := estimate) (l := l)
+        (η := η) (localPrime := localPrime) (localField := localField)
+        (αHaar := αHaar) (hullSystem := hullSystem)
+        (αLocal := αLocal) (ηLocal := ηLocal)
+        (localAnalyticHullSystem := localAnalyticHullSystem)
+        (archIndex := archIndex) (archSummand := archSummand)
+        constructorBuiltSource) :
+    IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource
+      β estimate αLocal ηLocal localField localAnalyticHullSystem
+      archIndex archSummand :=
+  boundary.valuationBallSource.valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+    |>.valuationBallFormulaGapMatchedPrimeErrorPadicDefectMainSource
+    |>.theorem110FormulaGapMatchedArithmeticDivisorEvaluationSource
+
+set_option linter.style.longLine false in
 noncomputable def RecordOb3Ob5ValuationBallNamedHDDBoundaryData.localHaarNormalizationDefect
     {recordAdjustedSource :
       IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
@@ -27386,7 +27439,8 @@ endpoint.
 The concrete public route still consumes these objects separately.  This
 source-level bundle records them as one artifact: the component Record-Ob3/Ob5
 source, the localized determinant-scale synchronization, the Theorem~1.10
-valuation-ball local analytic source, the Haar-defect function, the
+valuation-ball formula-gap source and its local-analytic projection, the
+Haar-defect function, the
 synchronized-source and transported component-form pointwise
 Step~(xi)/Haar/main equalities, and the global Haar-defect lower bound.
 -/
@@ -27439,6 +27493,13 @@ structure RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData
     IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
       β estimate αLocal ηLocal localField localAnalyticHullSystem
       archIndex archSummand
+  theorem110ValuationBallFormulaGapSource :
+    IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource
+      β estimate αLocal ηLocal localField localAnalyticHullSystem
+      archIndex archSummand
+  theorem110ValuationBallFormulaGapSource_toLocalAnalytic_eq :
+    theorem110ValuationBallFormulaGapSource.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource =
+      theorem110ValuationBallLocalAnalyticSource
   localHaarNormalizationDefect : β -> Real
   localizedArithmeticUpperContribution_eq_stepXI_haar_main :
     ∀ place : β,
@@ -27520,6 +27581,10 @@ noncomputable def RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toSynchronizedRo
       boundary.localizedSynchronizationSource_endpoint,
     theorem110ValuationBallLocalAnalyticSource :=
       boundary.theorem110ValuationBallLocalAnalyticSource,
+    theorem110ValuationBallFormulaGapSource :=
+      boundary.theorem110ValuationBallFormulaGapSource,
+    theorem110ValuationBallFormulaGapSource_toLocalAnalytic_eq := by
+      rfl,
     localHaarNormalizationDefect :=
       boundary.localHaarNormalizationDefect,
     localizedArithmeticUpperContribution_eq_stepXI_haar_main :=
@@ -27747,6 +27812,10 @@ theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.synchronizedRouteInputData
         boundary.toLocalizedSynchronizationSource ∧
       routeInput.theorem110ValuationBallLocalAnalyticSource =
         boundary.theorem110ValuationBallLocalAnalyticSource ∧
+      routeInput.theorem110ValuationBallFormulaGapSource =
+        boundary.theorem110ValuationBallFormulaGapSource ∧
+      routeInput.theorem110ValuationBallFormulaGapSource.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource =
+        routeInput.theorem110ValuationBallLocalAnalyticSource ∧
       routeInput.localHaarNormalizationDefect =
         boundary.localHaarNormalizationDefect ∧
       (∀ place : β,
@@ -27768,6 +27837,8 @@ theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.synchronizedRouteInputData
   exact
     ⟨routeInput.localizedSynchronizationSource_endpoint,
       rfl, rfl, rfl, rfl,
+      routeInput.theorem110ValuationBallFormulaGapSource_toLocalAnalytic_eq,
+      rfl,
       routeInput.localizedArithmeticUpperContribution_eq_stepXI_haar_main,
       routeInput.localArithmeticUpperContribution_eq_stepXI_haar_main,
       routeInput.total_haar_defect_ge_one⟩
@@ -28107,11 +28178,28 @@ noncomputable def RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.pr
     packet sourceWithSymmetry principalPointwiseSource hodgeEvaluation
     pointwiseInverseBasePrimeSummandSource operation hullOperation
     determinantOperation pointwiseFormulaSource sideConditions
-    (routeInput.toPrincipalPointwiseValuationBallTheorem110ValuationBallLocalAnalyticIUTIVLocalizedStepXISource
-      packet sourceWithSymmetry principalPointwiseSource operation
-      hullOperation determinantOperation
-      pointwiseFormulaSource.toPointwiseCalibrationSource sideConditions
-      |>.toTheorem110ValuationBallIUTIVLocalizedStepXISource)
+    { localAnalyticData :=
+        localAnalyticCThetaSourceDataOfAdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource
+          routeInput.theorem110ValuationBallFormulaGapSource.toAdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource,
+      theorem110Data :=
+        theorem110CThetaSourceDataOfAdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource
+          routeInput.theorem110ValuationBallFormulaGapSource.toAdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource,
+      localizedStepXISource :=
+        routeInput.localizedSynchronizationSource.localizedStepXISource,
+      determinantSource_eq_localizedStepXI :=
+        routeInput.localizedSynchronizationSource.determinantSource_eq_localizedStepXI,
+      canonicalCThetaScale_eq_localizedStepXISum :=
+        routeInput.localizedSynchronizationSource.canonicalCThetaScale_eq_localizedStepXISum,
+      theorem110ValuationBallSource :=
+        routeInput.theorem110ValuationBallFormulaGapSource,
+      localHaarNormalizationDefect :=
+        routeInput.localHaarNormalizationDefect,
+      localArithmeticUpperContribution_eq_stepXI_haar_main := by
+        intro place
+        rw [routeInput.theorem110ValuationBallFormulaGapSource_toLocalAnalytic_eq]
+        exact routeInput.localizedArithmeticUpperContribution_eq_stepXI_haar_main place,
+      total_haar_defect_ge_one :=
+        routeInput.total_haar_defect_ge_one }
 
 set_option linter.style.longLine false in
 /--
