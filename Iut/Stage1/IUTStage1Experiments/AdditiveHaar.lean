@@ -28299,6 +28299,176 @@ noncomputable def RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.to
 
 set_option linter.style.longLine false in
 /--
+Audit for the pointwise local-analytic \(\IUT\) IV Step~(xi) source
+constructed from a synchronized Record-Ob3/Ob5 valuation-ball route-input
+bundle.
+
+The route-input bundle is the first surface below the inverse-base-prime
+public route where the localized determinant/scale synchronization,
+Theorem~1.10 valuation-ball local-analytic source, Haar defect, and local
+arithmetic equality have all been projected from one source artifact.  This
+audit records that the resulting pointwise local-analytic source already
+contains the local-term \(\CTheta\) handoff, the signed comparison, and the
+Corollary~3.12 dichotomy.
+-/
+theorem RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.toPrincipalPointwiseValuationBallTheorem110ValuationBallLocalAnalyticIUTIVLocalizedStepXISource_audit
+    {sourceCopy constructorTargetCopy : Copy}
+    {coricConcrete : Type u} {lConcrete : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage sourceCopy constructorTargetCopy
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coricConcrete lConcrete)}
+    (packet :
+      IUTStage1ConcreteTheorem311PrimitiveSourcePacket packageConcrete)
+    (sourceWithSymmetry :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.WithSymmetryLabelTransport
+        packet)
+    {βStepXI : Type a} [Fintype βStepXI]
+    {γStepXI : Type w} [Fintype γStepXI]
+    {ηConcrete : Type w} {KConcrete : Type z}
+    {ΛStepXI : Type max u a z w}
+    [PseudoMetricSpace KConcrete] [MeasurableSpace KConcrete]
+    [AddGroup KConcrete] [T2Space KConcrete]
+    (principalPointwiseSource :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallPointwiseConstructedLogShellMetricZeroValuationBallExactSource
+        sourceWithSymmetry.fiberInd2ActionPacketTransportSource
+        packet.gluingTorsor packet.selectedQChoice
+        (η := ηConcrete) (K := KConcrete)
+        (β := βStepXI) (γ := γStepXI) (Λ := ΛStepXI))
+    {lStepXI : PrimeGeFive} {FStepXI : Type z} [Field FStepXI]
+    {XStepXI CStepXI : HyperbolicOrbicurveModel FStepXI}
+    {sourceHA :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaValueEvaluationSource
+        lStepXI XStepXI CStepXI}
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (pointwiseCalibrationSource :
+      PrincipalPointwiseValuationBallMeasureSummandCalibrationSource
+        packet sourceWithSymmetry principalPointwiseSource sourceHA)
+    (sideConditions : IUTStage1SourceSideConditions packageConcrete)
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {ηStep : Type w} {γLocal : Type w} [Fintype γLocal]
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := βStepXI) (γ := γLocal)
+        (let calibrationSource :=
+            pointwiseCalibrationSource.toThetaRegionCalibrationSource;
+          let thetaRegionSource :=
+            concretePacketThetaRegionSourceOfPrincipalPointwiseValuationBall
+              packet sourceWithSymmetry principalPointwiseSource;
+          let thetaRegionPrincipalSource := thetaRegionSource.thetaRegionPrincipalSource;
+          let measureCalibration := calibrationSource.toMeasureCalibration;
+          let summandChartedCalibration :=
+            calibrationSource.toSummandChartedCalibration;
+          let principalHDDSource :
+            IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.PrincipalProductHullConstructedOb3Ob5AdjustedLogVolumeMeasureHodgeGapCanonicalHDDDirectCommonContainerSource
+              (β := βStepXI) (γ := γStepXI)
+              packet.primitiveConstructor.record sourceHA ΛStepXI :=
+            primitiveThetaRegionCurrentProductHullPrincipalHDDSource
+              (βStepXI := βStepXI) (γStepXI := γStepXI)
+              (sourceHA := sourceHA)
+              packet.primitiveConstructor operation hullOperation determinantOperation
+              thetaRegionPrincipalSource packet.selectedQChoice
+              measureCalibration sideConditions summandChartedCalibration;
+          principalHDDSource.toDirectCommonContainerSource.canonicalHDDRecord)}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := βStepXI)
+        (let calibrationSource :=
+            pointwiseCalibrationSource.toThetaRegionCalibrationSource;
+          let thetaRegionSource :=
+            concretePacketThetaRegionSourceOfPrincipalPointwiseValuationBall
+              packet sourceWithSymmetry principalPointwiseSource;
+          let thetaRegionPrincipalSource := thetaRegionSource.thetaRegionPrincipalSource;
+          let measureCalibration := calibrationSource.toMeasureCalibration;
+          let summandChartedCalibration :=
+            calibrationSource.toSummandChartedCalibration;
+          let principalHDDSource :
+            IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.PrincipalProductHullConstructedOb3Ob5AdjustedLogVolumeMeasureHodgeGapCanonicalHDDDirectCommonContainerSource
+              (β := βStepXI) (γ := γStepXI)
+              packet.primitiveConstructor.record sourceHA ΛStepXI :=
+            primitiveThetaRegionCurrentProductHullPrincipalHDDSource
+              (βStepXI := βStepXI) (γStepXI := γStepXI)
+              (sourceHA := sourceHA)
+              packet.primitiveConstructor operation hullOperation determinantOperation
+              thetaRegionPrincipalSource packet.selectedQChoice
+              measureCalibration sideConditions summandChartedCalibration;
+          principalHDDSource.toDirectCommonContainerSource.canonicalHDDRecord)}
+    {localPrime : βStepXI -> Nat}
+    [∀ place : βStepXI, Fact (Nat.Prime (localPrime place))]
+    {localField : βStepXI -> Type x}
+    [(place : βStepXI) -> NontriviallyNormedField (localField place)]
+    [∀ place : βStepXI, ProperSpace (localField place)]
+    [∀ place : βStepXI, IsUltrametricDist (localField place)]
+    [(place : βStepXI) -> MeasurableSpace (localField place)]
+    [∀ place : βStepXI, BorelSpace (localField place)]
+    [∀ place : βStepXI, LocallyCompactSpace (localField place)]
+    [∀ place : βStepXI, IsTopologicalAddGroup (localField place)]
+    [∀ place : βStepXI, T2Space (localField place)]
+    [(place : βStepXI) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : βStepXI,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type w}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : βStepXI -> Type z}
+    [∀ place : βStepXI, Fintype (archIndex place)]
+    [∀ place : βStepXI, Fintype (archSummand place)]
+    (routeInput :
+      RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData
+        (recordAdjustedSource := recordAdjustedSource)
+        (sourceData := sourceData) (estimate := estimate) (l := lStepXI)
+        (η := ηStep) (localPrime := localPrime) (localField := localField)
+        (αHaar := αHaar) (hullSystem := hullSystem)
+        (αLocal := αLocal) (ηLocal := ηLocal)
+        (localAnalyticHullSystem := localAnalyticHullSystem)
+        (archIndex := archIndex) (archSummand := archSummand)
+        (let calibrationSource :=
+            pointwiseCalibrationSource.toThetaRegionCalibrationSource;
+          let thetaRegionSource :=
+            concretePacketThetaRegionSourceOfPrincipalPointwiseValuationBall
+              packet sourceWithSymmetry principalPointwiseSource;
+          let thetaRegionPrincipalSource := thetaRegionSource.thetaRegionPrincipalSource;
+          let measureCalibration := calibrationSource.toMeasureCalibration;
+          let summandChartedCalibration :=
+            calibrationSource.toSummandChartedCalibration;
+          let principalHDDSource :
+            IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.PrincipalProductHullConstructedOb3Ob5AdjustedLogVolumeMeasureHodgeGapCanonicalHDDDirectCommonContainerSource
+              (β := βStepXI) (γ := γStepXI)
+              packet.primitiveConstructor.record sourceHA ΛStepXI :=
+            primitiveThetaRegionCurrentProductHullPrincipalHDDSource
+              (βStepXI := βStepXI) (γStepXI := γStepXI)
+              (sourceHA := sourceHA)
+              packet.primitiveConstructor operation hullOperation determinantOperation
+              thetaRegionPrincipalSource packet.selectedQChoice
+              measureCalibration sideConditions summandChartedCalibration;
+          principalHDDSource.toDirectCommonContainerSource.toCanonicalHDDConstructorBuiltSource)) :
+    let source :=
+      routeInput.toPrincipalPointwiseValuationBallTheorem110ValuationBallLocalAnalyticIUTIVLocalizedStepXISource
+        packet sourceWithSymmetry principalPointwiseSource operation
+        hullOperation determinantOperation pointwiseCalibrationSource
+        sideConditions;
+    source.Endpoint ∧
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltLocalizedStepXILocalTermCThetaSource.LocalTermIUTIVCThetaHandoffAudit
+        source.toLocalizedCThetaSource ∧
+      packageConcrete.preLedger.thetaSigned <=
+        estimate.cTheta * (-packageConcrete.preLedger.qSigned) ∧
+      ((packageConcrete.preLedger.qSigned =
+          packageConcrete.preLedger.thetaSigned ∧
+        packageConcrete.preLedger.thetaSigned < 0) ∨
+        (-1 : Real) < estimate.cTheta) := by
+  intro source
+  exact
+    ⟨source.endpoint,
+      source.localTermIUTIVCThetaHandoffAudit,
+      source.thetaSigned_le_iutiv_cTheta_absLogQ,
+      source.dichotomy⟩
+
+set_option linter.style.longLine false in
+/--
 Pointwise inverse-base-prime route consuming the synchronized valuation-ball
 route-input bundle.
 
