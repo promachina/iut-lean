@@ -27941,11 +27941,11 @@ set_option linter.style.longLine false in
 Pointwise inverse-base-prime route consuming the synchronized valuation-ball
 route-input bundle.
 
-This threads the route-input projection into the existing pointwise
-local-analytic \(C_\Theta\) comparison.  The public caller supplies the
+This threads the route-input projection into the pointwise formula-gap
+\IUT{}~IV localized \(C_\Theta\) comparison.  The public caller supplies the
 inverse-base-prime summand source and the synchronized route-input artifact;
-the local-analytic Theorem~1.10/\IUT{} IV localized Step~(xi) source is
-constructed internally from the latter.
+the local-analytic Theorem~1.10 data is constructed internally from the latter
+and immediately projected to the formula-gap source used by the endpoint.
 -/
 noncomputable def RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.preferredPublicPrincipalPointwiseValuationBallInverseBasePrimeRoute
     {sourceCopy constructorTargetCopy : Copy}
@@ -28103,14 +28103,15 @@ noncomputable def RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.pr
               thetaRegionPrincipalSource packet.selectedQChoice
               measureCalibration sideConditions summandChartedCalibration;
           principalHDDSource.toDirectCommonContainerSource.toCanonicalHDDConstructorBuiltSource)) :=
-  preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallHodgeFormulaInverseBasePrimeSummandProjectedAdditiveHaarTheorem110ValuationBallLocalAnalyticIUTIVLocalizedStepXIConstructedHDDDataGoalCompletionAudit
+  preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallHodgeFormulaInverseBasePrimeSummandProjectedAdditiveHaarTheorem110ValuationBallIUTIVLocalizedStepXIConstructedHDDDataGoalCompletionAudit
     packet sourceWithSymmetry principalPointwiseSource hodgeEvaluation
     pointwiseInverseBasePrimeSummandSource operation hullOperation
     determinantOperation pointwiseFormulaSource sideConditions
     (routeInput.toPrincipalPointwiseValuationBallTheorem110ValuationBallLocalAnalyticIUTIVLocalizedStepXISource
       packet sourceWithSymmetry principalPointwiseSource operation
       hullOperation determinantOperation
-      pointwiseFormulaSource.toPointwiseCalibrationSource sideConditions)
+      pointwiseFormulaSource.toPointwiseCalibrationSource sideConditions
+      |>.toTheorem110ValuationBallIUTIVLocalizedStepXISource)
 
 set_option linter.style.longLine false in
 /--
