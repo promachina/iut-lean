@@ -25078,6 +25078,75 @@ structure RecordOb3Ob5ArithmeticDivisorBackedComponentSource
       recordAdjustedSource.adjustedSummandLogVolume
 
 set_option linter.style.longLine false in
+/--
+Projection from the valuation-ball Record-Ob3/Ob5 source to the component
+Record-Ob3/Ob5 source.
+
+The valuation-ball source already contains the arithmetic-divisor component
+source and the record Ob3/Ob4-to-Step~(xi) determinant handoff.  The only extra
+component-level datum is the nonemptiness of the Theorem~3.11 possible-image
+family, which remains an explicit lower source witness here.
+-/
+noncomputable def RecordOb3Ob5ArithmeticDivisorBackedComponentSource.ofValuationBallSource
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {l : PrimeGeFive}
+    {η : Type y}
+    {localPrime : β -> Nat}
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    {localField : β -> Type x}
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [∀ place : β, T2Space (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : β -> Type z}
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)]
+    (valuationBallSource :
+      ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand)
+    (possibleImageNonempty :
+      ∀ choice : index,
+        (record.thetaPossibleImages.images.region choice).toSet.Nonempty) :
+    RecordOb3Ob5ArithmeticDivisorBackedComponentSource
+      recordAdjustedSource sourceData estimate l η localPrime localField
+      αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+      archIndex archSummand :=
+  { oneSidedMultiradialSource :=
+      valuationBallSource.oneSidedMultiradialSource,
+    possibleImageNonempty := possibleImageNonempty,
+    qPilotRegion_eq_selectedQRegion :=
+      valuationBallSource.qPilotRegion_eq_selectedQRegion,
+    matchedLocalDegreeArithmeticDivisorBackedComponentSource :=
+      valuationBallSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource,
+    determinantSource_eq_recordOb3Ob4 :=
+      valuationBallSource.determinantSource_eq_recordOb3Ob4,
+    recordOb3Ob4_eq_stepXI := by
+      rw [valuationBallSource.arithmeticDivisorBackedComponent_eq_valuationBallFormulaMatching]
+      exact valuationBallSource.recordOb3Ob4_eq_stepXI,
+    canonicalCThetaScale_eq_recordAdjustedSummandLogVolume :=
+      valuationBallSource.canonicalCThetaScale_eq_recordAdjustedSummandLogVolume }
+
+set_option linter.style.longLine false in
 noncomputable def RecordOb3Ob5ArithmeticDivisorBackedComponentSource.toArithmeticDivisorBackedComponentSource
     {recordAdjustedSource :
       IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
