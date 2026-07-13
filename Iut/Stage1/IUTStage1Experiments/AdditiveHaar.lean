@@ -30663,12 +30663,22 @@ theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.preferredPublicCompactOpen
         hullOperation determinantOperation pointwiseFormulaSource sideConditions
         valuationBallSource;
     let routeInput := boundary.toSynchronizedRouteInputData;
+    let pointwiseInverseBasePrimeSummandSource :=
+      PrincipalPointwiseValuationBallInverseBasePrimeSummandProjectedAdditiveHaarSource.ofResidueModuleInverseBasePrimeValuationCoverAndAdditiveHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodge
+        (Λv := Λv) (p := p) (K := K)
+        (β := βHaar) (γ := γHaar) (κ := κ)
+        (packet := packet) (sourceWithSymmetry := sourceWithSymmetry)
+        (principalPointwiseSource := principalPointwiseSource)
+        (hodgeEvaluation := hodgeEvaluation) (V := V) (μ := μ)
+        residueModuleInverseBasePrimeValuationCoverSource
+        additiveHaarCompactOpenNormSquareDirectSummandConstructedGaussianHodgeSource;
     let localAnalyticSource :=
       routeInput.toPrincipalPointwiseValuationBallTheorem110ValuationBallLocalAnalyticIUTIVLocalizedStepXISource
         packet sourceWithSymmetry principalPointwiseSource operation
         hullOperation determinantOperation
         pointwiseFormulaSource.toPointwiseCalibrationSource sideConditions;
-    routeInput.localizedSynchronizationSource.Endpoint ∧
+    pointwiseInverseBasePrimeSummandSource.Endpoint ∧
+      routeInput.localizedSynchronizationSource.Endpoint ∧
       localAnalyticSource.Endpoint ∧
       IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltLocalizedStepXILocalTermCThetaSource.LocalTermIUTIVCThetaHandoffAudit
         localAnalyticSource.toLocalizedCThetaSource ∧
@@ -30699,10 +30709,11 @@ theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.preferredPublicCompactOpen
                     operation hullOperation determinantOperation pointwiseFormulaSource
                     sideConditions := by
   intro principalPointwiseSource constructorBuiltSource sourceData boundary
-    routeInput localAnalyticSource
+    routeInput pointwiseInverseBasePrimeSummandSource localAnalyticSource
   let dod := valuationBallSource.recordOb3Ob5ValuationBallSourceDODAudit
   exact
-    ⟨routeInput.localizedSynchronizationSource_endpoint,
+    ⟨pointwiseInverseBasePrimeSummandSource.endpoint,
+      routeInput.localizedSynchronizationSource_endpoint,
       localAnalyticSource.endpoint,
       localAnalyticSource.localTermIUTIVCThetaHandoffAudit,
       dod,
