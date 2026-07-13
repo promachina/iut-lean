@@ -27022,6 +27022,218 @@ theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.projectionAudit
 
 set_option linter.style.longLine false in
 /--
+Bundled synchronized route inputs derived below the concrete compact-open
+endpoint.
+
+The concrete public route still consumes these objects separately.  This
+source-level bundle records them as one artifact: the component Record-Ob3/Ob5
+source, the localized determinant-scale synchronization, the Theorem~1.10
+valuation-ball local analytic source, the Haar-defect function, the transported
+component-form pointwise Step~(xi)/Haar/main equality, and the global
+Haar-defect lower bound.
+-/
+structure RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {l : PrimeGeFive}
+    {η : Type y}
+    {localPrime : β -> Nat}
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    {localField : β -> Type x}
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [∀ place : β, T2Space (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : β -> Type z}
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)]
+    (constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record) where
+  componentSource :
+    RecordOb3Ob5ArithmeticDivisorBackedComponentSource
+      recordAdjustedSource sourceData estimate l η localPrime localField
+      αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+      archIndex archSummand
+  localizedSynchronizationSource :
+    IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.ConstructorBuiltLocalizedStepXIDeterminantScaleSynchronizationSource
+      constructorBuiltSource η γ
+  localizedSynchronizationSource_endpoint :
+    localizedSynchronizationSource.Endpoint
+  theorem110ValuationBallLocalAnalyticSource :
+    IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+      β estimate αLocal ηLocal localField localAnalyticHullSystem
+      archIndex archSummand
+  localHaarNormalizationDefect : β -> Real
+  localArithmeticUpperContribution_eq_stepXI_haar_main :
+    ∀ place : β,
+      (theorem110ValuationBallLocalAnalyticSource
+        |>.toThetaPilotArithmeticDivisorLocalEvaluationSource).localArithmeticUpperContribution place =
+        componentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.localizedStepXISource.weightedAdjustedLogVolume place +
+          localHaarNormalizationDefect place +
+            (theorem110ValuationBallLocalAnalyticSource
+              |>.toThetaPilotArithmeticDivisorLocalEvaluationSource).localMainLogContribution place
+  total_haar_defect_ge_one :
+    (1 : Real) <= ∑ place : β, localHaarNormalizationDefect place
+
+set_option linter.style.longLine false in
+noncomputable def RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toSynchronizedRouteInputData
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {l : PrimeGeFive}
+    {η : Type y}
+    {localPrime : β -> Nat}
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    {localField : β -> Type x}
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [∀ place : β, T2Space (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : β -> Type z}
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)]
+    {constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record}
+    (boundary :
+      RecordOb3Ob5ValuationBallNamedHDDBoundaryData
+        (recordAdjustedSource := recordAdjustedSource)
+        (sourceData := sourceData) (estimate := estimate) (l := l)
+        (η := η) (localPrime := localPrime) (localField := localField)
+        (αHaar := αHaar) (hullSystem := hullSystem)
+        (αLocal := αLocal) (ηLocal := ηLocal)
+        (localAnalyticHullSystem := localAnalyticHullSystem)
+        (archIndex := archIndex) (archSummand := archSummand)
+        constructorBuiltSource) :
+    RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData
+      (recordAdjustedSource := recordAdjustedSource)
+      (sourceData := sourceData) (estimate := estimate) (l := l)
+      (η := η) (localPrime := localPrime) (localField := localField)
+      (αHaar := αHaar) (hullSystem := hullSystem)
+      (αLocal := αLocal) (ηLocal := ηLocal)
+      (localAnalyticHullSystem := localAnalyticHullSystem)
+      (archIndex := archIndex) (archSummand := archSummand)
+      constructorBuiltSource :=
+  { componentSource := boundary.toComponentSource,
+    localizedSynchronizationSource := boundary.toLocalizedSynchronizationSource,
+    localizedSynchronizationSource_endpoint :=
+      boundary.localizedSynchronizationSource_endpoint,
+    theorem110ValuationBallLocalAnalyticSource :=
+      boundary.theorem110ValuationBallLocalAnalyticSource,
+    localHaarNormalizationDefect :=
+      boundary.localHaarNormalizationDefect,
+    localArithmeticUpperContribution_eq_stepXI_haar_main :=
+      boundary.componentLocalArithmeticUpperContribution_eq_stepXI_haar_main,
+    total_haar_defect_ge_one :=
+      boundary.total_haar_defect_ge_one }
+
+set_option linter.style.longLine false in
+theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.synchronizedRouteInputDataAudit
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {l : PrimeGeFive}
+    {η : Type y}
+    {localPrime : β -> Nat}
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    {localField : β -> Type x}
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [∀ place : β, T2Space (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : β -> Type z}
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)]
+    {constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record}
+    (boundary :
+      RecordOb3Ob5ValuationBallNamedHDDBoundaryData
+        (recordAdjustedSource := recordAdjustedSource)
+        (sourceData := sourceData) (estimate := estimate) (l := l)
+        (η := η) (localPrime := localPrime) (localField := localField)
+        (αHaar := αHaar) (hullSystem := hullSystem)
+        (αLocal := αLocal) (ηLocal := ηLocal)
+        (localAnalyticHullSystem := localAnalyticHullSystem)
+        (archIndex := archIndex) (archSummand := archSummand)
+        constructorBuiltSource) :
+    let routeInput := boundary.toSynchronizedRouteInputData;
+    routeInput.localizedSynchronizationSource.Endpoint ∧
+      routeInput.componentSource =
+        boundary.toComponentSource ∧
+      routeInput.localizedSynchronizationSource =
+        boundary.toLocalizedSynchronizationSource ∧
+      routeInput.theorem110ValuationBallLocalAnalyticSource =
+        boundary.theorem110ValuationBallLocalAnalyticSource ∧
+      routeInput.localHaarNormalizationDefect =
+        boundary.localHaarNormalizationDefect ∧
+      (∀ place : β,
+        (routeInput.theorem110ValuationBallLocalAnalyticSource
+          |>.toThetaPilotArithmeticDivisorLocalEvaluationSource).localArithmeticUpperContribution place =
+          routeInput.componentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.localizedStepXISource.weightedAdjustedLogVolume place +
+            routeInput.localHaarNormalizationDefect place +
+              (routeInput.theorem110ValuationBallLocalAnalyticSource
+                |>.toThetaPilotArithmeticDivisorLocalEvaluationSource).localMainLogContribution place) ∧
+      (1 : Real) <= ∑ place : β, routeInput.localHaarNormalizationDefect place := by
+  intro routeInput
+  exact
+    ⟨routeInput.localizedSynchronizationSource_endpoint,
+      rfl, rfl, rfl, rfl,
+      routeInput.localArithmeticUpperContribution_eq_stepXI_haar_main,
+      routeInput.total_haar_defect_ge_one⟩
+
+set_option linter.style.longLine false in
+/--
 Localized Step (xi) \(C_\Theta\) source from the Record-Ob3/Ob5 determinant
 handoff.
 
