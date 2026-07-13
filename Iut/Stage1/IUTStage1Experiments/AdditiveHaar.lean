@@ -25520,16 +25520,161 @@ noncomputable def RecordOb3Ob5ArithmeticDivisorBackedComponentSource.ofConcreteP
       αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
       archIndex archSummand :=
   { oneSidedMultiradialSource := oneSidedMultiradialSource,
-    possibleImageNonempty :=
-      possibleImageWitnessSource.possibleImageNonemptyOfChoice,
-    qPilotRegion_eq_selectedQRegion := qPilotRegion_eq_selectedQRegion,
+      possibleImageNonempty :=
+        possibleImageWitnessSource.possibleImageNonemptyOfChoice,
+      qPilotRegion_eq_selectedQRegion := qPilotRegion_eq_selectedQRegion,
+      matchedLocalDegreeArithmeticDivisorBackedComponentSource :=
+        matchedLocalDegreeArithmeticDivisorBackedComponentSource,
+      determinantSource_eq_recordOb3Ob4 :=
+        determinantSource_eq_recordOb3Ob4,
+      recordOb3Ob4_eq_stepXI := recordOb3Ob4_eq_stepXI,
+      canonicalCThetaScale_eq_recordAdjustedSummandLogVolume :=
+        canonicalCThetaScale_eq_recordAdjustedSummandLogVolume }
+
+set_option linter.style.longLine false in
+/--
+Lift a Record-Ob3/Ob5 arithmetic-divisor component source to the valuation-ball
+Record-Ob3/Ob5 source once the valuation-ball Theorem 1.10 formula-matching
+source is known to project to the component arithmetic-divisor formula source.
+
+This is the missing Step (xi) refinement bridge: the component source supplies
+the possible-image, local-degree, determinant, and adjusted-summand handoff
+data, while the valuation-ball formula source keeps the p-adic valuation-ball
+provenance required by the local analytic `C_Theta` route.
+-/
+noncomputable def RecordOb3Ob5ArithmeticDivisorBackedComponentSource.toRecordOb3Ob5ArithmeticDivisorBackedValuationBallSource
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {l : PrimeGeFive}
+    {η : Type y}
+    {localPrime : β -> Nat}
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    {localField : β -> Type x}
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [∀ place : β, T2Space (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : β -> Type z}
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)]
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand)
+    (valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource :
+      IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (arithmeticDivisorBackedComponent_eq_valuationBallFormulaMatching :
+      source.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource =
+        IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.toAdditiveHaarFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+          valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource) :
+    ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource
+      recordAdjustedSource sourceData estimate l η localPrime localField
+      αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+      archIndex archSummand :=
+  { oneSidedMultiradialSource := source.oneSidedMultiradialSource,
+    qPilotRegion_eq_selectedQRegion :=
+      source.qPilotRegion_eq_selectedQRegion,
+    valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource :=
+      valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource,
     matchedLocalDegreeArithmeticDivisorBackedComponentSource :=
-      matchedLocalDegreeArithmeticDivisorBackedComponentSource,
+      source.matchedLocalDegreeArithmeticDivisorBackedComponentSource,
+    arithmeticDivisorBackedComponent_eq_valuationBallFormulaMatching :=
+      arithmeticDivisorBackedComponent_eq_valuationBallFormulaMatching,
     determinantSource_eq_recordOb3Ob4 :=
-      determinantSource_eq_recordOb3Ob4,
-    recordOb3Ob4_eq_stepXI := recordOb3Ob4_eq_stepXI,
+      source.determinantSource_eq_recordOb3Ob4,
+    recordOb3Ob4_eq_stepXI := by
+      have hrecord := source.recordOb3Ob4_eq_stepXI
+      rw [arithmeticDivisorBackedComponent_eq_valuationBallFormulaMatching] at hrecord
+      simpa [
+        IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.toAdditiveHaarFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource]
+        using hrecord,
     canonicalCThetaScale_eq_recordAdjustedSummandLogVolume :=
-      canonicalCThetaScale_eq_recordAdjustedSummandLogVolume }
+      source.canonicalCThetaScale_eq_recordAdjustedSummandLogVolume }
+
+set_option linter.style.longLine false in
+theorem RecordOb3Ob5ArithmeticDivisorBackedComponentSource.toRecordOb3Ob5ArithmeticDivisorBackedValuationBallSource_projectionAudit
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {l : PrimeGeFive}
+    {η : Type y}
+    {localPrime : β -> Nat}
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    {localField : β -> Type x}
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [∀ place : β, T2Space (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : β -> Type z}
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)]
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand)
+    (valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource :
+      IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (arithmeticDivisorBackedComponent_eq_valuationBallFormulaMatching :
+      source.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource =
+        IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.toAdditiveHaarFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+          valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource) :
+    let valuationBallSource :=
+      source.toRecordOb3Ob5ArithmeticDivisorBackedValuationBallSource
+        valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+        arithmeticDivisorBackedComponent_eq_valuationBallFormulaMatching;
+    valuationBallSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource =
+        source.matchedLocalDegreeArithmeticDivisorBackedComponentSource ∧
+      valuationBallSource.valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource =
+        valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource ∧
+        valuationBallSource.toArithmeticDivisorBackedValuationBallSource.Endpoint := by
+  dsimp [
+    RecordOb3Ob5ArithmeticDivisorBackedComponentSource.toRecordOb3Ob5ArithmeticDivisorBackedValuationBallSource]
+  exact
+    ⟨rfl, rfl,
+      (source.toRecordOb3Ob5ArithmeticDivisorBackedValuationBallSource
+        valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+        arithmeticDivisorBackedComponent_eq_valuationBallFormulaMatching)
+        |>.toArithmeticDivisorBackedValuationBallSource
+        |>.endpoint⟩
 
 set_option linter.style.longLine false in
 /--
@@ -30133,13 +30278,13 @@ noncomputable def RecordOb3Ob5ValuationBallNamedHDDBoundaryData.ofCompactOpenLog
       (η := ηStep) (localPrime := localPrime) (localField := localField)
       (αHaar := αHaar) (hullSystem := hullSystem)
       (αLocal := αLocal) (ηLocal := ηLocal)
-      (localAnalyticHullSystem := localAnalyticHullSystem)
-      (archIndex := archIndex) (archSummand := archSummand)
-      constructorBuiltSource :=
+        (localAnalyticHullSystem := localAnalyticHullSystem)
+        (archIndex := archIndex) (archSummand := archSummand)
+        constructorBuiltSource :=
   let constructorBuiltSource :=
     concretePacketCompactOpenLogKummerMapConstructorBuiltSource
       packet sourceWithSymmetry compactOpenLogKummerMapSource operation
-      hullOperation determinantOperation pointwiseFormulaSource sideConditions
+      hullOperation determinantOperation pointwiseFormulaSource sideConditions;
   { valuationBallSource := valuationBallSource,
     possibleImageNonempty :=
       concretePacketCompactOpenLogKummerMapCanonicalHDDRecordThetaPossibleImageNonempty
@@ -30147,6 +30292,129 @@ noncomputable def RecordOb3Ob5ValuationBallNamedHDDBoundaryData.ofCompactOpenLog
         hullOperation determinantOperation pointwiseFormulaSource sideConditions,
     constructorBuilt_determinantSource_eq_recordOb3Ob4 := by
       simpa using valuationBallSource.determinantSource_eq_recordOb3Ob4 }
+
+set_option linter.style.longLine false in
+/--
+Canonical-HDD compact-open boundary from component Record-Ob3/Ob5 data and a
+valuation-ball formula-matching refinement.
+
+The compact-open source still constructs the principal HDD and possible-image
+nonemptiness.  The new mathematical input is lower than the previous
+valuation-ball boundary: an arithmetic-divisor-backed component source, a
+valuation-ball Theorem 1.10 formula-matching source, and the equality saying
+that the latter projects to the component formula source.
+-/
+noncomputable def RecordOb3Ob5ValuationBallNamedHDDBoundaryData.ofCompactOpenLogKummerMapCanonicalHDDComponentValuationBallFormulaSource
+    {sourceCopy constructorTargetCopy : Copy}
+    {coricConcrete : Type u} {lConcrete : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage sourceCopy constructorTargetCopy
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coricConcrete lConcrete)}
+    (packet :
+      IUTStage1ConcreteTheorem311PrimitiveSourcePacket packageConcrete)
+    (sourceWithSymmetry :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.WithSymmetryLabelTransport
+        packet)
+    {βStepXI : Type a} [Fintype βStepXI]
+    {γStepXI : Type w} [Fintype γStepXI]
+    {ηConcrete : Type y} {KConcrete : Type z}
+    {ΛStepXI : Type max u a w y z}
+    [PseudoMetricSpace KConcrete] [MeasurableSpace KConcrete]
+    [AddGroup KConcrete] [T2Space KConcrete]
+    (compactOpenLogKummerMapSource :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+        sourceWithSymmetry.fiberInd2ActionPacketTransportSource
+        packet.gluingTorsor packet.selectedQChoice
+        (η := ηConcrete) (K := KConcrete)
+        (β := βStepXI) (γ := γStepXI) (Λ := ΛStepXI))
+    {lStepXI : PrimeGeFive} {FStepXI : Type z} [Field FStepXI]
+    {XStepXI CStepXI : HyperbolicOrbicurveModel FStepXI}
+    {sourceHA :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaValueEvaluationSource
+        lStepXI XStepXI CStepXI}
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (pointwiseFormulaSource :
+      let principalPointwiseSource :=
+        compactOpenLogKummerMapSource.toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource;
+      PrincipalPointwiseValuationBallMeasureSummandFormulaSource
+        packet sourceWithSymmetry principalPointwiseSource sourceHA)
+    (sideConditions : IUTStage1SourceSideConditions packageConcrete)
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {ηStep : Type y} {γLocal : Type w} [Fintype γLocal]
+    {recordAdjustedSource :
+      let principalHDDSource :=
+        concretePacketCompactOpenLogKummerMapPrincipalHDDSource
+          packet sourceWithSymmetry compactOpenLogKummerMapSource operation
+          hullOperation determinantOperation pointwiseFormulaSource sideConditions;
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := βStepXI) (γ := γLocal)
+        principalHDDSource.toDirectCommonContainerSource.canonicalHDDRecord}
+    {localPrime : βStepXI -> Nat}
+    [∀ place : βStepXI, Fact (Nat.Prime (localPrime place))]
+    {localField : βStepXI -> Type x}
+    [(place : βStepXI) -> NontriviallyNormedField (localField place)]
+    [∀ place : βStepXI, ProperSpace (localField place)]
+    [∀ place : βStepXI, IsUltrametricDist (localField place)]
+    [(place : βStepXI) -> MeasurableSpace (localField place)]
+    [∀ place : βStepXI, BorelSpace (localField place)]
+    [∀ place : βStepXI, LocallyCompactSpace (localField place)]
+    [∀ place : βStepXI, IsTopologicalAddGroup (localField place)]
+    [∀ place : βStepXI, T2Space (localField place)]
+    [(place : βStepXI) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : βStepXI,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : βStepXI -> Type z}
+    [∀ place : βStepXI, Fintype (archIndex place)]
+    [∀ place : βStepXI, Fintype (archSummand place)]
+    (componentSource :
+      let constructorBuiltSource :=
+        concretePacketCompactOpenLogKummerMapConstructorBuiltSource
+          packet sourceWithSymmetry compactOpenLogKummerMapSource operation
+          hullOperation determinantOperation pointwiseFormulaSource sideConditions;
+      RecordOb3Ob5ArithmeticDivisorBackedComponentSource
+        recordAdjustedSource
+        constructorBuiltSource.toConstructedHolomorphicHullDeterminantSource
+        estimate lStepXI ηStep localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand)
+    (valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource :
+      IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+        βStepXI estimate ηStep γLocal localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (arithmeticDivisorBackedComponent_eq_valuationBallFormulaMatching :
+      componentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource =
+        IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.toAdditiveHaarFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+          valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource) :
+    let constructorBuiltSource :=
+      concretePacketCompactOpenLogKummerMapConstructorBuiltSource
+        packet sourceWithSymmetry compactOpenLogKummerMapSource operation
+        hullOperation determinantOperation pointwiseFormulaSource sideConditions;
+    RecordOb3Ob5ValuationBallNamedHDDBoundaryData
+      (recordAdjustedSource := recordAdjustedSource)
+      (sourceData := constructorBuiltSource.toConstructedHolomorphicHullDeterminantSource)
+      (estimate := estimate) (l := lStepXI)
+      (η := ηStep) (localPrime := localPrime) (localField := localField)
+      (αHaar := αHaar) (hullSystem := hullSystem)
+      (αLocal := αLocal) (ηLocal := ηLocal)
+      (localAnalyticHullSystem := localAnalyticHullSystem)
+      (archIndex := archIndex) (archSummand := archSummand)
+      constructorBuiltSource :=
+  let valuationBallSource :=
+    componentSource.toRecordOb3Ob5ArithmeticDivisorBackedValuationBallSource
+      valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+      arithmeticDivisorBackedComponent_eq_valuationBallFormulaMatching
+  RecordOb3Ob5ValuationBallNamedHDDBoundaryData.ofCompactOpenLogKummerMapCanonicalHDDValuationBallSource
+    packet sourceWithSymmetry compactOpenLogKummerMapSource operation
+    hullOperation determinantOperation pointwiseFormulaSource sideConditions
+    valuationBallSource
 
 set_option linter.style.longLine false in
 /--
@@ -30351,12 +30619,18 @@ theorem RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.ofCompactOpe
       routeInput.componentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource =
           valuationBallSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource ∧
         routeInput.localizedSynchronizationSource.Endpoint ∧
-        (1 : Real) <= ∑ place : βStepXI, routeInput.localHaarNormalizationDefect place := by
-  intro routeInput
-  exact
-    ⟨rfl,
-      routeInput.localizedSynchronizationSource_endpoint,
-      routeInput.total_haar_defect_ge_one⟩
+          (1 : Real) <= ∑ place : βStepXI, routeInput.localHaarNormalizationDefect place := by
+    intro routeInput
+    refine
+      ⟨?_, routeInput.localizedSynchronizationSource_endpoint,
+        routeInput.total_haar_defect_ge_one⟩
+    dsimp [
+      RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.ofCompactOpenLogKummerMapCanonicalHDDValuationBallSource,
+      RecordOb3Ob5ValuationBallNamedHDDBoundaryData.ofCompactOpenLogKummerMapCanonicalHDDValuationBallSource,
+      RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toSynchronizedRouteInputData,
+      RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toComponentSource,
+      RecordOb3Ob5ArithmeticDivisorBackedComponentSource.ofValuationBallSource]
+    rfl
 
 set_option linter.style.longLine false in
 /--
