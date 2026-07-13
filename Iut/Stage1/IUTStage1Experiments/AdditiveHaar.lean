@@ -33172,6 +33172,160 @@ noncomputable def RecordOb3Ob5ArithmeticDivisorBackedComponentSource.preferredPu
 
 set_option linter.style.longLine false in
 /--
+Concrete-packet compact-open component route with the arithmetic-degree
+controlled local source constructed from formula-gap/p-adic comparison data.
+
+This lowers
+`preferredPublicConcreteStepXI311312CompactOpenAdditiveHaarRecordOb3Ob5ControlledProductHandoffFormulaRealizedRoute`:
+the endpoint no longer receives an
+`IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource`.
+Instead, Lean builds that source from the valuation-ball formula-gap
+arithmetic-degree p-adic source, the Proposition~1.4/1.5 comparison source,
+and their formula-matching synchronization before entering the formula-realized
+product-handoff route.
+-/
+noncomputable def RecordOb3Ob5ArithmeticDivisorBackedComponentSource.preferredPublicConcreteStepXI311312CompactOpenAdditiveHaarRecordOb3Ob5FormulaGapComparisonProductHandoffFormulaRealizedRoute
+    {sourceCopy constructorTargetCopy : Copy}
+    {coricConcrete : Type u} {lConcrete : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage sourceCopy constructorTargetCopy
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coricConcrete lConcrete)}
+    (packet :
+      IUTStage1ConcreteTheorem311PrimitiveSourcePacket packageConcrete)
+    (sourceWithSymmetry :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.WithSymmetryLabelTransport
+        packet)
+    {βStepXI : Type a} [Fintype βStepXI]
+    {γStepXI : Type w} [Fintype γStepXI]
+    {ηConcrete : Type w} {KConcrete : Type z}
+    {ΛStepXI : Type max u a z w}
+    [PseudoMetricSpace KConcrete] [MeasurableSpace KConcrete]
+    [AddGroup KConcrete] [T2Space KConcrete]
+    (compactOpenLogKummerMapSource :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+        sourceWithSymmetry.fiberInd2ActionPacketTransportSource
+        packet.gluingTorsor packet.selectedQChoice
+        (η := ηConcrete) (K := KConcrete)
+        (β := βStepXI) (γ := γStepXI) (Λ := ΛStepXI))
+    {Λv : Type (max u a z w)}
+    {F : Type z} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        lConcrete X C)
+    {p : Nat} [Fact p.Prime]
+    {K : Type w} {βHaar : Type (max u a z w)} {γHaar : Type w}
+    {κ : βHaar -> γHaar -> Type (max u a z w)}
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [BorelSpace K] [LocallyCompactSpace K]
+    [IsTopologicalAddGroup K]
+    [NormedAlgebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    [T2Space K] [Fintype βHaar] [Fintype γHaar]
+    [∀ index : βHaar, ∀ place : γHaar, Field (κ index place)]
+    [∀ index : βHaar, ∀ place : γHaar, Fintype (κ index place)]
+    {V : Type (max u a z w)} {μ : Type w} [Fintype V]
+    (localArithmeticSource :
+      let principalPointwiseSource :=
+        compactOpenLogKummerMapSource.toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource;
+      let thetaRegionSource :=
+        concretePacketThetaRegionSourceOfPrincipalPointwiseValuationBall
+          packet sourceWithSymmetry principalPointwiseSource;
+      PrincipalProductPadicFiniteExtensionRestrictionCalibratedNormSquareOb7HandoffSource
+        (Λv := Λv) (p := p) (K := K)
+        (β := βHaar) (γ := γHaar) (κ := κ)
+        packet.primitiveConstructor.sourceDataWithTargetRegions
+        thetaRegionSource.principalHullSource hodgeEvaluation V μ)
+    {lStepXI : PrimeGeFive} {FStepXI : Type z} [Field FStepXI]
+    {XStepXI CStepXI : HyperbolicOrbicurveModel FStepXI}
+    {sourceHA :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaValueEvaluationSource
+        lStepXI XStepXI CStepXI}
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (pointwiseFormulaSource :
+      let principalPointwiseSource :=
+        compactOpenLogKummerMapSource.toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource;
+      PrincipalPointwiseValuationBallMeasureSummandFormulaSource
+        packet sourceWithSymmetry principalPointwiseSource sourceHA)
+    (sideConditions : IUTStage1SourceSideConditions packageConcrete)
+    {estimateConcrete : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {ηStep : Type w} {γLocal : Type w} [Fintype γLocal]
+    {recordAdjustedSource :
+      let principalHDDSource :=
+        concretePacketCompactOpenLogKummerMapPrincipalHDDSource
+          packet sourceWithSymmetry compactOpenLogKummerMapSource operation
+          hullOperation determinantOperation pointwiseFormulaSource sideConditions;
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := βStepXI) (γ := γLocal)
+        principalHDDSource.toDirectCommonContainerSource.canonicalHDDRecord}
+    {localPrime : βStepXI -> Nat}
+    [∀ place : βStepXI, Fact (Nat.Prime (localPrime place))]
+    {localField : βStepXI -> Type x}
+    [(place : βStepXI) -> NontriviallyNormedField (localField place)]
+    [∀ place : βStepXI, ProperSpace (localField place)]
+    [∀ place : βStepXI, IsUltrametricDist (localField place)]
+    [(place : βStepXI) -> MeasurableSpace (localField place)]
+    [∀ place : βStepXI, BorelSpace (localField place)]
+    [∀ place : βStepXI, LocallyCompactSpace (localField place)]
+    [∀ place : βStepXI, IsTopologicalAddGroup (localField place)]
+    [∀ place : βStepXI, T2Space (localField place)]
+    [(place : βStepXI) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : βStepXI,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaarRecord : Type z}
+    {hullSystemRecord : IUTStage1Remark395HolomorphicHullSystem αHaarRecord}
+    {αLocalRecord : Type z} {ηLocalRecord : Type w}
+    {localAnalyticHullSystemRecord :
+      IUTStage1Remark395HolomorphicHullSystem αLocalRecord}
+    {archIndexRecord archSummandRecord : βStepXI -> Type z}
+    [∀ place : βStepXI, Fintype (archIndexRecord place)]
+    [∀ place : βStepXI, Fintype (archSummandRecord place)]
+    (recordOb3Ob5Source :
+      let constructorBuiltSource :=
+        concretePacketCompactOpenLogKummerMapConstructorBuiltSource
+          packet sourceWithSymmetry compactOpenLogKummerMapSource operation
+          hullOperation determinantOperation pointwiseFormulaSource sideConditions;
+      RecordOb3Ob5ArithmeticDivisorBackedComponentSource
+        recordAdjustedSource
+        constructorBuiltSource.toConstructedHolomorphicHullDeterminantSource
+        estimateConcrete lStepXI ηStep localPrime localField
+        αHaarRecord hullSystemRecord αLocalRecord ηLocalRecord
+        localAnalyticHullSystemRecord archIndexRecord archSummandRecord)
+    (valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource :
+      IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+        βStepXI estimateConcrete ηStep γLocal localPrime localField
+        αHaarRecord hullSystemRecord αLocalRecord ηLocalRecord
+        localAnalyticHullSystemRecord archIndexRecord archSummandRecord)
+    (comparisonSource :
+      IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeComparisonFormulaGapSource
+        βStepXI estimateConcrete ηStep γLocal localPrime localField
+        αHaarRecord hullSystemRecord αLocalRecord ηLocalRecord
+        localAnalyticHullSystemRecord archIndexRecord archSummandRecord)
+    (comparisonFormulaMatching_eq_valuationBall :
+      comparisonSource.formulaMatchingSource =
+        valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.toArithmeticFormulaMatchingSource)
+    (arithmeticDivisorBackedComponent_eq_constructedFormulaMatching :
+      let valuationBallArithmeticDegreeControlledLocalArithmeticSource :=
+        IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.ofFormulaGapMatchedArithmeticDegreePadicComparisonSource
+          valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+          comparisonSource comparisonFormulaMatching_eq_valuationBall;
+      recordOb3Ob5Source.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource =
+        (IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.ofArithmeticDegreeControlledLocalArithmeticSource
+          valuationBallArithmeticDegreeControlledLocalArithmeticSource).toAdditiveHaarFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource) :=
+  let valuationBallArithmeticDegreeControlledLocalArithmeticSource :=
+    IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.ofFormulaGapMatchedArithmeticDegreePadicComparisonSource
+      valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+      comparisonSource comparisonFormulaMatching_eq_valuationBall
+  RecordOb3Ob5ArithmeticDivisorBackedComponentSource.preferredPublicConcreteStepXI311312CompactOpenAdditiveHaarRecordOb3Ob5ControlledProductHandoffFormulaRealizedRoute
+    packet sourceWithSymmetry compactOpenLogKummerMapSource hodgeEvaluation
+    localArithmeticSource operation hullOperation determinantOperation
+    pointwiseFormulaSource sideConditions recordOb3Ob5Source
+    valuationBallArithmeticDegreeControlledLocalArithmeticSource
+    arithmeticDivisorBackedComponent_eq_constructedFormulaMatching
+
+set_option linter.style.longLine false in
+/--
 Audit for the concrete-packet Record-Ob3/Ob5 synchronized route.
 
 It records the constructed synchronization endpoint, exposes the signed
