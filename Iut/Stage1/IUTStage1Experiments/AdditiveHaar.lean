@@ -26070,6 +26070,134 @@ noncomputable def RecordOb3Ob5ArithmeticDivisorBackedComponentSource.toConstruct
             rw [source.recordOb3Ob4_eq_stepXI])
 
 set_option linter.style.longLine false in
+theorem RecordOb3Ob5ArithmeticDivisorBackedComponentSource.constructorBuiltLocalizedStepXILocalTermCThetaSource_endpoint
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {l : PrimeGeFive}
+    {η : Type y}
+    {localPrime : β -> Nat}
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    {localField : β -> Type x}
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : β -> Type z}
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)]
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand)
+    (constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record)
+    (constructorBuilt_determinantSource_eq_recordOb3Ob4 :
+      constructorBuiltSource.determinantSource =
+        recordAdjustedSource.ob3ob4Source.toWeightedDeterminantSource) :
+    (source.toConstructorBuiltLocalizedStepXILocalTermCThetaSource
+      constructorBuiltSource
+      constructorBuilt_determinantSource_eq_recordOb3Ob4).Endpoint :=
+  (source.toConstructorBuiltLocalizedStepXILocalTermCThetaSource
+    constructorBuiltSource
+    constructorBuilt_determinantSource_eq_recordOb3Ob4).endpoint
+
+set_option linter.style.longLine false in
+/--
+Record-Ob3/Ob5 audited handoff into the constructor-built localized Step (xi)
+\(C_\Theta\) boundary.
+
+The only public determinant synchronization is the constructor-built
+determinant's equality with the record Ob3/Ob4 determinant; the localized
+Step (xi) determinant and canonical finite-sum identities are projected
+through the Record-Ob3/Ob5 arithmetic-divisor-backed source.
+-/
+theorem RecordOb3Ob5ArithmeticDivisorBackedComponentSource.constructorBuiltLocalizedStepXIHandoffAudit
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {l : PrimeGeFive}
+    {η : Type y}
+    {localPrime : β -> Nat}
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    {localField : β -> Type x}
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : β -> Type z}
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)]
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand)
+    (constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record)
+    (constructorBuilt_determinantSource_eq_recordOb3Ob4 :
+      constructorBuiltSource.determinantSource =
+        recordAdjustedSource.ob3ob4Source.toWeightedDeterminantSource) :
+    let localizedSource :=
+      source.toConstructorBuiltLocalizedStepXILocalTermCThetaSource
+        constructorBuiltSource
+        constructorBuilt_determinantSource_eq_recordOb3Ob4
+    localizedSource.Endpoint ∧
+      (IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.additiveHaarArithmeticResidualPayloadOfConstructorBuiltLocalizedStepXILocalTermCThetaSource
+        constructorBuiltSource localizedSource).Audit ∧
+      constructorBuiltSource.canonicalCThetaScale + 1 <=
+        estimate.arithmeticUpperTerm - estimate.mainLogTerm ∧
+      constructorBuiltSource.canonicalCThetaScale <= estimate.cTheta := by
+  intro localizedSource
+  have hgap :
+      constructorBuiltSource.canonicalCThetaScale + 1 <=
+        estimate.arithmeticUpperTerm - estimate.mainLogTerm :=
+    localizedSource.arithmeticGap_dominates_constructorCanonicalCThetaScale
+  have hplus :
+      estimate.cTheta + 1 =
+        estimate.arithmeticUpperTerm - estimate.mainLogTerm :=
+    estimate.cTheta_add_one_eq_arithmetic_minus_main
+  exact
+    ⟨localizedSource.endpoint,
+      IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.additiveHaarArithmeticResidualPayloadAudit_ofConstructorBuiltLocalizedStepXILocalTermCThetaSource
+        constructorBuiltSource localizedSource,
+      hgap,
+      by linarith⟩
+
+set_option linter.style.longLine false in
 /--
 Definition-of-done audit for the source-level preferred corridor.
 
