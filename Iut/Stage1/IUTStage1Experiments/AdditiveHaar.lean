@@ -27028,9 +27028,9 @@ endpoint.
 The concrete public route still consumes these objects separately.  This
 source-level bundle records them as one artifact: the component Record-Ob3/Ob5
 source, the localized determinant-scale synchronization, the Theorem~1.10
-valuation-ball local analytic source, the Haar-defect function, the transported
-component-form pointwise Step~(xi)/Haar/main equality, and the global
-Haar-defect lower bound.
+valuation-ball local analytic source, the Haar-defect function, the
+synchronized-source and transported component-form pointwise
+Step~(xi)/Haar/main equalities, and the global Haar-defect lower bound.
 -/
 structure RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData
     {recordAdjustedSource :
@@ -27082,6 +27082,14 @@ structure RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData
       β estimate αLocal ηLocal localField localAnalyticHullSystem
       archIndex archSummand
   localHaarNormalizationDefect : β -> Real
+  localizedArithmeticUpperContribution_eq_stepXI_haar_main :
+    ∀ place : β,
+      (theorem110ValuationBallLocalAnalyticSource
+        |>.toThetaPilotArithmeticDivisorLocalEvaluationSource).localArithmeticUpperContribution place =
+        localizedSynchronizationSource.localizedStepXISource.weightedAdjustedLogVolume place +
+          localHaarNormalizationDefect place +
+            (theorem110ValuationBallLocalAnalyticSource
+              |>.toThetaPilotArithmeticDivisorLocalEvaluationSource).localMainLogContribution place
   localArithmeticUpperContribution_eq_stepXI_haar_main :
     ∀ place : β,
       (theorem110ValuationBallLocalAnalyticSource
@@ -27156,6 +27164,8 @@ noncomputable def RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toSynchronizedRo
       boundary.theorem110ValuationBallLocalAnalyticSource,
     localHaarNormalizationDefect :=
       boundary.localHaarNormalizationDefect,
+    localizedArithmeticUpperContribution_eq_stepXI_haar_main :=
+      boundary.localArithmeticUpperContribution_eq_stepXI_haar_main,
     localArithmeticUpperContribution_eq_stepXI_haar_main :=
       boundary.componentLocalArithmeticUpperContribution_eq_stepXI_haar_main,
     total_haar_defect_ge_one :=
@@ -27220,6 +27230,13 @@ theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.synchronizedRouteInputData
       (∀ place : β,
         (routeInput.theorem110ValuationBallLocalAnalyticSource
           |>.toThetaPilotArithmeticDivisorLocalEvaluationSource).localArithmeticUpperContribution place =
+          routeInput.localizedSynchronizationSource.localizedStepXISource.weightedAdjustedLogVolume place +
+            routeInput.localHaarNormalizationDefect place +
+              (routeInput.theorem110ValuationBallLocalAnalyticSource
+                |>.toThetaPilotArithmeticDivisorLocalEvaluationSource).localMainLogContribution place) ∧
+      (∀ place : β,
+        (routeInput.theorem110ValuationBallLocalAnalyticSource
+          |>.toThetaPilotArithmeticDivisorLocalEvaluationSource).localArithmeticUpperContribution place =
           routeInput.componentSource.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource.arithmeticDegreeCalibrationSource.localizedStepXISource.weightedAdjustedLogVolume place +
             routeInput.localHaarNormalizationDefect place +
               (routeInput.theorem110ValuationBallLocalAnalyticSource
@@ -27229,6 +27246,7 @@ theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.synchronizedRouteInputData
   exact
     ⟨routeInput.localizedSynchronizationSource_endpoint,
       rfl, rfl, rfl, rfl,
+      routeInput.localizedArithmeticUpperContribution_eq_stepXI_haar_main,
       routeInput.localArithmeticUpperContribution_eq_stepXI_haar_main,
       routeInput.total_haar_defect_ge_one⟩
 
