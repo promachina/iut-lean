@@ -1371,6 +1371,11 @@ residual calculation.  The current local-analytic residual refinement lowers
 this boundary again: the public endpoint supplies the Theorem~1.10
 valuation-ball local-analytic arithmetic-divisor ledger and residual Haar
 bound, and Lean constructs the formula-gap residual source internally.  The
+localized residual refinement also removes the p-adic determinant/scale
+synchronization record from the strongest endpoint: it now supplies the
+finite-extension localized Step~(xi) determinant source and the two
+constructor-built determinant/canonical-scale comparison facts, from which Lean
+constructs the synchronization object.  The
 local-upper refinement defines the local Haar defect as the residual between
 the IUT~IV local arithmetic-upper contribution, the localized Step~(xi)
 determinant term, and the main-log summand; the expanded
