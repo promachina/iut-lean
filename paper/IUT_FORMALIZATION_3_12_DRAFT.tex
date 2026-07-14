@@ -2268,7 +2268,11 @@ also represented by a typed residual-Haar source: the p-adic finite
 determinant/scale synchronization, the formula-gap source, and the total
 residual Haar lower bound are packaged together, and Lean projects this package
 to the localized Step~(xi) \(C_\Theta\) source, the local-to-global \(C_\Theta\)
-handoff audit, the signed \(C_\Theta\) inequality, and the dichotomy.  A pointwise
+handoff audit, the signed \(C_\Theta\) inequality, and the dichotomy.  The
+corresponding concrete compact-open restriction-calibrated public route now
+consumes this residual-Haar source directly, rather than taking the p-adic
+synchronization, formula-gap ledger, and residual inequality as separate final
+arguments.  A pointwise
 Theorem~1.10 refinement also projects the
 determinant/scale synchronization and the arithmetic-degree Step~(xi)+Haar
 identity from a single localized valuation-ball source.  The
@@ -2551,7 +2555,8 @@ synchronization, formula-gap valuation-ball source, Haar defect, local
 arithmetic identity, and finite Haar lower bound are projected from one source;
 the p-adic formula-gap residual source performs the analogous finite-extension
 handoff by constructing the localized \(C_\Theta\) source and signed dichotomy
-from the synchronized p-adic determinant and formula-gap ledger;
+from the synchronized p-adic determinant and formula-gap ledger, and the
+concrete public wrapper now consumes that bundled source directly;
 the Record-Ob3/Ob5 synchronized
 companion now projects that source from the packet's canonical HDD record on
 the compact-open additive-Haar branch and audits the signed \(C_\Theta\)
