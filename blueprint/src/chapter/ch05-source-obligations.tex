@@ -105,6 +105,12 @@
   source-spine selected q-choice to the concrete projection of the generated
   full-label representative over the q-pilot theta class, and derives the
   component-kernel representative equality from the full-label kernel theorem.
+  The generated-q-choice source-spine bridge
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311SourceSpineGeneratedQChoiceQPilotComponentBridgeAlignmentSource}
+  lowers this again by supplying the generated q-choice itself, proving that its
+  theta class is the q-pilot theta class and that its finite label is the
+  component kernel's representative label; Lean then derives the
+  generated-full-label representative projection.
 \end{definition}
 
 \begin{definition}[Hodge/log-theta/log-Kummer source spine]
@@ -3248,12 +3254,16 @@
   spine.  The generated-full-label source-spine constructor
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineGeneratedFullLabelQPilotComponentBridgeAlignmentSource}
   then derives the same primitive packet from the generated full-label
-  representative projection.  The remaining bridge-alignment work at this
-  boundary is now the source-paper proof that the source-spine selected q-choice
-  is the concrete projection of the generated full-label q-pilot representative,
-  rather than supplied q-pilot class fields, local states, one-column data,
-  codomain equalities, a preassembled representative section, or a direct
-  constructed-representative equality.
+  representative projection.  The generated-q-choice constructor
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineGeneratedQChoiceQPilotComponentBridgeAlignmentSource}
+  derives that projection from the source-provided generated q-choice plus its
+  q-pilot theta-class and representative-label coherence.  The remaining
+  bridge-alignment work at this boundary is now the source-paper construction of
+  that generated q-choice and its projection to the source-spine selected
+  concrete q-choice, rather than supplied q-pilot class fields, local states,
+  one-column data, codomain equalities, a preassembled representative section, a
+  direct constructed-representative equality, or a direct generated-full-label
+  representative projection.
   The adjusted-log-volume direct-HDD route
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312RestrictionCalibratedProductHullOb3Ob5AdjustedLogVolumeDirectCanonicalHDDLocalizedCThetaRoute}
   constructs the direct-HDD source from the record Ob3/Ob5 finite adjusted
