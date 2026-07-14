@@ -1431,8 +1431,12 @@ the principal HDD determinant side and the localized p-adic side have different
 hidden \(\gamma\)-indices: it compares the projected weighted determinant
 summands, anchor, and positive tensor power over the common \(\beta\)-index,
 then derives the weighted determinant equality before entering the q-normalized
-handoff.  The remaining wiring task is to refactor the concrete endpoint
-signature so it consumes this heterogeneous source directly.
+handoff.  The public realized-exact local-arithmetic route now consumes this
+heterogeneous source and projects the q-normalized residual handoff internally,
+so the determinant equality is no longer a public endpoint input on that route.
+The remaining wiring task is the stricter same-index projected-principal
+concrete wrapper, where the local-arithmetic handoff and the Step~(xi)
+determinant source share the endpoint index already at the outer signature.
 A further source-hypothesis refinement
 removes the direct side-condition package from this public boundary: the route
 now consumes source-labeled q-pilot positivity and normalization hypotheses and
