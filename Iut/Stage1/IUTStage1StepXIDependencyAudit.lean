@@ -206,6 +206,8 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311AlignedBridgeComponentSource
 #guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311AlignedBridgeComponentSource.ofConstructedQualitativeCertificateData
+#guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311AlignedBridgeComponentSource.theorem311BridgePackage
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311AlignedBridgeComponentSource.bridge_certificate_eq
@@ -215,6 +217,10 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #check IUTStage1ConcreteTheorem311AlignedBridgeComponentSource.hodgeTheaterSHEAlignment
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311AlignedBridgeComponentSource.endpoint
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311AlignedBridgeComponentSource.ConstructedQualitativeBridgeNoCollapseAudit
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311AlignedBridgeComponentSource.constructedQualitativeBridgeNoCollapseAudit
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311StructuredFlagOutput
 #guard_msgs (drop info) in
@@ -263,6 +269,8 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.theorem311BridgePackage
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.theorem311BridgePackage_hodgeSHEIPLAPTBridgeConstructed
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.bridge_noCollapse_audit
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.theorem311Subclaims
 #guard_msgs (drop info) in

@@ -46,12 +46,19 @@
   \label{def:theorem-311-ipl-she-apt-bridge}
   \uses{def:prime-strip-links,def:hodge-theater-histories}
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311IPLSHEAPTBridgePackage}
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311AlignedBridgeComponentSource.ofConstructedQualitativeCertificateData}
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311AlignedBridgeComponentSource.ConstructedQualitativeBridgeNoCollapseAudit}
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311AlignedBridgeComponentSource.constructedQualitativeBridgeNoCollapseAudit}
   \leanok
   The Theorem 3.11 bridge is packaged as one source object containing an
   input-prime-strip-link construction, a one-column structured \(\SHE\)
   transport context, and an \(\APT\) construction.  The selected input link,
   one-column \(\SHE\), and \(\APT\) transport endpoints are projections of
-  this package.
+  this package.  At the concrete packet boundary, this bridge component can now
+  be constructed from the lower constructed qualitative certificate source, and
+  Lean exposes a no-collapse audit recording the forbidden direct \(\SHE\)
+  domain-to-codomain identification, the permitted non-forbidden \(\APT\)
+  quotient transport, and the selected \(\IPL\) source/target match.
 \end{definition}
 
 \begin{definition}[Hodge/log-theta/log-Kummer source spine]
@@ -3153,7 +3160,15 @@
   lower bridge-certificate constructor
   \lean{Iut.Stage1.IUTStage1PrimitiveTheorem311BridgeCertificateSourceConstructor}
   then builds the route-facing primitive source constructor without taking that
-  qualitative source as an independent packet field.
+  qualitative source as an independent packet field.  The package-aligned
+  bridge component now has the constructor
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311AlignedBridgeComponentSource.ofConstructedQualitativeCertificateData}
+  from the lower constructed qualitative certificate source, and the primitive
+  packet audit includes
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.bridge_noCollapse_audit};
+  thus the SHE no-identification guard, the non-forbidden APT quotient transport,
+  and the selected IPL prime-strip endpoints are visible at the concrete packet
+  boundary.
   The adjusted-log-volume direct-HDD route
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312RestrictionCalibratedProductHullOb3Ob5AdjustedLogVolumeDirectCanonicalHDDLocalizedCThetaRoute}
   constructs the direct-HDD source from the record Ob3/Ob5 finite adjusted
