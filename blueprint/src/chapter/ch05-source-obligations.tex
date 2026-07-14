@@ -55,6 +55,8 @@
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311ConstructedCommonContainerBridgeAlignmentSource.audit}
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311CanonicalPrimeStripBridgeAlignmentSource}
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311CanonicalPrimeStripBridgeAlignmentSource.audit}
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311CodomainCanonicalBridgeAlignmentSource}
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311CodomainCanonicalBridgeAlignmentSource.audit}
   \leanok
   The Theorem 3.11 bridge is packaged as one source object containing an
   input-prime-strip-link construction, a one-column structured \(\SHE\)
@@ -70,7 +72,10 @@
   common-container/SHE alignment is now derived one layer lower from constructed
   qualitative common-container data, and the canonical-prime-strip bridge source
   chooses the packet input and selected-output strips directly from the
-  constructed qualitative \(\IPL\) source.
+  constructed qualitative \(\IPL\) source.  The codomain-canonical bridge source
+  then fixes the packet one-column Hodge theater to be the constructed
+  \(\SHE\) codomain theater and reads the one-column history from the selected
+  q-choice.
 \end{definition}
 
 \begin{definition}[Hodge/log-theta/log-Kummer source spine]
@@ -3190,9 +3195,13 @@
   still lower constructor
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofCanonicalPrimeStripBridgeAlignmentSource}
   also fixes the packet input and selected-output prime strips as canonical
-  projections from the constructed qualitative \(\IPL\) source; the remaining
-  bridge-alignment gap is the source-paper derivation of the one-column codomain
-  law rather than an independently assembled bridge component.
+  projections from the constructed qualitative \(\IPL\) source.  The
+  codomain-canonical constructor
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofCodomainCanonicalBridgeAlignmentSource}
+  additionally fixes the packet one-column Hodge theater as the constructed
+  \(\SHE\) codomain and the one-column history as the selected q-choice history.
+  The remaining bridge-alignment gap at this boundary is the source-paper proof
+  that the selected q-choice lies in that constructed codomain theater.
   The adjusted-log-volume direct-HDD route
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312RestrictionCalibratedProductHullOb3Ob5AdjustedLogVolumeDirectCanonicalHDDLocalizedCThetaRoute}
   constructs the direct-HDD source from the record Ob3/Ob5 finite adjusted
