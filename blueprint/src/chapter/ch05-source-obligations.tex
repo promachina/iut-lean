@@ -61,6 +61,8 @@
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311QPilotCanonicalBridgeAlignmentSource.audit}
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311QPilotClassBridgeAlignmentSource}
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311QPilotClassBridgeAlignmentSource.audit}
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311QPilotComponentRepresentativeBridgeAlignmentSource}
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311QPilotComponentRepresentativeBridgeAlignmentSource.audit}
   \leanok
   The Theorem 3.11 bridge is packaged as one source object containing an
   input-prime-strip-link construction, a one-column structured \(\SHE\)
@@ -85,7 +87,11 @@
   \(q_{\mathrm{pilot}}\in\operatorname{codomain}\).  The q-pilot-class bridge
   source lowers this further by rebuilding the selected q-choice from a
   theta-pilot lattice class and representative data for the forgotten finite
-  label, procession state, local tensor state, and upper-semi state.
+  label, procession state, local tensor state, and upper-semi state.  The
+  component-representative bridge source lowers the representative section
+  itself to the log-theta/vertical-log-Kummer/Frobenioid divisor-column
+  component kernel; Lean constructs the section and audits the selected
+  q-choice as the kernel representative of the q-pilot theta class.
 \end{definition}
 
 \begin{definition}[Hodge/log-theta/log-Kummer source spine]
@@ -3217,10 +3223,16 @@
   \(\SHE\) q-pilot/codomain law.  The q-pilot-class constructor
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofQPilotClassBridgeAlignmentSource}
   goes below the concrete-coordinate boundary by taking a q-pilot theta-pilot
-  lattice class plus representative data.  The remaining bridge-alignment work
-  at this boundary is now the source-paper construction of that q-pilot class
-  and representative-data section, rather than supplied concrete q-choice
-  coordinates, local states, one-column data, or codomain equalities.
+  lattice class plus representative data.  The component-representative
+  constructor
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofQPilotComponentRepresentativeBridgeAlignmentSource}
+  lowers the representative-data section to the generated component kernel,
+  which constructs the forgotten finite label, procession state, local tensor
+  state, and upper-semi state.  The remaining bridge-alignment work at this
+  boundary is now the source-paper construction of the q-pilot theta class and
+  this component kernel, rather than supplied concrete q-choice coordinates,
+  local states, one-column data, codomain equalities, or a preassembled
+  representative section.
   The adjusted-log-volume direct-HDD route
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312RestrictionCalibratedProductHullOb3Ob5AdjustedLogVolumeDirectCanonicalHDDLocalizedCThetaRoute}
   constructs the direct-HDD source from the record Ob3/Ob5 finite adjusted
