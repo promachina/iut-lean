@@ -110,7 +110,15 @@
   lowers this again by supplying the generated q-choice itself, proving that its
   theta class is the q-pilot theta class and that its finite label is the
   component kernel's representative label; Lean then derives the
-  generated-full-label representative projection.
+  generated-full-label representative projection.  The selected-label
+  source-spine bridge
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311SourceSpineSelectedLabelQPilotComponentBridgeAlignmentSource}
+  removes this generated q-choice as a public object: Lean constructs it as the
+  kernel representative full-label choice over the source-spine q-pilot theta
+  class, proves that its finite label is the selected source label, and derives
+  the selected q-choice projection from fieldwise source equalities for the
+  q-pilot theater, representative finite label, procession state, local tensor
+  state, and upper-semi state.
 \end{definition}
 
 \begin{definition}[Hodge/log-theta/log-Kummer source spine]
@@ -3257,13 +3265,21 @@
   representative projection.  The generated-q-choice constructor
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineGeneratedQChoiceQPilotComponentBridgeAlignmentSource}
   derives that projection from the source-provided generated q-choice plus its
-  q-pilot theta-class and representative-label coherence.  The remaining
-  bridge-alignment work at this boundary is now the source-paper construction of
-  that generated q-choice and its projection to the source-spine selected
-  concrete q-choice, rather than supplied q-pilot class fields, local states,
-  one-column data, codomain equalities, a preassembled representative section, a
-  direct constructed-representative equality, or a direct generated-full-label
-  representative projection.
+  q-pilot theta-class and representative-label coherence.  The selected-label
+  constructor
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineSelectedLabelQPilotComponentBridgeAlignmentSource}
+  lowers this boundary again: the generated q-choice is constructed internally
+  as the representative full-label choice over the q-pilot theta class read from
+  the source spine, and Lean derives the projection from fieldwise source
+  compatibility of the selected q-choice with the q-pilot theater,
+  representative finite label, procession state, local tensor state, and
+  upper-semi state.  The remaining bridge-alignment work at this boundary is now
+  the source-paper construction of those fieldwise compatibilities from the
+  log-theta procession and vertical log-Kummer/Frobenioid component data, rather
+  than supplied q-pilot class fields, local states, one-column data, codomain
+  equalities, a preassembled representative section, a direct
+  constructed-representative equality, a direct generated-full-label
+  representative projection, or a source-provided generated q-choice.
   The adjusted-log-volume direct-HDD route
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312RestrictionCalibratedProductHullOb3Ob5AdjustedLogVolumeDirectCanonicalHDDLocalizedCThetaRoute}
   constructs the direct-HDD source from the record Ob3/Ob5 finite adjusted
