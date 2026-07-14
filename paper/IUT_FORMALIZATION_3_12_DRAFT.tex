@@ -2263,7 +2263,12 @@ local-upper variant packages the p-adic finite determinant together with the
 constructor determinant and canonical-scale sum identifications as one source
 object.  The formula-gap local-upper variant now projects the local-analytic
 arithmetic-divisor ledger from the Theorem~1.10 valuation-ball formula-gap
-source before applying the same residual calculation.  A pointwise
+source before applying the same residual calculation.  This boundary is now
+also represented by a typed residual-Haar source: the p-adic finite
+determinant/scale synchronization, the formula-gap source, and the total
+residual Haar lower bound are packaged together, and Lean projects this package
+to the localized Step~(xi) \(C_\Theta\) source, the local-to-global \(C_\Theta\)
+handoff audit, the signed \(C_\Theta\) inequality, and the dichotomy.  A pointwise
 Theorem~1.10 refinement also projects the
 determinant/scale synchronization and the arithmetic-degree Step~(xi)+Haar
 identity from a single localized valuation-ball source.  The
@@ -2544,6 +2549,9 @@ identifications as separate public equalities.  The same compact-open boundary
 now also has a pointwise Theorem 1.10/IUT IV variant in which the
 synchronization, formula-gap valuation-ball source, Haar defect, local
 arithmetic identity, and finite Haar lower bound are projected from one source;
+the p-adic formula-gap residual source performs the analogous finite-extension
+handoff by constructing the localized \(C_\Theta\) source and signed dichotomy
+from the synchronized p-adic determinant and formula-gap ledger;
 the Record-Ob3/Ob5 synchronized
 companion now projects that source from the packet's canonical HDD record on
 the compact-open additive-Haar branch and audits the signed \(C_\Theta\)
