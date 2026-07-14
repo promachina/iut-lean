@@ -49,6 +49,8 @@
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311AlignedBridgeComponentSource.ofConstructedQualitativeCertificateData}
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311AlignedBridgeComponentSource.ConstructedQualitativeBridgeNoCollapseAudit}
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311AlignedBridgeComponentSource.constructedQualitativeBridgeNoCollapseAudit}
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311ConstructedQualitativeBridgeAlignmentSource}
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311ConstructedQualitativeBridgeAlignmentSource.audit}
   \leanok
   The Theorem 3.11 bridge is packaged as one source object containing an
   input-prime-strip-link construction, a one-column structured \(\SHE\)
@@ -58,7 +60,10 @@
   be constructed from the lower constructed qualitative certificate source, and
   Lean exposes a no-collapse audit recording the forbidden direct \(\SHE\)
   domain-to-codomain identification, the permitted non-forbidden \(\APT\)
-  quotient transport, and the selected \(\IPL\) source/target match.
+  quotient transport, and the selected \(\IPL\) source/target match.  The
+  constructed-qualitative bridge-alignment source packages that lower
+  certificate with the packet-specific prime-strip, one-column, and
+  common-container/SHE alignment laws.
 \end{definition}
 
 \begin{definition}[Hodge/log-theta/log-Kummer source spine]
@@ -3168,7 +3173,11 @@
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.bridge_noCollapse_audit};
   thus the SHE no-identification guard, the non-forbidden APT quotient transport,
   and the selected IPL prime-strip endpoints are visible at the concrete packet
-  boundary.
+  boundary.  The packet constructor
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofConstructedQualitativeBridgeAlignmentSource}
+  now consumes the constructed-qualitative bridge-alignment source directly, so
+  the next mathematical gap is the source-paper derivation of the four alignment
+  laws rather than an independently assembled bridge component.
   The adjusted-log-volume direct-HDD route
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312RestrictionCalibratedProductHullOb3Ob5AdjustedLogVolumeDirectCanonicalHDDLocalizedCThetaRoute}
   constructs the direct-HDD source from the record Ob3/Ob5 finite adjusted
