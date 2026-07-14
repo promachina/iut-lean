@@ -93,9 +93,11 @@ certificate source, and the packet audit exposes the corresponding no-collapse
 guards: forbidden direct SHE domain-to-codomain identification, permitted APT
 quotient transport, and selected IPL source/target matching.  A further
 alignment source now packages the constructed qualitative certificate together
-with the four packet-specific bridge alignments and builds the primitive packet
-constructor from that source.  The remaining lower task is to construct this
-packet from the analytic multiradial,
+with the packet-specific bridge alignments and builds the primitive packet
+constructor from that source.  The SHE/common-container alignment has been
+lowered one step further: it is now derived from constructed qualitative
+common-container data rather than supplied as a standalone packet equality.  The
+remaining lower task is to construct this packet from the analytic multiradial,
 log-theta, local arithmetic, and IUT IV estimates of the papers.  The current
 result is a checked conditional Stage 1 corridor, not a closed proof of
 Corollary 3.12 from Mochizuki's published hypotheses.
@@ -580,8 +582,10 @@ current bridge component is no longer a fully free qualitative packet: Lean can
 construct it from the lower constructed qualitative certificate and audits the
 SHE/APT/IPL no-collapse projections at the primitive packet boundary.  The
 packet has also gained a constructed-qualitative bridge-alignment source, so the
-next boundary is the derivation of those four alignments rather than a prebuilt
-bridge component.  The
+SHE/common-container alignment is now a projection from constructed qualitative
+common-container data.  The next boundary is the derivation of the remaining
+prime-strip and one-column alignments rather than a prebuilt bridge component.
+The
 missing source construction includes:
 \[
 \begin{array}{l}
