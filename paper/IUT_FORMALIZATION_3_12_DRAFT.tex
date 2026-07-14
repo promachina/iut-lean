@@ -2278,10 +2278,11 @@ structure-sheaf/direct-summand equality, and nonzero summand norm are projected
 from one typed local-arithmetic package.  The latest wrapper also consumes the
 pointwise measure/summand formula source, replacing the three public
 Hodge/measure formula equalities by a single source object.  The current
-strongest compact-open wrapper consumes the canonical log-shell image laws:
-the two containments identifying transported theta-region cells with realized
-compact-open local shells.  Lean derives the log-Kummer graph, local chart,
-and realized-exact compact-open sources internally.  A pointwise
+strongest compact-open wrapper consumes the Remark~3.9.5 valuation-cover
+possible-region exactness, identifying each selected possible region with the
+realized compact-open local factor.  Lean rewrites this to the theta-region
+log-shell image laws and derives the log-Kummer graph, local chart, and
+realized-exact compact-open sources internally.  A pointwise
 Theorem~1.10 refinement also projects the
 determinant/scale synchronization and the arithmetic-degree Step~(xi)+Haar
 identity from a single localized valuation-ball source.  The
@@ -2569,9 +2570,9 @@ concrete public wrapper now consumes that bundled source directly; the newest
 wrapper also replaces the three local-arithmetic restriction witnesses by the
 single product-level Ob7 handoff source, and then replaces the three
 measure/summand formula witnesses by the pointwise formula source; the current
-log-shell image wrapper further derives the log-Kummer graph, local chart, and
-realized compact-open exact source from the two compact-open image
-containments;
+possible-region exact wrapper further derives the log-shell image,
+log-Kummer graph, local chart, and realized compact-open exact sources from
+the valuation-cover possible-region equality;
 the Record-Ob3/Ob5 synchronized
 companion now projects that source from the packet's canonical HDD record on
 the compact-open additive-Haar branch and audits the signed \(C_\Theta\)
