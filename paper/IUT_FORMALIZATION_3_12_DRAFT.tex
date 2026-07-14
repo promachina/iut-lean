@@ -1435,8 +1435,10 @@ heterogeneous source and projects the q-normalized residual handoff internally,
 so the determinant equality is no longer a public endpoint input on that route.
 The stricter same-index concrete source now records the case where the
 local-arithmetic handoff, the p-adic localized Step~(xi) determinant source,
-and the IUT~IV local-analytic ledger share the endpoint \(\beta\)-index; its
-remaining wiring task is the final q-normalized endpoint projection.
+and the IUT~IV local-analytic ledger share the endpoint \(\beta\)-index.  Lean
+now projects the q-normalized principal-product residual source from this
+concrete source and derives the signed dichotomy without passing through the
+older public wrapper.
 A further source-hypothesis refinement
 removes the direct side-condition package from this public boundary: the route
 now consumes source-labeled q-pilot positivity and normalization hypotheses and
