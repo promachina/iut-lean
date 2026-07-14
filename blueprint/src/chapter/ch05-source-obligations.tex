@@ -99,6 +99,12 @@
   Theorem 3.11 source spine; its audit
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311SourceSpineQPilotComponentBridgeAlignmentSource.audit}
   records the projected component bridge and these source-spine equalities.
+  The generated-full-label source-spine bridge
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311SourceSpineGeneratedFullLabelQPilotComponentBridgeAlignmentSource}
+  lowers the final representative equality one layer further: it matches the
+  source-spine selected q-choice to the concrete projection of the generated
+  full-label representative over the q-pilot theta class, and derives the
+  component-kernel representative equality from the full-label kernel theorem.
 \end{definition}
 
 \begin{definition}[Hodge/log-theta/log-Kummer source spine]
@@ -3239,11 +3245,15 @@
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineQPilotComponentBridgeAlignmentSource}
   goes one layer lower by reading the q-pilot history, lattice coordinate, and
   coric datum from the selected q-choice of the unified Theorem 3.11 source
-  spine.  The remaining bridge-alignment work at this boundary is now the
-  source-paper proof that this selected q-choice is the component-kernel
-  representative at the constructed q-pilot theater, rather than supplied
-  q-pilot class fields, local states, one-column data, codomain equalities, or
-  a preassembled representative section.
+  spine.  The generated-full-label source-spine constructor
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineGeneratedFullLabelQPilotComponentBridgeAlignmentSource}
+  then derives the same primitive packet from the generated full-label
+  representative projection.  The remaining bridge-alignment work at this
+  boundary is now the source-paper proof that the source-spine selected q-choice
+  is the concrete projection of the generated full-label q-pilot representative,
+  rather than supplied q-pilot class fields, local states, one-column data,
+  codomain equalities, a preassembled representative section, or a direct
+  constructed-representative equality.
   The adjusted-log-volume direct-HDD route
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312RestrictionCalibratedProductHullOb3Ob5AdjustedLogVolumeDirectCanonicalHDDLocalizedCThetaRoute}
   constructs the direct-HDD source from the record Ob3/Ob5 finite adjusted
