@@ -21,6 +21,7 @@ namespace RealLineCopy
 namespace QualitativeData
 
 variable {source target : Copy} {index : Type u}
+variable {newIndex : Type v}
 
 /-- Inert identifier for a prime strip or prime-strip-like bookkeeping object. -/
 structure PrimeStripId where
@@ -77,6 +78,15 @@ structure InputPrimeStripLinkConstruction
 namespace InputPrimeStripLinkConstruction
 
 variable {family : TransportedRegionFamily source target index}
+
+def reindex
+    (construction : InputPrimeStripLinkConstruction family)
+    (f : newIndex -> index) :
+    InputPrimeStripLinkConstruction (family.reindex f) :=
+  { inputPrimeStrip := construction.inputPrimeStrip,
+    outputPrimeStrip := construction.outputPrimeStrip,
+    choicePrimeStrip := fun choice => construction.choicePrimeStrip (f choice),
+    linkLabel := construction.linkLabel }
 
 def link (construction : InputPrimeStripLinkConstruction family) :
     PrimeStripLink :=
@@ -153,6 +163,19 @@ theorem choiceLink_endpoint
     construction.choiceLink_target_eq_choice choice⟩
 
 end InputPrimeStripLinkConstruction
+
+namespace IPLDatum
+
+variable {family : TransportedRegionFamily source target index}
+
+def reindex (datum : IPLDatum family) (f : newIndex -> index) :
+    IPLDatum (family.reindex f) :=
+  { inputPrimeStrip := datum.inputPrimeStrip,
+    outputPrimeStrip := datum.outputPrimeStrip,
+    choicePrimeStrip := fun choice => datum.choicePrimeStrip (f choice),
+    link := datum.link }
+
+end IPLDatum
 
 /-- A named arithmetic holomorphic structure in the toy bookkeeping layer. -/
 structure HolomorphicStructure where
@@ -261,6 +284,18 @@ structure StructuredSHEContext
 namespace StructuredSHEContext
 
 variable {family : TransportedRegionFamily source target index}
+
+def reindex (context : StructuredSHEContext family) (f : newIndex -> index) :
+    StructuredSHEContext (family.reindex f) :=
+  { domainStructure := context.domainStructure,
+    codomainStructure := context.codomainStructure,
+    commonLanguage := context.commonLanguage,
+    qPilotStructure := context.qPilotStructure,
+    thetaPilotStructure := context.thetaPilotStructure,
+    q_pilot_in_codomain := context.q_pilot_in_codomain,
+    theta_pilot_in_domain := context.theta_pilot_in_domain,
+    simultaneousExpression := context.simultaneousExpression,
+    histories_not_identified := context.histories_not_identified }
 
 def sharedContext (context : StructuredSHEContext family) :
     SharedHolomorphicContext :=
@@ -458,6 +493,14 @@ namespace StructuredSHETransportContext
 
 variable {family : TransportedRegionFamily source target index}
 
+def reindex
+    (context : StructuredSHETransportContext family)
+    (f : newIndex -> index) :
+    StructuredSHETransportContext (family.reindex f) :=
+  { baseContext := context.baseContext.reindex f,
+    transportSystem := context.transportSystem,
+    forbidden_domain_to_codomain := context.forbidden_domain_to_codomain }
+
 def sheDatum (context : StructuredSHETransportContext family) :
     SHEDatum family :=
   context.baseContext.sheDatum
@@ -554,6 +597,18 @@ namespace APTDatum
 
 variable {family : TransportedRegionFamily source target index}
 
+def reindex (datum : APTDatum family) (f : newIndex -> index) :
+    APTDatum (family.reindex f) :=
+  { transportSystem := datum.transportSystem,
+    transportQuotient := datum.transportQuotient,
+    arrow := datum.arrow,
+    arrow_permitted := datum.arrow_permitted,
+    mechanism := datum.mechanism,
+    mechanism_eq_arrow := datum.mechanism_eq_arrow,
+    outputFamily := datum.outputFamily.reindex f,
+    output_eq_family := by
+      rw [datum.output_eq_family] }
+
 def TransportQuotientEndpoint (datum : APTDatum family) : Prop :=
   datum.transportSystem.allowed datum.arrow ∧
     datum.transportQuotient.classOf datum.arrow.source =
@@ -590,6 +645,18 @@ structure AlgorithmicParallelTransportConstruction
 namespace AlgorithmicParallelTransportConstruction
 
 variable {family : TransportedRegionFamily source target index}
+
+def reindex
+    (construction : AlgorithmicParallelTransportConstruction family)
+    (f : newIndex -> index) :
+    AlgorithmicParallelTransportConstruction (family.reindex f) :=
+  { transportSystem := construction.transportSystem,
+    transportQuotient := construction.transportQuotient,
+    arrow := construction.arrow,
+    permitted := construction.permitted,
+    outputFamily := construction.outputFamily.reindex f,
+    output_eq_family := by
+      rw [construction.output_eq_family] }
 
 def permittedTransport
     (construction : AlgorithmicParallelTransportConstruction family) :
@@ -723,6 +790,13 @@ structure StructuredCertificate (family : TransportedRegionFamily source target 
 namespace StructuredCertificate
 
 variable {family : TransportedRegionFamily source target index}
+
+def reindex (certificate : StructuredCertificate family)
+    (f : newIndex -> index) :
+    StructuredCertificate (family.reindex f) :=
+  { ipl := certificate.ipl.reindex f,
+    she := { sharedContext := certificate.she.sharedContext },
+    apt := certificate.apt.reindex f }
 
 theorem hasStructuredIPL (certificate : StructuredCertificate family) :
     HasStructuredIPL family :=

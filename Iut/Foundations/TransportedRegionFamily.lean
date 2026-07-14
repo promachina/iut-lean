@@ -29,6 +29,34 @@ structure TransportedRegionFamily (source target : Copy) (index : Type u) where
 namespace TransportedRegionFamily
 
 variable {source target : Copy} {index : Type u}
+variable {newIndex : Type v}
+
+/--
+Reindex a transported region family along a source-side choice map.
+
+For the Stage 1 generated-choice corridor this is the formal operation that
+pulls an ambient concrete-choice family back to the generated full-label choice
+space via the concrete projection map.
+-/
+def reindex (family : TransportedRegionFamily source target index)
+    (f : newIndex -> index) :
+    TransportedRegionFamily source target newIndex :=
+  { transport := fun choice => family.transport (f choice),
+    targetRegion := fun choice => family.targetRegion (f choice) }
+
+@[simp]
+theorem reindex_transport
+    (family : TransportedRegionFamily source target index)
+    (f : newIndex -> index) (choice : newIndex) :
+    (family.reindex f).transport choice = family.transport (f choice) :=
+  rfl
+
+@[simp]
+theorem reindex_targetRegion
+    (family : TransportedRegionFamily source target index)
+    (f : newIndex -> index) (choice : newIndex) :
+    (family.reindex f).targetRegion choice = family.targetRegion (f choice) :=
+  rfl
 
 /-- The region comparison associated to one chosen transported target. -/
 def comparison (family : TransportedRegionFamily source target index) (choice : index) :
@@ -45,6 +73,21 @@ def comparisons (family : TransportedRegionFamily source target index) :
 def Holds (family : TransportedRegionFamily source target index)
     (choice : index) (sourcePoint : Point source) : Prop :=
   (family.comparison choice).Holds sourcePoint
+
+@[simp]
+theorem reindex_comparison
+    (family : TransportedRegionFamily source target index)
+    (f : newIndex -> index) (choice : newIndex) :
+    (family.reindex f).comparison choice = family.comparison (f choice) :=
+  rfl
+
+@[simp]
+theorem reindex_Holds
+    (family : TransportedRegionFamily source target index)
+    (f : newIndex -> index) (choice : newIndex) (sourcePoint : Point source) :
+    (family.reindex f).Holds choice sourcePoint ↔
+      family.Holds (f choice) sourcePoint :=
+  Iff.rfl
 
 @[simp]
 theorem holds_iff (family : TransportedRegionFamily source target index)

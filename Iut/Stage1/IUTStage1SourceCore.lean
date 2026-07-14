@@ -134,6 +134,32 @@ structure IUTStage1SourcePackage (source target : Copy) (index : Type u) where
 namespace IUTStage1SourcePackage
 
 variable {source target : Copy} {index : Type u}
+variable {newIndex : Type v}
+
+set_option linter.style.longLine false in
+/--
+Pull a source package back along a choice map, together with a lift of its
+chosen pre-ledger output.
+
+This is the package-level bridge needed for the generated full-label corridor:
+the generated choice space can inherit the original labels, signed real data,
+common-container comparison, and selected-output membership from an ambient
+package without asserting that every ambient choice is generated.
+-/
+def reindex
+    (package : IUTStage1SourcePackage source target index)
+    (f : newIndex -> index)
+    (chosen : newIndex)
+    (hchosen : f chosen = package.preLedger.chosenOutput.choice) :
+    IUTStage1SourcePackage source target newIndex :=
+  { labels := package.labels,
+    preLedger := package.preLedger.reindex f chosen hchosen,
+    input_eq := by
+      simpa [IUTStage1PreLedgerData.reindex] using package.input_eq,
+    multiradialOutput_eq := by
+      simpa [IUTStage1PreLedgerData.reindex] using package.multiradialOutput_eq,
+    logVolumeComparison_eq := by
+      simpa [IUTStage1PreLedgerData.reindex] using package.logVolumeComparison_eq }
 
 def input (package : IUTStage1SourcePackage source target index) :
     Stage1InputId :=

@@ -34,6 +34,29 @@ structure AlgorithmicOutput (source target : Copy) (index : Type u) where
 namespace AlgorithmicOutput
 
 variable {source target : Copy} {index : Type u}
+variable {newIndex : Type v}
+
+/--
+Reindex an algorithmic output along a choice map.
+
+The qualitative property names are preserved literally; the transported family
+is pulled back along the supplied map.  This is the output-level form of moving
+from ambient concrete choices to generated full-label choices.
+-/
+def reindex (output : AlgorithmicOutput source target index)
+    (f : newIndex -> index) :
+    AlgorithmicOutput source target newIndex :=
+  { family := output.family.reindex f,
+    ipl := output.ipl,
+    she := output.she,
+    apt := output.apt }
+
+@[simp]
+theorem reindex_family
+    (output : AlgorithmicOutput source target index)
+    (f : newIndex -> index) :
+    (output.reindex f).family = output.family.reindex f :=
+  rfl
 
 def HasIPL (output : AlgorithmicOutput source target index) : Prop :=
   output.ipl
@@ -76,6 +99,43 @@ def comparisons (output : AlgorithmicOutput source target index) :
 def Holds (output : AlgorithmicOutput source target index)
     (choice : index) (sourcePoint : Point source) : Prop :=
   output.family.Holds choice sourcePoint
+
+@[simp]
+theorem reindex_comparison
+    (output : AlgorithmicOutput source target index)
+    (f : newIndex -> index) (choice : newIndex) :
+    (output.reindex f).comparison choice =
+      output.comparison (f choice) :=
+  rfl
+
+@[simp]
+theorem reindex_Holds
+    (output : AlgorithmicOutput source target index)
+    (f : newIndex -> index) (choice : newIndex) (sourcePoint : Point source) :
+    (output.reindex f).Holds choice sourcePoint ↔
+      output.Holds (f choice) sourcePoint :=
+  Iff.rfl
+
+@[simp]
+theorem reindex_hasIPL
+    (output : AlgorithmicOutput source target index)
+    (f : newIndex -> index) :
+    (output.reindex f).HasIPL = output.HasIPL :=
+  rfl
+
+@[simp]
+theorem reindex_hasSHE
+    (output : AlgorithmicOutput source target index)
+    (f : newIndex -> index) :
+    (output.reindex f).HasSHE = output.HasSHE :=
+  rfl
+
+@[simp]
+theorem reindex_hasAPT
+    (output : AlgorithmicOutput source target index)
+    (f : newIndex -> index) :
+    (output.reindex f).HasAPT = output.HasAPT :=
+  rfl
 
 /-- A measured common-target bound for the transported output family. -/
 abbrev CommonTargetBound (output : AlgorithmicOutput source target index)

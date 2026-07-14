@@ -61,6 +61,103 @@ structure IUTStage1PreLedgerData (source target : Copy) (index : Type u) where
 namespace IUTStage1PreLedgerData
 
 variable {source target : Copy} {index : Type u}
+variable {newIndex : Type v}
+
+set_option linter.style.longLine false in
+/--
+Pull a pre-ledger back along a choice map, provided the chosen output has a
+specified lift.
+
+The common-container bridge for the pulled-back output is obtained by pulling
+back the already constructed common-target bound from the original pre-ledger.
+Thus no new common-container or hull/determinant assumption is introduced; the
+only extra datum is the generated choice that maps to the old selected output.
+-/
+def reindex
+    (data : IUTStage1PreLedgerData source target index)
+    (f : newIndex -> index)
+    (chosen : newIndex)
+    (hchosen : f chosen = data.chosenOutput.choice) :
+    IUTStage1PreLedgerData source target newIndex :=
+  let output' := data.output.reindex f
+  let certificate' := data.certificate.reindex f
+  let originalCommonBound := data.chartedContainer.apply data.certificate
+  let pulledCommonBridge :
+      output'.StructuredCommonTargetBoundBridge data.measure data.thetaSigned :=
+    { build := fun _ =>
+        { common := originalCommonBound.common,
+          contains_each := by
+            intro choice
+            exact originalCommonBound.contains_each (f choice),
+          volume_bound := originalCommonBound.volume_bound } }
+  let chosenOutput' : output'.ChosenOutputData :=
+    { choice := chosen,
+      comparison := data.chosenOutput.comparison,
+      comparison_eq := by
+        calc
+          data.chosenOutput.comparison =
+              data.output.comparison data.chosenOutput.choice :=
+            data.chosenOutput.comparison_eq
+          _ = data.output.comparison (f chosen) := by
+            rw [hchosen] }
+  let targetVolume' :
+      output'.ChartedTargetVolumeData data.measure
+        { chart := data.chartedContainer.chart.chart,
+          qToTarget := data.chartedContainer.chart.qToTarget,
+          thetaToTarget := data.chartedContainer.chart.thetaToTarget,
+          theta_trivial := data.chartedContainer.chart.theta_trivial }
+        chosenOutput'.choice :=
+    { targetSigned := data.targetVolume.targetSigned,
+      targetSigned_eq := by
+        calc
+          data.targetVolume.targetSigned =
+              RegionMeasure.targetVolume data.measure
+                (data.output.comparison data.chosenOutput.choice) :=
+            data.targetVolume.targetSigned_eq
+          _ = RegionMeasure.targetVolume data.measure
+                (data.output.comparison (f chosen)) := by
+            rw [hchosen] }
+  { input := data.input,
+    multiradialOutput := data.multiradialOutput,
+    logVolumeComparison := data.logVolumeComparison,
+    output := output',
+    measure := data.measure,
+    thetaSigned := data.thetaSigned,
+    qSigned := data.qSigned,
+    normalization := data.normalization,
+    certificate := certificate',
+    chartedContainer :=
+      { commonContainer :=
+          { container := data.chartedContainer.commonContainer.container,
+            context := certificate'.she.sharedContext,
+            hddShe :=
+              { sheArrow :=
+                  { arrow := data.chartedContainer.commonContainer.hddShe.sheArrow.arrow,
+                    datum := certificate'.she },
+                hdd :=
+                  { descent := data.chartedContainer.commonContainer.hddShe.hdd.descent,
+                    hullDetBridge :=
+                      { operation :=
+                          data.chartedContainer.commonContainer.hddShe.hdd.hullDetBridge.operation,
+                        bridge := pulledCommonBridge } } },
+            she_context_matches := rfl },
+        chart :=
+          { chart := data.chartedContainer.chart.chart,
+            qToTarget := data.chartedContainer.chart.qToTarget,
+            thetaToTarget := data.chartedContainer.chart.thetaToTarget,
+            theta_trivial := data.chartedContainer.chart.theta_trivial } },
+    qValue :=
+      { qPoint := data.qValue.qPoint,
+        qSigned_eq := data.qValue.qSigned_eq },
+    thetaBound :=
+      { thetaPoint := data.thetaBound.thetaPoint,
+        thetaSigned_eq := data.thetaBound.thetaSigned_eq },
+    chosenOutput := chosenOutput',
+    targetVolume := targetVolume',
+    membership :=
+      { holds := data.membership.holds,
+        q_chart_transport_eq := data.membership.q_chart_transport_eq,
+        volume_control := data.membership.volume_control } }
 
 def hasStructuredIPL (data : IUTStage1PreLedgerData source target index) :
     QualitativeData.HasStructuredIPL data.output.family :=
