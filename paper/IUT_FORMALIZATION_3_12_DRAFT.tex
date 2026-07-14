@@ -1375,7 +1375,10 @@ localized residual refinement also removes the p-adic determinant/scale
 synchronization record from the strongest endpoint: it now supplies the
 finite-extension localized Step~(xi) determinant source and the two
 constructor-built determinant/canonical-scale comparison facts, from which Lean
-constructs the synchronization object.  The
+constructs the synchronization object.  A further source-hypothesis refinement
+removes the direct side-condition package from this public boundary: the route
+now consumes source-labeled q-pilot positivity and normalization hypotheses and
+constructs the Stage~1 side-condition record internally.  The
 local-upper refinement defines the local Haar defect as the residual between
 the IUT~IV local arithmetic-upper contribution, the localized Step~(xi)
 determinant term, and the main-log summand; the expanded
