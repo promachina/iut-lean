@@ -57,6 +57,8 @@
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311CanonicalPrimeStripBridgeAlignmentSource.audit}
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311CodomainCanonicalBridgeAlignmentSource}
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311CodomainCanonicalBridgeAlignmentSource.audit}
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311QPilotCanonicalBridgeAlignmentSource}
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311QPilotCanonicalBridgeAlignmentSource.audit}
   \leanok
   The Theorem 3.11 bridge is packaged as one source object containing an
   input-prime-strip-link construction, a one-column structured \(\SHE\)
@@ -75,7 +77,10 @@
   constructed qualitative \(\IPL\) source.  The codomain-canonical bridge source
   then fixes the packet one-column Hodge theater to be the constructed
   \(\SHE\) codomain theater and reads the one-column history from the selected
-  q-choice.
+  q-choice.  The q-pilot-canonical bridge source goes one step lower: it builds
+  the selected concrete q-choice with the constructed \(\SHE\) q-pilot theater,
+  then derives its codomain placement from the structured \(\SHE\) theorem
+  \(q_{\mathrm{pilot}}\in\operatorname{codomain}\).
 \end{definition}
 
 \begin{definition}[Hodge/log-theta/log-Kummer source spine]
@@ -3200,8 +3205,14 @@
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofCodomainCanonicalBridgeAlignmentSource}
   additionally fixes the packet one-column Hodge theater as the constructed
   \(\SHE\) codomain and the one-column history as the selected q-choice history.
-  The remaining bridge-alignment gap at this boundary is the source-paper proof
-  that the selected q-choice lies in that constructed codomain theater.
+  The q-pilot-canonical constructor
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofQPilotCanonicalBridgeAlignmentSource}
+  constructs the selected q-choice from the constructed \(\SHE\) q-pilot
+  theater itself, so the codomain placement is derived by the structured
+  \(\SHE\) q-pilot/codomain law.  The remaining bridge-alignment work at this
+  boundary is now the source-paper construction of the concrete q-pilot choice
+  coordinates and procession/tensor/upper-semi states, rather than a supplied
+  one-column or codomain equality.
   The adjusted-log-volume direct-HDD route
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312RestrictionCalibratedProductHullOb3Ob5AdjustedLogVolumeDirectCanonicalHDDLocalizedCThetaRoute}
   constructs the direct-HDD source from the record Ob3/Ob5 finite adjusted
