@@ -240,6 +240,14 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311ConstructedCommonContainerBridgeAlignmentSource.audit
 #guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311CanonicalPrimeStripBridgeAlignmentSource
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311CanonicalPrimeStripBridgeAlignmentSource.toConstructedCommonContainerBridgeAlignmentSource
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311CanonicalPrimeStripBridgeAlignmentSource.Audit
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311CanonicalPrimeStripBridgeAlignmentSource.audit
+#guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311StructuredFlagOutput
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311StructuredOutputFlagCalibrationSource
@@ -275,6 +283,8 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofConstructedQualitativeBridgeAlignmentSource
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofConstructedCommonContainerBridgeAlignmentSource
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofCanonicalPrimeStripBridgeAlignmentSource
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.sourceData
 #guard_msgs (drop info) in

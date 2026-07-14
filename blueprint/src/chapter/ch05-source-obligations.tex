@@ -53,6 +53,8 @@
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311ConstructedQualitativeBridgeAlignmentSource.audit}
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311ConstructedCommonContainerBridgeAlignmentSource}
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311ConstructedCommonContainerBridgeAlignmentSource.audit}
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311CanonicalPrimeStripBridgeAlignmentSource}
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311CanonicalPrimeStripBridgeAlignmentSource.audit}
   \leanok
   The Theorem 3.11 bridge is packaged as one source object containing an
   input-prime-strip-link construction, a one-column structured \(\SHE\)
@@ -66,7 +68,9 @@
   constructed-qualitative bridge-alignment source packages that lower
   certificate with the packet-specific prime-strip and one-column laws; the
   common-container/SHE alignment is now derived one layer lower from constructed
-  qualitative common-container data.
+  qualitative common-container data, and the canonical-prime-strip bridge source
+  chooses the packet input and selected-output strips directly from the
+  constructed qualitative \(\IPL\) source.
 \end{definition}
 
 \begin{definition}[Hodge/log-theta/log-Kummer source spine]
@@ -3182,10 +3186,13 @@
   the lower constructor
   \lean{Iut.Stage1.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofConstructedCommonContainerBridgeAlignmentSource}
   consumes the common-container-derived alignment source.  Thus the
-  SHE/common-container equality is no longer a free packet-level alignment; the
-  next mathematical gap is the source-paper derivation of the remaining
-  prime-strip and one-column laws rather than an independently assembled bridge
-  component.
+  SHE/common-container equality is no longer a free packet-level alignment.  The
+  still lower constructor
+  \lean{Iut.Stage1.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofCanonicalPrimeStripBridgeAlignmentSource}
+  also fixes the packet input and selected-output prime strips as canonical
+  projections from the constructed qualitative \(\IPL\) source; the remaining
+  bridge-alignment gap is the source-paper derivation of the one-column codomain
+  law rather than an independently assembled bridge component.
   The adjusted-log-volume direct-HDD route
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312RestrictionCalibratedProductHullOb3Ob5AdjustedLogVolumeDirectCanonicalHDDLocalizedCThetaRoute}
   constructs the direct-HDD source from the record Ob3/Ob5 finite adjusted
