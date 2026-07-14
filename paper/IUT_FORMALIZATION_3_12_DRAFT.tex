@@ -1425,9 +1425,14 @@ principal HDD Ob3/Ob4 adjusted determinant source with the adjusted determinant
 source projected from the p-adic finite localized Step~(xi) object, and Lean
 derives the weighted determinant equality used by the localized \(C_\Theta\)
 handoff.  The remaining public-route wiring is to thread this adjusted
-synchronization source through the concrete endpoint so that the endpoint no
-longer consumes the older q-normalized source whose determinant equality is
-internal source data.
+synchronization source through the concrete endpoint.  A heterogeneous
+projected-weighted determinant source now handles the endpoint case in which
+the principal HDD determinant side and the localized p-adic side have different
+hidden \(\gamma\)-indices: it compares the projected weighted determinant
+summands, anchor, and positive tensor power over the common \(\beta\)-index,
+then derives the weighted determinant equality before entering the q-normalized
+handoff.  The remaining wiring task is to refactor the concrete endpoint
+signature so it consumes this heterogeneous source directly.
 A further source-hypothesis refinement
 removes the direct side-condition package from this public boundary: the route
 now consumes source-labeled q-pilot positivity and normalization hypotheses and
