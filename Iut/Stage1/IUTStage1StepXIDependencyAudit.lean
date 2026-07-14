@@ -282,6 +282,14 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311QPilotComponentRepresentativeBridgeAlignmentSource.audit
 #guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311SourceSpineQPilotComponentBridgeAlignmentSource
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311SourceSpineQPilotComponentBridgeAlignmentSource.toQPilotComponentRepresentativeBridgeAlignmentSource
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311SourceSpineQPilotComponentBridgeAlignmentSource.Audit
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311SourceSpineQPilotComponentBridgeAlignmentSource.audit
+#guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311StructuredFlagOutput
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311StructuredOutputFlagCalibrationSource
@@ -327,6 +335,10 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofQPilotClassBridgeAlignmentSource
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofQPilotComponentRepresentativeBridgeAlignmentSource
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineQPilotComponentBridgeAlignmentSource
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineQPilotComponentBridgeAlignmentSource_selectedQChoice_eq_source
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.sourceData
 #guard_msgs (drop info) in
