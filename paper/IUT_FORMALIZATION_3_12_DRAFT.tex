@@ -1660,7 +1660,11 @@ the localized Step~(xi) local-term \(C_\Theta\) constructor: Lean first
 projects the valuation-ball local cases to the pointwise residual source, then
 to the defined residual source, and finally constructs the localized
 \(C_\Theta\) source without taking the pointwise residual wrapper as a
-separate input at that handoff.
+separate input at that handoff.  The case-split residual source also now
+projects directly to the defined residual source and the packaged local
+arithmetic-degree residual source, so downstream constructors can consume the
+summed residual and Haar-defect package without reintroducing a pointwise
+residual argument.
 The boundary has now been lowered once more by the source
 \(\mathrm{ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource}\):
 it has the same same-index determinant and theta-equality fields as the
