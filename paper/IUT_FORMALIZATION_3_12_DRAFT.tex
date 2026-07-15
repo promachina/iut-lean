@@ -1620,6 +1620,27 @@ route.  The endpoint therefore no longer takes the global residual lower bound
 as a raw same-index input; what remains is to derive the pointwise local
 nonnegativity and distinguished contribution from the nonarchimedean,
 non-distal, and archimedean IUT~IV local estimates.
+This lower local-estimate boundary has now been attacked directly.  The source
+\(\mathrm{IUTStage1IUTIVLocalArithmeticDegreeGapBoundedPointwiseResidualSource}\)
+derives the pointwise residual source from the local arithmetic-gap
+inequalities
+\[
+  \mathrm{StepXI}_v\leq
+  \mathrm{localArithmeticUpper}_v-\mathrm{mainLog}_v
+\]
+for all places, together with one distinguished
+\(\mathrm{StepXI}_{v_0}+1\) version of the same inequality.  Lean proves the
+residual nonnegativity and the distinguished residual lower bound by ordered
+real arithmetic.  The further source
+\(\mathrm{IUTStage1IUTIVTheorem110ProcessionBoundPointwiseResidualSource}\)
+uses the case-defined Theorem~1.10 procession upper bound: once localized
+Step~(xi) is bounded by that procession bound, the existing Theorem~1.10
+formula source supplies the comparison with
+\(\mathrm{localArithmeticUpper}-\mathrm{mainLog}\), and Lean constructs the
+pointwise defined-residual source internally.  The strongest same-index public
+route has not yet been rewired to expose only this procession-bound source;
+the present lowering is the checked constructor layer immediately below the
+pointwise residual source.
 The boundary has now been lowered once more by the source
 \(\mathrm{ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource}\):
 it has the same same-index determinant and theta-equality fields as the
