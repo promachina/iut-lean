@@ -198,7 +198,12 @@
   removes that generated bundle as an independent input by pulling back the
   concrete \(\SHE\)-structured bundle along the chosen-output full-label
   projection.  The remaining structured boundary is therefore the concrete
-  package's structured Theorem 3.11/SHE bundle.  The direct product-hull/HDD layer now has a
+  package's structured Theorem 3.11/SHE bundle.  The constructed-qualitative
+  corridor source
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.IUTStage1ConcreteTheorem311ChosenOutputConstructedQualitativeGeneratedFullLabelQuotientCorridorSource}
+  lowers this boundary again by deriving the concrete structured bundle from a
+  constructed qualitative Theorem 3.11/SHE bundle before reindexing it to the
+  generated full-label index.  The direct product-hull/HDD layer now has a
   matching chosen-output generated source,
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ChosenOutputGeneratedFullLabelProductHullDirectCanonicalHDDSource},
   which projects the older generated-HDD source from this chosen-output
@@ -213,7 +218,12 @@
   lowering to the constructed-record source.  Its reindexed-structured
   strengthening
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ReindexedStructuredGeneratedChosenOutputFullLabelProductHullDirectCanonicalHDDSource}
-  obtains that generated bundle from the concrete structured bundle.
+  obtains that generated bundle from the concrete structured bundle.  Its
+  constructed-qualitative strengthening
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructedQualitativeGeneratedChosenOutputFullLabelProductHullDirectCanonicalHDDSource}
+  obtains the concrete structured bundle from constructed qualitative
+  Theorem 3.11/SHE data and records the qualitative and APT transport audits
+  at this boundary.
 \end{definition}
 
 \begin{definition}[Hodge/log-theta/log-Kummer source spine]
@@ -2481,7 +2491,10 @@
   reindexed-structured variant
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ReindexedStructuredGeneratedChosenOutputFullLabelProductHullDirectCanonicalHDDLocalizedCThetaRoute}
   derives the generated bundle from the concrete structured bundle before
-  entering the structured-bundle route.  The combined restriction-calibrated generated-full-label route
+  entering the structured-bundle route.  The constructed-qualitative variant
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ConstructedQualitativeGeneratedChosenOutputFullLabelProductHullDirectCanonicalHDDLocalizedCThetaRoute}
+  derives that concrete structured bundle from constructed qualitative
+  Theorem 3.11/SHE data before entering the reindexed-structured route.  The combined restriction-calibrated generated-full-label route
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312RestrictionCalibratedGeneratedFullLabelProductHullDirectCanonicalHDDLocalizedCThetaRoute}
   now requires both hardened inputs at once: the generated full-label/direct-HDD
   Step (xi) constructor, and the restriction-calibrated local-global Frobenioid
