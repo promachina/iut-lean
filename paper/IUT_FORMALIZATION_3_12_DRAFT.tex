@@ -1595,6 +1595,11 @@ lowered layer; the remaining numerical input is the global lower bound for
 the defined residual sum.  The same-index formula-gap residual theorem now
 also consumes this defined-residual source directly, projecting internally to
 the packaged residual source before entering the existing q-normalized route.
+The parallel same-index source
+\(\mathrm{ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedDefinedResidualSource}\)
+uses the same determinant and theta-equality data as the local-degree source
+but exposes the defined-residual payload at its boundary, and Lean projects it
+to the existing local arithmetic-degree source internally.
 The boundary has now been lowered once more by the source
 \(\mathrm{ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource}\):
 it has the same same-index determinant and theta-equality fields as the
