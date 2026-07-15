@@ -1707,10 +1707,12 @@ Step~(xi) is bounded by that procession bound, the existing Theorem~1.10
 formula source supplies the comparison with
 \(\mathrm{localArithmeticUpper}-\mathrm{mainLog}\), and Lean constructs the
 pointwise defined-residual source internally.  The strongest same-index public
-route has not yet been rewired to expose only this procession-bound source;
-the present lowering is the checked constructor layer immediately below the
-pointwise residual source.  The valuation-ball formula-gap layer now has the
-same lowering: the IUT~IV source
+route has since been rewired past the pointwise residual wrapper through the
+valuation-ball case-bounded same-index source described below; the remaining
+local-estimate work is to derive those distinguished, nondistinguished, and
+archimedean case comparisons from the still lower IUT~IV estimates rather than
+from a supplied case-bounded residual source.  The valuation-ball formula-gap
+layer now has the same lowering: the IUT~IV source
 \(\mathrm{IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource}\)
 projects directly to a formula arithmetic-divisor source, and
 \(\mathrm{IUTStage1IUTIVTheorem110ValuationBallProcessionBoundPointwiseResidualSource}\)
@@ -1754,6 +1756,10 @@ the q-normalized local-analytic source, where it constructs the signed
 both the signed Corollary~3.12 dichotomy and the companion
 \((-1 : \mathbb{R}) \leq C_\Theta\) lower bound, so the pointwise residual
 package is no longer the last public same-index residual input on that route.
+The same route is now pinned by endpoint-level evidence and public-boundary
+inventory audits: Lean records that the case-bounded valuation-ball source
+first constructs the pointwise residual source, then the defined residual and
+q-normalized comparison data, before reading off the dichotomy.
 The boundary has now been lowered once more by the source
 \(\mathrm{ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource}\):
 it has the same same-index determinant and theta-equality fields as the
