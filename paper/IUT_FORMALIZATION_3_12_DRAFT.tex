@@ -1655,7 +1655,12 @@ distinguished nonarchimedean bound, the nondistinguished nonarchimedean zero
 bound, the archimedean bound, and one distinguished \(+1\) inequality.  Lean
 then reconstructs the projected case-defined procession inequality and
 projects to the valuation-ball procession residual source and the pointwise
-defined-residual source internally.
+defined-residual source internally.  The same case-split source now also feeds
+the localized Step~(xi) local-term \(C_\Theta\) constructor: Lean first
+projects the valuation-ball local cases to the pointwise residual source, then
+to the defined residual source, and finally constructs the localized
+\(C_\Theta\) source without taking the pointwise residual wrapper as a
+separate input at that handoff.
 The boundary has now been lowered once more by the source
 \(\mathrm{ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource}\):
 it has the same same-index determinant and theta-equality fields as the
