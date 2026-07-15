@@ -3358,9 +3358,7 @@
   procession bound to
   \(\mathrm{localArithmeticUpper}-\mathrm{mainLog}\).  Its projection
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ProcessionBoundPointwiseResidualSource.toPointwiseDefinedResidualLowerSource}
-  constructs the pointwise residual source internally.  The same-index public
-  endpoint is still exposed through the pointwise source; the new constructor
-  is the checked local Theorem~1.10 layer immediately below it.  The
+  constructs the pointwise residual source internally.  The
   valuation-ball formula-gap source now projects directly to the formula
   arithmetic-divisor source through
   \lean{Iut.Stage1.IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource.toFormulaArithmeticDivisorEvaluationSource}.
@@ -3388,6 +3386,16 @@
   also projects directly to the defined residual source and the packaged local
   arithmetic-degree residual source, keeping the summed Haar-defect handoff
   available without re-exposing the pointwise residual wrapper.
+  The same-index case-bounded source
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedCaseBoundedResidualSource}
+  lifts this case split to the signed endpoint boundary: it keeps the
+  determinant and theta-equality fields of the pointwise same-index route, but
+  its residual payload is the valuation-ball Theorem~1.10 case source.  Its
+  projection
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedCaseBoundedResidualSource.toPointwiseDefinedResidualSource}
+  constructs the pointwise residual source internally, and
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedCaseBoundedResidualSourceSideHypothesesLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit}
+  exposes the corresponding named public signed dichotomy.
   The same-index local arithmetic-degree source
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource}
   lowers the formula-gap boundary itself: it keeps the determinant and
