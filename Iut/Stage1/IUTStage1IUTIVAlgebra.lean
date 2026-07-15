@@ -7185,6 +7185,16 @@ noncomputable def toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
     |>.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
 
 set_option linter.style.longLine false in
+noncomputable def toFormulaArithmeticDivisorEvaluationSource
+    (source :
+      IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand) :
+    IUTStage1IUTIVTheorem110FormulaArithmeticDivisorEvaluationSource
+      place estimate :=
+  source.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+    |>.toFormulaArithmeticDivisorEvaluationSource
+
+set_option linter.style.longLine false in
 def Endpoint
     (source :
       IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource

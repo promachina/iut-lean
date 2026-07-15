@@ -3360,7 +3360,15 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ProcessionBoundPointwiseResidualSource.toPointwiseDefinedResidualLowerSource}
   constructs the pointwise residual source internally.  The same-index public
   endpoint is still exposed through the pointwise source; the new constructor
-  is the checked local Theorem~1.10 layer immediately below it.
+  is the checked local Theorem~1.10 layer immediately below it.  The
+  valuation-ball formula-gap source now projects directly to the formula
+  arithmetic-divisor source through
+  \lean{Iut.Stage1.IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource.toFormulaArithmeticDivisorEvaluationSource}.
+  The valuation-ball residual constructor
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallProcessionBoundPointwiseResidualSource}
+  starts from that valuation-ball additive-Haar formula-gap data, compares
+  localized Step~(xi) with the projected case-defined procession bound, and
+  then constructs the same pointwise defined-residual source internally.
   The same-index local arithmetic-degree source
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource}
   lowers the formula-gap boundary itself: it keeps the determinant and
