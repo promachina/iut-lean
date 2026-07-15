@@ -1568,7 +1568,11 @@ endpoint.  The reusable local source
 \(\mathrm{IUTStage1IUTIVLocalArithmeticDegreeResidualSource}\) packages this
 payload independently of the same-index route: it exposes the local
 arithmetic-upper identity, the residual lower bound, and an endpoint audit from
-the same local degree and Haar-defect data.
+the same local degree and Haar-defect data.  The same-index namespace now has
+the corresponding residual-field constructor from this packaged payload, so
+the formula-gap source can fill its residual inequality from the local
+arithmetic-degree residual source rather than from separate raw Haar-defect
+and pointwise equality inputs.
 The same evidence is exposed at the named preferred public endpoint by the
 endpoint-level route audit, so downstream uses of the public theorem do not
 need to open the same-index source namespace to recover the constructed
