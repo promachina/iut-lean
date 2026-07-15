@@ -3137,8 +3137,10 @@
   Its local-upper variant defines each local Haar defect as the residual
   between the IUT~IV local arithmetic-upper contribution, the localized
   Step~(xi) determinant term, and the main-log summand; the expanded
-  finite-place arithmetic-degree equality is then derived internally from the
-  total residual Haar lower bound.
+  finite-place arithmetic-degree equality is then derived from the definition
+  of the IUT~IV local arithmetic-upper contribution.  The later same-index
+  theorem uses that expanded local identity together with the total Haar lower
+  bound to recover the formula-gap residual inequality.
   The local-analytic residual refinement
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenLogKummerMapLocalArithmeticSourcePadicFiniteLocalAnalyticResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit}
   lowers this boundary once more by deriving the formula-gap residual source
@@ -3269,7 +3271,12 @@
   lowers the IUT~IV side of this same-index source: it consumes the
   Theorem~1.10 formula-gap matched arithmetic-divisor source and projects the
   local-analytic ledger internally before invoking the same q-normalized
-  route.
+  route.  Its local arithmetic-degree residual theorem
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedFormulaGapSource.residual_total_haar_defect_ge_one_of_localArithmeticDegree}
+  derives the same residual lower bound from the pointwise
+  \(StepXI_v+Haar_v=a_v(D_v+C_v)+E_v-M_v\) identity and the total Haar-defect
+  lower bound, rather than taking that residual inequality as an independent
+  arithmetic fact.
   The endpoint-level audit
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalAnalyticSourceSideHypothesesLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceRouteAudit}
   exposes the same evidence under the preferred public route name.
