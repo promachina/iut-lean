@@ -3479,13 +3479,21 @@
   the local-analytic and Theorem~1.10 \(C_\Theta\) trace records are projected
   from the valuation-ball additive-Haar formula-gap source instead of being
   supplied as independent constructor inputs.  Its local-analytic companion
-  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.constructorBuiltLocalizedStepXILocalTermCThetaSourceOfValuationBallLocalAnalyticCaseBoundedResidualSource}
-  constructs that formula-gap matched source from the valuation-ball
-  additive-Haar local-analytic arithmetic-divisor source before entering the
-  same case-bounded \(C_\Theta\) handoff.  The same case-split source
-  also projects directly to the defined residual source and the packaged local
-  arithmetic-degree residual source, keeping the summed Haar-defect handoff
-  available without re-exposing the pointwise residual wrapper.
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.constructorBuiltLocalizedStepXILocalTermCThetaSourceOfValuationBallLocalAnalyticCaseBoundedResidualSource}
+	  constructs that formula-gap matched source from the valuation-ball
+	  additive-Haar local-analytic arithmetic-divisor source before entering the
+	  same case-bounded \(C_\Theta\) handoff.  The local-analytic case-source
+	  variant
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.constructorBuiltLocalizedStepXILocalTermCThetaSourceOfValuationBallLocalAnalyticCaseSourceResidualSource}
+	  consumes
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticCaseBoundedPointwiseResidualSource}
+	  directly: its three local cases and distinguished \(+1\) inequality are
+	  stated over the valuation-ball local-analytic arithmetic-divisor source,
+	  and Lean constructs the formula-gap matched case source internally.  The
+	  same case-split source
+	  also projects directly to the defined residual source and the packaged local
+	  arithmetic-degree residual source, keeping the summed Haar-defect handoff
+	  available without re-exposing the pointwise residual wrapper.
   The same-index case-bounded source
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedCaseBoundedResidualSource}
   lifts this case split to the signed endpoint boundary: it keeps the
@@ -3559,12 +3567,15 @@
   Theorem~1.10 case residual source, with determinant synchronization and
   theta equality inherited from the formula-gap side.
   The local-analytic constructor
-  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedCaseBoundedResidualSource.ofLocalAnalyticIUTIVSourceCaseBoundedResidualSource}
-  lowers that source boundary again: the formula-gap matched Theorem~1.10
-  source is constructed from the valuation-ball additive-Haar local-analytic
-  arithmetic-divisor source before the bundled case source is assembled.
-  The projection
-  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedCaseBoundedResidualSource.toLocalAnalyticSource}
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedCaseBoundedResidualSource.ofLocalAnalyticIUTIVSourceCaseBoundedResidualSource}
+	  lowers that source boundary again: the formula-gap matched Theorem~1.10
+	  source is constructed from the valuation-ball additive-Haar local-analytic
+	  arithmetic-divisor source before the bundled case source is assembled.
+	  The localized \(C_\Theta\) layer now has the parallel local-analytic
+	  case-source lowering; composing that source directly into this same-index
+	  constructor is the remaining endpoint-boundary step for this branch.
+	  The projection
+	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedCaseBoundedResidualSource.toLocalAnalyticSource}
   checks the converse handoff needed by the endpoint ladder: from the same
   explicit case split it reconstructs the same-index local-analytic source,
   deriving the total Haar residual inequality through the local

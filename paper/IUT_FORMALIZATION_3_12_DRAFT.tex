@@ -1737,10 +1737,17 @@ lowers the same handoff one step further: its local-analytic and
 Theorem~1.10 \(C_\Theta\) trace records are projected from the valuation-ball
 additive-Haar formula-gap source, rather than being supplied as separate
 constructor arguments.  The local-analytic companion
-\(\mathrm{constructorBuiltLocalizedStepXILocalTermCThetaSourceOfValuationBallLocalAnalyticCaseBoundedResidualSource}\)
+  \(\mathrm{constructorBuiltLocalizedStepXILocalTermCThetaSourceOfValuationBallLocalAnalyticCaseBoundedResidualSource}\)
 pushes this lower again: it constructs the formula-gap matched Theorem~1.10
 source from the valuation-ball additive-Haar local-analytic arithmetic-divisor
-source before entering the same case-bounded \(C_\Theta\) handoff.  The
+source before entering the same case-bounded \(C_\Theta\) handoff.  The new
+local-analytic case-source form
+\(\mathrm{constructorBuiltLocalizedStepXILocalTermCThetaSourceOfValuationBallLocalAnalyticCaseSourceResidualSource}\)
+removes the formula-gap-indexed case residual from this localized handoff as
+well: the distinguished, nondistinguished, archimedean, and distinguished
+\(+1\) inequalities are stated directly over the local-analytic valuation-ball
+source, and Lean constructs both the formula-gap matched source and the older
+case-bounded residual source internally.  The
 case-split residual source also now
 projects directly to the defined residual source and the packaged local
 arithmetic-degree residual source, so downstream constructors can consume the
@@ -1839,7 +1846,12 @@ boundary has now been lowered below the formula-gap ledger by
 synchronization and theta equality remain explicit at this stage, but Lean
 constructs the formula-gap matched Theorem~1.10 source from the valuation-ball
 additive-Haar local-analytic arithmetic-divisor source before assembling the
-bundled case source.  The case-bounded source now also has the projection
+bundled case source.  At the localized \(C_\Theta\) layer the corresponding
+case estimates can now be supplied directly over the local-analytic
+valuation-ball source; the same-index constructor still consumes the
+formula-gap-indexed case source until this last local-analytic case-source
+wrapper is composed through that endpoint.  The case-bounded source now also
+has the projection
 \(\mathrm{toLocalAnalyticSource}\): it constructs the older same-index
 local-analytic source by projecting the local-analytic ledger from the
 formula-gap valuation-ball source and proving the total Haar residual
