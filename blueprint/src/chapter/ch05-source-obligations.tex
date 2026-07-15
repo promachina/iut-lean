@@ -3479,21 +3479,34 @@
   the local-analytic and Theorem~1.10 \(C_\Theta\) trace records are projected
   from the valuation-ball additive-Haar formula-gap source instead of being
   supplied as independent constructor inputs.  Its local-analytic companion
-	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.constructorBuiltLocalizedStepXILocalTermCThetaSourceOfValuationBallLocalAnalyticCaseBoundedResidualSource}
-	  constructs that formula-gap matched source from the valuation-ball
-	  additive-Haar local-analytic arithmetic-divisor source before entering the
-	  same case-bounded \(C_\Theta\) handoff.  The local-analytic case-source
-	  variant
-	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.constructorBuiltLocalizedStepXILocalTermCThetaSourceOfValuationBallLocalAnalyticCaseSourceResidualSource}
-	  consumes
-	  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticCaseBoundedPointwiseResidualSource}
-	  directly: its three local cases and distinguished \(+1\) inequality are
-	  stated over the valuation-ball local-analytic arithmetic-divisor source,
-	  and Lean constructs the formula-gap matched case source internally.  The
-	  same case-split source
-	  also projects directly to the defined residual source and the packaged local
-	  arithmetic-degree residual source, keeping the summed Haar-defect handoff
-	  available without re-exposing the pointwise residual wrapper.
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.constructorBuiltLocalizedStepXILocalTermCThetaSourceOfValuationBallLocalAnalyticCaseBoundedResidualSource}
+  constructs that formula-gap matched source from the valuation-ball
+  additive-Haar local-analytic arithmetic-divisor source before entering the
+  same case-bounded \(C_\Theta\) handoff.  The local-analytic case-source
+  variant
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.constructorBuiltLocalizedStepXILocalTermCThetaSourceOfValuationBallLocalAnalyticCaseSourceResidualSource}
+  consumes
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticCaseBoundedPointwiseResidualSource}
+  directly: its three local cases and distinguished \(+1\) inequality are
+  stated over the valuation-ball local-analytic arithmetic-divisor source,
+  and Lean constructs the formula-gap matched case source internally.  The
+  same case-split source also projects directly to the defined residual source
+  and the packaged local arithmetic-degree residual source, keeping the summed
+  Haar-defect handoff available without re-exposing the pointwise residual
+  wrapper.  The local-analytic procession-bound refinement
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionBoundPointwiseResidualSource}
+  lowers this boundary below the three explicit case inequalities.  It stores
+  the single comparison with the projected case-defined Theorem~1.10
+  procession upper bound, the distinguished-kind witness, and the
+  distinguished \(+1\) comparison; its projection
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionBoundPointwiseResidualSource.toLocalAnalyticCaseBoundedPointwiseResidualSource}
+  expands the case definition and reconstructs the older local-analytic
+  case-bounded source.  The localized \(C_\Theta\) constructor
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.constructorBuiltLocalizedStepXILocalTermCThetaSourceOfValuationBallLocalAnalyticProcessionBoundResidualSource}
+  then consumes this processional source directly.  Thus the remaining
+  Step~(xi)-to-procession comparison is still an explicit source boundary, but
+  the distinguished, nondistinguished, and archimedean case inequalities are
+  no longer separate inputs at the local-analytic handoff.
   The same-index case-bounded source
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedCaseBoundedResidualSource}
   lifts this case split to the signed endpoint boundary: it keeps the
