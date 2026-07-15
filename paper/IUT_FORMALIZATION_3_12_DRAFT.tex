@@ -1815,10 +1815,17 @@ distinguished one-unit lower bound, and records the source Haar endpoint
 \(\mu(O_v)=1\), \(\mu(p_vO_v)=p_v^{-[K_v:\mathbb{Q}_{p_v}]}\).  The new
 \(\mathrm{IUTStage1IUTIVLocalArithmeticDegreePadicUnitBallHaarDefectResidualSource}\)
 and its processional local-analytic wrapper project to the older Haar-defect
-route before entering the localized \(C_\Theta\) constructor.  Thus the
-current trust boundary at this layer is the local arithmetic-degree identity
-matching \(StepXI_v+p_v^{[K_v:\mathbb{Q}_{p_v}]}\) with the IUT~IV
-arithmetic-minus-main expression, not the Haar-defect lower bound itself.
+route before entering the localized \(C_\Theta\) constructor.  This boundary is
+now lowered once more by the Step~(xi) synchronization source: it assumes the
+local calibration
+\[
+  StepXI_v=A_v-M_v-p_v^{[K_v:\mathbb{Q}_{p_v}]},
+\]
+where \(A_v\) is the already-constructed local IUT~IV arithmetic upper term.
+Lean unfolds \(A_v=a_v(D_v+C_v)+E_v\) to recover the expanded
+arithmetic-degree identity internally.  Thus the remaining trust boundary here
+is the Step~(xi)-to-local-arithmetic synchronization itself, not the
+Haar-defect lower bound or the expanded arithmetic-degree algebra.
 The same case split has now been lifted to the same-index signed boundary by
 \(\mathrm{ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedCaseBoundedResidualSource}\).
 It keeps the determinant and theta-equality fields of the pointwise same-index
