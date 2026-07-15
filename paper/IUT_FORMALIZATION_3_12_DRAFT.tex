@@ -1729,6 +1729,14 @@ and the Stage~1 side conditions before invoking the case-bounded signed and
 \(\CTheta\ge -1\) endpoints.  Thus the case-bounded route no longer requires
 an assembled source-obligation gap as a public input at this boundary; the
 remaining sign/normalization input is the Stage~1 side-condition package.
+A source-backed specialization now projects those side conditions from
+`IUTStage1SourceHullDetObligations`: the public signed and
+\(\CTheta\ge -1\) case-bounded endpoints still build the source-obligation gap
+from the primitive constructed-SHE bundle, but they read q-pilot positivity and
+normalization from the hull/determinant obligation object.  The remaining lower
+boundary for this route is therefore the construction of the source
+hull/determinant obligation package from the paper-level possible-image and
+hull data.
 The
 local-upper refinement defines the local Haar defect as the residual between
 the IUT~IV local arithmetic-upper contribution, the localized Step~(xi)
