@@ -187,7 +187,13 @@
   removes the image-family equality as an external field by rebuilding the
   generated multiradial record with the full-label image family forced by the
   chosen-output primitive packet.  The remaining generated-corridor boundary is
-  the base generated multiradial record.  The direct product-hull/HDD layer now has a
+  the base generated multiradial record.  The structured generated corridor
+  source
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.IUTStage1ConcreteTheorem311ChosenOutputStructuredGeneratedFullLabelQuotientCorridorSource}
+  lowers this further: it constructs that base record from a generated
+  \(\SHE\)-structured Theorem 3.11 bundle before installing the forced
+  full-label possible images.  The remaining generated-corridor boundary is now
+  the generated structured bundle.  The direct product-hull/HDD layer now has a
   matching chosen-output generated source,
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ChosenOutputGeneratedFullLabelProductHullDirectCanonicalHDDSource},
   which projects the older generated-HDD source from this chosen-output
@@ -196,7 +202,10 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructedRecordChosenOutputGeneratedFullLabelProductHullDirectCanonicalHDDSource}
   lowers this once more to the constructed generated corridor, so the
   product-HDD route no longer asks separately for the record/image
-  synchronization.
+  synchronization.  Its structured-bundle strengthening
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.StructuredGeneratedChosenOutputFullLabelProductHullDirectCanonicalHDDSource}
+  constructs the generated record from the generated structured bundle before
+  lowering to the constructed-record source.
 \end{definition}
 
 \begin{definition}[Hodge/log-theta/log-Kummer source spine]
@@ -2456,7 +2465,11 @@
   chosen-output source.  The constructed-record variant
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ConstructedRecordChosenOutputGeneratedFullLabelProductHullDirectCanonicalHDDLocalizedCThetaRoute}
   first rebuilds the generated record's possible-image family from the
-  chosen-output packet theorem and then lowers to the chosen-output route.  The combined restriction-calibrated generated-full-label route
+  chosen-output packet theorem and then lowers to the chosen-output route.  The
+  structured-bundle variant
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312StructuredGeneratedChosenOutputFullLabelProductHullDirectCanonicalHDDLocalizedCThetaRoute}
+  constructs the generated multiradial record from a generated
+  \(\SHE\)-structured bundle before entering the constructed-record route.  The combined restriction-calibrated generated-full-label route
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312RestrictionCalibratedGeneratedFullLabelProductHullDirectCanonicalHDDLocalizedCThetaRoute}
   now requires both hardened inputs at once: the generated full-label/direct-HDD
   Step (xi) constructor, and the restriction-calibrated local-global Frobenioid
