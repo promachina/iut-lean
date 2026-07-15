@@ -3507,6 +3507,19 @@
   Step~(xi)-to-procession comparison is still an explicit source boundary, but
   the distinguished, nondistinguished, and archimedean case inequalities are
   no longer separate inputs at the local-analytic handoff.
+  The local-analytic procession-comparison refinement
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionComparisonPointwiseResidualSource}
+  splits that comparison into the paper-facing local log-volume
+  identification and the upper-semi procession estimate.  It introduces a
+  procession-normalized local log-volume, identifies the localized Step~(xi)
+  weighted adjusted log-volume with it, and separately records the
+  processional upper bound against the projected Theorem~1.10 case-defined
+  procession bound.  Its projection
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionComparisonPointwiseResidualSource.toLocalAnalyticProcessionBoundPointwiseResidualSource}
+  reconstructs the older processional source, and
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.constructorBuiltLocalizedStepXILocalTermCThetaSourceOfValuationBallLocalAnalyticProcessionComparisonResidualSource}
+  feeds it into the localized \(C_\Theta\) handoff.  The upper-semi estimate
+  remains an upstream IUT~III/IUT~IV construction obligation.
   The same-index case-bounded source
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedCaseBoundedResidualSource}
   lifts this case split to the signed endpoint boundary: it keeps the
