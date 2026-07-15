@@ -1848,10 +1848,16 @@ constructs the formula-gap matched Theorem~1.10 source from the valuation-ball
 additive-Haar local-analytic arithmetic-divisor source before assembling the
 bundled case source.  At the localized \(C_\Theta\) layer the corresponding
 case estimates can now be supplied directly over the local-analytic
-valuation-ball source; the same-index constructor still consumes the
-formula-gap-indexed case source until this last local-analytic case-source
-wrapper is composed through that endpoint.  The case-bounded source now also
-has the projection
+valuation-ball source, and the same lowering has now been composed through the
+same-index case-bounded constructor
+\(\mathrm{ofLocalAnalyticIUTIVSourceLocalAnalyticCaseSourceResidualSource}\).
+Thus the bundled same-index source can be assembled from determinant
+synchronization, theta equality, the valuation-ball local-analytic IUT~IV
+source, and case inequalities stated over that same source; Lean constructs the
+formula-gap case residual internally before entering the older same-index
+case-bounded route.  Direct signed endpoint wrappers for this constructor are
+still a notational endpoint layer, not a new mathematical assumption.  The
+case-bounded source now also has the projection
 \(\mathrm{toLocalAnalyticSource}\): it constructs the older same-index
 local-analytic source by projecting the local-analytic ledger from the
 formula-gap valuation-ball source and proving the total Haar residual
