@@ -1579,6 +1579,20 @@ also constructs the constructor-built localized Step~(xi) local-term
 IUT~IV local evaluation ledger, eliminating the separate local main-log,
 Haar-defect, arithmetic-upper sum, and main-log sum arguments on that
 constructor path.
+A stricter residual layer
+\(\mathrm{IUTStage1IUTIVLocalArithmeticDegreeDefinedResidualSource}\) now
+defines the Haar defect itself as
+\[
+  \mathrm{localArithmeticUpper}_v-\mathrm{StepXI}_v-\mathrm{mainLog}_v .
+\]
+Lean proves the pointwise identity
+\(\mathrm{StepXI}_v+\mathrm{Haar}_v=a_v(D_v+C_v)+E_v-M_v\) by unfolding the
+IUT~IV local arithmetic-upper contribution, and then constructs the older
+packaged residual source and the localized Step~(xi) local-term
+\(C_\Theta\) source from this defined-residual input.  Thus the Haar-defect
+function and pointwise equality are no longer independent data at this
+lowered layer; the remaining numerical input is the global lower bound for
+the defined residual sum.
 The boundary has now been lowered once more by the source
 \(\mathrm{ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource}\):
 it has the same same-index determinant and theta-equality fields as the

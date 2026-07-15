@@ -3291,6 +3291,21 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.constructorBuiltLocalizedStepXILocalTermCThetaSourceOfLocalArithmeticDegreeResidualSource},
   so that constructor path no longer takes the local main-log, Haar-defect,
   arithmetic-upper sum, and main-log sum data as unrelated arguments.
+  The stricter defined-residual layer
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVLocalArithmeticDegreeDefinedResidualSource}
+  defines the Haar defect as
+  \(\mathrm{localArithmeticUpper}_v-\mathrm{StepXI}_v-\mathrm{mainLog}_v\).
+  Its theorem
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVLocalArithmeticDegreeDefinedResidualSource.localStepXIHaar_eq_arithmeticDegreePrimeMinusMain}
+  derives the pointwise Step~(xi)+Haar arithmetic-degree identity by unfolding
+  the IUT~IV local arithmetic-upper contribution, and
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVLocalArithmeticDegreeDefinedResidualSource.toLocalArithmeticDegreeResidualSource}
+  constructs the older packaged residual source.  The corresponding
+  constructor
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.constructorBuiltLocalizedStepXILocalTermCThetaSourceOfDefinedResidualSource}
+  feeds the localized Step~(xi) local-term \(C_\Theta\) source from this
+  defined-residual input; the remaining numerical datum is the global lower
+  bound for the defined residual sum.
   The same-index local arithmetic-degree source
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource}
   lowers the formula-gap boundary itself: it keeps the determinant and
