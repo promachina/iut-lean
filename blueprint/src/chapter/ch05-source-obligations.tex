@@ -4580,6 +4580,14 @@
   derive the source-side equality.  The remaining task is to replace the
   packet-normalized target calibrations by source-level log-Kummer
   constructions.
+
+  The current CI audit freezes the canonical Stage~1 trust boundary as
+  \lean{Iut.Stage1.IUTStage1StepXIDependencyAudit.canonicalStage1RemainingAssumptions}.
+  This manifest is attached to the projected-principal, weighted-determinant,
+  q-normalized, formula-gap, case-bounded endpoint and records which inputs are
+  still source obligations.  The next source-level replacements should remove
+  entries from this manifest rather than introducing more public endpoint
+  variants.
 \end{proof}
 
 \begin{theorem}[Preserve comparison levels]

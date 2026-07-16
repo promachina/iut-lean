@@ -111,6 +111,173 @@ theorem localizedCThetaBoundaryInventory_count_eq :
     localizedCThetaBoundaryInventory_count = 10 :=
   rfl
 
+/--
+Classification for the canonical Stage 1 public boundary.
+
+`sourceObligation` marks mathematics that still has to be constructed from the
+IUT papers before the 3.11-to-3.12 corridor is closed.  `interfaceOnly` marks
+typed bookkeeping that selects an operation or index surface but is not itself
+a mathematical comparison theorem.
+-/
+inductive CanonicalStage1BoundaryStatus where
+  | constructed
+  | derived
+  | interfaceOnly
+  | sourceObligation
+  deriving DecidableEq, Repr
+
+/--
+One public input or lower field used by the canonical audited Stage 1 route.
+
+The strings are deliberately human-readable: the compile-time checks below pin
+the actual declarations, while this manifest states the trust-boundary role,
+source-paper location, and consuming endpoint in one place.
+-/
+structure CanonicalStage1RemainingAssumption where
+  name : String
+  status : CanonicalStage1BoundaryStatus
+  paperSource : String
+  consumerDeclaration : String
+  note : String
+  deriving Repr
+
+/-- Short name for the current canonical public 3.11-to-3.12 Stage 1 route. -/
+def canonicalStage1RouteName : String :=
+  "projected-principal weighted determinant q-normalized formula-gap case-bounded route"
+
+/--
+Current canonical Stage 1 remaining-assumption manifest.
+
+New public endpoints should reduce this list, refine one of its source
+obligations to a constructed/derived item, or be kept private.  Adding a public
+wrapper that leaves this manifest unchanged is not progress toward the active
+paper-level corridor goal.
+-/
+def canonicalStage1RemainingAssumptions :
+    List CanonicalStage1RemainingAssumption :=
+  [ { name := "packet",
+      status := .sourceObligation,
+      paperSource := "IUT III, Theorem 3.11; IUT I-II initial theta/Hodge-theater setup",
+      consumerDeclaration :=
+        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffProjectedPrincipalProductWeightedDeterminantQNormalizedFormulaGapConstituentSourceOfCaseBoundedResidualSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
+      note :=
+        "Concrete primitive Theorem 3.11 packet is still supplied rather than constructed from initial theta data." },
+    { name := "sourceWithSymmetry",
+      status := .sourceObligation,
+      paperSource := "IUT III, Theorem 3.11 multiradial representation and Ind2 transport",
+      consumerDeclaration :=
+        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffProjectedPrincipalProductWeightedDeterminantQNormalizedFormulaGapConstituentSourceOfCaseBoundedResidualSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
+      note :=
+        "Symmetry-label/fiber transport data remains a source-level theorem to derive from the log-theta procession." },
+    { name := "compactOpenRealizedExactSource",
+      status := .sourceObligation,
+      paperSource := "IUT III, Remark 3.11.3 and Step (x) log-Kummer correspondence",
+      consumerDeclaration :=
+        "compactOpenLogKummerMapSourceOfRealizedExactPrincipalProduct",
+      note :=
+        "The compact-open realized exactness/log-Kummer image layer is still a public source input." },
+    { name := "hodgeEvaluation",
+      status := .sourceObligation,
+      paperSource := "IUT II Hodge-Arakelov theta evaluation; IUT III, Theorem 3.11",
+      consumerDeclaration :=
+        "PrincipalProductPadicFiniteExtensionRestrictionCalibratedNormSquareOb7HandoffSource",
+      note :=
+        "Hodge evaluation is typed, but the paper-level construction from initial theta data is not yet internal." },
+    { name := "localArithmeticHandoff",
+      status := .sourceObligation,
+      paperSource := "IUT III, Step (xi); Remark 3.9.5; Ob7",
+      consumerDeclaration :=
+        "PrincipalProductPadicFiniteExtensionRestrictionCalibratedNormSquareOb7HandoffSource",
+      note :=
+        "Finite-extension restriction, norm-square Ob7, and local arithmetic handoff remain exposed at this boundary." },
+    { name := "operation/hullOperation/determinantOperation",
+      status := .interfaceOnly,
+      paperSource := "IUT III, Remark 3.9.5 operation choices",
+      consumerDeclaration :=
+        "primitiveThetaRegionCurrentProductHullPrincipalHDDSource",
+      note :=
+        "Operation identifiers select the hull/determinant interface; they are not comparison assumptions by themselves." },
+    { name := "pointwiseDeterminantFormulaSource",
+      status := .sourceObligation,
+      paperSource := "IUT III, Remark 3.9.5 determinant and measure/summand calibration",
+      consumerDeclaration :=
+        "PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource",
+      note :=
+        "Pointwise determinant calibration is still supplied as a source package." },
+    { name := "sideConditions",
+      status := .sourceObligation,
+      paperSource := "IUT III, Corollary 3.12 sign and normalization hypotheses",
+      consumerDeclaration :=
+        "IUTStage1SourceSideConditions",
+      note :=
+        "q-positivity, normalization, and side-condition facts are reconstructed into the route but not yet derived from paper data." },
+    { name := "principalProductPadicFiniteSource",
+      status := .sourceObligation,
+      paperSource := "IUT III, Step (xi); p-adic finite local hull-vector-bundle decomposition",
+      consumerDeclaration :=
+        "PrincipalProductPadicFiniteLocalizedHullVectorBundleDecompositionSource",
+      note :=
+        "This is the current best p-adic/Haar source layer and the next target for genuine constructor replacement." },
+    { name := "weighted determinant component synchronizations",
+      status := .sourceObligation,
+      paperSource := "IUT III, Remark 3.9.5 Ob3/Ob4 determinant bridge",
+      consumerDeclaration :=
+        "weightedDeterminantSummand_eq_principalProductLocalizedStepXI; weightedDeterminantAnchor_eq_principalProductLocalizedStepXI; weightedDeterminantPositiveTensorPower_eq_principalProductLocalizedStepXI",
+      note :=
+        "The summand, anchor, and positive tensor-power identifications are still explicit equality inputs." },
+    { name := "thetaSigned_eq_principalProductLocalizedAdjustedSum_mul_absLogQ",
+      status := .sourceObligation,
+      paperSource := "IUT III, Corollary 3.12 theta/log-volume comparison",
+      consumerDeclaration :=
+        "ConstructorBuiltPrincipalProductPadicFiniteProjectedWeightedDeterminantQNormalizedFormulaGapResidualHaarSource",
+      note :=
+        "The canonical theta/log-volume scale identity is not yet derived from the log-theta lattice." },
+    { name := "theorem110ValuationBallFormulaGapSource",
+      status := .sourceObligation,
+      paperSource := "IUT IV, Theorem 1.10 valuation-ball arithmetic divisor estimates",
+      consumerDeclaration :=
+        "IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource",
+      note :=
+        "The local upper-bound ledger is typed but still supplied as an IUT IV source object." },
+    { name := "caseBoundedResidualSource",
+      status := .sourceObligation,
+      paperSource := "IUT IV local case split: nonarchimedean distal, nondistal, archimedean, distinguished +1",
+      consumerDeclaration :=
+        "IUTStage1IUTIVTheorem110ValuationBallCaseBoundedPointwiseResidualSource",
+      note :=
+        "The case-bounded residual source replaces a raw Haar lower-bound field but is not yet constructed from the local estimates." } ]
+
+/-- Number of manifest entries in the canonical Stage 1 remaining boundary. -/
+def canonicalStage1RemainingAssumptions_count : Nat :=
+  canonicalStage1RemainingAssumptions.length
+
+theorem canonicalStage1RemainingAssumptions_count_eq :
+    canonicalStage1RemainingAssumptions_count = 13 :=
+  rfl
+
+/-- Source obligations still present in the canonical manifest. -/
+def canonicalStage1SourceObligationNames : List String :=
+  canonicalStage1RemainingAssumptions.filterMap fun entry =>
+    if entry.status = .sourceObligation then some entry.name else none
+
+/-- The canonical route currently exposes twelve source-obligation entries. -/
+theorem canonicalStage1SourceObligationNames_count_eq :
+    canonicalStage1SourceObligationNames.length = 12 :=
+  rfl
+
+/-- The canonical route has exactly one interface-only entry. -/
+theorem canonicalStage1RemainingAssumptions_interfaceOnly_count_eq :
+    (canonicalStage1RemainingAssumptions.filter
+      (fun entry => entry.status = .interfaceOnly)).length = 1 :=
+  rfl
+
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffProjectedPrincipalProductWeightedDeterminantQNormalizedFormulaGapConstituentSourceOfCaseBoundedResidualSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConstructorBuiltPrincipalProductPadicFiniteProjectedWeightedDeterminantQNormalizedFormulaGapResidualHaarSourceCThetaGeNegOneLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallCaseBoundedPointwiseResidualSource.toLocalArithmeticDegreeResidualSource
+
 #guard_msgs (drop info) in
 #check IUTStage1SourceObligationGap.ofStructuredInputsWithSHEAndSideConditions
 #guard_msgs (drop info) in
