@@ -4589,9 +4589,13 @@
   hull-vector-bundle source is no longer an independent boundary item on this
   route: Lean derives it from the finite-extension restriction-calibrated local
   arithmetic handoff before comparing the weighted determinant and IUT~IV
-  residual data.  The next source-level replacements should remove further
-  entries from this manifest rather than introducing more public endpoint
-  variants.  The public \lean{Iut.Stage1.IUTStage1StepXI} module is now a
+  residual data.  The audit includes the one-place diagnostic
+  \lean{Iut.Stage1.IUTStage1StepXIDependencyAudit.detachedPadicFiniteToyCountermodel_not_detached_theta_identity},
+  which shows that a detached p-adic finite scale can satisfy neither the
+  handoff-derived theta identity nor the endpoint comparison automatically.  The
+  next source-level replacements should remove further entries from this
+  manifest rather than introducing more public endpoint variants.  The public
+  \lean{Iut.Stage1.IUTStage1StepXI} module is now a
   re-export facade over \lean{Iut.Stage1.IUTStage1StepXI.Core}, so further
   canonical-route slices can be split out while preserving existing names.
 \end{proof}

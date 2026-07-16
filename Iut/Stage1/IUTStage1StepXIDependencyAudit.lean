@@ -264,6 +264,62 @@ theorem canonicalStage1RemainingAssumptions_interfaceOnly_count_eq :
       (fun entry => entry.status = .interfaceOnly)).length = 1 :=
   rfl
 
+/--
+One-place diagnostic model for the p-adic finite source boundary.
+
+The canonical route now reads the local weighted Step~(xi) scale from the
+finite-extension restriction-calibrated handoff.  This toy model records the
+failure mode of the weakened boundary that allowed a detached p-adic finite
+source to supply its own scale: the handoff-derived theta identity can hold
+while the detached identity is false.
+-/
+structure DetachedPadicFiniteToyCountermodel where
+  qSigned : Real
+  thetaSigned : Real
+  derivedScale : Real
+  detachedScale : Real
+  qSigned_eq_neg_one : qSigned = -1
+  thetaSigned_eq_derivedScale_mul_absLogQ :
+    thetaSigned = derivedScale * (-qSigned)
+  derivedScale_eq_zero : derivedScale = 0
+  detachedScale_eq_one : detachedScale = 1
+
+/--
+The detached p-adic finite source law is not a harmless weakening of the
+canonical route: even in a one-place model it can contradict the theta identity
+forced by the local arithmetic handoff-derived source.
+-/
+theorem DetachedPadicFiniteToyCountermodel.not_detached_theta_identity
+    (toy : DetachedPadicFiniteToyCountermodel) :
+    ¬ toy.thetaSigned = toy.detachedScale * (-toy.qSigned) := by
+  intro hdetached
+  have htheta_zero : toy.thetaSigned = 0 := by
+    rw [toy.thetaSigned_eq_derivedScale_mul_absLogQ, toy.derivedScale_eq_zero,
+      zero_mul]
+  have htheta_one : toy.thetaSigned = 1 := by
+    rw [hdetached, toy.detachedScale_eq_one, toy.qSigned_eq_neg_one]
+    norm_num
+  rw [htheta_zero] at htheta_one
+  norm_num at htheta_one
+
+/-- Concrete one-place countermodel for the detached p-adic finite source law. -/
+def detachedPadicFiniteToyCountermodel :
+    DetachedPadicFiniteToyCountermodel :=
+  { qSigned := -1,
+    thetaSigned := 0,
+    derivedScale := 0,
+    detachedScale := 1,
+    qSigned_eq_neg_one := by norm_num,
+    thetaSigned_eq_derivedScale_mul_absLogQ := by norm_num,
+    derivedScale_eq_zero := by norm_num,
+    detachedScale_eq_one := by norm_num }
+
+theorem detachedPadicFiniteToyCountermodel_not_detached_theta_identity :
+    ¬ detachedPadicFiniteToyCountermodel.thetaSigned =
+      detachedPadicFiniteToyCountermodel.detachedScale *
+        (-detachedPadicFiniteToyCountermodel.qSigned) :=
+  detachedPadicFiniteToyCountermodel.not_detached_theta_identity
+
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedCaseBoundedResidualSourcePrimitiveConstructorInternalPrincipalHDDSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
