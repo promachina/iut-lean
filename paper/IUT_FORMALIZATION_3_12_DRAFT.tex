@@ -114,7 +114,10 @@ derived from the finite-extension restriction-calibrated local arithmetic
 handoff, rather than supplied as a separate boundary item.  The accompanying
 one-place diagnostic countermodel shows why this is not cosmetic: a detached
 p-adic finite scale can violate the theta identity forced by the handoff-derived
-scale.  Future Lean steps should remove further entries from the manifest,
+scale.  A second one-place diagnostic now records the corresponding
+\(C_\Theta\) failure mode: without the signed \(q\leq\theta\) comparison,
+q-positivity and the IUT~IV-style upper bound still allow \(C_\Theta<-1\).
+Future Lean steps should remove further entries from the manifest,
 especially the weighted determinant synchronizations, theta/log-volume scale
 identity, and IUT IV local case estimates.
 

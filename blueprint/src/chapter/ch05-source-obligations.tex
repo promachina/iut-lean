@@ -4605,7 +4605,12 @@
   residual data.  The audit includes the one-place diagnostic
   \lean{Iut.Stage1.IUTStage1StepXIDependencyAudit.detachedPadicFiniteToyCountermodel_not_detached_theta_identity},
   which shows that a detached p-adic finite scale can satisfy neither the
-  handoff-derived theta identity nor the endpoint comparison automatically.  The
+  handoff-derived theta identity nor the endpoint comparison automatically.
+  It also includes
+  \lean{Iut.Stage1.IUTStage1StepXIDependencyAudit.signedCThetaWithoutQThetaToyCountermodel_not_cTheta_ge_neg_one},
+  showing that the signed \(q\leq\theta\) comparison is essential for the
+  \(C_\Theta\ge -1\) lower-bound projection: q-positivity plus the IUT~IV-style
+  upper bound alone permit \(C_\Theta<-1\).  The
   next source-level replacements should remove further entries from this
   manifest rather than introducing more public endpoint variants.  The public
   \lean{Iut.Stage1.IUTStage1StepXI} module is now a

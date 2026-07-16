@@ -320,6 +320,51 @@ theorem detachedPadicFiniteToyCountermodel_not_detached_theta_identity :
         (-detachedPadicFiniteToyCountermodel.qSigned) :=
   detachedPadicFiniteToyCountermodel.not_detached_theta_identity
 
+/--
+One-place diagnostic for the signed \(C_\Theta\) lower-bound schema.
+
+The new p-adic unit-ball lower-bound projection ultimately uses
+`IUTStage1Corollary312SignedCThetaBound`, whose ordered-real proof needs both
+q-positivity and the signed comparison `qSigned <= thetaSigned`.  This toy model
+keeps q-positivity and the IUT IV-style upper bound
+`thetaSigned <= C_Theta * (-qSigned)`, but deletes `qSigned <= thetaSigned`.
+Then \(C_\Theta < -1\) is possible.
+-/
+structure SignedCThetaWithoutQThetaToyCountermodel where
+  qSigned : Real
+  thetaSigned : Real
+  cTheta : Real
+  q_positive : 0 < -qSigned
+  thetaSigned_le_cTheta_absLogQ : thetaSigned <= cTheta * (-qSigned)
+  not_qSigned_le_thetaSigned : ¬ qSigned <= thetaSigned
+  cTheta_lt_neg_one : cTheta < (-1 : Real)
+
+theorem SignedCThetaWithoutQThetaToyCountermodel.not_cTheta_ge_neg_one
+    (toy : SignedCThetaWithoutQThetaToyCountermodel) :
+    ¬ (-1 : Real) <= toy.cTheta :=
+  not_le_of_gt toy.cTheta_lt_neg_one
+
+/--
+Concrete countermodel: `q=-1`, `theta=-2`, and `C_Theta=-2`.
+
+The upper bound is an equality and the q-pilot sign is correct, but the missing
+`qSigned <= thetaSigned` comparison is false, and the lower bound
+\(-1\le C_\Theta\) fails.
+-/
+def signedCThetaWithoutQThetaToyCountermodel :
+    SignedCThetaWithoutQThetaToyCountermodel :=
+  { qSigned := -1,
+    thetaSigned := -2,
+    cTheta := -2,
+    q_positive := by norm_num,
+    thetaSigned_le_cTheta_absLogQ := by norm_num,
+    not_qSigned_le_thetaSigned := by norm_num,
+    cTheta_lt_neg_one := by norm_num }
+
+theorem signedCThetaWithoutQThetaToyCountermodel_not_cTheta_ge_neg_one :
+    ¬ (-1 : Real) <= signedCThetaWithoutQThetaToyCountermodel.cTheta :=
+  signedCThetaWithoutQThetaToyCountermodel.not_cTheta_ge_neg_one
+
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedCaseBoundedResidualSourcePrimitiveConstructorInternalPrincipalHDDSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
