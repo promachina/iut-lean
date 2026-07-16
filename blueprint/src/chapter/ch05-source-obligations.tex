@@ -4134,6 +4134,12 @@
   now discharges that residual payload from the p-adic unit-ball Haar-index
   source and the local synchronization identity, leaving the synchronization
   itself as the remaining source obligation for this slice.
+  The checked residual calculation is explicit:
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVLocalArithmeticDegreePadicUnitBallStepXISynchronizationSource.local_defined_residual_eq_padic_index}
+  identifies the local defined residual with the p-adic unit-ball index, and
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVLocalArithmeticDegreePadicUnitBallStepXISynchronizationSource.residual_total_haar_defect_ge_one}
+  sums these identities to obtain the residual lower bound consumed by the
+  \(C_\Theta\) route.
   The local-degree goal-evidence audit
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.goalEvidenceAudit}
   and public-boundary inventory
