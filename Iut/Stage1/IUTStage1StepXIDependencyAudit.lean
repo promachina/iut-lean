@@ -1093,13 +1093,13 @@ def publicStepXIHullConstructionInventory :
       auditTypeName :=
         "PreferredPublicTransportedCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit",
       constructorName :=
-        "preferredPublicTransportedCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit",
+        "preferredPublicTransportedCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit_fromAdditiveHaarPayload",
       keyField := "coordinate_hull_route" },
     { boundary := .realLineCoordinateScalarImageConstructedTrace,
       auditTypeName :=
         "PreferredPublicTransportedRealLineCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit",
       constructorName :=
-        "preferredPublicTransportedRealLineCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit",
+        "preferredPublicTransportedRealLineCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit_fromAdditiveHaarPayload",
       keyField := "real_line_coordinate_hull_route" },
     { boundary := .coordinateScalarImageExactImageValuationSelected,
       auditTypeName := "CoordinateScalarImageExactImageStepXIPublicAudit",
@@ -1309,6 +1309,8 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicTransportedCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit
 #guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicTransportedCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit_fromAdditiveHaarPayload
+#guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredPublicTransportedCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit.coordinate_hull_route
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredPublicTransportedCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit.constructed_paper_trace
@@ -1321,6 +1323,8 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredPublicTransportedRealLineCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicTransportedRealLineCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicTransportedRealLineCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit_fromAdditiveHaarPayload
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredPublicTransportedRealLineCoordinateScalarImageConstructedPaperTraceRouteBoundaryAudit.real_line_coordinate_hull_route
 #guard_msgs (drop info) in
