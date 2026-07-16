@@ -365,6 +365,55 @@ theorem signedCThetaWithoutQThetaToyCountermodel_not_cTheta_ge_neg_one :
     ¬ (-1 : Real) <= signedCThetaWithoutQThetaToyCountermodel.cTheta :=
   signedCThetaWithoutQThetaToyCountermodel.not_cTheta_ge_neg_one
 
+/--
+One-place diagnostic for the local-analytic case-source boundary.
+
+The scale-synchronized local-analytic case-source route uses the ordinary local
+case upper bound together with the distinguished \(+1\) gap.  This toy model
+keeps the ordinary distinguished local comparison but deletes the \(+1\) gap.
+Then the residual lower bound needed by the formula-gap case residual source is
+false.
+-/
+structure LocalAnalyticCaseWithoutDistinguishedGapToyCountermodel where
+  distinguishedStepXI : Real
+  distinguishedProcessionBound : Real
+  localStepXI_le_distinguishedProcessionBound :
+    distinguishedStepXI <= distinguishedProcessionBound
+  not_distinguished_stepXI_plus_one_le_distinguishedProcessionBound :
+    ¬ distinguishedStepXI + 1 <= distinguishedProcessionBound
+  distinguished_residual_lt_one :
+    distinguishedProcessionBound - distinguishedStepXI < 1
+
+theorem LocalAnalyticCaseWithoutDistinguishedGapToyCountermodel.not_residual_ge_one
+    (toy : LocalAnalyticCaseWithoutDistinguishedGapToyCountermodel) :
+    ¬ (1 : Real) <= toy.distinguishedProcessionBound - toy.distinguishedStepXI :=
+  not_le_of_gt toy.distinguished_residual_lt_one
+
+/--
+Concrete countermodel: the local Step~(xi) value and distinguished procession
+bound are both \(0\).  The weak local upper bound holds, but the distinguished
+\(+1\) gap and the residual lower bound both fail.
+-/
+def localAnalyticCaseWithoutDistinguishedGapToyCountermodel :
+    LocalAnalyticCaseWithoutDistinguishedGapToyCountermodel :=
+  { distinguishedStepXI := 0,
+    distinguishedProcessionBound := 0,
+    localStepXI_le_distinguishedProcessionBound := by norm_num,
+    not_distinguished_stepXI_plus_one_le_distinguishedProcessionBound := by
+      norm_num,
+    distinguished_residual_lt_one := by norm_num }
+
+theorem localAnalyticCaseWithoutDistinguishedGapToyCountermodel_not_residual_ge_one :
+    ¬ (1 : Real) <=
+      localAnalyticCaseWithoutDistinguishedGapToyCountermodel.distinguishedProcessionBound -
+        localAnalyticCaseWithoutDistinguishedGapToyCountermodel.distinguishedStepXI :=
+  localAnalyticCaseWithoutDistinguishedGapToyCountermodel.not_residual_ge_one
+
+#guard_msgs (drop info) in
+#check LocalAnalyticCaseWithoutDistinguishedGapToyCountermodel.not_residual_ge_one
+#guard_msgs (drop info) in
+#print axioms LocalAnalyticCaseWithoutDistinguishedGapToyCountermodel.not_residual_ge_one
+
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedCaseBoundedResidualSourcePrimitiveConstructorInternalPrincipalHDDSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
