@@ -451,6 +451,55 @@ theorem localArithmeticDegreeWithoutResidualLowerToyCountermodel_not_residual_ge
       localArithmeticDegreeWithoutResidualLowerToyCountermodel.localHaarDefect :=
   localArithmeticDegreeWithoutResidualLowerToyCountermodel.not_residual_ge_one
 
+/--
+One-place diagnostic for the p-adic unit-ball Haar-index lowering.
+
+The p-adic route removes the residual lower bound only because the local
+residual is identified with the unit-ball dilation index
+`p_v^[K_v : Q_p]`, whose normalized-place contribution is at least `1`.
+If that lower p-adic index law is weakened to an arbitrary synchronized
+"index", the Step~(xi) identity can still hold while the one-unit residual
+needed by the canonical endpoint fails.
+-/
+structure PadicUnitBallWithoutNormalizedIndexToyCountermodel where
+  localArithmeticUpper : Real
+  localStepXI : Real
+  localMainLog : Real
+  localPadicIndex : Real
+  localStepXI_plus_padicIndex_eq_arithmeticUpper_minus_main :
+    localStepXI + localPadicIndex = localArithmeticUpper - localMainLog
+  local_defined_residual_eq_padicIndex :
+    localArithmeticUpper - localStepXI - localMainLog = localPadicIndex
+  padicIndex_lt_one : localPadicIndex < 1
+
+theorem PadicUnitBallWithoutNormalizedIndexToyCountermodel.not_residual_ge_one
+    (toy : PadicUnitBallWithoutNormalizedIndexToyCountermodel) :
+    ¬ (1 : Real) <= toy.localArithmeticUpper - toy.localStepXI - toy.localMainLog := by
+  rw [toy.local_defined_residual_eq_padicIndex]
+  exact not_le_of_gt toy.padicIndex_lt_one
+
+/--
+Concrete p-adic-index countermodel with zero synchronized index.  The local
+Step~(xi) synchronization and residual/index identity hold, but the missing
+normalized-place index lower law makes the endpoint residual lower bound false.
+-/
+def padicUnitBallWithoutNormalizedIndexToyCountermodel :
+    PadicUnitBallWithoutNormalizedIndexToyCountermodel :=
+  { localArithmeticUpper := 0,
+    localStepXI := 0,
+    localMainLog := 0,
+    localPadicIndex := 0,
+    localStepXI_plus_padicIndex_eq_arithmeticUpper_minus_main := by norm_num,
+    local_defined_residual_eq_padicIndex := by norm_num,
+    padicIndex_lt_one := by norm_num }
+
+theorem padicUnitBallWithoutNormalizedIndexToyCountermodel_not_residual_ge_one :
+    ¬ (1 : Real) <=
+      padicUnitBallWithoutNormalizedIndexToyCountermodel.localArithmeticUpper -
+        padicUnitBallWithoutNormalizedIndexToyCountermodel.localStepXI -
+        padicUnitBallWithoutNormalizedIndexToyCountermodel.localMainLog :=
+  padicUnitBallWithoutNormalizedIndexToyCountermodel.not_residual_ge_one
+
 #guard_msgs (drop info) in
 #check LocalAnalyticCaseWithoutDistinguishedGapToyCountermodel.not_residual_ge_one
 #guard_msgs (drop info) in
@@ -460,6 +509,11 @@ theorem localArithmeticDegreeWithoutResidualLowerToyCountermodel_not_residual_ge
 #check LocalArithmeticDegreeWithoutResidualLowerToyCountermodel.not_residual_ge_one
 #guard_msgs (drop info) in
 #print axioms LocalArithmeticDegreeWithoutResidualLowerToyCountermodel.not_residual_ge_one
+
+#guard_msgs (drop info) in
+#check PadicUnitBallWithoutNormalizedIndexToyCountermodel.not_residual_ge_one
+#guard_msgs (drop info) in
+#print axioms PadicUnitBallWithoutNormalizedIndexToyCountermodel.not_residual_ge_one
 
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedCaseBoundedResidualSourcePrimitiveConstructorInternalPrincipalHDDSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
