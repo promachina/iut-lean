@@ -27769,6 +27769,83 @@ theorem preferredPublicPrincipalProductLocalizedCoverConstructedPaperTraceStepXI
 
 set_option linter.style.longLine false in
 /--
+Strict public principal-product localized-cover route with the non-Step-(xi)
+audit derived from the additive-Haar payload.
+
+This is the localized-cover analogue of the constructed principal-product
+route: the paper trace and Step~(xi) source are still built from the cover, and
+the remaining non-Step audit is reconstructed from the lower
+additive-Haar arithmetic-degree payload rather than supplied as a public input.
+-/
+theorem preferredPublicPrincipalProductLocalizedCoverConstructedPaperTraceStepXIPaperSourceRouteAudit_fromAdditiveHaarPayload
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (thetaSigned : Real)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {η : Type a} {β : Type b} {γ : Type c}
+    [Fintype β] [Fintype γ]
+    (coverSource :
+      PrincipalProductLocalizedHullCoverVectorBundleSource
+        sourceData principalSource η β γ)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned =
+        coverSource.toLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume)
+    {Penv Pgau V : Type b} {μ : Type c}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (principalProductHullFormationData sourceData principalSource)
+        β Penv Pgau V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations)
+    (additiveAudit :
+      additive_haar_arithmetic_degree_padic.RemainingPayloadAudit) :
+    PreferredPrincipalProductLocalizedCoverThetaEqFamilyHullStepXIPaperSourceRouteAudit
+      sourceData
+      (principalProductLocalizedCoverThetaEqFamilyHullPaperTrace
+        sourceData thetaSigned principalSource coverSource
+        thetaSigned_eq_familyHullLogVolume ob7Source)
+      thetaSigned principalSource coverSource thetaSigned_eq_familyHullLogVolume
+      ob7Source iutIV_cTheta additive_haar_arithmetic_degree_padic := by
+  let paperTrace :=
+    principalProductLocalizedCoverThetaEqFamilyHullPaperTrace
+      sourceData thetaSigned principalSource coverSource
+      thetaSigned_eq_familyHullLogVolume ob7Source
+  let localizedSource :=
+    coverSource.toLocalizedHullVectorBundleDecompositionSource
+  let concreteHullSource :=
+    principalProductConcreteHullSource sourceData principalSource
+  let stepXI :=
+    StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaEqFamilyHullThetaLGPOb7Source
+      (sourceData := sourceData)
+      paperTrace thetaSigned concreteHullSource
+      rfl localizedSource rfl rfl
+      thetaSigned_eq_familyHullLogVolume ob7Source
+  have audit :
+      NonStepXIRemainingPayloadAudit
+        (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+          sourceData stepXI iutIV_cTheta
+          additive_haar_arithmetic_degree_padic) :=
+    nonStepXIRemainingPayloadAudit_of_additiveHaar
+      (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+        sourceData stepXI iutIV_cTheta
+        additive_haar_arithmetic_degree_padic)
+      additiveAudit
+  simpa [paperTrace, localizedSource, concreteHullSource, stepXI] using
+    preferredPublicPrincipalProductLocalizedCoverConstructedPaperTraceStepXIPaperSourceRouteAudit
+      sourceData thetaSigned principalSource coverSource
+      thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
+      additive_haar_arithmetic_degree_padic audit
+
+set_option linter.style.longLine false in
+/--
 Strict public principal-product Step (xi) route through a localized cover, with
 both the paper trace and theta/family-hull value constructed internally.
 -/
@@ -27827,6 +27904,76 @@ theorem preferredPublicPrincipalProductLocalizedCoverCanonicalThetaConstructedPa
       sourceData principalSource coverSource ob7Source)
     principalSource coverSource ob7Source iutIV_cTheta
     additive_haar_arithmetic_degree_padic audit
+
+set_option linter.style.longLine false in
+/--
+Strict public principal-product localized-cover route with canonical theta and
+with the non-Step-(xi) audit derived from the additive-Haar payload.
+
+The signed theta value is the cover's family-hull log-volume, the paper trace
+is constructed internally, and the remaining non-Step audit is reconstructed
+from the lower additive-Haar payload.
+-/
+theorem preferredPublicPrincipalProductLocalizedCoverCanonicalThetaConstructedPaperTraceStepXIPaperSourceRouteAudit_fromAdditiveHaarPayload
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    {Λ : Type v}
+    (principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point targetCopy) Λ)
+    {η : Type a} {β : Type b} {γ : Type c}
+    [Fintype β] [Fintype γ]
+    (coverSource :
+      PrincipalProductLocalizedHullCoverVectorBundleSource
+        sourceData principalSource η β γ)
+    {Penv Pgau V : Type b} {μ : Type c}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (principalProductHullFormationData sourceData principalSource)
+        β Penv Pgau V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations)
+    (additiveAudit :
+      additive_haar_arithmetic_degree_padic.RemainingPayloadAudit) :
+    PreferredPrincipalProductLocalizedCoverCanonicalThetaStepXIPaperSourceRouteAudit
+      sourceData
+      (principalProductLocalizedCoverCanonicalThetaPaperTrace
+        sourceData principalSource coverSource ob7Source)
+      principalSource coverSource ob7Source iutIV_cTheta
+      additive_haar_arithmetic_degree_padic := by
+  let thetaSigned :=
+    coverSource.toLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume
+  let paperTrace :=
+    principalProductLocalizedCoverCanonicalThetaPaperTrace
+      sourceData principalSource coverSource ob7Source
+  let localizedSource :=
+    coverSource.toLocalizedHullVectorBundleDecompositionSource
+  let concreteHullSource :=
+    principalProductConcreteHullSource sourceData principalSource
+  let stepXI :=
+    StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaEqFamilyHullThetaLGPOb7Source
+      (sourceData := sourceData)
+      paperTrace thetaSigned concreteHullSource
+      rfl localizedSource rfl rfl rfl ob7Source
+  have audit :
+      NonStepXIRemainingPayloadAudit
+        (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+          sourceData stepXI iutIV_cTheta
+          additive_haar_arithmetic_degree_padic) :=
+    nonStepXIRemainingPayloadAudit_of_additiveHaar
+      (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+        sourceData stepXI iutIV_cTheta
+        additive_haar_arithmetic_degree_padic)
+      additiveAudit
+  simpa [thetaSigned, paperTrace, localizedSource, concreteHullSource, stepXI] using
+    preferredPublicPrincipalProductLocalizedCoverCanonicalThetaConstructedPaperTraceStepXIPaperSourceRouteAudit
+      sourceData principalSource coverSource ob7Source iutIV_cTheta
+      additive_haar_arithmetic_degree_padic audit
 
 set_option linter.style.longLine false in
 /--
