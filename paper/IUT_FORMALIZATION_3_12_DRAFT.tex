@@ -1554,6 +1554,11 @@ then derives the weighted determinant equality before entering the q-normalized
 handoff.  The public realized-exact local-arithmetic route now consumes this
 heterogeneous source and projects the q-normalized residual handoff internally,
 so the determinant equality is no longer a public endpoint input on that route.
+This local-analytic endpoint now also has a side-condition-sourced variant:
+q-pilot positivity and source normalization are supplied as
+\texttt{IUTStage1SourceSideConditions}, and Lean reconstructs the named
+side-hypothesis record internally before applying the heterogeneous
+projected-weighted route.
 The heterogeneous projected-weighted source now also exposes the
 \(C_\Theta \geq -1\) companion endpoint by projecting through the same
 q-normalized local-analytic handoff, matching the signed endpoint at the
