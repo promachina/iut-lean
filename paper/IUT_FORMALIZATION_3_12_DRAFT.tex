@@ -1888,6 +1888,11 @@ q-normalized endpoint, localized \(C_\Theta\) audit, signed IUT~IV upper
 bound, and dichotomy.  The named preferred public endpoint now has the
 corresponding local-degree version, so the signed endpoint can be invoked
 without presenting the older local-analytic source as the public input.
+There is also a side-condition-sourced local-degree endpoint: Lean rebuilds
+the named side-hypothesis record from \texttt{IUTStage1SourceSideConditions}
+and returns both the signed dichotomy and the companion \(C_\Theta\ge -1\)
+bound from the same local-degree source, using the formula-gap projection for
+the dichotomy and the scale-synchronized projection for the lower bound.
 The same lowered source now carries the relative nonvacuity audit and the
 public-boundary inventory audit directly: Lean constructs the old
 local-analytic source internally before proving that the q-normalized route,
