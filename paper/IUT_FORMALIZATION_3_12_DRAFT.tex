@@ -1577,6 +1577,10 @@ summand/anchor/tensor-power identifications, the q-normalized theta identity,
 the Theorem~1.10 formula-gap valuation-ball source, and the finite residual
 Haar lower bound, then constructs the projected formula-gap source internally
 and returns both the signed dichotomy and \(C_\Theta\geq -1\).
+The same constructor-level endpoint now also has a side-condition-sourced
+variant: q-pilot positivity and source normalization are supplied as
+`IUTStage1SourceSideConditions`, and Lean rebuilds the named side-hypothesis
+record internally before entering the constituent route.
 The stricter same-index concrete source now records the case where the
 local-arithmetic handoff, the p-adic localized Step~(xi) determinant source,
 and the IUT~IV local-analytic ledger share the endpoint \(\beta\)-index.  Lean
