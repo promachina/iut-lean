@@ -558,11 +558,19 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311AlgorithmicOutputComponentSource.endpoint
 #guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311AlgorithmicOutputComponentSource.ofOutputFlagCalibration
+#guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311SubclaimComponentSource
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311SubclaimComponentSource.theorem311Subclaims
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311SubclaimComponentSource.endpoint
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311SubclaimComponentSource.ofOutputFlagCalibration
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311SubclaimComponentSource.OutputFlagCalibrationAudit
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311SubclaimComponentSource.outputFlagCalibrationAudit
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket
 #guard_msgs (drop info) in
@@ -599,6 +607,12 @@ theorem localizedCThetaBoundaryInventory_count_eq :
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineComponentRepresentativeSelectedLabelQPilotBridgeAlignmentSource
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineComponentRepresentativeSelectedLabelQPilotBridgeAlignmentSource_selectedQChoice_eq_source
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineComponentRepresentativeSelectedLabelQPilotBridgeAlignmentOutputFlagCalibrationSource
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineComponentRepresentativeSelectedLabelQPilotBridgeAlignmentOutputFlagCalibrationSource_selectedQChoice_eq_source
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineComponentRepresentativeSelectedLabelQPilotBridgeAlignmentOutputFlagCalibrationSource_subclaimAudit
 #guard_msgs (drop info) in
 #check IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineOneSidedComponentSelectedLabelQPilotBridgeAlignmentSource
 #guard_msgs (drop info) in
