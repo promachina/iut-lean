@@ -2918,6 +2918,42 @@ theorem endpoint
     (fun v hkind => (source.nondistinguishedLogShellEstimate v hkind).endpoint),
     (fun v hkind => (source.archimedeanMetricEstimate v hkind).endpoint)⟩
 
+set_option linter.style.longLine false in
+/--
+Endpoint preservation for the Proposition~1.4/1.5-backed local formula
+projection.
+
+Once the distinguished and archimedean procession formula bounds are compared
+with the local arithmetic-minus-main-log gaps, the source projected from
+Proposition~1.4/1.5 data satisfies the older Theorem~1.10 local-case formula
+endpoint.  This names the exact handoff from paper-level local estimates to the
+local-case source consumed by the arithmetic-divisor evaluation layer.
+-/
+theorem toLocalCaseFormulaSource_endpoint
+    (source :
+      IUTStage1IUTIVTheorem110PropositionLogShellFormulaSource
+        place divisorSource)
+    (distinguished_formula_le_gap :
+      ∀ v : place,
+        source.localKind v =
+            IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean ->
+          source.distinguishedProcessionBound v <=
+            divisorSource.localArithmeticUpperContribution
+                source.localPrimeErrorContribution v -
+              source.localMainLogContribution v)
+    (archimedean_formula_le_gap :
+      ∀ v : place,
+        source.localKind v =
+            IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean ->
+          source.archimedeanProcessionBound v <=
+            divisorSource.localArithmeticUpperContribution
+                source.localPrimeErrorContribution v -
+              source.localMainLogContribution v) :
+    (source.toLocalCaseFormulaSource
+      distinguished_formula_le_gap archimedean_formula_le_gap).Endpoint :=
+  (source.toLocalCaseFormulaSource
+    distinguished_formula_le_gap archimedean_formula_le_gap).endpoint
+
 end IUTStage1IUTIVTheorem110PropositionLogShellFormulaSource
 
 set_option linter.style.longLine false in
