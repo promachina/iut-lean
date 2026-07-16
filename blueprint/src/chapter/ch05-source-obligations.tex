@@ -4129,6 +4129,11 @@
   formula-gap valuation-ball source, and local arithmetic-degree residual
   payload directly, constructs the local-degree source internally, and exposes
   the same signed and \(\CTheta\ge -1\) outputs.
+  The p-adic unit-ball Step~(xi) synchronization constructor
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicIUTStage1IUTIVLocalArithmeticDegreePadicUnitBallStepXISynchronizationSourceToLocalArithmeticDegreeResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit}
+  now discharges that residual payload from the p-adic unit-ball Haar-index
+  source and the local synchronization identity, leaving the synchronization
+  itself as the remaining source obligation for this slice.
   The local-degree goal-evidence audit
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.goalEvidenceAudit}
   and public-boundary inventory
@@ -4657,8 +4662,8 @@
   upper bound alone permit \(C_\Theta<-1\).  Finally,
   \lean{Iut.Stage1.IUTStage1StepXIDependencyAudit.localArithmeticDegreeWithoutResidualLowerToyCountermodel_not_residual_ge_one}
   shows why the local arithmetic-degree residual lower bound remains a real
-  source obligation after the case-bounded source has been demoted to a
-  constructor route.  The
+  source obligation unless it is discharged by a lower constructor such as the
+  p-adic unit-ball Step~(xi) synchronization projection.  The
   next source-level replacements should remove further entries from this
   manifest rather than introducing more public endpoint variants.  The public
   \lean{Iut.Stage1.IUTStage1StepXI} module is now a

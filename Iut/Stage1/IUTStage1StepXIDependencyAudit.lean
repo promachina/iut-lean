@@ -238,7 +238,7 @@ def canonicalStage1RemainingAssumptions :
       consumerDeclaration :=
         "IUTStage1IUTIVLocalArithmeticDegreeResidualSource",
       note :=
-        "The canonical route no longer requires the stronger case-bounded residual source.  Case-bounded, local-analytic case, processional arithmetic-gap, and p-adic Haar routes are constructors into this residual package; constructing this package from the full IUT IV local estimates remains open." } ]
+        "The canonical route no longer requires the stronger case-bounded residual source.  Case-bounded, local-analytic case, processional arithmetic-gap, and p-adic Haar routes are constructors into this residual package.  The p-adic unit-ball Step XI synchronization route now projects directly to this package through preferredPublicIUTStage1IUTIVLocalArithmeticDegreePadicUnitBallStepXISynchronizationSourceToLocalArithmeticDegreeResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit; deriving that synchronization from full IUT IV local estimates remains open." } ]
 
 /-- Number of manifest entries in the canonical Stage 1 remaining boundary. -/
 def canonicalStage1RemainingAssumptions_count : Nat :=
@@ -4369,6 +4369,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicIUTStage1IUTIVLocalArithmeticDegreePadicUnitBallStepXISynchronizationSourceOfPadicUnitBallHaarDefectResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicIUTStage1IUTIVLocalArithmeticDegreePadicUnitBallStepXISynchronizationSourceOfPadicUnitBallHaarDefectResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicIUTStage1IUTIVLocalArithmeticDegreePadicUnitBallStepXISynchronizationSourceToLocalArithmeticDegreeResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicIUTStage1IUTIVLocalArithmeticDegreePadicUnitBallStepXISynchronizationSourceToLocalArithmeticDegreeResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicIUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallStepXISynchronizationSourceOfProcessionalPadicUnitBallHaarDefectResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit
 #guard_msgs (drop info) in
