@@ -4587,7 +4587,9 @@
   q-normalized, formula-gap, case-bounded endpoint and records which inputs are
   still source obligations.  The next source-level replacements should remove
   entries from this manifest rather than introducing more public endpoint
-  variants.
+  variants.  The public \lean{Iut.Stage1.IUTStage1StepXI} module is now a
+  re-export facade over \lean{Iut.Stage1.IUTStage1StepXI.Core}, so further
+  canonical-route slices can be split out while preserving existing names.
 \end{proof}
 
 \begin{theorem}[Preserve comparison levels]
