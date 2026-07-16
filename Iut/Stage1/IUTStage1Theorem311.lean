@@ -26095,6 +26095,83 @@ theorem preferredTransportedRepresentableScalarParameterPrincipalProductLocalize
 
 set_option linter.style.longLine false in
 /--
+Representability-backed transported scalar-parameter route with the non-Step
+payload audit derived from the lower additive-Haar payload.
+-/
+theorem preferredTransportedRepresentableScalarParameterPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit_fromAdditiveHaarPayload
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    {δ : Type x} {A : δ -> Type y} {S : δ -> Type z}
+    (transportedRepresentableSource :
+      IUTStage1Remark395TransportedRepresentableScalarParameterPrincipalProductHullSystemSource
+        (Point targetCopy) δ A S)
+    {η : Type a} {β : Type b} {γ : Type c}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        transportedRepresentableScalarParameterPrincipalProductHullOperator
+          sourceData transportedRepresentableSource)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        transportedRepresentableScalarParameterPrincipalProductPossibleRegion
+          sourceData transportedRepresentableSource)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned = localizedSource.familyHullLogVolume)
+    {Penv Pgau V : Type b} {μ : Type c}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (transportedRepresentableScalarParameterPrincipalProductHullFormationData
+          sourceData transportedRepresentableSource)
+        β Penv Pgau V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations)
+    (additiveAudit :
+      additive_haar_arithmetic_degree_padic.RemainingPayloadAudit) :
+    PreferredTransportedRepresentableScalarParameterPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+      sourceData paperTrace thetaSigned transportedRepresentableSource
+      localizedSource hullOperator_eq possibleRegion_eq
+      thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
+      additive_haar_arithmetic_degree_padic := by
+  let principalSource :=
+    transportedRepresentableSource.toPrincipalProductHullSystemSource
+  let concreteHullSource :=
+    principalProductConcreteHullSource sourceData principalSource
+  let stepXI :=
+    StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaEqFamilyHullThetaLGPOb7Source
+      (sourceData := sourceData)
+      paperTrace thetaSigned concreteHullSource
+      rfl localizedSource hullOperator_eq possibleRegion_eq
+      thetaSigned_eq_familyHullLogVolume ob7Source
+  have audit :
+      NonStepXIRemainingPayloadAudit
+        (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+          sourceData stepXI iutIV_cTheta
+          additive_haar_arithmetic_degree_padic) :=
+    nonStepXIRemainingPayloadAudit_of_additiveHaar
+      (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+        sourceData stepXI iutIV_cTheta
+        additive_haar_arithmetic_degree_padic)
+      additiveAudit
+  simpa [principalSource, concreteHullSource, stepXI] using
+    preferredTransportedRepresentableScalarParameterPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+      sourceData paperTrace thetaSigned transportedRepresentableSource
+      localizedSource hullOperator_eq possibleRegion_eq
+      thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
+      additive_haar_arithmetic_degree_padic audit
+
+set_option linter.style.longLine false in
+/--
 Locally representable transported scalar-parameter public hull source.
 
 This lowers the representability-backed route one step further: the caller
@@ -26391,6 +26468,83 @@ theorem preferredTransportedLocallyRepresentableScalarParameterPrincipalProductL
           localizedSource hullOperator_eq possibleRegion_eq
           thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
           additive_haar_arithmetic_degree_padic audit }
+
+set_option linter.style.longLine false in
+/--
+Locally representable transported scalar-parameter route with the non-Step
+payload audit derived from the lower additive-Haar payload.
+-/
+theorem preferredTransportedLocallyRepresentableScalarParameterPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit_fromAdditiveHaarPayload
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    {δ : Type x} {A : δ -> Type y} {S : δ -> Type z}
+    (transportedLocalSource :
+      IUTStage1Remark395TransportedLocallyRepresentableScalarParameterPrincipalProductHullSystemSource
+        (Point targetCopy) δ A S)
+    {η : Type a} {β : Type b} {γ : Type c}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        transportedLocallyRepresentableScalarParameterPrincipalProductHullOperator
+          sourceData transportedLocalSource)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        transportedLocallyRepresentableScalarParameterPrincipalProductPossibleRegion
+          sourceData transportedLocalSource)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned = localizedSource.familyHullLogVolume)
+    {Penv Pgau V : Type b} {μ : Type c}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (transportedLocallyRepresentableScalarParameterPrincipalProductHullFormationData
+          sourceData transportedLocalSource)
+        β Penv Pgau V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations)
+    (additiveAudit :
+      additive_haar_arithmetic_degree_padic.RemainingPayloadAudit) :
+    PreferredTransportedLocallyRepresentableScalarParameterPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+      sourceData paperTrace thetaSigned transportedLocalSource
+      localizedSource hullOperator_eq possibleRegion_eq
+      thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
+      additive_haar_arithmetic_degree_padic := by
+  let principalSource :=
+    transportedLocalSource.toPrincipalProductHullSystemSource
+  let concreteHullSource :=
+    principalProductConcreteHullSource sourceData principalSource
+  let stepXI :=
+    StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaEqFamilyHullThetaLGPOb7Source
+      (sourceData := sourceData)
+      paperTrace thetaSigned concreteHullSource
+      rfl localizedSource hullOperator_eq possibleRegion_eq
+      thetaSigned_eq_familyHullLogVolume ob7Source
+  have audit :
+      NonStepXIRemainingPayloadAudit
+        (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+          sourceData stepXI iutIV_cTheta
+          additive_haar_arithmetic_degree_padic) :=
+    nonStepXIRemainingPayloadAudit_of_additiveHaar
+      (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+        sourceData stepXI iutIV_cTheta
+        additive_haar_arithmetic_degree_padic)
+      additiveAudit
+  simpa [principalSource, concreteHullSource, stepXI] using
+    preferredTransportedLocallyRepresentableScalarParameterPrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+      sourceData paperTrace thetaSigned transportedLocalSource
+      localizedSource hullOperator_eq possibleRegion_eq
+      thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
+      additive_haar_arithmetic_degree_padic audit
 
 set_option linter.style.longLine false in
 /--
@@ -26696,6 +26850,85 @@ theorem preferredTransportedCoordinateScalarImagePrincipalProductLocalizedThetaE
 
 set_option linter.style.longLine false in
 /--
+Coordinate scalar-image route with the non-Step payload audit derived from the
+lower additive-Haar payload.
+-/
+theorem preferredTransportedCoordinateScalarImagePrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit_fromAdditiveHaarPayload
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    {δ : Type x} {A : δ -> Type y}
+    [∀ d : δ, Inhabited (A d)]
+    (coordinateSource :
+      IUTStage1Remark395CoordinateScalarImageDirectProductHullSource δ A)
+    (carrierEquiv : Point targetCopy ≃ ((d : δ) -> A d))
+    {η : Type a} {β : Type b} {γ : Type c}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        transportedCoordinateScalarImagePrincipalProductHullOperator
+          sourceData coordinateSource carrierEquiv)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        transportedCoordinateScalarImagePrincipalProductPossibleRegion
+          sourceData coordinateSource carrierEquiv)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned = localizedSource.familyHullLogVolume)
+    {Penv Pgau V : Type b} {μ : Type c}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (transportedCoordinateScalarImagePrincipalProductHullFormationData
+          sourceData coordinateSource carrierEquiv)
+        β Penv Pgau V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations)
+    (additiveAudit :
+      additive_haar_arithmetic_degree_padic.RemainingPayloadAudit) :
+    PreferredTransportedCoordinateScalarImagePrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+      sourceData paperTrace thetaSigned coordinateSource carrierEquiv
+      localizedSource hullOperator_eq possibleRegion_eq
+      thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
+      additive_haar_arithmetic_degree_padic := by
+  let principalSource :=
+    transportedCoordinateScalarImagePrincipalProductSource
+      coordinateSource carrierEquiv
+  let concreteHullSource :=
+    principalProductConcreteHullSource sourceData principalSource
+  let stepXI :=
+    StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaEqFamilyHullThetaLGPOb7Source
+      (sourceData := sourceData)
+      paperTrace thetaSigned concreteHullSource
+      rfl localizedSource hullOperator_eq possibleRegion_eq
+      thetaSigned_eq_familyHullLogVolume ob7Source
+  have audit :
+      NonStepXIRemainingPayloadAudit
+        (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+          sourceData stepXI iutIV_cTheta
+          additive_haar_arithmetic_degree_padic) :=
+    nonStepXIRemainingPayloadAudit_of_additiveHaar
+      (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+        sourceData stepXI iutIV_cTheta
+        additive_haar_arithmetic_degree_padic)
+      additiveAudit
+  simpa [principalSource, concreteHullSource, stepXI] using
+    preferredTransportedCoordinateScalarImagePrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+      sourceData paperTrace thetaSigned coordinateSource carrierEquiv
+      localizedSource hullOperator_eq possibleRegion_eq
+      thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
+      additive_haar_arithmetic_degree_padic audit
+
+set_option linter.style.longLine false in
+/--
 Real-line one-coordinate specialization of the coordinate scalar-image
 principal-product hull source.
 
@@ -26959,6 +27192,84 @@ theorem preferredTransportedRealLineCoordinateScalarImagePrincipalProductLocaliz
           localizedSource hullOperator_eq possibleRegion_eq
           thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
           additive_haar_arithmetic_degree_padic audit }
+
+set_option linter.style.longLine false in
+/--
+Real-line coordinate scalar-image route with the non-Step payload audit derived
+from the lower additive-Haar payload.
+-/
+theorem preferredTransportedRealLineCoordinateScalarImagePrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit_fromAdditiveHaarPayload
+    {targetCopy : Copy} {coric : Type u} {l : PrimeGeFive}
+    (sourceData :
+      Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := targetCopy) coric l)
+    (paperTrace : StepXIPaperTrace)
+    (thetaSigned : Real)
+    (coordinateSource :
+      IUTStage1Remark395CoordinateScalarImageDirectProductHullSource
+        Unit (fun _ => Real))
+    {η : Type a} {β : Type b} {γ : Type c}
+    [Fintype β] [Fintype γ]
+    (localizedSource :
+      IUTStage1Remark395LocalizedHullVectorBundleDecompositionSource
+        (Point targetCopy)
+        (Quot sourceData.Core.equalityQuotient.relation) η β γ)
+    (hullOperator_eq :
+      localizedSource.hullOperator =
+        transportedRealLineCoordinateScalarImagePrincipalProductHullOperator
+          sourceData coordinateSource)
+    (possibleRegion_eq :
+      localizedSource.possibleRegion =
+        transportedRealLineCoordinateScalarImagePrincipalProductPossibleRegion
+          sourceData coordinateSource)
+    (thetaSigned_eq_familyHullLogVolume :
+      thetaSigned = localizedSource.familyHullLogVolume)
+    {Penv Pgau V : Type b} {μ : Type c}
+    [Fintype Penv] [Fintype Pgau] [Fintype V]
+    (ob7Source :
+      StepXIThetaLGPOb7CompatibilitySource
+        sourceData
+        (transportedRealLineCoordinateScalarImagePrincipalProductHullFormationData
+          sourceData coordinateSource)
+        β Penv Pgau V μ)
+    (iutIV_cTheta : IUTIVCThetaObligations)
+    (additive_haar_arithmetic_degree_padic :
+      AdditiveHaarArithmeticDegreePadicObligations)
+    (additiveAudit :
+      additive_haar_arithmetic_degree_padic.RemainingPayloadAudit) :
+    PreferredTransportedRealLineCoordinateScalarImagePrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+      sourceData paperTrace thetaSigned coordinateSource
+      localizedSource hullOperator_eq possibleRegion_eq
+      thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
+      additive_haar_arithmetic_degree_padic := by
+  let principalSource :=
+    transportedRealLineCoordinateScalarImagePrincipalProductSource
+      (targetCopy := targetCopy)
+      coordinateSource
+  let concreteHullSource :=
+    principalProductConcreteHullSource sourceData principalSource
+  let stepXI :=
+    StepXIPaperDerivedHullDeterminantSource.ofConcreteHolomorphicHullSystemLocalizedDeterminantThetaEqFamilyHullThetaLGPOb7Source
+      (sourceData := sourceData)
+      paperTrace thetaSigned concreteHullSource
+      rfl localizedSource hullOperator_eq possibleRegion_eq
+      thetaSigned_eq_familyHullLogVolume ob7Source
+  have audit :
+      NonStepXIRemainingPayloadAudit
+        (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+          sourceData stepXI iutIV_cTheta
+          additive_haar_arithmetic_degree_padic) :=
+    nonStepXIRemainingPayloadAudit_of_additiveHaar
+      (ofHodgeTheaterLogThetaLogKummerStepXIPaperSource
+        sourceData stepXI iutIV_cTheta
+        additive_haar_arithmetic_degree_padic)
+      additiveAudit
+  simpa [principalSource, concreteHullSource, stepXI] using
+    preferredTransportedRealLineCoordinateScalarImagePrincipalProductLocalizedThetaEqFamilyHullStepXIPaperSourceRouteAudit
+      sourceData paperTrace thetaSigned coordinateSource
+      localizedSource hullOperator_eq possibleRegion_eq
+      thetaSigned_eq_familyHullLogVolume ob7Source iutIV_cTheta
+      additive_haar_arithmetic_degree_padic audit
 
 set_option linter.style.longLine false in
 /--
