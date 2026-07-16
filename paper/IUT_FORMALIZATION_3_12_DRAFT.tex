@@ -1622,6 +1622,9 @@ then derives the weighted determinant equality before entering the q-normalized
 handoff.  The public realized-exact local-arithmetic route now consumes this
 heterogeneous source and projects the q-normalized residual handoff internally,
 so the determinant equality is no longer a public endpoint input on that route.
+At the same heterogeneous local-analytic boundary, the residual Haar inequality
+can now be constructed from the packaged local arithmetic-degree residual
+source rather than supplied as a raw total bound.
 This local-analytic endpoint now also has a side-condition-sourced variant:
 q-pilot positivity and source normalization are supplied as
 \texttt{IUTStage1SourceSideConditions}, and Lean reconstructs the named
