@@ -143,7 +143,7 @@ structure CanonicalStage1RemainingAssumption where
 
 /-- Short name for the current canonical public 3.11-to-3.12 Stage 1 route. -/
 def canonicalStage1RouteName : String :=
-  "same-index projected-principal weighted determinant q-normalized case-bounded route with derived p-adic finite source"
+  "same-index projected-principal scale-synchronized formula-gap case-bounded route with derived p-adic finite source"
 
 /--
 Current canonical Stage 1 remaining-assumption manifest.
@@ -159,14 +159,14 @@ def canonicalStage1RemainingAssumptions :
       status := .sourceObligation,
       paperSource := "IUT III, Theorem 3.11; IUT I-II initial theta/Hodge-theater setup",
       consumerDeclaration :=
-        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedCaseBoundedResidualSourcePrimitiveConstructorInternalPrincipalHDDSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
+        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedFormulaGapCaseBoundedResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
       note :=
         "Concrete primitive Theorem 3.11 packet is still supplied rather than constructed from initial theta data." },
     { name := "sourceWithSymmetry",
       status := .sourceObligation,
       paperSource := "IUT III, Theorem 3.11 multiradial representation and Ind2 transport",
       consumerDeclaration :=
-        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedCaseBoundedResidualSourcePrimitiveConstructorInternalPrincipalHDDSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
+        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedFormulaGapCaseBoundedResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
       note :=
         "Symmetry-label/fiber transport data remains a source-level theorem to derive from the log-theta procession." },
     { name := "compactOpenRealizedExactSource",
@@ -211,20 +211,20 @@ def canonicalStage1RemainingAssumptions :
         "IUTStage1SourceSideConditions",
       note :=
         "q-positivity, normalization, and side-condition facts are reconstructed into the route but not yet derived from paper data." },
-    { name := "weighted determinant component synchronizations",
+    { name := "constructor-built determinant-source synchronization",
       status := .sourceObligation,
       paperSource := "IUT III, Remark 3.9.5 Ob3/Ob4 determinant bridge",
       consumerDeclaration :=
-        "ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedCaseBoundedResidualSource.weightedDeterminantSummand_eq_projectedPrincipalProductLocalizedStepXI; weightedDeterminantAnchor_eq_projectedPrincipalProductLocalizedStepXI; weightedDeterminantPositiveTensorPower_eq_projectedPrincipalProductLocalizedStepXI",
+        "ConstructorBuiltPrincipalProductPadicFiniteLocalizedLocalAnalyticResidualHaarSource.determinantSource_eq_principalProductLocalizedStepXI",
       note :=
-        "The p-adic finite localized source is now derived from the local arithmetic handoff; the summand, anchor, and positive tensor-power identifications remain explicit equality inputs against that derived source." },
-    { name := "thetaSigned_eq_projectedPrincipalProductLocalizedAdjustedSum_mul_absLogQ",
+        "The canonical route now consumes the scale-synchronized source: the three weighted determinant component equalities of the older q-normalized route are no longer canonical public fields.  They are one way to construct this whole determinant-source equality, but the boundary is stated at the determinant-source synchronization level." },
+    { name := "canonicalCThetaScale_eq_principalProductLocalizedStepXISum",
       status := .sourceObligation,
       paperSource := "IUT III, Corollary 3.12 theta/log-volume comparison",
       consumerDeclaration :=
-        "ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedCaseBoundedResidualSource.thetaSigned_eq_projectedPrincipalProductLocalizedAdjustedSum_mul_absLogQ",
+        "ConstructorBuiltPrincipalProductPadicFiniteLocalizedLocalAnalyticResidualHaarSource.canonicalCThetaScale_eq_principalProductLocalizedStepXISum",
       note :=
-        "The canonical theta/log-volume scale identity is now stated over the local arithmetic handoff's derived p-adic finite localized source, but it is not yet derived from the log-theta lattice." },
+        "The raw same-index theta/log-volume identity is not a canonical public field on this route.  Lean derives the q-normalized theta identity from canonical C_Theta-scale synchronization and q-pilot positivity before entering the ordered-real endpoint." },
     { name := "theorem110ValuationBallFormulaGapSource",
       status := .sourceObligation,
       paperSource := "IUT IV, Theorem 1.10 valuation-ball arithmetic divisor estimates",

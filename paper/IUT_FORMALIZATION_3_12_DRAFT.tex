@@ -1760,8 +1760,11 @@ The determinant side of this constructor has now been lowered further: Lean
 derives the constructor-built weighted determinant equality from the three
 component equalities for weighted summands, anchor, and positive tensor power
 against the projected localized Step~(xi) determinant source.  The canonical
-\(C_\Theta\)-scale equality remains the explicit scale-synchronization input at
-this boundary.
+\(C_\Theta\)-scale equality remains the explicit scale-synchronization input
+for this constructor path, but the canonical audited boundary is now the
+scale-synchronized source itself: the whole determinant-source synchronization
+and canonical scale synchronization are the remaining source facts, while the
+three component equalities are only one checked way to construct the former.
 At the packaged q-normalized local arithmetic-degree boundary, Lean now also
 derives this canonical scale equality from the theta/log-volume identity
 \(\theta=\sum_v StepXI_v\cdot(-q)\) together with q-pilot positivity before
@@ -2113,10 +2116,13 @@ scale-synchronized local-analytic source.  The weighted-determinant refinement
 now composes this constructor into the signed and \(\CTheta\ge -1\) endpoints:
 Lean derives the determinant-source equality from the summand, anchor, and
 positive tensor-power identifications before entering the same local-degree
-route.  Thus the remaining lower boundary is to derive those component
-synchronizations, the theta/log-volume scale identity that implies canonical
-scale synchronization, and the localized IUT~IV case-estimate data from the
-concrete theta-region/Hodge-calibrated possible image data.
+route.  The canonical manifest now records the stronger scale-synchronized
+case-bounded route: the older component synchronizations and raw
+\(\theta=\sum_v StepXI_v(-q)\) field are not canonical public assumptions.
+What remains is to derive the whole constructor-built determinant-source
+synchronization, the canonical \(C_\Theta\)-scale synchronization, and the
+localized IUT~IV case-estimate data from the concrete
+theta-region/Hodge-calibrated possible image data.
 The
 local-upper refinement defines the local Haar defect as the residual between
 the IUT~IV local arithmetic-upper contribution, the localized Step~(xi)
