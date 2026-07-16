@@ -1658,9 +1658,10 @@ A constructor-level public endpoint lowers this boundary once more: instead of
 taking the projected formula-gap source as a route argument, it takes the
 principal-product local Step~(xi) decomposition, the projected weighted
 summand/anchor/tensor-power identifications, the q-normalized theta identity,
-the Theorem~1.10 formula-gap valuation-ball source, and the finite residual
-Haar lower bound, then constructs the projected formula-gap source internally
-and returns both the signed dichotomy and \(C_\Theta\geq -1\).
+the Theorem~1.10 formula-gap valuation-ball source, and the local
+arithmetic-degree residual payload.  Lean derives the finite residual Haar
+lower bound from that payload, constructs the projected formula-gap source
+internally, and returns both the signed dichotomy and \(C_\Theta\geq -1\).
 The same constructor-level endpoint now also has a side-condition-sourced
 variant: q-pilot positivity and source normalization are supplied as
 `IUTStage1SourceSideConditions`, and Lean rebuilds the named side-hypothesis
