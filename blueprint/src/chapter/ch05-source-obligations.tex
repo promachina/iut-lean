@@ -3756,9 +3756,10 @@
   and
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantScaleSynchronizedLocalAnalyticSource.cTheta_ge_neg_one_ofCaseBoundedResidualSource};
   unlike the older q-normalized case-bounded surface, this route does not
-  expose a raw same-index theta-normalization field.  Thus the active
-  canonical route is the scale-synchronized case-bounded route rather than the
-  older q-normalized case-bounded source.
+  expose a raw same-index theta-normalization field.  It is now a constructor
+  route into the active q-normalized local-arithmetic-degree boundary, where
+  Lean derives scale synchronization from the theta/log-volume identity and
+  q-pilot positivity.
   The local-analytic case-source variant
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantScaleSynchronizedLocalAnalyticSource.toScaleSynchronizedFormulaGapSourceOfLocalAnalyticCaseSource}
   lowers the same branch one step further: its public IUT~IV input is the
@@ -4634,13 +4635,18 @@
 
   The current CI audit freezes the canonical Stage~1 trust boundary as
   \lean{Iut.Stage1.IUTStage1StepXIDependencyAudit.canonicalStage1RemainingAssumptions}.
-  This manifest is attached to the same-index projected-principal,
-  weighted-determinant, q-normalized, case-bounded endpoint and records which
-  inputs are still source obligations.  The p-adic finite localized
-  hull-vector-bundle source is no longer an independent boundary item on this
-  route: Lean derives it from the finite-extension restriction-calibrated local
-  arithmetic handoff before comparing the weighted determinant and IUT~IV
-  residual data.  The audit includes the one-place diagnostic
+  This manifest is attached to the same-index q-normalized
+  local-arithmetic-degree endpoint and records which inputs are still source
+  obligations.  The p-adic finite localized hull-vector-bundle source is no
+  longer an independent boundary item on this route: Lean derives it from the
+  finite-extension restriction-calibrated local arithmetic handoff before
+  comparing the weighted determinant and IUT~IV residual data.  The
+  canonical \(C_\Theta\)-scale equality is also no longer exposed as a public
+  field at this boundary; Lean derives it from the q-normalized
+  theta/log-volume identity and q-pilot positivity.  The stronger case-bounded
+  IUT~IV source is now a constructor into the local arithmetic-degree residual
+  package, not the canonical public residual input.  The audit includes the
+  one-place diagnostic
   \lean{Iut.Stage1.IUTStage1StepXIDependencyAudit.detachedPadicFiniteToyCountermodel_not_detached_theta_identity},
   which shows that a detached p-adic finite scale can satisfy neither the
   handoff-derived theta identity nor the endpoint comparison automatically.
@@ -4648,7 +4654,11 @@
   \lean{Iut.Stage1.IUTStage1StepXIDependencyAudit.signedCThetaWithoutQThetaToyCountermodel_not_cTheta_ge_neg_one},
   showing that the signed \(q\leq\theta\) comparison is essential for the
   \(C_\Theta\ge -1\) lower-bound projection: q-positivity plus the IUT~IV-style
-  upper bound alone permit \(C_\Theta<-1\).  The
+  upper bound alone permit \(C_\Theta<-1\).  Finally,
+  \lean{Iut.Stage1.IUTStage1StepXIDependencyAudit.localArithmeticDegreeWithoutResidualLowerToyCountermodel_not_residual_ge_one}
+  shows why the local arithmetic-degree residual lower bound remains a real
+  source obligation after the case-bounded source has been demoted to a
+  constructor route.  The
   next source-level replacements should remove further entries from this
   manifest rather than introducing more public endpoint variants.  The public
   \lean{Iut.Stage1.IUTStage1StepXI} module is now a

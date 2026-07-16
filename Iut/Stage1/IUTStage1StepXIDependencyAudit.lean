@@ -143,7 +143,7 @@ structure CanonicalStage1RemainingAssumption where
 
 /-- Short name for the current canonical public 3.11-to-3.12 Stage 1 route. -/
 def canonicalStage1RouteName : String :=
-  "same-index projected-principal scale-synchronized formula-gap case-bounded route with derived p-adic finite source"
+  "same-index q-normalized local-arithmetic-degree route with derived scale-synchronized source"
 
 /--
 Current canonical Stage 1 remaining-assumption manifest.
@@ -159,14 +159,14 @@ def canonicalStage1RemainingAssumptions :
       status := .sourceObligation,
       paperSource := "IUT III, Theorem 3.11; IUT I-II initial theta/Hodge-theater setup",
       consumerDeclaration :=
-        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedFormulaGapCaseBoundedResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
+        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
       note :=
         "Concrete primitive Theorem 3.11 packet is still supplied rather than constructed from initial theta data." },
     { name := "sourceWithSymmetry",
       status := .sourceObligation,
       paperSource := "IUT III, Theorem 3.11 multiradial representation and Ind2 transport",
       consumerDeclaration :=
-        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedFormulaGapCaseBoundedResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
+        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
       note :=
         "Symmetry-label/fiber transport data remains a source-level theorem to derive from the log-theta procession." },
     { name := "compactOpenRealizedExactSource",
@@ -211,20 +211,20 @@ def canonicalStage1RemainingAssumptions :
         "IUTStage1SourceSideConditions",
       note :=
         "q-positivity, normalization, and side-condition facts are reconstructed into the route but not yet derived from paper data." },
-    { name := "constructor-built determinant-source synchronization",
+    { name := "weighted determinant component synchronization",
       status := .sourceObligation,
       paperSource := "IUT III, Remark 3.9.5 Ob3/Ob4 determinant bridge",
       consumerDeclaration :=
-        "ConstructorBuiltPrincipalProductPadicFiniteLocalizedLocalAnalyticResidualHaarSource.determinantSource_eq_principalProductLocalizedStepXI",
+        "ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource",
       note :=
-        "The canonical route now consumes the scale-synchronized source: the three weighted determinant component equalities of the older q-normalized route are no longer canonical public fields.  They are one way to construct this whole determinant-source equality, but the boundary is stated at the determinant-source synchronization level." },
-    { name := "canonicalCThetaScale_eq_principalProductLocalizedStepXISum",
+        "The canonical route is now the q-normalized local-arithmetic-degree constituent endpoint.  The summand, anchor, and positive tensor-power identifications remain source obligations; Lean reconstructs the scale-synchronized determinant source from them." },
+    { name := "thetaSigned_eq_projectedPrincipalProductLocalizedAdjustedSum_mul_absLogQ",
       status := .sourceObligation,
       paperSource := "IUT III, Corollary 3.12 theta/log-volume comparison",
       consumerDeclaration :=
-        "ConstructorBuiltPrincipalProductPadicFiniteLocalizedLocalAnalyticResidualHaarSource.canonicalCThetaScale_eq_principalProductLocalizedStepXISum",
+        "ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.toScaleSynchronizedLocalAnalyticSource",
       note :=
-        "The raw same-index theta/log-volume identity is not a canonical public field on this route.  Lean derives the q-normalized theta identity from canonical C_Theta-scale synchronization and q-pilot positivity before entering the ordered-real endpoint." },
+        "The public source now carries the q-normalized theta/log-volume identity.  Lean derives canonical C_Theta-scale synchronization from this identity and q-pilot positivity, so the raw canonical-scale equality is no longer a canonical public field." },
     { name := "theorem110ValuationBallFormulaGapSource",
       status := .sourceObligation,
       paperSource := "IUT IV, Theorem 1.10 valuation-ball arithmetic divisor estimates",
@@ -232,13 +232,13 @@ def canonicalStage1RemainingAssumptions :
         "IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource",
       note :=
         "The local upper-bound ledger is typed but still supplied as an IUT IV source object." },
-    { name := "caseBoundedResidualSource",
+    { name := "localArithmeticDegreeResidualSource",
       status := .sourceObligation,
-      paperSource := "IUT IV local case split: nonarchimedean distal, nondistal, archimedean, distinguished +1",
+      paperSource := "IUT IV local arithmetic-degree identity and Haar residual lower bound",
       consumerDeclaration :=
-        "IUTStage1IUTIVTheorem110ValuationBallCaseBoundedPointwiseResidualSource",
+        "IUTStage1IUTIVLocalArithmeticDegreeResidualSource",
       note :=
-        "The case-bounded residual source replaces a raw Haar lower-bound field but is not yet constructed from the local estimates." } ]
+        "The canonical route no longer requires the stronger case-bounded residual source.  Case-bounded, local-analytic case, processional arithmetic-gap, and p-adic Haar routes are constructors into this residual package; constructing this package from the full IUT IV local estimates remains open." } ]
 
 /-- Number of manifest entries in the canonical Stage 1 remaining boundary. -/
 def canonicalStage1RemainingAssumptions_count : Nat :=
@@ -409,10 +409,57 @@ theorem localAnalyticCaseWithoutDistinguishedGapToyCountermodel_not_residual_ge_
         localAnalyticCaseWithoutDistinguishedGapToyCountermodel.distinguishedStepXI :=
   localAnalyticCaseWithoutDistinguishedGapToyCountermodel.not_residual_ge_one
 
+/--
+One-place diagnostic for the canonical local-arithmetic-degree boundary.
+
+After the canonical route is lowered from the case-bounded IUT~IV source to the
+local arithmetic-degree residual source, the essential remaining numerical law
+is the residual lower bound.  This toy model keeps the local arithmetic-degree
+identity but reverses the lower bound; the \(C_\Theta\)-style one-unit residual
+needed by the endpoint is then unavailable.
+-/
+structure LocalArithmeticDegreeWithoutResidualLowerToyCountermodel where
+  localArithmeticUpper : Real
+  localStepXI : Real
+  localMainLog : Real
+  localHaarDefect : Real
+  local_identity :
+    localArithmeticUpper = localStepXI + localHaarDefect + localMainLog
+  residual_lt_one : localHaarDefect < 1
+
+theorem LocalArithmeticDegreeWithoutResidualLowerToyCountermodel.not_residual_ge_one
+    (toy : LocalArithmeticDegreeWithoutResidualLowerToyCountermodel) :
+    ¬ (1 : Real) <= toy.localHaarDefect :=
+  not_le_of_gt toy.residual_lt_one
+
+/--
+Concrete local-degree countermodel with zero Haar residual.  The arithmetic
+identity holds, but the residual lower bound required by the canonical endpoint
+fails.
+-/
+def localArithmeticDegreeWithoutResidualLowerToyCountermodel :
+    LocalArithmeticDegreeWithoutResidualLowerToyCountermodel :=
+  { localArithmeticUpper := 0,
+    localStepXI := 0,
+    localMainLog := 0,
+    localHaarDefect := 0,
+    local_identity := by norm_num,
+    residual_lt_one := by norm_num }
+
+theorem localArithmeticDegreeWithoutResidualLowerToyCountermodel_not_residual_ge_one :
+    ¬ (1 : Real) <=
+      localArithmeticDegreeWithoutResidualLowerToyCountermodel.localHaarDefect :=
+  localArithmeticDegreeWithoutResidualLowerToyCountermodel.not_residual_ge_one
+
 #guard_msgs (drop info) in
 #check LocalAnalyticCaseWithoutDistinguishedGapToyCountermodel.not_residual_ge_one
 #guard_msgs (drop info) in
 #print axioms LocalAnalyticCaseWithoutDistinguishedGapToyCountermodel.not_residual_ge_one
+
+#guard_msgs (drop info) in
+#check LocalArithmeticDegreeWithoutResidualLowerToyCountermodel.not_residual_ge_one
+#guard_msgs (drop info) in
+#print axioms LocalArithmeticDegreeWithoutResidualLowerToyCountermodel.not_residual_ge_one
 
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedCaseBoundedResidualSourcePrimitiveConstructorInternalPrincipalHDDSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
