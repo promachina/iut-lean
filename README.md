@@ -8,11 +8,11 @@ objects, transports, indeterminacies, and real-valued comparisons explicit enoug
 that Lean can check whether the claimed implication is valid under stated
 hypotheses.
 
-The local `docs/` folder contains Markdown conversions of the four IUT papers,
-Mochizuki's April 2026 formalization progress report, and the Scholze-Stix
-critique. It is intentionally gitignored as a local paper cache. The tracked
-research draft is `paper/IUT_FORMALIZATION_3_12_DRAFT.tex`, with the rendered
-PDF at `paper/IUT_FORMALIZATION_3_12_DRAFT.pdf`.
+The tracked `docs/` folder contains Markdown conversions of the four IUT papers,
+Mochizuki's formalization progress reports, the Scholze-Stix critique, and
+related source papers used as the local research corpus. The tracked research
+draft is `paper/IUT_FORMALIZATION_3_12_DRAFT.tex`, with the rendered PDF at
+`paper/IUT_FORMALIZATION_3_12_DRAFT.pdf`.
 
 ## Current Understanding
 
