@@ -8782,6 +8782,38 @@ theorem ext_of_localization_anchor_tensorPower
   cases target
   simp_all
 
+theorem weightedDeterminantSource_eq_of_localization_anchor_tensorPower
+    (source target : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (localization_eq : source.localization = target.localization)
+    (anchor_eq : source.anchor = target.anchor)
+    (positiveTensorPower_eq :
+      source.positiveTensorPower = target.positiveTensorPower) :
+    source.toWeightedDeterminantSource = target.toWeightedDeterminantSource := by
+  rw [ext_of_localization_anchor_tensorPower
+    source target localization_eq anchor_eq positiveTensorPower_eq]
+
+theorem weightedDeterminant_summand_anchor_tensorPower_eq_of_localization_anchor_tensorPower
+    (source target : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (localization_eq : source.localization = target.localization)
+    (anchor_eq : source.anchor = target.anchor)
+    (positiveTensorPower_eq :
+      source.positiveTensorPower = target.positiveTensorPower) :
+    (∀ index : β,
+      source.toWeightedDeterminantSource.summand index =
+        target.toWeightedDeterminantSource.summand index) ∧
+      source.toWeightedDeterminantSource.anchor =
+        target.toWeightedDeterminantSource.anchor ∧
+      source.toWeightedDeterminantSource.positiveTensorPower =
+        target.toWeightedDeterminantSource.positiveTensorPower := by
+  have hsource :=
+    weightedDeterminantSource_eq_of_localization_anchor_tensorPower
+      source target localization_eq anchor_eq positiveTensorPower_eq
+  exact ⟨fun index => congrArg (fun data => data.summand index) hsource,
+    congrArg IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.anchor hsource,
+    congrArg
+      IUTStage1ArithmeticVectorBundleWeightedDeterminantSource.positiveTensorPower
+      hsource⟩
+
 end IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource
 
 /--
