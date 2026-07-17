@@ -16590,6 +16590,73 @@ variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
 variable [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
 variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
 
+set_option linter.style.longLine false in
+/--
+Extensionality for finite-extension-over-`Q_p` Haar normalization sources by
+their mathematical payload fields.
+
+The remaining fields are analytic laws about these data.  Once the integer
+unit-ball source, realization, realized-region map, selected compact-open
+radius, and Haar measure are identified, Lean closes the law fields by proof
+irrelevance.  This lets the Step~(xi) p-adic determinant layer ask for
+component synchronization of the local-field Haar data instead of equality of
+the whole source record.
+-/
+theorem ext_of_components
+    {left right :
+      IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource
+        α p K hullSystem}
+    (integerSource_eq : left.integerSource = right.integerSource)
+    (realization_eq : left.realization = right.realization)
+    (realizedRegion_eq : left.realizedRegion = right.realizedRegion)
+    (compactOpenRadius_eq :
+      left.compactOpenRadius = right.compactOpenRadius)
+    (haarMeasure_eq : left.haarMeasure = right.haarMeasure) :
+    left = right := by
+  cases left
+  cases right
+  cases integerSource_eq
+  cases realization_eq
+  cases realizedRegion_eq
+  cases compactOpenRadius_eq
+  cases haarMeasure_eq
+  simp
+
+set_option linter.style.longLine false in
+/--
+Componentwise equality of finite-extension-over-`Q_p` Haar normalization
+sources.
+
+This is the lower local-field boundary for the p-adic unit-ball determinant
+source: it matches the finite-extension Haar payload directly and leaves the
+analytic law fields proof-irrelevant.
+-/
+structure ComponentwiseEqual
+    (left right :
+      IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource
+        α p K hullSystem) :
+    Prop where
+  integerSource_eq : left.integerSource = right.integerSource
+  realization_eq : left.realization = right.realization
+  realizedRegion_eq : left.realizedRegion = right.realizedRegion
+  compactOpenRadius_eq :
+    left.compactOpenRadius = right.compactOpenRadius
+  haarMeasure_eq : left.haarMeasure = right.haarMeasure
+
+set_option linter.style.longLine false in
+theorem ComponentwiseEqual.eq
+    {left right :
+      IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource
+        α p K hullSystem}
+    (matching : ComponentwiseEqual left right) :
+    left = right :=
+  ext_of_components
+    matching.integerSource_eq
+    matching.realization_eq
+    matching.realizedRegion_eq
+    matching.compactOpenRadius_eq
+    matching.haarMeasure_eq
+
 noncomputable def basePrimeScalePoint
     (_data :
       IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource
@@ -22944,6 +23011,27 @@ theorem additiveHaarFactor_componentwiseEqual_of_padicFiniteExtensionFactor_eq
       IUTStage1ValuedFieldIntegerUnitBallSource.integerSubring, hfactor]
 
 set_option linter.style.longLine false in
+theorem additiveHaarFactor_componentwiseEqual_of_padicFiniteExtensionFactor_componentwiseEqual
+    (source target :
+      IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleSource
+        α p K γ hullSystem)
+    (factor_match :
+      ∀ summand : γ,
+        IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource.ComponentwiseEqual
+          (source.padicFiniteExtensionFactor summand)
+          (target.padicFiniteExtensionFactor summand))
+    (summand : γ) :
+    IUTStage1AdditiveHaarCompactOpenNormalizationSource.ComponentwiseEqual
+      (source.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+        summand)
+      (target.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+        summand) :=
+  source.additiveHaarFactor_componentwiseEqual_of_padicFiniteExtensionFactor_eq
+    target
+    (fun summand => (factor_match summand).eq)
+    summand
+
+set_option linter.style.longLine false in
 theorem endpoint
     (data :
       IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleSource
@@ -23205,6 +23293,38 @@ theorem toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionFactor_s
           (target.localization index).bundle
           (padicFiniteExtensionFactor_eq index)
           summand
+  · exact structureSheafLogVolume_eq
+  · exact weight_eq
+  · exact anchor_eq
+  · exact positiveTensorPower_eq
+
+set_option linter.style.longLine false in
+theorem toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionFactor_componentwise_structureSheaf_weight_anchor_tensorPower
+    (source target :
+      IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+        α p K β γ hullSystem)
+    (padicFiniteExtensionFactor_match :
+      ∀ index : β, ∀ summand : γ,
+        IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource.ComponentwiseEqual
+          ((source.localization index).bundle.padicFiniteExtensionFactor summand)
+          ((target.localization index).bundle.padicFiniteExtensionFactor summand))
+    (structureSheafLogVolume_eq :
+      ∀ index : β,
+        (source.localization index).structureSheafLogVolume =
+          (target.localization index).structureSheafLogVolume)
+    (weight_eq :
+      ∀ index : β,
+        (source.localization index).weight =
+          (target.localization index).weight)
+    (anchor_eq : source.anchor = target.anchor)
+    (positiveTensorPower_eq :
+      source.positiveTensorPower = target.positiveTensorPower) :
+    source.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource =
+      target.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource := by
+  apply
+    toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionFactor_structureSheaf_weight_anchor_tensorPower
+  · intro index summand
+    exact (padicFiniteExtensionFactor_match index summand).eq
   · exact structureSheafLogVolume_eq
   · exact weight_eq
   · exact anchor_eq
