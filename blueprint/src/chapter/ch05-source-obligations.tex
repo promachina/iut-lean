@@ -4169,10 +4169,13 @@
   valuation-ball formula-gap matched prime-error source.  It is now also
   constructed from the arithmetic-degree-controlled local arithmetic source:
   Lean combines \(E_v=\operatorname{defect}_v+M_v\) with the p-adic Haar-index
-  identification \(\operatorname{defect}_v=\delta_v\).  Thus the finite sums,
-  nonnegativity, formula-gap construction data, and arithmetic-divisor
-  calibration are read from the valuation-ball local-estimate package rather
-  than restated on the p-adic split record, and
+  identification \(\operatorname{defect}_v=\delta_v\).  The same constructor is
+  now composed one layer lower from the formula-gap matched
+  arithmetic-degree/p-adic source plus the synchronized Proposition~1.4/1.5
+  arithmetic-degree comparison source.  Thus the finite sums, nonnegativity,
+  formula-gap construction data, and arithmetic-divisor calibration are read
+  from the valuation-ball local-estimate package rather than restated on the
+  p-adic split record, and
   \lean{Iut.Stage1.Experiments.IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource}
   consumes that constructed split together with the arithmetic-degree
   calibration before projecting to the canonical p-adic formula source; the
