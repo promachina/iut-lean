@@ -15070,6 +15070,81 @@ theorem endpoint
             ((data.localization index).bundle.additiveHaarFactor summand).compactOpenSubset) :=
   ⟨rfl, data.projected_directSummandLogVolume_eq_additiveHaarNormalized⟩
 
+set_option linter.style.longLine false in
+theorem toAdjustedDeterminantSource_eq_of_pointwise_additiveHaarFactor_structureSheaf_weight_anchor_tensorPower
+    (source target :
+      IUTStage1Remark395Ob3Ob4AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+        α η K β γ hullSystem)
+    (localRing_eq :
+      ∀ index : β,
+        (source.localization index).bundle.localRing =
+          (target.localization index).bundle.localRing)
+    (additiveHaarFactor_eq :
+      ∀ index : β, ∀ summand : γ,
+        IUTStage1AdditiveHaarCompactOpenNormalizationSource.ComponentwiseEqual
+          ((source.localization index).bundle.additiveHaarFactor summand)
+          ((target.localization index).bundle.additiveHaarFactor summand))
+    (structureSheafLogVolume_eq :
+      ∀ index : β,
+        (source.localization index).structureSheafLogVolume =
+          (target.localization index).structureSheafLogVolume)
+    (weight_eq :
+      ∀ index : β,
+        (source.localization index).weight =
+          (target.localization index).weight)
+    (anchor_eq : source.anchor = target.anchor)
+    (positiveTensorPower_eq :
+      source.positiveTensorPower = target.positiveTensorPower) :
+    source.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource =
+      target.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource := by
+  apply
+    IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_localRing_directSummand_structureSheaf_adjustedRaw_weight_anchor_tensorPower
+  · exact localRing_eq
+  · intro index
+    funext summand
+    rw [source.projected_directSummandLogVolume_eq_additiveHaarNormalized,
+      target.projected_directSummandLogVolume_eq_additiveHaarNormalized]
+    have hfactor := additiveHaarFactor_eq index summand
+    dsimp [IUTStage1AdditiveHaarCompactOpenNormalizationSource.normalizedHaarLogVolume,
+      IUTStage1AdditiveHaarCompactOpenNormalizationSource.rawHaarLogVolume,
+      IUTStage1AdditiveHaarCompactOpenNormalizationSource.rawHaarMeasure]
+    rw [hfactor.haarMeasure_eq, hfactor.compactOpenSubset_eq,
+      hfactor.finiteExtensionDegree_eq]
+  · exact structureSheafLogVolume_eq
+  · intro index
+    calc
+      (source.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.localization
+            index).adjustedRawLogVolume =
+          (Finset.univ.sum fun summand : γ =>
+            ((source.localization index).bundle.additiveHaarFactor summand).normalizedHaarLogVolume
+              ((source.localization index).bundle.additiveHaarFactor summand).compactOpenSubset) -
+            (source.localization index).structureSheafLogVolume := by
+        simpa using
+          (source.localization index).projected_adjustedRawLogVolume_eq_additiveHaar
+      _ =
+          (Finset.univ.sum fun summand : γ =>
+            ((target.localization index).bundle.additiveHaarFactor summand).normalizedHaarLogVolume
+              ((target.localization index).bundle.additiveHaarFactor summand).compactOpenSubset) -
+            (target.localization index).structureSheafLogVolume := by
+        rw [structureSheafLogVolume_eq index]
+        congr 1
+        apply Finset.sum_congr rfl
+        intro summand _hsummand
+        have hfactor := additiveHaarFactor_eq index summand
+        dsimp [IUTStage1AdditiveHaarCompactOpenNormalizationSource.normalizedHaarLogVolume,
+          IUTStage1AdditiveHaarCompactOpenNormalizationSource.rawHaarLogVolume,
+          IUTStage1AdditiveHaarCompactOpenNormalizationSource.rawHaarMeasure]
+        rw [hfactor.haarMeasure_eq, hfactor.compactOpenSubset_eq,
+          hfactor.finiteExtensionDegree_eq]
+      _ =
+          (target.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.localization
+            index).adjustedRawLogVolume := by
+        simpa using
+          ((target.localization index).projected_adjustedRawLogVolume_eq_additiveHaar).symm
+  · exact weight_eq
+  · exact anchor_eq
+  · exact positiveTensorPower_eq
+
 end IUTStage1Remark395Ob3Ob4AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
 
 set_option linter.style.longLine false in
@@ -22526,6 +22601,54 @@ theorem endpoint
         |>.additiveHaarFactor_compactOpenMeasure_eq_one summand,
     data.projected_directSummandLogVolume_eq_unitBallValuationHaarNormalized⟩
 
+set_option linter.style.longLine false in
+theorem toAdjustedDeterminantSource_eq_of_pointwise_unitBallValuationHaarFactor_structureSheaf_weight_anchor_tensorPower
+    (source target :
+      IUTStage1Remark395Ob3Ob4UnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+        α η K β γ hullSystem)
+    (localRing_eq :
+      ∀ index : β,
+        (source.localization index).bundle.localRing =
+          (target.localization index).bundle.localRing)
+    (additiveHaarFactor_eq :
+      ∀ index : β, ∀ summand : γ,
+        IUTStage1AdditiveHaarCompactOpenNormalizationSource.ComponentwiseEqual
+          ((source.localization index).bundle.additiveHaarFactor summand)
+          ((target.localization index).bundle.additiveHaarFactor summand))
+    (structureSheafLogVolume_eq :
+      ∀ index : β,
+        (source.localization index).structureSheafLogVolume =
+          (target.localization index).structureSheafLogVolume)
+    (weight_eq :
+      ∀ index : β,
+        (source.localization index).weight =
+          (target.localization index).weight)
+    (anchor_eq : source.anchor = target.anchor)
+    (positiveTensorPower_eq :
+      source.positiveTensorPower = target.positiveTensorPower) :
+    source.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource =
+      target.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource := by
+  apply
+    IUTStage1Remark395Ob3Ob4AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_additiveHaarFactor_structureSheaf_weight_anchor_tensorPower
+  · intro index
+    simpa [toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource] using
+      localRing_eq index
+  · intro index summand
+    simpa [toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource,
+      IUTStage1UnitBallValuationHaarCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource.toAdditiveHaarCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource,
+      IUTStage1UnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleSource] using
+      additiveHaarFactor_eq index summand
+  · intro index
+    simpa [toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource] using
+      structureSheafLogVolume_eq index
+  · intro index
+    simpa [toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource] using
+      weight_eq index
+  · simpa [toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource] using
+      anchor_eq
+  · simpa [toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource] using
+      positiveTensorPower_eq
+
 end IUTStage1Remark395Ob3Ob4UnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
 
 set_option linter.style.longLine false in
@@ -22972,6 +23095,53 @@ theorem endpoint
       (data.localization index).bundle
         |>.valuationBallFactor_compactOpenRadius_eq_one summand,
     data.projected_directSummandLogVolume_eq_padicFiniteExtensionUnitBallNormalized⟩
+
+set_option linter.style.longLine false in
+theorem toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionUnitBallFactor_structureSheaf_weight_anchor_tensorPower
+    (source target :
+      IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+        α p K β γ hullSystem)
+    (localRing_eq :
+      ∀ index : β,
+        (source.localization index).bundle.localRing =
+          (target.localization index).bundle.localRing)
+    (additiveHaarFactor_eq :
+      ∀ index : β, ∀ summand : γ,
+        IUTStage1AdditiveHaarCompactOpenNormalizationSource.ComponentwiseEqual
+          ((source.localization index).bundle.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor summand)
+          ((target.localization index).bundle.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor summand))
+    (structureSheafLogVolume_eq :
+      ∀ index : β,
+        (source.localization index).structureSheafLogVolume =
+          (target.localization index).structureSheafLogVolume)
+    (weight_eq :
+      ∀ index : β,
+        (source.localization index).weight =
+          (target.localization index).weight)
+    (anchor_eq : source.anchor = target.anchor)
+    (positiveTensorPower_eq :
+      source.positiveTensorPower = target.positiveTensorPower) :
+    source.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource =
+      target.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource := by
+  apply
+    IUTStage1Remark395Ob3Ob4UnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_unitBallValuationHaarFactor_structureSheaf_weight_anchor_tensorPower
+  · intro index
+    simpa [toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource] using
+      localRing_eq index
+  · intro index summand
+    simpa [toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource,
+      IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource.toUnitBallValuationHaarCompactOpenNormSquareStructureSheafAdjustedLocalizedVectorBundleSource] using
+      additiveHaarFactor_eq index summand
+  · intro index
+    simpa [toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource] using
+      structureSheafLogVolume_eq index
+  · intro index
+    simpa [toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource] using
+      weight_eq index
+  · simpa [toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource] using
+      anchor_eq
+  · simpa [toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource] using
+      positiveTensorPower_eq
 
 end IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
 

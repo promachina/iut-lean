@@ -1681,7 +1681,12 @@ direct-summand log-volume family, together with the structure-sheaf,
 raw-adjusted, weight, anchor, and tensor-power equalities, identifies the
 adjusted-determinant sources.  A norm-square refinement gives the same
 projected adjusted-determinant synchronization from equality of direct-summand
-norm families.  The same
+norm families.  The current lower criterion pushes this through the
+Haar-normalized local-field layer: the additive-Haar determinant theorem
+reconstructs the raw adjusted log-volume from the normalized Haar log-volume
+sum and the structure-sheaf term, and the valuation-unit-ball and \(p\)-adic
+finite-extension unit-ball variants transport the same Ob3/Ob4 synchronization
+through the local unit-ball normalization data.  The same
 full adjusted-determinant source now projects directly to the
 projected-weighted local-analytic route; in the same-index case, the summand,
 anchor, and positive tensor-power fields are derived from the full Ob3/Ob4
@@ -2269,6 +2274,16 @@ opens the localized bundle into local-ring and direct-summand log-volume data.
 The norm-square theorem
 \texttt{\detokenize{IUTStage1Remark395Ob3Ob4NormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_localRing_directSummandNorm_structureSheaf_adjustedRaw_weight_anchor_tensorPower}}
 performs the corresponding projection from direct-summand norm families.
+The additive-Haar theorem
+\texttt{\detokenize{IUTStage1Remark395Ob3Ob4AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_additiveHaarFactor_structureSheaf_weight_anchor_tensorPower}}
+lowers this further to componentwise equality of compact-open Haar
+normalization records, deriving the raw adjusted log-volume equality from the
+Haar sum formula.  The unit-ball and \(p\)-adic finite-extension variants
+\texttt{\detokenize{IUTStage1Remark395Ob3Ob4UnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_unitBallValuationHaarFactor_structureSheaf_weight_anchor_tensorPower}}
+and
+\texttt{\detokenize{IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionUnitBallFactor_structureSheaf_weight_anchor_tensorPower}}
+project the same criterion through valuation-unit-ball and finite-extension
+unit-ball local-field data.
 The same lowered source now carries the relative nonvacuity audit and the
 public-boundary inventory audit directly: Lean constructs the old
 local-analytic source internally before proving that the q-normalized route,

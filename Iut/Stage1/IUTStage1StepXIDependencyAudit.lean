@@ -479,6 +479,24 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1Remark395Ob3Ob4NormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_localRing_directSummandNorm_structureSheaf_adjustedRaw_weight_anchor_tensorPower",
       role :=
         "Derived norm-square Ob3/Ob4 synchronization criterion: pointwise local-ring and norm-family equality, together with structure-sheaf, raw-adjusted, weight, anchor, and tensor-power equality, identifies the projected adjusted-determinant sources." },
+    { name := "additive-Haar determinant adjusted-source synchronization",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Remark395Ob3Ob4AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_additiveHaarFactor_structureSheaf_weight_anchor_tensorPower",
+      role :=
+        "Derived Ob3/Ob4 synchronization criterion from componentwise equality of the additive-Haar compact-open normalization factors.  The raw adjusted log-volume is reconstructed from the normalized Haar log-volume sum and the structure-sheaf term rather than supplied as a separate equality." },
+    { name := "valuation-unit-ball Haar determinant adjusted-source synchronization",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Remark395Ob3Ob4UnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_unitBallValuationHaarFactor_structureSheaf_weight_anchor_tensorPower",
+      role :=
+        "Derived projection of the additive-Haar synchronization criterion to normalized valuation-unit-ball compact-open factors, carrying the Ob3/Ob4 adjusted-determinant equality through the unit-ball Haar source layer." },
+    { name := "p-adic finite-extension unit-ball determinant adjusted-source synchronization",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionUnitBallFactor_structureSheaf_weight_anchor_tensorPower",
+      role :=
+        "Derived projection of the unit-ball Haar synchronization criterion to finite-extension-over-Q_p local-field data.  This lowers the Ob3/Ob4 determinant synchronization below generic norm-square fields to the p-adic finite-extension unit-ball normalization boundary." },
     { name := "p-adic defect/main split countermodel",
       status := .constructed,
       declarationName :=
@@ -511,7 +529,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 37 :=
+    canonicalStage1ResidualFrontier.length = 40 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -521,7 +539,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 32 :=
+      (fun entry => entry.status = .derived)).length = 35 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -1215,6 +1233,18 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check IUTStage1Remark395Ob3Ob4NormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_localRing_directSummandNorm_structureSheaf_adjustedRaw_weight_anchor_tensorPower
 #guard_msgs (drop info) in
 #print axioms IUTStage1Remark395Ob3Ob4NormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_localRing_directSummandNorm_structureSheaf_adjustedRaw_weight_anchor_tensorPower
+#guard_msgs (drop info) in
+#check IUTStage1Remark395Ob3Ob4AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_additiveHaarFactor_structureSheaf_weight_anchor_tensorPower
+#guard_msgs (drop info) in
+#print axioms IUTStage1Remark395Ob3Ob4AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_additiveHaarFactor_structureSheaf_weight_anchor_tensorPower
+#guard_msgs (drop info) in
+#check IUTStage1Remark395Ob3Ob4UnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_unitBallValuationHaarFactor_structureSheaf_weight_anchor_tensorPower
+#guard_msgs (drop info) in
+#print axioms IUTStage1Remark395Ob3Ob4UnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_unitBallValuationHaarFactor_structureSheaf_weight_anchor_tensorPower
+#guard_msgs (drop info) in
+#check IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionUnitBallFactor_structureSheaf_weight_anchor_tensorPower
+#guard_msgs (drop info) in
+#print axioms IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionUnitBallFactor_structureSheaf_weight_anchor_tensorPower
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.projectedWeighted_endpoint
 #guard_msgs (drop info) in

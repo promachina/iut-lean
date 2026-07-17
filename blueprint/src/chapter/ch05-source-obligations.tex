@@ -3436,7 +3436,17 @@
   refinement
   \lean{Iut.Stage1.IUTStage1Remark395Ob3Ob4NormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_localRing_directSummandNorm_structureSheaf_adjustedRaw_weight_anchor_tensorPower}
   derives the projected adjusted-determinant synchronization from the
-  corresponding direct-summand norm families.  The same full
+  corresponding direct-summand norm families.  This criterion is now pushed to
+  the Haar-normalized local-field boundary: the additive-Haar theorem
+  \lean{Iut.Stage1.IUTStage1Remark395Ob3Ob4AdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_additiveHaarFactor_structureSheaf_weight_anchor_tensorPower}
+  reconstructs the raw adjusted log-volume from the normalized Haar log-volume
+  sum and the structure-sheaf term, and the unit-ball and \(p\)-adic
+  finite-extension projection theorems
+  \lean{Iut.Stage1.IUTStage1Remark395Ob3Ob4UnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_unitBallValuationHaarFactor_structureSheaf_weight_anchor_tensorPower}
+  and
+  \lean{Iut.Stage1.IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionUnitBallFactor_structureSheaf_weight_anchor_tensorPower}
+  carry the same synchronization through valuation-unit-ball and
+  finite-extension-over-\(\mathbb Q_p\) data.  The same full
   adjusted-determinant source now projects directly to
   the projected-weighted local-analytic source via
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.toProjectedWeightedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource};
@@ -4421,7 +4431,7 @@
   tensor-power fields consumed by the current canonical route:
   \lean{Iut.Stage1.IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.weightedDeterminant_summand_anchor_tensorPower_eq_of_localization_anchor_tensorPower}.
   The canonical route manifest records this residual frontier as a checked
-  thirty-seven-entry, zero-source-obligation sub-manifest:
+  forty-entry, zero-source-obligation sub-manifest:
   \lean{Iut.Stage1.IUTStage1StepXIDependencyAudit.canonicalStage1ResidualFrontier}.
   It classifies the p-adic-defect/main valuation-ball controlled Record-Ob3/Ob5
   component source as derived rather than as a lower source obligation.  The
