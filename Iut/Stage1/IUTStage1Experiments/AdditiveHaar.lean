@@ -317,6 +317,35 @@ noncomputable def ofPadicUnitBallHaarIndex
       padicHaarDefectSource.localHaarNormalizationDefect,
     localIUTIVArithmeticDefect_eq_padicHaarIndex := fun _place => rfl }
 
+set_option linter.style.longLine false in
+/--
+Every finite-place IUT IV arithmetic-defect source is extensionally the source
+reconstructed from its p-adic unit-ball Haar-index defect package.
+
+The record contains no independent numerical datum beyond the Haar defect: the
+field `localIUTIVArithmeticDefect_eq_padicHaarIndex` identifies the local IUT
+IV defect with the p-adic Haar normalization defect at every finite place.
+This lemma is the transport point needed when a later corridor boundary is
+phrased using the canonical p-adic constructor rather than the originally
+carried IUT IV defect record.
+-/
+theorem eq_ofPadicUnitBallHaarIndex
+    (source :
+      IUTStage1FinitePlaceIUTIVLocalArithmeticDefectSource
+        ι localPrime localField α hullSystem) :
+    source =
+      ofPadicUnitBallHaarIndex source.padicHaarDefectSource := by
+  cases source with
+  | mk padicHaarDefectSource localIUTIVArithmeticDefect
+      localIUTIVArithmeticDefect_eq_padicHaarIndex =>
+      have hlocal :
+          localIUTIVArithmeticDefect =
+            padicHaarDefectSource.localHaarNormalizationDefect := by
+        funext place
+        exact localIUTIVArithmeticDefect_eq_padicHaarIndex place
+      cases hlocal
+      rfl
+
 theorem localIUTIVArithmeticDefect_nonneg
     (source :
       IUTStage1FinitePlaceIUTIVLocalArithmeticDefectSource
