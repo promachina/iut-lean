@@ -11772,6 +11772,27 @@ noncomputable def ofArithmeticDegreePadicPrimeErrorFormulaMatchingSource
       source.arithmeticDegreeCalibrationSource }
 
 set_option linter.style.longLine false in
+/--
+Construct the formula-gap matched arithmetic-degree source from the
+constructed p-adic prime-error split.
+
+This is the source-backed entry into the formula-gap layer: the old
+`PrimeErrorPadicDefectMainSource` is no longer a separate input at this
+boundary, but is projected from the local analytic arithmetic-divisor source
+where \(E_v=\delta_v+M_v\) definitionally.
+-/
+noncomputable def ofConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    IUTStage1AdditiveHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+      β estimate η γ localPrime localField αHaar hullSystem
+      αLocal ηLocal localAnalyticHullSystem archIndex archSummand :=
+  ofArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+    source.toArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+
+set_option linter.style.longLine false in
 noncomputable def toIUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreePadicPrimeErrorFormulaMatchingSource
     (source :
       IUTStage1AdditiveHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
@@ -11828,6 +11849,54 @@ theorem ofArithmeticDegreePadicPrimeErrorFormulaMatchingSource_endpoint
     Endpoint
       (ofArithmeticDegreePadicPrimeErrorFormulaMatchingSource source) :=
   (ofArithmeticDegreePadicPrimeErrorFormulaMatchingSource source).endpoint
+
+theorem ofConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource_endpoint
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    Endpoint
+      (ofConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource source) :=
+  (ofConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource source).endpoint
+
+structure ConstructedPrimeErrorFormulaGapAudit
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    Prop where
+  formulaGapEndpoint :
+    Endpoint
+      (ofConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource source)
+  constructedArithmeticDegreeAudit :
+    IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource.ConstructedPrimeErrorArithmeticDegreeAudit
+      source
+  projectedArithmeticDegreeEndpoint :
+    IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreePadicPrimeErrorFormulaMatchingSource.Endpoint
+      source.toArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+  localPrimeErrorContribution_eq_padicHaarDefect_main :
+    ∀ place : β,
+      (source.constructedPrimeErrorSource.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        |>.toThetaPilotArithmeticDivisorLocalEvaluationSource).localPrimeErrorContribution place =
+        source.constructedPrimeErrorSource.iutIVArithmeticDefectSource.padicHaarDefectSource.localHaarNormalizationDefect place +
+          (source.constructedPrimeErrorSource.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+            |>.toThetaPilotArithmeticDivisorLocalEvaluationSource).localMainLogContribution place
+
+theorem constructedPrimeErrorFormulaGapAudit
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    ConstructedPrimeErrorFormulaGapAudit source :=
+  { formulaGapEndpoint :=
+      ofConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource_endpoint source,
+    constructedArithmeticDegreeAudit :=
+      IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource.constructedPrimeErrorArithmeticDegreeAudit
+        source,
+    projectedArithmeticDegreeEndpoint :=
+      source.toArithmeticDegreePadicPrimeErrorFormulaMatchingSource.endpoint,
+    localPrimeErrorContribution_eq_padicHaarDefect_main :=
+      source.constructedPrimeErrorSource.localPrimeErrorContribution_eq_padicHaarDefect_main }
 
 set_option linter.style.longLine false in
 theorem arithmeticDegreeCalibrationAudit
