@@ -509,6 +509,12 @@ def canonicalStage1ResidualFrontier :
         "PrincipalProductPadicFiniteLocalizedHullVectorBundleDecompositionSource.thetaSigned_eq_projectedLocalizedAdjustedSum_mul_absLogQ_of_familyHullLogVolume",
       role :=
         "Derived q-normalized theta identity from the family-hull log-volume identity, replacing a direct adjusted-sum equality by the Theorem 3.11 family-hull comparison at the p-adic finite principal-product boundary." },
+    { name := "principal-product q-normalized local-analytic source from family hull",
+      status := .derived,
+      declarationName :=
+        "ConstructorBuiltPrincipalProductPadicFiniteQNormalizedLocalizedLocalAnalyticResidualHaarSource.ofFamilyHullLogVolume",
+      role :=
+        "Derived constructor for the q-normalized principal-product p-adic local-analytic residual source.  The older boundary supplied the adjusted-sum theta identity directly; this constructor obtains it from the family-hull log-volume comparison and the principal-product p-adic finite hull decomposition." },
     { name := "p-adic defect/main split countermodel",
       status := .constructed,
       declarationName :=
@@ -541,7 +547,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 42 :=
+    canonicalStage1ResidualFrontier.length = 43 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -551,7 +557,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 37 :=
+      (fun entry => entry.status = .derived)).length = 38 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -3362,6 +3368,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteLocalizedLocalAnalyticResidualHaarSource.dichotomy
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteQNormalizedLocalizedLocalAnalyticResidualHaarSource
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteQNormalizedLocalizedLocalAnalyticResidualHaarSource.ofFamilyHullLogVolume
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteQNormalizedLocalizedLocalAnalyticResidualHaarSource.ofFamilyHullLogVolume
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteQNormalizedLocalizedLocalAnalyticResidualHaarSource.toQNormalizedLocalizedLocalAnalyticResidualHaarSource
 #guard_msgs (drop info) in
