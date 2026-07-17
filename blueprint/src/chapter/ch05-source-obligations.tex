@@ -3081,7 +3081,11 @@
   its audit
   \lean{Iut.Stage1.Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.recordOb3Ob5ValuationBallPadicDefectMainProjectionAudit}
   records that no additional component-to-valuation-ball equality is supplied
-  at this p-adic handoff.
+  at this p-adic handoff.  This handoff now factors through the explicit
+  arithmetic-degree-controlled projection
+  \lean{Iut.Stage1.Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.toArithmeticDegreeControlledLocalArithmeticSource},
+  so the p-adic source consumes a named constructed local-arithmetic object
+  rather than an anonymous reconstruction inside the final projection.
   The companion
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredPublicConcreteStepXI311312CurrentProductHullHodgeFormulaTheorem110ValuationBallLocalAnalyticGoalEvidenceAudit}
   and constructor
@@ -4195,10 +4199,15 @@
   valuation-ball Record-Ob3/Ob5 route lowers this once more by reading the
   component-to-valuation-ball formula equality from the valuation-ball record
   itself before constructing the same p-adic defect/main source and audit.
-  Thus the
-  finite sums, nonnegativity, formula-gap construction
-  data, and arithmetic-divisor calibration are read from the valuation-ball
-  local-estimate package rather than restated on the p-adic split record, and
+  This projection now factors through an explicit arithmetic-degree-controlled
+  local arithmetic source:
+  \lean{Iut.Stage1.Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.toArithmeticDegreeControlledLocalArithmeticSource}
+  and the audit
+  \lean{Iut.Stage1.Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.recordOb3Ob5ValuationBallArithmeticDegreeControlledProjectionAudit}.
+  Thus the finite sums, nonnegativity, formula-gap construction data,
+  arithmetic-divisor calibration, and Proposition~1.4/1.5 comparison matching
+  are read from the valuation-ball local-estimate package rather than restated
+  on the p-adic split record, and
   \lean{Iut.Stage1.Experiments.IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource}
   consumes that constructed split together with the arithmetic-degree
   calibration before projecting to the canonical p-adic formula source; the

@@ -3513,7 +3513,11 @@ formula package and comparison matching internally.  The stronger
 Record-Ob3/Ob5 valuation-ball source removes the remaining explicit
 component-to-valuation-ball equality from this p-adic handoff: it carries that
 equality as part of the valuation-ball record and projects the same
-defect/main source and audit directly from the packaged source.
+defect/main source and audit directly from the packaged source.  This
+projection now factors through a named arithmetic-degree-controlled local
+arithmetic source projected from the valuation-ball Record-Ob3/Ob5 data, so
+the p-adic defect/main constructor consumes that constructed local-arithmetic
+object rather than rebuilding it anonymously at the final handoff.
 
 \paragraph{Milestone B: \IUT{} IV local-to-global \(\CTheta\).}
 Continue lowering the arithmetic-divisor-backed finite-place source.  The
