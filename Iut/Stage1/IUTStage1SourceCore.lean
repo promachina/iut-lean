@@ -22915,6 +22915,35 @@ theorem projected_directSummandLogVolume_eq_padicFiniteExtensionUnitBallNormaliz
       summand
 
 set_option linter.style.longLine false in
+theorem additiveHaarFactor_componentwiseEqual_of_padicFiniteExtensionFactor_eq
+    (source target :
+      IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleSource
+        α p K γ hullSystem)
+    (factor_eq :
+      ∀ summand : γ,
+        source.padicFiniteExtensionFactor summand =
+          target.padicFiniteExtensionFactor summand)
+    (summand : γ) :
+    IUTStage1AdditiveHaarCompactOpenNormalizationSource.ComponentwiseEqual
+      (source.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+        summand)
+      (target.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor
+        summand) := by
+  have hfactor := factor_eq summand
+  constructor <;>
+    simp [toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource,
+      IUTStage1UnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor,
+      valuationBallFactor,
+      localRing,
+      IUTStage1ValuationBallAdditiveHaarNormalizationSource.toAdditiveHaarCompactOpenNormalizationSource,
+      IUTStage1ValuationBallTopologyAdditiveHaarNormalizationSource.toValuationBallAdditiveHaarNormalizationSourceCore,
+      IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource.toValuedFieldIntegerProperUltrametricHaarNormalizationSource,
+      IUTStage1ValuedFieldIntegerProperUltrametricHaarNormalizationSource.toProperUltrametricValuationBallAdditiveHaarNormalizationSource,
+      IUTStage1ProperUltrametricValuationBallAdditiveHaarNormalizationSource.toUltrametricValuationBallAdditiveHaarNormalizationSource,
+      IUTStage1UltrametricValuationBallAdditiveHaarNormalizationSource.toValuationBallTopologyAdditiveHaarNormalizationSource,
+      IUTStage1ValuedFieldIntegerUnitBallSource.integerSubring, hfactor]
+
+set_option linter.style.longLine false in
 theorem endpoint
     (data :
       IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleSource
@@ -23142,6 +23171,44 @@ theorem toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionUnitBall
       anchor_eq
   · simpa [toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource] using
       positiveTensorPower_eq
+
+set_option linter.style.longLine false in
+theorem toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionFactor_structureSheaf_weight_anchor_tensorPower
+    (source target :
+      IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+        α p K β γ hullSystem)
+    (padicFiniteExtensionFactor_eq :
+      ∀ index : β, ∀ summand : γ,
+        (source.localization index).bundle.padicFiniteExtensionFactor summand =
+          (target.localization index).bundle.padicFiniteExtensionFactor summand)
+    (structureSheafLogVolume_eq :
+      ∀ index : β,
+        (source.localization index).structureSheafLogVolume =
+          (target.localization index).structureSheafLogVolume)
+    (weight_eq :
+      ∀ index : β,
+        (source.localization index).weight =
+          (target.localization index).weight)
+    (anchor_eq : source.anchor = target.anchor)
+    (positiveTensorPower_eq :
+      source.positiveTensorPower = target.positiveTensorPower) :
+    source.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource =
+      target.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource := by
+  apply
+    toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionUnitBallFactor_structureSheaf_weight_anchor_tensorPower
+  · intro index
+    simp [IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleSource.localRing]
+  · intro index summand
+    exact
+      (source.localization index).bundle
+        |>.additiveHaarFactor_componentwiseEqual_of_padicFiniteExtensionFactor_eq
+          (target.localization index).bundle
+          (padicFiniteExtensionFactor_eq index)
+          summand
+  · exact structureSheafLogVolume_eq
+  · exact weight_eq
+  · exact anchor_eq
+  · exact positiveTensorPower_eq
 
 end IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
 

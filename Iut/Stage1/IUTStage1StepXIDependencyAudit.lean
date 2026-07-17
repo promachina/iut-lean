@@ -497,6 +497,12 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionUnitBallFactor_structureSheaf_weight_anchor_tensorPower",
       role :=
         "Derived projection of the unit-ball Haar synchronization criterion to finite-extension-over-Q_p local-field data.  This lowers the Ob3/Ob4 determinant synchronization below generic norm-square fields to the p-adic finite-extension unit-ball normalization boundary." },
+    { name := "p-adic finite-extension factor determinant adjusted-source synchronization",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionFactor_structureSheaf_weight_anchor_tensorPower",
+      role :=
+        "Derived Ob3/Ob4 synchronization criterion from equality of the underlying finite-extension-over-Q_p Haar normalization factors.  Lean now derives the projected additive-Haar componentwise equality internally, so the p-adic unit-ball determinant boundary no longer has to supply additive-Haar component matching as a primitive field once the finite-extension factors, structure-sheaf terms, weights, anchor, and tensor power are synchronized." },
     { name := "principal-product p-adic family-hull adjusted-sum projection",
       status := .derived,
       declarationName :=
@@ -595,7 +601,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 51 :=
+    canonicalStage1ResidualFrontier.length = 52 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -605,7 +611,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 46 :=
+      (fun entry => entry.status = .derived)).length = 47 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -1311,6 +1317,14 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionUnitBallFactor_structureSheaf_weight_anchor_tensorPower
 #guard_msgs (drop info) in
 #print axioms IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionUnitBallFactor_structureSheaf_weight_anchor_tensorPower
+#guard_msgs (drop info) in
+#check IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor_componentwiseEqual_of_padicFiniteExtensionFactor_eq
+#guard_msgs (drop info) in
+#print axioms IUTStage1PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleSource.additiveHaarFactor_componentwiseEqual_of_padicFiniteExtensionFactor_eq
+#guard_msgs (drop info) in
+#check IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionFactor_structureSheaf_weight_anchor_tensorPower
+#guard_msgs (drop info) in
+#print axioms IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionFactor_structureSheaf_weight_anchor_tensorPower
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.projectedWeighted_endpoint
 #guard_msgs (drop info) in
