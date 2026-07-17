@@ -8085,8 +8085,18 @@ theorem endpoint
       data.bundleLogVolume =
         Finset.univ.sum data.directSummandLogVolume ∧
       (data.toLocalizationSource structureSheafLogVolume weight weight_pos).bundleLogVolume =
-        data.bundleLogVolume :=
+      data.bundleLogVolume :=
   ⟨rfl, data.rank_gt_one, rfl, rfl⟩
+
+theorem ext_of_localRing_directSummandLogVolume
+    (source target : IUTStage1LocalizedArithmeticVectorBundle η γ)
+    (localRing_eq : source.localRing = target.localRing)
+    (directSummandLogVolume_eq :
+      source.directSummandLogVolume = target.directSummandLogVolume) :
+    source = target := by
+  cases source
+  cases target
+  simp_all
 
 end IUTStage1LocalizedArithmeticVectorBundle
 
@@ -8157,6 +8167,21 @@ theorem endpoint
       data.toLocalizedArithmeticVectorBundle.rank_gt_one = data.rank_gt_one :=
   ⟨rfl, data.toLocalized_directSummandLogVolume_eq_sq,
     data.directSummandLogVolume_nonneg, rfl⟩
+
+theorem toLocalizedArithmeticVectorBundle_eq_of_localRing_directSummandNorm
+    (source target :
+      IUTStage1NormSquareLocalizedArithmeticVectorBundle η γ)
+    (localRing_eq : source.localRing = target.localRing)
+    (directSummandNorm_eq :
+      source.directSummandNorm = target.directSummandNorm) :
+    source.toLocalizedArithmeticVectorBundle =
+      target.toLocalizedArithmeticVectorBundle := by
+  apply
+    IUTStage1LocalizedArithmeticVectorBundle.ext_of_localRing_directSummandLogVolume
+  · exact localRing_eq
+  · funext summand
+    simp [toLocalizedArithmeticVectorBundle, directSummandLogVolume,
+      directSummandNorm_eq]
 
 end IUTStage1NormSquareLocalizedArithmeticVectorBundle
 
@@ -8358,6 +8383,30 @@ theorem toAdjustedLocalizationSource_eq_of_bundle_structureSheaf_adjustedRaw_wei
     source target bundle_eq structureSheafLogVolume_eq
     adjustedRawLogVolume_eq weight_eq]
 
+set_option linter.style.longLine false in
+theorem toAdjustedLocalizationSource_eq_of_localRing_directSummand_structureSheaf_adjustedRaw_weight
+    (source target :
+      IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource η γ)
+    (localRing_eq :
+      source.bundle.localRing = target.bundle.localRing)
+    (directSummandLogVolume_eq :
+      source.bundle.directSummandLogVolume =
+        target.bundle.directSummandLogVolume)
+    (structureSheafLogVolume_eq :
+      source.structureSheafLogVolume = target.structureSheafLogVolume)
+    (adjustedRawLogVolume_eq :
+      source.adjustedRawLogVolume = target.adjustedRawLogVolume)
+    (weight_eq : source.weight = target.weight) :
+    source.toAdjustedLocalizationSource =
+      target.toAdjustedLocalizationSource :=
+  toAdjustedLocalizationSource_eq_of_bundle_structureSheaf_adjustedRaw_weight
+    source target
+    (IUTStage1LocalizedArithmeticVectorBundle.ext_of_localRing_directSummandLogVolume
+      source.bundle target.bundle localRing_eq directSummandLogVolume_eq)
+    structureSheafLogVolume_eq
+    adjustedRawLogVolume_eq
+    weight_eq
+
 end IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource
 
 set_option linter.style.longLine false in
@@ -8459,6 +8508,31 @@ theorem endpoint
       simpa [toStructureSheafAdjustedLocalizedVectorBundleSource] using
         data.adjusted_raw_eq,
     rfl⟩
+
+set_option linter.style.longLine false in
+theorem toStructureSheafAdjustedLocalizedVectorBundleSource_eq_of_localRing_directSummandNorm_structureSheaf_adjustedRaw_weight
+    (source target :
+      IUTStage1NormSquareStructureSheafAdjustedLocalizedVectorBundleSource
+        η γ)
+    (localRing_eq : source.bundle.localRing = target.bundle.localRing)
+    (directSummandNorm_eq :
+      source.bundle.directSummandNorm =
+        target.bundle.directSummandNorm)
+    (structureSheafLogVolume_eq :
+      source.structureSheafLogVolume = target.structureSheafLogVolume)
+    (adjustedRawLogVolume_eq :
+      source.adjustedRawLogVolume = target.adjustedRawLogVolume)
+    (weight_eq : source.weight = target.weight) :
+    source.toStructureSheafAdjustedLocalizedVectorBundleSource =
+      target.toStructureSheafAdjustedLocalizedVectorBundleSource :=
+  IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource.ext_of_bundle_structureSheaf_adjustedRaw_weight
+    source.toStructureSheafAdjustedLocalizedVectorBundleSource
+    target.toStructureSheafAdjustedLocalizedVectorBundleSource
+    (IUTStage1NormSquareLocalizedArithmeticVectorBundle.toLocalizedArithmeticVectorBundle_eq_of_localRing_directSummandNorm
+      source.bundle target.bundle localRing_eq directSummandNorm_eq)
+    structureSheafLogVolume_eq
+    adjustedRawLogVolume_eq
+    weight_eq
 
 end IUTStage1NormSquareStructureSheafAdjustedLocalizedVectorBundleSource
 
@@ -9163,6 +9237,84 @@ theorem toAdjustedDeterminantSource_eq_of_pointwise_bundle_structureSheaf_adjust
     anchor_eq
     positiveTensorPower_eq
 
+set_option linter.style.longLine false in
+theorem adjustedLocalizationFamily_eq_of_pointwise_localRing_directSummand_structureSheaf_adjustedRaw_weight
+    (source target :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ)
+    (localRing_eq :
+      ∀ index : β,
+        (source.localization index).bundle.localRing =
+          (target.localization index).bundle.localRing)
+    (directSummandLogVolume_eq :
+      ∀ index : β,
+        (source.localization index).bundle.directSummandLogVolume =
+          (target.localization index).bundle.directSummandLogVolume)
+    (structureSheafLogVolume_eq :
+      ∀ index : β,
+        (source.localization index).structureSheafLogVolume =
+          (target.localization index).structureSheafLogVolume)
+    (adjustedRawLogVolume_eq :
+      ∀ index : β,
+        (source.localization index).adjustedRawLogVolume =
+          (target.localization index).adjustedRawLogVolume)
+    (weight_eq :
+      ∀ index : β,
+        (source.localization index).weight =
+          (target.localization index).weight) :
+    source.toAdjustedDeterminantSource.localization =
+      target.toAdjustedDeterminantSource.localization := by
+  exact adjustedLocalizationFamily_eq_of_pointwise_bundle_structureSheaf_adjustedRaw_weight
+    source target
+    (fun index =>
+      IUTStage1LocalizedArithmeticVectorBundle.ext_of_localRing_directSummandLogVolume
+        (source.localization index).bundle
+        (target.localization index).bundle
+        (localRing_eq index)
+        (directSummandLogVolume_eq index))
+    structureSheafLogVolume_eq
+    adjustedRawLogVolume_eq
+    weight_eq
+
+set_option linter.style.longLine false in
+theorem toAdjustedDeterminantSource_eq_of_pointwise_localRing_directSummand_structureSheaf_adjustedRaw_weight_anchor_tensorPower
+    (source target :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ)
+    (localRing_eq :
+      ∀ index : β,
+        (source.localization index).bundle.localRing =
+          (target.localization index).bundle.localRing)
+    (directSummandLogVolume_eq :
+      ∀ index : β,
+        (source.localization index).bundle.directSummandLogVolume =
+          (target.localization index).bundle.directSummandLogVolume)
+    (structureSheafLogVolume_eq :
+      ∀ index : β,
+        (source.localization index).structureSheafLogVolume =
+          (target.localization index).structureSheafLogVolume)
+    (adjustedRawLogVolume_eq :
+      ∀ index : β,
+        (source.localization index).adjustedRawLogVolume =
+          (target.localization index).adjustedRawLogVolume)
+    (weight_eq :
+      ∀ index : β,
+        (source.localization index).weight =
+          (target.localization index).weight)
+    (anchor_eq : source.anchor = target.anchor)
+    (positiveTensorPower_eq :
+      source.positiveTensorPower = target.positiveTensorPower) :
+    source.toAdjustedDeterminantSource =
+      target.toAdjustedDeterminantSource :=
+  IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.ext_of_localization_anchor_tensorPower
+    source.toAdjustedDeterminantSource
+    target.toAdjustedDeterminantSource
+    (adjustedLocalizationFamily_eq_of_pointwise_localRing_directSummand_structureSheaf_adjustedRaw_weight
+      source target localRing_eq directSummandLogVolume_eq
+      structureSheafLogVolume_eq adjustedRawLogVolume_eq weight_eq)
+    anchor_eq
+    positiveTensorPower_eq
+
 end IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
 
 set_option linter.style.longLine false in
@@ -9264,6 +9416,51 @@ theorem endpoint
             summand) :=
   ⟨rfl, rfl, data.projected_directSummandLogVolume_eq_sq,
     data.projected_directSummandLogVolume_nonneg⟩
+
+set_option linter.style.longLine false in
+theorem toAdjustedDeterminantSource_eq_of_pointwise_localRing_directSummandNorm_structureSheaf_adjustedRaw_weight_anchor_tensorPower
+    (source target :
+      IUTStage1Remark395Ob3Ob4NormSquareLocalizedVectorBundleDeterminantSource
+        η β γ)
+    (localRing_eq :
+      ∀ index : β,
+        (source.localization index).bundle.localRing =
+          (target.localization index).bundle.localRing)
+    (directSummandNorm_eq :
+      ∀ index : β,
+        (source.localization index).bundle.directSummandNorm =
+          (target.localization index).bundle.directSummandNorm)
+    (structureSheafLogVolume_eq :
+      ∀ index : β,
+        (source.localization index).structureSheafLogVolume =
+          (target.localization index).structureSheafLogVolume)
+    (adjustedRawLogVolume_eq :
+      ∀ index : β,
+        (source.localization index).adjustedRawLogVolume =
+          (target.localization index).adjustedRawLogVolume)
+    (weight_eq :
+      ∀ index : β,
+        (source.localization index).weight =
+          (target.localization index).weight)
+    (anchor_eq : source.anchor = target.anchor)
+    (positiveTensorPower_eq :
+      source.positiveTensorPower = target.positiveTensorPower) :
+    source.toLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource =
+      target.toLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource := by
+  apply
+    IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_localization_anchor_tensorPower
+  · intro index
+    exact
+      IUTStage1NormSquareStructureSheafAdjustedLocalizedVectorBundleSource.toStructureSheafAdjustedLocalizedVectorBundleSource_eq_of_localRing_directSummandNorm_structureSheaf_adjustedRaw_weight
+        (source.localization index)
+        (target.localization index)
+        (localRing_eq index)
+        (directSummandNorm_eq index)
+        (structureSheafLogVolume_eq index)
+        (adjustedRawLogVolume_eq index)
+        (weight_eq index)
+  · exact anchor_eq
+  · exact positiveTensorPower_eq
 
 end IUTStage1Remark395Ob3Ob4NormSquareLocalizedVectorBundleDeterminantSource
 

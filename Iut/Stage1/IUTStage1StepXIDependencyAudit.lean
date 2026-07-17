@@ -437,6 +437,48 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_bundle_structureSheaf_adjustedRaw_weight_anchor_tensorPower",
       role :=
         "Derived determinant-level synchronization from concrete Ob3-1 component fields plus anchor and positive tensor-power equality.  This is the current lowest checked positive criterion for deriving the adjusted-determinant equality from localized vector-bundle data." },
+    { name := "localized arithmetic-vector-bundle local-ring/direct-summand extensionality",
+      status := .derived,
+      declarationName :=
+        "IUTStage1LocalizedArithmeticVectorBundle.ext_of_localRing_directSummandLogVolume",
+      role :=
+        "Derived extensionality for the finite localized arithmetic-vector-bundle source: the local-ring label and direct-summand log-volume family determine the localized bundle, up to proof-irrelevant rank evidence." },
+    { name := "adjusted localization local-ring/direct-summand synchronization",
+      status := .derived,
+      declarationName :=
+        "IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource.toAdjustedLocalizationSource_eq_of_localRing_directSummand_structureSheaf_adjustedRaw_weight",
+      role :=
+        "Derived adjusted-localization synchronization from local-ring equality, direct-summand log-volume equality, structure-sheaf log-volume equality, raw adjusted log-volume equality, and determinant-weight equality." },
+    { name := "localized determinant local-ring/direct-summand adjusted-family synchronization",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.adjustedLocalizationFamily_eq_of_pointwise_localRing_directSummand_structureSheaf_adjustedRaw_weight",
+      role :=
+        "Derived family-level Ob3 synchronization from per-place local-ring labels and direct-summand log-volume families, plus the structure-sheaf, raw-adjusted, and weight fields.  This lowers the previous bundle-equality criterion to concrete localized vector-bundle components." },
+    { name := "localized determinant local-ring/direct-summand adjusted-source synchronization",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_localRing_directSummand_structureSheaf_adjustedRaw_weight_anchor_tensorPower",
+      role :=
+        "Derived adjusted-determinant source synchronization from concrete localized arithmetic-vector-bundle fields, anchor equality, and positive tensor-power equality." },
+    { name := "norm-square localized bundle projection synchronization",
+      status := .derived,
+      declarationName :=
+        "IUTStage1NormSquareLocalizedArithmeticVectorBundle.toLocalizedArithmeticVectorBundle_eq_of_localRing_directSummandNorm",
+      role :=
+        "Derived projection showing that equality of local-ring labels and direct-summand norm families synchronizes the projected localized arithmetic-vector-bundle source." },
+    { name := "norm-square adjusted-localization projection synchronization",
+      status := .derived,
+      declarationName :=
+        "IUTStage1NormSquareStructureSheafAdjustedLocalizedVectorBundleSource.toStructureSheafAdjustedLocalizedVectorBundleSource_eq_of_localRing_directSummandNorm_structureSheaf_adjustedRaw_weight",
+      role :=
+        "Derived projection from norm-square localized data to the adjusted localized-vector-bundle source, using local-ring, norm-family, structure-sheaf, raw-adjusted, and weight equalities." },
+    { name := "norm-square determinant adjusted-source synchronization",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Remark395Ob3Ob4NormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_localRing_directSummandNorm_structureSheaf_adjustedRaw_weight_anchor_tensorPower",
+      role :=
+        "Derived norm-square Ob3/Ob4 synchronization criterion: pointwise local-ring and norm-family equality, together with structure-sheaf, raw-adjusted, weight, anchor, and tensor-power equality, identifies the projected adjusted-determinant sources." },
     { name := "p-adic defect/main split countermodel",
       status := .constructed,
       declarationName :=
@@ -469,7 +511,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 30 :=
+    canonicalStage1ResidualFrontier.length = 37 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -479,7 +521,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 25 :=
+      (fun entry => entry.status = .derived)).length = 32 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -1145,6 +1187,34 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_bundle_structureSheaf_adjustedRaw_weight_anchor_tensorPower
 #guard_msgs (drop info) in
 #print axioms IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_bundle_structureSheaf_adjustedRaw_weight_anchor_tensorPower
+#guard_msgs (drop info) in
+#check IUTStage1LocalizedArithmeticVectorBundle.ext_of_localRing_directSummandLogVolume
+#guard_msgs (drop info) in
+#print axioms IUTStage1LocalizedArithmeticVectorBundle.ext_of_localRing_directSummandLogVolume
+#guard_msgs (drop info) in
+#check IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource.toAdjustedLocalizationSource_eq_of_localRing_directSummand_structureSheaf_adjustedRaw_weight
+#guard_msgs (drop info) in
+#print axioms IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource.toAdjustedLocalizationSource_eq_of_localRing_directSummand_structureSheaf_adjustedRaw_weight
+#guard_msgs (drop info) in
+#check IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.adjustedLocalizationFamily_eq_of_pointwise_localRing_directSummand_structureSheaf_adjustedRaw_weight
+#guard_msgs (drop info) in
+#print axioms IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.adjustedLocalizationFamily_eq_of_pointwise_localRing_directSummand_structureSheaf_adjustedRaw_weight
+#guard_msgs (drop info) in
+#check IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_localRing_directSummand_structureSheaf_adjustedRaw_weight_anchor_tensorPower
+#guard_msgs (drop info) in
+#print axioms IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_localRing_directSummand_structureSheaf_adjustedRaw_weight_anchor_tensorPower
+#guard_msgs (drop info) in
+#check IUTStage1NormSquareLocalizedArithmeticVectorBundle.toLocalizedArithmeticVectorBundle_eq_of_localRing_directSummandNorm
+#guard_msgs (drop info) in
+#print axioms IUTStage1NormSquareLocalizedArithmeticVectorBundle.toLocalizedArithmeticVectorBundle_eq_of_localRing_directSummandNorm
+#guard_msgs (drop info) in
+#check IUTStage1NormSquareStructureSheafAdjustedLocalizedVectorBundleSource.toStructureSheafAdjustedLocalizedVectorBundleSource_eq_of_localRing_directSummandNorm_structureSheaf_adjustedRaw_weight
+#guard_msgs (drop info) in
+#print axioms IUTStage1NormSquareStructureSheafAdjustedLocalizedVectorBundleSource.toStructureSheafAdjustedLocalizedVectorBundleSource_eq_of_localRing_directSummandNorm_structureSheaf_adjustedRaw_weight
+#guard_msgs (drop info) in
+#check IUTStage1Remark395Ob3Ob4NormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_localRing_directSummandNorm_structureSheaf_adjustedRaw_weight_anchor_tensorPower
+#guard_msgs (drop info) in
+#print axioms IUTStage1Remark395Ob3Ob4NormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_localRing_directSummandNorm_structureSheaf_adjustedRaw_weight_anchor_tensorPower
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.projectedWeighted_endpoint
 #guard_msgs (drop info) in
