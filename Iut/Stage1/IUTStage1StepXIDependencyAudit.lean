@@ -335,6 +335,12 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.eq_ofPadicUnitBallHaarIndex",
       role :=
         "Derived extensional equality showing that an arithmetic-degree-controlled valuation-ball local source is reconstructed from its valuation-ball evaluation source, p-adic Haar-index defect source, Step (xi) arithmetic-degree calibration, and the induced p-adic prime-error split." },
+    { name := "local-degree formula p-adic-defect/main reconstruction equality",
+      status := .derived,
+      declarationName :=
+        "RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toPadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource_eq_ofArithmeticDegreeControlledLocalArithmeticSource",
+      role :=
+        "Derived equality showing that the local-degree formula Record-Ob3/Ob5 comparison source reaches the p-adic-defect/main valuation-ball local-estimate object by first reconstructing its arithmetic-degree-controlled local source; the p-adic-defect/main local-estimate package is not an extra field at this comparison layer." },
     { name := "p-adic defect/main split countermodel",
       status := .constructed,
       declarationName :=
@@ -355,7 +361,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic for the strict source's definitional formula synchronization." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 11 :=
+    canonicalStage1ResidualFrontier.length = 12 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -365,7 +371,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 6 :=
+      (fun entry => entry.status = .derived)).length = 7 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -5244,6 +5250,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check Experiments.IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.eq_ofPadicUnitBallHaarIndex
 #guard_msgs (drop info) in
 #print axioms Experiments.IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.eq_ofPadicUnitBallHaarIndex
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toPadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource_eq_ofArithmeticDegreeControlledLocalArithmeticSource
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toPadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource_eq_ofArithmeticDegreeControlledLocalArithmeticSource
 #guard_msgs (drop info) in
 #check Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainLocalAnalyticArithmeticDivisorSource
 #guard_msgs (drop info) in
