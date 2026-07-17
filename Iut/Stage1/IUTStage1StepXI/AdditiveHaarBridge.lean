@@ -1437,6 +1437,62 @@ theorem RecordOb3Ob5ArithmeticDivisorBackedPadicHaarControlledComponentSource.to
     source.toCoreLocalArithmeticDegreeResidualSource.Endpoint :=
   source.toCoreLocalArithmeticDegreeResidualSource.endpoint
 
+set_option linter.style.longLine false in
+/--
+Project the p-adic-defect/main valuation-ball controlled Record-Ob3/Ob5 source
+to the canonical p-adic arithmetic formula-matching package.
+
+This lowers the strict p-adic-Haar controlled bridge: the valuation-ball
+evaluation source, p-adic Haar-index defect source, and equality
+`E_v = delta_v + M_v` are projected from the p-adic-defect/main valuation-ball
+source before entering the core Step~(xi) formula package.
+-/
+noncomputable def RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.toCorePadicUnitBallArithmeticFormulaMatchingSource
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :=
+  source.toPadicHaarControlledComponentSource
+    |>.toCorePadicUnitBallArithmeticFormulaMatchingSource
+
+theorem RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.toCorePadicUnitBallArithmeticFormulaMatchingSource_endpoint
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :
+    source.toCorePadicUnitBallArithmeticFormulaMatchingSource.Endpoint :=
+  source.toCorePadicUnitBallArithmeticFormulaMatchingSource.endpoint
+
+set_option linter.style.longLine false in
+/--
+Project the p-adic-defect/main valuation-ball controlled Record-Ob3/Ob5 source
+directly to the canonical local arithmetic-degree residual package.
+
+The residual consumer now sees the lower p-adic-defect/main source rather than
+a separately supplied valuation-ball evaluation source, p-adic Haar-index
+source, prime-error split, arithmetic-degree-controlled local source, or
+component/formula synchronization equality.
+-/
+noncomputable def RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :=
+  source.toCorePadicUnitBallArithmeticFormulaMatchingSource
+    |>.toLocalArithmeticDegreeResidualSource
+
+theorem RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource_endpoint
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :
+    source.toCoreLocalArithmeticDegreeResidualSource.Endpoint :=
+  source.toCoreLocalArithmeticDegreeResidualSource.endpoint
+
 end ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource
 
 end Experiments
