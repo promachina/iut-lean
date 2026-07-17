@@ -17642,6 +17642,25 @@ variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
 variable [MeasurableSpace K] [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
 variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
 
+set_option linter.style.longLine false in
+/--
+Componentwise equality of constructed base-prime Haar-modulus sources.
+
+The all-subset `ENNReal` modulus law is a proof field once the local-field
+payload is synchronized.
+-/
+structure ComponentwiseEqual
+    (left right :
+      IUTStage1PadicFiniteExtensionConstructedDilationHaarModulusNormalizationSource
+        α p K hullSystem) :
+    Prop where
+  integerSource_eq : left.integerSource = right.integerSource
+  realization_eq : left.realization = right.realization
+  realizedRegion_eq : left.realizedRegion = right.realizedRegion
+  compactOpenRadius_eq :
+    left.compactOpenRadius = right.compactOpenRadius
+  haarMeasure_eq : left.haarMeasure = right.haarMeasure
+
 theorem residuePrime_real_pos :
     0 < (p : Real) := by
   exact_mod_cast (Fact.out : p.Prime).pos
@@ -17696,6 +17715,31 @@ noncomputable def toConstructedDilationMassHaarNormalizationSource
     basePrimeScale_measure_toReal_eq :=
       data.basePrimeScale_toReal_measure_eq,
     hull_logVolume_eq_normalized := data.hull_logVolume_eq_normalized }
+
+set_option linter.style.longLine false in
+theorem ComponentwiseEqual.toConstructedDilationMassHaarNormalizationSource
+    {left right :
+      IUTStage1PadicFiniteExtensionConstructedDilationHaarModulusNormalizationSource
+        α p K hullSystem}
+    (matching : ComponentwiseEqual left right) :
+    IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource.ComponentwiseEqual
+      left.toConstructedDilationMassHaarNormalizationSource
+      right.toConstructedDilationMassHaarNormalizationSource :=
+  { integerSource_eq := by
+      simpa [toConstructedDilationMassHaarNormalizationSource] using
+        matching.integerSource_eq,
+    realization_eq := by
+      simpa [toConstructedDilationMassHaarNormalizationSource] using
+        matching.realization_eq,
+    realizedRegion_eq := by
+      simpa [toConstructedDilationMassHaarNormalizationSource] using
+        matching.realizedRegion_eq,
+    compactOpenRadius_eq := by
+      simpa [toConstructedDilationMassHaarNormalizationSource] using
+        matching.compactOpenRadius_eq,
+    haarMeasure_eq := by
+      simpa [toConstructedDilationMassHaarNormalizationSource] using
+        matching.haarMeasure_eq }
 
 noncomputable def toPadicFiniteExtensionDilationMassHaarNormalizationSource
     (data :
@@ -17830,6 +17874,26 @@ variable [IsTopologicalAddGroup K]
 variable [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
 variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
 
+set_option linter.style.longLine false in
+/--
+Componentwise equality of constructed base-prime Haar-character sources.
+
+The regularity and Haar-character arithmetic are proof fields.  The payload
+that determines the projected modulus/mass source is the integer source,
+realization, realized-region map, compact-open radius, and Haar measure.
+-/
+structure ComponentwiseEqual
+    (left right :
+      IUTStage1PadicFiniteExtensionConstructedDilationHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    Prop where
+  integerSource_eq : left.integerSource = right.integerSource
+  realization_eq : left.realization = right.realization
+  realizedRegion_eq : left.realizedRegion = right.realizedRegion
+  compactOpenRadius_eq :
+    left.compactOpenRadius = right.compactOpenRadius
+  haarMeasure_eq : left.haarMeasure = right.haarMeasure
+
 noncomputable def basePrimeContinuousAddEquiv
     (_data :
       IUTStage1PadicFiniteExtensionConstructedDilationHaarCharacterNormalizationSource
@@ -17906,6 +17970,31 @@ noncomputable def toConstructedDilationHaarModulusNormalizationSource
     basePrimeScale_measure_eq := data.basePrimeScale_measure_eq,
     hull_logVolume_eq_normalized := data.hull_logVolume_eq_normalized }
 
+set_option linter.style.longLine false in
+theorem ComponentwiseEqual.toConstructedDilationHaarModulusNormalizationSource
+    {left right :
+      IUTStage1PadicFiniteExtensionConstructedDilationHaarCharacterNormalizationSource
+        α p K hullSystem}
+    (matching : ComponentwiseEqual left right) :
+    IUTStage1PadicFiniteExtensionConstructedDilationHaarModulusNormalizationSource.ComponentwiseEqual
+      left.toConstructedDilationHaarModulusNormalizationSource
+      right.toConstructedDilationHaarModulusNormalizationSource :=
+  { integerSource_eq := by
+      simpa [toConstructedDilationHaarModulusNormalizationSource] using
+        matching.integerSource_eq,
+    realization_eq := by
+      simpa [toConstructedDilationHaarModulusNormalizationSource] using
+        matching.realization_eq,
+    realizedRegion_eq := by
+      simpa [toConstructedDilationHaarModulusNormalizationSource] using
+        matching.realizedRegion_eq,
+    compactOpenRadius_eq := by
+      simpa [toConstructedDilationHaarModulusNormalizationSource] using
+        matching.compactOpenRadius_eq,
+    haarMeasure_eq := by
+      simpa [toConstructedDilationHaarModulusNormalizationSource] using
+        matching.haarMeasure_eq }
+
 noncomputable def toConstructedDilationMassHaarNormalizationSource
     (data :
       IUTStage1PadicFiniteExtensionConstructedDilationHaarCharacterNormalizationSource
@@ -17913,6 +18002,18 @@ noncomputable def toConstructedDilationMassHaarNormalizationSource
     IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
       α p K hullSystem :=
   data.toConstructedDilationHaarModulusNormalizationSource
+    |>.toConstructedDilationMassHaarNormalizationSource
+
+set_option linter.style.longLine false in
+theorem ComponentwiseEqual.toConstructedDilationMassHaarNormalizationSource
+    {left right :
+      IUTStage1PadicFiniteExtensionConstructedDilationHaarCharacterNormalizationSource
+        α p K hullSystem}
+    (matching : ComponentwiseEqual left right) :
+    IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource.ComponentwiseEqual
+      left.toConstructedDilationMassHaarNormalizationSource
+      right.toConstructedDilationMassHaarNormalizationSource :=
+  matching.toConstructedDilationHaarModulusNormalizationSource
     |>.toConstructedDilationMassHaarNormalizationSource
 
 theorem endpoint
@@ -17989,6 +18090,26 @@ variable [MeasurableSpace K] [BorelSpace K] [LocallyCompactSpace K]
 variable [IsTopologicalAddGroup K]
 variable [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
 variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+set_option linter.style.longLine false in
+/--
+Componentwise equality of unit-ball Haar-character normalization sources.
+
+This is the local paper-facing Haar payload: normalized valuation-ring mass,
+base-prime image mass, regularity, and the resulting character identity are
+proof fields once the local-field payload is fixed.
+-/
+structure ComponentwiseEqual
+    (left right :
+      IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    Prop where
+  integerSource_eq : left.integerSource = right.integerSource
+  realization_eq : left.realization = right.realization
+  realizedRegion_eq : left.realizedRegion = right.realizedRegion
+  compactOpenRadius_eq :
+    left.compactOpenRadius = right.compactOpenRadius
+  haarMeasure_eq : left.haarMeasure = right.haarMeasure
 
 noncomputable def basePrimeContinuousAddEquiv
     (_data :
@@ -18078,6 +18199,31 @@ noncomputable def toConstructedDilationHaarCharacterNormalizationSource
     basePrimeHaarChar_eq := data.basePrimeHaarChar_eq,
     hull_logVolume_eq_normalized := data.hull_logVolume_eq_normalized }
 
+set_option linter.style.longLine false in
+theorem ComponentwiseEqual.toConstructedDilationHaarCharacterNormalizationSource
+    {left right :
+      IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+        α p K hullSystem}
+    (matching : ComponentwiseEqual left right) :
+    IUTStage1PadicFiniteExtensionConstructedDilationHaarCharacterNormalizationSource.ComponentwiseEqual
+      left.toConstructedDilationHaarCharacterNormalizationSource
+      right.toConstructedDilationHaarCharacterNormalizationSource :=
+  { integerSource_eq := by
+      simpa [toConstructedDilationHaarCharacterNormalizationSource] using
+        matching.integerSource_eq,
+    realization_eq := by
+      simpa [toConstructedDilationHaarCharacterNormalizationSource] using
+        matching.realization_eq,
+    realizedRegion_eq := by
+      simpa [toConstructedDilationHaarCharacterNormalizationSource] using
+        matching.realizedRegion_eq,
+    compactOpenRadius_eq := by
+      simpa [toConstructedDilationHaarCharacterNormalizationSource] using
+        matching.compactOpenRadius_eq,
+    haarMeasure_eq := by
+      simpa [toConstructedDilationHaarCharacterNormalizationSource] using
+        matching.haarMeasure_eq }
+
 noncomputable def toConstructedDilationHaarModulusNormalizationSource
     (data :
       IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
@@ -18087,6 +18233,18 @@ noncomputable def toConstructedDilationHaarModulusNormalizationSource
   data.toConstructedDilationHaarCharacterNormalizationSource
     |>.toConstructedDilationHaarModulusNormalizationSource
 
+set_option linter.style.longLine false in
+theorem ComponentwiseEqual.toConstructedDilationHaarModulusNormalizationSource
+    {left right :
+      IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+        α p K hullSystem}
+    (matching : ComponentwiseEqual left right) :
+    IUTStage1PadicFiniteExtensionConstructedDilationHaarModulusNormalizationSource.ComponentwiseEqual
+      left.toConstructedDilationHaarModulusNormalizationSource
+      right.toConstructedDilationHaarModulusNormalizationSource :=
+  matching.toConstructedDilationHaarCharacterNormalizationSource
+    |>.toConstructedDilationHaarModulusNormalizationSource
+
 noncomputable def toConstructedDilationMassHaarNormalizationSource
     (data :
       IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
@@ -18094,6 +18252,18 @@ noncomputable def toConstructedDilationMassHaarNormalizationSource
     IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
       α p K hullSystem :=
   data.toConstructedDilationHaarCharacterNormalizationSource
+    |>.toConstructedDilationMassHaarNormalizationSource
+
+set_option linter.style.longLine false in
+theorem ComponentwiseEqual.toConstructedDilationMassHaarNormalizationSource
+    {left right :
+      IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+        α p K hullSystem}
+    (matching : ComponentwiseEqual left right) :
+    IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource.ComponentwiseEqual
+      left.toConstructedDilationMassHaarNormalizationSource
+      right.toConstructedDilationMassHaarNormalizationSource :=
+  matching.toConstructedDilationHaarCharacterNormalizationSource
     |>.toConstructedDilationMassHaarNormalizationSource
 
 theorem endpoint
@@ -23495,6 +23665,73 @@ theorem toAdjustedDeterminantSource_eq_of_pointwise_constructedDilationMassFacto
     exact
       (constructedFactor_match index summand)
         |>.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource
+  · exact structureSheafLogVolume_eq
+  · exact weight_eq
+  · exact anchor_eq
+  · exact positiveTensorPower_eq
+
+set_option linter.style.longLine false in
+/--
+Unit-ball Haar-character criterion for the p-adic finite-extension Ob3/Ob4
+determinant synchronization.
+
+This lowers the determinant boundary below the constructed dilation/mass
+source.  Each local finite-extension factor is identified with the projection
+of a source carrying the paper-facing Haar normalization data
+`mu(O_v)=1` and `mu(p_v O_v)=p_v^{-[K_v:Q_p]}`; componentwise equality of that
+unit-ball Haar-character payload is then projected through the character,
+modulus, mass, and proper-ultrametric layers.
+-/
+theorem toAdjustedDeterminantSource_eq_of_pointwise_unitBallHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower
+    [BorelSpace K] [LocallyCompactSpace K] [IsTopologicalAddGroup K]
+    (source target :
+      IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+        α p K β γ hullSystem)
+    (sourceUnitBallHaarCharacterFactor targetUnitBallHaarCharacterFactor :
+      β -> γ ->
+        IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+          α p K hullSystem)
+    (source_factor_eq :
+      ∀ index : β, ∀ summand : γ,
+        (source.localization index).bundle.padicFiniteExtensionFactor summand =
+          (sourceUnitBallHaarCharacterFactor index summand).toConstructedDilationMassHaarNormalizationSource.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource)
+    (target_factor_eq :
+      ∀ index : β, ∀ summand : γ,
+        (target.localization index).bundle.padicFiniteExtensionFactor summand =
+          (targetUnitBallHaarCharacterFactor index summand).toConstructedDilationMassHaarNormalizationSource.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource)
+    (unitBallHaarCharacterFactor_match :
+      ∀ index : β, ∀ summand : γ,
+        IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource.ComponentwiseEqual
+          (sourceUnitBallHaarCharacterFactor index summand)
+          (targetUnitBallHaarCharacterFactor index summand))
+    (structureSheafLogVolume_eq :
+      ∀ index : β,
+        (source.localization index).structureSheafLogVolume =
+          (target.localization index).structureSheafLogVolume)
+    (weight_eq :
+      ∀ index : β,
+        (source.localization index).weight =
+          (target.localization index).weight)
+    (anchor_eq : source.anchor = target.anchor)
+    (positiveTensorPower_eq :
+      source.positiveTensorPower = target.positiveTensorPower) :
+    source.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource =
+      target.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource := by
+  apply
+    toAdjustedDeterminantSource_eq_of_pointwise_constructedDilationMassFactor_componentwise_structureSheaf_weight_anchor_tensorPower
+      source target
+      (fun index summand =>
+        (sourceUnitBallHaarCharacterFactor index summand)
+          |>.toConstructedDilationMassHaarNormalizationSource)
+      (fun index summand =>
+        (targetUnitBallHaarCharacterFactor index summand)
+          |>.toConstructedDilationMassHaarNormalizationSource)
+  · exact source_factor_eq
+  · exact target_factor_eq
+  · intro index summand
+    exact
+      (unitBallHaarCharacterFactor_match index summand)
+        |>.toConstructedDilationMassHaarNormalizationSource
   · exact structureSheafLogVolume_eq
   · exact weight_eq
   · exact anchor_eq
