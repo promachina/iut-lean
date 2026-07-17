@@ -2093,6 +2093,11 @@ calibration, and the projected Step~(v)/(vii) comparison bounds.  This route
 now factors through the canonical p-adic arithmetic formula-matching package,
 so Lean exposes the reconstructed \(StepXI_v=a_v(D_v+C_v)\) and
 \(E_v=\delta_v+M_v\) laws before passing to the residual package.  The
+component-level p-adic defect/main projection now lowers to the same
+arithmetic-degree-controlled local arithmetic source: Lean reconstructs the
+valuation-ball formula package internally before applying the local-degree
+projection, leaving only the component-to-controlled-formula synchronization at
+that boundary.  The
 processional local-estimate and processional p-adic unit-ball Haar sources now
 project to that same residual package as well, so the residual consumer can be
 fed directly from the distinguished exact-procession, nondistinguished zero,
