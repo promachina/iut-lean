@@ -21176,6 +21176,27 @@ variable [NormedAlgebra ℚ_[p] K]
 variable [Field κ] [Fintype κ]
 variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
 
+set_option linter.style.longLine false in
+/--
+Componentwise equality for the residue-submodule Haar-character source.
+
+The submodule, quotient module, transported fintype, cardinality, and finrank
+fields construct the quotient-native residue-module source.  The projected
+local Haar payload is still determined by the integer source, realization,
+realized-region map, compact-open radius, and Haar measure.
+-/
+structure ComponentwiseEqual
+    (left right :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterNormalizationSource
+        α p K κ hullSystem) :
+    Prop where
+  integerSource_eq : left.integerSource = right.integerSource
+  realization_eq : left.realization = right.realization
+  realizedRegion_eq : left.realizedRegion = right.realizedRegion
+  compactOpenRadius_eq :
+    left.compactOpenRadius = right.compactOpenRadius
+  haarMeasure_eq : left.haarMeasure = right.haarMeasure
+
 noncomputable def toResidueModuleQuotientCosetHaarCharacterNormalizationSource
     (data :
       IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterNormalizationSource
@@ -21201,6 +21222,31 @@ noncomputable def toResidueModuleQuotientCosetHaarCharacterNormalizationSource
     quotientFinrank_eq_extensionFinrank :=
       data.quotientFinrankTransported_eq_extensionFinrank,
     hull_logVolume_eq_normalized := data.hull_logVolume_eq_normalized }
+
+set_option linter.style.longLine false in
+theorem ComponentwiseEqual.toResidueModuleQuotientCosetHaarCharacterNormalizationSource
+    {left right :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterNormalizationSource
+        α p K κ hullSystem}
+    (matching : ComponentwiseEqual left right) :
+    IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueModuleQuotientCosetHaarCharacterNormalizationSource.ComponentwiseEqual
+      left.toResidueModuleQuotientCosetHaarCharacterNormalizationSource
+      right.toResidueModuleQuotientCosetHaarCharacterNormalizationSource :=
+  { integerSource_eq := by
+      simpa [toResidueModuleQuotientCosetHaarCharacterNormalizationSource] using
+        matching.integerSource_eq,
+    realization_eq := by
+      simpa [toResidueModuleQuotientCosetHaarCharacterNormalizationSource] using
+        matching.realization_eq,
+    realizedRegion_eq := by
+      simpa [toResidueModuleQuotientCosetHaarCharacterNormalizationSource] using
+        matching.realizedRegion_eq,
+    compactOpenRadius_eq := by
+      simpa [toResidueModuleQuotientCosetHaarCharacterNormalizationSource] using
+        matching.compactOpenRadius_eq,
+    haarMeasure_eq := by
+      simpa [toResidueModuleQuotientCosetHaarCharacterNormalizationSource] using
+        matching.haarMeasure_eq }
 
 /--
 The submodule-level residue source reaches the full local
@@ -24068,6 +24114,72 @@ theorem toAdjustedDeterminantSource_eq_of_pointwise_normedValuedIntegerResidueMo
     exact
       (residueModuleFactor_match index summand)
         |>.toUnitBallHaarCharacterNormalizationSource
+  · exact structureSheafLogVolume_eq
+  · exact weight_eq
+  · exact anchor_eq
+  · exact positiveTensorPower_eq
+
+set_option linter.style.longLine false in
+/--
+Residue-submodule criterion for the p-adic finite-extension Ob3/Ob4 determinant
+synchronization.
+
+This lowers the residue-module determinant boundary to the source where the
+residue-field action is carried on the additive group of `O_v`, with
+`p_v O_v` represented by a residue submodule.  Lean transports the quotient
+module structure across the additive quotient, projects to the quotient-native
+residue-module source, and then applies the residue-module determinant
+synchronization criterion.
+-/
+theorem toAdjustedDeterminantSource_eq_of_pointwise_normedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower
+    (source target :
+      IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+        α p K β γ hullSystem)
+    (sourceResidueSubmoduleFactor targetResidueSubmoduleFactor :
+      β -> γ ->
+        IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterNormalizationSource
+          α p K κ hullSystem)
+    (source_factor_eq :
+      ∀ index : β, ∀ summand : γ,
+        (source.localization index).bundle.padicFiniteExtensionFactor summand =
+          (sourceResidueSubmoduleFactor index summand).toResidueModuleQuotientCosetHaarCharacterNormalizationSource.toUnitBallHaarCharacterNormalizationSource.toConstructedDilationMassHaarNormalizationSource.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource)
+    (target_factor_eq :
+      ∀ index : β, ∀ summand : γ,
+        (target.localization index).bundle.padicFiniteExtensionFactor summand =
+          (targetResidueSubmoduleFactor index summand).toResidueModuleQuotientCosetHaarCharacterNormalizationSource.toUnitBallHaarCharacterNormalizationSource.toConstructedDilationMassHaarNormalizationSource.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource)
+    (residueSubmoduleFactor_match :
+      ∀ index : β, ∀ summand : γ,
+        IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterNormalizationSource.ComponentwiseEqual
+          (sourceResidueSubmoduleFactor index summand)
+          (targetResidueSubmoduleFactor index summand))
+    (structureSheafLogVolume_eq :
+      ∀ index : β,
+        (source.localization index).structureSheafLogVolume =
+          (target.localization index).structureSheafLogVolume)
+    (weight_eq :
+      ∀ index : β,
+        (source.localization index).weight =
+          (target.localization index).weight)
+    (anchor_eq : source.anchor = target.anchor)
+    (positiveTensorPower_eq :
+      source.positiveTensorPower = target.positiveTensorPower) :
+    source.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource =
+      target.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource := by
+  apply
+    toAdjustedDeterminantSource_eq_of_pointwise_normedValuedIntegerResidueModuleQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower
+      source target
+      (fun index summand =>
+        (sourceResidueSubmoduleFactor index summand)
+          |>.toResidueModuleQuotientCosetHaarCharacterNormalizationSource)
+      (fun index summand =>
+        (targetResidueSubmoduleFactor index summand)
+          |>.toResidueModuleQuotientCosetHaarCharacterNormalizationSource)
+  · exact source_factor_eq
+  · exact target_factor_eq
+  · intro index summand
+    exact
+      (residueSubmoduleFactor_match index summand)
+        |>.toResidueModuleQuotientCosetHaarCharacterNormalizationSource
   · exact structureSheafLogVolume_eq
   · exact weight_eq
   · exact anchor_eq

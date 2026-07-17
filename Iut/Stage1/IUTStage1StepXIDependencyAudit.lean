@@ -534,6 +534,12 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_normedValuedIntegerResidueModuleQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower",
       role :=
         "Derived Ob3/Ob4 synchronization criterion from componentwise equality of quotient-native residue-module local-field payloads.  The finite residue quotient O_v / p_v O_v carries its residue-field module structure, Lean computes the quotient cardinality and representatives, projects to the unit-ball Haar-character source, and then reaches the determinant synchronization without a separate quotient-coset source field." },
+    { name := "residue-submodule quotient-coset Haar-character p-adic determinant adjusted-source synchronization",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_normedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower",
+      role :=
+        "Derived Ob3/Ob4 synchronization criterion from componentwise equality of residue-submodule local-field payloads.  The residue-field action is carried before quotienting on the additive group of O_v, the p_v O_v image is represented by a submodule, Lean transports the quotient module to O_v / p_v O_v, and the determinant synchronization then follows through the residue-module criterion." },
     { name := "principal-product p-adic family-hull adjusted-sum projection",
       status := .derived,
       declarationName :=
@@ -632,7 +638,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 57 :=
+    canonicalStage1ResidualFrontier.length = 58 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -642,7 +648,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 52 :=
+      (fun entry => entry.status = .derived)).length = 53 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6021,6 +6027,12 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_normedValuedIntegerResidueModuleQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower
 #guard_msgs (drop info) in
 #print axioms IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_normedValuedIntegerResidueModuleQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower
+#guard_msgs (drop info) in
+#check IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterNormalizationSource.ComponentwiseEqual.toResidueModuleQuotientCosetHaarCharacterNormalizationSource
+#guard_msgs (drop info) in
+#check IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_normedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower
+#guard_msgs (drop info) in
+#print axioms IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_normedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower
 
 end IUTStage1StepXIDependencyAudit
 end Stage1

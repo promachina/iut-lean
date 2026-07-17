@@ -2364,6 +2364,11 @@ the finite residue quotient \(O_v/p_vO_v\) carries its residue-field module
 structure, Lean computes the quotient cardinality and representatives, projects
 to the unit-ball Haar-character layer, and applies
 \texttt{\detokenize{IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_normedValuedIntegerResidueModuleQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower}}.
+It now descends one layer further to the residue-submodule source: the
+residue-field action is carried before quotienting on the additive group of
+\(O_v\), the \(p_vO_v\) image is represented by a submodule, Lean transports
+the quotient module to \(O_v/p_vO_v\), and applies
+\texttt{\detokenize{IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_normedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower}}.
 The same lowered source now carries the relative nonvacuity audit and the
 public-boundary inventory audit directly: Lean constructs the old
 local-analytic source internally before proving that the q-normalized route,
