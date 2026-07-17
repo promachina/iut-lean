@@ -224,7 +224,7 @@ def canonicalStage1RemainingAssumptions :
       consumerDeclaration :=
         "ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.toScaleSynchronizedLocalAnalyticSource",
       note :=
-        "The public source now carries the q-normalized theta/log-volume identity.  Lean derives canonical C_Theta-scale synchronization from this identity and q-pilot positivity, so the raw canonical-scale equality is no longer a canonical public field." },
+        "The public source now carries the q-normalized theta/log-volume identity.  Lean derives canonical C_Theta-scale synchronization from this identity and q-pilot positivity, so the raw canonical-scale equality is no longer a canonical public field.  The same-index constructor ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEqFamilyHullLogVolume now derives this q-normalized identity from the family-hull comparison and the principal-product p-adic finite hull decomposition; the remaining obligation is to construct the family-hull theta/log-volume comparison itself from paper-level Theorem 3.11 data." },
     { name := "theorem110ValuationBallLocalAnalyticSource",
       status := .sourceObligation,
       paperSource := "IUT IV, Theorem 1.10 valuation-ball arithmetic divisor estimates",
@@ -515,6 +515,12 @@ def canonicalStage1ResidualFrontier :
         "ConstructorBuiltPrincipalProductPadicFiniteQNormalizedLocalizedLocalAnalyticResidualHaarSource.ofFamilyHullLogVolume",
       role :=
         "Derived constructor for the q-normalized principal-product p-adic local-analytic residual source.  The older boundary supplied the adjusted-sum theta identity directly; this constructor obtains it from the family-hull log-volume comparison and the principal-product p-adic finite hull decomposition." },
+    { name := "same-index local arithmetic-degree source from family hull",
+      status := .derived,
+      declarationName :=
+        "ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEqFamilyHullLogVolume",
+      role :=
+        "Derived same-index local arithmetic-degree constructor that keeps the adjusted-determinant and residual source inputs fixed while replacing the public q-normalized adjusted-sum equality by the paper-facing family-hull theta/log-volume comparison." },
     { name := "p-adic defect/main split countermodel",
       status := .constructed,
       declarationName :=
@@ -547,7 +553,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 43 :=
+    canonicalStage1ResidualFrontier.length = 44 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -557,7 +563,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 38 :=
+      (fun entry => entry.status = .derived)).length = 39 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -1271,6 +1277,10 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEq
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEq
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEqFamilyHullLogVolume
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEqFamilyHullLogVolume
 #guard_msgs (drop info) in
 #check WeightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel.not_record_ob3ob4_synchronized
 #guard_msgs (drop info) in
