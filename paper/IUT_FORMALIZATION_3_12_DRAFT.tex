@@ -121,19 +121,21 @@ diagnostics for the detached p-adic scale failure, the necessity of the signed
 \(q\leq\theta\) comparison for \(C_\Theta\ge -1\), and the remaining residual
 lower-bound obligation at the local arithmetic-degree boundary.  The residual
 frontier is now classified explicitly: the p-adic-defect/main valuation-ball
-controlled Record-Ob3/Ob5 component source is the lower source obligation, and
-the local-degree comparison route exposes a second, sharper preservation
-obligation identifying the valuation-ball object reconstructed from the
-p-adic-defect/main source with the original valuation-ball additive-Haar object.
-Lean projects this source directly to the canonical residual package, deriving
-the strict p-adic-Haar controlled source, the arithmetic-degree-controlled local
-source, and the component/formula synchronization internally.  The stronger
-local-degree formula valuation-ball Record-Ob3/Ob5 source and the legacy strict
-p-adic-Haar residual projection remain checked as comparison routes.  The
-constructed diagnostics show the failure modes when the p-adic defect/main
-split, ordinary component formula matching, strict residual synchronization, or
-valuation-ball projection preservation laws are removed.  Future Lean
-steps should remove further entries from the manifest, especially the weighted
+controlled Record-Ob3/Ob5 component source is the lower source obligation.  The
+previously isolated local-degree valuation-ball projection law is now proved:
+Lean identifies the valuation-ball object reconstructed from the
+p-adic-defect/main source with the original valuation-ball additive-Haar object
+by transporting the nondistinguished shell payload across
+\(E_v=\delta_v+M_v\).  The strict source projects directly to the canonical
+residual package, deriving the strict p-adic-Haar controlled source, the
+arithmetic-degree-controlled local source, and the component/formula
+synchronization internally.  The stronger local-degree formula valuation-ball
+Record-Ob3/Ob5 source and the legacy strict p-adic-Haar residual projection
+remain checked as comparison routes.  The constructed diagnostics show the
+failure modes when the p-adic defect/main split, ordinary component formula
+matching, strict residual synchronization, or valuation-ball projection
+preservation laws are removed.  Future Lean steps should remove further entries
+from the manifest, especially the weighted
 determinant synchronizations, q-normalized theta/log-volume identity, the
 local-analytic Theorem~1.10 source, and the local arithmetic-degree residual
 package.
@@ -2139,20 +2141,17 @@ At the local-degree formula comparison layer, Lean now proves that the
 p-adic-defect/main valuation-ball local-estimate source is exactly the object
 obtained by first reconstructing the arithmetic-degree-controlled local source.
 Thus the p-adic-defect/main local-estimate package is not an additional datum at
-that comparison boundary.  The attempted strict lowering isolates the next
-precise law:
-\texttt{\detokenize{Iut.Stage1.Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.ValuationBallProjectionPreservation}}
-requires the valuation-ball additive-Haar evaluation object projected from the
-reconstructed p-adic-defect/main source to agree with the original valuation-ball
-object carried by the arithmetic-degree-controlled source.  The countermodel
+that comparison boundary.  It also proves the corresponding projection
+preservation theorem:
+\texttt{\detokenize{Iut.Stage1.Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.valuationBallProjectionPreservation}}
+identifies the valuation-ball additive-Haar evaluation object projected from the
+reconstructed p-adic-defect/main source with the original valuation-ball object
+carried by the arithmetic-degree-controlled source.  The countermodel
 \texttt{\detokenize{Iut.Stage1.IUTStage1StepXIDependencyAudit.ValuationBallProjectionWithoutPreservationToyCountermodel.not_projection_preservation}}
-records why this preservation cannot be silently omitted.
-The remaining
-construction task is therefore to derive this stricter p-adic Haar controlled
-component source, especially its component finite sums, nonnegativity, and
-arithmetic-divisor calibration, from the full IUT~IV local-estimate data; the
-specific next preservation issue is the valuation-ball additive-Haar
-construction object carried by the strict Record-Ob3/Ob5 layer.  The
+records why this preservation cannot be silently omitted.  The remaining
+construction task is therefore to derive the stricter p-adic Haar controlled
+component source itself, especially its component finite sums, nonnegativity, and
+arithmetic-divisor calibration, from the full IUT~IV local-estimate data.  The
 processional local-estimate and processional p-adic unit-ball Haar sources now
 project to that same residual package as well, so the residual consumer can be
 fed directly from the distinguished exact-procession, nondistinguished zero,

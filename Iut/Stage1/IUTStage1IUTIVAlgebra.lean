@@ -7283,6 +7283,16 @@ theorem ofValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSourc
       (ofValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource source) :=
   (ofValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource source).endpoint
 
+set_option linter.style.longLine false in
+theorem toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource_ofValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+    (source :
+      IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand) :
+    (ofValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource source
+      |>.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource) =
+        source := by
+  rfl
+
 end IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource
 set_option linter.style.longLine true
 
