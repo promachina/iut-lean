@@ -3,6 +3,7 @@ Copyright (c) 2026 IUT Lean formalization contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: IUT Lean formalization contributors
 -/
+import Iut.Stage1.IUTStage1SourceCore
 import Iut.Stage1.IUTStage1StepXI.AdditiveHaarBridge
 
 /-!
@@ -527,6 +528,12 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_unitBallQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower",
       role :=
         "Derived Ob3/Ob4 synchronization criterion from componentwise equality of quotient-coset Haar-character local-field payloads.  The local residue-coset partition is now derived from O_v / p_v O_v before projecting to the unit-ball Haar-character source, so the determinant boundary no longer needs to consume a standalone unit-ball Haar-character source when quotient-coset data is available." },
+    { name := "residue-module quotient-coset Haar-character p-adic determinant adjusted-source synchronization",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_normedValuedIntegerResidueModuleQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower",
+      role :=
+        "Derived Ob3/Ob4 synchronization criterion from componentwise equality of quotient-native residue-module local-field payloads.  The finite residue quotient O_v / p_v O_v carries its residue-field module structure, Lean computes the quotient cardinality and representatives, projects to the unit-ball Haar-character source, and then reaches the determinant synchronization without a separate quotient-coset source field." },
     { name := "principal-product p-adic family-hull adjusted-sum projection",
       status := .derived,
       declarationName :=
@@ -625,7 +632,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 56 :=
+    canonicalStage1ResidualFrontier.length = 57 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -635,7 +642,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 51 :=
+      (fun entry => entry.status = .derived)).length = 52 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6006,6 +6013,14 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check Experiments.IUTStage1AdditiveHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.constructedPrimeErrorFormulaGapAudit
 #guard_msgs (drop info) in
 #print axioms Experiments.IUTStage1AdditiveHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.constructedPrimeErrorFormulaGapAudit
+#guard_msgs (drop info) in
+#check IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueModuleQuotientCosetHaarCharacterNormalizationSource.quotientCosetHaarCharacterEndpoint
+#guard_msgs (drop info) in
+#check IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueModuleQuotientCosetHaarCharacterNormalizationSource.ComponentwiseEqual.toUnitBallHaarCharacterNormalizationSource
+#guard_msgs (drop info) in
+#check IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_normedValuedIntegerResidueModuleQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower
+#guard_msgs (drop info) in
+#print axioms IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_normedValuedIntegerResidueModuleQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower
 
 end IUTStage1StepXIDependencyAudit
 end Stage1

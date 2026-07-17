@@ -2359,6 +2359,11 @@ Haar-character source via
 \texttt{\detokenize{IUTStage1PadicFiniteExtensionUnitBallQuotientCosetHaarCharacterNormalizationSource.ComponentwiseEqual.toUnitBallHaarCharacterNormalizationSource}},
 and applies
 \texttt{\detokenize{IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_unitBallQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower}}.
+This now descends to the quotient-native residue-module source as well:
+the finite residue quotient \(O_v/p_vO_v\) carries its residue-field module
+structure, Lean computes the quotient cardinality and representatives, projects
+to the unit-ball Haar-character layer, and applies
+\texttt{\detokenize{IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_normedValuedIntegerResidueModuleQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower}}.
 The same lowered source now carries the relative nonvacuity audit and the
 public-boundary inventory audit directly: Lean constructs the old
 local-analytic source internally before proving that the q-normalized route,
