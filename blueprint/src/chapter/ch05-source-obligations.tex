@@ -4146,8 +4146,17 @@
   The p-adic unit-ball Step~(xi) synchronization constructor
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicIUTStage1IUTIVLocalArithmeticDegreePadicUnitBallStepXISynchronizationSourceToLocalArithmeticDegreeResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit}
   now discharges that residual payload from the p-adic unit-ball Haar-index
-  source and the local synchronization identity, leaving the synchronization
-  itself as the remaining source obligation for this slice.
+  source and the local synchronization identity.
+  That synchronization has now been lowered once more by the arithmetic formula
+  matching constructor
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicIUTStage1IUTIVLocalArithmeticDegreePadicUnitBallArithmeticFormulaMatchingSourceToPadicUnitBallStepXISynchronizationSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit}.
+  Its source data are the two local formula equalities
+  \(\mathrm{StepXI}_v=a_v(D_v+C_v)\) and
+  \(E_v=p_v^{[K_v:\mathbb Q_{p_v}]}+M_v\); Lean unfolds the local arithmetic
+  upper contribution to reconstruct both the p-adic synchronization and the
+  expanded Haar-residual identity.  The remaining work is therefore to derive
+  these two formula equalities from the full IUT~IV local-estimate
+  construction, not to assume the synchronization record directly.
   The checked residual calculation is explicit:
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVLocalArithmeticDegreePadicUnitBallStepXISynchronizationSource.local_defined_residual_eq_padic_index}
   identifies the local defined residual with the p-adic unit-ball index, and

@@ -1976,9 +1976,13 @@ local calibration
 \]
 where \(A_v\) is the already-constructed local IUT~IV arithmetic upper term.
 Lean unfolds \(A_v=a_v(D_v+C_v)+E_v\) to recover the expanded
-arithmetic-degree identity internally.  Thus the remaining trust boundary here
-is the Step~(xi)-to-local-arithmetic synchronization itself, not the
-Haar-defect lower bound or the expanded arithmetic-degree algebra.
+arithmetic-degree identity internally.  This synchronization is now further
+lowered to the formula matching equalities
+\(\mathrm{StepXI}_v=a_v(D_v+C_v)\) and
+\(E_v=p_v^{[K_v:\mathbb Q_{p_v}]}+M_v\).  Thus the remaining trust boundary is
+the derivation of these local formula equalities from the full IUT~IV local
+estimate construction, not the Haar-defect lower bound or an independent
+synchronization record.
 The same case split has now been lifted to the same-index signed boundary by
 \(\mathrm{ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedCaseBoundedResidualSource}\).
 It keeps the determinant and theta-equality fields of the pointwise same-index
@@ -2023,8 +2027,17 @@ p-adic unit-ball index \(p_v^{[K_v:\mathbb Q_{p_v}]}\), and Lean obtains the
 generic residual endpoint by composing the p-adic Haar-index residual,
 pointwise Haar-defect residual, and summed local arithmetic-degree residual
 constructors.  Thus, on this slice, the residual package is no longer the
-primitive mathematical assumption; the remaining source obligation is the
-local Step~(xi) synchronization identity itself.
+primitive mathematical assumption; the local Step~(xi) synchronization is now
+the next boundary to lower.
+This synchronization has now also been lowered to a p-adic arithmetic formula
+matching source.  Instead of taking the synchronized upper-contribution
+identity directly, the new constructor takes the two local equalities
+\(\mathrm{StepXI}_v=a_v(D_v+C_v)\) and
+\(E_v=p_v^{[K_v:\mathbb Q_{p_v}]}+M_v\).  Since the local arithmetic upper
+contribution is definitionally \(a_v(D_v+C_v)+E_v\), Lean reconstructs the
+p-adic Step~(xi) synchronization and the expanded Haar-residual identity from
+these formula pieces.  The remaining local-estimate obligation is therefore to
+derive these two equalities from the full IUT~IV Theorem~1.10 construction.
 The calculation is now exposed directly as well: Lean proves that the local
 defined residual is exactly the p-adic unit-ball index and then sums these
 identities to obtain the total residual Haar lower bound used by the
