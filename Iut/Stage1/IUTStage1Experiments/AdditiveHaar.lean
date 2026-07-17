@@ -13447,6 +13447,129 @@ theorem formulaGapMatchedComparisonSourceAudit
         comparisonFormulaMatching_eq_valuationBall)
         |>.localPrimeErrorContribution_eq_padicHaarDefect_main }
 
+set_option linter.style.longLine false in
+/--
+Construct the valuation-ball p-adic defect/main local-estimate source from the
+local Step~(v)/(vii) degree-identification formula source.
+
+This lowers the comparison input in
+`ofFormulaGapMatchedArithmeticDegreePadicComparisonSource`: Lean first projects
+the synchronized Proposition~1.4/1.5 comparison source from the local
+degree-identification formulas, then applies the same valuation-ball p-adic
+split constructor.
+-/
+noncomputable def ofFormulaGapMatchedArithmeticDegreePadicLocalDegreeFormulaSource
+    (valuationBallSource :
+      IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (localDegreeFormulaSource :
+      IUTStage1AdditiveHaarTheorem110StepXILocalDegreeIdentificationFormulaSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (localDegreeFormulaMatching_eq_valuationBall :
+      localDegreeFormulaSource.toArithmeticDegreeComparisonFormulaGapSource.formulaMatchingSource =
+        valuationBallSource.toArithmeticFormulaMatchingSource) :
+    IUTStage1AdditiveHaarTheorem110PadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource
+      β estimate localPrime localField αHaar hullSystem
+      αLocal ηLocal localAnalyticHullSystem archIndex archSummand :=
+  ofFormulaGapMatchedArithmeticDegreePadicComparisonSource
+    valuationBallSource
+    localDegreeFormulaSource.toArithmeticDegreeComparisonFormulaGapSource
+    localDegreeFormulaMatching_eq_valuationBall
+
+set_option linter.style.longLine false in
+theorem ofFormulaGapMatchedArithmeticDegreePadicLocalDegreeFormulaSource_endpoint
+    (valuationBallSource :
+      IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (localDegreeFormulaSource :
+      IUTStage1AdditiveHaarTheorem110StepXILocalDegreeIdentificationFormulaSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (localDegreeFormulaMatching_eq_valuationBall :
+      localDegreeFormulaSource.toArithmeticDegreeComparisonFormulaGapSource.formulaMatchingSource =
+        valuationBallSource.toArithmeticFormulaMatchingSource) :
+    Endpoint
+      (ofFormulaGapMatchedArithmeticDegreePadicLocalDegreeFormulaSource
+        valuationBallSource localDegreeFormulaSource
+        localDegreeFormulaMatching_eq_valuationBall) :=
+  (ofFormulaGapMatchedArithmeticDegreePadicLocalDegreeFormulaSource
+      valuationBallSource localDegreeFormulaSource
+      localDegreeFormulaMatching_eq_valuationBall).endpoint
+
+structure FormulaGapMatchedLocalDegreeFormulaSourceAudit
+    (valuationBallSource :
+      IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (localDegreeFormulaSource :
+      IUTStage1AdditiveHaarTheorem110StepXILocalDegreeIdentificationFormulaSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (localDegreeFormulaMatching_eq_valuationBall :
+      localDegreeFormulaSource.toArithmeticDegreeComparisonFormulaGapSource.formulaMatchingSource =
+        valuationBallSource.toArithmeticFormulaMatchingSource) :
+    Prop where
+  valuationBallEndpoint : valuationBallSource.Endpoint
+  localDegreeFormulaAudit :
+    IUTStage1AdditiveHaarTheorem110StepXILocalDegreeIdentificationFormulaSource.LocalDegreeFormulaAudit
+      localDegreeFormulaSource
+  comparisonEndpoint :
+    localDegreeFormulaSource.toArithmeticDegreeComparisonFormulaGapSource.Endpoint
+  constructedEndpoint :
+    Endpoint
+      (ofFormulaGapMatchedArithmeticDegreePadicLocalDegreeFormulaSource
+        valuationBallSource localDegreeFormulaSource
+        localDegreeFormulaMatching_eq_valuationBall)
+  formulaGapComparisonAudit :
+    FormulaGapMatchedComparisonSourceAudit
+      valuationBallSource
+      localDegreeFormulaSource.toArithmeticDegreeComparisonFormulaGapSource
+      localDegreeFormulaMatching_eq_valuationBall
+  formulaGapPrimeErrorAudit :
+    ValuationBallFormulaGapPrimeErrorAudit
+      (ofFormulaGapMatchedArithmeticDegreePadicLocalDegreeFormulaSource
+        valuationBallSource localDegreeFormulaSource
+        localDegreeFormulaMatching_eq_valuationBall)
+
+set_option linter.style.longLine false in
+theorem formulaGapMatchedLocalDegreeFormulaSourceAudit
+    (valuationBallSource :
+      IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (localDegreeFormulaSource :
+      IUTStage1AdditiveHaarTheorem110StepXILocalDegreeIdentificationFormulaSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (localDegreeFormulaMatching_eq_valuationBall :
+      localDegreeFormulaSource.toArithmeticDegreeComparisonFormulaGapSource.formulaMatchingSource =
+        valuationBallSource.toArithmeticFormulaMatchingSource) :
+    FormulaGapMatchedLocalDegreeFormulaSourceAudit
+      valuationBallSource localDegreeFormulaSource
+      localDegreeFormulaMatching_eq_valuationBall :=
+  { valuationBallEndpoint := valuationBallSource.endpoint,
+    localDegreeFormulaAudit :=
+      localDegreeFormulaSource.localDegreeFormulaAudit,
+    comparisonEndpoint :=
+      localDegreeFormulaSource.toArithmeticDegreeComparisonFormulaGapSource.endpoint,
+    constructedEndpoint :=
+      ofFormulaGapMatchedArithmeticDegreePadicLocalDegreeFormulaSource_endpoint
+        valuationBallSource localDegreeFormulaSource
+        localDegreeFormulaMatching_eq_valuationBall,
+    formulaGapComparisonAudit :=
+      formulaGapMatchedComparisonSourceAudit
+        valuationBallSource
+        localDegreeFormulaSource.toArithmeticDegreeComparisonFormulaGapSource
+        localDegreeFormulaMatching_eq_valuationBall,
+    formulaGapPrimeErrorAudit :=
+      valuationBallFormulaGapPrimeErrorAudit
+        (ofFormulaGapMatchedArithmeticDegreePadicLocalDegreeFormulaSource
+          valuationBallSource localDegreeFormulaSource
+          localDegreeFormulaMatching_eq_valuationBall) }
+
 end IUTStage1AdditiveHaarTheorem110PadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource
 
 set_option linter.style.longLine false in
