@@ -4154,14 +4154,15 @@
   \(\mathrm{StepXI}_v=a_v(D_v+C_v)\) and
   \(E_v=p_v^{[K_v:\mathbb Q_{p_v}]}+M_v\); Lean unfolds the local arithmetic
   upper contribution to reconstruct both the p-adic synchronization and the
-  expanded Haar-residual identity.  The source-backed bridge
-  \lean{Iut.Stage1.Experiments.IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.toCorePadicUnitBallArithmeticFormulaMatchingSource}
-  now feeds this canonical constructor from the valuation-ball
-  arithmetic-degree controlled source: the Step~(xi) equality is derived from
-  localized determinant weight/raw-log-volume calibration, and the
-  prime-error equality is derived through the p-adic Haar-index defect source.
-  The remaining work is therefore to derive those calibration and prime-error
-  inputs from the full IUT~IV local-estimate construction, not to assume the
+  expanded Haar-residual identity.  The stricter source-backed bridge
+  \lean{Iut.Stage1.Experiments.IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.toCorePadicUnitBallArithmeticFormulaMatchingSource}
+  now feeds this canonical constructor from the valuation-ball formula-gap
+  matched arithmetic-degree/p-adic source: the Step~(xi) equality is derived
+  from localized determinant weight/raw-log-volume calibration, the
+  prime-error equality is routed through the p-adic Haar-index defect source,
+  and the formula-gap valuation-ball provenance is preserved.  The remaining
+  work is therefore to derive those calibration and prime-error inputs from
+  the full IUT~IV local-estimate construction, not to assume the
   synchronization record directly.
   The checked residual calculation is explicit:
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVLocalArithmeticDegreePadicUnitBallStepXISynchronizationSource.local_defined_residual_eq_padic_index}
