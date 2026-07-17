@@ -146,6 +146,31 @@ theorem toCorePadicUnitBallArithmeticFormulaMatchingSource_endpoint
     source.toCorePadicUnitBallArithmeticFormulaMatchingSource.Endpoint :=
   source.toCorePadicUnitBallArithmeticFormulaMatchingSource.endpoint
 
+set_option linter.style.longLine false in
+/--
+Project additive-Haar formula matching directly to the canonical local
+arithmetic-degree residual package.
+
+This composes the source-backed p-adic unit-ball Haar-index formula equalities
+with the core residual constructor, so callers do not have to expose the
+intermediate synchronization record.
+-/
+noncomputable def toCoreLocalArithmeticDegreeResidualSource
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :=
+  source.toCorePadicUnitBallArithmeticFormulaMatchingSource
+    |>.toLocalArithmeticDegreeResidualSource
+
+theorem toCoreLocalArithmeticDegreeResidualSource_endpoint
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    source.toCoreLocalArithmeticDegreeResidualSource.Endpoint :=
+  source.toCoreLocalArithmeticDegreeResidualSource.endpoint
+
 end IUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource
 
 namespace IUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource
@@ -202,6 +227,27 @@ theorem toCorePadicUnitBallArithmeticFormulaMatchingSource_endpoint
         αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
     source.toCorePadicUnitBallArithmeticFormulaMatchingSource.Endpoint :=
   source.toCorePadicUnitBallArithmeticFormulaMatchingSource.endpoint
+
+set_option linter.style.longLine false in
+/--
+Project the p-adic prime-error split source directly to the canonical residual
+package by reconstructing the p-adic arithmetic formula-matching record first.
+-/
+noncomputable def toCoreLocalArithmeticDegreeResidualSource
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :=
+  source.toCorePadicUnitBallArithmeticFormulaMatchingSource
+    |>.toLocalArithmeticDegreeResidualSource
+
+theorem toCoreLocalArithmeticDegreeResidualSource_endpoint
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    source.toCoreLocalArithmeticDegreeResidualSource.Endpoint :=
+  source.toCoreLocalArithmeticDegreeResidualSource.endpoint
 
 end IUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource
 
@@ -264,6 +310,27 @@ theorem toCorePadicUnitBallArithmeticFormulaMatchingSource_endpoint
     source.toCorePadicUnitBallArithmeticFormulaMatchingSource.Endpoint :=
   source.toCorePadicUnitBallArithmeticFormulaMatchingSource.endpoint
 
+set_option linter.style.longLine false in
+/--
+Project the fully split additive-Haar arithmetic-degree/p-adic source directly
+to the canonical residual package.
+-/
+noncomputable def toCoreLocalArithmeticDegreeResidualSource
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :=
+  source.toCorePadicUnitBallArithmeticFormulaMatchingSource
+    |>.toLocalArithmeticDegreeResidualSource
+
+theorem toCoreLocalArithmeticDegreeResidualSource_endpoint
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    source.toCoreLocalArithmeticDegreeResidualSource.Endpoint :=
+  source.toCoreLocalArithmeticDegreeResidualSource.endpoint
+
 end IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreePadicPrimeErrorFormulaMatchingSource
 
 set_option linter.style.longLine false
@@ -322,6 +389,27 @@ theorem toCorePadicUnitBallArithmeticFormulaMatchingSource_endpoint
         αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
     source.toCorePadicUnitBallArithmeticFormulaMatchingSource.Endpoint :=
   source.toCorePadicUnitBallArithmeticFormulaMatchingSource.endpoint
+
+set_option linter.style.longLine false in
+/--
+Project the constructed prime-error arithmetic-degree formula source directly
+to the canonical local arithmetic-degree residual package.
+-/
+noncomputable def toCoreLocalArithmeticDegreeResidualSource
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :=
+  source.toCorePadicUnitBallArithmeticFormulaMatchingSource
+    |>.toLocalArithmeticDegreeResidualSource
+
+theorem toCoreLocalArithmeticDegreeResidualSource_endpoint
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    source.toCoreLocalArithmeticDegreeResidualSource.Endpoint :=
+  source.toCoreLocalArithmeticDegreeResidualSource.endpoint
 
 end IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource
 
@@ -382,6 +470,27 @@ theorem toCorePadicUnitBallArithmeticFormulaMatchingSource_endpoint
     source.toCorePadicUnitBallArithmeticFormulaMatchingSource.Endpoint :=
   source.toCorePadicUnitBallArithmeticFormulaMatchingSource.endpoint
 
+set_option linter.style.longLine false in
+/--
+Project the formula-gap matched additive-Haar arithmetic-degree/p-adic source
+directly to the canonical local arithmetic-degree residual package.
+-/
+noncomputable def toCoreLocalArithmeticDegreeResidualSource
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :=
+  source.toCorePadicUnitBallArithmeticFormulaMatchingSource
+    |>.toLocalArithmeticDegreeResidualSource
+
+theorem toCoreLocalArithmeticDegreeResidualSource_endpoint
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    source.toCoreLocalArithmeticDegreeResidualSource.Endpoint :=
+  source.toCoreLocalArithmeticDegreeResidualSource.endpoint
+
 end IUTStage1AdditiveHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
 
 namespace IUTStage1AdditiveHaarTheorem110StepXIMatchedLocalDegreeArithmeticDivisorBackedComponentSource
@@ -438,6 +547,27 @@ theorem toCorePadicUnitBallArithmeticFormulaMatchingSource_endpoint
         αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
     source.toCorePadicUnitBallArithmeticFormulaMatchingSource.Endpoint :=
   source.toCorePadicUnitBallArithmeticFormulaMatchingSource.endpoint
+
+set_option linter.style.longLine false in
+/--
+Project the arithmetic-divisor-backed local-degree component source directly
+to the canonical local arithmetic-degree residual package.
+-/
+noncomputable def toCoreLocalArithmeticDegreeResidualSource
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIMatchedLocalDegreeArithmeticDivisorBackedComponentSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :=
+  source.toCorePadicUnitBallArithmeticFormulaMatchingSource
+    |>.toLocalArithmeticDegreeResidualSource
+
+theorem toCoreLocalArithmeticDegreeResidualSource_endpoint
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIMatchedLocalDegreeArithmeticDivisorBackedComponentSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    source.toCoreLocalArithmeticDegreeResidualSource.Endpoint :=
+  source.toCoreLocalArithmeticDegreeResidualSource.endpoint
 
 end IUTStage1AdditiveHaarTheorem110StepXIMatchedLocalDegreeArithmeticDivisorBackedComponentSource
 
@@ -503,6 +633,27 @@ theorem toCorePadicUnitBallArithmeticFormulaMatchingSource_endpoint
     constructedSource.toCorePadicUnitBallArithmeticFormulaMatchingSource.Endpoint :=
   constructedSource.toCorePadicUnitBallArithmeticFormulaMatchingSource.endpoint
 
+set_option linter.style.longLine false in
+/--
+Project the constructed Theorem~3.11/IUT~IV local-term source directly to the
+canonical local arithmetic-degree residual package.
+-/
+noncomputable def toCoreLocalArithmeticDegreeResidualSource
+    (constructedSource :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :=
+  constructedSource.toCorePadicUnitBallArithmeticFormulaMatchingSource
+    |>.toLocalArithmeticDegreeResidualSource
+
+theorem toCoreLocalArithmeticDegreeResidualSource_endpoint
+    (constructedSource :
+      ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource
+        sourceData estimate l η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    constructedSource.toCoreLocalArithmeticDegreeResidualSource.Endpoint :=
+  constructedSource.toCoreLocalArithmeticDegreeResidualSource.endpoint
+
 end ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource
 
 namespace IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
@@ -560,6 +711,27 @@ theorem toCorePadicUnitBallArithmeticFormulaMatchingSource_endpoint
         αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
     source.toCorePadicUnitBallArithmeticFormulaMatchingSource.Endpoint :=
   source.toCorePadicUnitBallArithmeticFormulaMatchingSource.endpoint
+
+set_option linter.style.longLine false in
+/--
+Project the valuation-ball formula-gap matched arithmetic-degree/p-adic source
+directly to the canonical local arithmetic-degree residual package.
+-/
+noncomputable def toCoreLocalArithmeticDegreeResidualSource
+    (source :
+      IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :=
+  source.toCorePadicUnitBallArithmeticFormulaMatchingSource
+    |>.toLocalArithmeticDegreeResidualSource
+
+theorem toCoreLocalArithmeticDegreeResidualSource_endpoint
+    (source :
+      IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    source.toCoreLocalArithmeticDegreeResidualSource.Endpoint :=
+  source.toCoreLocalArithmeticDegreeResidualSource.endpoint
 
 end IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
 
@@ -621,6 +793,32 @@ theorem toCorePadicUnitBallArithmeticFormulaMatchingSource_endpoint
         αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
     source.toCorePadicUnitBallArithmeticFormulaMatchingSource.Endpoint :=
   source.toCorePadicUnitBallArithmeticFormulaMatchingSource.endpoint
+
+set_option linter.style.longLine false in
+/--
+Project the valuation-ball arithmetic-degree controlled source directly to the
+canonical local arithmetic-degree residual package.
+
+This is the lowest currently source-backed bridge into the canonical residual
+consumer: the Step~(xi) arithmetic equality, prime-error/p-adic-index split,
+and p-adic Haar lower bound are all reconstructed before entering the core
+residual source.
+-/
+noncomputable def toCoreLocalArithmeticDegreeResidualSource
+    (source :
+      IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :=
+  source.toCorePadicUnitBallArithmeticFormulaMatchingSource
+    |>.toLocalArithmeticDegreeResidualSource
+
+theorem toCoreLocalArithmeticDegreeResidualSource_endpoint
+    (source :
+      IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    source.toCoreLocalArithmeticDegreeResidualSource.Endpoint :=
+  source.toCoreLocalArithmeticDegreeResidualSource.endpoint
 
 end IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource
 
