@@ -308,6 +308,12 @@ def canonicalStage1ResidualFrontier :
         "RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource",
       role :=
         "Derived projection from the new lower source to the canonical local arithmetic-degree residual package." },
+    { name := "ordinary Record-Ob3/Ob5 component residual projection from arithmetic-degree-controlled local arithmetic",
+      status := .derived,
+      declarationName :=
+        "RecordOb3Ob5ArithmeticDivisorBackedComponentSource.toCoreLocalArithmeticDegreeResidualSourceOfArithmeticDegreeControlledLocalArithmeticSource",
+      role :=
+        "Derived projection from an ordinary Record-Ob3/Ob5 arithmetic-divisor component source once its full formula package is identified with the formula reconstructed from the arithmetic-degree-controlled local arithmetic source." },
     { name := "strict p-adic-Haar residual projection",
       status := .derived,
       declarationName :=
@@ -320,6 +326,12 @@ def canonicalStage1ResidualFrontier :
         "PadicDefectMainWithoutArithmeticDefectIdentificationToyCountermodel.not_padic_defect_main_split",
       role :=
         "Constructed weakened-boundary diagnostic showing why E_v = defect_v + M_v does not imply the p-adic Haar split without arithmetic-defect identification." },
+    { name := "ordinary component formula synchronization countermodel",
+      status := .constructed,
+      declarationName :=
+        "PadicHaarIndexLoweringWithoutComponentFormulaMatchingToyCountermodel.not_component_formula_eq_reconstructed_padicHaar",
+      role :=
+        "Constructed weakened-boundary diagnostic showing why the ordinary Record-Ob3/Ob5 component residual projection still needs the full component-to-reconstructed-padic formula package equality." },
     { name := "strict p-adic-Haar residual synchronization countermodel",
       status := .constructed,
       declarationName :=
@@ -328,7 +340,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic for the strict source's definitional formula synchronization." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 7 :=
+    canonicalStage1ResidualFrontier.length = 9 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -338,12 +350,12 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 4 :=
+      (fun entry => entry.status = .derived)).length = 5 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_constructed_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .constructed)).length = 2 :=
+      (fun entry => entry.status = .constructed)).length = 3 :=
   rfl
 
 /--
@@ -5262,6 +5274,12 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedComponentSource.toPadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSourceOfArithmeticDegreeControlledLocalArithmeticSource_endpoint
 #guard_msgs (drop info) in
 #print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedComponentSource.toPadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSourceOfArithmeticDegreeControlledLocalArithmeticSource_endpoint
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedComponentSource.toCoreLocalArithmeticDegreeResidualSourceOfArithmeticDegreeControlledLocalArithmeticSource
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedComponentSource.toCoreLocalArithmeticDegreeResidualSourceOfArithmeticDegreeControlledLocalArithmeticSource_endpoint
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedComponentSource.toCoreLocalArithmeticDegreeResidualSourceOfArithmeticDegreeControlledLocalArithmeticSource_endpoint
 #guard_msgs (drop info) in
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource
 #guard_msgs (drop info) in
