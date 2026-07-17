@@ -4328,6 +4328,11 @@
   keeps the Theorem~1.10/p-adic Haar-index and arithmetic-degree reconstruction
   equations true while detaching the Record-Ob3/Ob5 component formula from the
   reconstructed p-adic Haar formula.
+  The strict residual-consumer diagnostic
+  \lean{Iut.Stage1.IUTStage1StepXIDependencyAudit.PadicHaarControlledResidualWithoutDefinitionalSynchronizationToyCountermodel.not_component_residual_eq_reconstructed_padic_residual}
+  then shows the downstream failure: the component residual and reconstructed
+  p-adic residual can differ unless the strict controlled source carries this
+  formula synchronization definitionally.
   The local-degree goal-evidence audit
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.goalEvidenceAudit}
   and public-boundary inventory

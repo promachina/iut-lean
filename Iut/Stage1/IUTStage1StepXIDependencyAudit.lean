@@ -681,6 +681,87 @@ theorem padicHaarIndexLoweringWithoutComponentFormulaMatchingToyCountermodel_not
   padicHaarIndexLoweringWithoutComponentFormulaMatchingToyCountermodel
     |>.not_component_formula_eq_reconstructed_padicHaar
 
+/--
+One-place diagnostic for the strict p-adic-Haar controlled residual consumer.
+
+The strict source now projects directly to the canonical residual package only
+because its controlled component is assembled over the formula object
+reconstructed from p-adic Haar-index data.  If one weakens this source by
+keeping the p-adic Haar-index and arithmetic-degree reconstruction laws but
+allows the Record-Ob3/Ob5 component residual to refer to a detached component
+formula, then the residual seen by the component and the residual reconstructed
+from the p-adic source can differ.
+-/
+structure PadicHaarControlledResidualWithoutDefinitionalSynchronizationToyCountermodel where
+  componentFormula : Real
+  reconstructedPadicFormula : Real
+  componentResidual : Real
+  reconstructedPadicResidual : Real
+  localPrimeError : Real
+  localPadicHaarDefect : Real
+  localMainLog : Real
+  arithmeticDegreeCoefficient : Real
+  localDifferentDegree : Real
+  localConductorDegree : Real
+  localPrimeError_eq_padicHaarDefect_main :
+    localPrimeError = localPadicHaarDefect + localMainLog
+  reconstructedFormula_eq_arithmeticDegree_primeError :
+    reconstructedPadicFormula =
+      arithmeticDegreeCoefficient * (localDifferentDegree + localConductorDegree) +
+        localPrimeError
+  componentResidual_eq_componentFormula :
+    componentResidual = componentFormula
+  reconstructedPadicResidual_eq_reconstructedFormula :
+    reconstructedPadicResidual = reconstructedPadicFormula
+  componentFormula_eq_zero : componentFormula = 0
+  reconstructedPadicFormula_eq_one : reconstructedPadicFormula = 1
+
+theorem PadicHaarControlledResidualWithoutDefinitionalSynchronizationToyCountermodel.not_component_residual_eq_reconstructed_padic_residual
+    (toy :
+      PadicHaarControlledResidualWithoutDefinitionalSynchronizationToyCountermodel) :
+    ¬ toy.componentResidual = toy.reconstructedPadicResidual := by
+  intro hresidual
+  have hcomponentResidual : toy.componentResidual = 0 := by
+    rw [toy.componentResidual_eq_componentFormula, toy.componentFormula_eq_zero]
+  have hpadicResidual : toy.reconstructedPadicResidual = 1 := by
+    rw [
+      toy.reconstructedPadicResidual_eq_reconstructedFormula,
+      toy.reconstructedPadicFormula_eq_one]
+  rw [hcomponentResidual, hpadicResidual] at hresidual
+  norm_num at hresidual
+
+/--
+Concrete strict-boundary countermodel: the lower p-adic laws reconstruct
+formula and residual value \(1\), while the weakened component residual still
+tracks the detached component formula \(0\).  Thus the direct residual handoff
+needs the definitional component/formula synchronization carried by the strict
+p-adic-Haar controlled source.
+-/
+def padicHaarControlledResidualWithoutDefinitionalSynchronizationToyCountermodel :
+    PadicHaarControlledResidualWithoutDefinitionalSynchronizationToyCountermodel :=
+  { componentFormula := 0,
+    reconstructedPadicFormula := 1,
+    componentResidual := 0,
+    reconstructedPadicResidual := 1,
+    localPrimeError := 1,
+    localPadicHaarDefect := 1,
+    localMainLog := 0,
+    arithmeticDegreeCoefficient := 0,
+    localDifferentDegree := 0,
+    localConductorDegree := 0,
+    localPrimeError_eq_padicHaarDefect_main := by norm_num,
+    reconstructedFormula_eq_arithmeticDegree_primeError := by norm_num,
+    componentResidual_eq_componentFormula := by norm_num,
+    reconstructedPadicResidual_eq_reconstructedFormula := by norm_num,
+    componentFormula_eq_zero := by norm_num,
+    reconstructedPadicFormula_eq_one := by norm_num }
+
+theorem padicHaarControlledResidualWithoutDefinitionalSynchronizationToyCountermodel_not_component_residual_eq_reconstructed_padic_residual :
+    ¬ padicHaarControlledResidualWithoutDefinitionalSynchronizationToyCountermodel.componentResidual =
+      padicHaarControlledResidualWithoutDefinitionalSynchronizationToyCountermodel.reconstructedPadicResidual :=
+  padicHaarControlledResidualWithoutDefinitionalSynchronizationToyCountermodel
+    |>.not_component_residual_eq_reconstructed_padic_residual
+
 #guard_msgs (drop info) in
 #check LocalAnalyticCaseWithoutDistinguishedGapToyCountermodel.not_residual_ge_one
 #guard_msgs (drop info) in
@@ -708,6 +789,10 @@ theorem padicHaarIndexLoweringWithoutComponentFormulaMatchingToyCountermodel_not
 #check PadicHaarIndexLoweringWithoutComponentFormulaMatchingToyCountermodel.not_component_formula_eq_reconstructed_padicHaar
 #guard_msgs (drop info) in
 #print axioms PadicHaarIndexLoweringWithoutComponentFormulaMatchingToyCountermodel.not_component_formula_eq_reconstructed_padicHaar
+#guard_msgs (drop info) in
+#check PadicHaarControlledResidualWithoutDefinitionalSynchronizationToyCountermodel.not_component_residual_eq_reconstructed_padic_residual
+#guard_msgs (drop info) in
+#print axioms PadicHaarControlledResidualWithoutDefinitionalSynchronizationToyCountermodel.not_component_residual_eq_reconstructed_padic_residual
 
 #guard_msgs (drop info) in
 #check Experiments.IUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource.toCoreLocalArithmeticDegreeResidualSource
