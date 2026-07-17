@@ -395,6 +395,12 @@ def canonicalStage1ResidualFrontier :
         "ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.ofLocalArithmeticDegreeResidualSource",
       role :=
         "Derived constructor for the full Ob3/Ob4 adjusted-determinant q-normalized source from the local arithmetic-degree residual package.  The route still consumes the source-level adjusted determinant synchronization and q-normalized theta identity, but the total residual Haar inequality is now obtained by summing the local arithmetic-degree residual identity instead of being supplied as a raw field at this source boundary." },
+    { name := "adjusted-determinant source-to-projected weighted local-analytic projection",
+      status := .derived,
+      declarationName :=
+        "ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.toProjectedWeightedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource",
+      role :=
+        "Derived projection from full Remark 3.9.5 Ob3/Ob4 adjusted-determinant synchronization to the projected weighted determinant summand, anchor, and tensor-power fields consumed by the q-normalized local-analytic route.  At the same-index adjusted-determinant boundary, these three weighted shadow equalities are consequences of the full adjusted-determinant equality rather than separate source fields." },
     { name := "p-adic defect/main split countermodel",
       status := .constructed,
       declarationName :=
@@ -427,7 +433,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 23 :=
+    canonicalStage1ResidualFrontier.length = 24 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -437,7 +443,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 18 :=
+      (fun entry => entry.status = .derived)).length = 19 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -1079,6 +1085,14 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.weightedDeterminant_summand_anchor_tensorPower_eq_of_localization_anchor_tensorPower
 #guard_msgs (drop info) in
 #print axioms IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.weightedDeterminant_summand_anchor_tensorPower_eq_of_localization_anchor_tensorPower
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.toProjectedWeightedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.toProjectedWeightedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.projectedWeighted_endpoint
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.projectedWeighted_endpoint
 #guard_msgs (drop info) in
 #check WeightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel.not_record_ob3ob4_synchronized
 #guard_msgs (drop info) in

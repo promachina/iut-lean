@@ -1661,8 +1661,12 @@ handoff.  The same adjusted-determinant source now also exposes the
 \(C_\Theta \geq -1\) companion endpoint by projecting through the q-normalized
 local-analytic handoff.  Its local-arithmetic-degree constructor keeps the full
 adjusted-determinant synchronization while deriving the residual Haar lower
-bound from the packaged local arithmetic-degree residual source.  A heterogeneous
-projected-weighted determinant source now handles the endpoint case in which
+bound from the packaged local arithmetic-degree residual source.  The same
+full adjusted-determinant source now projects directly to the
+projected-weighted local-analytic route; in the same-index case, the summand,
+anchor, and positive tensor-power fields are derived from the full Ob3/Ob4
+equality rather than supplied as three independent weighted shadow fields.
+A heterogeneous projected-weighted determinant source now handles the endpoint case in which
 the principal HDD determinant side and the localized p-adic side have different
 hidden \(\gamma\)-indices: it compares the projected weighted determinant
 summands, anchor, and positive tensor power over the common \(\beta\)-index,
@@ -2216,6 +2220,9 @@ It also records the projection from that source-level synchronization to the
 older weighted determinant summand, anchor, and tensor-power equalities consumed
 by the current canonical route, via
 \texttt{\detokenize{IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.weightedDeterminant_summand_anchor_tensorPower_eq_of_localization_anchor_tensorPower}}.
+The full adjusted-determinant q-normalized source now uses that projection to
+enter the projected-weighted local-analytic route without adding the three
+component fields as separate same-index assumptions.
 The same lowered source now carries the relative nonvacuity audit and the
 public-boundary inventory audit directly: Lean constructs the old
 local-analytic source internally before proving that the q-normalized route,
