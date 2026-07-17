@@ -521,6 +521,12 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_unitBallHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower",
       role :=
         "Derived Ob3/Ob4 synchronization criterion from componentwise equality of unit-ball Haar-character local-field payloads.  The source carries the paper-facing normalization laws mu(O_v)=1 and mu(p_v O_v)=p_v^{-[K_v:Q_p]}; Lean projects componentwise equality through the Haar-character, ENNReal modulus, constructed dilation-mass, and finite-extension proper-ultrametric layers before applying the p-adic determinant theorem." },
+    { name := "quotient-coset Haar-character p-adic determinant adjusted-source synchronization",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_unitBallQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower",
+      role :=
+        "Derived Ob3/Ob4 synchronization criterion from componentwise equality of quotient-coset Haar-character local-field payloads.  The local residue-coset partition is now derived from O_v / p_v O_v before projecting to the unit-ball Haar-character source, so the determinant boundary no longer needs to consume a standalone unit-ball Haar-character source when quotient-coset data is available." },
     { name := "principal-product p-adic family-hull adjusted-sum projection",
       status := .derived,
       declarationName :=
@@ -619,7 +625,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 55 :=
+    canonicalStage1ResidualFrontier.length = 56 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -629,7 +635,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 50 :=
+      (fun entry => entry.status = .derived)).length = 51 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -1359,6 +1365,22 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionFactor_componentwise_structureSheaf_weight_anchor_tensorPower
 #guard_msgs (drop info) in
 #print axioms IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionFactor_componentwise_structureSheaf_weight_anchor_tensorPower
+#guard_msgs (drop info) in
+#check IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_constructedDilationMassFactor_componentwise_structureSheaf_weight_anchor_tensorPower
+#guard_msgs (drop info) in
+#print axioms IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_constructedDilationMassFactor_componentwise_structureSheaf_weight_anchor_tensorPower
+#guard_msgs (drop info) in
+#check IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_unitBallHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower
+#guard_msgs (drop info) in
+#print axioms IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_unitBallHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower
+#guard_msgs (drop info) in
+#check IUTStage1PadicFiniteExtensionUnitBallQuotientCosetHaarCharacterNormalizationSource.ComponentwiseEqual.toUnitBallHaarCharacterNormalizationSource
+#guard_msgs (drop info) in
+#print axioms IUTStage1PadicFiniteExtensionUnitBallQuotientCosetHaarCharacterNormalizationSource.ComponentwiseEqual.toUnitBallHaarCharacterNormalizationSource
+#guard_msgs (drop info) in
+#check IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_unitBallQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower
+#guard_msgs (drop info) in
+#print axioms IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_unitBallQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.projectedWeighted_endpoint
 #guard_msgs (drop info) in

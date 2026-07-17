@@ -18915,6 +18915,26 @@ variable [IsTopologicalAddGroup K]
 variable [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
 variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
 
+set_option linter.style.longLine false in
+/--
+Componentwise equality for the residue-coset Haar-character source.
+
+The residue-coset cover, disjointness, measurability, and cardinality laws are
+proof fields once the local Haar payload is fixed.  This equality therefore
+tracks the same payload used by the projected unit-ball Haar-character source.
+-/
+structure ComponentwiseEqual
+    (left right :
+      IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    Prop where
+  integerSource_eq : left.integerSource = right.integerSource
+  realization_eq : left.realization = right.realization
+  realizedRegion_eq : left.realizedRegion = right.realizedRegion
+  compactOpenRadius_eq :
+    left.compactOpenRadius = right.compactOpenRadius
+  haarMeasure_eq : left.haarMeasure = right.haarMeasure
+
 noncomputable def residueIndexCard
     (_data :
       IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
@@ -19101,6 +19121,31 @@ noncomputable def toUnitBallHaarCharacterNormalizationSource
       simpa [basePrimeScaledUnitBall] using data.basePrimeUnitBall_measure_eq,
     hull_logVolume_eq_normalized := data.hull_logVolume_eq_normalized }
 
+set_option linter.style.longLine false in
+theorem ComponentwiseEqual.toUnitBallHaarCharacterNormalizationSource
+    {left right :
+      IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
+        α p K hullSystem}
+    (matching : ComponentwiseEqual left right) :
+    IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource.ComponentwiseEqual
+      left.toUnitBallHaarCharacterNormalizationSource
+      right.toUnitBallHaarCharacterNormalizationSource :=
+  { integerSource_eq := by
+      simpa [toUnitBallHaarCharacterNormalizationSource] using
+        matching.integerSource_eq,
+    realization_eq := by
+      simpa [toUnitBallHaarCharacterNormalizationSource] using
+        matching.realization_eq,
+    realizedRegion_eq := by
+      simpa [toUnitBallHaarCharacterNormalizationSource] using
+        matching.realizedRegion_eq,
+    compactOpenRadius_eq := by
+      simpa [toUnitBallHaarCharacterNormalizationSource] using
+        matching.compactOpenRadius_eq,
+    haarMeasure_eq := by
+      simpa [toUnitBallHaarCharacterNormalizationSource] using
+        matching.haarMeasure_eq }
+
 theorem endpoint
     (data :
       IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource
@@ -19206,6 +19251,25 @@ variable [MeasurableSpace K] [BorelSpace K] [LocallyCompactSpace K]
 variable [IsTopologicalAddGroup K]
 variable [Algebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
 variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+set_option linter.style.longLine false in
+/--
+Componentwise equality for the quotient-coset Haar-character source.
+
+The additive quotient equivalence and representatives are used to derive the
+coset partition; they are not part of the projected Haar-character payload.
+-/
+structure ComponentwiseEqual
+    (left right :
+      IUTStage1PadicFiniteExtensionUnitBallQuotientCosetHaarCharacterNormalizationSource
+        α p K hullSystem) :
+    Prop where
+  integerSource_eq : left.integerSource = right.integerSource
+  realization_eq : left.realization = right.realization
+  realizedRegion_eq : left.realizedRegion = right.realizedRegion
+  compactOpenRadius_eq :
+    left.compactOpenRadius = right.compactOpenRadius
+  haarMeasure_eq : left.haarMeasure = right.haarMeasure
 
 noncomputable def toFiniteAdditiveQuotientCosetPartitionSource
     (data :
@@ -19329,6 +19393,43 @@ noncomputable def toUnitBallCosetHaarCharacterNormalizationSource
         residueCoset, residueCosetRepresentative, basePrimeScaledUnitBall] using
         data.residueCoset_measurable index,
     hull_logVolume_eq_normalized := data.hull_logVolume_eq_normalized }
+
+set_option linter.style.longLine false in
+theorem ComponentwiseEqual.toUnitBallCosetHaarCharacterNormalizationSource
+    {left right :
+      IUTStage1PadicFiniteExtensionUnitBallQuotientCosetHaarCharacterNormalizationSource
+        α p K hullSystem}
+    (matching : ComponentwiseEqual left right) :
+    IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource.ComponentwiseEqual
+      left.toUnitBallCosetHaarCharacterNormalizationSource
+      right.toUnitBallCosetHaarCharacterNormalizationSource :=
+  { integerSource_eq := by
+      simpa [toUnitBallCosetHaarCharacterNormalizationSource] using
+        matching.integerSource_eq,
+    realization_eq := by
+      simpa [toUnitBallCosetHaarCharacterNormalizationSource] using
+        matching.realization_eq,
+    realizedRegion_eq := by
+      simpa [toUnitBallCosetHaarCharacterNormalizationSource] using
+        matching.realizedRegion_eq,
+    compactOpenRadius_eq := by
+      simpa [toUnitBallCosetHaarCharacterNormalizationSource] using
+        matching.compactOpenRadius_eq,
+    haarMeasure_eq := by
+      simpa [toUnitBallCosetHaarCharacterNormalizationSource] using
+        matching.haarMeasure_eq }
+
+set_option linter.style.longLine false in
+theorem ComponentwiseEqual.toUnitBallHaarCharacterNormalizationSource
+    {left right :
+      IUTStage1PadicFiniteExtensionUnitBallQuotientCosetHaarCharacterNormalizationSource
+        α p K hullSystem}
+    (matching : ComponentwiseEqual left right) :
+    IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource.ComponentwiseEqual
+      left.toUnitBallCosetHaarCharacterNormalizationSource.toUnitBallHaarCharacterNormalizationSource
+      right.toUnitBallCosetHaarCharacterNormalizationSource.toUnitBallHaarCharacterNormalizationSource :=
+  matching.toUnitBallCosetHaarCharacterNormalizationSource
+    |>.toUnitBallHaarCharacterNormalizationSource
 
 /--
 The quotient-coset source exposes the same Haar-character endpoint as the older
@@ -20700,6 +20801,28 @@ variable [FiniteDimensional ℚ_[p] K]
 variable [Field κ] [Fintype κ]
 variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
 
+set_option linter.style.longLine false in
+/--
+Componentwise equality for the quotient-native residue-module Haar-character
+source.
+
+The finite-dimensional, quotient-module, quotient-fintype, cardinality, and
+finrank data derive the coset cardinality and Haar character.  The projected
+local Haar payload is determined by the integer source, realization,
+realized-region map, compact-open radius, and Haar measure.
+-/
+structure ComponentwiseEqual
+    (left right :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueModuleQuotientCosetHaarCharacterNormalizationSource
+        α p K κ hullSystem) :
+    Prop where
+  integerSource_eq : left.integerSource = right.integerSource
+  realization_eq : left.realization = right.realization
+  realizedRegion_eq : left.realizedRegion = right.realizedRegion
+  compactOpenRadius_eq :
+    left.compactOpenRadius = right.compactOpenRadius
+  haarMeasure_eq : left.haarMeasure = right.haarMeasure
+
 theorem quotient_card_eq_pow_finrank
     (data :
       IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueModuleQuotientCosetHaarCharacterNormalizationSource
@@ -20834,6 +20957,71 @@ noncomputable def toUnitBallHaarCharacterNormalizationSource
       |>.toUnitBallQuotientCosetHaarCharacterNormalizationSource
       |>.toUnitBallCosetHaarCharacterNormalizationSource
       |>.toUnitBallHaarCharacterNormalizationSource
+
+set_option linter.style.longLine false in
+theorem ComponentwiseEqual.toUnitBallHaarCharacterNormalizationSource
+    {left right :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueModuleQuotientCosetHaarCharacterNormalizationSource
+        α p K κ hullSystem}
+    (matching : ComponentwiseEqual left right) :
+    IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource.ComponentwiseEqual
+      left.toUnitBallHaarCharacterNormalizationSource
+      right.toUnitBallHaarCharacterNormalizationSource :=
+  { integerSource_eq := by
+      simpa [toUnitBallHaarCharacterNormalizationSource,
+        toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource.toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource.toNormedValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionNormedValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource.toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource.toUnitBallDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionUnitBallDilationQuotientCosetHaarCharacterNormalizationSource.toUnitBallQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionUnitBallQuotientCosetHaarCharacterNormalizationSource.toUnitBallCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource.toUnitBallHaarCharacterNormalizationSource] using
+        matching.integerSource_eq,
+    realization_eq := by
+      simpa [toUnitBallHaarCharacterNormalizationSource,
+        toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource.toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource.toNormedValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionNormedValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource.toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource.toUnitBallDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionUnitBallDilationQuotientCosetHaarCharacterNormalizationSource.toUnitBallQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionUnitBallQuotientCosetHaarCharacterNormalizationSource.toUnitBallCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource.toUnitBallHaarCharacterNormalizationSource] using
+        matching.realization_eq,
+    realizedRegion_eq := by
+      simpa [toUnitBallHaarCharacterNormalizationSource,
+        toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource.toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource.toNormedValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionNormedValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource.toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource.toUnitBallDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionUnitBallDilationQuotientCosetHaarCharacterNormalizationSource.toUnitBallQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionUnitBallQuotientCosetHaarCharacterNormalizationSource.toUnitBallCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource.toUnitBallHaarCharacterNormalizationSource] using
+        matching.realizedRegion_eq,
+    compactOpenRadius_eq := by
+      simpa [toUnitBallHaarCharacterNormalizationSource,
+        toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource.toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource.toNormedValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionNormedValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource.toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource.toUnitBallDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionUnitBallDilationQuotientCosetHaarCharacterNormalizationSource.toUnitBallQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionUnitBallQuotientCosetHaarCharacterNormalizationSource.toUnitBallCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource.toUnitBallHaarCharacterNormalizationSource] using
+        matching.compactOpenRadius_eq,
+    haarMeasure_eq := by
+      simpa [toUnitBallHaarCharacterNormalizationSource,
+        toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource.toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionNormedValuedIntegerQuotientCardinalityCosetHaarCharacterNormalizationSource.toNormedValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionNormedValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource.toValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionValuedIntegerDilationQuotientCosetHaarCharacterNormalizationSource.toUnitBallDilationQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionUnitBallDilationQuotientCosetHaarCharacterNormalizationSource.toUnitBallQuotientCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionUnitBallQuotientCosetHaarCharacterNormalizationSource.toUnitBallCosetHaarCharacterNormalizationSource,
+        IUTStage1PadicFiniteExtensionUnitBallCosetHaarCharacterNormalizationSource.toUnitBallHaarCharacterNormalizationSource] using
+        matching.haarMeasure_eq }
 
 theorem endpoint
     (data :
@@ -23732,6 +23920,74 @@ theorem toAdjustedDeterminantSource_eq_of_pointwise_unitBallHaarCharacterFactor_
     exact
       (unitBallHaarCharacterFactor_match index summand)
         |>.toConstructedDilationMassHaarNormalizationSource
+  · exact structureSheafLogVolume_eq
+  · exact weight_eq
+  · exact anchor_eq
+  · exact positiveTensorPower_eq
+
+set_option linter.style.longLine false in
+/--
+Quotient-coset criterion for the p-adic finite-extension Ob3/Ob4 determinant
+synchronization.
+
+This lowers the unit-ball Haar-character determinant boundary to the source
+that derives the residue-coset partition from `O_v / p_v O_v`.  The local
+factors are identified with projections of quotient-coset Haar-character
+sources, and componentwise equality of their local Haar payload is transported
+through the coset, Haar-character, dilation/mass, and proper-ultrametric layers.
+-/
+theorem toAdjustedDeterminantSource_eq_of_pointwise_unitBallQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower
+    [BorelSpace K] [LocallyCompactSpace K] [IsTopologicalAddGroup K]
+    (source target :
+      IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+        α p K β γ hullSystem)
+    (sourceQuotientCosetFactor targetQuotientCosetFactor :
+      β -> γ ->
+        IUTStage1PadicFiniteExtensionUnitBallQuotientCosetHaarCharacterNormalizationSource
+          α p K hullSystem)
+    (source_factor_eq :
+      ∀ index : β, ∀ summand : γ,
+        (source.localization index).bundle.padicFiniteExtensionFactor summand =
+          (sourceQuotientCosetFactor index summand).toUnitBallCosetHaarCharacterNormalizationSource.toUnitBallHaarCharacterNormalizationSource.toConstructedDilationMassHaarNormalizationSource.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource)
+    (target_factor_eq :
+      ∀ index : β, ∀ summand : γ,
+        (target.localization index).bundle.padicFiniteExtensionFactor summand =
+          (targetQuotientCosetFactor index summand).toUnitBallCosetHaarCharacterNormalizationSource.toUnitBallHaarCharacterNormalizationSource.toConstructedDilationMassHaarNormalizationSource.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource)
+    (quotientCosetFactor_match :
+      ∀ index : β, ∀ summand : γ,
+        IUTStage1PadicFiniteExtensionUnitBallQuotientCosetHaarCharacterNormalizationSource.ComponentwiseEqual
+          (sourceQuotientCosetFactor index summand)
+          (targetQuotientCosetFactor index summand))
+    (structureSheafLogVolume_eq :
+      ∀ index : β,
+        (source.localization index).structureSheafLogVolume =
+          (target.localization index).structureSheafLogVolume)
+    (weight_eq :
+      ∀ index : β,
+        (source.localization index).weight =
+          (target.localization index).weight)
+    (anchor_eq : source.anchor = target.anchor)
+    (positiveTensorPower_eq :
+      source.positiveTensorPower = target.positiveTensorPower) :
+    source.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource =
+      target.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource := by
+  apply
+    toAdjustedDeterminantSource_eq_of_pointwise_unitBallHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower
+      source target
+      (fun index summand =>
+        (sourceQuotientCosetFactor index summand)
+          |>.toUnitBallCosetHaarCharacterNormalizationSource
+          |>.toUnitBallHaarCharacterNormalizationSource)
+      (fun index summand =>
+        (targetQuotientCosetFactor index summand)
+          |>.toUnitBallCosetHaarCharacterNormalizationSource
+          |>.toUnitBallHaarCharacterNormalizationSource)
+  · exact source_factor_eq
+  · exact target_factor_eq
+  · intro index summand
+    exact
+      (quotientCosetFactor_match index summand)
+        |>.toUnitBallHaarCharacterNormalizationSource
   · exact structureSheafLogVolume_eq
   · exact weight_eq
   · exact anchor_eq
