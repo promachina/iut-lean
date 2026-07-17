@@ -1706,8 +1706,12 @@ rather than supplied as three independent weighted shadow fields.
 The same-index local-arithmetic route now also has a family-hull variant of
 this constructor: it derives the q-normalized adjusted-sum identity from the
 principal-product family-hull comparison and the p-adic finite localized hull
-decomposition, so the remaining theta input is the family-hull comparison
-itself.  The side-condition endpoint now consumes this family-hull variant:
+decomposition.  A further record-family-hull q-scale constructor derives the
+unscaled \(\theta_{\mathrm{signed}}\)-equals-record-family-hull equality from
+the pointwise determinant/Hodge calibration, leaving only the q-normalized
+compatibility between that record family-hull log-volume and the
+principal-product family-hull expression as the scalar input.  The
+side-condition endpoint now consumes the family-hull route:
 Lean constructs the same-index local arithmetic-degree source from full
 adjusted-determinant synchronization and the family-hull theta comparison
 before proving both the signed Corollary~3.12 dichotomy and the
@@ -2272,7 +2276,10 @@ component fields as separate same-index assumptions; the same-index
 local-arithmetic route now has the corresponding constructor
 \texttt{\detokenize{ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEq}}.
 Its family-hull variant additionally replaces the direct q-normalized
-adjusted-sum field by the family-hull theta/log-volume comparison.
+adjusted-sum field by the family-hull theta/log-volume comparison, and the
+record-family-hull q-scale refinement derives the unscaled theta equality from
+the pointwise determinant/Hodge calibration before applying the remaining
+q-scale compatibility.
 The adjusted-determinant source itself is now constructible from the three
 primitive Ob3/Ob4 synchronizations by
 \texttt{\detokenize{ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.ofLocalizationAnchorTensorPowerEq}}.
