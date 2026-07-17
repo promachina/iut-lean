@@ -377,6 +377,12 @@ def canonicalStage1ResidualFrontier :
         "RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.valuationBallProjectionPreservation",
       role :=
         "Derived preservation theorem showing that the valuation-ball additive-Haar evaluation object projected from the reconstructed p-adic-defect/main source equals the original valuation-ball object carried by the arithmetic-degree-controlled local source.  The proof opens the valuation-ball construction and uses the source equality E_v = localIUTIVDefect_v + M_v together with localIUTIVDefect_v = delta_v to transport the nondistinguished valuation-ball shell payload, so this is no longer a separate source obligation at the local-degree formula layer." },
+    { name := "Record-Ob3/Ob4 source extensional synchronization criterion",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.ext_of_localization_anchor_tensorPower",
+      role :=
+        "Derived positive criterion for replacing the remaining Record-Ob3/Ob4 synchronization assumption: full Ob3/Ob4 equality follows from equality of the localization family, anchor, and positive tensor-power data.  This is the source-backed criterion that the weighted determinant shadow countermodel shows cannot be weakened to determinant and finite-sum equality alone." },
     { name := "p-adic defect/main split countermodel",
       status := .constructed,
       declarationName :=
@@ -409,7 +415,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 20 :=
+    canonicalStage1ResidualFrontier.length = 21 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -419,7 +425,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 15 :=
+      (fun entry => entry.status = .derived)).length = 16 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -1053,6 +1059,10 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check ValuationBallProjectionWithoutPreservationToyCountermodel.not_projection_preservation
 #guard_msgs (drop info) in
 #print axioms ValuationBallProjectionWithoutPreservationToyCountermodel.not_projection_preservation
+#guard_msgs (drop info) in
+#check IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.ext_of_localization_anchor_tensorPower
+#guard_msgs (drop info) in
+#print axioms IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.ext_of_localization_anchor_tensorPower
 #guard_msgs (drop info) in
 #check WeightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel.not_record_ob3ob4_synchronized
 #guard_msgs (drop info) in

@@ -8771,6 +8771,17 @@ theorem endpoint
     data.normalizedDeterminantLogVolume_eq_determinant,
     data.projectedNormalizedLogVolume_eq_determinant⟩
 
+theorem ext_of_localization_anchor_tensorPower
+    (source target : IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource β γ)
+    (localization_eq : source.localization = target.localization)
+    (anchor_eq : source.anchor = target.anchor)
+    (positiveTensorPower_eq :
+      source.positiveTensorPower = target.positiveTensorPower) :
+    source = target := by
+  cases source
+  cases target
+  simp_all
+
 end IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource
 
 /--
