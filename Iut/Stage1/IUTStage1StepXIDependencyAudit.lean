@@ -224,7 +224,7 @@ def canonicalStage1RemainingAssumptions :
       consumerDeclaration :=
         "ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.toScaleSynchronizedLocalAnalyticSource",
       note :=
-        "The older public source carries the q-normalized theta/log-volume identity.  Lean derives canonical C_Theta-scale synchronization from this identity and q-pilot positivity, so the raw canonical-scale equality is no longer a canonical public field.  The same-index constructor ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEqFamilyHullLogVolume derives this q-normalized identity from the family-hull comparison and the principal-product p-adic finite hull decomposition, and the comparison side-condition endpoint preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantFamilyHullThetaSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit uses that constructor before proving both Corollary 3.12 outputs.  The refined constructor ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEqRecordFamilyHullQScale derives the unscaled thetaSigned = record family-hull log-volume equality from the pointwise determinant/Hodge calibration, and the checked endpoint preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantRecordFamilyHullQScaleSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit threads that constructor into the public signed dichotomy and C_Theta lower-bound route.  The record-family q-scale compatibility is now itself derived from the adjusted-sum q-normalization, determinant/Hodge calibration, and principal-product p-adic finite hull decomposition by ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.recordFamilyHullLogVolume_eq_principalProductFamilyHullLogVolume_mul_absLogQ_of_projectedLocalizedAdjustedSum.  The remaining source obligation at this slice is therefore the paper-level derivation of the adjusted-sum q-normalized theta/log-volume comparison." },
+        "The older public source carries the q-normalized theta/log-volume identity.  Lean derives canonical C_Theta-scale synchronization from this identity and q-pilot positivity, so the raw canonical-scale equality is no longer a canonical public field on that branch.  Conversely, the p-adic finite, principal-product, and same-index scale-synchronized routes now construct q-normalized residual sources internally from canonical scale synchronization via ConstructorBuiltPadicFiniteLocalizedLocalAnalyticResidualHaarSource.toQNormalizedLocalizedLocalAnalyticResidualHaarSource, ConstructorBuiltPrincipalProductPadicFiniteLocalizedLocalAnalyticResidualHaarSource.toQNormalizedLocalizedLocalAnalyticResidualHaarSource, and ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantScaleSynchronizedLocalAnalyticSource.toQNormalizedProjectedPrincipalProductSource.  The same-index constructor ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEqFamilyHullLogVolume derives this q-normalized identity from the family-hull comparison and the principal-product p-adic finite hull decomposition, and the comparison side-condition endpoint preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantFamilyHullThetaSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit uses that constructor before proving both Corollary 3.12 outputs.  The refined constructor ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEqRecordFamilyHullQScale derives the unscaled thetaSigned = record family-hull log-volume equality from the pointwise determinant/Hodge calibration, and the checked endpoint preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantRecordFamilyHullQScaleSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit threads that constructor into the public signed dichotomy and C_Theta lower-bound route.  The record-family q-scale compatibility is now itself derived from the adjusted-sum q-normalization, determinant/Hodge calibration, and principal-product p-adic finite hull decomposition by ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.recordFamilyHullLogVolume_eq_principalProductFamilyHullLogVolume_mul_absLogQ_of_projectedLocalizedAdjustedSum.  The remaining source obligation at this slice is the paper-level construction of the comparison object that supplies either the adjusted-sum q-normalized theta/log-volume identity or, equivalently on the scale-synchronized branch, the canonical C_Theta finite-sum synchronization." },
     { name := "theorem110ValuationBallLocalAnalyticSource",
       status := .sourceObligation,
       paperSource := "IUT IV, Theorem 1.10 valuation-ball arithmetic divisor estimates",
@@ -515,6 +515,24 @@ def canonicalStage1ResidualFrontier :
         "ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.recordFamilyHullLogVolume_eq_principalProductFamilyHullLogVolume_mul_absLogQ_of_projectedLocalizedAdjustedSum",
       role :=
         "Derived q-scale compatibility between the record family-hull log-volume and the principal-product family-hull expression.  The proof combines determinant/Hodge calibration for thetaSigned = record family-hull log-volume, the adjusted-sum q-normalized theta comparison, and the principal-product p-adic finite localized hull decomposition, so this compatibility is no longer an independent scalar input once the adjusted-sum comparison is available." },
+    { name := "p-adic finite scale synchronization to q-normalized residual source",
+      status := .derived,
+      declarationName :=
+        "ConstructorBuiltPadicFiniteLocalizedLocalAnalyticResidualHaarSource.toQNormalizedLocalizedLocalAnalyticResidualHaarSource",
+      role :=
+        "Derived conversion from the p-adic finite canonical determinant/scale synchronized local-analytic residual source to the q-normalized residual source.  The normalized theta identity is obtained from the canonical C_Theta finite-sum equality and q-pilot positivity via the generic p-adic finite determinant-scale synchronization theorem, rather than supplied as a raw adjusted-sum field." },
+    { name := "principal-product scale synchronization to q-normalized residual source",
+      status := .derived,
+      declarationName :=
+        "ConstructorBuiltPrincipalProductPadicFiniteLocalizedLocalAnalyticResidualHaarSource.toQNormalizedLocalizedLocalAnalyticResidualHaarSource",
+      role :=
+        "Derived principal-product conversion from canonical scale synchronization to the q-normalized p-adic finite local-analytic residual source.  This transports the scale-to-q-normalized theorem through the principal-product p-adic finite localized hull-vector-bundle decomposition." },
+    { name := "same-index scale-synchronized source to q-normalized principal-product source",
+      status := .derived,
+      declarationName :=
+        "ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantScaleSynchronizedLocalAnalyticSource.toQNormalizedProjectedPrincipalProductSource",
+      role :=
+        "Derived same-index conversion used by the scale-synchronized public endpoints: Lean constructs the q-normalized principal-product residual source internally from the canonical-scale source before reading off the signed Corollary 3.12 dichotomy and C_Theta lower bound." },
     { name := "principal-product q-normalized local-analytic source from family hull",
       status := .derived,
       declarationName :=
@@ -577,7 +595,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 48 :=
+    canonicalStage1ResidualFrontier.length = 51 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -587,7 +605,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 43 :=
+      (fun entry => entry.status = .derived)).length = 46 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -1309,6 +1327,18 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.recordFamilyHullLogVolume_eq_principalProductFamilyHullLogVolume_mul_absLogQ_of_projectedLocalizedAdjustedSum
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.recordFamilyHullLogVolume_eq_principalProductFamilyHullLogVolume_mul_absLogQ_of_projectedLocalizedAdjustedSum
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPadicFiniteLocalizedLocalAnalyticResidualHaarSource.toQNormalizedLocalizedLocalAnalyticResidualHaarSource
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPadicFiniteLocalizedLocalAnalyticResidualHaarSource.toQNormalizedLocalizedLocalAnalyticResidualHaarSource
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteLocalizedLocalAnalyticResidualHaarSource.toQNormalizedLocalizedLocalAnalyticResidualHaarSource
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteLocalizedLocalAnalyticResidualHaarSource.toQNormalizedLocalizedLocalAnalyticResidualHaarSource
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantScaleSynchronizedLocalAnalyticSource.toQNormalizedProjectedPrincipalProductSource
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantScaleSynchronizedLocalAnalyticSource.toQNormalizedProjectedPrincipalProductSource
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEqRecordFamilyHullQScale
 #guard_msgs (drop info) in
