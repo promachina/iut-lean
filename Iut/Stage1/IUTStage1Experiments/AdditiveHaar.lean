@@ -11533,6 +11533,154 @@ end IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreePadicPrimeErrorFormulaM
 
 set_option linter.style.longLine false in
 /--
+Arithmetic-degree formula source with constructed p-adic prime-error split.
+
+This lowers
+`IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreePadicPrimeErrorFormulaMatchingSource`
+by replacing its `PrimeErrorPadicDefectMainSource` input with the local analytic
+arithmetic-divisor source whose prime-error contribution is definitionally the
+p-adic Haar defect plus the main-log term.
+-/
+structure IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource
+    (β : Type v) [Fintype β]
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    (η : Type y) (γ : Type w) [Fintype γ]
+    (localPrime : β -> Nat)
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    (localField : β -> Type x)
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    (αHaar : Type z)
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar)
+    (αLocal : Type z) (ηLocal : Type y)
+    (localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal)
+    (archIndex archSummand : β -> Type z)
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)] where
+  constructedPrimeErrorSource :
+    IUTStage1AdditiveHaarTheorem110PadicDefectMainLocalAnalyticArithmeticDivisorSource
+      β estimate localPrime localField αHaar hullSystem
+      αLocal ηLocal localAnalyticHullSystem archIndex archSummand
+  arithmeticDegreeCalibrationSource :
+    IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeCalibrationSource
+      β estimate η γ localField αLocal ηLocal localAnalyticHullSystem
+      archIndex archSummand
+      constructedPrimeErrorSource.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+
+set_option linter.style.longLine false
+
+namespace IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource
+
+variable {β : Type v} [Fintype β]
+variable {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+variable {η : Type y} {γ : Type w} [Fintype γ]
+variable {localPrime : β -> Nat}
+variable [∀ place : β, Fact (Nat.Prime (localPrime place))]
+variable {localField : β -> Type x}
+variable [(place : β) -> NontriviallyNormedField (localField place)]
+variable [∀ place : β, ProperSpace (localField place)]
+variable [∀ place : β, IsUltrametricDist (localField place)]
+variable [(place : β) -> MeasurableSpace (localField place)]
+variable [∀ place : β, BorelSpace (localField place)]
+variable [∀ place : β, LocallyCompactSpace (localField place)]
+variable [∀ place : β, IsTopologicalAddGroup (localField place)]
+variable [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+variable [∀ place : β,
+  FiniteDimensional ℚ_[localPrime place] (localField place)]
+variable {αHaar : Type z}
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+variable {αLocal : Type z} {ηLocal : Type y}
+variable {localAnalyticHullSystem :
+  IUTStage1Remark395HolomorphicHullSystem αLocal}
+variable {archIndex archSummand : β -> Type z}
+variable [∀ place : β, Fintype (archIndex place)]
+variable [∀ place : β, Fintype (archSummand place)]
+
+set_option linter.style.longLine false in
+noncomputable def toArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+      β estimate η γ localPrime localField αHaar hullSystem
+      αLocal ηLocal localAnalyticHullSystem archIndex archSummand :=
+  { primeErrorPadicDefectMainSource :=
+      source.constructedPrimeErrorSource.toPrimeErrorPadicDefectMainSource,
+    arithmeticDegreeCalibrationSource :=
+      source.arithmeticDegreeCalibrationSource }
+
+def Endpoint
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    Prop :=
+  source.constructedPrimeErrorSource.Endpoint ∧
+    source.arithmeticDegreeCalibrationSource.Endpoint ∧
+      IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreePadicPrimeErrorFormulaMatchingSource.Endpoint
+        source.toArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+
+theorem endpoint
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    Endpoint source :=
+  ⟨source.constructedPrimeErrorSource.endpoint,
+    source.arithmeticDegreeCalibrationSource.endpoint,
+    source.toArithmeticDegreePadicPrimeErrorFormulaMatchingSource.endpoint⟩
+
+structure ConstructedPrimeErrorArithmeticDegreeAudit
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    Prop where
+  endpoint : Endpoint source
+  constructedPrimeErrorEndpoint :
+    source.constructedPrimeErrorSource.Endpoint
+  projectedPrimeErrorEndpoint :
+    IUTStage1AdditiveHaarTheorem110PrimeErrorPadicDefectMainSource.Endpoint
+      source.constructedPrimeErrorSource.toPrimeErrorPadicDefectMainSource
+  arithmeticDegreeCalibrationEndpoint :
+    source.arithmeticDegreeCalibrationSource.Endpoint
+  localPrimeErrorContribution_eq_padicHaarDefect_main :
+    ∀ place : β,
+      (source.constructedPrimeErrorSource.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        |>.toThetaPilotArithmeticDivisorLocalEvaluationSource).localPrimeErrorContribution place =
+        source.constructedPrimeErrorSource.iutIVArithmeticDefectSource.padicHaarDefectSource.localHaarNormalizationDefect place +
+          (source.constructedPrimeErrorSource.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+            |>.toThetaPilotArithmeticDivisorLocalEvaluationSource).localMainLogContribution place
+
+theorem constructedPrimeErrorArithmeticDegreeAudit
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    ConstructedPrimeErrorArithmeticDegreeAudit source :=
+  { endpoint := source.endpoint,
+    constructedPrimeErrorEndpoint := source.constructedPrimeErrorSource.endpoint,
+    projectedPrimeErrorEndpoint :=
+      source.constructedPrimeErrorSource.toPrimeErrorPadicDefectMainSource_endpoint,
+    arithmeticDegreeCalibrationEndpoint :=
+      source.arithmeticDegreeCalibrationSource.endpoint,
+    localPrimeErrorContribution_eq_padicHaarDefect_main :=
+      source.constructedPrimeErrorSource.localPrimeErrorContribution_eq_padicHaarDefect_main }
+
+end IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource
+
+set_option linter.style.longLine false in
+/--
 Arithmetic-degree and p-adic prime-error formula source whose Theorem 1.10
 local analytic arithmetic-divisor input is formula-gap matched.
 
