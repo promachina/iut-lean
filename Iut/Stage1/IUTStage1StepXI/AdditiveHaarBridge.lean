@@ -1030,6 +1030,37 @@ theorem RecordOb3Ob5ArithmeticDivisorBackedComponentSource.toCoreLocalArithmetic
 
 set_option linter.style.longLine false in
 /--
+Project the local-degree-formula valuation-ball Record-Ob3/Ob5 source to the
+canonical residual package.
+
+The source already contains the formula-matched p-adic/arithmetic-degree data,
+the Step~(v)/(vii) local-degree formula source, and the controlled
+Record-Ob3/Ob5 component indexed by the constructed arithmetic-degree local
+source.  This wrapper therefore removes the local-degree formula package and
+matching equality from the residual consumer surface.
+-/
+noncomputable def RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :=
+  source.controlledComponentSource.toRecordOb3Ob5ArithmeticDivisorBackedComponentSource
+    |>.toCoreLocalArithmeticDegreeResidualSourceOfArithmeticDegreeControlledLocalArithmeticSource
+      source.toArithmeticDegreeControlledLocalArithmeticSource
+      source.controlledComponentSource.matchedFormula_eq_controlled
+
+theorem RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource_endpoint
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :
+    source.toCoreLocalArithmeticDegreeResidualSource.Endpoint :=
+  source.toCoreLocalArithmeticDegreeResidualSource.endpoint
+
+set_option linter.style.longLine false in
+/--
 Project a Record-Ob3/Ob5 component source to the canonical p-adic arithmetic
 formula-matching package directly from the p-adic unit-ball Haar-index local
 estimate data.
