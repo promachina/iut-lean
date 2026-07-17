@@ -2071,7 +2071,10 @@ not a separately supplied Step~(xi) synchronization record.
 The calculation is now exposed directly as well: Lean proves that the local
 defined residual is exactly the p-adic unit-ball index and then sums these
 identities to obtain the total residual Haar lower bound used by the
-\(C_\Theta\) comparison.
+\(C_\Theta\) comparison.  The arithmetic formula-matching source now projects
+directly to the generic local arithmetic-degree residual package, so the
+canonical residual consumer can use the two formula equalities without
+exposing the intermediate p-adic Step~(xi) synchronization source.
 At the p-adic unit-ball/local-analytic boundary, Lean now also proves endpoint
 contracts for the two projected sources: the valuation-ball local-analytic
 localized source and the expanded p-adic Haar-residual source are both
