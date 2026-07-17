@@ -12109,6 +12109,53 @@ theorem ofPadicUnitBallHaarIndex_endpoint
     distinguishedProcessionBound_le_arithmeticDegreePart
     archimedeanProcessionBound_le_arithmeticDegreePart).endpoint
 
+set_option linter.style.longLine false in
+/--
+Canonicalize an arithmetic-degree-controlled valuation-ball local source through
+the p-adic unit-ball Haar-index constructor.
+
+The only apparent extra datum in the carried IUT~IV arithmetic-defect record is
+the local defect function.  Since that function is pointwise identified with
+the p-adic Haar-normalization defect, the whole controlled local source is
+extensionally the source reconstructed from its p-adic Haar-index package,
+with the same Step~(xi) arithmetic-degree calibration and comparison
+inequalities.
+-/
+theorem eq_ofPadicUnitBallHaarIndex
+    (source :
+      IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    source =
+      ofPadicUnitBallHaarIndex
+        source.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        source.iutIVArithmeticDefectSource.padicHaarDefectSource
+        source.arithmeticDegreeCalibrationSource
+        (by
+          intro place
+          have h :=
+            source.localPrimeErrorContribution_eq_iutIVDefect_main place
+          rw [source.iutIVArithmeticDefectSource.localIUTIVArithmeticDefect_eq_padicHaarIndex place] at h
+          exact h)
+        source.distinguishedProcessionBound_le_arithmeticDegreePart
+        source.archimedeanProcessionBound_le_arithmeticDegreePart := by
+  cases source with
+  | mk theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+      iutIVArithmeticDefectSource arithmeticDegreeCalibrationSource
+      localPrimeErrorContribution_eq_iutIVDefect_main
+      distinguishedProcessionBound_le_arithmeticDegreePart
+      archimedeanProcessionBound_le_arithmeticDegreePart =>
+      cases iutIVArithmeticDefectSource with
+      | mk padicHaarDefectSource localIUTIVArithmeticDefect
+          localIUTIVArithmeticDefect_eq_padicHaarIndex =>
+          have hlocal :
+              localIUTIVArithmeticDefect =
+                padicHaarDefectSource.localHaarNormalizationDefect := by
+            funext place
+            exact localIUTIVArithmeticDefect_eq_padicHaarIndex place
+          cases hlocal
+          rfl
+
 end IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource
 
 namespace IUTStage1AdditiveHaarTheorem110PadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource
