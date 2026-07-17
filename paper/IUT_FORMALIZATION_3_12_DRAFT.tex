@@ -1665,7 +1665,13 @@ bound from the packaged local arithmetic-degree residual source.  The same
 source now also has a primitive Ob3/Ob4 constructor,
 \texttt{\detokenize{ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.ofLocalizationAnchorTensorPowerEq}},
 which derives the full adjusted-determinant equality from equality of the
-localization family, anchor, and positive tensor power.  The same
+localization family, anchor, and positive tensor power.  The localization-family
+input is now lowered one source layer: Lean proves that the adjusted
+localization projected from a localized vector-bundle entry is determined by
+the underlying localized bundle, the structure-sheaf log-volume, the raw
+adjusted log-volume, and the positive determinant weight, and it promotes
+pointwise localized vector-bundle equality plus anchor and tensor-power
+equality to equality of the adjusted-determinant sources.  The same
 full adjusted-determinant source now projects directly to the
 projected-weighted local-analytic route; in the same-index case, the summand,
 anchor, and positive tensor-power fields are derived from the full Ob3/Ob4
@@ -2234,6 +2240,14 @@ local-arithmetic route now has the corresponding constructor
 The adjusted-determinant source itself is now constructible from the three
 primitive Ob3/Ob4 synchronizations by
 \texttt{\detokenize{ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.ofLocalizationAnchorTensorPowerEq}}.
+The localization-family synchronization has also been pushed to pointwise
+localized vector-bundle data:
+\texttt{\detokenize{IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource.toAdjustedLocalizationSource_eq_of_bundle_structureSheaf_adjustedRaw_weight}}
+identifies adjusted localization entries from the underlying bundle,
+structure-sheaf term, raw adjusted log-volume, and weight, while
+\texttt{\detokenize{IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_localization_anchor_tensorPower}}
+promotes pointwise localized vector-bundle equality, anchor equality, and
+positive tensor-power equality to equality of adjusted-determinant sources.
 The same lowered source now carries the relative nonvacuity audit and the
 public-boundary inventory audit directly: Lean constructs the old
 local-analytic source internally before proving that the q-normalized route,

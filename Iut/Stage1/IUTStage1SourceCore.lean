@@ -8329,6 +8329,35 @@ theorem endpoint
     rfl,
     data.bundle.rank_gt_one⟩
 
+theorem ext_of_bundle_structureSheaf_adjustedRaw_weight
+    (source target :
+      IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource η γ)
+    (bundle_eq : source.bundle = target.bundle)
+    (structureSheafLogVolume_eq :
+      source.structureSheafLogVolume = target.structureSheafLogVolume)
+    (adjustedRawLogVolume_eq :
+      source.adjustedRawLogVolume = target.adjustedRawLogVolume)
+    (weight_eq : source.weight = target.weight) :
+    source = target := by
+  cases source
+  cases target
+  simp_all
+
+theorem toAdjustedLocalizationSource_eq_of_bundle_structureSheaf_adjustedRaw_weight
+    (source target :
+      IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource η γ)
+    (bundle_eq : source.bundle = target.bundle)
+    (structureSheafLogVolume_eq :
+      source.structureSheafLogVolume = target.structureSheafLogVolume)
+    (adjustedRawLogVolume_eq :
+      source.adjustedRawLogVolume = target.adjustedRawLogVolume)
+    (weight_eq : source.weight = target.weight) :
+    source.toAdjustedLocalizationSource =
+      target.toAdjustedLocalizationSource := by
+  rw [ext_of_bundle_structureSheaf_adjustedRaw_weight
+    source target bundle_eq structureSheafLogVolume_eq
+    adjustedRawLogVolume_eq weight_eq]
+
 end IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource
 
 set_option linter.style.longLine false in
@@ -9030,6 +9059,40 @@ theorem endpoint
     data.localization_projected_weightedAdjustedLogVolume_eq,
     data.determinantLogVolume_eq_sum_weightedAdjusted,
     data.normalizedDeterminantLogVolume_eq_determinant⟩
+
+set_option linter.style.longLine false in
+theorem adjustedLocalizationFamily_eq_of_pointwise_localization_eq
+    (source target :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ)
+    (localization_eq :
+      ∀ index : β, source.localization index = target.localization index) :
+    source.toAdjustedDeterminantSource.localization =
+      target.toAdjustedDeterminantSource.localization := by
+  funext index
+  exact congrArg
+    IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource.toAdjustedLocalizationSource
+    (localization_eq index)
+
+set_option linter.style.longLine false in
+theorem toAdjustedDeterminantSource_eq_of_pointwise_localization_anchor_tensorPower
+    (source target :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ)
+    (localization_eq :
+      ∀ index : β, source.localization index = target.localization index)
+    (anchor_eq : source.anchor = target.anchor)
+    (positiveTensorPower_eq :
+      source.positiveTensorPower = target.positiveTensorPower) :
+    source.toAdjustedDeterminantSource =
+      target.toAdjustedDeterminantSource :=
+  IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.ext_of_localization_anchor_tensorPower
+    source.toAdjustedDeterminantSource
+    target.toAdjustedDeterminantSource
+    (adjustedLocalizationFamily_eq_of_pointwise_localization_eq
+      source target localization_eq)
+    anchor_eq
+    positiveTensorPower_eq
 
 end IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
 

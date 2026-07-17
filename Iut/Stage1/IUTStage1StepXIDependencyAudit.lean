@@ -413,6 +413,18 @@ def canonicalStage1ResidualFrontier :
         "ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.ofLocalizationAnchorTensorPowerEq",
       role :=
         "Derived constructor replacing the full adjusted-determinant equality field by the three primitive Remark 3.9.5 Ob3/Ob4 synchronizations: localization family equality, anchor equality, and positive tensor-power equality.  Lean derives equality of the adjusted-determinant sources by extensionality before entering the q-normalized adjusted-determinant route." },
+    { name := "localized vector-bundle adjusted-localization extensionality",
+      status := .derived,
+      declarationName :=
+        "IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource.toAdjustedLocalizationSource_eq_of_bundle_structureSheaf_adjustedRaw_weight",
+      role :=
+        "Derived source-level extensionality showing that the adjusted localization projected from a localized vector-bundle entry is determined by the underlying localized bundle, the structure-sheaf log-volume, the raw adjusted log-volume, and the positive determinant weight.  This lowers the localization-family synchronization target to concrete Ob3-1 localized vector-bundle fields." },
+    { name := "localized vector-bundle determinant pointwise localization synchronization",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_localization_anchor_tensorPower",
+      role :=
+        "Derived determinant-level projection showing that pointwise equality of localized vector-bundle entries, together with anchor and positive tensor-power equality, implies equality of the adjusted-determinant sources consumed by the current Ob3/Ob4 synchronization constructor." },
     { name := "p-adic defect/main split countermodel",
       status := .constructed,
       declarationName :=
@@ -445,7 +457,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 26 :=
+    canonicalStage1ResidualFrontier.length = 28 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -455,7 +467,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 21 :=
+      (fun entry => entry.status = .derived)).length = 23 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -1105,6 +1117,14 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.ofLocalizationAnchorTensorPowerEq
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.ofLocalizationAnchorTensorPowerEq
+#guard_msgs (drop info) in
+#check IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource.toAdjustedLocalizationSource_eq_of_bundle_structureSheaf_adjustedRaw_weight
+#guard_msgs (drop info) in
+#print axioms IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource.toAdjustedLocalizationSource_eq_of_bundle_structureSheaf_adjustedRaw_weight
+#guard_msgs (drop info) in
+#check IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_localization_anchor_tensorPower
+#guard_msgs (drop info) in
+#print axioms IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_localization_anchor_tensorPower
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.projectedWeighted_endpoint
 #guard_msgs (drop info) in
