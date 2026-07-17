@@ -4160,7 +4160,12 @@
   matched arithmetic-degree/p-adic source: the Step~(xi) equality is derived
   from localized determinant weight/raw-log-volume calibration, the
   prime-error equality is routed through the p-adic Haar-index defect source,
-  and the formula-gap valuation-ball provenance is preserved.  The remaining
+  and the formula-gap valuation-ball provenance is preserved.  The matched
+  local-degree arithmetic-divisor-backed source also projects to the same
+  canonical constructor through
+  \lean{Iut.Stage1.Experiments.IUTStage1AdditiveHaarTheorem110StepXIMatchedLocalDegreeArithmeticDivisorBackedComponentSource.toCorePadicUnitBallArithmeticFormulaMatchingSource},
+  so the bridge audit now records the Theorem~1.10 arithmetic-divisor local
+  degree branch before entering the p-adic synchronization layer.  The remaining
   work is therefore to derive those calibration and prime-error inputs from
   the full IUT~IV local-estimate construction, not to assume the
   synchronization record directly.
@@ -4706,6 +4711,10 @@
   shows why the local arithmetic-degree residual lower bound remains a real
   source obligation unless it is discharged by a lower constructor such as the
   p-adic unit-ball Step~(xi) synchronization projection.  The
+  arithmetic-divisor-backed local-degree p-adic bridge is now included in this
+  audit, so that lower constructor can be reached from a source whose finite
+  branch is backed by Theorem~1.10 arithmetic divisors rather than by an
+  abstract matched local-degree component alone.  The
   next source-level replacements should remove further entries from this
   manifest rather than introducing more public endpoint variants.  The public
   \lean{Iut.Stage1.IUTStage1StepXI} module is now a
