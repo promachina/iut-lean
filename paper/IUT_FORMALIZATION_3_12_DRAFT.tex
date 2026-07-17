@@ -1983,18 +1983,18 @@ lowered to the formula matching equalities
 formula-gap matched valuation-ball arithmetic-degree/p-adic source now projects
 those source-backed formula pieces to the canonical Step~(xi) constructor: the
 Step~(xi) equality comes from localized determinant weight and raw-log-volume
-calibration.  The prime-error split is now lowered further: a local analytic
-arithmetic-divisor source defines \(E_v\) as the p-adic Haar defect plus the
-main-log contribution, and the arithmetic-degree formula source consumes this
-constructed split before projecting to the canonical p-adic Step~(xi) formula
-boundary.  The formula-gap formula source now has the same
-constructed-prime-error entry and audit, so this lowering reaches the
-formula-gap layer rather than stopping at the older p-adic defect/main
-projection.
-Thus the remaining trust boundary is the derivation of that constructed
-source's finite sums, nonnegativity, formula-gap inputs, and arithmetic-divisor
-calibration from the full IUT~IV local estimate construction, not the
-Haar-defect lower bound or an independent synchronization record.
+calibration.  The prime-error split is now lowered further: it is constructed
+from the additive-Haar local analytic arithmetic-divisor evaluation source plus
+the p-adic identity \(E_v=\delta_v+M_v\).  Consequently the finite sums,
+nonnegativity, formula-gap construction data, and arithmetic-divisor
+calibration are read from the evaluation source rather than restated on the
+p-adic split record.  The arithmetic-degree and formula-gap formula sources
+consume this constructed split before projecting to the canonical p-adic
+Step~(xi) formula boundary.
+Thus the remaining trust boundary is the derivation of that additive-Haar
+evaluation source and the p-adic equality from the full IUT~IV local estimate
+construction, not the Haar-defect lower bound or an independent synchronization
+record.
 The same case split has now been lifted to the same-index signed boundary by
 \(\mathrm{ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedCaseBoundedResidualSource}\).
 It keeps the determinant and theta-equality fields of the pointwise same-index

@@ -4161,9 +4161,11 @@
   from localized determinant weight/raw-log-volume calibration.  The
   prime-error equality is no longer only a raw field at this layer:
   \lean{Iut.Stage1.Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainLocalAnalyticArithmeticDivisorSource}
-  builds the local analytic arithmetic-divisor source with
-  \(E_v\) definitionally equal to the p-adic Haar defect plus the main-log
-  contribution, and
+  now has a constructor from the additive-Haar local analytic arithmetic-divisor
+  evaluation source plus the p-adic identity
+  \(E_v=\delta_v+M_v\).  Thus the finite sums, nonnegativity, formula-gap
+  construction data, and arithmetic-divisor calibration are read from the
+  evaluation source rather than restated on the p-adic split record, and
   \lean{Iut.Stage1.Experiments.IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource}
   consumes that constructed split together with the arithmetic-degree
   calibration before projecting to the canonical p-adic formula source; the
