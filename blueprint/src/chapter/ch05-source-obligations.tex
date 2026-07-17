@@ -4317,11 +4317,11 @@
   projects the p-adic defect/main local-estimate source, while
   \lean{Iut.Stage1.Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicHaarControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource}
   projects the canonical local arithmetic-degree residual package.
-  The remaining work is
-  therefore to derive the strict p-adic Haar controlled component source
-  itself, especially its finite sums, nonnegativity, formula-gap inputs, and
-  arithmetic-divisor component calibration, from the full IUT~IV local-estimate
-  construction.
+  The strict p-adic Haar controlled component source is now also derived from
+  the local-degree formula valuation-ball comparison route; the remaining
+  higher task is to construct that local-degree formula source itself, including
+  its finite sums, nonnegativity, formula-gap inputs, and arithmetic-divisor
+  component calibration, from the full IUT~IV local-estimate construction.
   The checked residual calculation is explicit:
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVLocalArithmeticDegreePadicUnitBallStepXISynchronizationSource.local_defined_residual_eq_padic_index}
   identifies the local defined residual with the p-adic unit-ball index, and
@@ -4350,21 +4350,29 @@
   p-adic residual can differ unless the strict controlled source carries this
   formula synchronization definitionally.
   The canonical route manifest records this residual frontier as a checked
-  sixteen-entry sub-manifest:
+  seventeen-entry sub-manifest:
   \lean{Iut.Stage1.IUTStage1StepXIDependencyAudit.canonicalStage1ResidualFrontier}.
   It classifies the p-adic-defect/main valuation-ball controlled Record-Ob3/Ob5
-  component source as the remaining lower source obligation, and it now records
-  the local-degree valuation-ball projection preservation theorem
+  component source as derived rather than as a lower source obligation.  The
+  local-degree valuation-ball projection preservation theorem
   \lean{Iut.Stage1.Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.valuationBallProjectionPreservation}
-  as derived.  Its proof transports the nondistinguished valuation-ball shell
-  payload across \(E_v=\delta_v+M_v\), so the local-degree comparison route no
-  longer carries this preservation as a separate source obligation.  The bridge
+  transports the nondistinguished valuation-ball shell payload across
+  \(E_v=\delta_v+M_v\), so the local-degree comparison route no longer carries
+  this preservation as a separate source obligation.  The lowering
+  \lean{Iut.Stage1.Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toPadicDefectMainValuationBallControlledComponentSource}
+  constructs the canonical p-adic-defect/main controlled component source from
+  the local-degree formula comparison source.  It uses
+  \lean{Iut.Stage1.Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource.ofArithmeticDegreeControlledLocalArithmeticSource_toArithmeticDegreeControlledLocalArithmeticSource_eq}
+  to identify the p-adic-defect/main reconstruction with the original
+  arithmetic-degree-controlled source before transporting the controlled
+  Record-Ob3/Ob5 component.  The bridge
   \lean{Iut.Stage1.Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource}
   projects that source directly to the canonical residual package, reconstructing
   the strict p-adic-Haar controlled source, the arithmetic-degree-controlled
   local source, and the component/formula synchronization internally.  The
-  stronger local-degree formula valuation-ball Record-Ob3/Ob5 source and the
-  legacy strict p-adic-Haar residual projection remain checked comparison routes.
+  local-degree formula valuation-ball Record-Ob3/Ob5 source is now the higher
+  comparison boundary for this derived residual route; the legacy strict
+  p-adic-Haar residual projection remains a checked comparison route.
   The finite-place arithmetic-defect source is now canonicalized by
   \lean{Iut.Stage1.Experiments.IUTStage1FinitePlaceIUTIVLocalArithmeticDefectSource.eq_ofPadicUnitBallHaarIndex}:
   once the p-adic unit-ball Haar-index defect source is fixed, the IUT~IV local
@@ -4385,9 +4393,9 @@
   \lean{Iut.Stage1.Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toPadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource_eq_ofArithmeticDegreeControlledLocalArithmeticSource}
   shows that the p-adic-defect/main valuation-ball local-estimate object is
   reached by first reconstructing the arithmetic-degree-controlled local source;
-  it is not an additional field at this comparison boundary.  The remaining
-  strict Record-Ob3/Ob5 lowering is the stronger preservation of the
-  valuation-ball additive-Haar construction object; the diagnostic
+  it is not an additional field at this comparison boundary.  The now-derived
+  strict Record-Ob3/Ob5 lowering additionally uses the stronger preservation of
+  the valuation-ball additive-Haar construction object; the diagnostic
   \lean{Iut.Stage1.IUTStage1StepXIDependencyAudit.ValuationBallProjectionWithoutPreservationToyCountermodel.not_projection_preservation}
   shows the weakened-boundary failure when the reconstructed p-adic-defect/main
   valuation-ball shell payload is detached from the original valuation-ball

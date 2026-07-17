@@ -268,15 +268,15 @@ theorem canonicalStage1RemainingAssumptions_interfaceOnly_count_eq :
 Residual-frontier evidence for the canonical route.
 
 This sub-manifest records the current lower p-adic-defect/main boundary below
-the `localArithmeticDegreeResidualSource` entry.  The canonical source
-obligation is now the Record-Ob3/Ob5 controlled component source whose
+the `localArithmeticDegreeResidualSource` entry.  The former canonical source
+obligation was the Record-Ob3/Ob5 controlled component source whose
 valuation-ball local-estimate input is the p-adic-defect/main Theorem~1.10
-object.  It reconstructs the strict p-adic-Haar controlled source, the
-arithmetic-degree-controlled local source, and the component/formula
-synchronization internally.  The stronger local-degree formula valuation-ball
-source remains a checked comparison route, but it is not the canonical lowest
-residual source boundary.  The countermodels record why the p-adic defect/main
-split and formula synchronization cannot be weakened.
+object.  That package is now derived from the stronger local-degree formula
+valuation-ball source: the proof reconstructs the p-adic-defect/main object,
+uses valuation-ball projection preservation to identify the projected
+additive-Haar evaluation object, and transports the controlled component across
+the p-adic Haar-index canonicalization.  The countermodels record why the
+p-adic defect/main split and formula synchronization cannot be weakened.
 -/
 structure CanonicalStage1ResidualFrontierEntry where
   name : String
@@ -288,17 +288,23 @@ structure CanonicalStage1ResidualFrontierEntry where
 def canonicalStage1ResidualFrontier :
     List CanonicalStage1ResidualFrontierEntry :=
   [ { name := "p-adic-defect/main valuation-ball controlled Record-Ob3/Ob5 residual source",
-      status := .sourceObligation,
+      status := .derived,
       declarationName :=
         "RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource",
       role :=
-        "Canonical lowest checked residual boundary: a Record-Ob3/Ob5 controlled component source whose valuation-ball local-estimate input is the p-adic-defect/main source, so the valuation-ball evaluation source, p-adic Haar-index source, prime-error split, arithmetic-degree-controlled local source, and component/formula synchronization are reconstructed before entering the residual consumer." },
+        "Derived lowest checked residual boundary: the p-adic-defect/main Record-Ob3/Ob5 source is constructed from the local-degree formula valuation-ball comparison source before projecting to the residual consumer." },
     { name := "local-degree formula valuation-ball controlled Record-Ob3/Ob5 comparison source",
       status := .interfaceOnly,
       declarationName :=
         "RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource",
       role :=
-        "Stronger comparison source retained to audit the local-degree formula valuation-ball route; it is no longer the canonical residual source obligation because the residual consumer only needs the ordinary component plus controlled formula synchronization." },
+        "Stronger comparison source retained to audit and now construct the p-adic-defect/main controlled Record-Ob3/Ob5 route; its own construction from full local IUT IV local-estimate data remains part of the higher IUT IV source layer, not a separate residual-projection field." },
+    { name := "local-degree formula to p-adic-defect/main controlled source lowering",
+      status := .derived,
+      declarationName :=
+        "RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toPadicDefectMainValuationBallControlledComponentSource",
+      role :=
+        "Derived construction of the canonical p-adic-defect/main valuation-ball controlled Record-Ob3/Ob5 component source from the local-degree formula comparison source.  It combines the local-degree formula p-adic-defect/main endpoint, valuation-ball projection preservation, and arithmetic-degree-controlled p-adic Haar-index canonicalization to transport the controlled component without adding a new source field." },
     { name := "local-degree formula p-adic-defect/main endpoint",
       status := .derived,
       declarationName :=
@@ -385,17 +391,17 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that a reconstructed p-adic-defect/main valuation-ball shell payload may differ from the original valuation-ball shell payload unless projection preservation is supplied or proved." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 16 :=
+    canonicalStage1ResidualFrontier.length = 17 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .sourceObligation)).length = 1 :=
+      (fun entry => entry.status = .sourceObligation)).length = 0 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 10 :=
+      (fun entry => entry.status = .derived)).length = 12 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -5462,6 +5468,14 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.valuationBallProjectionPreservation
 #guard_msgs (drop info) in
 #print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.valuationBallProjectionPreservation
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toPadicDefectMainValuationBallControlledComponentSource
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toPadicDefectMainValuationBallControlledComponentSource
+#guard_msgs (drop info) in
+#check Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource.ofArithmeticDegreeControlledLocalArithmeticSource_toArithmeticDegreeControlledLocalArithmeticSource_eq
+#guard_msgs (drop info) in
+#print axioms Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource.ofArithmeticDegreeControlledLocalArithmeticSource_toArithmeticDegreeControlledLocalArithmeticSource_eq
 #guard_msgs (drop info) in
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource
 #guard_msgs (drop info) in
