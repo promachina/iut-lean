@@ -3650,6 +3650,13 @@
   so the old local-analytic and expanded residual packages are not merely
   definable from the p-adic unit-ball source; their checked endpoint payloads
   are reconstructed there.
+  The localized source itself now also exposes the same arithmetic calculation:
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISource.local_defined_residual_eq_padic_index}
+  identifies the local defined residual with the p-adic unit-ball Haar index,
+  and
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISource.residual_total_haar_defect_ge_one}
+  sums these identities to recover the residual lower bound at this public
+  p-adic/local-analytic boundary.
   The same reconstructed local-analytic handoff now also gives the lower-bound
   companion
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISource.cTheta_ge_neg_one_ofValuationBallLocalAnalyticSource},

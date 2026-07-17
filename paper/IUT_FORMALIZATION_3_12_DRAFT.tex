@@ -2033,7 +2033,10 @@ At the p-adic unit-ball/local-analytic boundary, Lean now also proves endpoint
 contracts for the two projected sources: the valuation-ball local-analytic
 localized source and the expanded p-adic Haar-residual source are both
 reconstructed from the p-adic unit-ball localized source and the matching local
-arithmetic-evaluation ledger.
+arithmetic-evaluation ledger.  The localized source itself also proves the
+same residual arithmetic directly: its local defined residual is the p-adic
+unit-ball Haar index, and summing these identities recovers the residual Haar
+lower bound at this boundary.
 A matching weakened-boundary countermodel shows why this is not a cosmetic
 replacement: if the synchronized index is allowed to be arbitrary, the
 Step~(xi) identity and residual/index equality can both hold with zero
