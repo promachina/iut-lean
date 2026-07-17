@@ -3,7 +3,7 @@ Copyright (c) 2026 IUT Lean formalization contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: IUT Lean formalization contributors
 -/
-import Iut.Stage1.IUTStage1StepXI
+import Iut.Stage1.IUTStage1StepXI.AdditiveHaarBridge
 
 /-!
 CI-facing dependency audit for the Step (xi) localized `C_Theta` boundary.
@@ -238,7 +238,7 @@ def canonicalStage1RemainingAssumptions :
       consumerDeclaration :=
         "IUTStage1IUTIVLocalArithmeticDegreeResidualSource",
       note :=
-        "The canonical route no longer requires the stronger case-bounded residual source.  Case-bounded, local-analytic case, processional arithmetic-gap, and p-adic Haar routes are constructors into this residual package.  The p-adic unit-ball Step XI synchronization route now projects directly to this package through preferredPublicIUTStage1IUTIVLocalArithmeticDegreePadicUnitBallStepXISynchronizationSourceToLocalArithmeticDegreeResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit.  The synchronization itself has a formula-matching constructor from StepXI = a(D+C) and prime-error = p-adic index + main; deriving those two formula equalities from the full IUT IV local-estimate construction remains open." } ]
+        "The canonical route no longer requires the stronger case-bounded residual source.  Case-bounded, local-analytic case, processional arithmetic-gap, and p-adic Haar routes are constructors into this residual package.  The p-adic unit-ball Step XI synchronization route now projects directly to this package through preferredPublicIUTStage1IUTIVLocalArithmeticDegreePadicUnitBallStepXISynchronizationSourceToLocalArithmeticDegreeResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit.  The synchronization itself has a formula-matching constructor from StepXI = a(D+C) and prime-error = p-adic index + main; the AdditiveHaarBridge now projects the source-backed additive-Haar and valuation-ball arithmetic-degree formula-matching tower into that canonical constructor.  Deriving the remaining formula-calibration inputs from the full IUT IV local-estimate construction remains open." } ]
 
 /-- Number of manifest entries in the canonical Stage 1 remaining boundary. -/
 def canonicalStage1RemainingAssumptions_count : Nat :=
@@ -4437,6 +4437,30 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicIUTStage1IUTIVLocalArithmeticDegreePadicUnitBallArithmeticFormulaMatchingSourceEndpointLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicIUTStage1IUTIVLocalArithmeticDegreePadicUnitBallArithmeticFormulaMatchingSourceEndpointLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit
+#guard_msgs (drop info) in
+#check Experiments.IUTStage1FinitePlacePadicUnitBallHaarIndexDefectSource.toCorePadicUnitBallHaarIndexDefectSource
+#guard_msgs (drop info) in
+#print axioms Experiments.IUTStage1FinitePlacePadicUnitBallHaarIndexDefectSource.toCorePadicUnitBallHaarIndexDefectSource
+#guard_msgs (drop info) in
+#check Experiments.IUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource.toCorePadicUnitBallArithmeticFormulaMatchingSource
+#guard_msgs (drop info) in
+#print axioms Experiments.IUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource.toCorePadicUnitBallArithmeticFormulaMatchingSource
+#guard_msgs (drop info) in
+#check Experiments.IUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource.toCorePadicUnitBallArithmeticFormulaMatchingSource_endpoint
+#guard_msgs (drop info) in
+#print axioms Experiments.IUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource.toCorePadicUnitBallArithmeticFormulaMatchingSource_endpoint
+#guard_msgs (drop info) in
+#check Experiments.IUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource.toCorePadicUnitBallArithmeticFormulaMatchingSource
+#guard_msgs (drop info) in
+#print axioms Experiments.IUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource.toCorePadicUnitBallArithmeticFormulaMatchingSource
+#guard_msgs (drop info) in
+#check Experiments.IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.toCorePadicUnitBallArithmeticFormulaMatchingSource
+#guard_msgs (drop info) in
+#print axioms Experiments.IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.toCorePadicUnitBallArithmeticFormulaMatchingSource
+#guard_msgs (drop info) in
+#check Experiments.IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.toCorePadicUnitBallArithmeticFormulaMatchingSource_endpoint
+#guard_msgs (drop info) in
+#print axioms Experiments.IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.toCorePadicUnitBallArithmeticFormulaMatchingSource_endpoint
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallStepXISynchronizationSource.ofProcessionalPadicUnitBallHaarDefectResidualSource
 #guard_msgs (drop info) in
