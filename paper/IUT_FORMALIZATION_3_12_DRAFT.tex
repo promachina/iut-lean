@@ -2109,7 +2109,11 @@ p-adic unit-ball Haar-index defect, the arithmetic-degree calibration, and the
 projected Step~(v)/(vii) comparison bounds, then reconstructs the controlled
 local arithmetic source internally before projecting to the Record-Ob3/Ob5
 valuation-ball source.  Thus the controlled local arithmetic package is no
-longer an independent input at this strict component layer.  The remaining
+longer an independent input at this strict component layer.  This strict
+source now also feeds the downstream p-adic defect/main local-estimate source
+and canonical local arithmetic-degree residual package directly, without
+reintroducing the older local-arithmetic or formula-synchronization arguments.
+The remaining
 construction task is therefore to derive this stricter p-adic Haar controlled
 component source, especially its component finite sums, nonnegativity, and
 arithmetic-divisor calibration, from the full IUT~IV local-estimate data.  The
@@ -3574,7 +3578,10 @@ defect/main source and audit directly from the packaged source.  This
 projection now factors through a named arithmetic-degree-controlled local
 arithmetic source projected from the valuation-ball Record-Ob3/Ob5 data, so
 the p-adic defect/main constructor consumes that constructed local-arithmetic
-object rather than rebuilding it anonymously at the final handoff.
+object rather than rebuilding it anonymously at the final handoff.  The
+p-adic-Haar controlled Record-Ob3/Ob5 source now provides this handoff
+directly and also projects to the canonical residual package from the strict
+p-adic Haar-index boundary.
 
 \paragraph{Milestone B: \IUT{} IV local-to-global \(\CTheta\).}
 Continue lowering the arithmetic-divisor-backed finite-place source.  The

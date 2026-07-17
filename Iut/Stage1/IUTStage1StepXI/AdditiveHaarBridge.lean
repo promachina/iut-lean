@@ -1347,6 +1347,65 @@ theorem RecordOb3Ob5ArithmeticDivisorBackedComponentSource.toCoreLocalArithmetic
     archimedeanProcessionBound_le_arithmeticDegreePart
     arithmeticDivisorBackedComponent_eq_padicHaarFormulaMatching).endpoint
 
+set_option linter.style.longLine false in
+/--
+Project the p-adic-Haar controlled Record-Ob3/Ob5 component source to the
+canonical p-adic arithmetic formula-matching package.
+
+This is the strict-source version of
+`toCorePadicUnitBallArithmeticFormulaMatchingSourceOfPadicUnitBallHaarIndex`:
+the p-adic Haar-index local-estimate data, arithmetic-degree calibration, and
+component/formula synchronization are all fields of the source, so the
+canonical Step~(v)/(vii) equalities are reached with no extra local-arithmetic
+or formula-matching equality argument.
+-/
+noncomputable def RecordOb3Ob5ArithmeticDivisorBackedPadicHaarControlledComponentSource.toCorePadicUnitBallArithmeticFormulaMatchingSource
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedPadicHaarControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :=
+  source.toRecordOb3Ob5ArithmeticDivisorBackedValuationBallSource
+    |>.valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
+    |>.toCorePadicUnitBallArithmeticFormulaMatchingSource
+
+theorem RecordOb3Ob5ArithmeticDivisorBackedPadicHaarControlledComponentSource.toCorePadicUnitBallArithmeticFormulaMatchingSource_endpoint
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedPadicHaarControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :
+    source.toCorePadicUnitBallArithmeticFormulaMatchingSource.Endpoint :=
+  source.toCorePadicUnitBallArithmeticFormulaMatchingSource.endpoint
+
+set_option linter.style.longLine false in
+/--
+Project the p-adic-Haar controlled Record-Ob3/Ob5 component source to the
+canonical local arithmetic-degree residual package.
+
+The residual package is now a consumer of the strict p-adic-Haar controlled
+source itself.  The old component-level route still records the weaker trust
+boundary, but this declaration removes the independent controlled local
+arithmetic source and formula-core equality from this consumer surface.
+-/
+noncomputable def RecordOb3Ob5ArithmeticDivisorBackedPadicHaarControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedPadicHaarControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :=
+  source.toCorePadicUnitBallArithmeticFormulaMatchingSource
+    |>.toLocalArithmeticDegreeResidualSource
+
+theorem RecordOb3Ob5ArithmeticDivisorBackedPadicHaarControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource_endpoint
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedPadicHaarControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :
+    source.toCoreLocalArithmeticDegreeResidualSource.Endpoint :=
+  source.toCoreLocalArithmeticDegreeResidualSource.endpoint
+
 end ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource
 
 end Experiments
