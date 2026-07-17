@@ -353,6 +353,12 @@ def canonicalStage1ResidualFrontier :
         "RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toPadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource_eq_ofArithmeticDegreeControlledLocalArithmeticSource",
       role :=
         "Derived equality showing that the local-degree formula Record-Ob3/Ob5 comparison source reaches the p-adic-defect/main valuation-ball local-estimate object by first reconstructing its arithmetic-degree-controlled local source; the p-adic-defect/main local-estimate package is not an extra field at this comparison layer." },
+    { name := "local-degree valuation-ball projection preservation law",
+      status := .sourceObligation,
+      declarationName :=
+        "RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.ValuationBallProjectionPreservation",
+      role :=
+        "Remaining law exposed by the attempted strict lowering: the valuation-ball additive-Haar evaluation object projected from the reconstructed p-adic-defect/main source must equal the original valuation-ball object carried by the arithmetic-degree-controlled local source.  This is the exact preservation needed before the local-degree formula comparison source can be lowered to the p-adic-defect/main controlled Record-Ob3/Ob5 boundary." },
     { name := "p-adic defect/main split countermodel",
       status := .constructed,
       declarationName :=
@@ -370,15 +376,21 @@ def canonicalStage1ResidualFrontier :
       declarationName :=
         "PadicHaarControlledResidualWithoutDefinitionalSynchronizationToyCountermodel.not_component_residual_eq_reconstructed_padic_residual",
       role :=
-        "Constructed weakened-boundary diagnostic for the strict source's definitional formula synchronization." } ]
+        "Constructed weakened-boundary diagnostic for the strict source's definitional formula synchronization." },
+    { name := "valuation-ball projection preservation countermodel",
+      status := .constructed,
+      declarationName :=
+        "ValuationBallProjectionWithoutPreservationToyCountermodel.not_projection_preservation",
+      role :=
+        "Constructed weakened-boundary diagnostic showing that a reconstructed p-adic-defect/main valuation-ball shell payload may differ from the original valuation-ball shell payload unless projection preservation is supplied or proved." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 14 :=
+    canonicalStage1ResidualFrontier.length = 16 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .sourceObligation)).length = 1 :=
+      (fun entry => entry.status = .sourceObligation)).length = 2 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
@@ -393,7 +405,7 @@ theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
 
 theorem canonicalStage1ResidualFrontier_constructed_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .constructed)).length = 3 :=
+      (fun entry => entry.status = .constructed)).length = 4 :=
   rfl
 
 /--
@@ -894,6 +906,42 @@ theorem padicHaarControlledResidualWithoutDefinitionalSynchronizationToyCounterm
   padicHaarControlledResidualWithoutDefinitionalSynchronizationToyCountermodel
     |>.not_component_residual_eq_reconstructed_padic_residual
 
+/--
+Toy diagnostic for the valuation-ball projection preservation law.
+
+The attempted local-degree-formula-to-p-adic-defect/main controlled lowering
+reconstructs a valuation-ball object after passing through the p-adic
+defect/main source.  If the original valuation-ball shell payload and the
+reconstructed shell payload are allowed to differ, there is no equality across
+which the Record-Ob3/Ob5 controlled component can be transported.
+-/
+structure ValuationBallProjectionWithoutPreservationToyCountermodel where
+  originalShellPayload : Nat
+  reconstructedShellPayload : Nat
+  payload_ne :
+    reconstructedShellPayload ≠ originalShellPayload
+
+theorem ValuationBallProjectionWithoutPreservationToyCountermodel.not_projection_preservation
+    (toy : ValuationBallProjectionWithoutPreservationToyCountermodel) :
+    ¬ toy.reconstructedShellPayload = toy.originalShellPayload :=
+  toy.payload_ne
+
+/--
+Concrete projection-preservation countermodel: the original valuation-ball
+payload is \(0\), while the reconstructed p-adic-defect/main valuation-ball
+payload is \(1\).
+-/
+def valuationBallProjectionWithoutPreservationToyCountermodel :
+    ValuationBallProjectionWithoutPreservationToyCountermodel :=
+  { originalShellPayload := 0,
+    reconstructedShellPayload := 1,
+    payload_ne := by norm_num }
+
+theorem valuationBallProjectionWithoutPreservationToyCountermodel_not_projection_preservation :
+    ¬ valuationBallProjectionWithoutPreservationToyCountermodel.reconstructedShellPayload =
+      valuationBallProjectionWithoutPreservationToyCountermodel.originalShellPayload :=
+  valuationBallProjectionWithoutPreservationToyCountermodel.not_projection_preservation
+
 #guard_msgs (drop info) in
 #check LocalAnalyticCaseWithoutDistinguishedGapToyCountermodel.not_residual_ge_one
 #guard_msgs (drop info) in
@@ -925,6 +973,10 @@ theorem padicHaarControlledResidualWithoutDefinitionalSynchronizationToyCounterm
 #check PadicHaarControlledResidualWithoutDefinitionalSynchronizationToyCountermodel.not_component_residual_eq_reconstructed_padic_residual
 #guard_msgs (drop info) in
 #print axioms PadicHaarControlledResidualWithoutDefinitionalSynchronizationToyCountermodel.not_component_residual_eq_reconstructed_padic_residual
+#guard_msgs (drop info) in
+#check ValuationBallProjectionWithoutPreservationToyCountermodel.not_projection_preservation
+#guard_msgs (drop info) in
+#print axioms ValuationBallProjectionWithoutPreservationToyCountermodel.not_projection_preservation
 
 #guard_msgs (drop info) in
 #check Experiments.IUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource.toCoreLocalArithmeticDegreeResidualSource

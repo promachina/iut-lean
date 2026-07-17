@@ -29247,7 +29247,7 @@ structure RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControl
     IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeCalibrationSource
       β estimate η γ localField αLocal ηLocal localAnalyticHullSystem
       archIndex archSummand
-      padicDefectMainValuationBallSource.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+      padicDefectMainValuationBallSource.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
   distinguishedProcessionBound_le_arithmeticDegreePart :
     ∀ place : β,
       padicDefectMainValuationBallSource.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localKind place =
@@ -29707,6 +29707,64 @@ theorem toPadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource_eq_of
       IUTStage1AdditiveHaarTheorem110PadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource.ofArithmeticDegreeControlledLocalArithmeticSource
         source.toArithmeticDegreeControlledLocalArithmeticSource := by
   rfl
+
+set_option linter.style.longLine false in
+/--
+The exact preservation law still needed to lower the local-degree formula
+comparison source to the stricter p-adic-defect/main Record-Ob3/Ob5 controlled
+component source.
+
+The local-degree formula source already reconstructs the p-adic-defect/main
+local-estimate object and the arithmetic-degree-controlled local source.  The
+remaining issue is sharper: the valuation-ball additive-Haar evaluation object
+obtained by projecting the reconstructed p-adic-defect/main source must be
+identified with the original valuation-ball object carried by the controlled
+local arithmetic source.  This equality preserves the valuation-ball log-shell
+payload, especially the nondistinguished finite-place construction, across the
+forgetful/reconstruction step.
+-/
+def ValuationBallProjectionPreservation
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {l : PrimeGeFive}
+    {η : Type y}
+    {localPrime : β -> Nat}
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    {localField : β -> Type x}
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [∀ place : β, T2Space (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : β -> Type z}
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)]
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :
+    Prop :=
+  (source.toPadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource
+      |>.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource) =
+    (source.toArithmeticDegreeControlledLocalArithmeticSource
+      |>.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource)
 
 end RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource
 
