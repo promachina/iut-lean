@@ -143,7 +143,7 @@ structure CanonicalStage1RemainingAssumption where
 
 /-- Short name for the current canonical public 3.11-to-3.12 Stage 1 route. -/
 def canonicalStage1RouteName : String :=
-  "same-index q-normalized local-arithmetic-degree route with derived scale-synchronized source"
+  "same-index q-normalized local-analytic route with derived scale-synchronized source"
 
 /--
 Current canonical Stage 1 remaining-assumption manifest.
@@ -225,13 +225,13 @@ def canonicalStage1RemainingAssumptions :
         "ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.toScaleSynchronizedLocalAnalyticSource",
       note :=
         "The public source now carries the q-normalized theta/log-volume identity.  Lean derives canonical C_Theta-scale synchronization from this identity and q-pilot positivity, so the raw canonical-scale equality is no longer a canonical public field." },
-    { name := "theorem110ValuationBallFormulaGapSource",
+    { name := "theorem110ValuationBallLocalAnalyticSource",
       status := .sourceObligation,
       paperSource := "IUT IV, Theorem 1.10 valuation-ball arithmetic divisor estimates",
       consumerDeclaration :=
-        "IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource",
+        "ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalAnalyticSource",
       note :=
-        "The local upper-bound ledger is typed but still supplied as an IUT IV source object." },
+        "The canonical route no longer exposes the stronger valuation-ball formula-gap source.  Lean constructs that package from the valuation-ball local-analytic arithmetic-divisor source when a formula-gap route is needed, but the local-analytic Theorem 1.10 ledger itself is still a source obligation." },
     { name := "localArithmeticDegreeResidualSource",
       status := .sourceObligation,
       paperSource := "IUT IV local arithmetic-degree identity and Haar residual lower bound",
