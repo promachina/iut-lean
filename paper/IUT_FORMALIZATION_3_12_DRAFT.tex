@@ -120,16 +120,17 @@ local arithmetic-degree residual package.  The audit includes one-place
 diagnostics for the detached p-adic scale failure, the necessity of the signed
 \(q\leq\theta\) comparison for \(C_\Theta\ge -1\), and the remaining residual
 lower-bound obligation at the local arithmetic-degree boundary.  The residual
-frontier is now classified explicitly: the local-degree formula valuation-ball
-Record-Ob3/Ob5 source remains the lower source obligation, while Lean derives
-from it the arithmetic-degree-controlled local source, the p-adic-defect/main
-local-estimate endpoint, and the canonical residual package.  The ordinary
-Record-Ob3/Ob5 component route also has a checked residual projection from
-arithmetic-degree-controlled local arithmetic once the full reconstructed formula
-package is identified; the legacy strict p-adic-Haar residual projection remains
-checked as a comparison route.  The constructed diagnostics show the failure
-modes when the p-adic defect/main split, ordinary component formula matching, or
-strict residual synchronization laws are removed.  Future Lean
+frontier is now classified explicitly: the ordinary Record-Ob3/Ob5 component
+route with arithmetic-degree-controlled local arithmetic and full
+component/formula synchronization is the lower source obligation.  The stronger
+local-degree formula valuation-ball Record-Ob3/Ob5 source remains a checked
+comparison route; Lean still derives from it the arithmetic-degree-controlled
+local source, the p-adic-defect/main local-estimate endpoint, and the canonical
+residual package, but the residual consumer no longer needs that stronger source
+as its canonical boundary.  The legacy strict p-adic-Haar residual projection
+also remains checked as a comparison route.  The constructed diagnostics show
+the failure modes when the p-adic defect/main split, ordinary component formula
+matching, or strict residual synchronization laws are removed.  Future Lean
 steps should remove further entries from the manifest, especially the weighted
 determinant synchronizations, q-normalized theta/log-volume identity, the
 local-analytic Theorem~1.10 source, and the local arithmetic-degree residual
@@ -3599,15 +3600,18 @@ defect/main source and audit directly from the packaged source.  This
 projection now factors through a named arithmetic-degree-controlled local
 arithmetic source projected from the valuation-ball Record-Ob3/Ob5 data, so
 the p-adic defect/main constructor consumes that constructed local-arithmetic
-object rather than rebuilding it anonymously at the final handoff.  The new
+object rather than rebuilding it anonymously at the final handoff.  The
 local-degree formula valuation-ball Record-Ob3/Ob5 source packages the
 formula-matched valuation-ball source, the Step~(v)/(vii) local-degree formula
 source, and the controlled component indexed by the constructed local
 arithmetic object; the split bridge projects this source directly to the
 canonical residual package without separately exposing the local-degree formula
-package.  The strict p-adic-Haar route remains checked separately, because its
-normalization uses the p-adic unit-ball reconstruction of the IUT~IV arithmetic
-defect.
+package.  The canonical residual-frontier audit is lower: it takes the ordinary
+Record-Ob3/Ob5 component source, arithmetic-degree-controlled local arithmetic,
+and full component/formula synchronization as the remaining source boundary, and
+keeps the local-degree formula valuation-ball source as a comparison route.  The
+strict p-adic-Haar route remains checked separately, because its normalization
+uses the p-adic unit-ball reconstruction of the IUT~IV arithmetic defect.
 
 \paragraph{Milestone B: \IUT{} IV local-to-global \(\CTheta\).}
 Continue lowering the arithmetic-divisor-backed finite-place source.  The

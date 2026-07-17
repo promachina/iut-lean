@@ -3089,13 +3089,18 @@
   \lean{Iut.Stage1.Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.toArithmeticDegreeControlledLocalArithmeticSource},
   so the p-adic source consumes a named constructed local-arithmetic object
   rather than an anonymous reconstruction inside the final projection.
-  The lower local-degree formula valuation-ball Record-Ob3/Ob5 source
+  The local-degree formula valuation-ball Record-Ob3/Ob5 comparison source
   \lean{Iut.Stage1.Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource}
-  now packages the formula-matched valuation-ball source, the Step~(v)/(vii)
+  packages the formula-matched valuation-ball source, the Step~(v)/(vii)
   local-degree formula source, and the controlled component indexed by the
   constructed local arithmetic source; the bridge projection
   \lean{Iut.Stage1.Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource}
-  sends this source directly to the canonical residual package.
+  sends this source directly to the canonical residual package.  The canonical
+  residual frontier is nevertheless lower: it takes the ordinary
+  Record-Ob3/Ob5 component source, arithmetic-degree-controlled local
+  arithmetic, and full component/formula synchronization as the remaining source
+  boundary, and retains this local-degree formula valuation-ball source as a
+  comparison route.
   The companion
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PreferredPublicConcreteStepXI311312CurrentProductHullHodgeFormulaTheorem110ValuationBallLocalAnalyticGoalEvidenceAudit}
   and constructor
@@ -4348,14 +4353,15 @@
   The canonical route manifest records this residual frontier as a checked
   nine-entry sub-manifest:
   \lean{Iut.Stage1.IUTStage1StepXIDependencyAudit.canonicalStage1ResidualFrontier}.
-  It classifies the local-degree formula valuation-ball Record-Ob3/Ob5 source
-  as the remaining lower source obligation.  From this source Lean now derives
-  the arithmetic-degree-controlled local source, the p-adic-defect/main local
-  estimate endpoint, and the canonical residual package.  The ordinary
-  Record-Ob3/Ob5 component source also has a checked residual projection from
-  arithmetic-degree-controlled local arithmetic once the full reconstructed
-  formula package is identified, and the legacy strict p-adic-Haar residual
-  projection remains checked as a comparison route.  The constructed diagnostics
+  It classifies the ordinary Record-Ob3/Ob5 component source, together with
+  arithmetic-degree-controlled local arithmetic and full component/formula
+  synchronization, as the remaining lower source obligation.  The stronger
+  local-degree formula valuation-ball Record-Ob3/Ob5 source remains checked as a
+  comparison route: from this source Lean still derives the
+  arithmetic-degree-controlled local source, the p-adic-defect/main local
+  estimate endpoint, and the canonical residual package, but it is no longer the
+  canonical lowest residual boundary.  The legacy strict p-adic-Haar residual
+  projection also remains checked as a comparison route.  The constructed diagnostics
   record the p-adic defect/main split failure without arithmetic-defect
   identification, the ordinary component formula-matching failure, and the
   strict residual synchronization failure without definitional formula matching.
