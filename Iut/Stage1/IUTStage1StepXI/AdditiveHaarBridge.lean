@@ -1061,6 +1061,41 @@ theorem RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallContro
 
 set_option linter.style.longLine false in
 /--
+Project a controlled Record-Ob3/Ob5 component source to the canonical residual
+package through the local-degree formula valuation-ball comparison lowering.
+
+This removes the local-degree formula comparison source as a separate residual
+surface when the source has already been synchronized at the controlled
+component layer.
+-/
+noncomputable def RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource
+    {localArithmeticSource :
+      IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand}
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand localArithmeticSource) :=
+  source.toLocalDegreeFormulaValuationBallControlledComponentSource
+    |>.toCoreLocalArithmeticDegreeResidualSource
+
+theorem RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource_endpoint
+    {localArithmeticSource :
+      IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand}
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand localArithmeticSource) :
+    source.toCoreLocalArithmeticDegreeResidualSource.Endpoint :=
+  source.toCoreLocalArithmeticDegreeResidualSource.endpoint
+
+set_option linter.style.longLine false in
+/--
 Project a Record-Ob3/Ob5 component source to the canonical p-adic arithmetic
 formula-matching package directly from the p-adic unit-ball Haar-index local
 estimate data.
