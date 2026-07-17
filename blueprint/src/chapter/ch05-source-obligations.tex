@@ -4271,14 +4271,22 @@
   same arithmetic-degree-controlled local arithmetic source:
   \lean{Iut.Stage1.Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedComponentSource.toPadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSourceOfArithmeticDegreeControlledLocalArithmeticSource}
   reconstructs the valuation-ball formula package internally before applying
-  the local-degree projection.  The remaining synchronization at this boundary
-  is exactly the equality identifying the Record-Ob3/Ob5 component formula with
-  that controlled formula object.
+  the local-degree projection.  For the ordinary component source the remaining
+  synchronization at this boundary is exactly the equality identifying the
+  Record-Ob3/Ob5 component formula with that controlled formula object.
+  The stricter controlled component source
+  \lean{Iut.Stage1.Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource}
+  removes that equality as a separate input: its local-degree arithmetic-divisor
+  component is assembled over
+  \lean{Iut.Stage1.Experiments.IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.ofArithmeticDegreeControlledLocalArithmeticSource}
+  by definition, and its projection audit
+  \lean{Iut.Stage1.Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource.toRecordOb3Ob5ArithmeticDivisorBackedValuationBallSource_projectionAudit}
+  checks the resulting Record-Ob3/Ob5 valuation-ball source with no component
+  formula synchronization hypothesis.
   The remaining work is
-  therefore to derive the finite sums, nonnegativity, formula-gap inputs, and
-  arithmetic-divisor calibration of this constructed source from the full
-  IUT~IV local-estimate construction, not to assume the synchronization record
-  directly.
+  therefore to derive the strict controlled component source itself, including
+  the finite sums, nonnegativity, formula-gap inputs, and arithmetic-divisor
+  calibration, from the full IUT~IV local-estimate construction.
   The checked residual calculation is explicit:
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVLocalArithmeticDegreePadicUnitBallStepXISynchronizationSource.local_defined_residual_eq_padic_index}
   identifies the local defined residual with the p-adic unit-ball index, and
