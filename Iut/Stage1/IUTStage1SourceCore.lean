@@ -17120,6 +17120,69 @@ theorem finiteExtensionDegree_pos
     0 < Module.finrank ℚ_[p] K :=
   Module.finrank_pos
 
+set_option linter.style.longLine false in
+/--
+Extensionality for constructed base-prime dilation/mass Haar sources by their
+actual local-field payload.
+
+The base-prime dilation is constructed, not stored.  After the integer source,
+realization, realized-region map, compact-open radius, and Haar measure agree,
+all analytic law fields are proof-irrelevant.
+-/
+theorem ext_of_components
+    {left right :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem}
+    (integerSource_eq : left.integerSource = right.integerSource)
+    (realization_eq : left.realization = right.realization)
+    (realizedRegion_eq : left.realizedRegion = right.realizedRegion)
+    (compactOpenRadius_eq :
+      left.compactOpenRadius = right.compactOpenRadius)
+    (haarMeasure_eq : left.haarMeasure = right.haarMeasure) :
+    left = right := by
+  cases left
+  cases right
+  cases integerSource_eq
+  cases realization_eq
+  cases realizedRegion_eq
+  cases compactOpenRadius_eq
+  cases haarMeasure_eq
+  simp
+
+set_option linter.style.longLine false in
+/--
+Componentwise equality of constructed base-prime dilation/mass Haar sources.
+
+This is lower than componentwise equality of the projected finite-extension
+proper-ultrametric source: the base-prime homeomorphism is not a field, and the
+uniform mass law is attached to the explicit multiplication-by-\(p\) map.
+-/
+structure ComponentwiseEqual
+    (left right :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem) :
+    Prop where
+  integerSource_eq : left.integerSource = right.integerSource
+  realization_eq : left.realization = right.realization
+  realizedRegion_eq : left.realizedRegion = right.realizedRegion
+  compactOpenRadius_eq :
+    left.compactOpenRadius = right.compactOpenRadius
+  haarMeasure_eq : left.haarMeasure = right.haarMeasure
+
+set_option linter.style.longLine false in
+theorem ComponentwiseEqual.eq
+    {left right :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem}
+    (matching : ComponentwiseEqual left right) :
+    left = right :=
+  ext_of_components
+    matching.integerSource_eq
+    matching.realization_eq
+    matching.realizedRegion_eq
+    matching.compactOpenRadius_eq
+    matching.haarMeasure_eq
+
 theorem basePrimeDilation_measure_toReal_eq
     (data :
       IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
@@ -17170,6 +17233,56 @@ noncomputable def toPadicFiniteExtensionProperUltrametricHaarNormalizationSource
       α p K hullSystem :=
   data.toPadicFiniteExtensionDilationMassHaarNormalizationSource
     |>.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource
+
+set_option linter.style.longLine false in
+theorem ComponentwiseEqual.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource
+    {left right :
+      IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+        α p K hullSystem}
+    (matching : ComponentwiseEqual left right) :
+    IUTStage1PadicFiniteExtensionProperUltrametricHaarNormalizationSource.ComponentwiseEqual
+      left.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource
+      right.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource :=
+  { integerSource_eq := by
+      simpa [
+        toPadicFiniteExtensionProperUltrametricHaarNormalizationSource,
+        IUTStage1PadicFiniteExtensionDilationMassHaarNormalizationSource.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource,
+        IUTStage1PadicFiniteExtensionDilationMassHaarNormalizationSource.toPadicFiniteExtensionDilationHaarNormalizationSource,
+        IUTStage1PadicFiniteExtensionDilationHaarNormalizationSource.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource,
+        toPadicFiniteExtensionDilationMassHaarNormalizationSource] using
+        matching.integerSource_eq,
+    realization_eq := by
+      simpa [
+        toPadicFiniteExtensionProperUltrametricHaarNormalizationSource,
+        IUTStage1PadicFiniteExtensionDilationMassHaarNormalizationSource.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource,
+        IUTStage1PadicFiniteExtensionDilationMassHaarNormalizationSource.toPadicFiniteExtensionDilationHaarNormalizationSource,
+        IUTStage1PadicFiniteExtensionDilationHaarNormalizationSource.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource,
+        toPadicFiniteExtensionDilationMassHaarNormalizationSource] using
+        matching.realization_eq,
+    realizedRegion_eq := by
+      simpa [
+        toPadicFiniteExtensionProperUltrametricHaarNormalizationSource,
+        IUTStage1PadicFiniteExtensionDilationMassHaarNormalizationSource.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource,
+        IUTStage1PadicFiniteExtensionDilationMassHaarNormalizationSource.toPadicFiniteExtensionDilationHaarNormalizationSource,
+        IUTStage1PadicFiniteExtensionDilationHaarNormalizationSource.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource,
+        toPadicFiniteExtensionDilationMassHaarNormalizationSource] using
+        matching.realizedRegion_eq,
+    compactOpenRadius_eq := by
+      simpa [
+        toPadicFiniteExtensionProperUltrametricHaarNormalizationSource,
+        IUTStage1PadicFiniteExtensionDilationMassHaarNormalizationSource.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource,
+        IUTStage1PadicFiniteExtensionDilationMassHaarNormalizationSource.toPadicFiniteExtensionDilationHaarNormalizationSource,
+        IUTStage1PadicFiniteExtensionDilationHaarNormalizationSource.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource,
+        toPadicFiniteExtensionDilationMassHaarNormalizationSource] using
+        matching.compactOpenRadius_eq,
+    haarMeasure_eq := by
+      simpa [
+        toPadicFiniteExtensionProperUltrametricHaarNormalizationSource,
+        IUTStage1PadicFiniteExtensionDilationMassHaarNormalizationSource.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource,
+        IUTStage1PadicFiniteExtensionDilationMassHaarNormalizationSource.toPadicFiniteExtensionDilationHaarNormalizationSource,
+        IUTStage1PadicFiniteExtensionDilationHaarNormalizationSource.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource,
+        toPadicFiniteExtensionDilationMassHaarNormalizationSource] using
+        matching.haarMeasure_eq }
 
 noncomputable def toValuedFieldIntegerProperUltrametricHaarNormalizationSource
     (data :
@@ -23325,6 +23438,63 @@ theorem toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionFactor_c
     toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionFactor_structureSheaf_weight_anchor_tensorPower
   · intro index summand
     exact (padicFiniteExtensionFactor_match index summand).eq
+  · exact structureSheafLogVolume_eq
+  · exact weight_eq
+  · exact anchor_eq
+  · exact positiveTensorPower_eq
+
+set_option linter.style.longLine false in
+/--
+Constructed-dilation/mass criterion for the p-adic finite-extension Ob3/Ob4
+determinant synchronization.
+
+This is lower than matching the projected finite-extension Haar source
+directly.  The local factors are first identified with projections of
+constructed base-prime dilation/mass sources, and componentwise equality of
+those constructed local-field payloads supplies the finite-extension
+componentwise equality consumed by the existing determinant theorem.
+-/
+theorem toAdjustedDeterminantSource_eq_of_pointwise_constructedDilationMassFactor_componentwise_structureSheaf_weight_anchor_tensorPower
+    (source target :
+      IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+        α p K β γ hullSystem)
+    (sourceConstructedFactor targetConstructedFactor :
+      β -> γ ->
+        IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource
+          α p K hullSystem)
+    (source_factor_eq :
+      ∀ index : β, ∀ summand : γ,
+        (source.localization index).bundle.padicFiniteExtensionFactor summand =
+          (sourceConstructedFactor index summand).toPadicFiniteExtensionProperUltrametricHaarNormalizationSource)
+    (target_factor_eq :
+      ∀ index : β, ∀ summand : γ,
+        (target.localization index).bundle.padicFiniteExtensionFactor summand =
+          (targetConstructedFactor index summand).toPadicFiniteExtensionProperUltrametricHaarNormalizationSource)
+    (constructedFactor_match :
+      ∀ index : β, ∀ summand : γ,
+        IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource.ComponentwiseEqual
+          (sourceConstructedFactor index summand)
+          (targetConstructedFactor index summand))
+    (structureSheafLogVolume_eq :
+      ∀ index : β,
+        (source.localization index).structureSheafLogVolume =
+          (target.localization index).structureSheafLogVolume)
+    (weight_eq :
+      ∀ index : β,
+        (source.localization index).weight =
+          (target.localization index).weight)
+    (anchor_eq : source.anchor = target.anchor)
+    (positiveTensorPower_eq :
+      source.positiveTensorPower = target.positiveTensorPower) :
+    source.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource =
+      target.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toNormSquareLocalizedVectorBundleDeterminantSource.toLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource := by
+  apply
+    toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionFactor_componentwise_structureSheaf_weight_anchor_tensorPower
+  · intro index summand
+    rw [source_factor_eq index summand, target_factor_eq index summand]
+    exact
+      (constructedFactor_match index summand)
+        |>.toPadicFiniteExtensionProperUltrametricHaarNormalizationSource
   · exact structureSheafLogVolume_eq
   · exact weight_eq
   · exact anchor_eq

@@ -509,6 +509,12 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionFactor_componentwise_structureSheaf_weight_anchor_tensorPower",
       role :=
         "Derived Ob3/Ob4 synchronization criterion from componentwise equality of the finite-extension-over-Q_p Haar payload fields: integer unit-ball source, realization, realized-region map, compact-open radius, and Haar measure.  The analytic law fields are proof-irrelevant after these payload fields are synchronized, so equality of full p-adic finite-extension Haar source records is no longer a primitive determinant-boundary input." },
+    { name := "constructed dilation-mass p-adic determinant adjusted-source synchronization",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_constructedDilationMassFactor_componentwise_structureSheaf_weight_anchor_tensorPower",
+      role :=
+        "Derived Ob3/Ob4 synchronization criterion from componentwise equality of constructed base-prime dilation/mass Haar payloads.  The local factors are identified with projections of constructed dilation-mass sources, whose base-prime homeomorphism is not a supplied field; Lean then projects this componentwise equality to the finite-extension proper-ultrametric Haar source consumed by the p-adic determinant boundary." },
     { name := "principal-product p-adic family-hull adjusted-sum projection",
       status := .derived,
       declarationName :=
@@ -607,7 +613,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 53 :=
+    canonicalStage1ResidualFrontier.length = 54 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -617,7 +623,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 48 :=
+      (fun entry => entry.status = .derived)).length = 49 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
