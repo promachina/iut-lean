@@ -4163,9 +4163,13 @@
   \lean{Iut.Stage1.Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainLocalAnalyticArithmeticDivisorSource}
   now has a constructor from the additive-Haar local analytic arithmetic-divisor
   evaluation source plus the p-adic identity
-  \(E_v=\delta_v+M_v\).  Thus the finite sums, nonnegativity, formula-gap
-  construction data, and arithmetic-divisor calibration are read from the
-  evaluation source rather than restated on the p-adic split record, and
+  \(E_v=\delta_v+M_v\).  Its valuation-ball refinement
+  \lean{Iut.Stage1.Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource}
+  builds this identity into the prime-error term itself and projects to the
+  valuation-ball formula-gap matched prime-error source.  Thus the finite sums,
+  nonnegativity, formula-gap construction data, and arithmetic-divisor
+  calibration are read from the valuation-ball local-estimate package rather
+  than restated on the p-adic split record, and
   \lean{Iut.Stage1.Experiments.IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource}
   consumes that constructed split together with the arithmetic-degree
   calibration before projecting to the canonical p-adic formula source; the
