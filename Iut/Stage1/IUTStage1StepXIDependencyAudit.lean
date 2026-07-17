@@ -238,7 +238,7 @@ def canonicalStage1RemainingAssumptions :
       consumerDeclaration :=
         "IUTStage1IUTIVLocalArithmeticDegreeResidualSource",
       note :=
-        "The canonical route no longer requires the stronger case-bounded residual source.  Case-bounded, local-analytic case, processional arithmetic-gap, and p-adic Haar routes are constructors into this residual package.  The p-adic unit-ball Step XI synchronization route now projects directly to this package through preferredPublicIUTStage1IUTIVLocalArithmeticDegreePadicUnitBallStepXISynchronizationSourceToLocalArithmeticDegreeResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit.  The synchronization itself has a formula-matching constructor from StepXI = a(D+C) and prime-error = p-adic index + main; the AdditiveHaarBridge now projects the additive-Haar, p-adic prime-error, arithmetic-degree calibrated, formula-gap matched, arithmetic-divisor-backed local-degree, constructed Theorem 3.11 local-term, and valuation-ball arithmetic-degree formula-matching tower into that canonical constructor.  The Step XI arithmetic-degree equality is therefore audited as a consequence of determinant-weight and adjusted raw-log-volume calibration.  The additive-Haar split can be constructed from a local analytic arithmetic-divisor evaluation source plus the p-adic equality E_v = delta_v + M_v; the valuation-ball p-adic defect/main source now builds that equality into the prime-error term, and it is itself constructible from the arithmetic-degree-controlled local arithmetic source by combining E_v = localIUTIVDefect_v + M_v with localIUTIVDefect_v = delta_v.  The Record-Ob3/Ob5 valuation-ball source now explicitly projects this arithmetic-degree-controlled local arithmetic source from its formula-gap arithmetic-degree/p-adic source and projected Step (v)/(vii) comparison package, then feeds the p-adic defect/main source through that projection.  The remaining IUT IV obligation is deriving the lower valuation-ball Record-Ob3/Ob5 local-estimate source from the full local-estimate construction." } ]
+        "The canonical route no longer requires the stronger case-bounded residual source.  Case-bounded, local-analytic case, processional arithmetic-gap, and p-adic Haar routes are constructors into this residual package.  The p-adic unit-ball Step XI synchronization route now projects directly to this package through preferredPublicIUTStage1IUTIVLocalArithmeticDegreePadicUnitBallStepXISynchronizationSourceToLocalArithmeticDegreeResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit.  The synchronization itself has a formula-matching constructor from StepXI = a(D+C) and prime-error = p-adic index + main; the AdditiveHaarBridge now projects the additive-Haar, p-adic prime-error, arithmetic-degree calibrated, formula-gap matched, arithmetic-divisor-backed local-degree, constructed Theorem 3.11 local-term, and valuation-ball arithmetic-degree formula-matching tower into that canonical constructor.  The Step XI arithmetic-degree equality is therefore audited as a consequence of determinant-weight and adjusted raw-log-volume calibration.  The additive-Haar split can be constructed from a local analytic arithmetic-divisor evaluation source plus the p-adic equality E_v = delta_v + M_v; the valuation-ball p-adic defect/main source now builds that equality into the prime-error term, and it is itself constructible from the arithmetic-degree-controlled local arithmetic source by combining E_v = localIUTIVDefect_v + M_v with localIUTIVDefect_v = delta_v.  The Record-Ob3/Ob5 p-adic Haar product route now stops at the controlled product-handoff boundary, so it needs the direct component-to-padic-Haar formula synchronization but not the stronger reconstructed local-degree formula equality.  The Record-Ob3/Ob5 valuation-ball source now explicitly projects this arithmetic-degree-controlled local arithmetic source from its formula-gap arithmetic-degree/p-adic source and projected Step (v)/(vii) comparison package, then feeds the p-adic defect/main source through that projection.  The remaining IUT IV obligation is deriving the lower valuation-ball Record-Ob3/Ob5 local-estimate source from the full local-estimate construction." } ]
 
 /-- Number of manifest entries in the canonical Stage 1 remaining boundary. -/
 def canonicalStage1RemainingAssumptions_count : Nat :=
@@ -550,6 +550,61 @@ theorem padicDefectMainWithoutArithmeticDefectIdentificationToyCountermodel_not_
   padicDefectMainWithoutArithmeticDefectIdentificationToyCountermodel
     |>.not_padic_defect_main_split
 
+/--
+One-place diagnostic for the p-adic Haar controlled product handoff.
+
+The controlled p-adic Haar route no longer assumes the stronger reconstructed
+local-degree formula equality, but it still needs the direct Record-Ob3/Ob5
+component-to-padic-Haar formula synchronization.  If that synchronization is
+removed, the component Step~(xi) formula and the p-adic Haar constructed
+formula can be valid on different local values.
+-/
+structure PadicHaarWithoutComponentFormulaSynchronizationToyCountermodel where
+  componentFormula : Real
+  padicHaarFormula : Real
+  componentStepXI : Real
+  padicHaarStepXI : Real
+  component_formula_matches_stepXI :
+    componentFormula = componentStepXI
+  padicHaar_formula_matches_stepXI :
+    padicHaarFormula = padicHaarStepXI
+  componentStepXI_eq_zero : componentStepXI = 0
+  padicHaarStepXI_eq_one : padicHaarStepXI = 1
+
+theorem PadicHaarWithoutComponentFormulaSynchronizationToyCountermodel.not_component_formula_eq_padicHaar
+    (toy : PadicHaarWithoutComponentFormulaSynchronizationToyCountermodel) :
+    ¬ toy.componentFormula = toy.padicHaarFormula := by
+  intro hsync
+  have hcomponent : toy.componentFormula = 0 := by
+    rw [toy.component_formula_matches_stepXI, toy.componentStepXI_eq_zero]
+  have hpadic : toy.padicHaarFormula = 1 := by
+    rw [toy.padicHaar_formula_matches_stepXI, toy.padicHaarStepXI_eq_one]
+  rw [hcomponent, hpadic] at hsync
+  norm_num at hsync
+
+/--
+Concrete countermodel: the component formula is synchronized with Step~(xi)
+value \(0\), while the p-adic Haar formula is synchronized with Step~(xi)
+value \(1\).  Both local formula laws hold internally, but the missing
+component-to-padic-Haar synchronization is false.
+-/
+def padicHaarWithoutComponentFormulaSynchronizationToyCountermodel :
+    PadicHaarWithoutComponentFormulaSynchronizationToyCountermodel :=
+  { componentFormula := 0,
+    padicHaarFormula := 1,
+    componentStepXI := 0,
+    padicHaarStepXI := 1,
+    component_formula_matches_stepXI := by norm_num,
+    padicHaar_formula_matches_stepXI := by norm_num,
+    componentStepXI_eq_zero := by norm_num,
+    padicHaarStepXI_eq_one := by norm_num }
+
+theorem padicHaarWithoutComponentFormulaSynchronizationToyCountermodel_not_component_formula_eq_padicHaar :
+    ¬ padicHaarWithoutComponentFormulaSynchronizationToyCountermodel.componentFormula =
+      padicHaarWithoutComponentFormulaSynchronizationToyCountermodel.padicHaarFormula :=
+  padicHaarWithoutComponentFormulaSynchronizationToyCountermodel
+    |>.not_component_formula_eq_padicHaar
+
 #guard_msgs (drop info) in
 #check LocalAnalyticCaseWithoutDistinguishedGapToyCountermodel.not_residual_ge_one
 #guard_msgs (drop info) in
@@ -569,6 +624,10 @@ theorem padicDefectMainWithoutArithmeticDefectIdentificationToyCountermodel_not_
 #check PadicDefectMainWithoutArithmeticDefectIdentificationToyCountermodel.not_padic_defect_main_split
 #guard_msgs (drop info) in
 #print axioms PadicDefectMainWithoutArithmeticDefectIdentificationToyCountermodel.not_padic_defect_main_split
+#guard_msgs (drop info) in
+#check PadicHaarWithoutComponentFormulaSynchronizationToyCountermodel.not_component_formula_eq_padicHaar
+#guard_msgs (drop info) in
+#print axioms PadicHaarWithoutComponentFormulaSynchronizationToyCountermodel.not_component_formula_eq_padicHaar
 
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedCaseBoundedResidualSourcePrimitiveConstructorInternalPrincipalHDDSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
@@ -4897,6 +4956,12 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.recordOb3Ob5ValuationBallPadicDefectMainProjectionAudit
 #guard_msgs (drop info) in
 #print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.recordOb3Ob5ValuationBallPadicDefectMainProjectionAudit
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedComponentSource.preferredPublicConcreteStepXI311312CompactOpenAdditiveHaarRecordOb3Ob5PadicHaarControlledProductHandoffFormulaRealizedRoute
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedComponentSource.preferredPublicConcreteStepXI311312CompactOpenAdditiveHaarRecordOb3Ob5PadicHaarControlledProductHandoffFormulaRealizedRoute
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedComponentSource.preferredPublicConcreteStepXI311312CompactOpenAdditiveHaarRecordOb3Ob5PadicHaarProjectedLocalDegreeFormulaProductHandoffFormulaRealizedRoute
 #guard_msgs (drop info) in
 #check Experiments.IUTStage1AdditiveHaarTheorem110StepXIConstructedPrimeErrorArithmeticDegreeFormulaMatchingSource
 #guard_msgs (drop info) in
