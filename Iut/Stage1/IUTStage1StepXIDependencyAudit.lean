@@ -224,7 +224,7 @@ def canonicalStage1RemainingAssumptions :
       consumerDeclaration :=
         "ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.toScaleSynchronizedLocalAnalyticSource",
       note :=
-        "The public source now carries the q-normalized theta/log-volume identity.  Lean derives canonical C_Theta-scale synchronization from this identity and q-pilot positivity, so the raw canonical-scale equality is no longer a canonical public field.  The same-index constructor ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEqFamilyHullLogVolume now derives this q-normalized identity from the family-hull comparison and the principal-product p-adic finite hull decomposition; the remaining obligation is to construct the family-hull theta/log-volume comparison itself from paper-level Theorem 3.11 data." },
+        "The older public source carries the q-normalized theta/log-volume identity.  Lean derives canonical C_Theta-scale synchronization from this identity and q-pilot positivity, so the raw canonical-scale equality is no longer a canonical public field.  The same-index constructor ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEqFamilyHullLogVolume derives this q-normalized identity from the family-hull comparison and the principal-product p-adic finite hull decomposition, and the checked side-condition endpoint preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantFamilyHullThetaSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit now uses that constructor before proving both Corollary 3.12 outputs.  The remaining obligation is to construct the family-hull theta/log-volume comparison itself from paper-level Theorem 3.11 data." },
     { name := "theorem110ValuationBallLocalAnalyticSource",
       status := .sourceObligation,
       paperSource := "IUT IV, Theorem 1.10 valuation-ball arithmetic divisor estimates",
@@ -521,6 +521,12 @@ def canonicalStage1ResidualFrontier :
         "ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEqFamilyHullLogVolume",
       role :=
         "Derived same-index local arithmetic-degree constructor that keeps the adjusted-determinant and residual source inputs fixed while replacing the public q-normalized adjusted-sum equality by the paper-facing family-hull theta/log-volume comparison." },
+    { name := "same-index side-condition endpoint from family-hull theta",
+      status := .derived,
+      declarationName :=
+        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantFamilyHullThetaSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
+      role :=
+        "Derived endpoint route that constructs the same-index local arithmetic-degree source from full adjusted-determinant synchronization and the family-hull theta comparison before proving both the Corollary 3.12 dichotomy and the C_Theta lower bound.  The direct q-normalized adjusted-sum theta equality is no longer a public input on this same-index surface." },
     { name := "p-adic defect/main split countermodel",
       status := .constructed,
       declarationName :=
@@ -553,7 +559,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 44 :=
+    canonicalStage1ResidualFrontier.length = 45 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -563,7 +569,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 39 :=
+      (fun entry => entry.status = .derived)).length = 40 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -1281,6 +1287,10 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEqFamilyHullLogVolume
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEqFamilyHullLogVolume
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantFamilyHullThetaSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantFamilyHullThetaSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #check WeightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel.not_record_ob3ob4_synchronized
 #guard_msgs (drop info) in
