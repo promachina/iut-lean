@@ -120,10 +120,11 @@ local arithmetic-degree residual package.  The audit includes one-place
 diagnostics for the detached p-adic scale failure, the necessity of the signed
 \(q\leq\theta\) comparison for \(C_\Theta\ge -1\), and the remaining residual
 lower-bound obligation at the local arithmetic-degree boundary.  The residual
-frontier is now classified explicitly: the strict p-adic-Haar controlled
-Record-Ob3/Ob5 source remains the source obligation, its defect/main,
-formula-matching, and residual consumers are derived projections, and the
-strict-residual countermodel is a constructed diagnostic.  Future Lean
+frontier is now classified explicitly: the valuation-ball p-adic-defect/main
+Record-Ob3/Ob5 source remains the source obligation, the former strict
+p-adic-Haar boundary and its defect/main, formula-matching, and residual
+consumers are derived projections, and the strict-residual countermodel is a
+constructed diagnostic.  Future Lean
 steps should remove further entries from the manifest, especially the weighted
 determinant synchronizations, q-normalized theta/log-volume identity, the
 local-analytic Theorem~1.10 source, and the local arithmetic-degree residual
@@ -2004,7 +2005,11 @@ comparison source is now projected from the local Step~(v)/(vii)
 degree-identification formula source.  The Record-Ob3/Ob5 arithmetic-divisor
 component route now composes this with its own local-degree projection, so the
 p-adic split can be constructed from component data plus valuation-ball
-provenance.  Finite sums, nonnegativity, formula-gap
+p-adic-defect/main provenance.  The current lower Record-Ob3/Ob5 source consumes that
+valuation-ball p-adic-defect/main object directly, so the valuation-ball
+evaluation source, the Haar-index defect source, and the equality
+\(E_v=\delta_v+M_v\) are projected rather than supplied independently.
+Finite sums, nonnegativity, formula-gap
 construction data, and arithmetic-divisor calibration are read from the
 valuation-ball local-estimate package rather than restated on the p-adic split
 record.  The arithmetic-degree and formula-gap formula sources consume this

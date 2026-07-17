@@ -29071,6 +29071,211 @@ end RecordOb3Ob5ArithmeticDivisorBackedPadicHaarControlledComponentSource
 
 set_option linter.style.longLine false in
 /--
+Record-Ob3/Ob5 controlled component source with the valuation-ball
+p-adic-defect/main Theorem~1.10 object as its local-estimate input.
+
+This lowers `RecordOb3Ob5ArithmeticDivisorBackedPadicHaarControlledComponentSource`:
+the valuation-ball evaluation source, the p-adic unit-ball Haar defect source,
+and the pointwise split \(E_v=\delta_v+M_v\) are no longer separate fields.
+They are projected from
+`IUTStage1AdditiveHaarTheorem110PadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource`,
+where the prime-error term is definitionally the Haar defect plus the main
+local logarithmic contribution.
+-/
+structure RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource
+    (recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record)
+    (sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record)
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    (l : PrimeGeFive)
+    (η : Type y)
+    (localPrime : β -> Nat)
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    (localField : β -> Type x)
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [∀ place : β, T2Space (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    (αHaar : Type z)
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar)
+    (αLocal : Type z) (ηLocal : Type y)
+    (localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal)
+    (archIndex archSummand : β -> Type z)
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)] where
+  padicDefectMainValuationBallSource :
+    IUTStage1AdditiveHaarTheorem110PadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource
+      β estimate localPrime localField αHaar hullSystem
+      αLocal ηLocal localAnalyticHullSystem archIndex archSummand
+  arithmeticDegreeCalibrationSource :
+    IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeCalibrationSource
+      β estimate η γ localField αLocal ηLocal localAnalyticHullSystem
+      archIndex archSummand
+      padicDefectMainValuationBallSource.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+  distinguishedProcessionBound_le_arithmeticDegreePart :
+    ∀ place : β,
+      padicDefectMainValuationBallSource.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localKind place =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean ->
+        padicDefectMainValuationBallSource.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.distinguishedProcessionBound place <=
+          (let arithmeticSource :=
+            padicDefectMainValuationBallSource
+              |>.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+              |>.toThetaPilotArithmeticDivisorLocalEvaluationSource;
+          arithmeticSource.arithmeticDegreeCoefficient *
+            (arithmeticSource.localDifferentDegree place +
+              arithmeticSource.localConductorDegree place))
+  archimedeanProcessionBound_le_arithmeticDegreePart :
+    ∀ place : β,
+      padicDefectMainValuationBallSource.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localKind place =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean ->
+        padicDefectMainValuationBallSource.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.archimedeanProcessionBound place <=
+          (let arithmeticSource :=
+            padicDefectMainValuationBallSource
+              |>.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+              |>.toThetaPilotArithmeticDivisorLocalEvaluationSource;
+          arithmeticSource.arithmeticDegreeCoefficient *
+            (arithmeticSource.localDifferentDegree place +
+              arithmeticSource.localConductorDegree place))
+  controlledComponentSource :
+    let localArithmeticSource :=
+      IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.ofPadicUnitBallHaarIndex
+        padicDefectMainValuationBallSource.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        padicDefectMainValuationBallSource.iutIVArithmeticDefectSource.padicHaarDefectSource
+        arithmeticDegreeCalibrationSource
+        padicDefectMainValuationBallSource.localPrimeErrorContribution_eq_padicHaarDefect_main
+        distinguishedProcessionBound_le_arithmeticDegreePart
+        archimedeanProcessionBound_le_arithmeticDegreePart;
+    RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource
+      recordAdjustedSource sourceData estimate l η localPrime localField
+      αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+      archIndex archSummand localArithmeticSource
+
+namespace RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource
+
+set_option linter.style.longLine false in
+noncomputable def toPadicHaarControlledComponentSource
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {l : PrimeGeFive}
+    {η : Type y}
+    {localPrime : β -> Nat}
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    {localField : β -> Type x}
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [∀ place : β, T2Space (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : β -> Type z}
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)]
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :
+    RecordOb3Ob5ArithmeticDivisorBackedPadicHaarControlledComponentSource
+      recordAdjustedSource sourceData estimate l η localPrime localField
+      αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+      archIndex archSummand :=
+  { theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource :=
+      source.padicDefectMainValuationBallSource
+        |>.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource,
+    padicHaarDefectSource :=
+      source.padicDefectMainValuationBallSource.iutIVArithmeticDefectSource.padicHaarDefectSource,
+    arithmeticDegreeCalibrationSource :=
+      source.arithmeticDegreeCalibrationSource,
+    localPrimeErrorContribution_eq_padicHaarDefect_main :=
+      source.padicDefectMainValuationBallSource.localPrimeErrorContribution_eq_padicHaarDefect_main,
+    distinguishedProcessionBound_le_arithmeticDegreePart :=
+      source.distinguishedProcessionBound_le_arithmeticDegreePart,
+    archimedeanProcessionBound_le_arithmeticDegreePart :=
+      source.archimedeanProcessionBound_le_arithmeticDegreePart,
+    controlledComponentSource := by
+      simpa using source.controlledComponentSource }
+
+set_option linter.style.longLine false in
+theorem toPadicHaarControlledComponentSource_projectionAudit
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := β) (γ := γ) record}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {l : PrimeGeFive}
+    {η : Type y}
+    {localPrime : β -> Nat}
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    {localField : β -> Type x}
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [∀ place : β, T2Space (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : β -> Type z}
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)]
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :
+    let strictSource := source.toPadicHaarControlledComponentSource;
+    strictSource.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource =
+        source.padicDefectMainValuationBallSource.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource ∧
+      strictSource.padicHaarDefectSource =
+          source.padicDefectMainValuationBallSource.iutIVArithmeticDefectSource.padicHaarDefectSource ∧
+        strictSource.toArithmeticDegreeControlledLocalArithmeticSource.Endpoint ∧
+          strictSource.toPadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource.Endpoint := by
+  intro strictSource
+  exact
+    ⟨rfl, rfl,
+      strictSource.toArithmeticDegreeControlledLocalArithmeticSource.endpoint,
+      strictSource.toPadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource.endpoint⟩
+
+end RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource
+
+set_option linter.style.longLine false in
+/--
 Project the local Step~(v)/(vii) degree-identification formula source already
 carried by a Record-Ob3/Ob5 arithmetic-divisor component source.
 
