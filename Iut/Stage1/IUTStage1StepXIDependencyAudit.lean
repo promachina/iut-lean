@@ -497,6 +497,18 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_padicFiniteExtensionUnitBallFactor_structureSheaf_weight_anchor_tensorPower",
       role :=
         "Derived projection of the unit-ball Haar synchronization criterion to finite-extension-over-Q_p local-field data.  This lowers the Ob3/Ob4 determinant synchronization below generic norm-square fields to the p-adic finite-extension unit-ball normalization boundary." },
+    { name := "principal-product p-adic family-hull adjusted-sum projection",
+      status := .derived,
+      declarationName :=
+        "PrincipalProductPadicFiniteLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume_eq_projectedLocalizedAdjustedSum",
+      role :=
+        "Derived Remark 3.9.5 projection showing that the principal-product p-adic finite localized hull decomposition computes the family-hull log-volume as the finite sum of projected weighted adjusted local Step (xi) log-volumes." },
+    { name := "principal-product p-adic q-normalization from family hull",
+      status := .derived,
+      declarationName :=
+        "PrincipalProductPadicFiniteLocalizedHullVectorBundleDecompositionSource.thetaSigned_eq_projectedLocalizedAdjustedSum_mul_absLogQ_of_familyHullLogVolume",
+      role :=
+        "Derived q-normalized theta identity from the family-hull log-volume identity, replacing a direct adjusted-sum equality by the Theorem 3.11 family-hull comparison at the p-adic finite principal-product boundary." },
     { name := "p-adic defect/main split countermodel",
       status := .constructed,
       declarationName :=
@@ -529,7 +541,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 40 :=
+    canonicalStage1ResidualFrontier.length = 42 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -539,7 +551,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 35 :=
+      (fun entry => entry.status = .derived)).length = 37 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -3328,6 +3340,14 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteLocalizedLocalAnalyticResidualHaarSource
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductPadicFiniteLocalizedHullVectorBundleDecompositionSource
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductPadicFiniteLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume_eq_projectedLocalizedAdjustedSum
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductPadicFiniteLocalizedHullVectorBundleDecompositionSource.familyHullLogVolume_eq_projectedLocalizedAdjustedSum
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductPadicFiniteLocalizedHullVectorBundleDecompositionSource.thetaSigned_eq_projectedLocalizedAdjustedSum_mul_absLogQ_of_familyHullLogVolume
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductPadicFiniteLocalizedHullVectorBundleDecompositionSource.thetaSigned_eq_projectedLocalizedAdjustedSum_mul_absLogQ_of_familyHullLogVolume
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteLocalizedLocalAnalyticResidualHaarSource.toLocalizedLocalAnalyticResidualHaarSource
 #guard_msgs (drop info) in
