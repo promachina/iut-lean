@@ -500,6 +500,56 @@ theorem padicUnitBallWithoutNormalizedIndexToyCountermodel_not_residual_ge_one :
         padicUnitBallWithoutNormalizedIndexToyCountermodel.localMainLog :=
   padicUnitBallWithoutNormalizedIndexToyCountermodel.not_residual_ge_one
 
+/--
+One-place diagnostic for the valuation-ball p-adic defect/main lowering.
+
+The arithmetic-degree-controlled source gives the prime-error identity in the
+form `E_v = localIUTIVDefect_v + M_v`.  The constructor lowered in
+`AdditiveHaar` converts this to the p-adic split
+`E_v = delta_v + M_v` only by using the IUT~IV arithmetic-defect
+identification `localIUTIVDefect_v = delta_v`.  If that identification is
+weakened away, the defect/main identity can hold while the p-adic split fails.
+-/
+structure PadicDefectMainWithoutArithmeticDefectIdentificationToyCountermodel where
+  localPrimeError : Real
+  localIUTIVDefect : Real
+  localPadicHaarDefect : Real
+  localMainLog : Real
+  prime_eq_iutIVDefect_main :
+    localPrimeError = localIUTIVDefect + localMainLog
+  iutIVDefect_ne_padicHaarDefect :
+    localIUTIVDefect ≠ localPadicHaarDefect
+  not_prime_eq_padicHaarDefect_main :
+    ¬ localPrimeError = localPadicHaarDefect + localMainLog
+
+theorem PadicDefectMainWithoutArithmeticDefectIdentificationToyCountermodel.not_padic_defect_main_split
+    (toy : PadicDefectMainWithoutArithmeticDefectIdentificationToyCountermodel) :
+    ¬ toy.localPrimeError = toy.localPadicHaarDefect + toy.localMainLog :=
+  toy.not_prime_eq_padicHaarDefect_main
+
+/--
+Concrete countermodel: the prime error, IUT~IV arithmetic defect, and main term
+are all zero, while the p-adic Haar defect is one.  The
+`E_v = localIUTIVDefect_v + M_v` identity holds, but the p-adic split
+`E_v = delta_v + M_v` is false.
+-/
+def padicDefectMainWithoutArithmeticDefectIdentificationToyCountermodel :
+    PadicDefectMainWithoutArithmeticDefectIdentificationToyCountermodel :=
+  { localPrimeError := 0,
+    localIUTIVDefect := 0,
+    localPadicHaarDefect := 1,
+    localMainLog := 0,
+    prime_eq_iutIVDefect_main := by norm_num,
+    iutIVDefect_ne_padicHaarDefect := by norm_num,
+    not_prime_eq_padicHaarDefect_main := by norm_num }
+
+theorem padicDefectMainWithoutArithmeticDefectIdentificationToyCountermodel_not_padic_defect_main_split :
+    ¬ padicDefectMainWithoutArithmeticDefectIdentificationToyCountermodel.localPrimeError =
+      padicDefectMainWithoutArithmeticDefectIdentificationToyCountermodel.localPadicHaarDefect +
+        padicDefectMainWithoutArithmeticDefectIdentificationToyCountermodel.localMainLog :=
+  padicDefectMainWithoutArithmeticDefectIdentificationToyCountermodel
+    |>.not_padic_defect_main_split
+
 #guard_msgs (drop info) in
 #check LocalAnalyticCaseWithoutDistinguishedGapToyCountermodel.not_residual_ge_one
 #guard_msgs (drop info) in
@@ -514,6 +564,11 @@ theorem padicUnitBallWithoutNormalizedIndexToyCountermodel_not_residual_ge_one :
 #check PadicUnitBallWithoutNormalizedIndexToyCountermodel.not_residual_ge_one
 #guard_msgs (drop info) in
 #print axioms PadicUnitBallWithoutNormalizedIndexToyCountermodel.not_residual_ge_one
+
+#guard_msgs (drop info) in
+#check PadicDefectMainWithoutArithmeticDefectIdentificationToyCountermodel.not_padic_defect_main_split
+#guard_msgs (drop info) in
+#print axioms PadicDefectMainWithoutArithmeticDefectIdentificationToyCountermodel.not_padic_defect_main_split
 
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedCaseBoundedResidualSourcePrimitiveConstructorInternalPrincipalHDDSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
