@@ -400,10 +400,16 @@ def canonicalStage1ResidualFrontier :
       declarationName :=
         "ValuationBallProjectionWithoutPreservationToyCountermodel.not_projection_preservation",
       role :=
-        "Constructed weakened-boundary diagnostic showing that a reconstructed p-adic-defect/main valuation-ball shell payload may differ from the original valuation-ball shell payload unless projection preservation is supplied or proved." } ]
+        "Constructed weakened-boundary diagnostic showing that a reconstructed p-adic-defect/main valuation-ball shell payload may differ from the original valuation-ball shell payload unless projection preservation is supplied or proved." },
+    { name := "weighted determinant shadow synchronization countermodel",
+      status := .constructed,
+      declarationName :=
+        "WeightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel.not_record_ob3ob4_synchronized",
+      role :=
+        "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 19 :=
+    canonicalStage1ResidualFrontier.length = 20 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -423,7 +429,7 @@ theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
 
 theorem canonicalStage1ResidualFrontier_constructed_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .constructed)).length = 4 :=
+      (fun entry => entry.status = .constructed)).length = 5 :=
   rfl
 
 /--
@@ -960,6 +966,58 @@ theorem valuationBallProjectionWithoutPreservationToyCountermodel_not_projection
       valuationBallProjectionWithoutPreservationToyCountermodel.originalShellPayload :=
   valuationBallProjectionWithoutPreservationToyCountermodel.not_projection_preservation
 
+/--
+Toy diagnostic for the Record-Ob3/Ob4 weighted-determinant shadow.
+
+The Step (xi) valuation-cover route may know that the displayed weighted
+determinant agrees with the localized Step (xi) determinant and that the
+finite-sum scale agrees.  Those shadows do not determine the full Ob3/Ob4
+source: the distinguished anchor or localization payload can still differ.
+Thus the full `recordOb3Ob4_eq_stepXI` field is not replaceable by equality
+of weighted determinant shadows.
+-/
+structure WeightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel where
+  recordAnchor : Nat
+  stepXIAnchor : Nat
+  weightedDeterminantShadow : Real
+  stepXIWeightedDeterminantShadow : Real
+  recordAdjustedSummand : Real
+  stepXIFiniteSum : Real
+  weighted_shadow_eq :
+    weightedDeterminantShadow = stepXIWeightedDeterminantShadow
+  finite_sum_eq :
+    recordAdjustedSummand = stepXIFiniteSum
+  anchor_ne : recordAnchor ≠ stepXIAnchor
+
+theorem WeightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel.not_record_ob3ob4_synchronized
+    (toy :
+      WeightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel) :
+    ¬ toy.recordAnchor = toy.stepXIAnchor :=
+  toy.anchor_ne
+
+/--
+Concrete Ob3/Ob4 shadow countermodel: all determinant and finite-sum numerical
+shadows are \(0\), but the record anchor is \(0\) and the Step (xi) anchor is
+\(1\).
+-/
+def weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel :
+    WeightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel :=
+  { recordAnchor := 0,
+    stepXIAnchor := 1,
+    weightedDeterminantShadow := 0,
+    stepXIWeightedDeterminantShadow := 0,
+    recordAdjustedSummand := 0,
+    stepXIFiniteSum := 0,
+    weighted_shadow_eq := rfl,
+    finite_sum_eq := rfl,
+    anchor_ne := by norm_num }
+
+theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not_record_ob3ob4_synchronized :
+    ¬ weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel.recordAnchor =
+      weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel.stepXIAnchor :=
+  weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel
+    |>.not_record_ob3ob4_synchronized
+
 #guard_msgs (drop info) in
 #check LocalAnalyticCaseWithoutDistinguishedGapToyCountermodel.not_residual_ge_one
 #guard_msgs (drop info) in
@@ -995,6 +1053,10 @@ theorem valuationBallProjectionWithoutPreservationToyCountermodel_not_projection
 #check ValuationBallProjectionWithoutPreservationToyCountermodel.not_projection_preservation
 #guard_msgs (drop info) in
 #print axioms ValuationBallProjectionWithoutPreservationToyCountermodel.not_projection_preservation
+#guard_msgs (drop info) in
+#check WeightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel.not_record_ob3ob4_synchronized
+#guard_msgs (drop info) in
+#print axioms WeightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel.not_record_ob3ob4_synchronized
 
 #guard_msgs (drop info) in
 #check Experiments.IUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource.toCoreLocalArithmeticDegreeResidualSource
