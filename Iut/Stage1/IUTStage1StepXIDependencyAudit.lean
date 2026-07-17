@@ -238,7 +238,7 @@ def canonicalStage1RemainingAssumptions :
       consumerDeclaration :=
         "IUTStage1IUTIVLocalArithmeticDegreeResidualSource",
       note :=
-        "The canonical route no longer requires the stronger case-bounded residual source.  Case-bounded, local-analytic case, processional arithmetic-gap, and p-adic Haar routes are constructors into this residual package.  The p-adic unit-ball Step XI synchronization route now projects directly to this package through preferredPublicIUTStage1IUTIVLocalArithmeticDegreePadicUnitBallStepXISynchronizationSourceToLocalArithmeticDegreeResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit.  The synchronization itself has a formula-matching constructor from StepXI = a(D+C) and prime-error = p-adic index + main; the AdditiveHaarBridge now projects the additive-Haar, p-adic prime-error, arithmetic-degree calibrated, formula-gap matched, arithmetic-divisor-backed local-degree, constructed Theorem 3.11 local-term, and valuation-ball arithmetic-degree formula-matching tower into that canonical constructor.  The Step XI arithmetic-degree equality is therefore audited as a consequence of determinant-weight and adjusted raw-log-volume calibration, and the local-degree branch is tracked back to Theorem 1.10 arithmetic divisors after the constructed multiradial/local-global source is present.  Deriving those calibration inputs and the prime-error split from the full IUT IV local-estimate construction remains open." } ]
+        "The canonical route no longer requires the stronger case-bounded residual source.  Case-bounded, local-analytic case, processional arithmetic-gap, and p-adic Haar routes are constructors into this residual package.  The p-adic unit-ball Step XI synchronization route now projects directly to this package through preferredPublicIUTStage1IUTIVLocalArithmeticDegreePadicUnitBallStepXISynchronizationSourceToLocalArithmeticDegreeResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit.  The synchronization itself has a formula-matching constructor from StepXI = a(D+C) and prime-error = p-adic index + main; the AdditiveHaarBridge now projects the additive-Haar, p-adic prime-error, arithmetic-degree calibrated, formula-gap matched, arithmetic-divisor-backed local-degree, constructed Theorem 3.11 local-term, and valuation-ball arithmetic-degree formula-matching tower into that canonical constructor.  The Step XI arithmetic-degree equality is therefore audited as a consequence of determinant-weight and adjusted raw-log-volume calibration.  The prime-error split can now be constructed by the additive-Haar local analytic arithmetic-divisor source whose local prime-error term is definitionally the p-adic Haar defect plus the main-log contribution; the remaining IUT IV obligation is deriving that source's finite sums, nonnegativity, formula-gap inputs, and arithmetic-divisor calibration from the full local-estimate construction." } ]
 
 /-- Number of manifest entries in the canonical Stage 1 remaining boundary. -/
 def canonicalStage1RemainingAssumptions_count : Nat :=
@@ -4773,6 +4773,25 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallCalibrationLocalArithmeticPointwisePadicUnitBallValuationBallLocalAnalyticPadicNormalizedProcessionalCaseIUTIVArithmeticDivisorLocalizedStepXIConstructedHDDDataGoalCompletionAuditAlias
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallCalibrationLocalArithmeticPointwisePadicUnitBallValuationBallLocalAnalyticPadicNormalizedProcessionalCaseIUTIVArithmeticDivisorLocalizedStepXIConstructedHDDDataGoalCompletionAuditAlias
+
+#guard_msgs (drop info) in
+#check Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainLocalAnalyticArithmeticDivisorSource
+#guard_msgs (drop info) in
+#check Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainLocalAnalyticArithmeticDivisorSource.localPrimeErrorContribution
+#guard_msgs (drop info) in
+#check Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainLocalAnalyticArithmeticDivisorSource.localPrimeErrorContribution_eq_padicHaarDefect_main
+#guard_msgs (drop info) in
+#print axioms Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainLocalAnalyticArithmeticDivisorSource.localPrimeErrorContribution_eq_padicHaarDefect_main
+#guard_msgs (drop info) in
+#check Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainLocalAnalyticArithmeticDivisorSource.primeErrorSplitAudit
+#guard_msgs (drop info) in
+#print axioms Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainLocalAnalyticArithmeticDivisorSource.primeErrorSplitAudit
+#guard_msgs (drop info) in
+#check Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainLocalAnalyticArithmeticDivisorSource.toPrimeErrorPadicDefectMainSource
+#guard_msgs (drop info) in
+#check Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainLocalAnalyticArithmeticDivisorSource.primeErrorProjectionAudit
+#guard_msgs (drop info) in
+#print axioms Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainLocalAnalyticArithmeticDivisorSource.primeErrorProjectionAudit
 
 end IUTStage1StepXIDependencyAudit
 end Stage1

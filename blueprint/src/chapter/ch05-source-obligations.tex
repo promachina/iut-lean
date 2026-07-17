@@ -4158,9 +4158,13 @@
   \lean{Iut.Stage1.Experiments.IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.toCorePadicUnitBallArithmeticFormulaMatchingSource}
   now feeds this canonical constructor from the valuation-ball formula-gap
   matched arithmetic-degree/p-adic source: the Step~(xi) equality is derived
-  from localized determinant weight/raw-log-volume calibration, the
-  prime-error equality is routed through the p-adic Haar-index defect source,
-  and the formula-gap valuation-ball provenance is preserved.  The matched
+  from localized determinant weight/raw-log-volume calibration.  The
+  prime-error equality is no longer only a raw field at this layer:
+  \lean{Iut.Stage1.Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainLocalAnalyticArithmeticDivisorSource}
+  builds the local analytic arithmetic-divisor source with
+  \(E_v\) definitionally equal to the p-adic Haar defect plus the main-log
+  contribution, and then projects to the older p-adic defect/main source.
+  The formula-gap valuation-ball provenance is preserved.  The matched
   local-degree arithmetic-divisor-backed source also projects to the same
   canonical constructor through
   \lean{Iut.Stage1.Experiments.IUTStage1AdditiveHaarTheorem110StepXIMatchedLocalDegreeArithmeticDivisorBackedComponentSource.toCorePadicUnitBallArithmeticFormulaMatchingSource},
@@ -4171,7 +4175,8 @@
   so the audit can now pass through the multiradial possible-image,
   q-pilot-alignment, determinant, and local-global \(C_\Theta\) source layer
   before projecting to the p-adic formula source.  The remaining work is
-  therefore to derive those calibration and prime-error inputs from the full
+  therefore to derive the finite sums, nonnegativity, formula-gap inputs, and
+  arithmetic-divisor calibration of this constructed source from the full
   IUT~IV local-estimate construction, not to assume the synchronization record
   directly.
   The checked residual calculation is explicit:

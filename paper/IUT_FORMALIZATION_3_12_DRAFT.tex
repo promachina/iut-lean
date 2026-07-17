@@ -1983,11 +1983,13 @@ lowered to the formula matching equalities
 formula-gap matched valuation-ball arithmetic-degree/p-adic source now projects
 those source-backed formula pieces to the canonical Step~(xi) constructor: the
 Step~(xi) equality comes from localized determinant weight and raw-log-volume
-calibration, the prime-error equality is routed through the p-adic Haar-index
-defect source, and the formula-gap provenance is preserved.  Thus the remaining
-trust boundary is the derivation of those calibration and prime-error inputs
-from the full IUT~IV local estimate construction, not the Haar-defect lower
-bound or an independent synchronization record.
+calibration.  The prime-error split is now lowered further: a local analytic
+arithmetic-divisor source defines \(E_v\) as the p-adic Haar defect plus the
+main-log contribution and then projects to the older p-adic defect/main source.
+Thus the remaining trust boundary is the derivation of that constructed
+source's finite sums, nonnegativity, formula-gap inputs, and arithmetic-divisor
+calibration from the full IUT~IV local estimate construction, not the
+Haar-defect lower bound or an independent synchronization record.
 The same case split has now been lifted to the same-index signed boundary by
 \(\mathrm{ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedCaseBoundedResidualSource}\).
 It keeps the determinant and theta-equality fields of the pointwise same-index
