@@ -217,7 +217,7 @@ def canonicalStage1RemainingAssumptions :
       consumerDeclaration :=
         "ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource",
       note :=
-        "The canonical route is now the q-normalized local-arithmetic-degree constituent endpoint.  The summand, anchor, and positive tensor-power identifications remain source obligations; Lean reconstructs the scale-synchronized determinant source from them." },
+        "The canonical route is now the q-normalized local-arithmetic-degree constituent endpoint.  On the same-gamma adjusted-determinant boundary Lean derives the summand, anchor, and positive tensor-power identifications from full Ob3/Ob4 adjusted-determinant synchronization via ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEq.  The heterogeneous projected-weighted route still exposes these three projected fields, and the remaining paper source obligation is deriving the full adjusted-determinant synchronization from Remark 3.9.5 source data." },
     { name := "thetaSigned_eq_projectedPrincipalProductLocalizedAdjustedSum_mul_absLogQ",
       status := .sourceObligation,
       paperSource := "IUT III, Corollary 3.12 theta/log-volume comparison",
@@ -401,6 +401,12 @@ def canonicalStage1ResidualFrontier :
         "ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.toProjectedWeightedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource",
       role :=
         "Derived projection from full Remark 3.9.5 Ob3/Ob4 adjusted-determinant synchronization to the projected weighted determinant summand, anchor, and tensor-power fields consumed by the q-normalized local-analytic route.  At the same-index adjusted-determinant boundary, these three weighted shadow equalities are consequences of the full adjusted-determinant equality rather than separate source fields." },
+    { name := "same-gamma adjusted-determinant to weighted local-arithmetic constructor",
+      status := .derived,
+      declarationName :=
+        "ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEq",
+      role :=
+        "Derived concrete same-gamma constructor from full Remark 3.9.5 Ob3/Ob4 adjusted-determinant synchronization to the same-index q-normalized local arithmetic-degree source.  The proof projects the full adjusted-determinant equality to the weighted summand, anchor, and tensor-power fields consumed by the canonical same-index route, while the distinct-gamma projected weighted route remains the heterogeneous boundary." },
     { name := "p-adic defect/main split countermodel",
       status := .constructed,
       declarationName :=
@@ -433,7 +439,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 24 :=
+    canonicalStage1ResidualFrontier.length = 25 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -443,7 +449,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 19 :=
+      (fun entry => entry.status = .derived)).length = 20 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -1093,6 +1099,10 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.projectedWeighted_endpoint
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.projectedWeighted_endpoint
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEq
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEq
 #guard_msgs (drop info) in
 #check WeightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel.not_record_ob3ob4_synchronized
 #guard_msgs (drop info) in
