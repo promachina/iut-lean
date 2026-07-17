@@ -605,6 +605,82 @@ theorem padicHaarWithoutComponentFormulaSynchronizationToyCountermodel_not_compo
   padicHaarWithoutComponentFormulaSynchronizationToyCountermodel
     |>.not_component_formula_eq_padicHaar
 
+/--
+One-place diagnostic for the lower p-adic Haar-index component route.
+
+The new component projection constructs the arithmetic-degree-controlled local
+arithmetic source from Theorem~1.10 local-analytic data, p-adic Haar-index
+defect data, arithmetic-degree calibration, and Step~(v)/(vii) comparison
+bounds.  Those laws still do not identify the detached Record-Ob3/Ob5
+component formula with the reconstructed p-adic Haar formula.  This toy model
+keeps the lower p-adic and arithmetic-degree equations true while making the
+missing component synchronization false.
+-/
+structure PadicHaarIndexLoweringWithoutComponentFormulaMatchingToyCountermodel where
+  componentFormula : Real
+  reconstructedPadicFormula : Real
+  localPrimeError : Real
+  localPadicHaarDefect : Real
+  localMainLog : Real
+  arithmeticDegreeCoefficient : Real
+  localDifferentDegree : Real
+  localConductorDegree : Real
+  distinguishedProcessionBound : Real
+  archimedeanProcessionBound : Real
+  localPrimeError_eq_padicHaarDefect_main :
+    localPrimeError = localPadicHaarDefect + localMainLog
+  reconstructedFormula_eq_arithmeticDegree_primeError :
+    reconstructedPadicFormula =
+      arithmeticDegreeCoefficient * (localDifferentDegree + localConductorDegree) +
+        localPrimeError
+  distinguishedProcessionBound_le_arithmeticDegreePart :
+    distinguishedProcessionBound <=
+      arithmeticDegreeCoefficient * (localDifferentDegree + localConductorDegree)
+  archimedeanProcessionBound_le_arithmeticDegreePart :
+    archimedeanProcessionBound <=
+      arithmeticDegreeCoefficient * (localDifferentDegree + localConductorDegree)
+  componentFormula_eq_zero : componentFormula = 0
+  reconstructedPadicFormula_eq_one : reconstructedPadicFormula = 1
+
+theorem PadicHaarIndexLoweringWithoutComponentFormulaMatchingToyCountermodel.not_component_formula_eq_reconstructed_padicHaar
+    (toy : PadicHaarIndexLoweringWithoutComponentFormulaMatchingToyCountermodel) :
+    ¬ toy.componentFormula = toy.reconstructedPadicFormula := by
+  intro hsync
+  rw [toy.componentFormula_eq_zero, toy.reconstructedPadicFormula_eq_one] at hsync
+  norm_num at hsync
+
+/--
+Concrete lower-boundary countermodel: the lower p-adic Haar-index laws produce
+the reconstructed formula \(1 = 0 \cdot (0+0) + (1+0)\), and the Step~(v)/(vii)
+comparison bounds are both zero.  The detached component formula is \(0\), so
+the missing Record-Ob3/Ob5 component-to-reconstructed-padic formula
+synchronization is false.
+-/
+def padicHaarIndexLoweringWithoutComponentFormulaMatchingToyCountermodel :
+    PadicHaarIndexLoweringWithoutComponentFormulaMatchingToyCountermodel :=
+  { componentFormula := 0,
+    reconstructedPadicFormula := 1,
+    localPrimeError := 1,
+    localPadicHaarDefect := 1,
+    localMainLog := 0,
+    arithmeticDegreeCoefficient := 0,
+    localDifferentDegree := 0,
+    localConductorDegree := 0,
+    distinguishedProcessionBound := 0,
+    archimedeanProcessionBound := 0,
+    localPrimeError_eq_padicHaarDefect_main := by norm_num,
+    reconstructedFormula_eq_arithmeticDegree_primeError := by norm_num,
+    distinguishedProcessionBound_le_arithmeticDegreePart := by norm_num,
+    archimedeanProcessionBound_le_arithmeticDegreePart := by norm_num,
+    componentFormula_eq_zero := by norm_num,
+    reconstructedPadicFormula_eq_one := by norm_num }
+
+theorem padicHaarIndexLoweringWithoutComponentFormulaMatchingToyCountermodel_not_component_formula_eq_reconstructed_padicHaar :
+    ¬ padicHaarIndexLoweringWithoutComponentFormulaMatchingToyCountermodel.componentFormula =
+      padicHaarIndexLoweringWithoutComponentFormulaMatchingToyCountermodel.reconstructedPadicFormula :=
+  padicHaarIndexLoweringWithoutComponentFormulaMatchingToyCountermodel
+    |>.not_component_formula_eq_reconstructed_padicHaar
+
 #guard_msgs (drop info) in
 #check LocalAnalyticCaseWithoutDistinguishedGapToyCountermodel.not_residual_ge_one
 #guard_msgs (drop info) in
@@ -628,6 +704,10 @@ theorem padicHaarWithoutComponentFormulaSynchronizationToyCountermodel_not_compo
 #check PadicHaarWithoutComponentFormulaSynchronizationToyCountermodel.not_component_formula_eq_padicHaar
 #guard_msgs (drop info) in
 #print axioms PadicHaarWithoutComponentFormulaSynchronizationToyCountermodel.not_component_formula_eq_padicHaar
+#guard_msgs (drop info) in
+#check PadicHaarIndexLoweringWithoutComponentFormulaMatchingToyCountermodel.not_component_formula_eq_reconstructed_padicHaar
+#guard_msgs (drop info) in
+#print axioms PadicHaarIndexLoweringWithoutComponentFormulaMatchingToyCountermodel.not_component_formula_eq_reconstructed_padicHaar
 
 #guard_msgs (drop info) in
 #check Experiments.IUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource.toCoreLocalArithmeticDegreeResidualSource
