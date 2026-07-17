@@ -977,6 +977,57 @@ theorem RecordOb3Ob5ArithmeticDivisorBackedComponentSource.toCoreLocalArithmetic
     valuationBallFormulaGapMatchedArithmeticDegreePadicFormulaMatchingSource
     componentFormulaMatching_eq_valuationBall).endpoint
 
+set_option linter.style.longLine false in
+/--
+Project a Record-Ob3/Ob5 component source to the canonical residual package
+from the lower arithmetic-degree-controlled local arithmetic source.
+
+Compared with `toCoreLocalArithmeticDegreeResidualSource`, this constructor no
+longer asks for the valuation-ball formula-gap source as a separate argument:
+it is reconstructed internally from the arithmetic-degree-controlled local
+arithmetic source before the valuation-ball Record-Ob3/Ob5 residual projection
+is applied.
+-/
+noncomputable def RecordOb3Ob5ArithmeticDivisorBackedComponentSource.toCoreLocalArithmeticDegreeResidualSourceOfArithmeticDegreeControlledLocalArithmeticSource
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand)
+    (localArithmeticSource :
+      IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (arithmeticDivisorBackedComponent_eq_controlledFormulaMatching :
+      source.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource =
+        (IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.ofArithmeticDegreeControlledLocalArithmeticSource
+          localArithmeticSource).toAdditiveHaarFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource) :=
+  (source.toRecordOb3Ob5ArithmeticDivisorBackedValuationBallSourceOfArithmeticDegreeControlledLocalArithmeticSource
+      localArithmeticSource
+      arithmeticDivisorBackedComponent_eq_controlledFormulaMatching)
+    |>.toCoreLocalArithmeticDegreeResidualSource
+
+theorem RecordOb3Ob5ArithmeticDivisorBackedComponentSource.toCoreLocalArithmeticDegreeResidualSourceOfArithmeticDegreeControlledLocalArithmeticSource_endpoint
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand)
+    (localArithmeticSource :
+      IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (arithmeticDivisorBackedComponent_eq_controlledFormulaMatching :
+      source.matchedLocalDegreeArithmeticDivisorBackedComponentSource.formulaGapMatchedArithmeticDegreePadicFormulaMatchingSource =
+        (IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.ofArithmeticDegreeControlledLocalArithmeticSource
+          localArithmeticSource).toAdditiveHaarFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource) :
+    (source.toCoreLocalArithmeticDegreeResidualSourceOfArithmeticDegreeControlledLocalArithmeticSource
+      localArithmeticSource
+      arithmeticDivisorBackedComponent_eq_controlledFormulaMatching).Endpoint :=
+  (source.toCoreLocalArithmeticDegreeResidualSourceOfArithmeticDegreeControlledLocalArithmeticSource
+    localArithmeticSource
+    arithmeticDivisorBackedComponent_eq_controlledFormulaMatching).endpoint
+
 end ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource
 
 end Experiments
