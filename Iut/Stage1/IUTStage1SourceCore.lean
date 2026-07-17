@@ -9094,6 +9094,75 @@ theorem toAdjustedDeterminantSource_eq_of_pointwise_localization_anchor_tensorPo
     anchor_eq
     positiveTensorPower_eq
 
+set_option linter.style.longLine false in
+theorem adjustedLocalizationFamily_eq_of_pointwise_bundle_structureSheaf_adjustedRaw_weight
+    (source target :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ)
+    (bundle_eq :
+      ∀ index : β,
+        (source.localization index).bundle =
+          (target.localization index).bundle)
+    (structureSheafLogVolume_eq :
+      ∀ index : β,
+        (source.localization index).structureSheafLogVolume =
+          (target.localization index).structureSheafLogVolume)
+    (adjustedRawLogVolume_eq :
+      ∀ index : β,
+        (source.localization index).adjustedRawLogVolume =
+          (target.localization index).adjustedRawLogVolume)
+    (weight_eq :
+      ∀ index : β,
+        (source.localization index).weight =
+          (target.localization index).weight) :
+    source.toAdjustedDeterminantSource.localization =
+      target.toAdjustedDeterminantSource.localization := by
+  exact adjustedLocalizationFamily_eq_of_pointwise_localization_eq
+    source target
+    (fun index =>
+      IUTStage1StructureSheafAdjustedLocalizedVectorBundleSource.ext_of_bundle_structureSheaf_adjustedRaw_weight
+        (source.localization index)
+        (target.localization index)
+        (bundle_eq index)
+        (structureSheafLogVolume_eq index)
+        (adjustedRawLogVolume_eq index)
+        (weight_eq index))
+
+set_option linter.style.longLine false in
+theorem toAdjustedDeterminantSource_eq_of_pointwise_bundle_structureSheaf_adjustedRaw_weight_anchor_tensorPower
+    (source target :
+      IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
+        η β γ)
+    (bundle_eq :
+      ∀ index : β,
+        (source.localization index).bundle =
+          (target.localization index).bundle)
+    (structureSheafLogVolume_eq :
+      ∀ index : β,
+        (source.localization index).structureSheafLogVolume =
+          (target.localization index).structureSheafLogVolume)
+    (adjustedRawLogVolume_eq :
+      ∀ index : β,
+        (source.localization index).adjustedRawLogVolume =
+          (target.localization index).adjustedRawLogVolume)
+    (weight_eq :
+      ∀ index : β,
+        (source.localization index).weight =
+          (target.localization index).weight)
+    (anchor_eq : source.anchor = target.anchor)
+    (positiveTensorPower_eq :
+      source.positiveTensorPower = target.positiveTensorPower) :
+    source.toAdjustedDeterminantSource =
+      target.toAdjustedDeterminantSource :=
+  IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.ext_of_localization_anchor_tensorPower
+    source.toAdjustedDeterminantSource
+    target.toAdjustedDeterminantSource
+    (adjustedLocalizationFamily_eq_of_pointwise_bundle_structureSheaf_adjustedRaw_weight
+      source target bundle_eq structureSheafLogVolume_eq
+      adjustedRawLogVolume_eq weight_eq)
+    anchor_eq
+    positiveTensorPower_eq
+
 end IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource
 
 set_option linter.style.longLine false in

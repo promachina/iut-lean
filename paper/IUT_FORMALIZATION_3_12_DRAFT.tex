@@ -1671,7 +1671,11 @@ localization projected from a localized vector-bundle entry is determined by
 the underlying localized bundle, the structure-sheaf log-volume, the raw
 adjusted log-volume, and the positive determinant weight, and it promotes
 pointwise localized vector-bundle equality plus anchor and tensor-power
-equality to equality of the adjusted-determinant sources.  The same
+equality to equality of the adjusted-determinant sources.  This is lowered once
+more by a component-field criterion: per-place equality of the underlying
+localized bundle, structure-sheaf log-volume, raw adjusted log-volume, and
+determinant weight, together with anchor and tensor-power equality, suffices to
+identify the adjusted-determinant sources.  The same
 full adjusted-determinant source now projects directly to the
 projected-weighted local-analytic route; in the same-index case, the summand,
 anchor, and positive tensor-power fields are derived from the full Ob3/Ob4
@@ -2248,6 +2252,11 @@ structure-sheaf term, raw adjusted log-volume, and weight, while
 \texttt{\detokenize{IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_localization_anchor_tensorPower}}
 promotes pointwise localized vector-bundle equality, anchor equality, and
 positive tensor-power equality to equality of adjusted-determinant sources.
+The lower theorem
+\texttt{\detokenize{IUTStage1Remark395Ob3Ob4LocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_bundle_structureSheaf_adjustedRaw_weight_anchor_tensorPower}}
+replaces the localized-entry equality by equality of the concrete Ob3-1
+component fields: localized bundles, structure-sheaf log-volumes, raw adjusted
+log-volumes, and weights, plus anchor and positive tensor power.
 The same lowered source now carries the relative nonvacuity audit and the
 public-boundary inventory audit directly: Lean constructs the old
 local-analytic source internally before proving that the q-normalized route,
