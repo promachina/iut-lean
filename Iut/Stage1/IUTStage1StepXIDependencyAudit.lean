@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: IUT Lean formalization contributors
 -/
 import Iut.Stage1.IUTStage1SourceCore
+import Iut.Stage1.IUTStage1IUTIVAlgebra
 import Iut.Stage1.IUTStage1StepXI.AdditiveHaarBridge
 
 /-!
@@ -348,6 +349,12 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.nondistinguished_zero_le_gap",
       role :=
         "Derived nondistinguished finite-place Step (vi) contribution before the additive-Haar projection: the valuation-ball Proposition 1.4 log-shell source directly proves that the zero local contribution is bounded by the valuation-ball arithmetic-minus-main gap." },
+    { name := "valuation-ball Theorem 1.10 local source ingredient audit",
+      status := .derived,
+      declarationName :=
+        "IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.sourceIngredientAudit",
+      role :=
+        "Derived expansion of the valuation-ball local analytic arithmetic-divisor source into its paper-facing ingredients: arithmetic divisors, valuation-ball additive-Haar Proposition 1.4 constructions, additive/local analytic/proposition/formula projections, theta-pilot local evaluation, Step (vi) zero contribution, and Step (v)/(vii) formula-to-gap inequalities.  The top-level IUT IV local-estimate obligation is not closed, but this audit fixes the exact source ingredients consumed by that boundary." },
     { name := "local-degree formula arithmetic-degree controlled source",
       status := .derived,
       declarationName :=
@@ -680,7 +687,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 64 :=
+    canonicalStage1ResidualFrontier.length = 65 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -690,7 +697,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 59 :=
+      (fun entry => entry.status = .derived)).length = 60 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6113,6 +6120,12 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check Experiments.IUTStage1FinitePlaceResidueSubmodulePadicUnitBallHaarIndexDefectSource.endpoint
 #guard_msgs (drop info) in
 #print axioms Experiments.IUTStage1FinitePlaceResidueSubmodulePadicUnitBallHaarIndexDefectSource.endpoint
+#guard_msgs (drop info) in
+#check IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.SourceIngredientAudit
+#guard_msgs (drop info) in
+#check IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.sourceIngredientAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.sourceIngredientAudit
 #guard_msgs (drop info) in
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toCorePadicUnitBallArithmeticFormulaMatchingSource
 #guard_msgs (drop info) in

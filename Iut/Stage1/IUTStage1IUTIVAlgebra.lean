@@ -4373,6 +4373,119 @@ theorem endpoint
     source.toFormulaArithmeticDivisorEvaluationSource.endpoint,
     source.toThetaPilotArithmeticDivisorLocalEvaluationSource.endpoint⟩
 
+set_option linter.style.longLine false in
+/--
+Source-ingredient audit for the valuation-ball Theorem 1.10 local analytic
+boundary.
+
+This expands the single valuation-ball local analytic source into the exact
+paper-facing ingredients used downstream: arithmetic divisors, valuation-ball
+additive-Haar Proposition 1.4 constructions, additive/local analytic
+projections, Proposition/formula projections, the theta-pilot local evaluation,
+the Step (vi) zero contribution, and the Step (v)/(vii) formula-to-gap
+inequalities.
+-/
+structure SourceIngredientAudit
+    (source :
+      IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand) : Prop where
+  arithmeticDivisorEndpoint :
+    source.arithmeticDivisorSource.Endpoint
+  valuationBallConstructionEndpoint :
+    source.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.Endpoint
+  additiveHaarProjectionEndpoint :
+    IUTStage1IUTIVTheorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.Endpoint
+      source.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+  localAnalyticProjectionEndpoint :
+    IUTStage1IUTIVTheorem110LocalAnalyticArithmeticDivisorEvaluationSource.Endpoint
+      source.toLocalAnalyticArithmeticDivisorEvaluationSource
+  propositionProjectionEndpoint :
+    IUTStage1IUTIVTheorem110PropositionArithmeticDivisorEvaluationSource.Endpoint
+      source.toPropositionArithmeticDivisorEvaluationSource
+  formulaProjectionEndpoint :
+    IUTStage1IUTIVTheorem110FormulaArithmeticDivisorEvaluationSource.Endpoint
+      source.toFormulaArithmeticDivisorEvaluationSource
+  thetaPilotLocalEvaluationEndpoint :
+    IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource.Endpoint
+      source.toThetaPilotArithmeticDivisorLocalEvaluationSource
+  stepV_distinguished_formula_le_gap :
+    ∀ placeId : place,
+      source.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localKind
+          placeId =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean ->
+        source.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.distinguishedProcessionBound
+            placeId <=
+          source.arithmeticDivisorSource.localArithmeticUpperContribution
+              source.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localPrimeErrorContribution
+                placeId -
+            source.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localMainLogContribution
+              placeId
+  stepVI_nondistinguished_zero :
+    ∀ placeId : place,
+      source.toFormulaArithmeticDivisorEvaluationSource.localCaseFormulaSource.localKind
+          placeId =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.nondistinguishedNonarchimedean ->
+        source.toFormulaArithmeticDivisorEvaluationSource.localCaseFormulaSource.localProcessionUpperBound
+          placeId = 0
+  stepVII_archimedean_formula_le_gap :
+    ∀ placeId : place,
+      source.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localKind
+          placeId =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean ->
+        source.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.archimedeanProcessionBound
+            placeId <=
+          source.arithmeticDivisorSource.localArithmeticUpperContribution
+              source.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localPrimeErrorContribution
+                placeId -
+            source.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localMainLogContribution
+              placeId
+  projectedLocalProcessionUpperBound_le_gap :
+    ∀ placeId : place,
+      source.toFormulaArithmeticDivisorEvaluationSource.localCaseFormulaSource.localProcessionUpperBound
+          placeId <=
+        source.arithmeticDivisorSource.localArithmeticUpperContribution
+            source.toFormulaArithmeticDivisorEvaluationSource.localCaseFormulaSource.localPrimeErrorContribution
+              placeId -
+          source.toFormulaArithmeticDivisorEvaluationSource.localCaseFormulaSource.localMainLogContribution
+            placeId
+  endpoint : Endpoint source
+
+set_option linter.style.longLine false in
+theorem sourceIngredientAudit
+    (source :
+      IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand) :
+    SourceIngredientAudit source :=
+  { arithmeticDivisorEndpoint :=
+      source.arithmeticDivisorSource.endpoint,
+    valuationBallConstructionEndpoint :=
+      source.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.endpoint,
+    additiveHaarProjectionEndpoint :=
+      source.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.endpoint,
+    localAnalyticProjectionEndpoint :=
+      source.toLocalAnalyticArithmeticDivisorEvaluationSource.endpoint,
+    propositionProjectionEndpoint :=
+      source.toPropositionArithmeticDivisorEvaluationSource.endpoint,
+    formulaProjectionEndpoint :=
+      source.toFormulaArithmeticDivisorEvaluationSource.endpoint,
+    thetaPilotLocalEvaluationEndpoint :=
+      source.toThetaPilotArithmeticDivisorLocalEvaluationSource.endpoint,
+    stepV_distinguished_formula_le_gap :=
+      source.distinguished_formula_le_gap,
+    stepVI_nondistinguished_zero := by
+      intro placeId hkind
+      exact
+        source.toFormulaArithmeticDivisorEvaluationSource.localCaseFormulaSource
+          |>.stepVI_nondistinguished_zero placeId hkind,
+    stepVII_archimedean_formula_le_gap :=
+      source.archimedean_formula_le_gap,
+    projectedLocalProcessionUpperBound_le_gap := by
+      intro placeId
+      exact
+        source.toFormulaArithmeticDivisorEvaluationSource.localCaseFormulaSource
+          |>.localProcessionUpperBound_le_gap placeId,
+    endpoint := source.endpoint }
+
 end IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
 set_option linter.style.longLine true
 
