@@ -1006,6 +1006,18 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedCaseDefinedProcessionalArithmeticGapSource.toLocalArithmeticDegreeLowerWeightResidualSource",
       role :=
         "Derived lower-weight residual projection below the ordinary normalized arithmetic-gap source.  Lean first reconstructs the p-adic-normalized case source from the case-defined value, then obtains the local arithmetic-degree residual package from the p-adic Haar residual source." },
+    { name := "case-defined p-adic-normalized arithmetic-gap source from case-defined estimate",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedCaseDefinedProcessionalArithmeticGapSource.ofPadicNormalizedCaseDefinedProcessionalEstimateSource",
+      role :=
+        "Derived constructor from the stronger case-defined p-adic-normalized processional estimate source to the case-defined arithmetic-gap source.  The estimate source supplies the distinguished case-procession +1 inequality against the projected Theorem 1.10 upper bound, and Lean composes it with the Theorem 1.10 arithmetic-divisor gap estimate to derive the arithmetic-minus-main +1 field." },
+    { name := "case-defined p-adic-normalized arithmetic-gap endpoint from case-defined estimate",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedCaseDefinedProcessionalArithmeticGapSource.ofPadicNormalizedCaseDefinedProcessionalEstimateSource_endpoint",
+      role :=
+        "Endpoint theorem for the case-defined estimate to arithmetic-gap lowering.  This records that the arithmetic-minus-main residual gap is no longer an independent input once the case-defined projected-procession estimate and the Theorem 1.10 local arithmetic-divisor gap are available." },
     { name := "processional Haar-residual source from case-defined normalized arithmetic gap",
       status := .derived,
       declarationName :=
@@ -1446,7 +1458,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 190 :=
+    canonicalStage1ResidualFrontier.length = 192 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1456,7 +1468,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 184 :=
+      (fun entry => entry.status = .derived)).length = 186 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6734,6 +6746,14 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedCaseDefinedProcessionalArithmeticGapSource.endpoint
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedCaseDefinedProcessionalArithmeticGapSource.endpoint
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedCaseDefinedProcessionalArithmeticGapSource.ofPadicNormalizedCaseDefinedProcessionalEstimateSource
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedCaseDefinedProcessionalArithmeticGapSource.ofPadicNormalizedCaseDefinedProcessionalEstimateSource
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedCaseDefinedProcessionalArithmeticGapSource.ofPadicNormalizedCaseDefinedProcessionalEstimateSource_endpoint
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedCaseDefinedProcessionalArithmeticGapSource.ofPadicNormalizedCaseDefinedProcessionalEstimateSource_endpoint
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.ofPadicUnitBallHaarDefectResidualSourcePadicNormalizedProcessionalCaseSource
 #guard_msgs (drop info) in
