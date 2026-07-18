@@ -241,7 +241,7 @@ def canonicalStage1RemainingAssumptions :
       consumerDeclaration :=
         "preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallCalibrationLocalArithmeticPointwisePadicUnitBallValuationBallLocalAnalyticPadicNormalizedProcessionalCaseIUTIVArithmeticDivisorLocalizedStepXIConstructedHDDDataGoalCompletionAudit",
       note :=
-        "Current lower IUT IV source boundary: the p-adic unit-ball localized Step (xi) source supplies the localized arithmetic-divisor identity and p-adic Haar residual normalization; the matching valuation-ball local-analytic Theorem 1.10 source supplies the local analytic ledger; and the p-adic-normalized processional case source supplies the Step (v)/(vi)/(vii) procession-normalized identities at the p-adic normalized place.  Lean reconstructs the pointwise local-analytic localized source, the expanded p-adic Haar residual identity, the generic Haar-defect source, the pointwise residual theorem, and the lower-weight local arithmetic-degree residual ledger internally; the later processional Haar-index wrappers are checked derived routes, not the canonical public boundary.  The normalized case layer now exposes the distinguished finite-place lower weight and derives the global Haar lower bound by finite summation.  The remaining paper obligation is deriving this p-adic-normalized processional local-estimate source from the full IUT IV local estimate proof." },
+        "Current lower IUT IV source boundary: the p-adic unit-ball localized Step (xi) source supplies the localized arithmetic-divisor identity and p-adic Haar residual normalization; the matching valuation-ball local-analytic Theorem 1.10 source supplies the local analytic ledger; and the p-adic-normalized processional case source supplies the Step (v)/(vi)/(vii) procession-normalized identities at the p-adic normalized place.  Lean reconstructs the pointwise local-analytic localized source, the expanded p-adic Haar residual identity, the generic Haar-defect source, the pointwise residual theorem, and the lower-weight local arithmetic-degree residual ledger internally; the later processional Haar-index wrappers are checked derived routes, not the canonical public boundary.  The normalized case layer now exposes the distinguished finite-place lower weight, derives the global Haar lower bound by finite summation, and is itself obtained from the full local-analytic processional estimate source by forgetting the distinguished +1 processional upper-bound field after normalized-place alignment.  The remaining paper obligation is deriving this p-adic-normalized processional local-estimate source from the full IUT IV local estimate proof." },
     { name := "localArithmeticDegreeResidualSource",
       status := .derived,
       paperSource := "IUT IV local arithmetic-degree identity and Haar residual lower bound",
@@ -1072,6 +1072,12 @@ def canonicalStage1ResidualFrontier :
         "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantFamilyHullThetaSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
       role :=
         "Derived endpoint route that constructs the same-index local arithmetic-degree source from full adjusted-determinant synchronization and the family-hull theta comparison before proving both the Corollary 3.12 dichotomy and the C_Theta lower bound.  The direct q-normalized adjusted-sum theta equality is no longer a public input on this same-index surface." },
+    { name := "p-adic normalized case source from processional estimate",
+      status := .derived,
+      declarationName :=
+        "IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalCaseSource.ofProcessionalEstimateSource",
+      role :=
+        "Derived projection from the full local-analytic processional estimate source to the p-adic-normalized processional case source.  The projection forgets the distinguished +1 upper-bound field and retains the Step (v)/(vi)/(vii) processional log-volume identities after the distinguished estimate place is aligned with the p-adic normalized finite place." },
     { name := "p-adic defect/main split countermodel",
       status := .constructed,
       declarationName :=
@@ -1110,7 +1116,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 134 :=
+    canonicalStage1ResidualFrontier.length = 135 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1120,7 +1126,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 128 :=
+      (fun entry => entry.status = .derived)).length = 129 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6264,6 +6270,14 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalCaseSource.ofPadicNormalizedProcessionalEstimateSource_endpoint
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalCaseSource.ofPadicNormalizedProcessionalEstimateSource_endpoint
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalCaseSource.ofProcessionalEstimateSource
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalCaseSource.ofProcessionalEstimateSource
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalCaseSource.ofProcessionalEstimateSource_endpoint
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalCaseSource.ofProcessionalEstimateSource_endpoint
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalCaseSource.ofProcessionalPointwiseResidualSource
 #guard_msgs (drop info) in
