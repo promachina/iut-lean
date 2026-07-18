@@ -759,6 +759,12 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalCaseSource.ofPadicNormalizedProcessionalEstimateSource",
       role :=
         "Derived projection from the stronger p-adic-normalized processional estimate source to the weaker case source consumed by the Haar-residual route.  The distinguished +1 upper-bound field is deliberately dropped because the p-adic Haar-residual route obtains the unit contribution from the expanded residual lower bound; the normalized local-log-volume identities and distinguished normalized-place kind are preserved definitionally." },
+    { name := "processional pointwise residual to p-adic-normalized Haar-residual case projection",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalCaseSource.ofProcessionalPointwiseResidualSource",
+      role :=
+        "Derived projection from the lower processional pointwise-residual source to the p-adic-normalized case source consumed by the Haar-residual route.  The one-unit distinguished margin is no longer read from the processional estimate ledger; it is supplied by the pointwise defined residual lower bound, while the projection only carries the case-wise procession-normalized log-volume identities and the explicit alignment of the distinguished residual place with the p-adic normalized place." },
     { name := "p-adic-defect/main projected-weighted formula-gap residual endpoint",
       status := .derived,
       declarationName :=
@@ -875,7 +881,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 95 :=
+    canonicalStage1ResidualFrontier.length = 96 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -885,7 +891,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 89 :=
+      (fun entry => entry.status = .derived)).length = 90 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -5939,6 +5945,14 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalCaseSource.ofPadicNormalizedProcessionalEstimateSource_endpoint
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalCaseSource.ofPadicNormalizedProcessionalEstimateSource_endpoint
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalCaseSource.ofProcessionalPointwiseResidualSource
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalCaseSource.ofProcessionalPointwiseResidualSource
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalCaseSource.ofProcessionalPointwiseResidualSource_endpoint
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalCaseSource.ofProcessionalPointwiseResidualSource_endpoint
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.ofPadicUnitBallHaarDefectResidualSourcePadicNormalizedProcessionalCaseSource
 #guard_msgs (drop info) in
