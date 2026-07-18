@@ -625,6 +625,12 @@ def canonicalStage1ResidualFrontier :
         "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.goalEvidence_projectedWeightedFormulaGapResidual_fromPadicDefectMain",
       role :=
         "Derived constructor-level signed endpoint for the projected-weighted formula-gap residual source.  The formula-gap Theorem 1.10 package and local arithmetic-degree residual package are projected from one p-adic-defect/main Record-Ob3/Ob5 valuation-ball source; the only extra alignment is the explicit equality identifying the arithmetic-degree calibration localized Step (xi) source with the principal-product p-adic finite localized Step (xi) source consumed by the residual constructor." },
+    { name := "p-adic-defect/main formula-gap residual projection audit",
+      status := .derived,
+      declarationName :=
+        "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.projectedFormulaGapResidualAudit",
+      role :=
+        "Derived audit at the lower p-adic-defect/main Record-Ob3/Ob5 valuation-ball boundary.  It proves that the same source projects the formula-gap Theorem 1.10 package, the valuation-ball local-analytic endpoint, and the canonical local arithmetic-degree residual endpoint, recording the exact source-backed replacement for the former pair of separate formula-gap and residual public inputs." },
     { name := "principal-product p-adic family-hull adjusted-sum projection",
       status := .derived,
       declarationName :=
@@ -723,7 +729,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 71 :=
+    canonicalStage1ResidualFrontier.length = 72 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -733,7 +739,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 66 :=
+      (fun entry => entry.status = .derived)).length = 67 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6028,6 +6034,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.goalEvidence_projectedWeightedFormulaGapResidual_fromPadicDefectMain
 #guard_msgs (drop info) in
 #print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.goalEvidence_projectedWeightedFormulaGapResidual_fromPadicDefectMain
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.projectedFormulaGapResidualAudit
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.projectedFormulaGapResidualAudit
 #guard_msgs (drop info) in
 #print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.toPadicHaarControlledComponentSource_projectionAudit
 #guard_msgs (drop info) in

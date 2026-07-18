@@ -1529,6 +1529,40 @@ theorem RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlle
   source.toCoreLocalArithmeticDegreeResidualSource.endpoint
 
 set_option linter.style.longLine false in
+/--
+Audit the lower p-adic-defect/main source as a formula-gap and residual source.
+
+The p-adic-defect/main valuation-ball source does not merely map to the generic
+residual package.  It also projects the formula-gap Theorem~1.10 package that
+the projected-weighted residual endpoint consumes.  This records the exact
+source-backed replacement for the former pair of public inputs: a separate
+formula-gap package and a separate local arithmetic-degree residual package.
+-/
+theorem RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.projectedFormulaGapResidualAudit
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :
+    let theorem110ValuationBallFormulaGapSource :=
+      source.padicDefectMainValuationBallSource
+        |>.toValuationBallFormulaGapMatchedPrimeErrorPadicDefectMainSource
+        |>.theorem110FormulaGapMatchedArithmeticDivisorEvaluationSource;
+    theorem110ValuationBallFormulaGapSource.Endpoint ∧
+      source.toCoreLocalArithmeticDegreeResidualSource.Endpoint ∧
+      theorem110ValuationBallFormulaGapSource.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.Endpoint :=
+  ⟨source.padicDefectMainValuationBallSource
+      |>.toValuationBallFormulaGapMatchedPrimeErrorPadicDefectMainSource
+      |>.theorem110FormulaGapMatchedArithmeticDivisorEvaluationSource
+      |>.endpoint,
+    source.toCoreLocalArithmeticDegreeResidualSource_endpoint,
+    source.padicDefectMainValuationBallSource
+      |>.toValuationBallFormulaGapMatchedPrimeErrorPadicDefectMainSource
+      |>.theorem110FormulaGapMatchedArithmeticDivisorEvaluationSource
+      |>.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+      |>.endpoint⟩
+
+set_option linter.style.longLine false in
 set_option maxHeartbeats 1200000 in
 -- The endpoint elaborates the full projected-weighted formula-gap residual boundary.
 /--
