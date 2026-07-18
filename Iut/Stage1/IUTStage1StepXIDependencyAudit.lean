@@ -144,7 +144,7 @@ structure CanonicalStage1RemainingAssumption where
 
 /-- Short name for the current canonical public 3.11-to-3.12 Stage 1 route. -/
 def canonicalStage1RouteName : String :=
-  "same-index q-normalized local-arithmetic-degree route with derived scale-synchronized source"
+  "same-index q-normalized route with compact-open additive-Haar p-adic-defect/main residual lowering"
 
 /--
 Current canonical Stage 1 remaining-assumption manifest.
@@ -234,10 +234,10 @@ def canonicalStage1RemainingAssumptions :
       note :=
         "The canonical route no longer exposes the stronger valuation-ball formula-gap source.  Lean constructs that package from the valuation-ball local-analytic arithmetic-divisor source when a formula-gap route is needed, but the local-analytic Theorem 1.10 ledger itself is still a source obligation." },
     { name := "localArithmeticDegreeResidualSource",
-      status := .sourceObligation,
+      status := .derived,
       paperSource := "IUT IV local arithmetic-degree identity and Haar residual lower bound",
       consumerDeclaration :=
-        "IUTStage1IUTIVLocalArithmeticDegreeResidualSource",
+        "RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource",
       note :=
         "The canonical route no longer requires the stronger case-bounded residual source.  Case-bounded, local-analytic case, processional arithmetic-gap, and p-adic Haar routes are constructors into this residual package.  The processional local-estimate route now projects directly to the residual package through preferredPublicIUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSourceToLocalArithmeticDegreeResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit, and the processional p-adic unit-ball Haar route projects directly through preferredPublicIUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSourceToLocalArithmeticDegreeResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit.  The p-adic unit-ball Step XI synchronization route now projects directly to this package through preferredPublicIUTStage1IUTIVLocalArithmeticDegreePadicUnitBallStepXISynchronizationSourceToLocalArithmeticDegreeResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit.  The arithmetic formula-matching source now also projects directly to the generic residual package through preferredPublicIUTStage1IUTIVLocalArithmeticDegreePadicUnitBallArithmeticFormulaMatchingSourceToLocalArithmeticDegreeResidualSourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit, so the intermediate synchronization record is reconstructed internally from StepXI = a(D+C) and prime-error = p-adic index + main.  The AdditiveHaarBridge now projects the additive-Haar, p-adic prime-error, arithmetic-degree calibrated, formula-gap matched, arithmetic-divisor-backed local-degree, constructed Theorem 3.11 local-term, valuation-ball arithmetic-degree tower, and Record-Ob3/Ob5 valuation-ball source directly into the canonical residual package; the strongest checked bridge is Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.toCoreLocalArithmeticDegreeResidualSource.  The current canonical residual frontier is lower than both the local-degree formula valuation-ball source and the ordinary arithmetic-degree-controlled component source: it uses the Record-Ob3/Ob5 p-adic-defect/main valuation-ball controlled component source.  That source derives the strict p-adic-Haar controlled source from a single valuation-ball local-estimate object whose prime-error term is definitionally E_v = delta_v + M_v; the valuation-ball evaluation source, Haar-index defect source, split equality, arithmetic-degree-controlled local source, and component/formula synchronization equality are no longer separate fields at this lower boundary.  The same p-adic-defect/main controlled source now feeds both the compact-open controlled product-handoff route and the compact-open projected-local-degree formula route through Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.preferredPublicConcreteStepXI311312CompactOpenAdditiveHaarRecordOb3Ob5PadicDefectMainControlledProductHandoffFormulaRealizedRoute and Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.preferredPublicConcreteStepXI311312CompactOpenAdditiveHaarRecordOb3Ob5PadicDefectMainProjectedLocalDegreeFormulaProductHandoffFormulaRealizedRoute, replacing the separate p-adic-Haar local analytic object, defect source, calibration, split, comparison bounds, local-degree formula projection, and component/formula equalities at that surface.  The stronger local-degree formula valuation-ball source remains checked as a comparison route.  This strict source feeds both the p-adic defect/main local-estimate source and the canonical residual package directly.  The Step XI arithmetic-degree equality is therefore audited as a consequence of determinant-weight and adjusted raw-log-volume calibration.  The additive-Haar split can be constructed from a local analytic arithmetic-divisor evaluation source plus the p-adic equality E_v = delta_v + M_v; the valuation-ball p-adic defect/main source now builds that equality into the prime-error term, and it is itself constructible from the arithmetic-degree-controlled local arithmetic source by combining E_v = localIUTIVDefect_v + M_v with localIUTIVDefect_v = delta_v.  The arithmetic-defect record is canonicalized extensionally by Experiments.IUTStage1FinitePlaceIUTIVLocalArithmeticDefectSource.eq_ofPadicUnitBallHaarIndex, and the whole arithmetic-degree-controlled local source is now canonicalized by Experiments.IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.eq_ofPadicUnitBallHaarIndex, so localIUTIVDefect_v is not an independent numerical input once the p-adic Haar defect source is fixed.  The strict residual countermodel PadicHaarControlledResidualWithoutDefinitionalSynchronizationToyCountermodel shows that the component residual and reconstructed p-adic residual can diverge if the controlled component/formula synchronization is weakened.  The remaining IUT IV obligation is deriving the complete lower valuation-ball Record-Ob3/Ob5 local-estimate source itself from the full paper-level local-estimate construction." } ]
 
@@ -254,15 +254,21 @@ def canonicalStage1SourceObligationNames : List String :=
   canonicalStage1RemainingAssumptions.filterMap fun entry =>
     if entry.status = .sourceObligation then some entry.name else none
 
-/-- The canonical route currently exposes eleven source-obligation entries. -/
+/-- The canonical route currently exposes ten source-obligation entries. -/
 theorem canonicalStage1SourceObligationNames_count_eq :
-    canonicalStage1SourceObligationNames.length = 11 :=
+    canonicalStage1SourceObligationNames.length = 10 :=
   rfl
 
 /-- The canonical route has exactly one interface-only entry. -/
 theorem canonicalStage1RemainingAssumptions_interfaceOnly_count_eq :
     (canonicalStage1RemainingAssumptions.filter
       (fun entry => entry.status = .interfaceOnly)).length = 1 :=
+  rfl
+
+/-- The canonical route has one derived top-level entry: the residual package. -/
+theorem canonicalStage1RemainingAssumptions_derived_count_eq :
+    (canonicalStage1RemainingAssumptions.filter
+      (fun entry => entry.status = .derived)).length = 1 :=
   rfl
 
 /--
