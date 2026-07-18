@@ -44270,22 +44270,10 @@ noncomputable def RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBal
         estimateConcrete lStepXI ηStep localPrime localField
         αHaarRecord hullSystemRecord αLocalRecord ηLocalRecord
         localAnalyticHullSystemRecord archIndexRecord archSummandRecord) :=
-  let strictSource :=
-    recordOb3Ob5PadicDefectMainSource.toPadicHaarControlledComponentSource
-  let componentSource :=
-    strictSource.toRecordOb3Ob5ArithmeticDivisorBackedComponentSource
-  let localArithmeticSourceFromDefectMain :=
-    strictSource.toArithmeticDegreeControlledLocalArithmeticSource
-  RecordOb3Ob5ArithmeticDivisorBackedComponentSource.preferredPublicConcreteStepXI311312CompactOpenAdditiveHaarRecordOb3Ob5ControlledProductHandoffFormulaRealizedRoute
+  RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.preferredPublicCompactOpenLogKummerMapCanonicalHDDPadicDefectMainProductHandoffFormulaRealizedRoute
     packet sourceWithSymmetry compactOpenLogKummerMapSource hodgeEvaluation
-    localArithmeticSource operation hullOperation determinantOperation
-    pointwiseFormulaSource sideConditions componentSource
-    localArithmeticSourceFromDefectMain
-    (by
-      simpa [
-        componentSource, localArithmeticSourceFromDefectMain,
-        RecordOb3Ob5ArithmeticDivisorBackedPadicHaarControlledComponentSource.toRecordOb3Ob5ArithmeticDivisorBackedComponentSource]
-        using strictSource.toControlledComponentSource.matchedFormula_eq_controlled)
+    localArithmeticSource operation hullOperation determinantOperation pointwiseFormulaSource
+    sideConditions recordOb3Ob5PadicDefectMainSource
 
 set_option linter.style.longLine false in
 /--
