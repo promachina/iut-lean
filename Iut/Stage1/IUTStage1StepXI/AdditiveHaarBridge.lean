@@ -1529,6 +1529,184 @@ theorem RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlle
   source.toCoreLocalArithmeticDegreeResidualSource.endpoint
 
 set_option linter.style.longLine false in
+set_option maxHeartbeats 1200000 in
+-- The endpoint elaborates the full projected-weighted formula-gap residual boundary.
+/--
+Constructor-level signed endpoint from the p-adic-defect/main valuation-ball
+Record-Ob3/Ob5 source.
+
+This lowers the formula-gap residual consumer: the public source no longer
+supplies the valuation-ball formula-gap Theorem 1.10 package and the local
+arithmetic-degree residual package separately.  Lean projects the formula-gap
+package and residual package from the single p-adic-defect/main Record-Ob3/Ob5
+source, then transports the residual package across the explicit equality
+identifying its arithmetic-degree calibration localized Step (xi) source with
+the principal-product p-adic finite localized Step (xi) source consumed by the
+formula-gap residual constructor.
+-/
+theorem RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.goalEvidence_projectedWeightedFormulaGapResidual_fromPadicDefectMain
+    {source target : Copy} {index : Type u}
+    {package : IUTStage1SourcePackage source target index}
+    {record : IUTStage1Theorem311MultiradialSourceRecord package}
+    {coric : Type u} {l : PrimeGeFive}
+    {theorem311Source :
+      IUTStage1Theorem311ToCorollary312PaperTrace.Theorem311HodgeTheaterLogThetaLogKummerSource
+        (target := target) coric l}
+    {ΛStepXI : Type v}
+    {principalSource :
+      IUTStage1Remark395PrincipalProductHullSystemSource
+        (Point target) ΛStepXI}
+    {β : Type a} [Fintype β]
+    {γStepXI : Type w} [Fintype γStepXI]
+    {lStepXI : PrimeGeFive} {FStepXI : Type} [Field FStepXI]
+    {XStepXI CStepXI : HyperbolicOrbicurveModel FStepXI}
+    {sourceHA :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaValueEvaluationSource
+        lStepXI XStepXI CStepXI}
+    {principalHDDSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.PrincipalProductHullConstructedOb3Ob5AdjustedLogVolumeMeasureHodgeGapCanonicalHDDDirectCommonContainerSource
+        (β := β) (γ := γStepXI) record sourceHA ΛStepXI}
+    {sourceData :
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := β) record}
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {p : Nat} [Fact p.Prime] {KLocal : Type w}
+    [NontriviallyNormedField KLocal] [ProperSpace KLocal]
+    [IsUltrametricDist KLocal] [MeasurableSpace KLocal]
+    [Algebra ℚ_[p] KLocal] [FiniteDimensional ℚ_[p] KLocal]
+    {localPrime : β -> Nat}
+    [∀ place : β, Fact (Nat.Prime (localPrime place))]
+    {localField : β -> Type x}
+    [(place : β) -> NontriviallyNormedField (localField place)]
+    [∀ place : β, ProperSpace (localField place)]
+    [∀ place : β, IsUltrametricDist (localField place)]
+    [(place : β) -> MeasurableSpace (localField place)]
+    [∀ place : β, BorelSpace (localField place)]
+    [∀ place : β, LocallyCompactSpace (localField place)]
+    [∀ place : β, IsTopologicalAddGroup (localField place)]
+    [∀ place : β, T2Space (localField place)]
+    [(place : β) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : β,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type} {ηLocal : Type w}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : β -> Type}
+    [∀ place : β, Fintype (archIndex place)]
+    [∀ place : β, Fintype (archSummand place)]
+    (principalProductPadicFiniteSource :
+      IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalProductPadicFiniteLocalizedHullVectorBundleDecompositionSource
+        theorem311Source principalSource p KLocal β γStepXI)
+    (weightedDeterminantSummand_eq_principalProductLocalizedStepXI :
+      let normSquareLocalizedStepXISource :=
+        principalProductPadicFiniteSource.localizedSource
+          |>.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+          |>.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+          |>.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+          |>.toNormSquareLocalizedVectorBundleDeterminantSource;
+      let localizedStepXISource :=
+        normSquareLocalizedStepXISource.toLocalizedVectorBundleDeterminantSource;
+      ∀ place : β,
+        principalHDDSource.ob3ob4Source.toWeightedDeterminantSource.summand place =
+          localizedStepXISource.toAdjustedDeterminantSource.toWeightedDeterminantSource.summand place)
+    (weightedDeterminantAnchor_eq_principalProductLocalizedStepXI :
+      let normSquareLocalizedStepXISource :=
+        principalProductPadicFiniteSource.localizedSource
+          |>.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+          |>.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+          |>.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+          |>.toNormSquareLocalizedVectorBundleDeterminantSource;
+      let localizedStepXISource :=
+        normSquareLocalizedStepXISource.toLocalizedVectorBundleDeterminantSource;
+      principalHDDSource.ob3ob4Source.toWeightedDeterminantSource.anchor =
+        localizedStepXISource.toAdjustedDeterminantSource.toWeightedDeterminantSource.anchor)
+    (weightedDeterminantPositiveTensorPower_eq_principalProductLocalizedStepXI :
+      let normSquareLocalizedStepXISource :=
+        principalProductPadicFiniteSource.localizedSource
+          |>.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+          |>.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+          |>.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+          |>.toNormSquareLocalizedVectorBundleDeterminantSource;
+      let localizedStepXISource :=
+        normSquareLocalizedStepXISource.toLocalizedVectorBundleDeterminantSource;
+      principalHDDSource.ob3ob4Source.toWeightedDeterminantSource.positiveTensorPower =
+        localizedStepXISource.toAdjustedDeterminantSource.toWeightedDeterminantSource.positiveTensorPower)
+    (thetaSigned_eq_principalProductLocalizedAdjustedSum_mul_absLogQ :
+      let normSquareLocalizedStepXISource :=
+        principalProductPadicFiniteSource.localizedSource
+          |>.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+          |>.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+          |>.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+          |>.toNormSquareLocalizedVectorBundleDeterminantSource;
+      let localizedStepXISource :=
+        normSquareLocalizedStepXISource.toLocalizedVectorBundleDeterminantSource;
+      package.preLedger.thetaSigned =
+        (∑ place : β,
+          localizedStepXISource.weightedAdjustedLogVolume place) *
+          (-package.preLedger.qSigned))
+    (padicDefectMainSource :
+      RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource
+        principalHDDSource.toRecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        sourceData estimate lStepXI (Subring KLocal) localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand)
+    (calibrationLocalizedStepXI_eq_principalProduct :
+      let normSquareLocalizedStepXISource :=
+        principalProductPadicFiniteSource.localizedSource
+          |>.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+          |>.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+          |>.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+          |>.toNormSquareLocalizedVectorBundleDeterminantSource;
+      let localizedStepXISource :=
+        normSquareLocalizedStepXISource.toLocalizedVectorBundleDeterminantSource;
+      padicDefectMainSource.arithmeticDegreeCalibrationSource.localizedStepXISource =
+        localizedStepXISource) :
+    ((package.preLedger.qSigned = package.preLedger.thetaSigned ∧
+        package.preLedger.thetaSigned < 0) ∨
+      (-1 : Real) < estimate.cTheta) ∧
+      (-1 : Real) <= estimate.cTheta := by
+  let theorem110ValuationBallFormulaGapSource :
+      IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarFormulaGapMatchedArithmeticDivisorEvaluationSource
+        β estimate αLocal ηLocal localField localAnalyticHullSystem
+        archIndex archSummand :=
+    padicDefectMainSource.padicDefectMainValuationBallSource
+      |>.toValuationBallFormulaGapMatchedPrimeErrorPadicDefectMainSource
+      |>.theorem110FormulaGapMatchedArithmeticDivisorEvaluationSource
+  let localArithmeticDegreeResidualSource :
+      let theorem110ValuationBallLocalAnalyticSource :=
+        theorem110ValuationBallFormulaGapSource.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource;
+      let normSquareLocalizedStepXISource :=
+        principalProductPadicFiniteSource.localizedSource
+          |>.toUnitBallValuationHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+          |>.toAdditiveHaarCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+          |>.toCompactOpenNormSquareLocalizedVectorBundleDeterminantSource
+          |>.toNormSquareLocalizedVectorBundleDeterminantSource;
+      let localizedStepXISource :=
+        normSquareLocalizedStepXISource.toLocalizedVectorBundleDeterminantSource;
+      IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVLocalArithmeticDegreeResidualSource
+        theorem110ValuationBallLocalAnalyticSource.toThetaPilotArithmeticDivisorLocalEvaluationSource
+        localizedStepXISource := by
+    dsimp
+    rw [← calibrationLocalizedStepXI_eq_principalProduct]
+    simpa [theorem110ValuationBallFormulaGapSource] using
+      padicDefectMainSource.toCoreLocalArithmeticDegreeResidualSource
+  exact
+    IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteProjectedWeightedDeterminantQNormalizedFormulaGapResidualHaarSource.goalEvidence_ofLocalArithmeticDegreeResidualSource
+      (principalHDDSource := principalHDDSource)
+      (αIUTIV := αLocal) (ηIUTIV := ηLocal)
+      (KIUTIV := localField) (iutIVHullSystem := localAnalyticHullSystem)
+      (archIndex := archIndex) (archSummand := archSummand)
+      principalProductPadicFiniteSource
+      weightedDeterminantSummand_eq_principalProductLocalizedStepXI
+      weightedDeterminantAnchor_eq_principalProductLocalizedStepXI
+      weightedDeterminantPositiveTensorPower_eq_principalProductLocalizedStepXI
+      thetaSigned_eq_principalProductLocalizedAdjustedSum_mul_absLogQ
+      theorem110ValuationBallFormulaGapSource
+      localArithmeticDegreeResidualSource
+
+set_option linter.style.longLine false in
 /--
 Project a named-HDD Record-Ob3/Ob5 valuation-ball boundary directly to the
 canonical p-adic arithmetic formula-matching package.
