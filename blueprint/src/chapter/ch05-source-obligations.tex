@@ -4035,6 +4035,19 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteProjectedWeightedDeterminantQNormalizedFormulaGapResidualHaarSource.goalEvidence_ofLocalArithmeticDegreeLowerWeightResidualSource}.
   Thus these projected \(C_\Theta\) consumers no longer need the summed
   residual Haar inequality as the primitive residual datum.
+  The lower-weight ledger itself is now produced by the pointwise
+  defined-residual layer:
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVLocalArithmeticDegreePointwiseDefinedResidualLowerSource.distinguishedResidualLowerWeight}
+  puts weight \(1\) at the distinguished place and \(0\) elsewhere,
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVLocalArithmeticDegreePointwiseDefinedResidualLowerSource.distinguishedResidualLowerWeight_sum_eq_one}
+  proves the finite sum is \(1\), and
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVLocalArithmeticDegreePointwiseDefinedResidualLowerSource.toLocalArithmeticDegreeLowerWeightResidualSource}
+  converts pointwise nonnegativity plus the distinguished \(+1\) residual
+  into the lower-weight residual package.  The finite Haar-defect source has
+  the analogous construction
+  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1FinitePlaceHaarDefectLowerBoundSource.toLocalHaarDefectLowerWeightSource},
+  so the lower-weight ledger is no longer an independent assumption once a
+  normalized-place Haar lower bound is available.
   The stricter defined-residual layer
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVLocalArithmeticDegreeDefinedResidualSource}
   defines the Haar defect as
