@@ -219,7 +219,7 @@ def canonicalStage1RemainingAssumptions :
       consumerDeclaration :=
         "ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource",
       note :=
-        "The canonical route is now the q-normalized local-arithmetic-degree constituent endpoint.  On the same-gamma adjusted-determinant boundary Lean derives the summand, anchor, and positive tensor-power identifications from full Ob3/Ob4 adjusted-determinant synchronization via ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEq.  The adjusted-determinant source can now derive that full equality from equality of the localization family, anchor, and positive tensor power via ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.ofLocalizationAnchorTensorPowerEq.  The heterogeneous projected-weighted route still exposes the projected weighted fields, and the remaining paper source obligation is deriving those primitive Ob3/Ob4 synchronizations from Remark 3.9.5 source data." },
+        "The canonical route is now the q-normalized local-arithmetic-degree constituent endpoint.  On the same-gamma adjusted-determinant boundary Lean derives the summand, anchor, and positive tensor-power identifications from full Ob3/Ob4 adjusted-determinant synchronization via ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEq.  The adjusted-determinant source can now derive that full equality from equality of the localization family, anchor, and positive tensor power via ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.ofLocalizationAnchorTensorPowerEq, and the Record-Ob3/Ob5 component constructor now derives its recordOb3Ob4_eq_stepXI field from the same primitive criterion via RecordOb3Ob5ArithmeticDivisorBackedComponentSource.ofConcretePossibleImageWitnessSourceLocalizationAnchorTensorPowerEq.  The heterogeneous projected-weighted route still exposes the projected weighted fields, and the remaining paper source obligation is deriving those primitive Ob3/Ob4 synchronizations from Remark 3.9.5 source data." },
     { name := "thetaSigned_eq_projectedPrincipalProductLocalizedAdjustedSum_mul_absLogQ",
       status := .sourceObligation,
       paperSource := "IUT III, Corollary 3.12 theta/log-volume comparison",
@@ -421,6 +421,18 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.ext_of_localization_anchor_tensorPower",
       role :=
         "Derived positive criterion for replacing the remaining Record-Ob3/Ob4 synchronization assumption: full Ob3/Ob4 equality follows from equality of the localization family, anchor, and positive tensor-power data.  This is the source-backed criterion that the weighted determinant shadow countermodel shows cannot be weakened to determinant and finite-sum equality alone." },
+    { name := "Record-Ob3/Ob5 component constructor from localization-anchor-tensor synchronization",
+      status := .derived,
+      declarationName :=
+        "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedComponentSource.ofConcretePossibleImageWitnessSourceLocalizationAnchorTensorPowerEq",
+      role :=
+        "Derived Record-Ob3/Ob5 component constructor that no longer takes the full recordOb3Ob4_eq_stepXI equality directly.  Lean derives the full Ob3/Ob4 adjusted-determinant equality from localization-family, anchor, and positive tensor-power synchronization before entering the existing component source constructor." },
+    { name := "Record-Ob3/Ob5 component localization-anchor-tensor audit",
+      status := .derived,
+      declarationName :=
+        "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedComponentSource.ofConcretePossibleImageWitnessSourceLocalizationAnchorTensorPowerEq_audit",
+      role :=
+        "Derived audit showing that the constructed component source's recordOb3Ob4_eq_stepXI proof is exactly the Ob3/Ob4 extensionality proof and that the projected arithmetic-divisor-backed component endpoint holds." },
     { name := "Record-Ob3/Ob4 source-to-weighted determinant projection",
       status := .derived,
       declarationName :=
@@ -765,7 +777,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 78 :=
+    canonicalStage1ResidualFrontier.length = 80 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -775,7 +787,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 72 :=
+      (fun entry => entry.status = .derived)).length = 74 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -1467,6 +1479,14 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.ext_of_localization_anchor_tensorPower
 #guard_msgs (drop info) in
 #print axioms IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.ext_of_localization_anchor_tensorPower
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedComponentSource.ofConcretePossibleImageWitnessSourceLocalizationAnchorTensorPowerEq
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedComponentSource.ofConcretePossibleImageWitnessSourceLocalizationAnchorTensorPowerEq
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedComponentSource.ofConcretePossibleImageWitnessSourceLocalizationAnchorTensorPowerEq_audit
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedComponentSource.ofConcretePossibleImageWitnessSourceLocalizationAnchorTensorPowerEq_audit
 #guard_msgs (drop info) in
 #check IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.weightedDeterminant_summand_anchor_tensorPower_eq_of_localization_anchor_tensorPower
 #guard_msgs (drop info) in
