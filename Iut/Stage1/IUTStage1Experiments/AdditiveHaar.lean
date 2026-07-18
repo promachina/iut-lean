@@ -10285,6 +10285,8 @@ records directly, it supplies the actual local formula checks:
 * the distinguished procession formula bound is the coarse Step (v) bound;
 * the Proposition 1.4 tensor expression is \(D_v+C_v\) and dominates the
   coarse Step (v) bound;
+* the nondistinguished Step (vi) contribution is the Proposition 1.4 zero/gap
+  estimate carried by the local analytic source;
 * the archimedean procession formula bound is the coarse Step (vii) bound;
 * the coarse Step (vii) bound is \(D_v+C_v\).
 
@@ -10454,6 +10456,29 @@ theorem distinguished_formula_bound_le_different_conductor
         arithmeticSource.localDifferentDegree place +
           arithmeticSource.localConductorDegree place) := by
       simpa using htensor
+
+set_option linter.style.longLine false in
+theorem nondistinguished_zero_le_gap
+    (source :
+      IUTStage1AdditiveHaarTheorem110StepXILocalDegreeIdentificationFormulaSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (place : β)
+    (hkind :
+      source.formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.additiveHaarLocalAnalyticConstructionFormulaSource.localKind place =
+        IUTStage1IUTIVTheorem110LocalEstimateKind.nondistinguishedNonarchimedean) :
+    0 <=
+      (let theorem110Source :=
+        source.formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource;
+      theorem110Source.arithmeticDivisorSource.localArithmeticUpperContribution
+          theorem110Source.additiveHaarLocalAnalyticConstructionFormulaSource.localPrimeErrorContribution
+          place -
+        theorem110Source.additiveHaarLocalAnalyticConstructionFormulaSource.localMainLogContribution
+          place) := by
+  simpa using
+    (source.formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+      |>.additiveHaarLocalAnalyticConstructionFormulaSource
+      |>.nondistinguishedAdditiveHaarLogShellConstruction place hkind).prop14_zero_le_gap
 
 set_option linter.style.longLine false in
 theorem archimedean_formula_bound_eq_different_conductor
@@ -10627,6 +10652,19 @@ structure LocalDegreeFormulaAudit
               source.formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource;
           arithmeticSource.localDifferentDegree place +
             arithmeticSource.localConductorDegree place)
+  nondistinguishedZero_le_gap :
+    ∀ place : β,
+      (hkind :
+        source.formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.additiveHaarLocalAnalyticConstructionFormulaSource.localKind place =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.nondistinguishedNonarchimedean) ->
+        0 <=
+          (let theorem110Source :=
+            source.formulaMatchingSource.theorem110AdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource;
+          theorem110Source.arithmeticDivisorSource.localArithmeticUpperContribution
+              theorem110Source.additiveHaarLocalAnalyticConstructionFormulaSource.localPrimeErrorContribution
+              place -
+            theorem110Source.additiveHaarLocalAnalyticConstructionFormulaSource.localMainLogContribution
+              place)
   archimedeanFormulaBound_eq_differentConductor :
     ∀ place : β,
       (hkind :
@@ -10660,6 +10698,8 @@ theorem localDegreeFormulaAudit
   { endpoint := source.endpoint,
     distinguishedFormulaBound_le_differentConductor :=
       source.distinguished_formula_bound_le_different_conductor,
+    nondistinguishedZero_le_gap :=
+      source.nondistinguished_zero_le_gap,
     archimedeanFormulaBound_eq_differentConductor :=
       source.archimedean_formula_bound_eq_different_conductor,
     archimedeanFormulaBound_le_differentConductor :=
