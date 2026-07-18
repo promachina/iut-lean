@@ -493,6 +493,24 @@ def canonicalStage1ResidualFrontier :
         "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.ofConstructorBuiltOb3Ob4AdjustedDeterminantSourceFamilyHullQNormalizedLocalizationAnchorTensorPowerEq_audit",
       role :=
         "Derived audit for the family-hull q-normalized valuation-ball constructor.  It pins the transported adjusted-summand q-normalization, the canonical CTheta scale equality, preservation of the valuation-ball formula-gap source, and the arithmetic-divisor-backed valuation-ball endpoint." },
+    { name := "possible-image witness named-HDD valuation-ball boundary",
+      status := .derived,
+      declarationName :=
+        "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDBoundaryData.ofPossibleImageWitnessConstructorBuiltSource_projectionAudit",
+      role :=
+        "Derived named-HDD boundary constructor from the typed Theorem 3.11 possible-image witness and constructor-built Record-Ob3/Ob5 valuation-ball source.  The all-choice nonemptiness family is projected from the possible-image witness, and the constructor-built-to-record Ob3/Ob4 determinant equality is projected from the valuation-ball source rather than supplied as a separate named-HDD field." },
+    { name := "possible-image witness synchronized route input",
+      status := .derived,
+      declarationName :=
+        "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.ofPossibleImageWitnessConstructorBuiltValuationBallSource_projectionAudit",
+      role :=
+        "Derived synchronized route-input constructor from the possible-image named-HDD boundary.  The component Record-Ob3/Ob5 source, localized determinant/scale synchronization endpoint, arithmetic-divisor-backed component endpoint, and Haar-defect lower bound are reconstructed before any compact-open public route consumes the data." },
+    { name := "family-hull q-normalized synchronized route input",
+      status := .derived,
+      declarationName :=
+        "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.ofConstructorBuiltFamilyHullQNormalizedLocalizationAnchorTensorPowerEq_audit",
+      role :=
+        "Derived synchronized route-input constructor from the family-hull q-normalized Record-Ob3/Ob5 constructor-built source.  Lean converts family-hull q-normalization to adjusted-summand q-normalization, derives the canonical CTheta scale equality, reconstructs the named-HDD synchronized route input from the possible-image witness and valuation-ball Theorem 1.10 source, and preserves the localized synchronization endpoint, arithmetic-divisor endpoint, and Haar lower bound." },
     { name := "Record-Ob3/Ob4 source-to-weighted determinant projection",
       status := .derived,
       declarationName :=
@@ -837,7 +855,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 90 :=
+    canonicalStage1ResidualFrontier.length = 93 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -847,7 +865,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 84 :=
+      (fun entry => entry.status = .derived)).length = 87 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -1587,6 +1605,22 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.ofConstructorBuiltOb3Ob4AdjustedDeterminantSourceFamilyHullQNormalizedLocalizationAnchorTensorPowerEq_audit
 #guard_msgs (drop info) in
 #print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.ofConstructorBuiltOb3Ob4AdjustedDeterminantSourceFamilyHullQNormalizedLocalizationAnchorTensorPowerEq_audit
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDBoundaryData.ofPossibleImageWitnessConstructorBuiltSource_projectionAudit
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDBoundaryData.ofPossibleImageWitnessConstructorBuiltSource_projectionAudit
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.ofPossibleImageWitnessConstructorBuiltValuationBallSource_projectionAudit
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.ofPossibleImageWitnessConstructorBuiltValuationBallSource_projectionAudit
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.ofConstructorBuiltFamilyHullQNormalizedLocalizationAnchorTensorPowerEq
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.ofConstructorBuiltFamilyHullQNormalizedLocalizationAnchorTensorPowerEq
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.ofConstructorBuiltFamilyHullQNormalizedLocalizationAnchorTensorPowerEq_audit
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.ofConstructorBuiltFamilyHullQNormalizedLocalizationAnchorTensorPowerEq_audit
 #guard_msgs (drop info) in
 #check IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.weightedDeterminant_summand_anchor_tensorPower_eq_of_localization_anchor_tensorPower
 #guard_msgs (drop info) in
