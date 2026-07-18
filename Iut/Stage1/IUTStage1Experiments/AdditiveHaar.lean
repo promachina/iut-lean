@@ -253,6 +253,154 @@ end IUTStage1FinitePlacePadicUnitBallHaarIndexDefectSource
 
 set_option linter.style.longLine false in
 /--
+Finite-place p-adic Haar-index source lowered to residue-submodule local data.
+
+At each finite place the source carries the residue-field action on the
+additive group of `O_v` and a residue submodule representing `p_v O_v`.  Lean
+transports the quotient module to `O_v / p_v O_v`, derives the unit-ball
+Haar-character endpoint, and then constructs the existing finite-place p-adic
+Haar-index defect source.  Thus the local IUT IV Haar-defect boundary can
+consume residue-submodule data instead of a prebuilt unit-ball Haar-character
+source.
+-/
+structure IUTStage1FinitePlaceResidueSubmodulePadicUnitBallHaarIndexDefectSource
+    (ι : Type u) [Fintype ι]
+    (localPrime : ι -> Nat)
+    [∀ place : ι, Fact (Nat.Prime (localPrime place))]
+    (localField : ι -> Type v)
+    [(place : ι) -> NontriviallyNormedField (localField place)]
+    [∀ place : ι, ProperSpace (localField place)]
+    [∀ place : ι, IsUltrametricDist (localField place)]
+    [(place : ι) -> MeasurableSpace (localField place)]
+    [∀ place : ι, BorelSpace (localField place)]
+    [∀ place : ι, LocallyCompactSpace (localField place)]
+    [∀ place : ι, IsTopologicalAddGroup (localField place)]
+    [(place : ι) -> NormedAlgebra ℚ_[localPrime place] (localField place)]
+    [∀ place : ι,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    (κ : ι -> Type x)
+    [(place : ι) -> Field (κ place)]
+    [(place : ι) -> Fintype (κ place)]
+    (α : Type w)
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α) where
+  residueSubmoduleHaarSource :
+    ∀ place : ι,
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterNormalizationSource
+        α (localPrime place) (localField place) (κ place) hullSystem
+  normalizedPlace : ι
+
+namespace IUTStage1FinitePlaceResidueSubmodulePadicUnitBallHaarIndexDefectSource
+
+variable {ι : Type u} [Fintype ι]
+variable {localPrime : ι -> Nat}
+variable [∀ place : ι, Fact (Nat.Prime (localPrime place))]
+variable {localField : ι -> Type v}
+variable [(place : ι) -> NontriviallyNormedField (localField place)]
+variable [∀ place : ι, ProperSpace (localField place)]
+variable [∀ place : ι, IsUltrametricDist (localField place)]
+variable [(place : ι) -> MeasurableSpace (localField place)]
+variable [∀ place : ι, BorelSpace (localField place)]
+variable [∀ place : ι, LocallyCompactSpace (localField place)]
+variable [∀ place : ι, IsTopologicalAddGroup (localField place)]
+variable [(place : ι) -> NormedAlgebra ℚ_[localPrime place] (localField place)]
+variable [∀ place : ι,
+  FiniteDimensional ℚ_[localPrime place] (localField place)]
+variable {κ : ι -> Type x}
+variable [(place : ι) -> Field (κ place)]
+variable [(place : ι) -> Fintype (κ place)]
+variable {α : Type w}
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+
+noncomputable def toPadicUnitBallHaarIndexDefectSource
+    (source :
+      IUTStage1FinitePlaceResidueSubmodulePadicUnitBallHaarIndexDefectSource
+        ι localPrime localField κ α hullSystem) :
+    IUTStage1FinitePlacePadicUnitBallHaarIndexDefectSource
+      ι localPrime localField α hullSystem :=
+  { unitBallHaarSource := fun place =>
+      (source.residueSubmoduleHaarSource place)
+        |>.toUnitBallHaarCharacterNormalizationSource,
+    normalizedPlace := source.normalizedPlace }
+
+noncomputable def localHaarNormalizationDefect
+    (source :
+      IUTStage1FinitePlaceResidueSubmodulePadicUnitBallHaarIndexDefectSource
+        ι localPrime localField κ α hullSystem)
+    (place : ι) :
+    Real :=
+  source.toPadicUnitBallHaarIndexDefectSource.localHaarNormalizationDefect place
+
+theorem localHaarNormalizationDefect_nonneg
+    (source :
+      IUTStage1FinitePlaceResidueSubmodulePadicUnitBallHaarIndexDefectSource
+        ι localPrime localField κ α hullSystem)
+    (place : ι) :
+    0 <= source.localHaarNormalizationDefect place :=
+  source.toPadicUnitBallHaarIndexDefectSource.localHaarNormalizationDefect_nonneg
+    place
+
+theorem normalizedPlace_defect_ge_one
+    (source :
+      IUTStage1FinitePlaceResidueSubmodulePadicUnitBallHaarIndexDefectSource
+        ι localPrime localField κ α hullSystem) :
+    (1 : Real) <=
+      source.localHaarNormalizationDefect source.normalizedPlace :=
+  source.toPadicUnitBallHaarIndexDefectSource.normalizedPlace_defect_ge_one
+
+noncomputable def toFinitePlaceHaarDefectLowerBoundSource
+    (source :
+      IUTStage1FinitePlaceResidueSubmodulePadicUnitBallHaarIndexDefectSource
+        ι localPrime localField κ α hullSystem) :
+    IUTStage1FinitePlaceHaarDefectLowerBoundSource ι :=
+  source.toPadicUnitBallHaarIndexDefectSource
+    |>.toFinitePlaceHaarDefectLowerBoundSource
+
+set_option linter.style.longLine false in
+def ResidueSubmoduleHaarEndpoint
+    (source :
+      IUTStage1FinitePlaceResidueSubmodulePadicUnitBallHaarIndexDefectSource
+        ι localPrime localField κ α hullSystem)
+    (place : ι) :
+    Prop :=
+  source.toPadicUnitBallHaarIndexDefectSource.UnitBallHaarEndpoint place
+
+set_option linter.style.longLine false in
+theorem residueSubmoduleHaarEndpoint
+    (source :
+      IUTStage1FinitePlaceResidueSubmodulePadicUnitBallHaarIndexDefectSource
+        ι localPrime localField κ α hullSystem)
+    (place : ι) :
+    source.ResidueSubmoduleHaarEndpoint place :=
+  source.toPadicUnitBallHaarIndexDefectSource.endpoint.1 place
+
+noncomputable def Endpoint
+    (source :
+      IUTStage1FinitePlaceResidueSubmodulePadicUnitBallHaarIndexDefectSource
+        ι localPrime localField κ α hullSystem) :
+    Prop :=
+  (∀ place : ι, source.ResidueSubmoduleHaarEndpoint place) ∧
+    source.toPadicUnitBallHaarIndexDefectSource.Endpoint
+
+theorem endpoint
+    (source :
+      IUTStage1FinitePlaceResidueSubmodulePadicUnitBallHaarIndexDefectSource
+        ι localPrime localField κ α hullSystem) :
+    Endpoint source :=
+  ⟨source.residueSubmoduleHaarEndpoint,
+    source.toPadicUnitBallHaarIndexDefectSource.endpoint⟩
+
+theorem total_haar_defect_ge_one
+    (source :
+      IUTStage1FinitePlaceResidueSubmodulePadicUnitBallHaarIndexDefectSource
+        ι localPrime localField κ α hullSystem) :
+    (1 : Real) <=
+      ∑ place : ι, source.localHaarNormalizationDefect place :=
+  source.toFinitePlaceHaarDefectLowerBoundSource.total_haar_defect_ge_one
+
+end IUTStage1FinitePlaceResidueSubmodulePadicUnitBallHaarIndexDefectSource
+
+set_option linter.style.longLine false in
+/--
 Finite-place IUT IV local arithmetic-defect source.
 
 Theorem 1.10 of IUT IV estimates the paper-side `C_Theta` expression by summing
