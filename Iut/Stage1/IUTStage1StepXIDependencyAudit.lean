@@ -336,6 +336,12 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1AdditiveHaarTheorem110StepXILocalDegreeIdentificationFormulaSource.nondistinguished_zero_le_gap",
       role :=
         "Derived nondistinguished finite-place Step (vi) contribution at the local-degree formula layer: the zero term is bounded by the local arithmetic-minus-main gap through the Proposition 1.4 additive-Haar log-shell source, so the local-estimate audit now exposes distinguished, nondistinguished, and archimedean cases at the same source-backed boundary." },
+    { name := "valuation-ball nondistinguished Step VI zero-gap law",
+      status := .derived,
+      declarationName :=
+        "IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.nondistinguished_zero_le_gap",
+      role :=
+        "Derived nondistinguished finite-place Step (vi) contribution before the additive-Haar projection: the valuation-ball Proposition 1.4 log-shell source directly proves that the zero local contribution is bounded by the valuation-ball arithmetic-minus-main gap." },
     { name := "local-degree formula arithmetic-degree controlled source",
       status := .derived,
       declarationName :=
@@ -668,7 +674,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 62 :=
+    canonicalStage1ResidualFrontier.length = 63 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -678,7 +684,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 57 :=
+      (fun entry => entry.status = .derived)).length = 58 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -5883,6 +5889,18 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check Experiments.IUTStage1AdditiveHaarTheorem110StepXILocalDegreeIdentificationFormulaSource.nondistinguished_zero_le_gap
 #guard_msgs (drop info) in
 #print axioms Experiments.IUTStage1AdditiveHaarTheorem110StepXILocalDegreeIdentificationFormulaSource.nondistinguished_zero_le_gap
+#guard_msgs (drop info) in
+#check IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.nondistinguished_zero_le_gap
+#guard_msgs (drop info) in
+#print axioms IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.nondistinguished_zero_le_gap
+#guard_msgs (drop info) in
+#check Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource.nondistinguished_valuationBall_zero_le_gap
+#guard_msgs (drop info) in
+#print axioms Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource.nondistinguished_valuationBall_zero_le_gap
+#guard_msgs (drop info) in
+#check Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource.valuationBallPrimeErrorSplitAudit
+#guard_msgs (drop info) in
+#print axioms Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource.valuationBallPrimeErrorSplitAudit
 #guard_msgs (drop info) in
 #check Experiments.IUTStage1AdditiveHaarTheorem110StepXILocalDegreeIdentificationFormulaSource.localDegreeFormulaAudit
 #guard_msgs (drop info) in

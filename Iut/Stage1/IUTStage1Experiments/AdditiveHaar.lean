@@ -1314,6 +1314,23 @@ theorem localPrimeErrorContribution_eq_padicHaarDefect_main
   rfl
 
 set_option linter.style.longLine false in
+theorem nondistinguished_valuationBall_zero_le_gap
+    (source :
+      IUTStage1AdditiveHaarTheorem110PadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource
+        β estimate localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (place : β)
+    (hkind :
+      source.localKind place =
+        IUTStage1IUTIVTheorem110LocalEstimateKind.nondistinguishedNonarchimedean) :
+    0 <=
+      source.arithmeticDivisorSource.localArithmeticUpperContribution
+        source.localPrimeErrorContribution place -
+          source.localMainLogContribution place :=
+  source.toValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+    |>.nondistinguished_zero_le_gap place hkind
+
+set_option linter.style.longLine false in
 def Endpoint
     (source :
       IUTStage1AdditiveHaarTheorem110PadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource
@@ -1370,6 +1387,15 @@ structure ValuationBallPrimeErrorSplitAudit
         source.iutIVArithmeticDefectSource.padicHaarDefectSource.localHaarNormalizationDefect place +
           (source.toAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
             |>.toThetaPilotArithmeticDivisorLocalEvaluationSource).localMainLogContribution place
+  nondistinguishedValuationBallZero_le_gap :
+    ∀ place : β,
+      (hkind :
+        source.localKind place =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.nondistinguishedNonarchimedean) ->
+        0 <=
+          source.arithmeticDivisorSource.localArithmeticUpperContribution
+            source.localPrimeErrorContribution place -
+              source.localMainLogContribution place
 
 set_option linter.style.longLine false in
 theorem valuationBallPrimeErrorSplitAudit
@@ -1387,7 +1413,9 @@ theorem valuationBallPrimeErrorSplitAudit
       source.toPadicDefectMainLocalAnalyticArithmeticDivisorSource.endpoint,
     localPrimeErrorContribution_def := fun _place => rfl,
     localPrimeErrorContribution_eq_padicHaarDefect_main :=
-      source.localPrimeErrorContribution_eq_padicHaarDefect_main }
+      source.localPrimeErrorContribution_eq_padicHaarDefect_main,
+    nondistinguishedValuationBallZero_le_gap :=
+      source.nondistinguished_valuationBall_zero_le_gap }
 
 end IUTStage1AdditiveHaarTheorem110PadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource
 

@@ -4068,6 +4068,22 @@ theorem endpoint
     source.toLocalAnalyticConstructionFormulaSource.endpoint,
     source.toPropositionLogShellFormulaSource.endpoint⟩
 
+set_option linter.style.longLine false in
+theorem nondistinguished_zero_le_gap
+    (source :
+      IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+        place divisorSource α η K hullSystem archIndex archSummand)
+    (placeId : place)
+    (hkind :
+      source.localKind placeId =
+        IUTStage1IUTIVTheorem110LocalEstimateKind.nondistinguishedNonarchimedean) :
+    0 <=
+      divisorSource.localArithmeticUpperContribution
+        source.localPrimeErrorContribution placeId -
+          source.localMainLogContribution placeId :=
+  (source.nondistinguishedValuationBallAdditiveHaarLogShellConstruction
+    placeId hkind).prop14_zero_le_gap
+
 end IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
 
 set_option linter.style.longLine false in
