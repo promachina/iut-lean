@@ -331,6 +331,12 @@ def canonicalStage1ResidualFrontier :
         "RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toPadicDefectMainValuationBallControlledComponentSource",
       role :=
         "Derived construction of the canonical p-adic-defect/main valuation-ball controlled Record-Ob3/Ob5 component source from the local-degree formula comparison source.  It combines the local-degree formula p-adic-defect/main endpoint, valuation-ball projection preservation, and arithmetic-degree-controlled p-adic Haar-index canonicalization to transport the controlled component without adding a new source field." },
+    { name := "local-degree formula p-adic-defect/main controlled component audit",
+      status := .derived,
+      declarationName :=
+        "RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.localDegreeFormulaPadicDefectMainControlledComponentAudit",
+      role :=
+        "Derived audit for the currently checked Theorem 1.10 local-case slice below the canonical residual boundary.  It records the Step (v) distinguished different/conductor bound, Step (vi) nondistinguished zero-gap contribution, Step (vii) archimedean different/conductor identification, the p-adic split E_v = delta_v + M_v, valuation-ball projection preservation, and the lowering into the p-adic-defect/main controlled Record-Ob3/Ob5 component source." },
     { name := "local-degree formula p-adic-defect/main endpoint",
       status := .derived,
       declarationName :=
@@ -687,7 +693,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 65 :=
+    canonicalStage1ResidualFrontier.length = 66 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -697,7 +703,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 60 :=
+      (fun entry => entry.status = .derived)).length = 61 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6042,6 +6048,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toPadicDefectMainValuationBallControlledComponentSource
 #guard_msgs (drop info) in
 #print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toPadicDefectMainValuationBallControlledComponentSource
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.localDegreeFormulaPadicDefectMainControlledComponentAudit
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.localDegreeFormulaPadicDefectMainControlledComponentAudit
 #guard_msgs (drop info) in
 #check Experiments.IUTStage1AdditiveHaarTheorem110PadicDefectMainValuationBallLocalAnalyticArithmeticDivisorSource.ofArithmeticDegreeControlledLocalArithmeticSource_toArithmeticDegreeControlledLocalArithmeticSource_eq
 #guard_msgs (drop info) in
