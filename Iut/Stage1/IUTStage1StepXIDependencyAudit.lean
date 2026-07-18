@@ -589,6 +589,18 @@ def canonicalStage1ResidualFrontier :
         "Experiments.IUTStage1FinitePlaceResidueSubmodulePadicUnitBallHaarIndexDefectSource.toPadicUnitBallHaarIndexDefectSource",
       role :=
         "Derived finite-place p-adic Haar-index defect source from residue-submodule local data.  Each place supplies the residue-field action before quotienting and the p_v O_v submodule; Lean projects these sources to unit-ball Haar-character normalizations, constructs the existing p-adic Haar-index defect source, and obtains the finite Haar-defect lower bound used by the IUT IV local-to-global residual package." },
+    { name := "normed finite-extension inverse-base-prime valuation-ball source",
+      status := .derived,
+      declarationName :=
+        "IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource.normedFiniteExtensionInverseBasePrimeValuationBallSource_endpoint",
+      role :=
+        "Derived finite-extension construction of the inverse-base-prime valuation-ball source.  From the norm-compatible p-adic dilation law, Lean proves p^{-1}O_K is the valuation ball of radius p, constructs the corresponding valuation-ball additive-Haar source, and records the component match with the inverse-base-prime compact-open normalization." },
+    { name := "inverse-base-prime valuation-ball componentwise additive-Haar synchronization",
+      status := .derived,
+      declarationName :=
+        "IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource.InverseBasePrimeValuationBallSource.inverseBasePrime_componentwiseEqual",
+      role :=
+        "Derived componentwise synchronization from the valuation-ball inverse-base-prime source to the compact-open additive-Haar inverse-base-prime normalization.  The selected compact open, base-prime dilation, Haar measure, ring of integers, and finite-extension degree are transported before the compact-open route consumes the p-adic Haar factor." },
     { name := "named-HDD valuation-ball residual projection",
       status := .derived,
       declarationName :=
@@ -739,6 +751,12 @@ def canonicalStage1ResidualFrontier :
         "ValuationBallProjectionWithoutPreservationToyCountermodel.not_projection_preservation",
       role :=
         "Constructed weakened-boundary diagnostic showing that a reconstructed p-adic-defect/main valuation-ball shell payload may differ from the original valuation-ball shell payload unless projection preservation is supplied or proved." },
+    { name := "compact-open inverse-base-prime valuation-cover countermodel",
+      status := .constructed,
+      declarationName :=
+        "InverseBasePrimeWithoutValuationCoverToyCountermodel.not_compactOpen_measure_eq_inverseBasePrime_measure",
+      role :=
+        "Constructed weakened-boundary diagnostic showing why the compact-open inverse-base-prime route cannot replace the p^{-1}O_K valuation-cover law by an arbitrary compact-open Haar source: the detached compact open may still have unit mass while the inverse-base-prime ball has mass strictly greater than one." },
     { name := "weighted determinant shadow synchronization countermodel",
       status := .constructed,
       declarationName :=
@@ -747,7 +765,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 75 :=
+    canonicalStage1ResidualFrontier.length = 78 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -757,7 +775,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 70 :=
+      (fun entry => entry.status = .derived)).length = 72 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -767,7 +785,7 @@ theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
 
 theorem canonicalStage1ResidualFrontier_constructed_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .constructed)).length = 5 :=
+      (fun entry => entry.status = .constructed)).length = 6 :=
   rfl
 
 /--
@@ -1305,6 +1323,48 @@ theorem valuationBallProjectionWithoutPreservationToyCountermodel_not_projection
   valuationBallProjectionWithoutPreservationToyCountermodel.not_projection_preservation
 
 /--
+Toy diagnostic for the compact-open inverse-base-prime valuation-cover law.
+
+The p-adic finite-extension construction proves that the selected compact open
+is \(p^{-1}O_K\), hence its Haar mass is \(p^{[K:\mathbb Q_p]}\), strictly
+larger than one.  If the compact-open additive-Haar factor is detached from
+that valuation-cover law, it may still be normalized like \(O_K\), with mass
+one, and therefore cannot supply the inverse-base-prime summand used by the
+compact-open route.
+-/
+structure InverseBasePrimeWithoutValuationCoverToyCountermodel where
+  inverseBasePrimeMeasure : Real
+  detachedCompactOpenMeasure : Real
+  inverseBasePrime_measure_gt_one : 1 < inverseBasePrimeMeasure
+  detachedCompactOpen_measure_one : detachedCompactOpenMeasure = 1
+
+theorem InverseBasePrimeWithoutValuationCoverToyCountermodel.not_compactOpen_measure_eq_inverseBasePrime_measure
+    (toy : InverseBasePrimeWithoutValuationCoverToyCountermodel) :
+    ¬ toy.detachedCompactOpenMeasure = toy.inverseBasePrimeMeasure := by
+  intro hmeasure
+  have hdetached_gt_one : 1 < toy.detachedCompactOpenMeasure := by
+    simpa [hmeasure] using toy.inverseBasePrime_measure_gt_one
+  rw [toy.detachedCompactOpen_measure_one] at hdetached_gt_one
+  exact (lt_irrefl (1 : Real)) hdetached_gt_one
+
+/--
+Concrete inverse-base-prime countermodel: the detached compact open has unit
+mass, while the actual inverse-base-prime compact open has mass \(2\).
+-/
+def inverseBasePrimeWithoutValuationCoverToyCountermodel :
+    InverseBasePrimeWithoutValuationCoverToyCountermodel :=
+  { inverseBasePrimeMeasure := 2,
+    detachedCompactOpenMeasure := 1,
+    inverseBasePrime_measure_gt_one := by norm_num,
+    detachedCompactOpen_measure_one := by norm_num }
+
+theorem inverseBasePrimeWithoutValuationCoverToyCountermodel_not_compactOpen_measure_eq_inverseBasePrime_measure :
+    ¬ inverseBasePrimeWithoutValuationCoverToyCountermodel.detachedCompactOpenMeasure =
+      inverseBasePrimeWithoutValuationCoverToyCountermodel.inverseBasePrimeMeasure :=
+  inverseBasePrimeWithoutValuationCoverToyCountermodel
+    |>.not_compactOpen_measure_eq_inverseBasePrime_measure
+
+/--
 Toy diagnostic for the Record-Ob3/Ob4 weighted-determinant shadow.
 
 The Step (xi) valuation-cover route may know that the displayed weighted
@@ -1391,6 +1451,18 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check ValuationBallProjectionWithoutPreservationToyCountermodel.not_projection_preservation
 #guard_msgs (drop info) in
 #print axioms ValuationBallProjectionWithoutPreservationToyCountermodel.not_projection_preservation
+#guard_msgs (drop info) in
+#check InverseBasePrimeWithoutValuationCoverToyCountermodel.not_compactOpen_measure_eq_inverseBasePrime_measure
+#guard_msgs (drop info) in
+#print axioms InverseBasePrimeWithoutValuationCoverToyCountermodel.not_compactOpen_measure_eq_inverseBasePrime_measure
+#guard_msgs (drop info) in
+#check IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource.normedFiniteExtensionInverseBasePrimeValuationBallSource_endpoint
+#guard_msgs (drop info) in
+#print axioms IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource.normedFiniteExtensionInverseBasePrimeValuationBallSource_endpoint
+#guard_msgs (drop info) in
+#check IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource.InverseBasePrimeValuationBallSource.inverseBasePrime_componentwiseEqual
+#guard_msgs (drop info) in
+#print axioms IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource.InverseBasePrimeValuationBallSource.inverseBasePrime_componentwiseEqual
 #guard_msgs (drop info) in
 #check IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.ext_of_localization_anchor_tensorPower
 #guard_msgs (drop info) in

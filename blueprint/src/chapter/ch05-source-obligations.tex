@@ -4556,22 +4556,35 @@
   the existing p-adic unit-ball Haar-index defect source by projecting each
   local factor to its unit-ball Haar-character normalization:
   \lean{Iut.Stage1.Experiments.IUTStage1FinitePlaceResidueSubmodulePadicUnitBallHaarIndexDefectSource.toPadicUnitBallHaarIndexDefectSource}.
+  The inverse-base-prime compact-open factor is also source-backed at the
+  finite-extension layer: Lean proves \(p^{-1}O_K\) is the valuation ball of
+  radius \(p\), constructs the corresponding valuation-ball additive-Haar
+  source, and transports it componentwise to the compact-open
+  inverse-base-prime normalization via
+  \lean{Iut.Stage1.IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource.normedFiniteExtensionInverseBasePrimeValuationBallSource_endpoint}
+  and
+  \lean{Iut.Stage1.IUTStage1PadicFiniteExtensionConstructedDilationMassHaarNormalizationSource.InverseBasePrimeValuationBallSource.inverseBasePrime_componentwiseEqual}.
   The named-HDD Record-Ob3/Ob5 valuation-ball boundary now also projects
   directly to the canonical residual package through the p-adic arithmetic
   formula-matching bridge:
   \lean{Iut.Stage1.Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toCoreLocalArithmeticDegreeResidualSource}.
   The canonical route manifest records this residual frontier as a checked
-  seventy-five-entry, zero-source-obligation sub-manifest:
+  seventy-eight-entry, zero-source-obligation sub-manifest:
   \lean{Iut.Stage1.IUTStage1StepXIDependencyAudit.canonicalStage1ResidualFrontier}.
-  The eight newest residual-frontier entries register the synchronized
-  route-input construction, the compact-open inverse-base-prime audit, the
-  p-adic-defect/main compact-open route-input constructor, the local-degree
-  formula compact-open route-input constructor, the local-degree formula
-  canonical-HDD compact-open inverse-base-prime route, and the two
-  p-adic-defect/main
-  compact-open product-handoff routes, plus the
-  constructor-level p-adic-defect/main projected-weighted formula-gap residual
-  endpoint and its projection audit.  The checked manifest therefore tracks that the local analytic
+  The newest residual-frontier entries register the finite-extension
+  inverse-base-prime valuation-ball construction and its componentwise
+  additive-Haar synchronization, the synchronized route-input construction, the
+  compact-open inverse-base-prime audit, the p-adic-defect/main compact-open
+  route-input constructor, the local-degree formula compact-open route-input
+  constructor, the local-degree formula canonical-HDD compact-open
+  inverse-base-prime route, and the two p-adic-defect/main compact-open
+  product-handoff routes, plus the constructor-level p-adic-defect/main
+  projected-weighted formula-gap residual endpoint and its projection audit.
+  A matching weakened-boundary countermodel,
+  \lean{Iut.Stage1.IUTStage1StepXIDependencyAudit.InverseBasePrimeWithoutValuationCoverToyCountermodel.not_compactOpen_measure_eq_inverseBasePrime_measure},
+  records that an arbitrary detached compact open may retain unit Haar mass
+  while the true inverse-base-prime ball has mass strictly greater than one.
+  The checked manifest therefore tracks that the local analytic
   Theorem~1.10 object,
   Haar-defect function, pointwise equality, localized synchronization,
   local-degree formula projection, and component/formula equality are bundled
