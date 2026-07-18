@@ -21173,6 +21173,7 @@ variable [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
 variable [MeasurableSpace K] [BorelSpace K] [LocallyCompactSpace K]
 variable [IsTopologicalAddGroup K]
 variable [NormedAlgebra ℚ_[p] K]
+variable [FiniteDimensional ℚ_[p] K]
 variable [Field κ] [Fintype κ]
 variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
 
@@ -21223,6 +21224,17 @@ noncomputable def toResidueModuleQuotientCosetHaarCharacterNormalizationSource
       data.quotientFinrankTransported_eq_extensionFinrank,
     hull_logVolume_eq_normalized := data.hull_logVolume_eq_normalized }
 
+noncomputable def toUnitBallHaarCharacterNormalizationSource
+    (data :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterNormalizationSource
+        α p K κ hullSystem) :
+    IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource
+      α p K hullSystem := by
+  haveI : FiniteDimensional ℚ_[p] K := data.finiteDimensional
+  exact
+    data.toResidueModuleQuotientCosetHaarCharacterNormalizationSource
+      |>.toUnitBallHaarCharacterNormalizationSource
+
 set_option linter.style.longLine false in
 theorem ComponentwiseEqual.toResidueModuleQuotientCosetHaarCharacterNormalizationSource
     {left right :
@@ -21247,6 +21259,20 @@ theorem ComponentwiseEqual.toResidueModuleQuotientCosetHaarCharacterNormalizatio
     haarMeasure_eq := by
       simpa [toResidueModuleQuotientCosetHaarCharacterNormalizationSource] using
         matching.haarMeasure_eq }
+
+set_option linter.style.longLine false in
+theorem ComponentwiseEqual.toUnitBallHaarCharacterNormalizationSource
+    {left right :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterNormalizationSource
+        α p K κ hullSystem}
+    (matching : ComponentwiseEqual left right) :
+    IUTStage1PadicFiniteExtensionUnitBallHaarCharacterNormalizationSource.ComponentwiseEqual
+      left.toUnitBallHaarCharacterNormalizationSource
+      right.toUnitBallHaarCharacterNormalizationSource := by
+  haveI : FiniteDimensional ℚ_[p] K := left.finiteDimensional
+  exact
+    matching.toResidueModuleQuotientCosetHaarCharacterNormalizationSource
+      |>.toUnitBallHaarCharacterNormalizationSource
 
 /--
 The submodule-level residue source reaches the full local
@@ -21329,6 +21355,31 @@ theorem quotientCosetHaarCharacterEndpoint
       hhaar.2.2.2.2.2.2.1,
       hhaar.2.2.2.2.2.2.2.1,
       hhaar.2.2.2.2.2.2.2.2⟩
+
+theorem unitBallHaarCharacterEndpoint
+    (data :
+      IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterNormalizationSource
+        α p K κ hullSystem) :
+    letI := data.finiteDimensional
+    data.toUnitBallHaarCharacterNormalizationSource.haarMeasure
+        data.toUnitBallHaarCharacterNormalizationSource.integerSource.ringOfIntegers = 1 ∧
+      data.toUnitBallHaarCharacterNormalizationSource.haarMeasure
+          ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+            data.toUnitBallHaarCharacterNormalizationSource.integerSource.ringOfIntegers) =
+        ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) ∧
+      (MeasureTheory.addEquivAddHaarChar
+          data.toUnitBallHaarCharacterNormalizationSource.basePrimeContinuousAddEquiv :
+          ENNReal) =
+        ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) ∧
+      (∀ subset : Set K,
+        data.toUnitBallHaarCharacterNormalizationSource.haarMeasure
+            ((fun point : K => algebraMap ℚ_[p] K (p : ℚ_[p]) * point) ''
+              subset) =
+          ENNReal.ofReal (((p : Real) ^ Module.finrank ℚ_[p] K)⁻¹) *
+            data.toUnitBallHaarCharacterNormalizationSource.haarMeasure
+              subset) := by
+  haveI : FiniteDimensional ℚ_[p] K := data.finiteDimensional
+  exact data.toUnitBallHaarCharacterNormalizationSource.endpoint
 
 end IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterNormalizationSource
 

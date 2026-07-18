@@ -4528,8 +4528,15 @@
   transports the quotient module to \(O_v/p_vO_v\) before applying the
   residue-module determinant criterion:
   \lean{Iut.Stage1.IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_normedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower}.
+  The same residue-submodule object now projects directly to the unit-ball
+  Haar-character endpoint.  Lean transports the quotient module across
+  \(O_v/p_vO_v\) and reads off \(\mu(O_v)=1\),
+  \(\mu(p_vO_v)=p_v^{-[K_v:\mathbb Q_p]}\), the additive Haar-character
+  scalar, and the all-subset base-prime dilation law without reintroducing a
+  quotient-native residue-module source:
+  \lean{Iut.Stage1.IUTStage1PadicFiniteExtensionNormedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterNormalizationSource.unitBallHaarCharacterEndpoint}.
   The canonical route manifest records this residual frontier as a checked
-  fifty-eight-entry, zero-source-obligation sub-manifest:
+  fifty-nine-entry, zero-source-obligation sub-manifest:
   \lean{Iut.Stage1.IUTStage1StepXIDependencyAudit.canonicalStage1ResidualFrontier}.
   It classifies the p-adic-defect/main valuation-ball controlled Record-Ob3/Ob5
   component source as derived rather than as a lower source obligation.  The

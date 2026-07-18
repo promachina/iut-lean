@@ -2369,6 +2369,11 @@ residue-field action is carried before quotienting on the additive group of
 \(O_v\), the \(p_vO_v\) image is represented by a submodule, Lean transports
 the quotient module to \(O_v/p_vO_v\), and applies
 \texttt{\detokenize{IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_normedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower}}.
+The same residue-submodule source now has a direct unit-ball Haar-character
+endpoint: after transporting the quotient module across \(O_v/p_vO_v\), Lean
+recovers \(\mu(O_v)=1\), \(\mu(p_vO_v)=p_v^{-[K_v:\mathbb Q_p]}\), the additive
+Haar-character scalar, and the all-subset base-prime dilation law without
+reintroducing the quotient-native residue-module object as a separate source.
 The same lowered source now carries the relative nonvacuity audit and the
 public-boundary inventory audit directly: Lean constructs the old
 local-analytic source internally before proving that the q-normalized route,
