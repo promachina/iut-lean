@@ -424,6 +424,18 @@ def canonicalStage1ResidualFrontier :
         "RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.preferredPublicCompactOpenLogKummerMapCanonicalHDDPadicDefectMainInverseBasePrimeRoute_projectionAudit",
       role :=
         "Derived route audit showing that the p-adic-defect/main compact-open canonical-HDD route factors through the p-adic-defect/main source projections and is definitionally the controlled-component route at the same handoff." },
+    { name := "p-adic-defect/main compact-open canonical-HDD product-handoff route",
+      status := .derived,
+      declarationName :=
+        "RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.preferredPublicCompactOpenLogKummerMapCanonicalHDDPadicDefectMainProductHandoffFormulaRealizedRoute",
+      role :=
+        "Derived combined lowering for the compact-open canonical-HDD route.  The public p-adic/Haar arithmetic input is the product-level Ob7 handoff, and the public local-estimate input is the p-adic-defect/main Record-Ob3/Ob5 source; Lean projects the controlled component and arithmetic-degree local source before entering the canonical-HDD component product-handoff route." },
+    { name := "p-adic-defect/main compact-open canonical-HDD product-handoff route audit",
+      status := .derived,
+      declarationName :=
+        "RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.preferredPublicCompactOpenLogKummerMapCanonicalHDDPadicDefectMainProductHandoffFormulaRealizedRoute_projectionAudit",
+      role :=
+        "Derived route audit showing that the p-adic-defect/main canonical-HDD product-handoff route factors through the p-adic-defect/main controlled-component projection and is definitionally the canonical-HDD arithmetic-degree controlled product-handoff route." },
     { name := "local-degree formula p-adic-defect/main endpoint",
       status := .derived,
       declarationName :=
@@ -1080,7 +1092,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 129 :=
+    canonicalStage1ResidualFrontier.length = 131 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1090,7 +1102,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 123 :=
+      (fun entry => entry.status = .derived)).length = 125 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6705,6 +6717,14 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.preferredPublicCompactOpenLogKummerMapCanonicalHDDPadicDefectMainInverseBasePrimeRoute_projectionAudit
 #guard_msgs (drop info) in
 #print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.preferredPublicCompactOpenLogKummerMapCanonicalHDDPadicDefectMainInverseBasePrimeRoute_projectionAudit
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.preferredPublicCompactOpenLogKummerMapCanonicalHDDPadicDefectMainProductHandoffFormulaRealizedRoute
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.preferredPublicCompactOpenLogKummerMapCanonicalHDDPadicDefectMainProductHandoffFormulaRealizedRoute
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.preferredPublicCompactOpenLogKummerMapCanonicalHDDPadicDefectMainProductHandoffFormulaRealizedRoute_projectionAudit
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.preferredPublicCompactOpenLogKummerMapCanonicalHDDPadicDefectMainProductHandoffFormulaRealizedRoute_projectionAudit
 #guard_msgs (drop info) in
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.toCorePadicUnitBallArithmeticFormulaMatchingSource
 #guard_msgs (drop info) in
