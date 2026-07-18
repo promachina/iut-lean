@@ -238,9 +238,9 @@ def canonicalStage1RemainingAssumptions :
       status := .sourceObligation,
       paperSource := "IUT IV, Theorem 1.10, local Step (v)/(vi)/(vii) estimates and p-adic Haar residual normalization",
       consumerDeclaration :=
-        "preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallCalibrationLocalArithmeticPointwisePadicUnitBallValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualIUTIVArithmeticDivisorLocalizedStepXIConstructedHDDDataGoalCompletionAudit",
+        "preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallCalibrationLocalArithmeticPointwisePadicUnitBallValuationBallLocalAnalyticPadicNormalizedProcessionalCaseIUTIVArithmeticDivisorLocalizedStepXIConstructedHDDDataGoalCompletionAudit",
       note :=
-        "Current lower IUT IV source boundary: the p-adic unit-ball localized Step (xi) source supplies the localized arithmetic-divisor identity and p-adic Haar residual normalization; the matching valuation-ball local-analytic Theorem 1.10 source supplies the local analytic ledger; and the processional p-adic unit-ball Haar-defect residual source supplies the Step (v)/(vi)/(vii) procession-normalized identities together with the finite-place Haar defect p_v^[K_v:Q_p].  Lean reconstructs the generic Haar-defect source, pointwise residual theorem, expanded p-adic Haar residual source, and p-adic-normalized processional case handoff internally; the remaining paper obligation is deriving this p-adic Haar-index processional local-estimate source and the normalized-place compatibility from the full IUT IV local estimate proof." },
+        "Current lower IUT IV source boundary: the p-adic unit-ball localized Step (xi) source supplies the localized arithmetic-divisor identity and p-adic Haar residual normalization; the matching valuation-ball local-analytic Theorem 1.10 source supplies the local analytic ledger; and the p-adic-normalized processional case source supplies the Step (v)/(vi)/(vii) procession-normalized identities at the p-adic normalized place.  Lean reconstructs the pointwise local-analytic localized source, the expanded p-adic Haar residual identity, the generic Haar-defect source, and the pointwise residual theorem internally; the later processional Haar-index wrappers are checked derived routes, not the canonical public boundary.  The remaining paper obligation is deriving this p-adic-normalized processional local-estimate source from the full IUT IV local estimate proof." },
     { name := "localArithmeticDegreeResidualSource",
       status := .derived,
       paperSource := "IUT IV local arithmetic-degree identity and Haar residual lower bound",
@@ -771,6 +771,18 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISource.ofPointwiseTheorem110ValuationBallLocalAnalyticIUTIVLocalizedStepXISourcePadicUnitBallHaarDefectResidualSourceProcessionalPointwiseResidualSource",
       role :=
         "Derived packet-facing constructor below the normalized processional case record.  From the pointwise local-analytic valuation-ball IUT IV localized source, the expanded p-adic unit-ball Haar residual identity, the lower processional pointwise-residual source, and the explicit normalized-place alignment, Lean reconstructs the p-adic-normalized case source internally before entering the existing processional p-adic localized Step (xi) route." },
+    { name := "pointwise p-adic unit-ball valuation-ball route from p-adic-normalized processional case source",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISource.ofPointwisePadicUnitBallIUTIVLocalizedStepXISourceValuationBallLocalAnalyticPadicNormalizedProcessionalCaseSource",
+      role :=
+        "Derived p-adic unit-ball route below the pointwise local-analytic p-adic case endpoint.  From the p-adic unit-ball localized Step (xi) object, the matching valuation-ball local-analytic Theorem 1.10 source, the local-evaluation equality, and p-adic-normalized processional case data indexed over the reconstructed p-adic Haar residual source, Lean reconstructs the pointwise local-analytic localized source and expanded p-adic Haar-residual identity before entering the p-adic-normalized case route." },
+    { name := "public p-adic unit-ball valuation-ball endpoint from p-adic-normalized processional case source",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallCalibrationLocalArithmeticPointwisePadicUnitBallValuationBallLocalAnalyticPadicNormalizedProcessionalCaseIUTIVArithmeticDivisorLocalizedStepXIConstructedHDDDataGoalCompletionAudit",
+      role :=
+        "Derived public signed endpoint at the current canonical p-adic unit-ball/local-analytic boundary.  It exposes the p-adic unit-ball localized Step (xi) object, matching valuation-ball local-analytic Theorem 1.10 ledger, local-evaluation equality, and p-adic-normalized processional case data; Lean derives the expanded p-adic Haar-residual source and normalized-place alignment internally before invoking the established processional p-adic unit-ball Corollary 3.12 route." },
     { name := "pointwise p-adic unit-ball valuation-ball route from processional pointwise residual source",
       status := .derived,
       declarationName :=
@@ -923,7 +935,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 103 :=
+    canonicalStage1ResidualFrontier.length = 105 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -933,7 +945,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 97 :=
+      (fun entry => entry.status = .derived)).length = 99 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
