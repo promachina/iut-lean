@@ -1932,7 +1932,11 @@ route supplies the \(C_\Theta\geq -1\) companion endpoint.  This
 canonical-scale route now also has signed and \(C_\Theta\geq -1\)
 side-condition-sourced public endpoints: Lean rebuilds the named
 side-hypothesis record from \texttt{IUTStage1SourceSideConditions} before
-entering the same scale-synchronized local-analytic source route.
+entering the same scale-synchronized local-analytic source route.  The same
+two endpoints now have source-obligation-gap forms, so this same-index
+lower-comparison surface can project q-positivity and source normalization
+from \texttt{IUTStage1SourceObligationGap} instead of exposing the raw
+side-condition record when the gap is available.
 A formula-gap same-index companion now lifts this replacement through the
 Theorem~1.10 formula-gap boundary.  Its source carries the principal-product
 formula-gap residual package; Lean projects the local-analytic ledger and then
@@ -1943,7 +1947,8 @@ q-normalized scale-synchronized route.  The formula-gap canonical-scale route
 now has the same side-condition-sourced signed and \(C_\Theta\geq -1\)
 variants, so the public surface can consume
 \texttt{IUTStage1SourceSideConditions} rather than a separate
-side-hypothesis wrapper at this boundary.
+side-hypothesis wrapper at this boundary.  Its signed and \(C_\Theta\geq -1\)
+variants are also lowered through \texttt{IUTStage1SourceObligationGap}.
 The case-bounded version of this scale-synchronized route now constructs the
 formula-gap residual package from the scale-synchronized local-analytic source,
 the valuation-ball formula-gap source, and the explicit distinguished,
@@ -2587,12 +2592,13 @@ derivation of the source-obligation gap itself remains part of the lower
 Theorem~3.11 construction boundary.
 The q-normalized local arithmetic-degree route now has the same source-gap
 lowering at the packaged, expanded constituent, family-hull theta, and
-record-family-hull q-scale surfaces: the source-gap endpoints project
-q-pilot positivity and normalization from `IUTStage1SourceObligationGap`
-before proving both the signed dichotomy and the \(\CTheta\ge -1\) companion
-bound.  This removes the raw side-condition record from these local-degree
-surfaces; the remaining lower-comparison companions still remain to be
-lowered through the same gap.
+record-family-hull q-scale surfaces, and the same-index scale-synchronized
+local-analytic/formula-gap lower-comparison companions now have matching
+source-gap endpoints.  In each case Lean projects q-pilot positivity and
+normalization from `IUTStage1SourceObligationGap` before proving the signed
+dichotomy and the \(\CTheta\ge -1\) companion bound.  This removes the raw
+side-condition record from these same-index surfaces; the remaining
+projected/heterogeneous formula-gap companions still need the same lowering.
 The same public surface has also been lowered through the concrete packet:
 Lean constructs that source-obligation gap from
 `packet.primitiveConstructor.constructedBundle.toStructuredInputsWithSHE`

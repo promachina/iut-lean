@@ -213,7 +213,7 @@ def canonicalStage1RemainingAssumptions :
       consumerDeclaration :=
         "IUTStage1SourceSideConditions",
       note :=
-        "q-positivity, normalization, and side-condition facts are reconstructed into the route but not yet derived from paper data.  The packaged, expanded constituent, family-hull theta, and record-family-hull q-scale same-index local arithmetic-degree endpoints now have source-obligation-gap surfaces, so this raw side-condition record is no longer exposed at those routes once the gap is available.  Lower comparison companions still expose the side-condition source until their package construction is lowered through the same gap." },
+        "q-positivity, normalization, and side-condition facts are reconstructed into the route but not yet derived from paper data.  The packaged, expanded constituent, family-hull theta, record-family-hull q-scale, and same-index scale-synchronized local-analytic/formula-gap lower-comparison endpoints now have source-obligation-gap surfaces, so this raw side-condition record is no longer exposed at those routes once the gap is available.  The remaining projected/heterogeneous formula-gap companions still expose the side-condition source until their package construction is lowered through the same gap." },
     { name := "weighted determinant component synchronization",
       status := .sourceObligation,
       paperSource := "IUT III, Remark 3.9.5 Ob3/Ob4 determinant bridge",
@@ -1042,6 +1042,30 @@ def canonicalStage1ResidualFrontier :
         "ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantScaleSynchronizedLocalAnalyticSource.toQNormalizedProjectedPrincipalProductSource",
       role :=
         "Derived same-index conversion used by the scale-synchronized public endpoints: Lean constructs the q-normalized principal-product residual source internally from the canonical-scale source before reading off the signed Corollary 3.12 dichotomy and C_Theta lower bound." },
+    { name := "same-index scale-synchronized local-analytic source-obligation-gap signed endpoint",
+      status := .derived,
+      declarationName :=
+        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedLocalAnalyticSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
+      role :=
+        "Derived source-gap lowering for the same-index scale-synchronized local-analytic signed endpoint.  The canonical-scale source is still the mathematical comparison input, but q-pilot positivity and source normalization are read from IUTStage1SourceObligationGap.sideConditionHypotheses instead of exposing a raw side-condition record." },
+    { name := "same-index scale-synchronized local-analytic source-obligation-gap CTheta endpoint",
+      status := .derived,
+      declarationName :=
+        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedLocalAnalyticSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312CThetaGeNegOneGoalEvidenceAudit",
+      role :=
+        "Derived source-gap lowering for the same-index scale-synchronized local-analytic C_Theta >= -1 endpoint.  It uses the same canonical-scale comparison source and projects the sign/normalization hypotheses from the source-obligation gap before invoking the side-hypotheses lower-bound route." },
+    { name := "same-index scale-synchronized formula-gap source-obligation-gap signed endpoint",
+      status := .derived,
+      declarationName :=
+        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedFormulaGapSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
+      role :=
+        "Derived source-gap lowering for the same-index scale-synchronized formula-gap signed endpoint.  The formula-gap residual package remains the public mathematical object, while the side-condition hypotheses are reconstructed from the source-obligation gap." },
+    { name := "same-index scale-synchronized formula-gap source-obligation-gap CTheta endpoint",
+      status := .derived,
+      declarationName :=
+        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedFormulaGapSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312CThetaGeNegOneGoalEvidenceAudit",
+      role :=
+        "Derived source-gap lowering for the same-index scale-synchronized formula-gap C_Theta >= -1 endpoint.  It keeps the formula-gap comparison source but removes the raw side-condition record from this lower-comparison public boundary." },
     { name := "principal-product q-normalized local-analytic source from family hull",
       status := .derived,
       declarationName :=
@@ -1140,7 +1164,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 139 :=
+    canonicalStage1ResidualFrontier.length = 143 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1150,7 +1174,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 133 :=
+      (fun entry => entry.status = .derived)).length = 137 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -4308,6 +4332,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedLocalAnalyticSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedLocalAnalyticSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedLocalAnalyticSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalAnalyticSource
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalAnalyticSource
@@ -4355,6 +4383,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedLocalAnalyticSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312CThetaGeNegOneGoalEvidenceAudit
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedLocalAnalyticSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312CThetaGeNegOneGoalEvidenceAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedLocalAnalyticSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312CThetaGeNegOneGoalEvidenceAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedLocalAnalyticSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312CThetaGeNegOneGoalEvidenceAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantScaleSynchronizedLocalAnalyticSource.cTheta_ge_neg_one
 #guard_msgs (drop info) in
@@ -4440,6 +4472,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedFormulaGapSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedFormulaGapSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedFormulaGapSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantScaleSynchronizedFormulaGapSource
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantScaleSynchronizedFormulaGapSource
@@ -4459,6 +4495,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedFormulaGapSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312CThetaGeNegOneGoalEvidenceAudit
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedFormulaGapSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312CThetaGeNegOneGoalEvidenceAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedFormulaGapSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312CThetaGeNegOneGoalEvidenceAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantScaleSynchronizedFormulaGapSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312CThetaGeNegOneGoalEvidenceAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantScaleSynchronizedFormulaGapSource.cTheta_ge_neg_one
 #guard_msgs (drop info) in
