@@ -1528,6 +1528,122 @@ theorem RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlle
     source.toCoreLocalArithmeticDegreeResidualSource.Endpoint :=
   source.toCoreLocalArithmeticDegreeResidualSource.endpoint
 
+set_option linter.style.longLine false in
+/--
+Project a named-HDD Record-Ob3/Ob5 valuation-ball boundary directly to the
+canonical p-adic arithmetic formula-matching package.
+
+The named-HDD boundary still remembers the valuation-ball Record-Ob3/Ob5
+source, but the consumer does not need to expose that source separately.  Lean
+first reconstructs the arithmetic-degree-controlled local source from the
+valuation-ball boundary, then projects through the canonical Step~(xi) formula
+package.
+-/
+noncomputable def RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toCorePadicUnitBallArithmeticFormulaMatchingSource
+    {constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record}
+    (boundary :
+      RecordOb3Ob5ValuationBallNamedHDDBoundaryData
+        (recordAdjustedSource := recordAdjustedSource)
+        (sourceData := sourceData) (estimate := estimate) (l := l)
+        (η := η) (localPrime := localPrime) (localField := localField)
+        (αHaar := αHaar) (hullSystem := hullSystem)
+        (αLocal := αLocal) (ηLocal := ηLocal)
+        (localAnalyticHullSystem := localAnalyticHullSystem)
+        (archIndex := archIndex) (archSummand := archSummand)
+        constructorBuiltSource) :=
+  boundary.valuationBallSource.toArithmeticDegreeControlledLocalArithmeticSource
+    |>.toCorePadicUnitBallArithmeticFormulaMatchingSource
+
+theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toCorePadicUnitBallArithmeticFormulaMatchingSource_endpoint
+    {constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record}
+    (boundary :
+      RecordOb3Ob5ValuationBallNamedHDDBoundaryData
+        (recordAdjustedSource := recordAdjustedSource)
+        (sourceData := sourceData) (estimate := estimate) (l := l)
+        (η := η) (localPrime := localPrime) (localField := localField)
+        (αHaar := αHaar) (hullSystem := hullSystem)
+        (αLocal := αLocal) (ηLocal := ηLocal)
+        (localAnalyticHullSystem := localAnalyticHullSystem)
+        (archIndex := archIndex) (archSummand := archSummand)
+        constructorBuiltSource) :
+    boundary.toCorePadicUnitBallArithmeticFormulaMatchingSource.Endpoint :=
+  boundary.toCorePadicUnitBallArithmeticFormulaMatchingSource.endpoint
+
+set_option linter.style.longLine false in
+/--
+Project a named-HDD Record-Ob3/Ob5 valuation-ball boundary directly to the
+canonical local arithmetic-degree residual package.
+
+This is the named-HDD analogue of the lower p-adic-defect/main residual
+projection: the residual consumer receives the formula package produced from
+the named boundary, not a separately supplied valuation-ball local-estimate
+source, Haar-index source, prime-error split, or component/formula
+synchronization equality.
+-/
+noncomputable def RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toCoreLocalArithmeticDegreeResidualSource
+    {constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record}
+    (boundary :
+      RecordOb3Ob5ValuationBallNamedHDDBoundaryData
+        (recordAdjustedSource := recordAdjustedSource)
+        (sourceData := sourceData) (estimate := estimate) (l := l)
+        (η := η) (localPrime := localPrime) (localField := localField)
+        (αHaar := αHaar) (hullSystem := hullSystem)
+        (αLocal := αLocal) (ηLocal := ηLocal)
+        (localAnalyticHullSystem := localAnalyticHullSystem)
+        (archIndex := archIndex) (archSummand := archSummand)
+        constructorBuiltSource) :=
+  boundary.toCorePadicUnitBallArithmeticFormulaMatchingSource
+    |>.toLocalArithmeticDegreeResidualSource
+
+theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toCoreLocalArithmeticDegreeResidualSource_endpoint
+    {constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record}
+    (boundary :
+      RecordOb3Ob5ValuationBallNamedHDDBoundaryData
+        (recordAdjustedSource := recordAdjustedSource)
+        (sourceData := sourceData) (estimate := estimate) (l := l)
+        (η := η) (localPrime := localPrime) (localField := localField)
+        (αHaar := αHaar) (hullSystem := hullSystem)
+        (αLocal := αLocal) (ηLocal := ηLocal)
+        (localAnalyticHullSystem := localAnalyticHullSystem)
+        (archIndex := archIndex) (archSummand := archSummand)
+        constructorBuiltSource) :
+    boundary.toCoreLocalArithmeticDegreeResidualSource.Endpoint :=
+  boundary.toCoreLocalArithmeticDegreeResidualSource.endpoint
+
+set_option linter.style.longLine false in
+/--
+Audit the named-HDD residual projection.
+
+The projected residual source has its endpoint, and the finite Haar-defect
+lower bound is the same one carried by the named-HDD valuation-ball boundary.
+-/
+theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toCoreLocalArithmeticDegreeResidualSource_audit
+    {constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := β) record}
+    (boundary :
+      RecordOb3Ob5ValuationBallNamedHDDBoundaryData
+        (recordAdjustedSource := recordAdjustedSource)
+        (sourceData := sourceData) (estimate := estimate) (l := l)
+        (η := η) (localPrime := localPrime) (localField := localField)
+        (αHaar := αHaar) (hullSystem := hullSystem)
+        (αLocal := αLocal) (ηLocal := ηLocal)
+        (localAnalyticHullSystem := localAnalyticHullSystem)
+        (archIndex := archIndex) (archSummand := archSummand)
+        constructorBuiltSource) :
+    boundary.toCoreLocalArithmeticDegreeResidualSource.Endpoint ∧
+      (1 : Real) <= ∑ place : β, boundary.localHaarNormalizationDefect place :=
+  ⟨boundary.toCoreLocalArithmeticDegreeResidualSource_endpoint,
+    boundary.total_haar_defect_ge_one⟩
+
 end ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource
 
 end Experiments

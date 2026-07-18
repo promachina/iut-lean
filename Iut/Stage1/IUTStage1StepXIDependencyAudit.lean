@@ -552,6 +552,12 @@ def canonicalStage1ResidualFrontier :
         "Experiments.IUTStage1FinitePlaceResidueSubmodulePadicUnitBallHaarIndexDefectSource.toPadicUnitBallHaarIndexDefectSource",
       role :=
         "Derived finite-place p-adic Haar-index defect source from residue-submodule local data.  Each place supplies the residue-field action before quotienting and the p_v O_v submodule; Lean projects these sources to unit-ball Haar-character normalizations, constructs the existing p-adic Haar-index defect source, and obtains the finite Haar-defect lower bound used by the IUT IV local-to-global residual package." },
+    { name := "named-HDD valuation-ball residual projection",
+      status := .derived,
+      declarationName :=
+        "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toCoreLocalArithmeticDegreeResidualSource",
+      role :=
+        "Derived projection from the named-HDD Record-Ob3/Ob5 valuation-ball boundary to the canonical local arithmetic-degree residual package.  The boundary already carries the compact-open/nonempty possible-image witness, constructor-built determinant synchronization, and valuation-ball Record-Ob3/Ob5 source; Lean reconstructs the arithmetic-degree-controlled local source, projects it through the p-adic arithmetic formula-matching package, and preserves the finite Haar-defect lower bound without exposing the valuation-ball source as a separate residual consumer input." },
     { name := "principal-product p-adic family-hull adjusted-sum projection",
       status := .derived,
       declarationName :=
@@ -650,7 +656,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 60 :=
+    canonicalStage1ResidualFrontier.length = 61 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -660,7 +666,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 55 :=
+      (fun entry => entry.status = .derived)).length = 56 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6057,6 +6063,14 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check Experiments.IUTStage1FinitePlaceResidueSubmodulePadicUnitBallHaarIndexDefectSource.endpoint
 #guard_msgs (drop info) in
 #print axioms Experiments.IUTStage1FinitePlaceResidueSubmodulePadicUnitBallHaarIndexDefectSource.endpoint
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toCorePadicUnitBallArithmeticFormulaMatchingSource
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toCoreLocalArithmeticDegreeResidualSource
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toCoreLocalArithmeticDegreeResidualSource_audit
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toCoreLocalArithmeticDegreeResidualSource_audit
 #guard_msgs (drop info) in
 #check IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_normedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower
 #guard_msgs (drop info) in
