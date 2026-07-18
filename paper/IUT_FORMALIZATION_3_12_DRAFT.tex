@@ -2595,13 +2595,15 @@ lowering at the packaged, expanded constituent, family-hull theta, and
 record-family-hull q-scale surfaces, and the same-index scale-synchronized
 local-analytic/formula-gap lower-comparison companions now have matching
 source-gap endpoints.  The projected-principal-product q-normalized
-formula-gap source pair and the strongest case-bounded projected formula-gap
-constituent endpoint now have the same lowering.  In each case Lean projects
-q-pilot positivity and normalization from `IUTStage1SourceObligationGap`
-before proving the signed dichotomy and the \(\CTheta\ge -1\) companion bound.
-This removes the raw side-condition record from these surfaces; the remaining
-non-case-bounded projected formula-gap constituent and local-degree residual
-companions still need the same lowering.
+formula-gap source pair and the projected formula-gap constituent/residual
+endpoints now have the same lowering, including the direct residual-Haar,
+local-degree residual, and case-bounded residual forms.  In each case Lean
+projects q-pilot positivity and normalization from
+`IUTStage1SourceObligationGap` before proving the signed dichotomy and the
+\(\CTheta\ge -1\) companion bound.  This removes the raw side-condition record
+from these projected formula-gap surfaces; the remaining work lies in deriving
+the source-obligation gap and the determinant/IUT~IV comparison inputs from
+paper-level data.
 The same public surface has also been lowered through the concrete packet:
 Lean constructs that source-obligation gap from
 `packet.primitiveConstructor.constructedBundle.toStructuredInputsWithSHE`

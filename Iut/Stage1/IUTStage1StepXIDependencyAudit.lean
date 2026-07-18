@@ -213,7 +213,7 @@ def canonicalStage1RemainingAssumptions :
       consumerDeclaration :=
         "IUTStage1SourceSideConditions",
       note :=
-        "q-positivity, normalization, and side-condition facts are reconstructed into the route but not yet derived from paper data.  The packaged, expanded constituent, family-hull theta, record-family-hull q-scale, same-index scale-synchronized local-analytic/formula-gap, projected formula-gap source, and case-bounded projected formula-gap constituent endpoints now have source-obligation-gap surfaces, so this raw side-condition record is no longer exposed at those routes once the gap is available.  The remaining non-case-bounded expanded projected formula-gap constituent and local-degree residual companions still expose the side-condition source until their package construction is lowered through the same gap." },
+        "q-positivity, normalization, and side-condition facts are reconstructed into the route but not yet derived from paper data.  The packaged, expanded constituent, family-hull theta, record-family-hull q-scale, same-index scale-synchronized local-analytic/formula-gap, projected formula-gap source, and projected formula-gap constituent/residual endpoints now have source-obligation-gap surfaces, so this raw side-condition record is no longer exposed at those routes once the gap is available.  The remaining work below this field is the paper-level construction of the source-obligation gap and the determinant/IUT IV comparison inputs rather than another public raw side-condition route." },
     { name := "weighted determinant component synchronization",
       status := .sourceObligation,
       paperSource := "IUT III, Remark 3.9.5 Ob3/Ob4 determinant bridge",
@@ -1078,6 +1078,18 @@ def canonicalStage1ResidualFrontier :
         "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffProjectedPrincipalProductWeightedDeterminantQNormalizedFormulaGapSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312CThetaGeNegOneGoalEvidenceAudit",
       role :=
         "Derived source-gap lowering for the projected-principal-product q-normalized formula-gap C_Theta >= -1 endpoint.  The lower-bound route now projects q-positivity and normalization through the source-obligation gap before consuming the projected formula-gap source." },
+    { name := "projected formula-gap constituent source-obligation-gap endpoint",
+      status := .derived,
+      declarationName :=
+        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffProjectedPrincipalProductWeightedDeterminantQNormalizedFormulaGapConstituentSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
+      role :=
+        "Derived source-gap lowering for the non-case-bounded heterogeneous projected formula-gap constituent endpoint.  The principal-product Step XI source, projected determinant synchronizations, q-normalized theta identity, Theorem 1.10 formula-gap source, and residual Haar lower bound remain public mathematical data, while q-pilot positivity and source normalization are projected from IUTStage1SourceObligationGap." },
+    { name := "local-degree projected formula-gap constituent source-obligation-gap endpoint",
+      status := .derived,
+      declarationName :=
+        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffProjectedPrincipalProductWeightedDeterminantQNormalizedFormulaGapConstituentSourceOfLocalArithmeticDegreeResidualSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
+      role :=
+        "Derived source-gap lowering for the projected formula-gap constituent endpoint whose residual Haar lower bound is supplied by the local arithmetic-degree residual payload.  The source-gap record now supplies the sign and normalization facts before the local-degree residual route enters the checked signed dichotomy and C_Theta >= -1 endpoint." },
     { name := "case-bounded projected formula-gap constituent source-obligation-gap endpoint",
       status := .derived,
       declarationName :=
@@ -1182,7 +1194,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 146 :=
+    canonicalStage1ResidualFrontier.length = 148 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1192,7 +1204,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 140 :=
+      (fun entry => entry.status = .derived)).length = 142 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -5338,9 +5350,17 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffProjectedPrincipalProductWeightedDeterminantQNormalizedFormulaGapConstituentSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffProjectedPrincipalProductWeightedDeterminantQNormalizedFormulaGapConstituentSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffProjectedPrincipalProductWeightedDeterminantQNormalizedFormulaGapConstituentSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffProjectedPrincipalProductWeightedDeterminantQNormalizedFormulaGapConstituentSourceOfLocalArithmeticDegreeResidualSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffProjectedPrincipalProductWeightedDeterminantQNormalizedFormulaGapConstituentSourceOfLocalArithmeticDegreeResidualSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffProjectedPrincipalProductWeightedDeterminantQNormalizedFormulaGapConstituentSourceOfLocalArithmeticDegreeResidualSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffProjectedPrincipalProductWeightedDeterminantQNormalizedFormulaGapConstituentSourceOfLocalArithmeticDegreeResidualSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffProjectedPrincipalProductWeightedDeterminantQNormalizedFormulaGapConstituentSourceOfCaseBoundedResidualSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
