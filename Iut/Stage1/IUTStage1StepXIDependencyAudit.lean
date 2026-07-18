@@ -940,6 +940,18 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseDefinedProcessionalEstimateSource.toProcessionalEstimateSource",
       role :=
         "Derived local IUT IV processional-estimate constructor.  The procession-normalized local log-volume is now the case-defined Step (v)/(vi)/(vii) value: exact Proposition 1.4/1.7 procession at distinguished finite places, zero at nondistinguished finite places, and the Proposition 1.5 metric-container value at archimedean places.  The constructor therefore replaces three separately supplied local identity families by one Step XI equality against this case-defined value." },
+    { name := "case-defined processional estimate from local procession-bound residual source",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseDefinedProcessionalEstimateSource.ofLocalAnalyticProcessionBoundPointwiseResidualSource",
+      role :=
+        "Derived constructor for the case-defined processional estimate source from the lower local-analytic procession-bound residual source plus the case-defined Step XI equality.  Lean transports the lower Step XI +1 procession-bound inequality across weightedAdjustedLogVolume = caseProcession, so the caseProcession +1 field is no longer an independent primitive when that lower source is available." },
+    { name := "case-defined processional estimate endpoint from local procession-bound residual source",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseDefinedProcessionalEstimateSource.ofLocalAnalyticProcessionBoundPointwiseResidualSource_endpoint",
+      role :=
+        "Endpoint theorem for the local procession-bound residual source to case-defined estimate lowering.  This records the equality-transport proof of the distinguished case-defined +1 estimate inside the audited frontier." },
     { name := "p-adic-normalized case-defined processional estimate constructor",
       status := .derived,
       declarationName :=
@@ -1458,7 +1470,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 192 :=
+    canonicalStage1ResidualFrontier.length = 194 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1468,7 +1480,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 186 :=
+      (fun entry => entry.status = .derived)).length = 188 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -3313,6 +3325,14 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseDefinedProcessionalEstimateSource.toProcessionalEstimateSource
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseDefinedProcessionalEstimateSource.toProcessionalEstimateSource
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseDefinedProcessionalEstimateSource.ofLocalAnalyticProcessionBoundPointwiseResidualSource
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseDefinedProcessionalEstimateSource.ofLocalAnalyticProcessionBoundPointwiseResidualSource
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseDefinedProcessionalEstimateSource.ofLocalAnalyticProcessionBoundPointwiseResidualSource_endpoint
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseDefinedProcessionalEstimateSource.ofLocalAnalyticProcessionBoundPointwiseResidualSource_endpoint
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallStepXISynchronizationSource.PadicNormalizedCaseDefinedProcessionalEstimateSource
 #guard_msgs (drop info) in
