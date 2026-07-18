@@ -241,7 +241,7 @@ def canonicalStage1RemainingAssumptions :
       consumerDeclaration :=
         "preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallCalibrationLocalArithmeticPointwisePadicUnitBallValuationBallLocalAnalyticPadicNormalizedProcessionalCaseIUTIVArithmeticDivisorLocalizedStepXIConstructedHDDDataGoalCompletionAudit",
       note :=
-        "Current lower IUT IV source boundary: the p-adic unit-ball localized Step (xi) source supplies the localized arithmetic-divisor identity and p-adic Haar residual normalization; the matching valuation-ball local-analytic Theorem 1.10 source supplies the local analytic ledger; and the p-adic-normalized processional case source supplies the Step (v)/(vi)/(vii) procession-normalized identities at the p-adic normalized place.  Lean reconstructs the pointwise local-analytic localized source, the expanded p-adic Haar residual identity, the generic Haar-defect source, and the pointwise residual theorem internally; the later processional Haar-index wrappers are checked derived routes, not the canonical public boundary.  The remaining paper obligation is deriving this p-adic-normalized processional local-estimate source from the full IUT IV local estimate proof." },
+        "Current lower IUT IV source boundary: the p-adic unit-ball localized Step (xi) source supplies the localized arithmetic-divisor identity and p-adic Haar residual normalization; the matching valuation-ball local-analytic Theorem 1.10 source supplies the local analytic ledger; and the p-adic-normalized processional case source supplies the Step (v)/(vi)/(vii) procession-normalized identities at the p-adic normalized place.  Lean reconstructs the pointwise local-analytic localized source, the expanded p-adic Haar residual identity, the generic Haar-defect source, the pointwise residual theorem, and the lower-weight local arithmetic-degree residual ledger internally; the later processional Haar-index wrappers are checked derived routes, not the canonical public boundary.  The normalized case layer now exposes the distinguished finite-place lower weight and derives the global Haar lower bound by finite summation.  The remaining paper obligation is deriving this p-adic-normalized processional local-estimate source from the full IUT IV local estimate proof." },
     { name := "localArithmeticDegreeResidualSource",
       status := .derived,
       paperSource := "IUT IV local arithmetic-degree identity and Haar residual lower bound",
@@ -862,6 +862,18 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalCaseSource.ofProcessionalArithmeticGapSource",
       role :=
         "Derived projection from the lower processional arithmetic-gap source to the p-adic-normalized case source consumed by the Haar-residual route.  The projection retains the Step (v)/(vi)/(vii) procession-normalized local-log-volume identities and transports the distinguished-place kind across the explicit equality with the p-adic normalized place; the stronger pointwise residual package is not exposed on this branch." },
+    { name := "p-adic-normalized case lower-weight residual projection",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalCaseSource.toLocalArithmeticDegreeLowerWeightResidualSource",
+      role :=
+        "Derived projection from p-adic-normalized processional case data to the lower-weight local arithmetic-degree residual package.  The p-adic Haar residual source supplies the distinguished normalized finite-place lower weight, Lean proves the weight sum is one, and the global Haar lower bound follows by finite summation instead of being a separate input." },
+    { name := "p-adic-normalized case residual lower bound",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalCaseSource.total_haar_defect_ge_one",
+      role :=
+        "Derived theorem exposing the finite local-to-global Haar inequality at the p-adic-normalized case boundary.  It is obtained by projecting through the lower-weight residual ledger, not by reading a raw summed residual field." },
     { name := "p-adic-normalized arithmetic-gap to ordinary arithmetic-gap projection",
       status := .derived,
       declarationName :=
@@ -873,7 +885,13 @@ def canonicalStage1ResidualFrontier :
       declarationName :=
         "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalArithmeticGapSource.toPadicNormalizedProcessionalCaseSource",
       role :=
-        "Derived projection from the p-adic-normalized arithmetic-gap source to the p-adic-normalized processional case source.  The arithmetic-minus-main residual inequality remains available for the lower IUT IV residual route, while the case consumer only reads the normalized place kind and the Step (v)/(vi)/(vii) local-volume identifications." },
+        "Derived projection from the p-adic-normalized arithmetic-gap source to the p-adic-normalized processional case source.  The arithmetic-minus-main residual inequality remains available for the lower IUT IV residual route, while the case consumer reads the normalized place kind, the Step (v)/(vi)/(vii) local-volume identifications, and now projects on to the same lower-weight residual ledger." },
+    { name := "p-adic-normalized arithmetic-gap lower-weight residual projection",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalArithmeticGapSource.toLocalArithmeticDegreeLowerWeightResidualSource",
+      role :=
+        "Derived projection from the normalized arithmetic-gap source directly to the lower-weight residual package by first reconstructing the p-adic-normalized case source.  This keeps the global Haar lower bound constructed from the normalized finite-place weight even when the public source is the arithmetic-gap form." },
     { name := "pointwise local-analytic p-adic packet route from processional pointwise residual source",
       status := .derived,
       declarationName :=
@@ -1092,7 +1110,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 131 :=
+    canonicalStage1ResidualFrontier.length = 134 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1102,7 +1120,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 125 :=
+      (fun entry => entry.status = .derived)).length = 128 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
