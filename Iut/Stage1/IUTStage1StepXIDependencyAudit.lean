@@ -145,7 +145,7 @@ structure CanonicalStage1RemainingAssumption where
 
 /-- Short name for the current canonical public 3.11-to-3.12 Stage 1 route. -/
 def canonicalStage1RouteName : String :=
-  "same-index q-normalized route with compact-open additive-Haar p-adic-defect/main residual lowering"
+  "same-index q-normalized route with compact-open additive-Haar p-adic-defect/main residual lowering and p-adic-normalized processional local-estimate frontier"
 
 /--
 Current canonical Stage 1 remaining-assumption manifest.
@@ -228,12 +228,19 @@ def canonicalStage1RemainingAssumptions :
       note :=
         "The older public source carries the q-normalized theta/log-volume identity.  Lean derives canonical C_Theta-scale synchronization from this identity and q-pilot positivity, so the raw canonical-scale equality is no longer a canonical public field on that branch.  Conversely, the p-adic finite, principal-product, and same-index scale-synchronized routes now construct q-normalized residual sources internally from canonical scale synchronization via ConstructorBuiltPadicFiniteLocalizedLocalAnalyticResidualHaarSource.toQNormalizedLocalizedLocalAnalyticResidualHaarSource, ConstructorBuiltPrincipalProductPadicFiniteLocalizedLocalAnalyticResidualHaarSource.toQNormalizedLocalizedLocalAnalyticResidualHaarSource, and ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantScaleSynchronizedLocalAnalyticSource.toQNormalizedProjectedPrincipalProductSource.  The same-index constructor ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEqFamilyHullLogVolume derives this q-normalized identity from the family-hull comparison and the principal-product p-adic finite hull decomposition, and the comparison side-condition endpoint preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantFamilyHullThetaSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit uses that constructor before proving both Corollary 3.12 outputs.  The refined constructor ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.ofAdjustedDeterminantSourceEqRecordFamilyHullQScale derives the unscaled thetaSigned = record family-hull log-volume equality from the pointwise determinant/Hodge calibration, and the checked endpoint preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantRecordFamilyHullQScaleSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit threads that constructor into the public signed dichotomy and C_Theta lower-bound route.  The record-family q-scale compatibility is now itself derived from the adjusted-sum q-normalization, determinant/Hodge calibration, and principal-product p-adic finite hull decomposition by ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedLocalArithmeticDegreeSource.recordFamilyHullLogVolume_eq_principalProductFamilyHullLogVolume_mul_absLogQ_of_projectedLocalizedAdjustedSum.  The remaining source obligation at this slice is the paper-level construction of the comparison object that supplies either the adjusted-sum q-normalized theta/log-volume identity or, equivalently on the scale-synchronized branch, the canonical C_Theta finite-sum synchronization." },
     { name := "theorem110ValuationBallFormulaGapSource",
-      status := .sourceObligation,
+      status := .derived,
       paperSource := "IUT IV, Theorem 1.10 valuation-ball arithmetic divisor estimates",
       consumerDeclaration :=
-        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
+        "PrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISource.ofPointwiseTheorem110ValuationBallLocalAnalyticIUTIVLocalizedStepXISourcePadicUnitBallHaarDefectResidualSourcePadicNormalizedProcessionalCaseSource",
       note :=
-        "The canonical same-index local-arithmetic-degree route consumes the valuation-ball formula-gap Theorem 1.10 package and derives the local-analytic object from it internally.  The lower additive-Haar p-adic-defect/main compact-open routes show that the local-analytic object, Haar-index defect source, split equality, local-degree formula projection, comparison bounds, and component/formula synchronization can be reconstructed before the signed comparison consumer is entered.  The remaining IUT IV source obligation is deriving this formula-gap or lower p-adic-defect/main valuation-ball local-estimate source from the paper-level local-estimate proof." },
+        "The formula-gap Theorem 1.10 package is no longer the canonical IUT IV boundary.  Lean has a stricter p-adic processional route in which the local-analytic valuation-ball ledger is combined with an expanded p-adic unit-ball Haar residual source and p-adic-normalized processional case data; the bundled processional p-adic synchronization and formula-gap route are then reconstructed internally before the signed comparison is consumed." },
+    { name := "p-adic-normalized processional local-estimate frontier",
+      status := .sourceObligation,
+      paperSource := "IUT IV, Theorem 1.10, local Step (v)/(vi)/(vii) estimates and p-adic Haar residual normalization",
+      consumerDeclaration :=
+        "preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallCalibrationLocalArithmeticPointwiseTheorem110LocalAnalyticPadicUnitBallHaarDefectResidualPadicNormalizedProcessionalCaseIUTIVArithmeticDivisorLocalizedStepXIConstructedHDDDataGoalCompletionAudit",
+      note :=
+        "Current lower IUT IV source boundary: the pointwise local-analytic valuation-ball Theorem 1.10/IUT IV localized source supplies the local analytic ledger and localized Step (xi) object; the p-adic unit-ball Haar residual source supplies the expanded arithmetic-degree Haar defect identity; and the p-adic-normalized processional case source supplies the Step (v)/(vi)/(vii) processional identifications with the distinguished place definitionally fixed by the p-adic normalization.  This replaces the older omnibus formula-gap source as the canonical IUT IV frontier, but it is still a paper-level source obligation until constructed from the full IUT IV local estimate proof." },
     { name := "localArithmeticDegreeResidualSource",
       status := .derived,
       paperSource := "IUT IV local arithmetic-degree identity and Haar residual lower bound",
@@ -247,7 +254,7 @@ def canonicalStage1RemainingAssumptions_count : Nat :=
   canonicalStage1RemainingAssumptions.length
 
 theorem canonicalStage1RemainingAssumptions_count_eq :
-    canonicalStage1RemainingAssumptions_count = 12 :=
+    canonicalStage1RemainingAssumptions_count = 13 :=
   rfl
 
 /-- Source obligations still present in the canonical manifest. -/
@@ -266,10 +273,11 @@ theorem canonicalStage1RemainingAssumptions_interfaceOnly_count_eq :
       (fun entry => entry.status = .interfaceOnly)).length = 1 :=
   rfl
 
-/-- The canonical route has one derived top-level entry: the residual package. -/
+/-- The canonical route has two derived top-level entries: the residual package
+and the replaced formula-gap package. -/
 theorem canonicalStage1RemainingAssumptions_derived_count_eq :
     (canonicalStage1RemainingAssumptions.filter
-      (fun entry => entry.status = .derived)).length = 1 :=
+      (fun entry => entry.status = .derived)).length = 2 :=
   rfl
 
 /--
@@ -739,6 +747,12 @@ def canonicalStage1ResidualFrontier :
         "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.preferredPublicConcreteStepXI311312CompactOpenAdditiveHaarRecordOb3Ob5PadicDefectMainProjectedLocalDegreeFormulaProductHandoffFormulaRealizedRoute",
       role :=
         "Derived compact-open projected-local-degree route from the same lower p-adic-defect/main source.  It reconstructs the local Step (v)/(vii) formula package and matching comparison from the controlled component chain, synchronizes the resulting local arithmetic handoff, and reaches the signed product-handoff endpoint without reopening the stricter p-adic-Haar source as a public boundary." },
+    { name := "p-adic-normalized processional case local-estimate endpoint",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallCalibrationLocalArithmeticPointwiseTheorem110LocalAnalyticPadicUnitBallHaarDefectResidualPadicNormalizedProcessionalCaseIUTIVArithmeticDivisorLocalizedStepXIConstructedHDDDataGoalCompletionAudit",
+      role :=
+        "Derived strict p-adic processional endpoint below the older formula-gap public boundary.  It takes the pointwise local-analytic valuation-ball Theorem 1.10/IUT IV localized source, the expanded p-adic unit-ball Haar residual identity, and p-adic-normalized processional case data, then reconstructs the bundled processional p-adic synchronization and signed Corollary 3.12 route internally.  The entry is derived relative to this residual frontier; the corresponding top-level manifest still records the p-adic-normalized processional local-estimate construction as a paper-level source obligation." },
     { name := "p-adic-defect/main projected-weighted formula-gap residual endpoint",
       status := .derived,
       declarationName :=
@@ -855,7 +869,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 93 :=
+    canonicalStage1ResidualFrontier.length = 94 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -865,7 +879,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 87 :=
+      (fun entry => entry.status = .derived)).length = 88 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
