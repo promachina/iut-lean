@@ -1998,6 +1998,13 @@ also constructs the constructor-built localized Step~(xi) local-term
 IUT~IV local evaluation ledger, eliminating the separate local main-log,
 Haar-defect, arithmetic-upper sum, and main-log sum arguments on that
 constructor path.
+Lean now further lowers the residual Haar summation itself.  A local
+lower-weight ledger records weights \(w_v\) with \(\sum_v w_v=1\) and
+\(w_v\le Haar_v\) pointwise; finite summation gives
+\(1\le\sum_v Haar_v\).  This lower-weight residual source is converted to the
+older local arithmetic-degree residual package and is consumed by the
+adjusted-determinant q-normalized residual route before the signed
+\(C_\Theta\) handoff.
 A stricter residual layer
 \(\mathrm{IUTStage1IUTIVLocalArithmeticDegreeDefinedResidualSource}\) now
 defines the Haar defect itself as
