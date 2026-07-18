@@ -4088,6 +4088,242 @@ end IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticConstructionFo
 
 set_option linter.style.longLine false in
 /--
+Valuation-ball local analytic construction with a selected distinguished
+nonarchimedean place.
+
+This refines the valuation-ball Theorem 1.10 local source by making the
+distinguished p-adic place part of the source's case definition.  The local
+kind is definitionally distinguished at `selectedDistinguishedPlace`; away
+from that place it is read from `residualLocalKind`.  This is the source-level
+place-selection layer needed by the p-adic Haar route: downstream proofs of
+`localKind selected = distinguishedNonarchimedean` are no longer separate
+public inputs.
+-/
+structure IUTStage1IUTIVTheorem110SelectedDistinguishedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+    (place : Type u) [Fintype place]
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    (divisorSource :
+      IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate)
+    (α : Type v) (η : Type w) (K : place -> Type x)
+    [∀ placeId : place, TopologicalSpace (K placeId)]
+    [∀ placeId : place, MeasurableSpace (K placeId)]
+    [∀ placeId : place, AddGroup (K placeId)]
+    [∀ placeId : place, T2Space (K placeId)]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α)
+    (archIndex archSummand : place -> Type v)
+    [∀ placeId : place, Fintype (archIndex placeId)]
+    [∀ placeId : place, Fintype (archSummand placeId)]
+    (selectedDistinguishedPlace : place) where
+  residualLocalKind : place -> IUTStage1IUTIVTheorem110LocalEstimateKind
+  localPrimeErrorContribution : place -> Real
+  localMainLogContribution : place -> Real
+  distinguishedProcessionBound : place -> Real
+  archimedeanProcessionBound : place -> Real
+  localPrimeErrorContribution_nonneg :
+    ∀ placeId : place, 0 <= localPrimeErrorContribution placeId
+  primeErrorContribution_eq_sum :
+    10 * (estimate.eStarMod * (estimate.l.value : Real) + estimate.etaPrm) =
+      ∑ placeId : place, localPrimeErrorContribution placeId
+  mainLogTerm_eq_sum :
+    estimate.mainLogTerm =
+      ∑ placeId : place, localMainLogContribution placeId
+  selectedDistinguishedValuationBallAdditiveHaarLogShellConstruction :
+    IUTStage1IUTIVProposition14DistinguishedValuationBallAdditiveHaarLogShellSource
+      α η (K selectedDistinguishedPlace) hullSystem estimate.l
+      (distinguishedProcessionBound selectedDistinguishedPlace)
+  residualDistinguishedValuationBallAdditiveHaarLogShellConstruction :
+    ∀ placeId : place,
+      placeId ≠ selectedDistinguishedPlace ->
+        residualLocalKind placeId =
+            IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean ->
+          IUTStage1IUTIVProposition14DistinguishedValuationBallAdditiveHaarLogShellSource
+            α η (K placeId) hullSystem estimate.l
+            (distinguishedProcessionBound placeId)
+  residualNondistinguishedValuationBallAdditiveHaarLogShellConstruction :
+    ∀ placeId : place,
+      placeId ≠ selectedDistinguishedPlace ->
+        residualLocalKind placeId =
+            IUTStage1IUTIVTheorem110LocalEstimateKind.nondistinguishedNonarchimedean ->
+          IUTStage1IUTIVProposition14NondistinguishedValuationBallAdditiveHaarLogShellSource
+            α η (K placeId) hullSystem
+            (divisorSource.localArithmeticUpperContribution
+                localPrimeErrorContribution placeId -
+              localMainLogContribution placeId)
+  residualArchimedeanMetricConstruction :
+    ∀ placeId : place,
+      placeId ≠ selectedDistinguishedPlace ->
+        residualLocalKind placeId =
+            IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean ->
+          IUTStage1IUTIVProposition15ArchimedeanMetricConstructionSource
+            (archIndex placeId) (archSummand placeId) estimate.l
+            (archimedeanProcessionBound placeId)
+
+namespace IUTStage1IUTIVTheorem110SelectedDistinguishedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+
+variable {place : Type u} [Fintype place]
+variable {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+variable {divisorSource :
+  IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate}
+variable {α : Type v} {η : Type w} {K : place -> Type x}
+variable [∀ placeId : place, TopologicalSpace (K placeId)]
+variable [∀ placeId : place, MeasurableSpace (K placeId)]
+variable [∀ placeId : place, AddGroup (K placeId)]
+variable [∀ placeId : place, T2Space (K placeId)]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+variable {archIndex archSummand : place -> Type v}
+variable [∀ placeId : place, Fintype (archIndex placeId)]
+variable [∀ placeId : place, Fintype (archSummand placeId)]
+variable {selectedDistinguishedPlace : place}
+
+noncomputable def localKind
+    (source :
+      IUTStage1IUTIVTheorem110SelectedDistinguishedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+        place divisorSource α η K hullSystem archIndex archSummand
+        selectedDistinguishedPlace)
+    (placeId : place) :
+    IUTStage1IUTIVTheorem110LocalEstimateKind := by
+  classical
+  exact
+    if placeId = selectedDistinguishedPlace then
+      IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean
+    else
+      source.residualLocalKind placeId
+
+@[simp] theorem localKind_selectedDistinguishedPlace
+    (source :
+      IUTStage1IUTIVTheorem110SelectedDistinguishedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+        place divisorSource α η K hullSystem archIndex archSummand
+        selectedDistinguishedPlace) :
+    source.localKind selectedDistinguishedPlace =
+      IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean := by
+  classical
+  simp [localKind]
+
+set_option linter.style.longLine false in
+noncomputable def toValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+    (source :
+      IUTStage1IUTIVTheorem110SelectedDistinguishedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+        place divisorSource α η K hullSystem archIndex archSummand
+        selectedDistinguishedPlace) :
+    IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+      place divisorSource α η K hullSystem archIndex archSummand :=
+  { localKind := source.localKind,
+    localPrimeErrorContribution := source.localPrimeErrorContribution,
+    localMainLogContribution := source.localMainLogContribution,
+    distinguishedProcessionBound := source.distinguishedProcessionBound,
+    archimedeanProcessionBound := source.archimedeanProcessionBound,
+    localPrimeErrorContribution_nonneg :=
+      source.localPrimeErrorContribution_nonneg,
+    primeErrorContribution_eq_sum :=
+      source.primeErrorContribution_eq_sum,
+    mainLogTerm_eq_sum :=
+      source.mainLogTerm_eq_sum,
+    distinguishedValuationBallAdditiveHaarLogShellConstruction := by
+      classical
+      intro placeId hkind
+      by_cases hplace : placeId = selectedDistinguishedPlace
+      · subst hplace
+        exact source.selectedDistinguishedValuationBallAdditiveHaarLogShellConstruction
+      · exact source.residualDistinguishedValuationBallAdditiveHaarLogShellConstruction
+          placeId hplace (by
+            simpa [localKind, hplace] using hkind),
+    nondistinguishedValuationBallAdditiveHaarLogShellConstruction := by
+      classical
+      intro placeId hkind
+      by_cases hplace : placeId = selectedDistinguishedPlace
+      · subst hplace
+        exact False.elim (by
+          simpa [localKind] using hkind)
+      · exact source.residualNondistinguishedValuationBallAdditiveHaarLogShellConstruction
+          placeId hplace (by
+            simpa [localKind, hplace] using hkind),
+    archimedeanMetricConstruction := by
+      classical
+      intro placeId hkind
+      by_cases hplace : placeId = selectedDistinguishedPlace
+      · subst hplace
+        exact False.elim (by
+          simpa [localKind] using hkind)
+      · exact source.residualArchimedeanMetricConstruction
+          placeId hplace (by
+            simpa [localKind, hplace] using hkind) }
+
+set_option linter.style.longLine false in
+theorem selectedDistinguishedPlace_kind
+    (source :
+      IUTStage1IUTIVTheorem110SelectedDistinguishedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+        place divisorSource α η K hullSystem archIndex archSummand
+        selectedDistinguishedPlace) :
+    source.toValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localKind
+        selectedDistinguishedPlace =
+      IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean := by
+  classical
+  simp [
+    toValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource,
+    localKind]
+
+def Endpoint
+    (source :
+      IUTStage1IUTIVTheorem110SelectedDistinguishedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+        place divisorSource α η K hullSystem archIndex archSummand
+        selectedDistinguishedPlace) :
+    Prop :=
+  (∀ placeId : place,
+      0 <= source.localPrimeErrorContribution placeId) ∧
+    10 * (estimate.eStarMod * (estimate.l.value : Real) + estimate.etaPrm) =
+      ∑ placeId : place, source.localPrimeErrorContribution placeId ∧
+    estimate.mainLogTerm =
+      ∑ placeId : place, source.localMainLogContribution placeId ∧
+    source.selectedDistinguishedValuationBallAdditiveHaarLogShellConstruction.Endpoint ∧
+    (∀ placeId : place,
+      (hneq : placeId ≠ selectedDistinguishedPlace) ->
+        (hkind :
+          source.residualLocalKind placeId =
+            IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean) ->
+          (source.residualDistinguishedValuationBallAdditiveHaarLogShellConstruction
+            placeId hneq hkind).Endpoint) ∧
+    (∀ placeId : place,
+      (hneq : placeId ≠ selectedDistinguishedPlace) ->
+        (hkind :
+          source.residualLocalKind placeId =
+            IUTStage1IUTIVTheorem110LocalEstimateKind.nondistinguishedNonarchimedean) ->
+          (source.residualNondistinguishedValuationBallAdditiveHaarLogShellConstruction
+            placeId hneq hkind).Endpoint) ∧
+    (∀ placeId : place,
+      (hneq : placeId ≠ selectedDistinguishedPlace) ->
+        (hkind :
+          source.residualLocalKind placeId =
+            IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean) ->
+          (source.residualArchimedeanMetricConstruction
+            placeId hneq hkind).Endpoint) ∧
+    source.toValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.Endpoint
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (source :
+      IUTStage1IUTIVTheorem110SelectedDistinguishedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+        place divisorSource α η K hullSystem archIndex archSummand
+        selectedDistinguishedPlace) :
+    Endpoint source :=
+  ⟨source.localPrimeErrorContribution_nonneg,
+    source.primeErrorContribution_eq_sum,
+    source.mainLogTerm_eq_sum,
+    source.selectedDistinguishedValuationBallAdditiveHaarLogShellConstruction.endpoint,
+    (fun placeId hneq hkind =>
+      (source.residualDistinguishedValuationBallAdditiveHaarLogShellConstruction
+        placeId hneq hkind).endpoint),
+    (fun placeId hneq hkind =>
+      (source.residualNondistinguishedValuationBallAdditiveHaarLogShellConstruction
+        placeId hneq hkind).endpoint),
+    (fun placeId hneq hkind =>
+      (source.residualArchimedeanMetricConstruction
+        placeId hneq hkind).endpoint),
+    source.toValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.endpoint⟩
+
+end IUTStage1IUTIVTheorem110SelectedDistinguishedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+
+set_option linter.style.longLine false in
+/--
 Arithmetic-divisor evaluation source whose Theorem 1.10 local analytic
 construction is backed at finite places by additive Haar normalization.
 -/
@@ -4487,6 +4723,145 @@ theorem sourceIngredientAudit
     endpoint := source.endpoint }
 
 end IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+set_option linter.style.longLine true
+
+set_option linter.style.longLine false in
+/--
+Arithmetic-divisor evaluation source whose valuation-ball local analytic
+construction has a selected distinguished nonarchimedean place.
+
+This is the paper-facing p-adic place-selection refinement of the ordinary
+valuation-ball local analytic source.  It projects to the existing Theorem
+1.10 valuation-ball arithmetic-divisor evaluation source, but additionally
+proves that the selected place is distinguished by construction.
+-/
+structure IUTStage1IUTIVTheorem110SelectedDistinguishedValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+    (place : Type u) [Fintype place]
+    (estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow)
+    (α : Type v) (η : Type w) (K : place -> Type x)
+    [∀ placeId : place, TopologicalSpace (K placeId)]
+    [∀ placeId : place, MeasurableSpace (K placeId)]
+    [∀ placeId : place, AddGroup (K placeId)]
+    [∀ placeId : place, T2Space (K placeId)]
+    (hullSystem : IUTStage1Remark395HolomorphicHullSystem α)
+    (archIndex archSummand : place -> Type v)
+    [∀ placeId : place, Fintype (archIndex placeId)]
+    [∀ placeId : place, Fintype (archSummand placeId)]
+    (selectedDistinguishedPlace : place) where
+  arithmeticDivisorSource :
+    IUTStage1IUTIVTheorem110ArithmeticDivisorSource place estimate
+  selectedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource :
+    IUTStage1IUTIVTheorem110SelectedDistinguishedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+      place arithmeticDivisorSource α η K hullSystem archIndex archSummand
+      selectedDistinguishedPlace
+  distinguished_formula_le_gap :
+    ∀ placeId : place,
+      selectedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.toValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localKind
+          placeId =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean ->
+        selectedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.distinguishedProcessionBound
+            placeId <=
+          arithmeticDivisorSource.localArithmeticUpperContribution
+              selectedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localPrimeErrorContribution
+                placeId -
+            selectedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localMainLogContribution
+              placeId
+  archimedean_formula_le_gap :
+    ∀ placeId : place,
+      selectedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.toValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localKind
+          placeId =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean ->
+        selectedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.archimedeanProcessionBound
+            placeId <=
+          arithmeticDivisorSource.localArithmeticUpperContribution
+              selectedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localPrimeErrorContribution
+                placeId -
+            selectedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localMainLogContribution
+              placeId
+
+namespace IUTStage1IUTIVTheorem110SelectedDistinguishedValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+
+variable {place : Type u} [Fintype place]
+variable {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+variable {α : Type v} {η : Type w} {K : place -> Type x}
+variable [∀ placeId : place, TopologicalSpace (K placeId)]
+variable [∀ placeId : place, MeasurableSpace (K placeId)]
+variable [∀ placeId : place, AddGroup (K placeId)]
+variable [∀ placeId : place, T2Space (K placeId)]
+variable {hullSystem : IUTStage1Remark395HolomorphicHullSystem α}
+variable {archIndex archSummand : place -> Type v}
+variable [∀ placeId : place, Fintype (archIndex placeId)]
+variable [∀ placeId : place, Fintype (archSummand placeId)]
+variable {selectedDistinguishedPlace : place}
+
+set_option linter.style.longLine false in
+noncomputable def toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+    (source :
+      IUTStage1IUTIVTheorem110SelectedDistinguishedValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand
+        selectedDistinguishedPlace) :
+    IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+      place estimate α η K hullSystem archIndex archSummand :=
+  { arithmeticDivisorSource := source.arithmeticDivisorSource,
+    valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource :=
+      source.selectedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+        |>.toValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource,
+    distinguished_formula_le_gap :=
+      source.distinguished_formula_le_gap,
+    archimedean_formula_le_gap :=
+      source.archimedean_formula_le_gap }
+
+set_option linter.style.longLine false in
+noncomputable def toThetaPilotArithmeticDivisorLocalEvaluationSource
+    (source :
+      IUTStage1IUTIVTheorem110SelectedDistinguishedValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand
+        selectedDistinguishedPlace) :
+    IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource
+      place estimate :=
+  source.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+    |>.toThetaPilotArithmeticDivisorLocalEvaluationSource
+
+set_option linter.style.longLine false in
+theorem selectedDistinguishedPlace_kind
+    (source :
+      IUTStage1IUTIVTheorem110SelectedDistinguishedValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand
+        selectedDistinguishedPlace) :
+    source.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localKind
+        selectedDistinguishedPlace =
+      IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean :=
+  source.selectedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource
+    |>.selectedDistinguishedPlace_kind
+
+set_option linter.style.longLine false in
+def Endpoint
+    (source :
+      IUTStage1IUTIVTheorem110SelectedDistinguishedValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand
+        selectedDistinguishedPlace) :
+    Prop :=
+  source.arithmeticDivisorSource.Endpoint ∧
+    source.selectedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.Endpoint ∧
+      IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.Endpoint
+        source.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource ∧
+        IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource.Endpoint
+          source.toThetaPilotArithmeticDivisorLocalEvaluationSource
+
+set_option linter.style.longLine false in
+theorem endpoint
+    (source :
+      IUTStage1IUTIVTheorem110SelectedDistinguishedValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        place estimate α η K hullSystem archIndex archSummand
+        selectedDistinguishedPlace) :
+    Endpoint source :=
+  ⟨source.arithmeticDivisorSource.endpoint,
+    source.selectedValuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.endpoint,
+    source.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.endpoint,
+    source.toThetaPilotArithmeticDivisorLocalEvaluationSource.endpoint⟩
+
+end IUTStage1IUTIVTheorem110SelectedDistinguishedValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+
 set_option linter.style.longLine true
 
 set_option linter.style.longLine false in
