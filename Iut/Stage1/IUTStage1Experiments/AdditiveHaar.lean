@@ -33891,6 +33891,183 @@ theorem RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.ofCompactOpe
       routeInput.total_haar_defect_ge_one⟩
 
 set_option linter.style.longLine false in
+/--
+Compact-open projection directly to synchronized route inputs from the
+p-adic-defect/main valuation-ball source.
+
+This is the lower IUT~IV source-backed version of
+`ofCompactOpenLogKummerMapConstructorBuiltValuationBallSource`: the public
+surface no longer has to supply the Record-Ob3/Ob5 valuation-ball source
+itself.  Lean reconstructs that valuation-ball source from the stricter
+p-adic-defect/main controlled component source, then enters the existing
+compact-open synchronized route-input constructor.
+-/
+noncomputable def RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.ofCompactOpenLogKummerMapConstructorBuiltPadicDefectMainSource
+    {sourceCopy constructorTargetCopy : Copy}
+    {coricConcrete : Type u} {lConcrete : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage sourceCopy constructorTargetCopy
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coricConcrete lConcrete)}
+    (packet :
+      IUTStage1ConcreteTheorem311PrimitiveSourcePacket packageConcrete)
+    (sourceWithSymmetry :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.WithSymmetryLabelTransport
+        packet)
+    {βStepXI : Type a} [Fintype βStepXI]
+    {γStepXI : Type w} [Fintype γStepXI]
+    {ηConcrete : Type y} {KConcrete : Type z}
+    {ΛStepXI : Type max u a w y z}
+    [PseudoMetricSpace KConcrete] [MeasurableSpace KConcrete]
+    [AddGroup KConcrete] [T2Space KConcrete]
+    (compactOpenLogKummerMapSource :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+        sourceWithSymmetry.fiberInd2ActionPacketTransportSource
+        packet.gluingTorsor packet.selectedQChoice
+        (η := ηConcrete) (K := KConcrete)
+        (β := βStepXI) (γ := γStepXI) (Λ := ΛStepXI))
+    {γLocal : Type w} [Fintype γLocal]
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {lStepXI : PrimeGeFive}
+    {ηStep : Type y}
+    {localPrime : βStepXI -> Nat}
+    [∀ place : βStepXI, Fact (Nat.Prime (localPrime place))]
+    {localField : βStepXI -> Type x}
+    [(place : βStepXI) -> NontriviallyNormedField (localField place)]
+    [∀ place : βStepXI, ProperSpace (localField place)]
+    [∀ place : βStepXI, IsUltrametricDist (localField place)]
+    [(place : βStepXI) -> MeasurableSpace (localField place)]
+    [∀ place : βStepXI, BorelSpace (localField place)]
+    [∀ place : βStepXI, LocallyCompactSpace (localField place)]
+    [∀ place : βStepXI, IsTopologicalAddGroup (localField place)]
+    [∀ place : βStepXI, T2Space (localField place)]
+    [(place : βStepXI) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : βStepXI,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : βStepXI -> Type z}
+    [∀ place : βStepXI, Fintype (archIndex place)]
+    [∀ place : βStepXI, Fintype (archSummand place)]
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := βStepXI) (γ := γLocal) packet.primitiveConstructor.record}
+    {constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := βStepXI) packet.primitiveConstructor.record}
+    (padicDefectMainSource :
+      RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource
+        recordAdjustedSource
+        constructorBuiltSource.toConstructedHolomorphicHullDeterminantSource
+        estimate lStepXI ηStep localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :
+    RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData
+      (recordAdjustedSource := recordAdjustedSource)
+      (sourceData := constructorBuiltSource.toConstructedHolomorphicHullDeterminantSource)
+      (estimate := estimate) (l := lStepXI)
+      (η := ηStep) (localPrime := localPrime) (localField := localField)
+      (αHaar := αHaar) (hullSystem := hullSystem)
+      (αLocal := αLocal) (ηLocal := ηLocal)
+      (localAnalyticHullSystem := localAnalyticHullSystem)
+      (archIndex := archIndex) (archSummand := archSummand)
+      constructorBuiltSource :=
+  let strictSource := padicDefectMainSource.toPadicHaarControlledComponentSource
+  let valuationBallSource :=
+    strictSource.toRecordOb3Ob5ArithmeticDivisorBackedValuationBallSource
+  RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.ofCompactOpenLogKummerMapConstructorBuiltValuationBallSource
+    packet sourceWithSymmetry compactOpenLogKummerMapSource valuationBallSource
+
+set_option linter.style.longLine false in
+/--
+Audit for the compact-open p-adic-defect/main route-input projection.
+
+The synchronized route-input bundle obtained from the lower source has the
+same component source reconstructed from the p-adic-defect/main controlled
+component chain, carries the localized determinant/scale synchronization
+endpoint, and has the formula-gap and Haar-residual endpoints needed by the
+compact-open \(C_\Theta\) route.
+-/
+theorem RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.ofCompactOpenLogKummerMapConstructorBuiltPadicDefectMainSource_projectionAudit
+    {sourceCopy constructorTargetCopy : Copy}
+    {coricConcrete : Type u} {lConcrete : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage sourceCopy constructorTargetCopy
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coricConcrete lConcrete)}
+    (packet :
+      IUTStage1ConcreteTheorem311PrimitiveSourcePacket packageConcrete)
+    (sourceWithSymmetry :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.WithSymmetryLabelTransport
+        packet)
+    {βStepXI : Type a} [Fintype βStepXI]
+    {γStepXI : Type w} [Fintype γStepXI]
+    {ηConcrete : Type y} {KConcrete : Type z}
+    {ΛStepXI : Type max u a w y z}
+    [PseudoMetricSpace KConcrete] [MeasurableSpace KConcrete]
+    [AddGroup KConcrete] [T2Space KConcrete]
+    (compactOpenLogKummerMapSource :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerMapPossibleRegionSource
+        sourceWithSymmetry.fiberInd2ActionPacketTransportSource
+        packet.gluingTorsor packet.selectedQChoice
+        (η := ηConcrete) (K := KConcrete)
+        (β := βStepXI) (γ := γStepXI) (Λ := ΛStepXI))
+    {γLocal : Type w} [Fintype γLocal]
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {lStepXI : PrimeGeFive}
+    {ηStep : Type y}
+    {localPrime : βStepXI -> Nat}
+    [∀ place : βStepXI, Fact (Nat.Prime (localPrime place))]
+    {localField : βStepXI -> Type x}
+    [(place : βStepXI) -> NontriviallyNormedField (localField place)]
+    [∀ place : βStepXI, ProperSpace (localField place)]
+    [∀ place : βStepXI, IsUltrametricDist (localField place)]
+    [(place : βStepXI) -> MeasurableSpace (localField place)]
+    [∀ place : βStepXI, BorelSpace (localField place)]
+    [∀ place : βStepXI, LocallyCompactSpace (localField place)]
+    [∀ place : βStepXI, IsTopologicalAddGroup (localField place)]
+    [∀ place : βStepXI, T2Space (localField place)]
+    [(place : βStepXI) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : βStepXI,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type y}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : βStepXI -> Type z}
+    [∀ place : βStepXI, Fintype (archIndex place)]
+    [∀ place : βStepXI, Fintype (archSummand place)]
+    {recordAdjustedSource :
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := βStepXI) (γ := γLocal) packet.primitiveConstructor.record}
+    {constructorBuiltSource :
+      IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource
+        (β := βStepXI) packet.primitiveConstructor.record}
+    (padicDefectMainSource :
+      RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource
+        recordAdjustedSource
+        constructorBuiltSource.toConstructedHolomorphicHullDeterminantSource
+        estimate lStepXI ηStep localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :
+      let routeInput :=
+        RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.ofCompactOpenLogKummerMapConstructorBuiltPadicDefectMainSource
+          packet sourceWithSymmetry compactOpenLogKummerMapSource padicDefectMainSource;
+      routeInput.componentSource =
+          padicDefectMainSource.toPadicHaarControlledComponentSource.toRecordOb3Ob5ArithmeticDivisorBackedComponentSource ∧
+        routeInput.localizedSynchronizationSource.Endpoint ∧
+          routeInput.theorem110ValuationBallFormulaGapSource.Endpoint ∧
+            (1 : Real) <= ∑ place : βStepXI, routeInput.localHaarNormalizationDefect place := by
+  intro routeInput
+  exact
+    ⟨rfl,
+      routeInput.localizedSynchronizationSource_endpoint,
+      routeInput.theorem110ValuationBallFormulaGapSource.endpoint,
+      routeInput.total_haar_defect_ge_one⟩
+
+set_option linter.style.longLine false in
 theorem RecordOb3Ob5ValuationBallNamedHDDBoundaryData.synchronizedRouteInputDataAudit
     {recordAdjustedSource :
       IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource

@@ -2914,6 +2914,14 @@
   synchronized route-input bundle is now constructed directly from the
   compact-open log-Kummer source and this valuation-ball source, so the
   named-HDD boundary is not exposed as a separate input at that layer.
+  The same route-input layer now has a stricter p-adic-defect/main constructor:
+  Lean reconstructs the Record-Ob3/Ob5 valuation-ball source from the
+  p-adic-defect/main controlled component source, then builds the synchronized
+  route-input bundle and audits its component source, determinant/scale
+  synchronization endpoint, formula-gap endpoint, and finite Haar-residual
+  lower bound.  Thus this compact-open handoff no longer has to expose the
+  stronger valuation-ball source when the lower p-adic-defect/main source is
+  available.
   The canonical-HDD compact-open endpoint now performs the same lowering one
   level earlier: the direct canonical-HDD audit transfers theta-possible-image
   nonemptiness from the primitive Theorem~3.11 record to the canonical HDD
@@ -4547,11 +4555,12 @@
   formula-matching bridge:
   \lean{Iut.Stage1.Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toCoreLocalArithmeticDegreeResidualSource}.
   The canonical route manifest records this residual frontier as a checked
-  seventy-two-entry, zero-source-obligation sub-manifest:
+  seventy-three-entry, zero-source-obligation sub-manifest:
   \lean{Iut.Stage1.IUTStage1StepXIDependencyAudit.canonicalStage1ResidualFrontier}.
-  The six newest residual-frontier entries register the synchronized
-  route-input construction, the compact-open inverse-base-prime audit, and the
-  two p-adic-defect/main compact-open product-handoff routes, plus the
+  The seven newest residual-frontier entries register the synchronized
+  route-input construction, the compact-open inverse-base-prime audit, the
+  p-adic-defect/main compact-open route-input constructor, and the two
+  p-adic-defect/main compact-open product-handoff routes, plus the
   constructor-level p-adic-defect/main projected-weighted formula-gap residual
   endpoint and its projection audit.  The checked manifest therefore tracks that the local analytic
   Theorem~1.10 object,
