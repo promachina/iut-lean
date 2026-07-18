@@ -595,6 +595,18 @@ def canonicalStage1ResidualFrontier :
         "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toCoreLocalArithmeticDegreeResidualSource",
       role :=
         "Derived projection from the named-HDD Record-Ob3/Ob5 valuation-ball boundary to the canonical local arithmetic-degree residual package.  The boundary already carries the compact-open/nonempty possible-image witness, constructor-built determinant synchronization, and valuation-ball Record-Ob3/Ob5 source; Lean reconstructs the arithmetic-degree-controlled local source, projects it through the p-adic arithmetic formula-matching package, and preserves the finite Haar-defect lower bound without exposing the valuation-ball source as a separate residual consumer input." },
+    { name := "synchronized valuation-ball route input to local-analytic IUT IV source",
+      status := .derived,
+      declarationName :=
+        "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.toPrincipalPointwiseValuationBallTheorem110ValuationBallLocalAnalyticIUTIVLocalizedStepXISource_audit",
+      role :=
+        "Derived audit for the synchronized Record-Ob3/Ob5 valuation-ball route-input bundle.  It constructs the pointwise local-analytic IUT IV Step (xi) source from one bundled artifact carrying localized determinant/scale synchronization, the valuation-ball Theorem 1.10 local-analytic projection, the Haar-defect function, the pointwise Step (xi)/Haar/main equality, and the total Haar-defect lower bound, then proves the local-term C_Theta handoff, signed comparison, and Corollary 3.12 dichotomy at that source." },
+    { name := "compact-open synchronized route input inverse-base-prime audit",
+      status := .derived,
+      declarationName :=
+        "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.preferredPublicCompactOpenLogKummerMapInverseBasePrimeRoute_audit",
+      role :=
+        "Derived compact-open route audit showing that the compact-open log-Kummer source is projected to the principal pointwise valuation-ball source, the inverse-base-prime summand source is constructed from the residue-module valuation cover and additive-Haar compact-open norm-square direct summand source, and the synchronized route-input bundle supplies the local-analytic IUT IV source before the signed C_Theta comparison.  Thus the local-analytic Theorem 1.10 object, Haar defect, local equality, and synchronization are not independent inputs at this compact-open route layer." },
     { name := "principal-product p-adic family-hull adjusted-sum projection",
       status := .derived,
       declarationName :=
@@ -693,7 +705,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 66 :=
+    canonicalStage1ResidualFrontier.length = 68 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -703,7 +715,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 61 :=
+      (fun entry => entry.status = .derived)).length = 63 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6144,6 +6156,14 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toCoreLocalArithmeticDegreeResidualSource_audit
 #guard_msgs (drop info) in
 #print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDBoundaryData.toCoreLocalArithmeticDegreeResidualSource_audit
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.toPrincipalPointwiseValuationBallTheorem110ValuationBallLocalAnalyticIUTIVLocalizedStepXISource_audit
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.toPrincipalPointwiseValuationBallTheorem110ValuationBallLocalAnalyticIUTIVLocalizedStepXISource_audit
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.preferredPublicCompactOpenLogKummerMapInverseBasePrimeRoute_audit
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.preferredPublicCompactOpenLogKummerMapInverseBasePrimeRoute_audit
 #guard_msgs (drop info) in
 #check IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_normedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower
 #guard_msgs (drop info) in
