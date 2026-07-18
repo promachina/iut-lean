@@ -119,7 +119,15 @@ identity plus q-pilot positivity.  Conversely, the checked p-adic finite,
 principal-product, and same-index scale-synchronized routes now construct the
 q-normalized residual source internally from canonical scale synchronization,
 so the audit records this scalar conversion as derived rather than leaving it
-implicit in endpoint wrappers.  The stronger valuation-ball formula-gap
+implicit in endpoint wrappers.  The Record-Ob3/Ob5 valuation-ball
+constructor-built boundary now applies the
+same conversion locally: the direct scalar equality between the constructed
+canonical \(C_\Theta\) scale and the Record-Ob3/Ob5 adjusted summand is derived
+from \(\theta=\mathrm{adjustedSummandLogVolume}\cdot(-q)\) and q-pilot
+positivity, while the determinant side remains constructor-built from the same
+Ob3/Ob4 adjusted-determinant source.  The residual-frontier manifest now has
+87 checked entries: 81 derived entries and 6 constructed countermodel
+diagnostics.  The stronger valuation-ball formula-gap
 source and the case-bounded IUT~IV residual source are no longer canonical
 public inputs: Lean constructs the formula-gap package from the local-analytic
 Theorem~1.10 ledger when needed, and projects case-bounded/p-adic data into the
