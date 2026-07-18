@@ -460,6 +460,18 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.sourceIngredientAudit",
       role :=
         "Derived expansion of the valuation-ball local analytic arithmetic-divisor source into its paper-facing ingredients: arithmetic divisors, valuation-ball additive-Haar Proposition 1.4 constructions, additive/local analytic/proposition/formula projections, theta-pilot local evaluation, Step (vi) zero contribution, and Step (v)/(vii) formula-to-gap inequalities.  The top-level IUT IV local-estimate obligation is not closed, but this audit fixes the exact source ingredients consumed by that boundary." },
+    { name := "case-defined Step V/VI/VII procession upper-bound theorem",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.caseProcessionNormalizedLocalLogVolume_le_projectedProcessionUpperBound",
+      role :=
+        "Derived source-free local Theorem 1.10 bound for the case-defined processional value.  Lean case-splits on the valuation-ball local kind: distinguished finite places use exact procession <= coarse <= formula, nondistinguished finite places are the zero case, and archimedean places use the metric-container estimate." },
+    { name := "case-defined Step V/VI/VII procession arithmetic-gap theorem",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.caseProcessionNormalizedLocalLogVolume_le_arithmeticMinusMain",
+      role :=
+        "Derived source-free local arithmetic-gap bound for the case-defined processional value.  It composes the projected processional upper-bound theorem with the Theorem 1.10 arithmetic-divisor gap estimate, distinguishing the general paper upper-bound route from the stronger case-procession arithmetic-degree equality specialization." },
     { name := "local-degree formula arithmetic-degree controlled source",
       status := .derived,
       declarationName :=
@@ -1386,7 +1398,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 180 :=
+    canonicalStage1ResidualFrontier.length = 182 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1396,7 +1408,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 174 :=
+      (fun entry => entry.status = .derived)).length = 176 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6996,6 +7008,14 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicIUTStage1IUTIVTheorem110SelectedDistinguishedValuationBallLocalAnalyticArithmeticDivisorSourceSelectedDistinguishedPlaceKindLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicIUTStage1IUTIVTheorem110SelectedDistinguishedValuationBallLocalAnalyticArithmeticDivisorSourceSelectedDistinguishedPlaceKindLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.caseProcessionNormalizedLocalLogVolume_le_projectedProcessionUpperBound
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.caseProcessionNormalizedLocalLogVolume_le_projectedProcessionUpperBound
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.caseProcessionNormalizedLocalLogVolume_le_arithmeticMinusMain
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.caseProcessionNormalizedLocalLogVolume_le_arithmeticMinusMain
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseProcessionArithmeticDegreeFormulaSource
 #guard_msgs (drop info) in
