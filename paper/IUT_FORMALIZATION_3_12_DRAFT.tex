@@ -1026,8 +1026,9 @@ local-degree formula canonical-HDD compact-open inverse-base-prime route, the
 two p-adic-defect/main compact-open product-handoff routes, and the
 constructor-level p-adic-defect/main formula-gap residual endpoint, are now
 registered in the canonical residual-frontier manifest.  The same manifest also
-records the Record-Ob3/Ob5 localization-anchor-tensor constructor, so it is now
-an eighty-entry, zero-source-obligation sub-manifest of the preferred
+records the Record-Ob3/Ob5 component and valuation-ball
+localization-anchor-tensor constructors, so it is now an eighty-two-entry,
+zero-source-obligation sub-manifest of the preferred
 route.  The same frontier now records the finite-extension
 inverse-base-prime valuation-ball construction: Lean proves \(p^{-1}O_K\) is
 the valuation ball of radius \(p\), transports it componentwise to the
@@ -2338,7 +2339,11 @@ The Record-Ob3/Ob5 component source itself now has the same lowering:
 \texttt{\detokenize{RecordOb3Ob5ArithmeticDivisorBackedComponentSource.ofConcretePossibleImageWitnessSourceLocalizationAnchorTensorPowerEq}}
 derives its \texttt{recordOb3Ob4\_eq\_stepXI} field from the localization,
 anchor, and positive tensor-power equalities before entering the existing
-component constructor.
+component constructor.  The valuation-ball Record-Ob3/Ob5 source now composes
+that component constructor with the valuation-ball formula source, so the local
+Theorem~1.10 valuation-ball boundary also no longer requires the full
+\texttt{recordOb3Ob4\_eq\_stepXI} equality when those three primitive
+synchronizations are supplied.
 Its family-hull variant additionally replaces the direct q-normalized
 adjusted-sum field by the family-hull theta/log-volume comparison, and the
 record-family-hull q-scale refinement derives the unscaled theta equality from

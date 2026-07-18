@@ -433,6 +433,18 @@ def canonicalStage1ResidualFrontier :
         "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedComponentSource.ofConcretePossibleImageWitnessSourceLocalizationAnchorTensorPowerEq_audit",
       role :=
         "Derived audit showing that the constructed component source's recordOb3Ob4_eq_stepXI proof is exactly the Ob3/Ob4 extensionality proof and that the projected arithmetic-divisor-backed component endpoint holds." },
+    { name := "Record-Ob3/Ob5 valuation-ball constructor from localization-anchor-tensor synchronization",
+      status := .derived,
+      declarationName :=
+        "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.ofConcretePossibleImageWitnessSourceLocalizationAnchorTensorPowerEq",
+      role :=
+        "Derived valuation-ball Record-Ob3/Ob5 constructor that composes the component-level localization-anchor-tensor lowering with the local Theorem 1.10 valuation-ball formula source.  The full recordOb3Ob4_eq_stepXI equality is transported from the primitive Ob3/Ob4 synchronization criterion across the component-to-valuation-ball formula matching equality." },
+    { name := "Record-Ob3/Ob5 valuation-ball localization-anchor-tensor audit",
+      status := .derived,
+      declarationName :=
+        "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.ofConcretePossibleImageWitnessSourceLocalizationAnchorTensorPowerEq_audit",
+      role :=
+        "Derived audit showing that the constructed valuation-ball Record-Ob3/Ob5 source retains the matched arithmetic-divisor component, retains the valuation-ball formula-gap source, and projects to the arithmetic-divisor-backed valuation-ball endpoint." },
     { name := "Record-Ob3/Ob4 source-to-weighted determinant projection",
       status := .derived,
       declarationName :=
@@ -777,7 +789,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 80 :=
+    canonicalStage1ResidualFrontier.length = 82 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -787,7 +799,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 74 :=
+      (fun entry => entry.status = .derived)).length = 76 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -1487,6 +1499,14 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedComponentSource.ofConcretePossibleImageWitnessSourceLocalizationAnchorTensorPowerEq_audit
 #guard_msgs (drop info) in
 #print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedComponentSource.ofConcretePossibleImageWitnessSourceLocalizationAnchorTensorPowerEq_audit
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.ofConcretePossibleImageWitnessSourceLocalizationAnchorTensorPowerEq
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.ofConcretePossibleImageWitnessSourceLocalizationAnchorTensorPowerEq
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.ofConcretePossibleImageWitnessSourceLocalizationAnchorTensorPowerEq_audit
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.ofConcretePossibleImageWitnessSourceLocalizationAnchorTensorPowerEq_audit
 #guard_msgs (drop info) in
 #check IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.weightedDeterminant_summand_anchor_tensorPower_eq_of_localization_anchor_tensorPower
 #guard_msgs (drop info) in
