@@ -475,6 +475,18 @@ def canonicalStage1ResidualFrontier :
         "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.ofConstructorBuiltOb3Ob4AdjustedDeterminantSourceQNormalizedLocalizationAnchorTensorPowerEq_audit",
       role :=
         "Derived audit showing that the q-normalized constructor-built valuation-ball source proves the canonical-scale equality internally, preserves the valuation-ball formula-gap source, and reaches the arithmetic-divisor-backed valuation-ball endpoint." },
+    { name := "Record-Ob3/Ob5 family-hull q-normalization to adjusted-summand q-normalization",
+      status := .derived,
+      declarationName :=
+        "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.thetaSigned_eq_recordAdjustedSummandLogVolume_mul_absLogQ_of_familyHullQNormalized",
+      role :=
+        "Derived scalar lowering at the valuation-ball Record-Ob3/Ob5 boundary.  The source-level Remark 3.9.5 equality familyHullLogVolume = adjustedSummandLogVolume converts the family-hull q-normalized theta comparison into the adjusted-summand q-normalized comparison consumed by the existing constructor." },
+    { name := "Record-Ob3/Ob5 family-hull q-normalized constructor-built valuation-ball source",
+      status := .derived,
+      declarationName :=
+        "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.ofConstructorBuiltOb3Ob4AdjustedDeterminantSourceFamilyHullQNormalizedLocalizationAnchorTensorPowerEq",
+      role :=
+        "Derived constructor-built valuation-ball Record-Ob3/Ob5 source that replaces the adjusted-summand q-normalized theta identity by the family-hull q-normalized theta identity, deriving the former from the Record-Ob3/Ob5 family-hull/summand equality before entering the q-normalized valuation-ball constructor." },
     { name := "Record-Ob3/Ob4 source-to-weighted determinant projection",
       status := .derived,
       declarationName :=
@@ -819,7 +831,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 87 :=
+    canonicalStage1ResidualFrontier.length = 89 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -829,7 +841,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 81 :=
+      (fun entry => entry.status = .derived)).length = 83 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -1557,6 +1569,14 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.ofConstructorBuiltOb3Ob4AdjustedDeterminantSourceQNormalizedLocalizationAnchorTensorPowerEq_audit
 #guard_msgs (drop info) in
 #print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.ofConstructorBuiltOb3Ob4AdjustedDeterminantSourceQNormalizedLocalizationAnchorTensorPowerEq_audit
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.thetaSigned_eq_recordAdjustedSummandLogVolume_mul_absLogQ_of_familyHullQNormalized
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.thetaSigned_eq_recordAdjustedSummandLogVolume_mul_absLogQ_of_familyHullQNormalized
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.ofConstructorBuiltOb3Ob4AdjustedDeterminantSourceFamilyHullQNormalizedLocalizationAnchorTensorPowerEq
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.ofConstructorBuiltOb3Ob4AdjustedDeterminantSourceFamilyHullQNormalizedLocalizationAnchorTensorPowerEq
 #guard_msgs (drop info) in
 #check IUTStage1Remark395Ob3Ob4AdjustedDeterminantSource.weightedDeterminant_summand_anchor_tensorPower_eq_of_localization_anchor_tensorPower
 #guard_msgs (drop info) in
