@@ -213,7 +213,7 @@ def canonicalStage1RemainingAssumptions :
       consumerDeclaration :=
         "IUTStage1SourceSideConditions",
       note :=
-        "q-positivity, normalization, and side-condition facts are reconstructed into the route but not yet derived from paper data.  The packaged and expanded q-normalized local arithmetic-degree endpoints now both have source-obligation-gap surfaces, so this raw side-condition record is no longer exposed at those routes once the gap is available.  Family-hull, record-family, and lower comparison companions still expose the side-condition source until their package construction is lowered through the same gap." },
+        "q-positivity, normalization, and side-condition facts are reconstructed into the route but not yet derived from paper data.  The packaged, expanded constituent, family-hull theta, and record-family-hull q-scale same-index local arithmetic-degree endpoints now have source-obligation-gap surfaces, so this raw side-condition record is no longer exposed at those routes once the gap is available.  Lower comparison companions still expose the side-condition source until their package construction is lowered through the same gap." },
     { name := "weighted determinant component synchronization",
       status := .sourceObligation,
       paperSource := "IUT III, Remark 3.9.5 Ob3/Ob4 determinant bridge",
@@ -1072,6 +1072,18 @@ def canonicalStage1ResidualFrontier :
         "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantFamilyHullThetaSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
       role :=
         "Derived endpoint route that constructs the same-index local arithmetic-degree source from full adjusted-determinant synchronization and the family-hull theta comparison before proving both the Corollary 3.12 dichotomy and the C_Theta lower bound.  The direct q-normalized adjusted-sum theta equality is no longer a public input on this same-index surface." },
+    { name := "same-index family-hull theta source-obligation-gap endpoint",
+      status := .derived,
+      declarationName :=
+        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantFamilyHullThetaSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
+      role :=
+        "Derived source-gap lowering for the same-index family-hull theta endpoint.  Lean still consumes the full adjusted-determinant synchronization, the paper-facing family-hull theta/log-volume comparison, the Theorem 1.10 formula-gap source, and the local arithmetic-degree residual source, but q-pilot positivity and normalization are projected from IUTStage1SourceObligationGap instead of a raw side-condition record." },
+    { name := "same-index record-family-hull q-scale source-obligation-gap endpoint",
+      status := .derived,
+      declarationName :=
+        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantRecordFamilyHullQScaleSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
+      role :=
+        "Derived source-gap lowering for the same-index record-family-hull q-scale endpoint.  The endpoint keeps the record-family q-scale compatibility and source-level determinant/Hodge calibration route, but its sign and normalization data are read from IUTStage1SourceObligationGap before entering the local-degree signed dichotomy and C_Theta >= -1 proof." },
     { name := "local arithmetic-degree source-obligation-gap endpoint",
       status := .derived,
       declarationName :=
@@ -1128,7 +1140,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 137 :=
+    canonicalStage1ResidualFrontier.length = 139 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1138,7 +1150,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 131 :=
+      (fun entry => entry.status = .derived)).length = 133 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -2042,6 +2054,14 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantRecordFamilyHullQScaleSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantRecordFamilyHullQScaleSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantFamilyHullThetaSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantFamilyHullThetaSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantRecordFamilyHullQScaleSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantRecordFamilyHullQScaleSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #check WeightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel.not_record_ob3ob4_synchronized
 #guard_msgs (drop info) in
