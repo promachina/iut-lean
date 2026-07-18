@@ -145,7 +145,7 @@ structure CanonicalStage1RemainingAssumption where
 
 /-- Short name for the current canonical public 3.11-to-3.12 Stage 1 route. -/
 def canonicalStage1RouteName : String :=
-  "same-index q-normalized route with compact-open additive-Haar p-adic-defect/main residual lowering and p-adic-normalized processional local-estimate frontier"
+  "same-index q-normalized route with compact-open additive-Haar p-adic-defect/main residual lowering and p-adic unit-ball processional Haar-defect frontier"
 
 /--
 Current canonical Stage 1 remaining-assumption manifest.
@@ -238,9 +238,9 @@ def canonicalStage1RemainingAssumptions :
       status := .sourceObligation,
       paperSource := "IUT IV, Theorem 1.10, local Step (v)/(vi)/(vii) estimates and p-adic Haar residual normalization",
       consumerDeclaration :=
-        "preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallCalibrationLocalArithmeticPointwiseTheorem110LocalAnalyticPadicUnitBallHaarDefectResidualPadicNormalizedProcessionalCaseIUTIVArithmeticDivisorLocalizedStepXIConstructedHDDDataGoalCompletionAudit",
+        "preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallCalibrationLocalArithmeticPointwisePadicUnitBallValuationBallLocalAnalyticProcessionalHaarDefectResidualIUTIVArithmeticDivisorLocalizedStepXIConstructedHDDDataGoalCompletionAudit",
       note :=
-        "Current lower IUT IV source boundary: the pointwise local-analytic valuation-ball Theorem 1.10/IUT IV localized source supplies the local analytic ledger and localized Step (xi) object; the p-adic unit-ball Haar residual source supplies the expanded arithmetic-degree Haar defect identity; and the p-adic-normalized processional case source supplies the Step (v)/(vi)/(vii) processional identifications with the distinguished place definitionally fixed by the p-adic normalization.  This replaces the older omnibus formula-gap source as the canonical IUT IV frontier, but it is still a paper-level source obligation until constructed from the full IUT IV local estimate proof." },
+        "Current lower IUT IV source boundary: the p-adic unit-ball localized Step (xi) source supplies the localized arithmetic-divisor identity and p-adic Haar residual normalization; the matching valuation-ball local-analytic Theorem 1.10 source supplies the local analytic ledger; and the processional Haar-defect residual source supplies the Step (v)/(vi)/(vii) procession-normalized identities together with the local Haar-defect residual lower bound.  Lean reconstructs the pointwise residual theorem, expanded p-adic Haar residual source, and p-adic-normalized processional case handoff internally; the remaining paper obligation is deriving this Haar-defect processional local-estimate source and the normalized-place alignment from the full IUT IV local estimate proof." },
     { name := "localArithmeticDegreeResidualSource",
       status := .derived,
       paperSource := "IUT IV local arithmetic-degree identity and Haar residual lower bound",
@@ -783,6 +783,18 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallCalibrationLocalArithmeticPointwisePadicUnitBallValuationBallLocalAnalyticProcessionalPointwiseResidualIUTIVArithmeticDivisorLocalizedStepXIConstructedHDDDataGoalCompletionAudit",
       role :=
         "Derived public signed endpoint below the p-adic-normalized processional case public boundary.  The endpoint exposes the p-adic unit-ball localized Step (xi) object, matching valuation-ball local-analytic Theorem 1.10 source, local-evaluation equality, processional pointwise-residual theorem, and normalized-place alignment, then reconstructs the normalized case and expanded p-adic Haar-residual handoff before entering the established processional p-adic unit-ball Corollary 3.12 route." },
+    { name := "pointwise p-adic unit-ball valuation-ball route from processional Haar-defect residual source",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISource.ofPointwisePadicUnitBallIUTIVLocalizedStepXISourceValuationBallLocalAnalyticProcessionalHaarDefectResidualSource",
+      role :=
+        "Derived p-adic unit-ball route below the pointwise residual public boundary.  The processional Haar-defect residual source projects to the pointwise residual theorem internally, so the handoff now reads the distinguished one-unit contribution from the local Haar-defect residual source while preserving the explicit normalized-place alignment." },
+    { name := "public p-adic unit-ball valuation-ball endpoint from processional Haar-defect residual source",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallCalibrationLocalArithmeticPointwisePadicUnitBallValuationBallLocalAnalyticProcessionalHaarDefectResidualIUTIVArithmeticDivisorLocalizedStepXIConstructedHDDDataGoalCompletionAudit",
+      role :=
+        "Derived public signed endpoint below the processional pointwise-residual public boundary.  The endpoint exposes the p-adic unit-ball localized Step (xi) object, matching valuation-ball local-analytic Theorem 1.10 source, local-evaluation equality, processional Haar-defect residual theorem, and normalized-place alignment; Lean reconstructs the pointwise residual theorem, normalized case, and expanded p-adic Haar-residual handoff before entering the established processional p-adic unit-ball Corollary 3.12 route." },
     { name := "p-adic-defect/main projected-weighted formula-gap residual endpoint",
       status := .derived,
       declarationName :=
@@ -899,7 +911,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 99 :=
+    canonicalStage1ResidualFrontier.length = 101 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -909,7 +921,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 93 :=
+      (fun entry => entry.status = .derived)).length = 95 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6072,13 +6084,25 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISource.ofPointwisePadicUnitBallIUTIVLocalizedStepXISourceValuationBallLocalAnalyticProcessionalPointwiseResidualSource
 #guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISource.ofPointwisePadicUnitBallIUTIVLocalizedStepXISourceValuationBallLocalAnalyticProcessionalHaarDefectResidualSource
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISource.ofPointwisePadicUnitBallIUTIVLocalizedStepXISourceValuationBallLocalAnalyticProcessionalHaarDefectResidualSource
+#guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISourceOfPointwisePadicUnitBallValuationBallLocalAnalyticProcessionalPointwiseResidualLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISourceOfPointwisePadicUnitBallValuationBallLocalAnalyticProcessionalPointwiseResidualLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit
 #guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISourceOfPointwisePadicUnitBallValuationBallLocalAnalyticProcessionalHaarDefectResidualLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISourceOfPointwisePadicUnitBallValuationBallLocalAnalyticProcessionalHaarDefectResidualLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit
+#guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallCalibrationLocalArithmeticPointwisePadicUnitBallValuationBallLocalAnalyticProcessionalPointwiseResidualIUTIVArithmeticDivisorLocalizedStepXIConstructedHDDDataGoalCompletionAudit
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallCalibrationLocalArithmeticPointwisePadicUnitBallValuationBallLocalAnalyticProcessionalPointwiseResidualIUTIVArithmeticDivisorLocalizedStepXIConstructedHDDDataGoalCompletionAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallCalibrationLocalArithmeticPointwisePadicUnitBallValuationBallLocalAnalyticProcessionalHaarDefectResidualIUTIVArithmeticDivisorLocalizedStepXIConstructedHDDDataGoalCompletionAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallCalibrationLocalArithmeticPointwisePadicUnitBallValuationBallLocalAnalyticProcessionalHaarDefectResidualIUTIVArithmeticDivisorLocalizedStepXIConstructedHDDDataGoalCompletionAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicPrincipalPointwiseValuationBallPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISourceToTheorem110ValuationBallLocalAnalyticIUTIVLocalizedStepXISourceLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312ConstructorAudit
 #guard_msgs (drop info) in
