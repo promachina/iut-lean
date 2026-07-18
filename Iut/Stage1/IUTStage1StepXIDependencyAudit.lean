@@ -619,6 +619,12 @@ def canonicalStage1ResidualFrontier :
         "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.ofCompactOpenLogKummerMapConstructorBuiltLocalDegreeFormulaSource_projectionAudit",
       role :=
         "Derived compact-open route-input constructor from the Step (v)/(vii) local-degree formula Record-Ob3/Ob5 valuation-ball comparison source.  Lean first reconstructs the p-adic-defect/main controlled source using the valuation-ball projection-preservation theorem, then enters the checked p-adic-defect/main route-input constructor; the audit records component reconstruction, determinant/scale synchronization, formula-gap endpoint, Haar-residual lower bound, and the local Step (v)/(vi)/(vii) audit." },
+    { name := "local-degree formula canonical-HDD compact-open inverse-base-prime route",
+      status := .derived,
+      declarationName :=
+        "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.preferredPublicCompactOpenLogKummerMapCanonicalHDDLocalDegreeFormulaInverseBasePrimeRoute",
+      role :=
+        "Derived signed canonical-HDD compact-open inverse-base-prime route from the Step (v)/(vii) local-degree formula Record-Ob3/Ob5 source.  Lean projects the controlled component source carried by the local-degree formula object, reconstructs the matching valuation-ball formula source from that controlled local arithmetic, proves the component/formula synchronization definitionally, and enters the canonical-HDD component/formula inverse-base-prime consumer." },
     { name := "p-adic-defect/main compact-open controlled product-handoff route",
       status := .derived,
       declarationName :=
@@ -741,7 +747,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 74 :=
+    canonicalStage1ResidualFrontier.length = 75 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -751,7 +757,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 69 :=
+      (fun entry => entry.status = .derived)).length = 70 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6050,6 +6056,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.ofCompactOpenLogKummerMapConstructorBuiltLocalDegreeFormulaSource_projectionAudit
 #guard_msgs (drop info) in
 #print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.ofCompactOpenLogKummerMapConstructorBuiltLocalDegreeFormulaSource_projectionAudit
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.preferredPublicCompactOpenLogKummerMapCanonicalHDDLocalDegreeFormulaInverseBasePrimeRoute
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.preferredPublicCompactOpenLogKummerMapCanonicalHDDLocalDegreeFormulaInverseBasePrimeRoute
 #guard_msgs (drop info) in
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.preferredPublicConcreteStepXI311312CompactOpenAdditiveHaarRecordOb3Ob5PadicDefectMainControlledProductHandoffFormulaRealizedRoute
 #guard_msgs (drop info) in
