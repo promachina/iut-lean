@@ -4449,6 +4449,17 @@ structure Audit : Prop where
     ∀ (thetaClass : ThetaPilotClass (coric := coric)) (label : ZMod l.value),
       ((source.logShellLogLinkFamily thetaClass).labelObject label).finiteLogVolume =
         (source.logShellLogLinkFamily thetaClass).baseObject.finiteLogVolume
+  transported_logShell_family_constant :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      (source.logShellLogLinkFamily
+          thetaClass).toZModLabelledLogShellTransportFamily.toZModLabelledLogShellFamily =
+        IUTStage1ZModLabelledLogShellFamilyLogVolume.constantFromLocalObject
+          (l := l) (source.logShellLogLinkFamily thetaClass).baseObject
+  transported_normalizedLogVolume_eq_base :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      (source.logShellLogLinkFamily
+          thetaClass).toZModLabelledLogShellTransportFamily.toZModLabelledLogShellFamily.normalizedLogVolume =
+        (source.logShellLogLinkFamily thetaClass).baseObject.finiteLogVolume
   direct_summand_count_eq_zmodCard :
     ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
       choice.local_tensor_state.directSummandCount = Fintype.card (ZMod l.value)
@@ -4484,6 +4495,16 @@ theorem audit :
       exact
         (source.logShellLogLinkFamily thetaClass).labelObject_finiteLogVolume_eq_base
           label,
+    transported_logShell_family_constant := by
+      intro thetaClass
+      exact
+        (source.logShellLogLinkFamily thetaClass)
+          |>.toZModLabelledLogShellFamily_eq_constantFromBaseObject,
+    transported_normalizedLogVolume_eq_base := by
+      intro thetaClass
+      exact
+        (source.logShellLogLinkFamily thetaClass)
+          |>.toZModLabelledLogShellFamily_normalizedLogVolume,
     direct_summand_count_eq_zmodCard := by
       intro choice
       exact source.direct_summand_count_eq_zmodCard choice,
@@ -4619,6 +4640,18 @@ structure Audit : Prop where
             ((source.logShellLocalObjectFamily thetaClass).baseColumn +
               (source.logShellLocalObjectFamily thetaClass).labelColumnShift
                 label)).realifiedLogVolume
+  transported_logShell_family_constant :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      (source.logShellLogLinkFamily
+          thetaClass).toZModLabelledLogShellTransportFamily.toZModLabelledLogShellFamily =
+        IUTStage1ZModLabelledLogShellFamilyLogVolume.constantFromLocalObject
+          (l := l)
+          (source.logShellLocalObjectFamily thetaClass).baseFiniteLocalObject
+  transported_normalizedLogVolume_eq_base :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      (source.logShellLogLinkFamily
+          thetaClass).toZModLabelledLogShellTransportFamily.toZModLabelledLogShellFamily.normalizedLogVolume =
+        (source.logShellLocalObjectFamily thetaClass).baseFiniteLocalObject.finiteLogVolume
   direct_summand_count_eq_zmodCard :
     ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
       choice.local_tensor_state.directSummandCount = Fintype.card (ZMod l.value)
@@ -4654,6 +4687,16 @@ theorem audit :
       exact
         (source.logShellLocalObjectFamily thetaClass).label_finiteLogVolume_eq_realified
           label,
+    transported_logShell_family_constant := by
+      intro thetaClass
+      exact
+        (source.logShellLogLinkFamily thetaClass)
+          |>.toZModLabelledLogShellFamily_eq_constantFromBaseObject,
+    transported_normalizedLogVolume_eq_base := by
+      intro thetaClass
+      exact
+        (source.logShellLogLinkFamily thetaClass)
+          |>.toZModLabelledLogShellFamily_normalizedLogVolume,
     direct_summand_count_eq_zmodCard := by
       intro choice
       exact source.direct_summand_count_eq_zmodCard choice,

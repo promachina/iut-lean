@@ -999,6 +999,22 @@ theorem normalizedLogVolume_eq_baseFinite
   rfl
 
 set_option linter.style.longLine false in
+theorem toZModLabelledLogShellFamily_eq_constantFromBaseObject
+    (data : IUTStage1ZModLabelledLogShellTransportFamily l kind) :
+    data.toZModLabelledLogShellFamily =
+      IUTStage1ZModLabelledLogShellFamilyLogVolume.constantFromLocalObject
+        (l := l) data.baseObject := by
+  cases data with
+  | mk baseObject labelObject labelTransport =>
+      dsimp [toZModLabelledLogShellFamily,
+        IUTStage1ZModLabelledLogShellFamilyLogVolume.constantFromLocalObject]
+      have hlabel : labelObject = fun _ => baseObject := by
+        funext label
+        exact (labelTransport label).transported_eq_base
+      subst hlabel
+      rfl
+
+set_option linter.style.longLine false in
 def constantFromBaseObject
     (baseObject : IUTStage1FiniteLocalLogVolumeObject kind) :
     IUTStage1ZModLabelledLogShellTransportFamily l kind :=
@@ -1086,6 +1102,21 @@ theorem toZModLabelledLogShellTransportFamily_labelObject
   rfl
 
 set_option linter.style.longLine false in
+theorem toZModLabelledLogShellFamily_eq_constantFromBaseObject
+    (source : IUTStage1VerticalLogKummerLogShellTransportFamilySource l kind) :
+    source.toZModLabelledLogShellTransportFamily.toZModLabelledLogShellFamily =
+      IUTStage1ZModLabelledLogShellFamilyLogVolume.constantFromLocalObject
+        (l := l) source.baseObject :=
+  source.toZModLabelledLogShellTransportFamily
+    |>.toZModLabelledLogShellFamily_eq_constantFromBaseObject
+
+theorem toZModLabelledLogShellFamily_normalizedLogVolume
+    (source : IUTStage1VerticalLogKummerLogShellTransportFamilySource l kind) :
+    source.toZModLabelledLogShellTransportFamily.toZModLabelledLogShellFamily.normalizedLogVolume =
+      source.baseObject.finiteLogVolume :=
+  source.toZModLabelledLogShellTransportFamily.normalizedLogVolume_eq_baseFinite
+
+set_option linter.style.longLine false in
 /--
 Audit endpoint for the column-log-link construction of the transported
 log-shell family.
@@ -1106,6 +1137,13 @@ structure Audit
       (∀ label : ZMod l.value,
         source.toZModLabelledLogShellTransportFamily.labelObject label =
           source.labelObject label)
+  transported_logShell_family_constant :
+    source.toZModLabelledLogShellTransportFamily.toZModLabelledLogShellFamily =
+      IUTStage1ZModLabelledLogShellFamilyLogVolume.constantFromLocalObject
+        (l := l) source.baseObject
+  transported_normalizedLogVolume_eq_base :
+    source.toZModLabelledLogShellTransportFamily.toZModLabelledLogShellFamily.normalizedLogVolume =
+      source.baseObject.finiteLogVolume
 
 theorem audit
     (source : IUTStage1VerticalLogKummerLogShellTransportFamilySource l kind) :
@@ -1113,7 +1151,11 @@ theorem audit
   { label_transport_eq_base := source.labelObject_eq_base,
     label_finiteLogVolume_eq_base := source.labelObject_finiteLogVolume_eq_base,
     transported_family_from_logLinks := by
-      exact ⟨rfl, fun _label => rfl⟩ }
+      exact ⟨rfl, fun _label => rfl⟩,
+    transported_logShell_family_constant :=
+      source.toZModLabelledLogShellFamily_eq_constantFromBaseObject,
+    transported_normalizedLogVolume_eq_base :=
+      source.toZModLabelledLogShellFamily_normalizedLogVolume }
 
 end IUTStage1VerticalLogKummerLogShellTransportFamilySource
 

@@ -161,7 +161,14 @@
   to prove that the uniform average of the constant
   \(\mathbb Z/l\mathbb Z\)-indexed label family is the base volume, and then
   transports the result through the constructed representative upper-semi
-  state.  The generated full-label kernel layer also carries this finite
+  state.  One layer lower, vertical log-Kummer/log-link transport now proves
+  constancy for the whole finite log-shell family:
+  \lean{Iut.Stage1.IUTStage1VerticalLogKummerLogShellTransportFamilySource.toZModLabelledLogShellFamily_eq_constantFromBaseObject}
+  identifies the constructed \(\mathbb Z/l\mathbb Z\)-labelled log-shell family
+  with the constant family on the base object, and
+  \lean{Iut.Stage1.IUTStage1VerticalLogKummerLogShellTransportFamilySource.toZModLabelledLogShellFamily_normalizedLogVolume}
+  reads the normalized log-volume as the base finite log-volume.  The generated
+  full-label kernel layer also carries this finite
   average internally:
   \lean{Iut.Stage1.IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.generatedFullLabelAverage}
   builds the constant \(\mathbb Z/l\mathbb Z\)-indexed normalized
