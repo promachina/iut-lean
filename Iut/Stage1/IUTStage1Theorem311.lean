@@ -15386,6 +15386,55 @@ def generatedFullLabelLogVolume
   source.baseConstructedRealifiedVolume choice.thetaClass
 
 set_option linter.style.longLine false in
+/--
+Finite-label averaged log-volume attached to a generated theta-pilot class.
+
+At the generated full-label boundary the normalized label family is constant:
+every `F_l` label over the same theta-pilot class carries the Frobenioid
+base realified volume.  The average is therefore constructed, not supplied.
+-/
+noncomputable def generatedFullLabelAverage
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    IUTStage1LabelAveragedProcessionLogVolume (ZMod l.value) :=
+  IUTStage1LabelAveragedProcessionLogVolume.constant
+    (label := ZMod l.value)
+    (source.baseConstructedRealifiedVolume thetaClass)
+
+set_option linter.style.longLine false in
+@[simp]
+theorem generatedFullLabelAverage_normalizedLogVolume
+    (thetaClass : ThetaPilotClass (coric := coric))
+    (label : ZMod l.value) :
+    (source.generatedFullLabelAverage thetaClass).normalizedLogVolume label =
+      source.baseConstructedRealifiedVolume thetaClass :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelAverage_average_eq_base
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    (source.generatedFullLabelAverage thetaClass).averageLogVolume =
+      source.baseConstructedRealifiedVolume thetaClass :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelLogVolume_eq_labelAverage
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    source.generatedFullLabelLogVolume choice =
+      (source.generatedFullLabelAverage choice.thetaClass).averageLogVolume := by
+  exact (source.generatedFullLabelAverage_average_eq_base choice.thetaClass).symm
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelAverage_eq_zmod_sum
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    (source.generatedFullLabelAverage thetaClass).averageLogVolume =
+      (Finset.univ.sum fun _label : ZMod l.value =>
+        source.baseConstructedRealifiedVolume thetaClass) / (l.value : Real) := by
+  rw [source.generatedFullLabelAverage_average_eq_base thetaClass]
+  exact
+    (LogThetaLabelProcessionUpperSemiSource.zmod_constant_label_average
+      (l := l) (source.baseConstructedRealifiedVolume thetaClass)).symm
+
+set_option linter.style.longLine false in
 /-- `(Ind1)` on generated full-label choices: translation in the finite label. -/
 def generatedFullLabelInd1Step
     (choice₁ choice₂ : FullLabelGeneratedChoice (coric := coric) (l := l)) :
@@ -16009,6 +16058,19 @@ structure GeneratedFullLabelQuotientPossibleImageAudit
     Nonempty
       (IUTStage1Theorem311TypedIndeterminacyCore
         (FullLabelGeneratedChoice (coric := coric) (l := l)))
+  generated_label_average :
+    Nonempty
+      (ThetaPilotClass (coric := coric) ->
+        IUTStage1LabelAveragedProcessionLogVolume (ZMod l.value))
+  generated_label_average_formula :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      (source.generatedFullLabelAverage thetaClass).averageLogVolume =
+        (Finset.univ.sum fun _label : ZMod l.value =>
+          source.baseConstructedRealifiedVolume thetaClass) / (l.value : Real)
+  generated_logVolume_eq_labelAverage :
+    ∀ choice : FullLabelGeneratedChoice (coric := coric) (l := l),
+      source.generatedFullLabelLogVolume choice =
+        (source.generatedFullLabelAverage choice.thetaClass).averageLogVolume
   ind1_preserves_generated_logVolume :
     ∀ {choice₁ choice₂ :
         FullLabelGeneratedChoice (coric := coric) (l := l)},
@@ -16099,6 +16161,14 @@ theorem generatedFullLabelQuotientPossibleImageAudit
       thetaClassImages selected :=
   { typed_core :=
       ⟨source.generatedFullLabelTypedIndeterminacyCore⟩,
+    generated_label_average :=
+      ⟨source.generatedFullLabelAverage⟩,
+    generated_label_average_formula := by
+      intro thetaClass
+      exact source.generatedFullLabelAverage_eq_zmod_sum thetaClass,
+    generated_logVolume_eq_labelAverage := by
+      intro choice
+      exact source.generatedFullLabelLogVolume_eq_labelAverage choice,
     ind1_preserves_generated_logVolume := by
       intro choice₁ choice₂ hstep
       exact source.generatedFullLabelInd1_logVolume_eq hstep,

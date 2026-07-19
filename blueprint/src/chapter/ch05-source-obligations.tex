@@ -161,7 +161,17 @@
   to prove that the uniform average of the constant
   \(\mathbb Z/l\mathbb Z\)-indexed label family is the base volume, and then
   transports the result through the constructed representative upper-semi
-  state.  The generated package
+  state.  The generated full-label kernel layer also carries this finite
+  average internally:
+  \lean{Iut.Stage1.IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.generatedFullLabelAverage}
+  builds the constant \(\mathbb Z/l\mathbb Z\)-indexed normalized
+  log-volume object, and
+  \lean{Iut.Stage1.IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeKernel.generatedFullLabelLogVolume_eq_labelAverage}
+  proves that the generated full-label typed-core log-volume is exactly this
+  finite average.  Thus the quotient possible-image audit records the
+  procession-normalized average at the generated source boundary itself, not
+  merely after projection to an ambient representative source.  The generated
+  package
   reindex source
   \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.IUTStage1ConcreteTheorem311ComponentKernelGeneratedFullLabelPackageReindexSource}
   pulls the concrete pre-ledger/source package back along the kernel projection
