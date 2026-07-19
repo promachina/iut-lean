@@ -964,6 +964,18 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPointwiseResidualSource.ofPointwiseDefinedResidualLowerSourceCaseProcession_endpoint",
       role :=
         "Endpoint theorem for the lower pointwise residual to case-defined processional pointwise-residual constructor.  This checks that the reconstructed source still yields the arithmetic-gap, defined-residual, lower-weight, and local arithmetic-degree endpoints used downstream." },
+    { name := "case-defined processional Haar-defect residual from lower Haar source",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalHaarDefectResidualSource.ofPointwiseHaarDefectResidualSourceCaseProcession",
+      role :=
+        "Derived constructor for the processional Haar-defect residual source from the lower pointwise Haar-defect residual package plus the case-defined Step XI equality.  The Haar source supplies the residual lower-bound data and distinguished unit defect; the three Step (v)/(vi)/(vii) procession-normalization identity families are projected from the case-defined local value." },
+    { name := "case-defined processional Haar-defect residual endpoint from lower Haar source",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalHaarDefectResidualSource.ofPointwiseHaarDefectResidualSourceCaseProcession_endpoint",
+      role :=
+        "Endpoint theorem for the lower pointwise Haar-defect residual to case-defined processional Haar-defect constructor.  This verifies that the reconstructed Haar-defect source still yields the pointwise residual, lower-weight residual, and local arithmetic-degree endpoints consumed downstream." },
     { name := "p-adic-normalized case-defined processional estimate constructor",
       status := .derived,
       declarationName :=
@@ -1482,7 +1494,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 196 :=
+    canonicalStage1ResidualFrontier.length = 198 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1492,7 +1504,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 190 :=
+      (fun entry => entry.status = .derived)).length = 192 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -3353,6 +3365,14 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPointwiseResidualSource.ofPointwiseDefinedResidualLowerSourceCaseProcession_endpoint
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPointwiseResidualSource.ofPointwiseDefinedResidualLowerSourceCaseProcession_endpoint
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalHaarDefectResidualSource.ofPointwiseHaarDefectResidualSourceCaseProcession
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalHaarDefectResidualSource.ofPointwiseHaarDefectResidualSourceCaseProcession
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalHaarDefectResidualSource.ofPointwiseHaarDefectResidualSourceCaseProcession_endpoint
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalHaarDefectResidualSource.ofPointwiseHaarDefectResidualSourceCaseProcession_endpoint
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallStepXISynchronizationSource.PadicNormalizedCaseDefinedProcessionalEstimateSource
 #guard_msgs (drop info) in
