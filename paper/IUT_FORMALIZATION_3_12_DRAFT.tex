@@ -2891,6 +2891,14 @@ the public IUT~IV input is the valuation-ball local-analytic Theorem~1.10
 source together with the local-analytic case split, and Lean constructs both
 the formula-gap matched source and the formula-gap case residual internally
 before invoking the signed and \(\CTheta\ge -1\) endpoints.
+The q-normalized local arithmetic-degree source now also feeds the same-index
+case-bounded boundary directly: Lean projects the formula-gap source from the
+local-degree object, attaches the explicit Theorem~1.10 valuation-ball case
+residual source, and then invokes the internal-principal-HDD route.  Thus this
+case-bounded endpoint inherits the adjusted-determinant synchronization and
+record-family-hull q-scale lowerings already present in the local-degree
+source, instead of restating the weighted determinant component equalities at
+the public boundary.
 This has now been lowered to the procession-bound form on the same branch:
 Lean reconstructs the expanded local case source from the projected
 Theorem~1.10 procession upper bound and the distinguished \(+1\) comparison.
