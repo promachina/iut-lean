@@ -1708,6 +1708,12 @@ def canonicalStage1ResidualFrontier :
         "preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelCompactOpenLogKummerMapExplicitDeterminantFormulaLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
       role :=
         "Derived lowering of the same possible-image local-degree source-gap route below log-shell exactness.  The endpoint takes compact-open local Kummer realization map data, a selected possible-region section, compatibility with valuation-factor realization, and compact-open soundness; Lean derives the correspondence, image laws, compact-open possible-region exactness, compact-open log-shell image exactness, principal log-shell image exactness, and log-shell exactness before entering the source-gap route." },
+    { name := "compact-open log-Kummer graph-to-map constructor",
+      status := .derived,
+      declarationName :=
+        "ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerGraphMetricZeroValuationBallExactSource.toCompactOpenLogKummerMapPossibleRegionSource",
+      role :=
+        "Derived graph-to-map lowering for the compact-open log-Kummer source layer.  From graph left-totality over transported theta regions, realization compatibility, and compact-open soundness, Lean constructs the possible-region local Kummer map source: the map is the valuation-factor realization, the section is chosen by graph left-totality, and the soundness law is inherited from the graph source." },
     { name := "determinant-factored pointwise formula projection audit",
       status := .derived,
       declarationName :=
@@ -1776,7 +1782,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 245 :=
+    canonicalStage1ResidualFrontier.length = 246 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1786,7 +1792,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 239 :=
+      (fun entry => entry.status = .derived)).length = 240 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -5762,6 +5768,14 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelCompactOpenLogKummerMapExplicitDeterminantFormulaLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelCompactOpenLogKummerMapExplicitDeterminantFormulaLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#check IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerGraphMetricZeroValuationBallExactSource.toCompactOpenLogKummerMapPossibleRegionSource
+#guard_msgs (drop info) in
+#print axioms IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerGraphMetricZeroValuationBallExactSource.toCompactOpenLogKummerMapPossibleRegionSource
+#guard_msgs (drop info) in
+#check IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerGraphMetricZeroValuationBallExactSource.compactOpenLogKummerMapPossibleRegionEndpoint
+#guard_msgs (drop info) in
+#print axioms IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerGraphMetricZeroValuationBallExactSource.compactOpenLogKummerMapPossibleRegionEndpoint
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeSourceSideHypothesesLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceRouteAudit
 #guard_msgs (drop info) in

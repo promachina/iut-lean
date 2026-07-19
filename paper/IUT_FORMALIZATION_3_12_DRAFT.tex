@@ -1887,7 +1887,10 @@ A stronger possible-image source-gap variant now starts instead from
 compact-open local Kummer map data: the local realization map, selected-region
 section, valuation-factor compatibility, and compact-open soundness are enough
 for Lean to derive the correspondence, image, possible-region exactness, and
-log-shell exactness chain before entering the signed \(C_\Theta\) route.
+log-shell exactness chain before entering the signed \(C_\Theta\) route.  The
+compact-open graph source now also constructs this map package directly:
+left-totality supplies the section, graph realization supplies the map
+compatibility, and graph soundness supplies the possible-region law.
 A formula-gap residual variant now lowers the IUT~IV input again: it takes the
 valuation-ball additive-Haar formula-gap residual source and projects the
 local-analytic residual ledger internally.
