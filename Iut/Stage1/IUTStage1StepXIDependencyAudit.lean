@@ -1282,6 +1282,36 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseLocalArithmeticDegreeFormulaSource.endpoint",
       role :=
         "Derived endpoint for the case-local arithmetic-degree formula source, recording the valuation-ball Theorem 1.10 endpoint, the three local formula clauses, and the constructed all-place case-procession arithmetic-degree formula endpoint." },
+    { name := "Theorem 1.10 case-local arithmetic-degree bound source",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseLocalArithmeticDegreeBoundSource",
+      role :=
+        "Derived estimate-shaped lower source for the local Theorem 1.10 handoff.  It records the three paper-local Step (v)/(vi)/(vii) upper bounds against the arithmetic-degree part, without requiring the stronger equality clauses used by the current exact formula route." },
+    { name := "Theorem 1.10 case-local bound recombination theorem",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseLocalArithmeticDegreeBoundSource.caseProcession_le_arithmeticDegreePart",
+      role :=
+        "Derived theorem that performs the IUT IV Step (v)/(vi)/(vii) local-kind case split and proves the all-place upper bound `caseProcession_v <= a_v(D_v+C_v)` from the three case-local estimate clauses." },
+    { name := "Theorem 1.10 case-local formula source to bound source",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseLocalArithmeticDegreeBoundSource.ofCaseLocalArithmeticDegreeFormulaSource",
+      role :=
+        "Derived constructor showing that the stronger Step (v)/(vi)/(vii) equality source canonically supplies the weaker estimate-shaped case-local arithmetic-degree bound source by `le_of_eq`." },
+    { name := "Theorem 1.10 case-local arithmetic-degree bound endpoint",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseLocalArithmeticDegreeBoundSource.endpoint",
+      role :=
+        "Derived endpoint for the case-local arithmetic-degree bound source, recording the valuation-ball Theorem 1.10 endpoint and the recombined all-place case-procession arithmetic-degree upper bound." },
+    { name := "Theorem 1.10 case-local formula source to bound endpoint",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseLocalArithmeticDegreeBoundSource.ofCaseLocalArithmeticDegreeFormulaSource_endpoint",
+      role :=
+        "Endpoint theorem verifying that the exact case-local arithmetic-degree formula source satisfies the weaker bound-source endpoint after converting equalities to inequalities." },
     { name := "Theorem 1.10 case-procession arithmetic-degree endpoint",
       status := .derived,
       declarationName :=
@@ -1554,7 +1584,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 208 :=
+    canonicalStage1ResidualFrontier.length = 213 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1564,7 +1594,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 202 :=
+      (fun entry => entry.status = .derived)).length = 207 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -7274,6 +7304,24 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseLocalArithmeticDegreeFormulaSource.endpoint
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseLocalArithmeticDegreeFormulaSource.endpoint
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseLocalArithmeticDegreeBoundSource
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseLocalArithmeticDegreeBoundSource.caseProcession_le_arithmeticDegreePart
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseLocalArithmeticDegreeBoundSource.caseProcession_le_arithmeticDegreePart
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseLocalArithmeticDegreeBoundSource.ofCaseLocalArithmeticDegreeFormulaSource
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseLocalArithmeticDegreeBoundSource.ofCaseLocalArithmeticDegreeFormulaSource
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseLocalArithmeticDegreeBoundSource.endpoint
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseLocalArithmeticDegreeBoundSource.endpoint
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseLocalArithmeticDegreeBoundSource.ofCaseLocalArithmeticDegreeFormulaSource_endpoint
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseLocalArithmeticDegreeBoundSource.ofCaseLocalArithmeticDegreeFormulaSource_endpoint
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISource.SelectedTheorem110CaseDefinedReconstructedProcessionalPadicUnitBallHaarDefectResidualSource
 #guard_msgs (drop info) in
