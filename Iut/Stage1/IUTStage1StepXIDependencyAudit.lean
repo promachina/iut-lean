@@ -976,6 +976,18 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalHaarDefectResidualSource.ofPointwiseHaarDefectResidualSourceCaseProcession_endpoint",
       role :=
         "Endpoint theorem for the lower pointwise Haar-defect residual to case-defined processional Haar-defect constructor.  This verifies that the reconstructed Haar-defect source still yields the pointwise residual, lower-weight residual, and local arithmetic-degree endpoints consumed downstream." },
+    { name := "local CTheta handoff from pointwise Haar source and case procession",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.constructorBuiltLocalizedStepXILocalTermCThetaSourceOfValuationBallLocalAnalyticPointwiseHaarDefectCaseProcessionSource",
+      role :=
+        "Derived local CTheta constructor below the processional Haar-defect handoff.  It reconstructs the processional Haar-defect source from the lower pointwise Haar-defect residual package, the case-defined Step XI equality, and the distinguished-kind witness before entering the established local-term CTheta route." },
+    { name := "local CTheta handoff endpoint from pointwise Haar source and case procession",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.constructorBuiltLocalizedStepXILocalTermCThetaSourceOfValuationBallLocalAnalyticPointwiseHaarDefectCaseProcessionSource_endpoint",
+      role :=
+        "Endpoint theorem for the pointwise Haar-defect plus case-procession local CTheta constructor.  This verifies that the reconstructed processional Haar-defect source still yields the localized CTheta endpoint consumed by the canonical determinant-scale route." },
     { name := "p-adic-normalized case-defined processional estimate constructor",
       status := .derived,
       declarationName :=
@@ -1494,7 +1506,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 198 :=
+    canonicalStage1ResidualFrontier.length = 200 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1504,7 +1516,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 192 :=
+      (fun entry => entry.status = .derived)).length = 194 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -3373,6 +3385,14 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalHaarDefectResidualSource.ofPointwiseHaarDefectResidualSourceCaseProcession_endpoint
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalHaarDefectResidualSource.ofPointwiseHaarDefectResidualSourceCaseProcession_endpoint
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.constructorBuiltLocalizedStepXILocalTermCThetaSourceOfValuationBallLocalAnalyticPointwiseHaarDefectCaseProcessionSource
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.constructorBuiltLocalizedStepXILocalTermCThetaSourceOfValuationBallLocalAnalyticPointwiseHaarDefectCaseProcessionSource
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.constructorBuiltLocalizedStepXILocalTermCThetaSourceOfValuationBallLocalAnalyticPointwiseHaarDefectCaseProcessionSource_endpoint
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.constructorBuiltLocalizedStepXILocalTermCThetaSourceOfValuationBallLocalAnalyticPointwiseHaarDefectCaseProcessionSource_endpoint
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallStepXISynchronizationSource.PadicNormalizedCaseDefinedProcessionalEstimateSource
 #guard_msgs (drop info) in
