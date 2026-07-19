@@ -206,7 +206,7 @@ def canonicalStage1RemainingAssumptions :
       consumerDeclaration :=
         "PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource",
       note :=
-        "Pointwise determinant calibration is still supplied as a source package." },
+        "Pointwise determinant calibration is still a paper source package, but the determinant-normalized equality is no longer the bottom of the checked boundary.  PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.ofSummandChartedHodgeFamilyHullCalibration constructs this package from the lower pre-ledger volume/hull calibration plus the summand-charted Hodge/family-hull equality; Lean derives determinant log-volume, normalized determinant, and family-hull equalities from the finite adjusted-summand formula and record-native determinant decomposition." },
     { name := "sideConditions",
       status := .sourceObligation,
       paperSource := "IUT III, Corollary 3.12 sign and normalization hypotheses",
@@ -1690,6 +1690,18 @@ def canonicalStage1ResidualFrontier :
         "PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.toPointwiseFormulaSource_projectionAudit",
       role :=
         "Derived audit for the pointwise determinant/Hodge calibration boundary.  It verifies that the older pointwise summand formula source is reconstructed from determinant-charted Hodge calibration together with the record-native determinant decomposition into adjusted summands, and that the reconstructed pointwise formula endpoint holds." },
+    { name := "summand-charted pointwise determinant source constructor",
+      status := .derived,
+      declarationName :=
+        "PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.ofSummandChartedHodgeFamilyHullCalibration",
+      role :=
+        "Derived lower constructor for the pointwise determinant/Hodge source.  The input is the pre-ledger volume/hull equality and the summand-charted Hodge/family-hull calibration; Lean derives the determinant-normalized Hodge equality, determinant log-volume equality, and family-hull equality before constructing the pointwise determinant formula source." },
+    { name := "summand-charted pointwise determinant source audit",
+      status := .derived,
+      declarationName :=
+        "PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.ofSummandChartedHodgeFamilyHullCalibration_projectionAudit",
+      role :=
+        "Derived audit for the summand-charted determinant lowering, recording the finite adjusted-summand, determinant log-volume, normalized determinant, family-hull, and pointwise endpoint consequences." },
     { name := "p-adic normalized case source from processional estimate",
       status := .derived,
       declarationName :=
@@ -1734,7 +1746,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 238 :=
+    canonicalStage1ResidualFrontier.length = 240 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1744,7 +1756,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 232 :=
+      (fun entry => entry.status = .derived)).length = 234 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -3415,6 +3427,12 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.toPointwiseFormulaSource_projectionAudit
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.toPointwiseFormulaSource_projectionAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.ofSummandChartedHodgeFamilyHullCalibration
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.ofSummandChartedHodgeFamilyHullCalibration_projectionAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.ofSummandChartedHodgeFamilyHullCalibration_projectionAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallCalibrationConstructedHDDLocalizedRestrictionDataGoalCompletionAudit
 #guard_msgs (drop info) in
