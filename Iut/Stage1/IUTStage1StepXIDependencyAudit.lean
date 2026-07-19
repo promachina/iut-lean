@@ -1360,6 +1360,12 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseProcessionArithmeticDegreeFormulaSource.endpoint",
       role :=
         "Derived endpoint for the case-procession arithmetic-degree formula source.  It records the valuation-ball Theorem 1.10 endpoint together with the pointwise equality between the case-defined processional local log-volume and the arithmetic-divisor degree part." },
+    { name := "Step XI to case-procession equality from arithmetic-degree part",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseProcessionArithmeticDegreeFormulaSource.weightedAdjustedLogVolume_eq_caseProcession_of_localStepXI_eq_arithmeticDegreePart",
+      role :=
+        "Derived reusable equality for the local Theorem 1.10 handoff.  If the localized Step (xi) weighted adjusted log-volume and the case-defined procession value are both identified with the same arithmetic-divisor part a_v(D_v+C_v), Lean derives the direct StepXI_v = caseProcession_v comparison consumed by the selected p-adic Haar-defect source." },
     { name := "selected p-adic case-defined source from arithmetic-degree formulas",
       status := .derived,
       declarationName :=
@@ -1632,7 +1638,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 221 :=
+    canonicalStage1ResidualFrontier.length = 222 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1642,7 +1648,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 215 :=
+      (fun entry => entry.status = .derived)).length = 216 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -7346,6 +7352,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseProcessionArithmeticDegreeFormulaSource.endpoint
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseProcessionArithmeticDegreeFormulaSource.endpoint
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseProcessionArithmeticDegreeFormulaSource.weightedAdjustedLogVolume_eq_caseProcession_of_localStepXI_eq_arithmeticDegreePart
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseProcessionArithmeticDegreeFormulaSource.weightedAdjustedLogVolume_eq_caseProcession_of_localStepXI_eq_arithmeticDegreePart
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseLocalArithmeticDegreeFormulaSource
 #guard_msgs (drop info) in
