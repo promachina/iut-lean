@@ -543,7 +543,7 @@ def canonicalStage1ResidualFrontier :
       declarationName :=
         "RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.padicDefectMainReconstructionAudit",
       role :=
-        "Derived audit bundling the strict p-adic-defect/main source reconstruction: the valuation-ball local-estimate endpoint, strict p-adic-Haar projection, reconstructed arithmetic-degree-controlled local source, carried controlled Record-Ob3/Ob5 component, and p-adic-defect/main reconstruction equality are all verified from the single source object." },
+        "Derived audit bundling the strict p-adic-defect/main source reconstruction: the valuation-ball local-estimate endpoint, strict p-adic-Haar projection, reconstructed arithmetic-degree-controlled local source, the Step (v) distinguished exact-procession bound, Step (vi) nondistinguished zero bound, Step (vii) archimedean metric-container bound, the recombined case-procession arithmetic-degree inequality, carried controlled Record-Ob3/Ob5 component, and p-adic-defect/main reconstruction equality are all verified from the single source object." },
     { name := "local-degree formula p-adic-defect/main reconstruction equality",
       status := .derived,
       declarationName :=

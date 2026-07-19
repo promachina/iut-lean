@@ -31459,6 +31459,58 @@ structure PadicDefectMainReconstructionAudit
       |>.Endpoint
   arithmetic_degree_controlled_endpoint :
     source.toArithmeticDegreeControlledLocalArithmeticSource.Endpoint
+  case_local_arithmetic_degree_bound_endpoint :
+    source.toArithmeticDegreeControlledLocalArithmeticSource
+      |>.toCoreCaseLocalArithmeticDegreeBoundSource
+      |>.Endpoint
+  distinguished_exact_procession_le_arithmetic_degree_part :
+    ∀ place : β,
+      (hkind :
+        source.toArithmeticDegreeControlledLocalArithmeticSource.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localKind
+            place =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.distinguishedNonarchimedean) ->
+      (source.toArithmeticDegreeControlledLocalArithmeticSource.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.distinguishedValuationBallAdditiveHaarLogShellConstruction
+        place hkind).exactProcessionNormalizedUpperBound <=
+        source.toArithmeticDegreeControlledLocalArithmeticSource.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource.arithmeticDegreeCoefficient *
+          (source.toArithmeticDegreeControlledLocalArithmeticSource.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource.localDifferentDegree
+              place +
+            source.toArithmeticDegreeControlledLocalArithmeticSource.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource.localConductorDegree
+              place)
+  nondistinguished_zero_le_arithmetic_degree_part :
+    ∀ place : β,
+      source.toArithmeticDegreeControlledLocalArithmeticSource.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localKind
+          place =
+        IUTStage1IUTIVTheorem110LocalEstimateKind.nondistinguishedNonarchimedean ->
+      (0 : Real) <=
+        source.toArithmeticDegreeControlledLocalArithmeticSource.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource.arithmeticDegreeCoefficient *
+          (source.toArithmeticDegreeControlledLocalArithmeticSource.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource.localDifferentDegree
+              place +
+            source.toArithmeticDegreeControlledLocalArithmeticSource.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource.localConductorDegree
+              place)
+  archimedean_metric_container_le_arithmetic_degree_part :
+    ∀ place : β,
+      (hkind :
+        source.toArithmeticDegreeControlledLocalArithmeticSource.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.localKind
+            place =
+          IUTStage1IUTIVTheorem110LocalEstimateKind.archimedean) ->
+      (source.toArithmeticDegreeControlledLocalArithmeticSource.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.archimedeanMetricConstruction
+        place hkind).metricContainerLogVolume <=
+        source.toArithmeticDegreeControlledLocalArithmeticSource.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource.arithmeticDegreeCoefficient *
+          (source.toArithmeticDegreeControlledLocalArithmeticSource.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource.localDifferentDegree
+              place +
+            source.toArithmeticDegreeControlledLocalArithmeticSource.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource.localConductorDegree
+              place)
+  case_procession_le_arithmetic_degree_part :
+    ∀ place : β,
+      IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.caseProcessionNormalizedLocalLogVolume
+          (theorem110ValuationBallLocalAnalyticSource :=
+            source.toArithmeticDegreeControlledLocalArithmeticSource.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource)
+          place <=
+        source.toArithmeticDegreeControlledLocalArithmeticSource.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource.arithmeticDegreeCoefficient *
+          (source.toArithmeticDegreeControlledLocalArithmeticSource.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource.localDifferentDegree
+              place +
+            source.toArithmeticDegreeControlledLocalArithmeticSource.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource.localConductorDegree
+              place)
   controlled_component_endpoint :
     ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.Endpoint
       source.toControlledComponentSource.toRecordOb3Ob5ArithmeticDivisorBackedComponentSource.toArithmeticDivisorBackedComponentSource
@@ -31518,6 +31570,26 @@ theorem padicDefectMainReconstructionAudit
         |>.endpoint,
     arithmetic_degree_controlled_endpoint :=
       source.toArithmeticDegreeControlledLocalArithmeticSource.endpoint,
+    case_local_arithmetic_degree_bound_endpoint :=
+      source.toArithmeticDegreeControlledLocalArithmeticSource
+        |>.toCoreCaseLocalArithmeticDegreeBoundSource
+        |>.endpoint,
+    distinguished_exact_procession_le_arithmetic_degree_part :=
+      source.toArithmeticDegreeControlledLocalArithmeticSource
+        |>.toCoreCaseLocalArithmeticDegreeBoundSource
+        |>.distinguished_exactProcession_le_arithmeticDegreePart,
+    nondistinguished_zero_le_arithmetic_degree_part :=
+      source.toArithmeticDegreeControlledLocalArithmeticSource
+        |>.toCoreCaseLocalArithmeticDegreeBoundSource
+        |>.nondistinguished_zero_le_arithmeticDegreePart,
+    archimedean_metric_container_le_arithmetic_degree_part :=
+      source.toArithmeticDegreeControlledLocalArithmeticSource
+        |>.toCoreCaseLocalArithmeticDegreeBoundSource
+        |>.archimedean_metricContainer_le_arithmeticDegreePart,
+    case_procession_le_arithmetic_degree_part :=
+      source.toArithmeticDegreeControlledLocalArithmeticSource
+        |>.toCoreCaseLocalArithmeticDegreeBoundSource
+        |>.caseProcession_le_arithmeticDegreePart,
     controlled_component_endpoint :=
       source.toControlledComponentSource.endpoint,
     controlled_component_eq_carried := by
