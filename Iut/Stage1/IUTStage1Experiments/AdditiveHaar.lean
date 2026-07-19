@@ -13903,6 +13903,62 @@ theorem ofFormulaGapMatchedArithmeticDegreePadicComparisonSource_endpoint
       valuationBallSource comparisonSource
       comparisonFormulaMatching_eq_valuationBall).endpoint
 
+set_option linter.style.longLine false in
+/--
+Reconstructing the valuation-ball formula-gap arithmetic-degree/p-adic package
+from the controlled local arithmetic source built out of a synchronized
+valuation-ball/comparison pair preserves the additive formula-matching core.
+
+This is the equality needed below the Record-Ob3/Ob5 valuation-ball boundary:
+the local controlled source may be reconstructed through the IUT~IV
+prime-error/Haar-index split, but the additive formula package consumed by the
+matched local-degree component remains the same package.
+-/
+theorem ofFormulaGapMatchedArithmeticDegreePadicComparisonSource_toArithmeticFormulaMatching_eq
+    (valuationBallSource :
+      IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (comparisonSource :
+      IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreeComparisonFormulaGapSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand)
+    (comparisonFormulaMatching_eq_valuationBall :
+      comparisonSource.formulaMatchingSource =
+        valuationBallSource.toArithmeticFormulaMatchingSource) :
+    (IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.ofArithmeticDegreeControlledLocalArithmeticSource
+        (IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.ofFormulaGapMatchedArithmeticDegreePadicComparisonSource
+          valuationBallSource comparisonSource
+          comparisonFormulaMatching_eq_valuationBall)
+      |>.toArithmeticFormulaMatchingSource) =
+      valuationBallSource.toArithmeticFormulaMatchingSource := by
+  calc
+    (IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.ofArithmeticDegreeControlledLocalArithmeticSource
+        (IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.ofFormulaGapMatchedArithmeticDegreePadicComparisonSource
+          valuationBallSource comparisonSource
+          comparisonFormulaMatching_eq_valuationBall)
+      |>.toArithmeticFormulaMatchingSource) =
+        comparisonSource.formulaMatchingSource := by
+      cases valuationBallSource
+      cases comparisonSource
+      simpa [
+        IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.ofFormulaGapMatchedArithmeticDegreePadicComparisonSource,
+        IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.toStepXIFormulaGapControlledLocalArithmeticSource,
+        IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.ofArithmeticDegreeControlledLocalArithmeticSource,
+        IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.ofStepXIFormulaGapControlledLocalArithmeticSource,
+        IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.toArithmeticFormulaMatchingSource,
+        IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.toAdditiveHaarFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource,
+        IUTStage1ValuationBallHaarTheorem110FormulaGapMatchedPrimeErrorPadicDefectMainSource.ofStepXIFormulaGapControlledLocalArithmeticSource,
+        IUTStage1ValuationBallHaarTheorem110FormulaGapMatchedPrimeErrorPadicDefectMainSource.toAdditiveHaarFormulaGapMatchedPrimeErrorPadicDefectMainSource,
+        IUTStage1AdditiveHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.toArithmeticFormulaMatchingSource,
+        IUTStage1AdditiveHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource.toIUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreePadicPrimeErrorFormulaMatchingSource,
+        IUTStage1AdditiveHaarTheorem110StepXIArithmeticDegreePadicPrimeErrorFormulaMatchingSource.toIUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource,
+        IUTStage1AdditiveHaarTheorem110StepXIPadicPrimeErrorFormulaMatchingSource.toIUTStage1AdditiveHaarTheorem110StepXIArithmeticFormulaMatchingSource,
+        IUTStage1AdditiveHaarTheorem110FormulaGapMatchedPrimeErrorPadicDefectMainSource.toIUTStage1AdditiveHaarTheorem110PrimeErrorPadicDefectMainSource]
+        using comparisonFormulaMatching_eq_valuationBall.symm
+    _ = valuationBallSource.toArithmeticFormulaMatchingSource :=
+      comparisonFormulaMatching_eq_valuationBall
+
 structure FormulaGapMatchedComparisonSourceAudit
     (valuationBallSource :
       IUTStage1ValuationBallHaarTheorem110StepXIFormulaGapMatchedArithmeticDegreePadicPrimeErrorFormulaMatchingSource
