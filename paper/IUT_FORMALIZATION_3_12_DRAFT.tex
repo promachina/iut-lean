@@ -283,7 +283,10 @@ local case inequalities, while the formula-gap and residual packages are
 reconstructed internally.  Its procession-bound refinement lowers this once
 more: the public residual input is the projected case-defined procession bound
 and the distinguished one-unit gap, from which Lean reconstructs the local case
-source internally.  The same-index side-condition
+source internally.  Its procession-comparison refinement separates the
+localized Step~(xi) equality with procession-normalized local log-volume from
+the upper-semi projected procession estimate before reconstructing that
+procession-bound source internally.  The same-index side-condition
 endpoint now also obtains the q-normalized theta identity from the
 family-hull comparison and the principal-product \(p\)-adic finite hull
 decomposition, so this checked surface no longer exposes the direct
@@ -2930,9 +2933,10 @@ The same endpoint also accepts the procession-comparison source, separating
 the Step~(xi) identification with procession-normalized local log-volume from
 the upper-semi procession estimate before reconstructing the procession-bound
 source internally.
-It now also accepts the processional-estimate source, deriving that upper-semi
-comparison from the local Step~(v), Step~(vi), and Step~(vii) estimates.
-What remains at this layer is to derive the primitive Ob3/Ob4 localization,
+The next lowering at this layer is to make this adjusted-sum endpoint accept
+the processional-estimate source, deriving the upper-semi comparison from the
+local Step~(v), Step~(vi), and Step~(vii) estimates.
+What remains here is to derive the primitive Ob3/Ob4 localization,
 anchor, and positive tensor-power synchronizations, the q-normalized
 theta/log-volume identity, and the local arithmetic-degree residual package
 from the concrete theta-region/Hodge-calibrated possible image data and the
