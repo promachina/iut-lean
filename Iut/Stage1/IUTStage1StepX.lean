@@ -94,6 +94,58 @@ theorem reindex_normalizedLogVolume_eq
 
 end IUTStage1ProcessionTensorPacketLogVolume
 
+namespace IUTStage1LabelAveragedProcessionLogVolume
+
+variable {label : Type u} [Fintype label]
+
+/--
+Reindex a finite label-averaged procession log-volume by a label-set
+permutation.
+
+This is the concrete finite shadow of the `(Ind1)` permutation part of
+Theorem 3.11: labels are not identified or collapsed; they are transported by
+an equivalence, and the normalized average is unchanged because finite sums are
+invariant under reindexing.
+-/
+noncomputable def reindex
+    (data : IUTStage1LabelAveragedProcessionLogVolume label)
+    (perm : label ≃ label) :
+    IUTStage1LabelAveragedProcessionLogVolume label :=
+  { normalizedLogVolume := fun label => data.normalizedLogVolume (perm label),
+    averageLogVolume := data.averageLogVolume,
+    average_eq := by
+      rw [data.average_eq]
+      congr 1
+      exact
+        (Fintype.sum_equiv perm
+          (fun label => data.normalizedLogVolume (perm label))
+          data.normalizedLogVolume
+          (fun _label => rfl)).symm }
+
+theorem reindex_normalizedLogVolume_eq
+    (data : IUTStage1LabelAveragedProcessionLogVolume label)
+    (perm : label ≃ label)
+    (j : label) :
+    (data.reindex perm).normalizedLogVolume j =
+      data.normalizedLogVolume (perm j) :=
+  rfl
+
+theorem reindex_averageLogVolume_eq
+    (data : IUTStage1LabelAveragedProcessionLogVolume label)
+    (perm : label ≃ label) :
+    (data.reindex perm).averageLogVolume =
+      data.averageLogVolume :=
+  rfl
+
+theorem averageLogVolume_eq_reindex
+    (data : IUTStage1LabelAveragedProcessionLogVolume label)
+    (perm : label ≃ label) :
+    data.averageLogVolume =
+      (data.reindex perm).averageLogVolume :=
+  rfl
+
+end IUTStage1LabelAveragedProcessionLogVolume
+
 /--
 IUT III Step (x) procession-normalized indeterminacy corridor.
 
@@ -249,6 +301,111 @@ theorem ofZModCuspLabelLogVolumeCompatibilities_endpoint
       corridor.afterInd2_average_le_ind3UpperBound⟩
 
 end IUTStage1ProcessionNormalizedIndeterminacyCorridor
+
+/--
+Finite-action form of the Step (x) indeterminacy corridor.
+
+The source description of `(Ind1)` includes permutation automorphisms of the
+label sets, while `(Ind2)` includes further automorphisms of the prime-strip
+data.  At the label-averaged log-volume level both are represented by
+permutations of the finite label set.  The record therefore asks for actual
+equivalences, not pointwise label identifications, and proves average
+invariance by finite-sum reindexing.  `(Ind3)` remains one-sided.
+-/
+structure IUTStage1ProcessionNormalizedPermutationIndeterminacyCorridor
+    (label : Type u) [Fintype label] where
+  beforeIndeterminacy :
+    IUTStage1LabelAveragedProcessionLogVolume label
+  ind1Permutation : label ≃ label
+  ind2Permutation : label ≃ label
+  ind3UpperBound : Real
+  ind3_upper :
+    ((beforeIndeterminacy.reindex ind1Permutation).reindex
+      ind2Permutation).averageLogVolume <= ind3UpperBound
+
+namespace IUTStage1ProcessionNormalizedPermutationIndeterminacyCorridor
+
+variable {label : Type u} [Fintype label]
+
+noncomputable def afterInd1
+    (data :
+      IUTStage1ProcessionNormalizedPermutationIndeterminacyCorridor label) :
+    IUTStage1LabelAveragedProcessionLogVolume label :=
+  data.beforeIndeterminacy.reindex data.ind1Permutation
+
+noncomputable def afterInd2
+    (data :
+      IUTStage1ProcessionNormalizedPermutationIndeterminacyCorridor label) :
+    IUTStage1LabelAveragedProcessionLogVolume label :=
+  data.afterInd1.reindex data.ind2Permutation
+
+theorem afterInd1_normalizedLogVolume_eq
+    (data :
+      IUTStage1ProcessionNormalizedPermutationIndeterminacyCorridor label)
+    (j : label) :
+    data.afterInd1.normalizedLogVolume j =
+      data.beforeIndeterminacy.normalizedLogVolume
+        (data.ind1Permutation j) :=
+  rfl
+
+theorem afterInd2_normalizedLogVolume_eq
+    (data :
+      IUTStage1ProcessionNormalizedPermutationIndeterminacyCorridor label)
+    (j : label) :
+    data.afterInd2.normalizedLogVolume j =
+      data.beforeIndeterminacy.normalizedLogVolume
+        (data.ind1Permutation (data.ind2Permutation j)) :=
+  rfl
+
+theorem ind1_preserves_average
+    (data :
+      IUTStage1ProcessionNormalizedPermutationIndeterminacyCorridor label) :
+    data.afterInd1.averageLogVolume =
+      data.beforeIndeterminacy.averageLogVolume :=
+  rfl
+
+theorem ind2_preserves_average
+    (data :
+      IUTStage1ProcessionNormalizedPermutationIndeterminacyCorridor label) :
+    data.afterInd2.averageLogVolume =
+      data.afterInd1.averageLogVolume :=
+  rfl
+
+theorem afterInd2_average_eq_before
+    (data :
+      IUTStage1ProcessionNormalizedPermutationIndeterminacyCorridor label) :
+    data.afterInd2.averageLogVolume =
+      data.beforeIndeterminacy.averageLogVolume :=
+  rfl
+
+theorem before_average_le_ind3UpperBound
+    (data :
+      IUTStage1ProcessionNormalizedPermutationIndeterminacyCorridor label) :
+    data.beforeIndeterminacy.averageLogVolume <= data.ind3UpperBound := by
+  simpa [afterInd2] using data.ind3_upper
+
+/--
+Permutation-action Step (x) endpoint.
+
+This is the averaged-log-volume statement corresponding to the paper's
+Ind1/Ind2/Ind3 split: Ind1 and Ind2 preserve the average by finite label
+permutation, while Ind3 contributes only the upper-semi inequality.
+-/
+theorem permutationIndeterminacy_endpoint
+    (data :
+      IUTStage1ProcessionNormalizedPermutationIndeterminacyCorridor label) :
+    data.afterInd1.averageLogVolume =
+        data.beforeIndeterminacy.averageLogVolume ∧
+      data.afterInd2.averageLogVolume =
+        data.afterInd1.averageLogVolume ∧
+      data.afterInd2.averageLogVolume <= data.ind3UpperBound ∧
+      data.beforeIndeterminacy.averageLogVolume <= data.ind3UpperBound :=
+  ⟨data.ind1_preserves_average,
+    data.ind2_preserves_average,
+    data.ind3_upper,
+    data.before_average_le_ind3UpperBound⟩
+
+end IUTStage1ProcessionNormalizedPermutationIndeterminacyCorridor
 
 /--
 Step (x) to Step (xi) upper-ray bridge.

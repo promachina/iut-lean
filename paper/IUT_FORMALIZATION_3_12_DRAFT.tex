@@ -443,6 +443,12 @@ Lean interface:
 \IndOne,\IndTwo : \text{equality/invariance},\qquad
 \IndThree : \text{upper-semi inequality}.
 \]
+At the finite procession layer this has been sharpened from a pointwise
+same-label comparison to an explicit action statement: \IndOne{} and
+\IndTwo{} may act by equivalences of the finite label set, and Lean proves
+that the normalized average is invariant by finite-sum reindexing.  The labels
+are transported rather than identified, while \IndThree{} remains the sole
+one-sided upper-semi input.
 This separation is one of the central design decisions of the formalization.
 It prevents a proof from turning an upper-semi source relation into an equality
 merely because both appear in the informal phrase ``indeterminacy''.
