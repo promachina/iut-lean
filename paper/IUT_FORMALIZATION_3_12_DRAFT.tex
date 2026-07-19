@@ -1893,6 +1893,10 @@ left-totality supplies the section, graph realization supplies the map
 compatibility, and graph soundness supplies the possible-region law.  The
 corresponding public source-gap endpoint now uses that constructor internally,
 so this branch exposes graph data rather than the compact-open map package.
+It is lower again at the compact-open image and possible-region levels: Lean
+builds the canonical graph from the compact-open log-shell image containments,
+then derives those containments from the Remark~3.9.5 equality identifying the
+selected possible region with the realized compact-open local factor.
 A formula-gap residual variant now lowers the IUT~IV input again: it takes the
 valuation-ball additive-Haar formula-gap residual source and projects the
 local-analytic residual ledger internally.
