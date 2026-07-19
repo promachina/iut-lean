@@ -1708,6 +1708,35 @@ theorem RecordOb3Ob5ArithmeticDivisorBackedMatchedLocalDegreeObjectValuationBall
 
 set_option linter.style.longLine false in
 /--
+Project the matched local-degree object Record-Ob3/Ob5 source to the
+case-local Theorem~1.10 arithmetic-degree bound package.
+
+This is the pointwise-bound analogue of
+`toCoreLocalArithmeticDegreeResidualSource`: the typed Step~(v)/(vii)
+local-degree objects are first projected to the local-degree formula comparison
+source, and the canonical Step~(v)/(vi)/(vii) upper-bound package is then
+reconstructed from the arithmetic-degree-controlled local source.
+-/
+noncomputable def RecordOb3Ob5ArithmeticDivisorBackedMatchedLocalDegreeObjectValuationBallControlledComponentSource.toCoreCaseLocalArithmeticDegreeBoundSource
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedMatchedLocalDegreeObjectValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :=
+  source.toLocalDegreeFormulaValuationBallControlledComponentSource
+    |>.toCoreCaseLocalArithmeticDegreeBoundSource
+
+theorem RecordOb3Ob5ArithmeticDivisorBackedMatchedLocalDegreeObjectValuationBallControlledComponentSource.toCoreCaseLocalArithmeticDegreeBoundSource_endpoint
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedMatchedLocalDegreeObjectValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :
+    source.toCoreCaseLocalArithmeticDegreeBoundSource.Endpoint :=
+  source.toCoreCaseLocalArithmeticDegreeBoundSource.endpoint
+
+set_option linter.style.longLine false in
+/--
 Audit the matched local-degree object source as the lower formula-gap/residual
 source for the canonical Stage~1 bridge.
 
@@ -1740,6 +1769,32 @@ theorem RecordOb3Ob5ArithmeticDivisorBackedMatchedLocalDegreeObjectValuationBall
         |>.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
         |>.endpoint,
       padicDefectMainSource.toCoreLocalArithmeticDegreeResidualSource_endpoint⟩
+
+set_option linter.style.longLine false in
+/--
+Audit that the matched local-degree object source supplies both local
+Theorem~1.10 consumers: the residual ledger and the pointwise case-local
+upper-bound package.
+
+Thus the local-degree formula comparison source is no longer an independent
+input for either the residual consumer or the case-local bound consumer at this
+Record-Ob3/Ob5 handoff.
+-/
+theorem RecordOb3Ob5ArithmeticDivisorBackedMatchedLocalDegreeObjectValuationBallControlledComponentSource.projectedCaseBoundResidualAudit
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedMatchedLocalDegreeObjectValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :
+    source.matchedLocalDegreeIdentificationObjectSource.Endpoint ∧
+      source.toCoreCaseLocalArithmeticDegreeBoundSource.Endpoint ∧
+      source.toCoreLocalArithmeticDegreeResidualSource.Endpoint ∧
+      source.toLocalDegreeFormulaValuationBallControlledComponentSource.toCoreCaseLocalArithmeticDegreeBoundSource.Endpoint :=
+  ⟨source.matchedLocalDegreeIdentificationObjectSource.endpoint,
+    source.toCoreCaseLocalArithmeticDegreeBoundSource_endpoint,
+    source.toCoreLocalArithmeticDegreeResidualSource_endpoint,
+    source.toLocalDegreeFormulaValuationBallControlledComponentSource
+      |>.toCoreCaseLocalArithmeticDegreeBoundSource_endpoint⟩
 
 set_option linter.style.longLine false in
 /--
