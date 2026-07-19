@@ -2440,7 +2440,12 @@ witness, equality-quotient possible-image family, and the three fiber
 transport laws before entering that same local-degree route.  This removes a
 preassembled symmetry-label wrapper from this branch, while the derivation of
 the witness and transport laws from the full log-theta procession remains a
-paper-level source obligation.
+paper-level source obligation.  The branch has also been lowered below the
+compact-open realized-exact source: Lean now accepts realized valuation-ball
+exactness and reconstructs compact-open realized exactness using the local
+Haar-normalization identity
+\(\mathrm{compactOpenSubset}=\mathrm{valuationBall}(\mathrm{compactOpenRadius})\)
+before applying the same possible-image source-gap endpoint.
 The p-adic unit-ball Step~(xi) synchronization source now projects directly to
 that local arithmetic-degree residual payload: the Haar defect is the
 p-adic unit-ball index \(p_v^{[K_v:\mathbb Q_{p_v}]}\), and Lean obtains the
