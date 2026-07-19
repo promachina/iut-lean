@@ -1702,6 +1702,12 @@ def canonicalStage1ResidualFrontier :
         "PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.ofSummandChartedHodgeFamilyHullCalibration_projectionAudit",
       role :=
         "Derived audit for the summand-charted determinant lowering, recording the finite adjusted-summand, determinant log-volume, normalized determinant, family-hull, and pointwise endpoint consequences." },
+    { name := "source-spine-data primitive packet construction audit",
+      status := .derived,
+      declarationName :=
+        "IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineDataOneSidedComponentSHECodomainSelectedLabelQPilotBridgeAlignmentOutputFlagCalibrationSource_packetConstructionAudit",
+      role :=
+        "Derived audit for the lower one-sided source-spine-data primitive packet constructor.  It verifies that the constructed packet keeps the source-spine selected q-choice, projected bridge component, Step X log-Kummer source, and target-region formula source, while its Theorem 3.11 subclaim component is generated from structured output-flag calibration rather than supplied as an independent packet input." },
     { name := "p-adic normalized case source from processional estimate",
       status := .derived,
       declarationName :=
@@ -1746,7 +1752,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 240 :=
+    canonicalStage1ResidualFrontier.length = 241 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1756,7 +1762,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 234 :=
+      (fun entry => entry.status = .derived)).length = 235 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -3245,6 +3251,9 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineDataOneSidedComponentSHECodomainSelectedLabelQPilotBridgeAlignmentOutputFlagCalibrationSource_selectedQChoice_eq_source
 #guard_msgs (drop info) in
 #check IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineDataOneSidedComponentSHECodomainSelectedLabelQPilotBridgeAlignmentOutputFlagCalibrationSource_subclaimAudit
+#guard_msgs (drop info) in
+#check IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineDataOneSidedComponentSHECodomainSelectedLabelQPilotBridgeAlignmentOutputFlagCalibrationSource_packetConstructionAudit
+#print axioms IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineDataOneSidedComponentSHECodomainSelectedLabelQPilotBridgeAlignmentOutputFlagCalibrationSource_packetConstructionAudit
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.sourceData
 #guard_msgs (drop info) in
