@@ -1480,6 +1480,18 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISource.SelectedTheorem110PadicNormalizedCaseDefinedProcessionalArithmeticGapSource.toSelectedTheorem110CaseDefinedReconstructedProcessionalPadicUnitBallHaarDefectResidualSource",
       role :=
         "Derived projection from the selected p-adic arithmetic-gap source to the selected case-defined reconstructed p-adic Haar-defect source, retaining only the Step (xi)-to-case-procession equality needed by the established selected handoff." },
+    { name := "selected p-adic arithmetic-gap source from selected case-defined Haar-defect source",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISource.SelectedTheorem110PadicNormalizedCaseDefinedProcessionalArithmeticGapSource.ofSelectedTheorem110CaseDefinedReconstructedProcessionalPadicUnitBallHaarDefectResidualSource",
+      role :=
+        "Derived constructor that lowers the selected p-adic arithmetic-minus-main gap to the selected case-defined Haar-defect source together with the p-adic unit-ball local arithmetic identity and normalized-place Haar-defect lower bound.  The proof rewrites the selected Theorem 1.10 local-evaluation copy to the pointwise p-adic unit-ball source, then closes `caseProcession_v + 1 <= upper_v - M_v` by ordered-real arithmetic from `upper_v = StepXI_v + defect_v + M_v`, `StepXI_v = caseProcession_v`, and `1 <= defect_v`." },
+    { name := "selected p-adic arithmetic-gap source from selected case-defined Haar-defect source endpoint",
+      status := .derived,
+      declarationName :=
+        "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISource.SelectedTheorem110PadicNormalizedCaseDefinedProcessionalArithmeticGapSource.ofSelectedTheorem110CaseDefinedReconstructedProcessionalPadicUnitBallHaarDefectResidualSource_endpoint",
+      role :=
+        "Endpoint theorem for the selected case-defined-to-arithmetic-gap lowering.  It records that the derived selected arithmetic-gap source satisfies the selected Theorem 1.10 endpoint, the ordinary p-adic arithmetic-gap endpoint, and the selected case-defined reconstructed Haar-defect endpoint without adding a new source obligation." },
     { name := "selected p-adic arithmetic-gap endpoint",
       status := .derived,
       declarationName :=
@@ -1722,7 +1734,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 236 :=
+    canonicalStage1ResidualFrontier.length = 238 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1732,7 +1744,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 230 :=
+      (fun entry => entry.status = .derived)).length = 232 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -7556,6 +7568,14 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISource.SelectedTheorem110PadicNormalizedCaseDefinedProcessionalArithmeticGapSource.toSelectedTheorem110CaseDefinedReconstructedProcessionalPadicUnitBallHaarDefectResidualSource
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISource.SelectedTheorem110PadicNormalizedCaseDefinedProcessionalArithmeticGapSource.toSelectedTheorem110CaseDefinedReconstructedProcessionalPadicUnitBallHaarDefectResidualSource
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISource.SelectedTheorem110PadicNormalizedCaseDefinedProcessionalArithmeticGapSource.ofSelectedTheorem110CaseDefinedReconstructedProcessionalPadicUnitBallHaarDefectResidualSource
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISource.SelectedTheorem110PadicNormalizedCaseDefinedProcessionalArithmeticGapSource.ofSelectedTheorem110CaseDefinedReconstructedProcessionalPadicUnitBallHaarDefectResidualSource
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISource.SelectedTheorem110PadicNormalizedCaseDefinedProcessionalArithmeticGapSource.ofSelectedTheorem110CaseDefinedReconstructedProcessionalPadicUnitBallHaarDefectResidualSource_endpoint
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISource.SelectedTheorem110PadicNormalizedCaseDefinedProcessionalArithmeticGapSource.ofSelectedTheorem110CaseDefinedReconstructedProcessionalPadicUnitBallHaarDefectResidualSource_endpoint
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallProcessionalPadicUnitBallIUTIVArithmeticDivisorLocalizedStepXISource.SelectedTheorem110PadicNormalizedCaseDefinedProcessionalArithmeticGapSource.endpoint
 #guard_msgs (drop info) in
