@@ -890,6 +890,34 @@ theorem RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.toCoreLocalArithm
     source.toCoreLocalArithmeticDegreeResidualSource.Endpoint :=
   source.toCoreLocalArithmeticDegreeResidualSource.endpoint
 
+set_option linter.style.longLine false in
+/--
+Project a Record-Ob3/Ob5 valuation-ball local-estimate source directly to the
+case-local Theorem~1.10 arithmetic-degree bound source.
+
+This is the bound counterpart of the residual projection above: the lower
+Record-Ob3/Ob5 source reconstructs the arithmetic-degree-controlled local
+arithmetic source, whose Step~(v), Step~(vi), and Step~(vii) inequalities give
+the canonical case-local bound package.
+-/
+noncomputable def RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.toCoreCaseLocalArithmeticDegreeBoundSource
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :=
+  source.toArithmeticDegreeControlledLocalArithmeticSource
+    |>.toCoreCaseLocalArithmeticDegreeBoundSource
+
+theorem RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.toCoreCaseLocalArithmeticDegreeBoundSource_endpoint
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :
+    source.toCoreCaseLocalArithmeticDegreeBoundSource.Endpoint :=
+  source.toCoreCaseLocalArithmeticDegreeBoundSource.endpoint
+
 end ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource
 
 namespace ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource
@@ -1061,6 +1089,34 @@ theorem RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallContro
 
 set_option linter.style.longLine false in
 /--
+Project the local-degree-formula valuation-ball Record-Ob3/Ob5 source to the
+case-local Theorem~1.10 arithmetic-degree bound source.
+
+The local-degree-formula source already reconstructs the same arithmetic-degree
+controlled local source used by the residual route, so the pointwise Step~(v),
+Step~(vi), and Step~(vii) bound package is obtained without exposing the
+formula comparison layer to downstream consumers.
+-/
+noncomputable def RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toCoreCaseLocalArithmeticDegreeBoundSource
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :=
+  source.toArithmeticDegreeControlledLocalArithmeticSource
+    |>.toCoreCaseLocalArithmeticDegreeBoundSource
+
+theorem RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toCoreCaseLocalArithmeticDegreeBoundSource_endpoint
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :
+    source.toCoreCaseLocalArithmeticDegreeBoundSource.Endpoint :=
+  source.toCoreCaseLocalArithmeticDegreeBoundSource.endpoint
+
+set_option linter.style.longLine false in
+/--
 Project a controlled Record-Ob3/Ob5 component source to the canonical residual
 package through the local-degree formula valuation-ball comparison lowering.
 
@@ -1093,6 +1149,43 @@ theorem RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource.toCoreLocal
         archIndex archSummand localArithmeticSource) :
     source.toCoreLocalArithmeticDegreeResidualSource.Endpoint :=
   source.toCoreLocalArithmeticDegreeResidualSource.endpoint
+
+set_option linter.style.longLine false in
+/--
+Project a controlled Record-Ob3/Ob5 component source to the case-local
+Theorem~1.10 arithmetic-degree bound source through the local-degree formula
+valuation-ball comparison lowering.
+
+This is the pointwise-bound analogue of
+`toCoreLocalArithmeticDegreeResidualSource`: the controlled component source
+first rebuilds the local-degree-formula valuation-ball source and then uses its
+arithmetic-degree-controlled local source projection.
+-/
+noncomputable def RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource.toCoreCaseLocalArithmeticDegreeBoundSource
+    {localArithmeticSource :
+      IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand}
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand localArithmeticSource) :=
+  source.toLocalDegreeFormulaValuationBallControlledComponentSource
+    |>.toCoreCaseLocalArithmeticDegreeBoundSource
+
+theorem RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource.toCoreCaseLocalArithmeticDegreeBoundSource_endpoint
+    {localArithmeticSource :
+      IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand}
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand localArithmeticSource) :
+    source.toCoreCaseLocalArithmeticDegreeBoundSource.Endpoint :=
+  source.toCoreCaseLocalArithmeticDegreeBoundSource.endpoint
 
 set_option linter.style.longLine false in
 /--
@@ -1527,6 +1620,34 @@ theorem RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlle
         archIndex archSummand) :
     source.toCoreLocalArithmeticDegreeResidualSource.Endpoint :=
   source.toCoreLocalArithmeticDegreeResidualSource.endpoint
+
+set_option linter.style.longLine false in
+/--
+Project the p-adic-defect/main valuation-ball controlled Record-Ob3/Ob5 source
+directly to the case-local Theorem~1.10 arithmetic-degree bound source.
+
+This lowers the public bound surface to the same p-adic-defect/main source that
+already feeds the canonical residual package: the valuation-ball local estimate,
+p-adic defect/main split, and controlled component synchronization reconstruct
+the arithmetic-degree-controlled local source internally.
+-/
+noncomputable def RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.toCoreCaseLocalArithmeticDegreeBoundSource
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :=
+  source.toArithmeticDegreeControlledLocalArithmeticSource
+    |>.toCoreCaseLocalArithmeticDegreeBoundSource
+
+theorem RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.toCoreCaseLocalArithmeticDegreeBoundSource_endpoint
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :
+    source.toCoreCaseLocalArithmeticDegreeBoundSource.Endpoint :=
+  source.toCoreCaseLocalArithmeticDegreeBoundSource.endpoint
 
 set_option linter.style.longLine false in
 /--

@@ -310,6 +310,12 @@ def canonicalStage1ResidualFrontier :
         "RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource",
       role :=
         "Derived lowest checked residual boundary: the p-adic-defect/main Record-Ob3/Ob5 source is constructed from the local-degree formula valuation-ball comparison source before projecting to the residual consumer." },
+    { name := "p-adic-defect/main valuation-ball controlled Record-Ob3/Ob5 case-local bound source",
+      status := .derived,
+      declarationName :=
+        "RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.toCoreCaseLocalArithmeticDegreeBoundSource",
+      role :=
+        "Derived lowest checked pointwise-bound boundary: the p-adic-defect/main Record-Ob3/Ob5 source reconstructs the arithmetic-degree-controlled local source and projects its Step (v), Step (vi), and Step (vii) inequalities to the canonical case-local Theorem 1.10 arithmetic-degree bound package." },
     { name := "p-adic-defect/main direct local-degree formula projection",
       status := .derived,
       declarationName :=
@@ -334,6 +340,12 @@ def canonicalStage1ResidualFrontier :
         "RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource",
       role :=
         "Derived projection from the controlled Record-Ob3/Ob5 component source to the canonical residual package by first constructing the local-degree formula valuation-ball comparison source and then applying the existing local-degree residual projection." },
+    { name := "controlled component case-local bound projection through local-degree formula lowering",
+      status := .derived,
+      declarationName :=
+        "RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource.toCoreCaseLocalArithmeticDegreeBoundSource",
+      role :=
+        "Derived projection from the controlled Record-Ob3/Ob5 component source to the canonical case-local Theorem 1.10 arithmetic-degree bound package by first constructing the local-degree formula valuation-ball comparison source." },
     { name := "controlled component to matched local-degree object source lowering",
       status := .derived,
       declarationName :=
@@ -484,6 +496,12 @@ def canonicalStage1ResidualFrontier :
         "RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource",
       role :=
         "Derived projection from the checked local-degree formula comparison source to the canonical local arithmetic-degree residual package." },
+    { name := "local-degree formula case-local bound projection",
+      status := .derived,
+      declarationName :=
+        "RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toCoreCaseLocalArithmeticDegreeBoundSource",
+      role :=
+        "Derived projection from the checked local-degree formula comparison source to the canonical case-local Theorem 1.10 arithmetic-degree bound package through the reconstructed arithmetic-degree-controlled local source." },
     { name := "strict p-adic-Haar residual projection",
       status := .derived,
       declarationName :=
@@ -502,6 +520,12 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.eq_ofPadicUnitBallHaarIndex",
       role :=
         "Derived extensional equality showing that an arithmetic-degree-controlled valuation-ball local source is reconstructed from its valuation-ball evaluation source, p-adic Haar-index defect source, Step (xi) arithmetic-degree calibration, and the induced p-adic prime-error split." },
+    { name := "valuation-ball Record-Ob3/Ob5 case-local bound projection",
+      status := .derived,
+      declarationName :=
+        "RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.toCoreCaseLocalArithmeticDegreeBoundSource",
+      role :=
+        "Derived projection from the Record-Ob3/Ob5 valuation-ball local-estimate source to the canonical case-local Theorem 1.10 arithmetic-degree bound package through the reconstructed arithmetic-degree-controlled local source." },
     { name := "strict p-adic-Haar p-adic-defect/main reconstruction equality",
       status := .derived,
       declarationName :=
@@ -1596,7 +1620,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 215 :=
+    canonicalStage1ResidualFrontier.length = 219 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1606,7 +1630,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 209 :=
+      (fun entry => entry.status = .derived)).length = 213 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -7728,6 +7752,12 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #guard_msgs (drop info) in
 #print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource_endpoint
 #guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.toCoreCaseLocalArithmeticDegreeBoundSource
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.toCoreCaseLocalArithmeticDegreeBoundSource_endpoint
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.toCoreCaseLocalArithmeticDegreeBoundSource_endpoint
+#guard_msgs (drop info) in
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource.toLocalDegreeFormulaValuationBallControlledComponentSource
 #guard_msgs (drop info) in
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource.toLocalDegreeFormulaValuationBallControlledComponentSource_projectionAudit
@@ -7739,6 +7769,12 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource_endpoint
 #guard_msgs (drop info) in
 #print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource_endpoint
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource.toCoreCaseLocalArithmeticDegreeBoundSource
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource.toCoreCaseLocalArithmeticDegreeBoundSource_endpoint
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource.toCoreCaseLocalArithmeticDegreeBoundSource_endpoint
 #guard_msgs (drop info) in
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedControlledComponentSource.toMatchedLocalDegreeObjectValuationBallControlledComponentSource
 #guard_msgs (drop info) in
@@ -7780,6 +7816,12 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #guard_msgs (drop info) in
 #print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource_endpoint
 #guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toCoreCaseLocalArithmeticDegreeBoundSource
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toCoreCaseLocalArithmeticDegreeBoundSource_endpoint
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedLocalDegreeFormulaValuationBallControlledComponentSource.toCoreCaseLocalArithmeticDegreeBoundSource_endpoint
+#guard_msgs (drop info) in
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedComponentSource.recordOb3Ob5PadicDefectMainProjectionAudit
 #guard_msgs (drop info) in
 #print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedComponentSource.recordOb3Ob5PadicDefectMainProjectionAudit
@@ -7791,6 +7833,12 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.recordOb3Ob5ValuationBallArithmeticDegreeControlledProjectionAudit
 #guard_msgs (drop info) in
 #print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.recordOb3Ob5ValuationBallArithmeticDegreeControlledProjectionAudit
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.toCoreCaseLocalArithmeticDegreeBoundSource
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.toCoreCaseLocalArithmeticDegreeBoundSource_endpoint
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.toCoreCaseLocalArithmeticDegreeBoundSource_endpoint
 #guard_msgs (drop info) in
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110ValuationBallHaarArithmeticDivisorBackedMatchedLocalDegreeComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedValuationBallSource.recordOb3Ob5ValuationBallPadicDefectMainProjectionAudit
 #guard_msgs (drop info) in
