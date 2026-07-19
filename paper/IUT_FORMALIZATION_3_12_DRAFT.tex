@@ -2445,7 +2445,12 @@ compact-open realized-exact source: Lean now accepts realized valuation-ball
 exactness and reconstructs compact-open realized exactness using the local
 Haar-normalization identity
 \(\mathrm{compactOpenSubset}=\mathrm{valuationBall}(\mathrm{compactOpenRadius})\)
-before applying the same possible-image source-gap endpoint.
+before applying the same possible-image source-gap endpoint.  A further
+log-shell refinement lowers this input once more: Lean accepts the two
+paper-facing equalities
+\(\Theta_{\mathrm{region}}=\mathrm{realized}(\mathrm{logShell})\) and
+\(\mathrm{logShell}=\mathrm{valuationBall}\), composes them into realized
+valuation-ball exactness, and then follows the compact-open route above.
 The p-adic unit-ball Step~(xi) synchronization source now projects directly to
 that local arithmetic-degree residual payload: the Haar defect is the
 p-adic unit-ball index \(p_v^{[K_v:\mathbb Q_{p_v}]}\), and Lean obtains the

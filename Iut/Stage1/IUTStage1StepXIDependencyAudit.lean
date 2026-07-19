@@ -178,7 +178,7 @@ def canonicalStage1RemainingAssumptions :
       consumerDeclaration :=
         "compactOpenLogKummerMapSourceOfRealizedExactPrincipalProduct",
       note :=
-        "The compact-open realized exactness/log-Kummer image layer is still a public source input on the broad route.  The possible-image local-degree source-gap branch now has a checked lowering that constructs this compact-open exactness source from realized valuation-ball exactness and the local compact-open Haar normalization law." },
+        "The compact-open realized exactness/log-Kummer image layer is still a public source input on the broad route.  The possible-image local-degree source-gap branch now has checked lowerings that construct this compact-open exactness source first from realized valuation-ball exactness and then from the two log-shell exactness equalities together with the local compact-open Haar normalization law." },
     { name := "hodgeEvaluation",
       status := .sourceObligation,
       paperSource := "IUT II Hodge-Arakelov theta evaluation; IUT III, Theorem 3.11",
@@ -1696,6 +1696,12 @@ def canonicalStage1ResidualFrontier :
         "preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelRealizedExactExplicitDeterminantFormulaLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
       role :=
         "Derived lowering of the same possible-image local-degree source-gap route below compact-open realized exactness.  The endpoint takes realized valuation-ball exactness, uses ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallRealizedExactSource.toCompactOpenRealizedExactSource to insert the compactOpenSubset = valuationBall compactOpenRadius Haar-normalization law, and then enters the possible-image symmetry-label source-gap endpoint." },
+    { name := "log-shell exactness local-degree source-gap endpoint",
+      status := .derived,
+      declarationName :=
+        "preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelLogShellExactExplicitDeterminantFormulaLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
+      role :=
+        "Derived lowering of the same possible-image local-degree source-gap route below realized valuation-ball exactness.  The endpoint takes the paper-facing equalities thetaRegion = realized(logShell) and logShell = valuationBall through ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallLogShellExactSource.toPrincipalRealizedExactSource, then uses the realized-exact and compact-open lowerings before entering the source-gap route." },
     { name := "determinant-factored pointwise formula projection audit",
       status := .derived,
       declarationName :=
@@ -1764,7 +1770,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 243 :=
+    canonicalStage1ResidualFrontier.length = 244 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1774,7 +1780,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 237 :=
+      (fun entry => entry.status = .derived)).length = 238 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -5742,6 +5748,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelRealizedExactExplicitDeterminantFormulaLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelRealizedExactExplicitDeterminantFormulaLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelLogShellExactExplicitDeterminantFormulaLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelLogShellExactExplicitDeterminantFormulaLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeSourceSideHypothesesLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceRouteAudit
 #guard_msgs (drop info) in
