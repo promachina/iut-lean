@@ -2367,6 +2367,18 @@ theorem labelAverage_average_eq_fl_sum
   rfl
 
 set_option linter.style.longLine false in
+theorem zmod_constant_label_average
+    (c : Real) :
+    (Finset.univ.sum fun _label : ZMod l.value => c) / (l.value : Real) =
+      c := by
+  haveI : Nonempty (ZMod l.value) := ⟨0⟩
+  have haverage :=
+    (IUTStage1LabelAveragedProcessionLogVolume.constant
+      (label := ZMod l.value) c).average_eq
+  rw [ZMod.card] at haverage
+  exact haverage.symm
+
+set_option linter.style.longLine false in
 theorem ind3_source_average_eq
     {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
     (hstep : Ind3UpperSemiStep choice₁ choice₂) :
@@ -7312,6 +7324,67 @@ noncomputable def toProcessionNormalizedLogVolumeSource :
     |>.toProcessionNormalizedLogVolumeSource
 
 set_option linter.style.longLine false in
+noncomputable def toConstantBaseVolumeLogThetaLabelProcessionUpperSemiSource :
+    LogThetaLabelProcessionUpperSemiSource coric l :=
+  { labelLogVolume := fun thetaClass _label =>
+      source.baseConstructedRealifiedVolume thetaClass,
+    ind3_source_labelAverage_eq_upperSemiSource := by
+      intro choice₁ choice₂ hstep
+      let constructed :=
+        source.toFrobenioidDivisorColumnRepresentativeConstructedUpperSemiBaseVolumeZModLogShellPacketLocalObjectSource
+          |>.toFrobenioidDivisorColumnConstructedUpperSemiBaseVolumeZModLogShellPacketLocalObjectSource
+      calc
+        (Finset.univ.sum fun _label : ZMod l.value =>
+            source.baseConstructedRealifiedVolume (thetaPilotClass choice₁)) /
+            (l.value : Real) =
+            source.baseConstructedRealifiedVolume (thetaPilotClass choice₁) :=
+          LogThetaLabelProcessionUpperSemiSource.zmod_constant_label_average
+            (l := l)
+            (source.baseConstructedRealifiedVolume (thetaPilotClass choice₁))
+        _ = choice₁.upper_semi_state.logVolumeCompatibility.sourceLogVolume := by
+          simpa [baseConstructedRealifiedVolume, constructed] using
+            (constructed.upperSemi_sourceLogVolume_eq_baseConstructedRealified
+              choice₁).symm,
+    ind3_target_labelAverage_eq_upperSemiTarget := by
+      intro choice₁ choice₂ hstep
+      let constructed :=
+        source.toFrobenioidDivisorColumnRepresentativeConstructedUpperSemiBaseVolumeZModLogShellPacketLocalObjectSource
+          |>.toFrobenioidDivisorColumnConstructedUpperSemiBaseVolumeZModLogShellPacketLocalObjectSource
+      calc
+        (Finset.univ.sum fun _label : ZMod l.value =>
+            source.baseConstructedRealifiedVolume (thetaPilotClass choice₂)) /
+            (l.value : Real) =
+            source.baseConstructedRealifiedVolume (thetaPilotClass choice₂) :=
+          LogThetaLabelProcessionUpperSemiSource.zmod_constant_label_average
+            (l := l)
+            (source.baseConstructedRealifiedVolume (thetaPilotClass choice₂))
+        _ = choice₂.upper_semi_state.logVolumeCompatibility.targetLogVolume := by
+          simpa [baseConstructedRealifiedVolume, constructed] using
+            (constructed.upperSemi_targetLogVolume_eq_baseConstructedRealified
+              choice₂).symm }
+
+set_option linter.style.longLine false in
+noncomputable def toConstantBaseVolumeProcessionNormalizedUpperSemiComparisonSource :
+    ProcessionNormalizedUpperSemiComparisonSource coric l :=
+  source.toConstantBaseVolumeLogThetaLabelProcessionUpperSemiSource
+    |>.toProcessionNormalizedUpperSemiComparisonSource
+
+set_option linter.style.longLine false in
+noncomputable def toConstantBaseVolumeProcessionNormalizedLogVolumeSource :
+    ProcessionNormalizedLogVolumeSource coric l :=
+  source.toConstantBaseVolumeLogThetaLabelProcessionUpperSemiSource
+    |>.toProcessionNormalizedLogVolumeSource
+
+set_option linter.style.longLine false in
+theorem constantBaseVolume_labelAverage_eq_base
+    (thetaClass : ThetaPilotClass (coric := coric)) :
+    (source.toConstantBaseVolumeLogThetaLabelProcessionUpperSemiSource.labelAverage
+      thetaClass).averageLogVolume =
+      source.baseConstructedRealifiedVolume thetaClass :=
+  LogThetaLabelProcessionUpperSemiSource.zmod_constant_label_average
+    (l := l) (source.baseConstructedRealifiedVolume thetaClass)
+
+set_option linter.style.longLine false in
 theorem ind3_baseConstructedRealified_le
     {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
     (hstep : Ind3UpperSemiStep choice₁ choice₂) :
@@ -7356,6 +7429,15 @@ structure Audit : Prop where
         { sourceLogVolume := source.baseConstructedRealifiedVolume thetaClass,
           targetLogVolume := source.baseConstructedRealifiedVolume thetaClass,
           source_le_target := le_rfl }
+  constant_base_volume_logTheta_source :
+    Nonempty (LogThetaLabelProcessionUpperSemiSource coric l)
+  constant_base_volume_procession_source :
+    Nonempty (ProcessionNormalizedLogVolumeSource coric l)
+  constant_base_label_average_eq_base :
+    ∀ thetaClass : ThetaPilotClass (coric := coric),
+      (source.toConstantBaseVolumeLogThetaLabelProcessionUpperSemiSource.labelAverage
+        thetaClass).averageLogVolume =
+        source.baseConstructedRealifiedVolume thetaClass
   ind3_baseConstructedRealified_le :
     ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
       (hstep : Ind3UpperSemiStep choice₁ choice₂) ->
@@ -7389,6 +7471,13 @@ theorem audit :
     representative_upperSemi_logVolumeCompatibility_eq_base := by
       intro thetaClass
       exact source.representative_upperSemi_logVolumeCompatibility_eq_base thetaClass,
+    constant_base_volume_logTheta_source :=
+      ⟨source.toConstantBaseVolumeLogThetaLabelProcessionUpperSemiSource⟩,
+    constant_base_volume_procession_source :=
+      ⟨source.toConstantBaseVolumeProcessionNormalizedLogVolumeSource⟩,
+    constant_base_label_average_eq_base := by
+      intro thetaClass
+      exact source.constantBaseVolume_labelAverage_eq_base thetaClass,
     ind3_baseConstructedRealified_le := by
       intro choice₁ choice₂ hstep
       exact source.ind3_baseConstructedRealified_le hstep }
