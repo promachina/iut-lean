@@ -15494,6 +15494,27 @@ theorem generatedFullLabelOrbitAverage_eq_thetaClassAverage
   exact source.generatedFullLabelLogVolume_eq_labelAverage choice
 
 set_option linter.style.longLine false in
+theorem generatedFullLabelOrbitAverage_normalizedLogVolume_eq_of_thetaClass_eq
+    {choice₁ choice₂ : FullLabelGeneratedChoice (coric := coric) (l := l)}
+    (hclass : choice₁.thetaClass = choice₂.thetaClass)
+    (label : ZMod l.value) :
+    (source.generatedFullLabelOrbitAverage choice₁).normalizedLogVolume label =
+      (source.generatedFullLabelOrbitAverage choice₂).normalizedLogVolume label := by
+  dsimp [generatedFullLabelOrbitAverage, generatedFullLabelLogVolume,
+    fullLabelGeneratedChoice]
+  rw [hclass]
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelOrbitAverage_eq_of_thetaClass_eq
+    {choice₁ choice₂ : FullLabelGeneratedChoice (coric := coric) (l := l)}
+    (hclass : choice₁.thetaClass = choice₂.thetaClass) :
+    (source.generatedFullLabelOrbitAverage choice₁).averageLogVolume =
+      (source.generatedFullLabelOrbitAverage choice₂).averageLogVolume :=
+  IUTStage1LabelAveragedProcessionLogVolume.average_eq_of_pointwise
+    (source.generatedFullLabelOrbitAverage_normalizedLogVolume_eq_of_thetaClass_eq
+      hclass)
+
+set_option linter.style.longLine false in
 /-- `(Ind1)` on generated full-label choices: translation in the finite label. -/
 def generatedFullLabelInd1Step
     (choice₁ choice₂ : FullLabelGeneratedChoice (coric := coric) (l := l)) :
@@ -15559,6 +15580,44 @@ theorem generatedFullLabelInd2_logVolume_eq
       source.generatedFullLabelLogVolume choice₂ := by
   dsimp [generatedFullLabelLogVolume]
   rw [hstep]
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelInd1_orbitAverage_normalizedLogVolume_eq
+    {choice₁ choice₂ : FullLabelGeneratedChoice (coric := coric) (l := l)}
+    (hstep : generatedFullLabelInd1Step (l := l) choice₁ choice₂)
+    (label : ZMod l.value) :
+    (source.generatedFullLabelOrbitAverage choice₁).normalizedLogVolume label =
+      (source.generatedFullLabelOrbitAverage choice₂).normalizedLogVolume label :=
+  source.generatedFullLabelOrbitAverage_normalizedLogVolume_eq_of_thetaClass_eq
+    (generatedFullLabelInd1_thetaClass_eq (l := l) hstep) label
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelInd2_orbitAverage_normalizedLogVolume_eq
+    {choice₁ choice₂ : FullLabelGeneratedChoice (coric := coric) (l := l)}
+    (hstep : generatedFullLabelInd2Step (l := l) choice₁ choice₂)
+    (label : ZMod l.value) :
+    (source.generatedFullLabelOrbitAverage choice₁).normalizedLogVolume label =
+      (source.generatedFullLabelOrbitAverage choice₂).normalizedLogVolume label :=
+  source.generatedFullLabelOrbitAverage_normalizedLogVolume_eq_of_thetaClass_eq
+    (generatedFullLabelInd2_thetaClass_eq (l := l) hstep) label
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelInd1_orbitAverage_eq
+    {choice₁ choice₂ : FullLabelGeneratedChoice (coric := coric) (l := l)}
+    (hstep : generatedFullLabelInd1Step (l := l) choice₁ choice₂) :
+    (source.generatedFullLabelOrbitAverage choice₁).averageLogVolume =
+      (source.generatedFullLabelOrbitAverage choice₂).averageLogVolume :=
+  IUTStage1LabelAveragedProcessionLogVolume.average_eq_of_pointwise
+    (source.generatedFullLabelInd1_orbitAverage_normalizedLogVolume_eq hstep)
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelInd2_orbitAverage_eq
+    {choice₁ choice₂ : FullLabelGeneratedChoice (coric := coric) (l := l)}
+    (hstep : generatedFullLabelInd2Step (l := l) choice₁ choice₂) :
+    (source.generatedFullLabelOrbitAverage choice₁).averageLogVolume =
+      (source.generatedFullLabelOrbitAverage choice₂).averageLogVolume :=
+  IUTStage1LabelAveragedProcessionLogVolume.average_eq_of_pointwise
+    (source.generatedFullLabelInd2_orbitAverage_normalizedLogVolume_eq hstep)
 
 set_option linter.style.longLine false in
 theorem generatedFullLabelInd3_logVolume_le
@@ -16152,6 +16211,9 @@ structure GeneratedFullLabelQuotientPossibleImageAudit
     ∀ choice : FullLabelGeneratedChoice (coric := coric) (l := l),
       source.generatedFullLabelLogVolume choice =
         (source.generatedFullLabelAverage choice.thetaClass).averageLogVolume
+  generated_orbit_average :
+    ∀ choice : FullLabelGeneratedChoice (coric := coric) (l := l),
+      Nonempty (IUTStage1LabelAveragedProcessionLogVolume (ZMod l.value))
   ind1_preserves_generated_logVolume :
     ∀ {choice₁ choice₂ :
         FullLabelGeneratedChoice (coric := coric) (l := l)},
@@ -16170,6 +16232,32 @@ structure GeneratedFullLabelQuotientPossibleImageAudit
       source.generatedFullLabelInd3Step choice₁ choice₂ ->
         source.generatedFullLabelLogVolume choice₁ <=
           source.generatedFullLabelLogVolume choice₂
+  ind1_preserves_generated_orbitAverage :
+    ∀ {choice₁ choice₂ :
+        FullLabelGeneratedChoice (coric := coric) (l := l)},
+      generatedFullLabelInd1Step (l := l) choice₁ choice₂ ->
+        (source.generatedFullLabelOrbitAverage choice₁).averageLogVolume =
+          (source.generatedFullLabelOrbitAverage choice₂).averageLogVolume
+  ind2_preserves_generated_orbitAverage :
+    ∀ {choice₁ choice₂ :
+        FullLabelGeneratedChoice (coric := coric) (l := l)},
+      generatedFullLabelInd2Step (l := l) choice₁ choice₂ ->
+        (source.generatedFullLabelOrbitAverage choice₁).averageLogVolume =
+          (source.generatedFullLabelOrbitAverage choice₂).averageLogVolume
+  ind1_preserves_generated_orbitAverage_pointwise :
+    ∀ {choice₁ choice₂ :
+        FullLabelGeneratedChoice (coric := coric) (l := l)},
+      generatedFullLabelInd1Step (l := l) choice₁ choice₂ ->
+        ∀ label : ZMod l.value,
+          (source.generatedFullLabelOrbitAverage choice₁).normalizedLogVolume label =
+            (source.generatedFullLabelOrbitAverage choice₂).normalizedLogVolume label
+  ind2_preserves_generated_orbitAverage_pointwise :
+    ∀ {choice₁ choice₂ :
+        FullLabelGeneratedChoice (coric := coric) (l := l)},
+      generatedFullLabelInd2Step (l := l) choice₁ choice₂ ->
+        ∀ label : ZMod l.value,
+          (source.generatedFullLabelOrbitAverage choice₁).normalizedLogVolume label =
+            (source.generatedFullLabelOrbitAverage choice₂).normalizedLogVolume label
   equalityQuotient_no_ind3_generator :
     ∀ {choice₁ choice₂ :
         FullLabelGeneratedChoice (coric := coric) (l := l)},
@@ -16250,6 +16338,9 @@ theorem generatedFullLabelQuotientPossibleImageAudit
     generated_logVolume_eq_labelAverage := by
       intro choice
       exact source.generatedFullLabelLogVolume_eq_labelAverage choice,
+    generated_orbit_average := by
+      intro choice
+      exact ⟨source.generatedFullLabelOrbitAverage choice⟩,
     ind1_preserves_generated_logVolume := by
       intro choice₁ choice₂ hstep
       exact source.generatedFullLabelInd1_logVolume_eq hstep,
@@ -16259,6 +16350,20 @@ theorem generatedFullLabelQuotientPossibleImageAudit
     ind3_upper_semi_generated_logVolume := by
       intro choice₁ choice₂ hstep
       exact source.generatedFullLabelInd3_logVolume_le hstep,
+    ind1_preserves_generated_orbitAverage := by
+      intro choice₁ choice₂ hstep
+      exact source.generatedFullLabelInd1_orbitAverage_eq hstep,
+    ind2_preserves_generated_orbitAverage := by
+      intro choice₁ choice₂ hstep
+      exact source.generatedFullLabelInd2_orbitAverage_eq hstep,
+    ind1_preserves_generated_orbitAverage_pointwise := by
+      intro choice₁ choice₂ hstep label
+      exact source.generatedFullLabelInd1_orbitAverage_normalizedLogVolume_eq
+        hstep label,
+    ind2_preserves_generated_orbitAverage_pointwise := by
+      intro choice₁ choice₂ hstep label
+      exact source.generatedFullLabelInd2_orbitAverage_normalizedLogVolume_eq
+        hstep label,
     equalityQuotient_no_ind3_generator := by
       intro choice₁ choice₂ hstep
       exact
