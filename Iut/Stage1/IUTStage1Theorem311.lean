@@ -15435,6 +15435,65 @@ theorem generatedFullLabelAverage_eq_zmod_sum
       (l := l) (source.baseConstructedRealifiedVolume thetaClass)).symm
 
 set_option linter.style.longLine false in
+/--
+Finite averaged log-volume of the actual generated `F_l` orbit through a
+selected full-label choice.
+
+The normalized entry at label `j` is the generated log-volume of the generated
+choice with the same theta-pilot class and finite label `j`.  Since the
+generated log-volume forgets the finite label, the average is the selected
+choice's generated log-volume.
+-/
+noncomputable def generatedFullLabelOrbitAverage
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    IUTStage1LabelAveragedProcessionLogVolume (ZMod l.value) :=
+  { normalizedLogVolume := fun label =>
+      source.generatedFullLabelLogVolume
+        (fullLabelGeneratedChoice (l := l) choice.thetaClass label),
+    averageLogVolume := source.generatedFullLabelLogVolume choice,
+    average_eq := by
+      dsimp [generatedFullLabelLogVolume, fullLabelGeneratedChoice]
+      rw [ZMod.card]
+      exact
+        (LogThetaLabelProcessionUpperSemiSource.zmod_constant_label_average
+          (l := l) (source.baseConstructedRealifiedVolume choice.thetaClass)).symm }
+
+set_option linter.style.longLine false in
+@[simp]
+theorem generatedFullLabelOrbitAverage_normalizedLogVolume
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l))
+    (label : ZMod l.value) :
+    (source.generatedFullLabelOrbitAverage choice).normalizedLogVolume label =
+      source.generatedFullLabelLogVolume
+        (fullLabelGeneratedChoice (l := l) choice.thetaClass label) :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelOrbitAverage_average_eq_logVolume
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    (source.generatedFullLabelOrbitAverage choice).averageLogVolume =
+      source.generatedFullLabelLogVolume choice :=
+  rfl
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelOrbitAverage_eq_zmod_sum
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    (source.generatedFullLabelOrbitAverage choice).averageLogVolume =
+      (Finset.univ.sum fun label : ZMod l.value =>
+        source.generatedFullLabelLogVolume
+          (fullLabelGeneratedChoice (l := l) choice.thetaClass label)) /
+        (l.value : Real) := by
+  rw [(source.generatedFullLabelOrbitAverage choice).average_eq, ZMod.card]
+  rfl
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelOrbitAverage_eq_thetaClassAverage
+    (choice : FullLabelGeneratedChoice (coric := coric) (l := l)) :
+    (source.generatedFullLabelOrbitAverage choice).averageLogVolume =
+      (source.generatedFullLabelAverage choice.thetaClass).averageLogVolume := by
+  exact source.generatedFullLabelLogVolume_eq_labelAverage choice
+
+set_option linter.style.longLine false in
 /-- `(Ind1)` on generated full-label choices: translation in the finite label. -/
 def generatedFullLabelInd1Step
     (choice₁ choice₂ : FullLabelGeneratedChoice (coric := coric) (l := l)) :
@@ -15819,6 +15878,20 @@ structure GeneratedFullLabelProcessionOrbitAudit
     Fintype.card (ZMod l.value) = l.value
   orbit_self :
     choice ∈ generatedFullLabelProcessionOrbit (l := l) choice
+  orbit_label_average :
+    Nonempty (IUTStage1LabelAveragedProcessionLogVolume (ZMod l.value))
+  orbit_label_average_formula :
+    (source.generatedFullLabelOrbitAverage choice).averageLogVolume =
+      (Finset.univ.sum fun label : ZMod l.value =>
+        source.generatedFullLabelLogVolume
+          (fullLabelGeneratedChoice (l := l) choice.thetaClass label)) /
+        (l.value : Real)
+  orbit_average_eq_selected_logVolume :
+    (source.generatedFullLabelOrbitAverage choice).averageLogVolume =
+      source.generatedFullLabelLogVolume choice
+  orbit_average_eq_thetaClass_average :
+    (source.generatedFullLabelOrbitAverage choice).averageLogVolume =
+      (source.generatedFullLabelAverage choice.thetaClass).averageLogVolume
   all_labels_present :
     ∀ label : ZMod l.value,
       ∃ choice' :
@@ -15866,6 +15939,14 @@ theorem generatedFullLabelProcessionOrbitAudit
     source.GeneratedFullLabelProcessionOrbitAudit thetaClassImages choice :=
   { zmod_label_cardinality := ZMod.card l.value,
     orbit_self := generatedFullLabelProcessionOrbit_self (l := l) choice,
+    orbit_label_average :=
+      ⟨source.generatedFullLabelOrbitAverage choice⟩,
+    orbit_label_average_formula :=
+      source.generatedFullLabelOrbitAverage_eq_zmod_sum choice,
+    orbit_average_eq_selected_logVolume :=
+      source.generatedFullLabelOrbitAverage_average_eq_logVolume choice,
+    orbit_average_eq_thetaClass_average :=
+      source.generatedFullLabelOrbitAverage_eq_thetaClassAverage choice,
     all_labels_present := by
       intro label
       exact generatedFullLabelProcessionOrbit_allLabelsPresent (l := l) choice label,
