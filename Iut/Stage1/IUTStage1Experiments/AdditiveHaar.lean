@@ -12265,6 +12265,104 @@ theorem endpoint
     source.toStepXIFormulaGapControlledLocalArithmeticSource.endpoint⟩
 
 set_option linter.style.longLine false in
+/--
+Project the valuation-ball arithmetic-degree-controlled local source to the
+canonical Stage~XI case-local Theorem~1.10 arithmetic-degree bound source.
+
+The source already contains the Step~(v) distinguished and Step~(vii)
+archimedean formula bounds against \(a_v(D_v+C_v)\).  Lean supplies the
+remaining Step~(vi) nondistinguished zero bound from nonnegativity of the local
+different/conductor degrees and positivity of the arithmetic-degree coefficient.
+-/
+noncomputable def toCoreCaseLocalArithmeticDegreeBoundSource
+    (source :
+      IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseLocalArithmeticDegreeBoundSource
+      (theorem110ValuationBallLocalAnalyticSource :=
+        source.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource) :=
+  { distinguished_exactProcession_le_arithmeticDegreePart := by
+      intro place hkind
+      have hleExact :
+          (source.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.distinguishedValuationBallAdditiveHaarLogShellConstruction
+            place hkind).exactProcessionNormalizedUpperBound <=
+            source.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.distinguishedProcessionBound
+              place :=
+        le_trans
+          (source.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.distinguishedValuationBallAdditiveHaarLogShellConstruction
+            place hkind).stepV_exact_procession_le_coarse
+          (source.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.distinguishedValuationBallAdditiveHaarLogShellConstruction
+            place hkind).stepV_coarse_le_formula_bound
+      exact
+        le_trans hleExact
+          (source.distinguishedProcessionBound_le_arithmeticDegreePart
+            place hkind),
+    nondistinguished_zero_le_arithmeticDegreePart := by
+      intro place _hkind
+      let arithmeticSource :=
+        source.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+          |>.toThetaPilotArithmeticDivisorLocalEvaluationSource
+      have hdeg :
+          0 <= arithmeticSource.localDifferentDegree place +
+            arithmeticSource.localConductorDegree place :=
+        add_nonneg
+          (arithmeticSource.localDifferentDegree_nonneg place)
+          (arithmeticSource.localConductorDegree_nonneg place)
+      have hcoeff :
+          0 <= arithmeticSource.arithmeticDegreeCoefficient := by
+        have hlpos : 0 < (estimate.l.value : Real) := by
+          have hlfive : (5 : Real) <= (estimate.l.value : Real) := by
+            exact_mod_cast estimate.l.ge_five
+          linarith
+        have hdenpos : 0 < 4 * estimate.absoluteLogQ :=
+          mul_pos (by norm_num) estimate.absoluteLogQ_pos
+        have hbase :
+            0 <= ((estimate.l.value : Real) + 1) /
+              (4 * estimate.absoluteLogQ) :=
+          div_nonneg (by linarith [le_of_lt hlpos]) (le_of_lt hdenpos)
+        have hdmod : 0 <= (estimate.dmod : Real) := by
+          exact_mod_cast Nat.zero_le estimate.dmod
+        have hthetaTerm :
+            0 <= 36 * (estimate.dmod : Real) / (estimate.l.value : Real) :=
+          div_nonneg (mul_nonneg (by norm_num) hdmod) (le_of_lt hlpos)
+        have htheta :
+            0 <= 1 + 36 * (estimate.dmod : Real) /
+              (estimate.l.value : Real) := by
+          linarith
+        dsimp [
+          arithmeticSource,
+          IUTStage1IUTIVThetaPilotArithmeticDivisorLocalEvaluationSource.arithmeticDegreeCoefficient]
+        exact mul_nonneg hbase htheta
+      simpa [
+        arithmeticSource,
+        IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.toThetaPilotArithmeticDivisorLocalEvaluationSource]
+        using mul_nonneg hcoeff hdeg,
+    archimedean_metricContainer_le_arithmeticDegreePart := by
+      intro place hkind
+      have hmetric :
+          (source.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.archimedeanMetricConstruction
+            place hkind).metricContainerLogVolume <=
+            source.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.archimedeanProcessionBound
+              place :=
+        IUTStage1IUTIVProposition15ArchimedeanLocalMetricEstimate.metric_container_le_formula_bound
+          ((source.theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.valuationBallAdditiveHaarLocalAnalyticConstructionFormulaSource.archimedeanMetricConstruction
+            place hkind).toArchimedeanLocalMetricEstimate)
+      exact
+        le_trans hmetric
+          (source.archimedeanProcessionBound_le_arithmeticDegreePart
+            place hkind) }
+
+set_option linter.style.longLine false in
+theorem toCoreCaseLocalArithmeticDegreeBoundSource_endpoint
+    (source :
+      IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource
+        β estimate η γ localPrime localField αHaar hullSystem
+        αLocal ηLocal localAnalyticHullSystem archIndex archSummand) :
+    source.toCoreCaseLocalArithmeticDegreeBoundSource.Endpoint :=
+  source.toCoreCaseLocalArithmeticDegreeBoundSource.endpoint
+
+set_option linter.style.longLine false in
 theorem ofPadicUnitBallHaarIndex_endpoint
     (theorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource :
       IUTStage1IUTIVTheorem110ValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
