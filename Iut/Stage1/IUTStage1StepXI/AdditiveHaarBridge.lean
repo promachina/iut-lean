@@ -1651,6 +1651,98 @@ theorem RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlle
 
 set_option linter.style.longLine false in
 /--
+Project the matched local-degree object Record-Ob3/Ob5 source to the canonical
+p-adic unit-ball arithmetic formula-matching package.
+
+This is the lower local-estimate boundary for the residual bridge: the
+valuation-ball formula-matching source, the local Step~(v)/(vii)
+degree-identification objects, and their synchronization reconstruct the
+p-adic-defect/main source internally before entering the canonical Step~(xi)
+formula package.
+-/
+noncomputable def RecordOb3Ob5ArithmeticDivisorBackedMatchedLocalDegreeObjectValuationBallControlledComponentSource.toCorePadicUnitBallArithmeticFormulaMatchingSource
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedMatchedLocalDegreeObjectValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :=
+  source.toPadicDefectMainValuationBallControlledComponentSource
+    |>.toCorePadicUnitBallArithmeticFormulaMatchingSource
+
+theorem RecordOb3Ob5ArithmeticDivisorBackedMatchedLocalDegreeObjectValuationBallControlledComponentSource.toCorePadicUnitBallArithmeticFormulaMatchingSource_endpoint
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedMatchedLocalDegreeObjectValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :
+    source.toCorePadicUnitBallArithmeticFormulaMatchingSource.Endpoint :=
+  source.toCorePadicUnitBallArithmeticFormulaMatchingSource.endpoint
+
+set_option linter.style.longLine false in
+/--
+Project the matched local-degree object Record-Ob3/Ob5 source directly to the
+canonical local arithmetic-degree residual package.
+
+Compared with the p-adic-defect/main bridge, this consumer no longer accepts a
+p-adic-defect/main valuation-ball package as an independent input.  It derives
+that package from the matched local-degree object source, then projects the
+canonical p-adic arithmetic formula package and its residual ledger.
+-/
+noncomputable def RecordOb3Ob5ArithmeticDivisorBackedMatchedLocalDegreeObjectValuationBallControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedMatchedLocalDegreeObjectValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :=
+  source.toCorePadicUnitBallArithmeticFormulaMatchingSource
+    |>.toLocalArithmeticDegreeResidualSource
+
+theorem RecordOb3Ob5ArithmeticDivisorBackedMatchedLocalDegreeObjectValuationBallControlledComponentSource.toCoreLocalArithmeticDegreeResidualSource_endpoint
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedMatchedLocalDegreeObjectValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :
+    source.toCoreLocalArithmeticDegreeResidualSource.Endpoint :=
+  source.toCoreLocalArithmeticDegreeResidualSource.endpoint
+
+set_option linter.style.longLine false in
+/--
+Audit the matched local-degree object source as the lower formula-gap/residual
+source for the canonical Stage~1 bridge.
+
+The formula-gap Theorem~1.10 package and the local arithmetic-degree residual
+package are both recovered from the matched local-degree object source, after
+reconstructing the p-adic-defect/main valuation-ball source from the typed
+Step~(v)/(vii) local-degree objects.
+-/
+theorem RecordOb3Ob5ArithmeticDivisorBackedMatchedLocalDegreeObjectValuationBallControlledComponentSource.projectedFormulaGapResidualAudit
+    (source :
+      RecordOb3Ob5ArithmeticDivisorBackedMatchedLocalDegreeObjectValuationBallControlledComponentSource
+        recordAdjustedSource sourceData estimate l η localPrime localField
+        αHaar hullSystem αLocal ηLocal localAnalyticHullSystem
+        archIndex archSummand) :
+    let padicDefectMainSource :=
+      source.toPadicDefectMainValuationBallControlledComponentSource;
+    let theorem110ValuationBallFormulaGapSource :=
+      padicDefectMainSource.padicDefectMainValuationBallSource
+        |>.toValuationBallFormulaGapMatchedPrimeErrorPadicDefectMainSource
+        |>.theorem110FormulaGapMatchedArithmeticDivisorEvaluationSource;
+    theorem110ValuationBallFormulaGapSource.Endpoint ∧
+      source.toCoreLocalArithmeticDegreeResidualSource.Endpoint ∧
+      theorem110ValuationBallFormulaGapSource.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource.Endpoint ∧
+      padicDefectMainSource.toCoreLocalArithmeticDegreeResidualSource.Endpoint := by
+  intro padicDefectMainSource theorem110ValuationBallFormulaGapSource
+  exact
+    ⟨theorem110ValuationBallFormulaGapSource.endpoint,
+      source.toCoreLocalArithmeticDegreeResidualSource_endpoint,
+      theorem110ValuationBallFormulaGapSource
+        |>.toValuationBallAdditiveHaarLocalAnalyticArithmeticDivisorEvaluationSource
+        |>.endpoint,
+      padicDefectMainSource.toCoreLocalArithmeticDegreeResidualSource_endpoint⟩
+
+set_option linter.style.longLine false in
+/--
 Audit the lower p-adic-defect/main source as a formula-gap and residual source.
 
 The p-adic-defect/main valuation-ball source does not merely map to the generic

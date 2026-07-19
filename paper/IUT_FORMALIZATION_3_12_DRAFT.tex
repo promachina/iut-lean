@@ -140,7 +140,7 @@ Ob3/Ob4 determinant equality, and Lean reconstructs the localized
 determinant/scale synchronization, arithmetic-divisor endpoint, and Haar
 lower bound before any compact-open route consumes the bundle.  The
 residual-frontier manifest now has
-238 checked entries: 232 derived entries and 6 constructed countermodel
+271 checked entries: 265 derived entries and 6 constructed countermodel
 diagnostics.  The newest determinant-facing audit checks that the pointwise
 summand formula is reconstructed from determinant/Hodge calibration and the
 record-native determinant decomposition into adjusted summands.  The
@@ -301,19 +301,22 @@ adjusted-sum theta equality.  The audit includes one-place
 diagnostics for the detached p-adic scale failure, the necessity of the signed
 \(q\leq\theta\) comparison for \(C_\Theta\ge -1\), and the remaining residual
 lower-bound obligation at the local arithmetic-degree boundary.  The residual
-frontier is now classified explicitly: the p-adic-defect/main valuation-ball
-controlled Record-Ob3/Ob5 component source is derived from the local-degree
-formula valuation-ball comparison source.  Lean identifies the valuation-ball
-object reconstructed from the p-adic-defect/main source with the original
-valuation-ball additive-Haar object by transporting the nondistinguished shell
-payload across \(E_v=\delta_v+M_v\), then reconstructs the
-arithmetic-degree-controlled local source from this p-adic-defect/main object
-and transports the controlled component.  The derived strict source projects
-directly to the canonical residual package and now also feeds a compact-open
-product-handoff formula-realized route and the compact-open projected-local-degree
-formula route without separately exposing the valuation-ball local analytic
-object, Haar defect source, calibration, split law, comparison bounds,
-local-degree formula projection, or component/formula equalities.  Lean also
+frontier is now classified explicitly below the p-adic-defect/main package:
+the matched local-degree object valuation-ball Record-Ob3/Ob5 source projects
+to the canonical p-adic arithmetic formula package and local arithmetic-degree
+residual package after reconstructing the local-degree formula source and then
+the p-adic-defect/main valuation-ball source internally.  Lean identifies the
+valuation-ball object reconstructed from the p-adic-defect/main source with the
+original valuation-ball additive-Haar object by transporting the
+nondistinguished shell payload across \(E_v=\delta_v+M_v\), then reconstructs
+the arithmetic-degree-controlled local source from this p-adic-defect/main
+object and transports the controlled component.  The derived matched-object
+source projects directly to the canonical residual package and the reconstructed
+p-adic-defect/main source still feeds a compact-open product-handoff
+formula-realized route and the compact-open projected-local-degree formula route
+without separately exposing the valuation-ball local analytic object, Haar
+defect source, calibration, split law, comparison bounds, local-degree formula
+projection, p-adic-defect/main package, or component/formula equalities.  Lean also
 now pins the valuation-ball Theorem~1.10 local analytic source by a
 source-ingredient audit that expands it into arithmetic divisors,
 valuation-ball additive-Haar Proposition~1.4 constructions, the
@@ -328,9 +331,9 @@ valuation-ball Record-Ob3/Ob5 source is now derived from the synchronized
 controlled component layer by projecting the local Step~(v)/(vii) formulas and
 reconstructing the valuation-ball formula package from the controlled local
 arithmetic source.  The remaining boundary has therefore moved upward to the
-construction of that controlled component/local-estimate layer from full
-IUT~IV data; the legacy strict p-adic-Haar residual projection remains checked
-as a comparison route.  The constructed diagnostics show the
+construction of that matched-object controlled component/local-estimate layer
+from full IUT~IV data; the legacy strict p-adic-Haar and p-adic-defect/main
+residual projections remain checked as comparison routes.  The constructed diagnostics show the
 failure modes when the p-adic defect/main split, ordinary component formula
 matching, strict residual synchronization, or valuation-ball projection
 preservation laws are removed.  Future Lean steps should remove further entries
@@ -4294,10 +4297,11 @@ arithmetic object; the split bridge projects this source directly to the
 canonical residual package without separately exposing the local-degree formula
 package.  The canonical residual-frontier audit is lower again: the
 p-adic-defect/main valuation-ball controlled Record-Ob3/Ob5 component source is
-now constructed from the local-degree formula valuation-ball source and then
-projected directly to the canonical residual package.  The local-degree formula
-valuation-ball source itself is now constructed from the synchronized controlled
-component source and no longer appears as an interface-only residual entry.
+now reconstructed from the matched local-degree object valuation-ball source
+before projecting to the canonical residual package.  The local-degree formula
+valuation-ball source itself is projected from those typed Step~(v)/(vii)
+objects, and neither the local-degree formula source nor the p-adic-defect/main
+source appears as an interface-only residual entry.
 The same comparison layer is now lower when typed Step~(v)/(vii) local-degree
 objects are available: Lean projects the local-degree formula source and its
 valuation-ball matching proof from those objects and their additive formula
@@ -4305,6 +4309,9 @@ synchronization before constructing the p-adic-defect/main controlled source.
 The matched-object source is also the public local-estimate argument of the
 compact-open canonical-HDD inverse-base-prime route, so this lowering is now on
 the route spine rather than only a residual projection.
+The bridge now also names direct projections from that matched-object source to
+the canonical p-adic arithmetic formula-matching source, the local
+arithmetic-degree residual source, and the formula-gap/residual audit.
 It is also no longer a primitive object once the controlled Record-Ob3/Ob5
 component is present: the controlled-component projection constructs it
 internally from the arithmetic-divisor-backed local-degree chain.
