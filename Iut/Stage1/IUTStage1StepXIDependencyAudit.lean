@@ -1684,6 +1684,12 @@ def canonicalStage1ResidualFrontier :
         "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantProjectedLocalizedAdjustedSumCaseBoundedResidualSourceDerivedResidualSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
       role :=
         "Derived public endpoint removing the separate local arithmetic-degree residual package from the adjusted-sum case-bounded branch.  The valuation-ball case-bounded residual source constructs its local arithmetic-degree residual payload internally via toLocalArithmeticDegreeResidualSource before the adjusted-sum same-index route proves the signed dichotomy and C_Theta >= -1 endpoint." },
+    { name := "same-index adjusted-sum local-analytic case-source endpoint",
+      status := .derived,
+      declarationName :=
+        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantProjectedLocalizedAdjustedSumLocalAnalyticCaseSourceDerivedResidualSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
+      role :=
+        "Derived public endpoint lowering the adjusted-sum case-bounded branch from formula-gap-indexed valuation-ball data to the local-analytic Theorem 1.10 valuation-ball source.  Lean reconstructs the formula-gap matched source, the case-bounded residual source, and its local arithmetic-degree residual package internally before proving the signed dichotomy and C_Theta >= -1 endpoint." },
     { name := "same-index side-condition endpoint from record family-hull q-scale",
       status := .derived,
       declarationName :=
@@ -1848,7 +1854,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 257 :=
+    canonicalStage1ResidualFrontier.length = 258 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1858,7 +1864,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 251 :=
+      (fun entry => entry.status = .derived)).length = 252 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -5730,6 +5736,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantProjectedLocalizedAdjustedSumCaseBoundedResidualSourceDerivedResidualSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantProjectedLocalizedAdjustedSumCaseBoundedResidualSourceDerivedResidualSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantProjectedLocalizedAdjustedSumLocalAnalyticCaseSourceDerivedResidualSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantProjectedLocalizedAdjustedSumLocalAnalyticCaseSourceDerivedResidualSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConcretePacketProjectedPrincipalProductSameIndexWeightedDeterminantQNormalizedCaseBoundedResidualSource.ofLocalAnalyticIUTIVSourceCaseBoundedResidualSource
 #guard_msgs (drop info) in
