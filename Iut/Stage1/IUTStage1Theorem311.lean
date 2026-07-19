@@ -15628,6 +15628,16 @@ theorem generatedFullLabelInd3_logVolume_le
   hstep
 
 set_option linter.style.longLine false in
+theorem generatedFullLabelInd3_orbitAverage_le
+    {choice₁ choice₂ : FullLabelGeneratedChoice (coric := coric) (l := l)}
+    (hstep : source.generatedFullLabelInd3Step choice₁ choice₂) :
+    (source.generatedFullLabelOrbitAverage choice₁).averageLogVolume <=
+      (source.generatedFullLabelOrbitAverage choice₂).averageLogVolume := by
+  rw [source.generatedFullLabelOrbitAverage_average_eq_logVolume choice₁,
+    source.generatedFullLabelOrbitAverage_average_eq_logVolume choice₂]
+  exact source.generatedFullLabelInd3_logVolume_le hstep
+
+set_option linter.style.longLine false in
 /--
 Typed `(Ind1),(Ind2),(Ind3)` core on the generated full-label choice space.
 
@@ -15787,12 +15797,30 @@ theorem generatedFullLabelThetaClass_eq_equalityRelation
   IUTStage1GeneratedIndeterminacyRelation.ind2 hclass
 
 set_option linter.style.longLine false in
+theorem generatedFullLabelEqualityRelation_iff_thetaClass_eq
+    {choice₁ choice₂ : FullLabelGeneratedChoice (coric := coric) (l := l)} :
+    (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotient.relation
+        choice₁ choice₂ ↔
+      choice₁.thetaClass = choice₂.thetaClass :=
+  ⟨fun hrel => source.generatedFullLabelEqualityRelation_thetaClass_eq hrel,
+    fun hclass => source.generatedFullLabelThetaClass_eq_equalityRelation hclass⟩
+
+set_option linter.style.longLine false in
 theorem generatedFullLabelEqualityQuotientMap_eq_of_thetaClass_eq
     {choice₁ choice₂ : FullLabelGeneratedChoice (coric := coric) (l := l)}
     (hclass : choice₁.thetaClass = choice₂.thetaClass) :
     (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotientMap choice₁ =
       (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotientMap choice₂ :=
   Quot.sound (source.generatedFullLabelThetaClass_eq_equalityRelation hclass)
+
+set_option linter.style.longLine false in
+theorem generatedFullLabelEqualitySetoidQuotientMap_eq_iff_thetaClass_eq
+    {choice₁ choice₂ : FullLabelGeneratedChoice (coric := coric) (l := l)} :
+    (source.generatedFullLabelTypedIndeterminacyCore).equalitySetoidQuotientMap choice₁ =
+        (source.generatedFullLabelTypedIndeterminacyCore).equalitySetoidQuotientMap choice₂ ↔
+      choice₁.thetaClass = choice₂.thetaClass := by
+  rw [(source.generatedFullLabelTypedIndeterminacyCore).equalitySetoidQuotientMap_eq_iff]
+  exact source.generatedFullLabelEqualityRelation_iff_thetaClass_eq
 
 set_option linter.style.longLine false in
 theorem generatedFullLabelInd1_equalityQuotientMap_eq
@@ -16232,6 +16260,12 @@ structure GeneratedFullLabelQuotientPossibleImageAudit
       source.generatedFullLabelInd3Step choice₁ choice₂ ->
         source.generatedFullLabelLogVolume choice₁ <=
           source.generatedFullLabelLogVolume choice₂
+  ind3_upper_semi_generated_orbitAverage :
+    ∀ {choice₁ choice₂ :
+        FullLabelGeneratedChoice (coric := coric) (l := l)},
+      source.generatedFullLabelInd3Step choice₁ choice₂ ->
+        (source.generatedFullLabelOrbitAverage choice₁).averageLogVolume <=
+          (source.generatedFullLabelOrbitAverage choice₂).averageLogVolume
   ind1_preserves_generated_orbitAverage :
     ∀ {choice₁ choice₂ :
         FullLabelGeneratedChoice (coric := coric) (l := l)},
@@ -16276,6 +16310,18 @@ structure GeneratedFullLabelQuotientPossibleImageAudit
       choice₁.thetaClass = choice₂.thetaClass ->
         (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotient.relation
           choice₁ choice₂
+  equality_relation_iff_thetaClass_eq :
+    ∀ {choice₁ choice₂ :
+        FullLabelGeneratedChoice (coric := coric) (l := l)},
+      (source.generatedFullLabelTypedIndeterminacyCore).equalityQuotient.relation
+          choice₁ choice₂ ↔
+        choice₁.thetaClass = choice₂.thetaClass
+  equalitySetoidQuotientMap_eq_iff_thetaClass_eq :
+    ∀ {choice₁ choice₂ :
+        FullLabelGeneratedChoice (coric := coric) (l := l)},
+      (source.generatedFullLabelTypedIndeterminacyCore).equalitySetoidQuotientMap choice₁ =
+          (source.generatedFullLabelTypedIndeterminacyCore).equalitySetoidQuotientMap choice₂ ↔
+        choice₁.thetaClass = choice₂.thetaClass
   ind1_equalityQuotientMap_eq :
     ∀ {choice₁ choice₂ :
         FullLabelGeneratedChoice (coric := coric) (l := l)},
@@ -16350,6 +16396,9 @@ theorem generatedFullLabelQuotientPossibleImageAudit
     ind3_upper_semi_generated_logVolume := by
       intro choice₁ choice₂ hstep
       exact source.generatedFullLabelInd3_logVolume_le hstep,
+    ind3_upper_semi_generated_orbitAverage := by
+      intro choice₁ choice₂ hstep
+      exact source.generatedFullLabelInd3_orbitAverage_le hstep,
     ind1_preserves_generated_orbitAverage := by
       intro choice₁ choice₂ hstep
       exact source.generatedFullLabelInd1_orbitAverage_eq hstep,
@@ -16375,6 +16424,12 @@ theorem generatedFullLabelQuotientPossibleImageAudit
     thetaClass_eq_equality_relation := by
       intro choice₁ choice₂ hclass
       exact source.generatedFullLabelThetaClass_eq_equalityRelation hclass,
+    equality_relation_iff_thetaClass_eq := by
+      intro choice₁ choice₂
+      exact source.generatedFullLabelEqualityRelation_iff_thetaClass_eq,
+    equalitySetoidQuotientMap_eq_iff_thetaClass_eq := by
+      intro choice₁ choice₂
+      exact source.generatedFullLabelEqualitySetoidQuotientMap_eq_iff_thetaClass_eq,
     ind1_equalityQuotientMap_eq := by
       intro choice₁ choice₂ hstep
       exact source.generatedFullLabelInd1_equalityQuotientMap_eq hstep,
