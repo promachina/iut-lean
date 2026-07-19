@@ -1312,6 +1312,18 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalEstimatePointwiseResidualSource.CaseLocalArithmeticDegreeBoundSource.ofCaseLocalArithmeticDegreeFormulaSource_endpoint",
       role :=
         "Endpoint theorem verifying that the exact case-local arithmetic-degree formula source satisfies the weaker bound-source endpoint after converting equalities to inequalities." },
+    { name := "additive-Haar arithmetic-degree controlled source to case-local bound source",
+      status := .derived,
+      declarationName :=
+        "Experiments.IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.toCoreCaseLocalArithmeticDegreeBoundSource",
+      role :=
+        "Derived projection from the valuation-ball arithmetic-degree-controlled local source to the canonical case-local Theorem 1.10 arithmetic-degree bound source.  Step (v) and Step (vii) use the carried procession-bound comparisons, and Step (vi) is derived from nonnegativity of the local different/conductor degrees and the arithmetic-degree coefficient." },
+    { name := "additive-Haar arithmetic-degree controlled source to residual package",
+      status := .derived,
+      declarationName :=
+        "Experiments.IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.toCoreLocalArithmeticDegreeResidualSource",
+      role :=
+        "Derived projection from the same valuation-ball arithmetic-degree-controlled local source to the canonical local arithmetic-degree residual package.  Lean combines StepXI_v = a_v(D_v+C_v), E_v = delta_v + M_v, and the finite Haar-defect lower bound to prove the residual identity and global residual inequality without an intermediate processional or case-bounded residual source." },
     { name := "Theorem 1.10 case-procession arithmetic-degree endpoint",
       status := .derived,
       declarationName :=
@@ -1584,7 +1596,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 213 :=
+    canonicalStage1ResidualFrontier.length = 215 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1594,7 +1606,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 207 :=
+      (fun entry => entry.status = .derived)).length = 209 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -7635,6 +7647,18 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.padicDefectMainReconstructionAudit
 #guard_msgs (drop info) in
 #print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.padicDefectMainReconstructionAudit
+#guard_msgs (drop info) in
+#check Experiments.IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.toCoreCaseLocalArithmeticDegreeBoundSource
+#guard_msgs (drop info) in
+#check Experiments.IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.toCoreCaseLocalArithmeticDegreeBoundSource_endpoint
+#guard_msgs (drop info) in
+#print axioms Experiments.IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.toCoreCaseLocalArithmeticDegreeBoundSource_endpoint
+#guard_msgs (drop info) in
+#check Experiments.IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.toCoreLocalArithmeticDegreeResidualSource
+#guard_msgs (drop info) in
+#check Experiments.IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.toCoreLocalArithmeticDegreeResidualSource_endpoint
+#guard_msgs (drop info) in
+#print axioms Experiments.IUTStage1ValuationBallHaarTheorem110StepXIArithmeticDegreeControlledLocalArithmeticSource.toCoreLocalArithmeticDegreeResidualSource_endpoint
 #guard_msgs (drop info) in
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ArithmeticDivisorBackedPadicDefectMainValuationBallControlledComponentSource.toLocalDegreeFormulaValuationBallControlledComponentSource
 #guard_msgs (drop info) in
