@@ -449,6 +449,13 @@ same-label comparison to an explicit action statement: \IndOne{} and
 that the normalized average is invariant by finite-sum reindexing.  The labels
 are transported rather than identified, while \IndThree{} remains the sole
 one-sided upper-semi input.
+This action statement is now connected to the Step~(x)-to-Step~(xi) numerical
+handoff.  The code factors out the invariant upper-ray payload
+\(q_{\mathrm{pilot}}\leq \Theta_{\mathrm{hull}}\), and the permutation corridor
+constructs that payload directly from \IndOne{}/\IndTwo{} reindexing and the
+\IndThree{} upper bound.  Consequently, the corresponding signed
+\(C_\Theta\) endpoint no longer requires same-label \IndOne{}/\IndTwo{}
+pointwise hypotheses.
 This separation is one of the central design decisions of the formalization.
 It prevents a proof from turning an upper-semi source relation into an equality
 merely because both appear in the informal phrase ``indeterminacy''.

@@ -8504,6 +8504,28 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1ProcessionNormalizedPermutationIndeterminacyCorridor.permutationIndeterminacy_endpoint
 #guard_msgs (drop info) in
 #print axioms IUTStage1ProcessionNormalizedPermutationIndeterminacyCorridor.permutationIndeterminacy_endpoint
+#guard_msgs (drop info) in
+#check IUTStage1StepXInvariantUpperRayLogVolume
+#guard_msgs (drop info) in
+#check IUTStage1StepXInvariantUpperRayLogVolume.signedCThetaComparison_endpoint
+#guard_msgs (drop info) in
+#print axioms IUTStage1StepXInvariantUpperRayLogVolume.signedCThetaComparison_endpoint
+#guard_msgs (drop info) in
+#check IUTStage1PermutationStepXToHullUpperRayLogVolume
+#guard_msgs (drop info) in
+#check IUTStage1PermutationStepXToHullUpperRayLogVolume.ofPermutationCorridor
+#guard_msgs (drop info) in
+#check IUTStage1PermutationStepXToHullUpperRayLogVolume.ofPermutationCorridor_endpoint
+#guard_msgs (drop info) in
+#print axioms IUTStage1PermutationStepXToHullUpperRayLogVolume.ofPermutationCorridor_endpoint
+#guard_msgs (drop info) in
+#check IUTStage1PermutationStepXToHullUpperRayLogVolume.signedCThetaComparison_endpoint
+#guard_msgs (drop info) in
+#print axioms IUTStage1PermutationStepXToHullUpperRayLogVolume.signedCThetaComparison_endpoint
+#guard_msgs (drop info) in
+#check IUTStage1PermutationStepXToHullUpperRayLogVolume.signedCorollary312_magnitudes
+#guard_msgs (drop info) in
+#print axioms IUTStage1PermutationStepXToHullUpperRayLogVolume.signedCorollary312_magnitudes
 
 end IUTStage1StepXIDependencyAudit
 end Stage1

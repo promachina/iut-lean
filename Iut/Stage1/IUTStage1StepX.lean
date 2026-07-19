@@ -451,6 +451,328 @@ structure IUTStage1StepXHullApproximantHandoff
     hullSource.qPilotLogVolume =
       corridor.beforeIndeterminacy.averageLogVolume
 
+/--
+Invariant Step (x)-to-upper-ray payload.
+
+This is the common numerical core used after the procession-normalized
+indeterminacy analysis has done its work.  It deliberately records only the
+paper-level consequence needed by Step (xi): the q-pilot averaged log-volume
+lies in the theta hull upper ray.  Both the older pointwise corridor and the
+permutation-action corridor below project to this record.
+-/
+structure IUTStage1StepXInvariantUpperRayLogVolume
+    (label : Type u) [Fintype label] where
+  determinant :
+    IUTStage1ArithmeticVectorBundleDeterminantLogVolume
+  thetaHullLogVolume : Real
+  theta_eq_normalized_determinant :
+    thetaHullLogVolume = determinant.normalizedLogVolume
+  qPilotLogVolume : Real
+  q_mem_upperRay : qPilotLogVolume <= thetaHullLogVolume
+
+namespace IUTStage1StepXInvariantUpperRayLogVolume
+
+variable {label : Type u} [Fintype label]
+
+def toHullDetPilotUpperRayLogVolume
+    (data : IUTStage1StepXInvariantUpperRayLogVolume label) :
+    IUTStage1HullDetPilotUpperRayLogVolume :=
+  { determinant := data.determinant,
+    thetaHullLogVolume := data.thetaHullLogVolume,
+    theta_eq_normalized_determinant :=
+      data.theta_eq_normalized_determinant,
+    qPilotLogVolume := data.qPilotLogVolume,
+    q_mem_upperRay := data.q_mem_upperRay }
+
+theorem qPilotLogVolume_le_thetaHullLogVolume
+    (data : IUTStage1StepXInvariantUpperRayLogVolume label) :
+    data.qPilotLogVolume <= data.thetaHullLogVolume :=
+  data.q_mem_upperRay
+
+theorem qPilotLogVolume_mem_upperRay
+    (data : IUTStage1StepXInvariantUpperRayLogVolume label) :
+    data.qPilotLogVolume ∈
+      data.toHullDetPilotUpperRayLogVolume.upperRay :=
+  data.q_mem_upperRay
+
+def toQPilotTwoComputationLogVolume
+    (data : IUTStage1StepXInvariantUpperRayLogVolume label) :
+    IUTStage1QPilotTwoComputationLogVolume :=
+  { upperRayData := data.toHullDetPilotUpperRayLogVolume,
+    inputPrimeStripLogVolume := data.qPilotLogVolume,
+    outputHullLogVolume := data.qPilotLogVolume,
+    input_eq_q := rfl,
+    output_eq_q := rfl }
+
+def toQPilotTwoComputationSignedEndpoint
+    (data : IUTStage1StepXInvariantUpperRayLogVolume label)
+    (q_pilot_positive : 0 < -data.qPilotLogVolume) :
+    IUTStage1QPilotTwoComputationSignedEndpoint :=
+  { twoComputation := data.toQPilotTwoComputationLogVolume,
+    q_pilot_positive := q_pilot_positive }
+
+def toQPilotTwoComputationCThetaEndpoint
+    (data : IUTStage1StepXInvariantUpperRayLogVolume label)
+    (q_pilot_positive : 0 < -data.qPilotLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <= cTheta * (-data.qPilotLogVolume)) :
+    IUTStage1QPilotTwoComputationCThetaEndpoint :=
+  { signedEndpoint :=
+      data.toQPilotTwoComputationSignedEndpoint q_pilot_positive,
+    cTheta := cTheta,
+    thetaHullLogVolume_le_cTheta_absLogQ := by
+      simpa [toQPilotTwoComputationSignedEndpoint,
+        toQPilotTwoComputationLogVolume,
+        toHullDetPilotUpperRayLogVolume] using
+        thetaHull_le_cTheta_absLogQ }
+
+theorem signedCThetaComparison_endpoint
+    (data : IUTStage1StepXInvariantUpperRayLogVolume label)
+    (q_pilot_positive : 0 < -data.qPilotLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <= cTheta * (-data.qPilotLogVolume)) :
+    let endpoint :=
+      data.toQPilotTwoComputationCThetaEndpoint
+        q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ;
+    endpoint.toSignedCThetaBound.comparison.qSigned =
+        data.qPilotLogVolume ∧
+      endpoint.toSignedCThetaBound.comparison.thetaSigned =
+        data.thetaHullLogVolume ∧
+      endpoint.toSignedCThetaBound.comparison.qSigned <=
+        endpoint.toSignedCThetaBound.comparison.thetaSigned ∧
+      endpoint.toSignedCThetaBound.comparison.qSigned <=
+        endpoint.toSignedCThetaBound.cTheta *
+          (-endpoint.toSignedCThetaBound.comparison.qSigned) ∧
+      (-1 : Real) <= endpoint.toSignedCThetaBound.cTheta := by
+  intro endpoint
+  exact
+    ⟨by
+      simpa [endpoint, toQPilotTwoComputationCThetaEndpoint,
+        toQPilotTwoComputationSignedEndpoint,
+        toQPilotTwoComputationLogVolume,
+        IUTStage1QPilotTwoComputationCThetaEndpoint.toSignedCThetaBound,
+        IUTStage1QPilotTwoComputationSignedEndpoint.comparisonData],
+      by
+        simpa [endpoint, toQPilotTwoComputationCThetaEndpoint,
+          toQPilotTwoComputationSignedEndpoint,
+          toQPilotTwoComputationLogVolume,
+          toHullDetPilotUpperRayLogVolume,
+          IUTStage1QPilotTwoComputationCThetaEndpoint.toSignedCThetaBound,
+          IUTStage1QPilotTwoComputationSignedEndpoint.comparisonData],
+      endpoint.toSignedCThetaBound.comparison.qSigned_le_thetaSigned,
+      endpoint.toSignedCThetaBound.qSigned_le_cTheta_absLogQ,
+      endpoint.toSignedCThetaBound.cTheta_ge_neg_one⟩
+
+theorem signedCorollary312_magnitudes
+    (data : IUTStage1StepXInvariantUpperRayLogVolume label)
+    (q_pilot_positive : 0 < -data.qPilotLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <= cTheta * (-data.qPilotLogVolume)) :
+    let endpoint :=
+      data.toQPilotTwoComputationCThetaEndpoint
+        q_pilot_positive cTheta thetaHull_le_cTheta_absLogQ;
+    endpoint.toSignedCThetaBound.comparison.qPilot.value =
+        -data.qPilotLogVolume ∧
+      endpoint.toSignedCThetaBound.comparison.thetaPilot.value =
+        -data.thetaHullLogVolume ∧
+      Corollary312Inequality
+        endpoint.toSignedCThetaBound.comparison.thetaPilot
+        endpoint.toSignedCThetaBound.comparison.qPilot := by
+  intro endpoint
+  exact
+    ⟨by
+      simpa [endpoint, toQPilotTwoComputationCThetaEndpoint,
+        toQPilotTwoComputationSignedEndpoint,
+        toQPilotTwoComputationLogVolume,
+        IUTStage1QPilotTwoComputationCThetaEndpoint.toSignedCThetaBound,
+        IUTStage1QPilotTwoComputationSignedEndpoint.comparisonData,
+        Corollary312ComparisonData.qPilot],
+      by
+        simpa [endpoint, toQPilotTwoComputationCThetaEndpoint,
+          toQPilotTwoComputationSignedEndpoint,
+          toQPilotTwoComputationLogVolume,
+          toHullDetPilotUpperRayLogVolume,
+          IUTStage1QPilotTwoComputationCThetaEndpoint.toSignedCThetaBound,
+          IUTStage1QPilotTwoComputationSignedEndpoint.comparisonData,
+          Corollary312ComparisonData.thetaPilot],
+      endpoint.toSignedCThetaBound.comparison.corollary312⟩
+
+end IUTStage1StepXInvariantUpperRayLogVolume
+
+/--
+Step (x) to Step (xi) handoff for the permutation-action form of the
+indeterminacy corridor.
+
+Unlike the older same-label route, this record does not ask for pointwise
+identification of the normalized label family after \IndOne{} and \IndTwo{}.
+The q-pilot average is the pre-indeterminacy average, and membership in the
+theta upper ray follows from finite-sum invariance under the two label-set
+equivalences plus the one-sided \IndThree{} bound.
+-/
+structure IUTStage1PermutationStepXToHullUpperRayLogVolume
+    (label : Type u) [Fintype label] where
+  corridor :
+    IUTStage1ProcessionNormalizedPermutationIndeterminacyCorridor label
+  determinant :
+    IUTStage1ArithmeticVectorBundleDeterminantLogVolume
+  thetaHullLogVolume : Real
+  theta_eq_ind3Upper :
+    thetaHullLogVolume = corridor.ind3UpperBound
+  theta_eq_normalized_determinant :
+    thetaHullLogVolume = determinant.normalizedLogVolume
+  qPilotLogVolume : Real
+  q_eq_beforeAverage :
+    qPilotLogVolume =
+      corridor.beforeIndeterminacy.averageLogVolume
+
+namespace IUTStage1PermutationStepXToHullUpperRayLogVolume
+
+variable {label : Type u} [Fintype label]
+
+def qPilotLogVolume_le_thetaHullLogVolume
+    (data : IUTStage1PermutationStepXToHullUpperRayLogVolume label) :
+    data.qPilotLogVolume <= data.thetaHullLogVolume := by
+  rw [data.q_eq_beforeAverage, data.theta_eq_ind3Upper]
+  exact data.corridor.before_average_le_ind3UpperBound
+
+def toInvariantUpperRayLogVolume
+    (data : IUTStage1PermutationStepXToHullUpperRayLogVolume label) :
+    IUTStage1StepXInvariantUpperRayLogVolume label :=
+  { determinant := data.determinant,
+    thetaHullLogVolume := data.thetaHullLogVolume,
+    theta_eq_normalized_determinant :=
+      data.theta_eq_normalized_determinant,
+    qPilotLogVolume := data.qPilotLogVolume,
+    q_mem_upperRay := data.qPilotLogVolume_le_thetaHullLogVolume }
+
+def ofPermutationCorridor
+    (corridor :
+      IUTStage1ProcessionNormalizedPermutationIndeterminacyCorridor label)
+    (determinant :
+      IUTStage1ArithmeticVectorBundleDeterminantLogVolume)
+    (thetaHullLogVolume : Real)
+    (theta_eq_ind3Upper :
+      thetaHullLogVolume = corridor.ind3UpperBound)
+    (theta_eq_normalized_determinant :
+      thetaHullLogVolume = determinant.normalizedLogVolume) :
+    IUTStage1PermutationStepXToHullUpperRayLogVolume label :=
+  { corridor := corridor,
+    determinant := determinant,
+    thetaHullLogVolume := thetaHullLogVolume,
+    theta_eq_ind3Upper := theta_eq_ind3Upper,
+    theta_eq_normalized_determinant :=
+      theta_eq_normalized_determinant,
+    qPilotLogVolume := corridor.beforeIndeterminacy.averageLogVolume,
+    q_eq_beforeAverage := rfl }
+
+theorem ofPermutationCorridor_endpoint
+    (corridor :
+      IUTStage1ProcessionNormalizedPermutationIndeterminacyCorridor label)
+    (determinant :
+      IUTStage1ArithmeticVectorBundleDeterminantLogVolume)
+    (thetaHullLogVolume : Real)
+    (theta_eq_ind3Upper :
+      thetaHullLogVolume = corridor.ind3UpperBound)
+    (theta_eq_normalized_determinant :
+      thetaHullLogVolume = determinant.normalizedLogVolume) :
+    let data :=
+      ofPermutationCorridor corridor determinant thetaHullLogVolume
+        theta_eq_ind3Upper theta_eq_normalized_determinant;
+    data.qPilotLogVolume =
+        corridor.beforeIndeterminacy.averageLogVolume ∧
+      data.qPilotLogVolume <= data.thetaHullLogVolume ∧
+      data.thetaHullLogVolume = determinant.normalizedLogVolume :=
+  by
+    intro data
+    exact
+      ⟨rfl,
+        data.qPilotLogVolume_le_thetaHullLogVolume,
+        data.theta_eq_normalized_determinant⟩
+
+theorem signedCThetaComparison_endpoint
+    (data : IUTStage1PermutationStepXToHullUpperRayLogVolume label)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta *
+          (-data.corridor.beforeIndeterminacy.averageLogVolume)) :
+    let endpoint :=
+      data.toInvariantUpperRayLogVolume.toQPilotTwoComputationCThetaEndpoint
+        (by
+          simpa [toInvariantUpperRayLogVolume, data.q_eq_beforeAverage]
+            using q_pilot_positive)
+        cTheta
+        (by
+          simpa [toInvariantUpperRayLogVolume, data.q_eq_beforeAverage]
+            using thetaHull_le_cTheta_absLogQ);
+    endpoint.toSignedCThetaBound.comparison.qSigned =
+        data.corridor.beforeIndeterminacy.averageLogVolume ∧
+      endpoint.toSignedCThetaBound.comparison.thetaSigned =
+        data.thetaHullLogVolume ∧
+      endpoint.toSignedCThetaBound.comparison.qSigned <=
+        endpoint.toSignedCThetaBound.comparison.thetaSigned ∧
+      endpoint.toSignedCThetaBound.comparison.qSigned <=
+        endpoint.toSignedCThetaBound.cTheta *
+          (-endpoint.toSignedCThetaBound.comparison.qSigned) ∧
+      (-1 : Real) <= endpoint.toSignedCThetaBound.cTheta := by
+  intro endpoint
+  have hgeneric :=
+    data.toInvariantUpperRayLogVolume.signedCThetaComparison_endpoint
+      (by
+        simpa [toInvariantUpperRayLogVolume, data.q_eq_beforeAverage]
+          using q_pilot_positive)
+      cTheta
+      (by
+        simpa [toInvariantUpperRayLogVolume, data.q_eq_beforeAverage]
+          using thetaHull_le_cTheta_absLogQ)
+  simpa [endpoint, toInvariantUpperRayLogVolume, data.q_eq_beforeAverage]
+    using hgeneric
+
+theorem signedCorollary312_magnitudes
+    (data : IUTStage1PermutationStepXToHullUpperRayLogVolume label)
+    (q_pilot_positive :
+      0 < -data.corridor.beforeIndeterminacy.averageLogVolume)
+    (cTheta : Real)
+    (thetaHull_le_cTheta_absLogQ :
+      data.thetaHullLogVolume <=
+        cTheta *
+          (-data.corridor.beforeIndeterminacy.averageLogVolume)) :
+    let endpoint :=
+      data.toInvariantUpperRayLogVolume.toQPilotTwoComputationCThetaEndpoint
+        (by
+          simpa [toInvariantUpperRayLogVolume, data.q_eq_beforeAverage]
+            using q_pilot_positive)
+        cTheta
+        (by
+          simpa [toInvariantUpperRayLogVolume, data.q_eq_beforeAverage]
+            using thetaHull_le_cTheta_absLogQ);
+    endpoint.toSignedCThetaBound.comparison.qPilot.value =
+        -data.corridor.beforeIndeterminacy.averageLogVolume ∧
+      endpoint.toSignedCThetaBound.comparison.thetaPilot.value =
+        -data.thetaHullLogVolume ∧
+      Corollary312Inequality
+        endpoint.toSignedCThetaBound.comparison.thetaPilot
+        endpoint.toSignedCThetaBound.comparison.qPilot := by
+  intro endpoint
+  have hgeneric :=
+    data.toInvariantUpperRayLogVolume.signedCorollary312_magnitudes
+      (by
+        simpa [toInvariantUpperRayLogVolume, data.q_eq_beforeAverage]
+          using q_pilot_positive)
+      cTheta
+      (by
+        simpa [toInvariantUpperRayLogVolume, data.q_eq_beforeAverage]
+          using thetaHull_le_cTheta_absLogQ)
+  simpa [endpoint, toInvariantUpperRayLogVolume, data.q_eq_beforeAverage]
+    using hgeneric
+
+end IUTStage1PermutationStepXToHullUpperRayLogVolume
+
 namespace IUTStage1StepXToHullUpperRayLogVolume
 
 variable {label : Type u} [Fintype label]
