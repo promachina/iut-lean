@@ -14983,6 +14983,21 @@ theorem region_eq_of_equalityOrbit
     _ = images.region choice₂ := by
           rw [quotientImages.pullback_region_eq]
 
+theorem region_eq_of_equalityQuotientMap_eq
+    (quotientImages : EqualityQuotientPossibleImages core images)
+    {choice₁ choice₂ : choice}
+    (hmap : core.equalityQuotientMap choice₁ =
+      core.equalityQuotientMap choice₂) :
+    images.region choice₁ = images.region choice₂ := by
+  calc
+    images.region choice₁ =
+        quotientImages.quotientImages.region (core.equalityQuotientMap choice₁) := by
+          rw [quotientImages.pullback_region_eq]
+    _ = quotientImages.quotientImages.region (core.equalityQuotientMap choice₂) := by
+          rw [hmap]
+    _ = images.region choice₂ := by
+          rw [quotientImages.pullback_region_eq]
+
 theorem ind1_region_eq
     (quotientImages : EqualityQuotientPossibleImages core images)
     {choice₁ choice₂ : choice}
@@ -18229,6 +18244,47 @@ def toEqualityQuotientPossibleImages
     (source.toPossibleImageQuotientCompatibility indData)
 
 set_option linter.style.longLine false in
+theorem equalityQuotient_image_invariant
+    (source : ThetaPilotClassPossibleImageSource
+      (target := target) coric l)
+    (indData : IndeterminacyData coric l) :
+    ∀ {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).equalityQuotient.relation choice₁ choice₂ ->
+        source.choiceImages.region choice₁ =
+          source.choiceImages.region choice₂ :=
+  (source.toPossibleImageQuotientCompatibility indData)
+    |>.equalityQuotient_image_invariant
+
+set_option linter.style.longLine false in
+theorem equalityQuotient_pullback_region_eq
+    (source : ThetaPilotClassPossibleImageSource
+      (target := target) coric l)
+    (indData : IndeterminacyData coric l)
+    (choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l) :
+    (source.toEqualityQuotientPossibleImages indData).quotientImages.region
+        ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).equalityQuotientMap choice) =
+      source.choiceImages.region choice :=
+  (source.toEqualityQuotientPossibleImages indData).pullback_region_eq choice
+
+set_option linter.style.longLine false in
+theorem region_eq_of_equalityQuotientMap_eq
+    (source : ThetaPilotClassPossibleImageSource
+      (target := target) coric l)
+    (indData : IndeterminacyData coric l)
+    {choice₁ choice₂ : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (hmap :
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).equalityQuotientMap choice₁ =
+        (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).equalityQuotientMap choice₂) :
+    source.choiceImages.region choice₁ =
+      source.choiceImages.region choice₂ :=
+  (source.toEqualityQuotientPossibleImages indData)
+    |>.region_eq_of_equalityQuotientMap_eq hmap
+
+set_option linter.style.longLine false in
 /--
 Compatibility from concrete theta-pilot possible images and finite-label
 averaged procession log-volumes.
@@ -18359,6 +18415,19 @@ structure Audit
         (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
           indData)
         source.choiceImages)
+  equality_quotient_image_invariant :
+    ∀ {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          indData).equalityQuotient.relation choice₁ choice₂ ->
+        source.choiceImages.region choice₁ =
+          source.choiceImages.region choice₂
+  equality_quotient_pullback_region_eq :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.toEqualityQuotientPossibleImages indData).quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+            indData).equalityQuotientMap choice) =
+        source.choiceImages.region choice
   ind1_region_eq :
     ∀ {choice₁ choice₂ :
       IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
@@ -18395,6 +18464,12 @@ theorem audit
     choice_images_nonempty := source.choiceImageNonempty,
     equality_quotient_possible_images :=
       ⟨source.toEqualityQuotientPossibleImages indData⟩,
+    equality_quotient_image_invariant := by
+      intro choice₁ choice₂ hrel
+      exact source.equalityQuotient_image_invariant indData hrel,
+    equality_quotient_pullback_region_eq := by
+      intro choice
+      exact source.equalityQuotient_pullback_region_eq indData choice,
     ind1_region_eq := by
       intro choice₁ choice₂ hstep
       exact source.ind1_region_eq hstep,
@@ -18430,6 +18505,20 @@ structure ProcessionNormalizedAudit
         (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCoreOfProcessionNormalizedLogVolumeSource
           volumeSource)
         source.choiceImages)
+  equality_quotient_image_invariant :
+    ∀ {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCoreOfProcessionNormalizedLogVolumeSource
+          volumeSource).equalityQuotient.relation choice₁ choice₂ ->
+        source.choiceImages.region choice₁ =
+          source.choiceImages.region choice₂
+  equality_quotient_pullback_region_eq :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.toEqualityQuotientPossibleImagesOfProcessionNormalized
+          volumeSource).quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCoreOfProcessionNormalizedLogVolumeSource
+            volumeSource).equalityQuotientMap choice) =
+        source.choiceImages.region choice
   choice_images_nonempty :
     ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
       (source.choiceImages.region choice).toSet.Nonempty
@@ -18474,6 +18563,16 @@ theorem processionNormalizedAudit
     equality_quotient_possible_images :=
       ⟨source.toEqualityQuotientPossibleImagesOfProcessionNormalized
         volumeSource⟩,
+    equality_quotient_image_invariant := by
+      intro choice₁ choice₂ hrel
+      exact
+        (source.toPossibleImageQuotientCompatibilityOfProcessionNormalized
+          volumeSource).equalityQuotient_image_invariant hrel,
+    equality_quotient_pullback_region_eq := by
+      intro choice
+      exact
+        (source.toEqualityQuotientPossibleImagesOfProcessionNormalized
+          volumeSource).pullback_region_eq choice,
     choice_images_nonempty := source.choiceImageNonempty,
     choice_region_is_thetaPilot_pullback := by
       intro choice
@@ -18514,6 +18613,20 @@ structure ProcessionNormalizedUpperSemiAudit
         (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCoreOfProcessionNormalizedUpperSemiComparisonSource
           volumeSource)
         source.choiceImages)
+  equality_quotient_image_invariant :
+    ∀ {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCoreOfProcessionNormalizedUpperSemiComparisonSource
+          volumeSource).equalityQuotient.relation choice₁ choice₂ ->
+        source.choiceImages.region choice₁ =
+          source.choiceImages.region choice₂
+  equality_quotient_pullback_region_eq :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.toEqualityQuotientPossibleImagesOfProcessionNormalizedUpperSemi
+          volumeSource).quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCoreOfProcessionNormalizedUpperSemiComparisonSource
+            volumeSource).equalityQuotientMap choice) =
+        source.choiceImages.region choice
   choice_images_nonempty :
     ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
       (source.choiceImages.region choice).toSet.Nonempty
@@ -18558,6 +18671,16 @@ theorem processionNormalizedUpperSemiAudit
     equality_quotient_possible_images :=
       ⟨source.toEqualityQuotientPossibleImagesOfProcessionNormalizedUpperSemi
         volumeSource⟩,
+    equality_quotient_image_invariant := by
+      intro choice₁ choice₂ hrel
+      exact
+        (source.toPossibleImageQuotientCompatibilityOfProcessionNormalizedUpperSemi
+          volumeSource).equalityQuotient_image_invariant hrel,
+    equality_quotient_pullback_region_eq := by
+      intro choice
+      exact
+        (source.toEqualityQuotientPossibleImagesOfProcessionNormalizedUpperSemi
+          volumeSource).pullback_region_eq choice,
     choice_images_nonempty := source.choiceImageNonempty,
     choice_region_is_thetaPilot_pullback := by
       intro choice
@@ -18598,6 +18721,20 @@ structure VerticalLogKummerPacketAlignmentAudit
         (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCoreOfProcessionNormalizedVerticalLogKummerPacketAlignmentSource
           volumeSource)
         source.choiceImages)
+  equality_quotient_image_invariant :
+    ∀ {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l},
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCoreOfProcessionNormalizedVerticalLogKummerPacketAlignmentSource
+          volumeSource).equalityQuotient.relation choice₁ choice₂ ->
+        source.choiceImages.region choice₁ =
+          source.choiceImages.region choice₂
+  equality_quotient_pullback_region_eq :
+    ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
+      (source.toEqualityQuotientPossibleImagesOfVerticalLogKummerPacketAlignment
+          volumeSource).quotientImages.region
+          ((IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCoreOfProcessionNormalizedVerticalLogKummerPacketAlignmentSource
+            volumeSource).equalityQuotientMap choice) =
+        source.choiceImages.region choice
   choice_images_nonempty :
     ∀ choice : IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l,
       (source.choiceImages.region choice).toSet.Nonempty
@@ -18643,6 +18780,16 @@ theorem verticalLogKummerPacketAlignmentAudit
     equality_quotient_possible_images :=
       ⟨source.toEqualityQuotientPossibleImagesOfVerticalLogKummerPacketAlignment
         volumeSource⟩,
+    equality_quotient_image_invariant := by
+      intro choice₁ choice₂ hrel
+      exact
+        (source.toPossibleImageQuotientCompatibilityOfVerticalLogKummerPacketAlignment
+          volumeSource).equalityQuotient_image_invariant hrel,
+    equality_quotient_pullback_region_eq := by
+      intro choice
+      exact
+        (source.toEqualityQuotientPossibleImagesOfVerticalLogKummerPacketAlignment
+          volumeSource).pullback_region_eq choice,
     choice_images_nonempty := source.choiceImageNonempty,
     choice_region_is_thetaPilot_pullback := by
       intro choice
