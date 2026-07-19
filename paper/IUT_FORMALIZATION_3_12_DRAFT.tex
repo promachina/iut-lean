@@ -1970,7 +1970,14 @@ levels: the two image laws imply possible-region exactness, and a compact-open
 log-Kummer correspondence source supplies those image laws by left-totality,
 realization compatibility, and compact-open soundness.  Thus this public
 source-gap branch can be entered from correspondence data rather than an
-already packaged equality of possible regions.
+already packaged equality of possible regions.  The image-law branch now also
+has a named constructor
+\texttt{\detokenize{compactOpenRealizedExactSourceOfCompactOpenLogKummerImageSource}},
+which factors the same image-law, possible-region, log-shell, graph/map,
+correspondence, and principal-realized-exact chain into a reusable compact-open
+realized-exact source.  This prepares the scalar family-hull branches to
+consume image-law data directly instead of treating compact-open realized
+exactness as primitive.
 A formula-gap residual variant now lowers the IUT~IV input again: it takes the
 valuation-ball additive-Haar formula-gap residual source and projects the
 local-analytic residual ledger internally.
