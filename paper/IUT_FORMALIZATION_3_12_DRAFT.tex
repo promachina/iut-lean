@@ -2949,11 +2949,20 @@ general processional-estimate source internally.
 The p-adic-normalized case-defined processional-estimate endpoint fixes the
 distinguished nonarchimedean place as the normalized p-adic unit-ball
 Haar-defect place before projecting to the ordinary case-defined source.
+The same adjusted-sum branch now also has a residual-level local arithmetic-degree
+handoff: Lean consumes the local arithmetic-degree residual package directly,
+without exposing a case-bounded or processional-estimate residual source.  The
+p-adic-normalized arithmetic-gap endpoint uses this handoff to lower the
+normalized branch below the processional-estimate assumption: the p-adic source
+carries the Step~(v)/(vi)/(vii) case values and the arithmetic-minus-main
+\(+1\) gap at the normalized Haar-defect place, and Lean projects that data to
+the local arithmetic-degree residual package before entering the adjusted-sum
+comparison.
 What remains here is to derive the primitive Ob3/Ob4 localization,
 anchor, and positive tensor-power synchronizations, the q-normalized
-theta/log-volume identity, and the local arithmetic-degree residual package
-from the concrete theta-region/Hodge-calibrated possible image data and the
-full IUT~IV local estimates.
+theta/log-volume identity, and this p-adic arithmetic-gap residual package from
+the concrete theta-region/Hodge-calibrated possible image data and the full
+IUT~IV local estimates.
 The
 local-upper refinement defines the local Haar defect as the residual between
 the IUT~IV local arithmetic-upper contribution, the localized Step~(xi)
