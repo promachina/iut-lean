@@ -1582,6 +1582,12 @@ def canonicalStage1ResidualFrontier :
         "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
       role :=
         "Derived source-gap lowering for the expanded q-normalized same-index local arithmetic-degree constituent route.  The endpoint no longer exposes the raw side-condition record: it specializes the existing constituent theorem at IUTStage1SourceObligationGap.sideConditions, leaving the weighted-determinant synchronization fields, q-normalized theta/log-volume identity, Theorem 1.10 formula-gap source, and local arithmetic-degree residual source as the remaining expanded mathematical inputs." },
+    { name := "determinant-factored pointwise formula projection audit",
+      status := .derived,
+      declarationName :=
+        "PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.toPointwiseFormulaSource_projectionAudit",
+      role :=
+        "Derived audit for the pointwise determinant/Hodge calibration boundary.  It verifies that the older pointwise summand formula source is reconstructed from determinant-charted Hodge calibration together with the record-native determinant decomposition into adjusted summands, and that the reconstructed pointwise formula endpoint holds." },
     { name := "p-adic normalized case source from processional estimate",
       status := .derived,
       declarationName :=
@@ -1626,7 +1632,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 220 :=
+    canonicalStage1ResidualFrontier.length = 221 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1636,7 +1642,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 214 :=
+      (fun entry => entry.status = .derived)).length = 215 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -3303,6 +3309,10 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.toPointwiseFormulaSource
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.determinantCalibrationEndpoint
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.toPointwiseFormulaSource_projectionAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.toPointwiseFormulaSource_projectionAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallCalibrationConstructedHDDLocalizedRestrictionDataGoalCompletionAudit
 #guard_msgs (drop info) in
