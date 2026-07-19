@@ -1630,6 +1630,12 @@ def canonicalStage1ResidualFrontier :
         "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffProjectedPrincipalProductWeightedDeterminantQNormalizedFormulaGapConstituentSourceOfCaseBoundedResidualSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
       role :=
         "Derived source-gap lowering for the strongest heterogeneous projected formula-gap case-bounded endpoint.  The principal-product Step XI, projected determinant, q-normalization, Theorem 1.10 formula-gap, and case-bounded residual inputs remain public mathematical data, while q-pilot positivity and source normalization are projected from IUTStage1SourceObligationGap." },
+    { name := "case-bounded projected formula-gap constituent structured-SHE endpoint",
+      status := .derived,
+      declarationName :=
+        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffProjectedPrincipalProductWeightedDeterminantQNormalizedFormulaGapConstituentSourceOfCaseBoundedResidualSourcePrimitiveConstructorSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
+      role :=
+        "Derived structured-SHE lowering for the strongest heterogeneous projected formula-gap case-bounded endpoint.  The Stage 1 source-obligation gap is constructed from the primitive concrete packet's constructed-SHE Theorem 3.11 bundle and side conditions before the projected formula-gap case residual route enters the signed dichotomy and C_Theta >= -1 endpoint." },
     { name := "principal-product q-normalized local-analytic source from family hull",
       status := .derived,
       declarationName :=
@@ -1812,7 +1818,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 251 :=
+    canonicalStage1ResidualFrontier.length = 252 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1822,7 +1828,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 245 :=
+      (fun entry => entry.status = .derived)).length = 246 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6106,6 +6112,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffProjectedPrincipalProductWeightedDeterminantQNormalizedFormulaGapConstituentSourceOfCaseBoundedResidualSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffProjectedPrincipalProductWeightedDeterminantQNormalizedFormulaGapConstituentSourceOfCaseBoundedResidualSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffProjectedPrincipalProductWeightedDeterminantQNormalizedFormulaGapConstituentSourceOfCaseBoundedResidualSourcePrimitiveConstructorSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffProjectedPrincipalProductWeightedDeterminantQNormalizedFormulaGapConstituentSourceOfCaseBoundedResidualSourcePrimitiveConstructorSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteLocalizedLocalAnalyticResidualHaarSource.localHaarNormalizationDefect
 #guard_msgs (drop info) in
