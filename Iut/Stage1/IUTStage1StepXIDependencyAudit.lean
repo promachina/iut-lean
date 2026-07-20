@@ -1894,6 +1894,12 @@ def canonicalStage1ResidualFrontier :
         "preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelCompactOpenLogKummerCorrespondencePointwiseArithmeticFormulaCaseBoundedResidualSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
       role :=
         "Derived lowering of the strongest possible-image/correspondence route below the packaged same-index local arithmetic-degree source.  Lean constructs the symmetry-label transport, compact-open realized exact source, pointwise valuation-ball source, restriction-calibrated Ob7 handoff, and pointwise determinant-formula source, then enters the projected formula-gap/case-bounded IUT IV route which reconstructs the same-index local-degree package internally from principal-product Step XI decomposition, weighted-determinant synchronization, q-normalization, formula-gap Theorem 1.10 data, and case-bounded residuals." },
+    { name := "possible-image correspondence pointwise arithmetic/formula local-analytic case residual endpoint",
+      status := .derived,
+      declarationName :=
+        "preferredPublicConcretePacketPossibleImageWitnessCompactOpenLogKummerPointwiseFormulaLocalAnalyticCaseResidual311312GoalEvidenceAudit",
+      role :=
+        "Derived lowering of the strongest possible-image/correspondence case-bounded route below the formula-gap and residual packages.  Lean projects the formula-gap matched Theorem 1.10 source and the case-bounded residual source from the valuation-ball local-analytic arithmetic-divisor source together with the local distinguished, nondistinguished, archimedean, and +1 case inequalities before entering the existing signed Corollary 3.12 endpoint." },
     { name := "local arithmetic-degree constituent source-obligation-gap endpoint",
       status := .derived,
       declarationName :=
@@ -2040,7 +2046,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 289 :=
+    canonicalStage1ResidualFrontier.length = 290 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -2050,7 +2056,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 283 :=
+      (fun entry => entry.status = .derived)).length = 284 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6166,6 +6172,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelCompactOpenLogKummerCorrespondencePointwiseArithmeticFormulaCaseBoundedResidualSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelCompactOpenLogKummerCorrespondencePointwiseArithmeticFormulaCaseBoundedResidualSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessCompactOpenLogKummerPointwiseFormulaLocalAnalyticCaseResidual311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessCompactOpenLogKummerPointwiseFormulaLocalAnalyticCaseResidual311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
