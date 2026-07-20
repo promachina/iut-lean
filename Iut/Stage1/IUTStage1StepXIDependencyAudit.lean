@@ -171,7 +171,7 @@ def canonicalStage1RemainingAssumptions :
       consumerDeclaration :=
         "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
       note :=
-        "Symmetry-label/fiber transport data remains a source-level theorem to derive from the log-theta procession for the broad route.  The local-degree source-gap branch now has a checked lowering that constructs this packet-indexed wrapper from possible-image witness, equality-quotient, and fiber transport data." },
+        "Symmetry-label/fiber transport data remains a source-level theorem to derive from the log-theta procession for the broad route, but it is no longer primitive on the packaged compact-open correspondence local-degree source-gap branch: Lean constructs this packet-indexed wrapper from possible-image witness, equality-quotient possible images, and the symmetry-label/upper-semi/procession fiber transport laws before entering that branch.  The expanded local-degree source-gap branch has the analogous checked lowering." },
     { name := "compactOpenRealizedExactSource",
       status := .sourceObligation,
       paperSource := "IUT III, Remark 3.11.3 and Step (x) log-Kummer correspondence",
@@ -1870,6 +1870,12 @@ def canonicalStage1ResidualFrontier :
         "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenLogKummerCorrespondenceLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
       role :=
         "Derived lowering of the packaged same-index local arithmetic-degree source-gap route below compact-open realized exactness.  Lean extracts image laws from compact-open log-Kummer correspondence data, reconstructs compact-open realized exactness, and then enters the existing packaged local-degree source-gap theorem with the local-degree source typed over the constructed exactness source." },
+    { name := "possible-image witness compact-open log-Kummer correspondence packaged local-degree source-gap endpoint",
+      status := .derived,
+      declarationName :=
+        "preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelCompactOpenLogKummerCorrespondenceLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
+      role :=
+        "Derived lowering of the packaged same-index local arithmetic-degree correspondence route below the preassembled WithSymmetryLabelTransport boundary.  Lean constructs the packet-indexed symmetry/Ind2 transport source from the possible-image witness, equality-quotient possible-image family, and the symmetry-label, upper-semi, and procession fiber transport laws before reconstructing compact-open realized exactness from correspondence data and entering the packaged local-degree source-gap endpoint." },
     { name := "local arithmetic-degree constituent source-obligation-gap endpoint",
       status := .derived,
       declarationName :=
@@ -2016,7 +2022,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 285 :=
+    canonicalStage1ResidualFrontier.length = 286 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -2026,7 +2032,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 279 :=
+      (fun entry => entry.status = .derived)).length = 280 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6126,6 +6132,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenLogKummerCorrespondenceLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenLogKummerCorrespondenceLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelCompactOpenLogKummerCorrespondenceLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelCompactOpenLogKummerCorrespondenceLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
