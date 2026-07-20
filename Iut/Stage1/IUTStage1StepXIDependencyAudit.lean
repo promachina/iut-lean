@@ -1996,6 +1996,24 @@ def canonicalStage1ResidualFrontier :
         "preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelCompactOpenLogShellImageExplicitDeterminantFormulaLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
       role :=
         "Derived lowering of the possible-image local-degree source-gap route below the graph package.  The endpoint takes compact-open log-shell image containments, builds the canonical log-Kummer graph from the valuation-factor realization map, and then enters the graph-source source-gap route." },
+    { name := "pointwise local-coordinate to compact-open log-shell image constructor",
+      status := .derived,
+      declarationName :=
+        "ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallPointwiseConstructedLogShellMetricZeroValuationBallExactSource.toCompactOpenLogShellImageMetricZeroValuationBallExactSource",
+      role :=
+        "Derived local-coordinate lowering for the compact-open log-shell image boundary.  The pointwise principal source supplies local representatives of transported theta-region points and the converse valuation-ball realization law; Lean constructs log-shell exactness and then applies compact-open Haar normalization to recover the compact-open log-shell image source." },
+    { name := "pointwise local-coordinate compact-open image endpoint",
+      status := .derived,
+      declarationName :=
+        "ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallPointwiseConstructedLogShellMetricZeroValuationBallExactSource.compactOpenLogShellImageEndpoint",
+      role :=
+        "Endpoint audit for the pointwise-to-compact-open projection.  It records the reconstructed thetaRegion = realized(logShell) equality, logShell = valuationBall equality, the two compact-open image containments, and selected-principal-hull union equality from pointwise local Kummer coordinate data." },
+    { name := "pointwise local-coordinate compact-open graph endpoint",
+      status := .derived,
+      declarationName :=
+        "ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallPointwiseConstructedLogShellMetricZeroValuationBallExactSource.compactOpenLogKummerGraphEndpoint",
+      role :=
+        "Endpoint audit showing that the same pointwise local-coordinate source also reconstructs the compact-open log-Kummer graph layer: graph left-totality and compact-open soundness are derived after passing through the compact-open log-shell image source." },
     { name := "compact-open possible-region exact local-degree source-gap endpoint",
       status := .derived,
       declarationName :=
@@ -2106,7 +2124,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 300 :=
+    canonicalStage1ResidualFrontier.length = 303 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -2116,7 +2134,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 294 :=
+      (fun entry => entry.status = .derived)).length = 297 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -8838,6 +8856,18 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenRealizedExactSource.endpoint_with_sourceSpineRepresentativeLogVolume
 #guard_msgs (drop info) in
 #print axioms IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenRealizedExactSource.endpoint_with_sourceSpineRepresentativeLogVolume
+#guard_msgs (drop info) in
+#check IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallPointwiseConstructedLogShellMetricZeroValuationBallExactSource.toCompactOpenLogShellImageMetricZeroValuationBallExactSource
+#guard_msgs (drop info) in
+#print axioms IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallPointwiseConstructedLogShellMetricZeroValuationBallExactSource.toCompactOpenLogShellImageMetricZeroValuationBallExactSource
+#guard_msgs (drop info) in
+#check IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallPointwiseConstructedLogShellMetricZeroValuationBallExactSource.compactOpenLogShellImageEndpoint
+#guard_msgs (drop info) in
+#print axioms IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallPointwiseConstructedLogShellMetricZeroValuationBallExactSource.compactOpenLogShellImageEndpoint
+#guard_msgs (drop info) in
+#check IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallPointwiseConstructedLogShellMetricZeroValuationBallExactSource.compactOpenLogKummerGraphEndpoint
+#guard_msgs (drop info) in
+#print axioms IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallPointwiseConstructedLogShellMetricZeroValuationBallExactSource.compactOpenLogKummerGraphEndpoint
 #guard_msgs (drop info) in
 #check IUTStage1LabelAveragedProcessionLogVolume.reindex
 #guard_msgs (drop info) in
