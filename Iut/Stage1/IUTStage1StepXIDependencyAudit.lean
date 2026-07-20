@@ -1810,6 +1810,12 @@ def canonicalStage1ResidualFrontier :
         "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenLogKummerImageLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantFamilyHullThetaSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
       role :=
         "Derived lowering of the source-with-symmetry family-hull theta source-gap route below compact-open realized exactness.  The endpoint consumes compact-open log-Kummer image laws, derives compact-open realized exactness by compactOpenRealizedExactSourceOfCompactOpenLogKummerImageSource, and then enters the adjusted-determinant family-hull theta/log-volume source-gap comparison." },
+    { name := "compact-open log-Kummer image record-family q-scale source-gap endpoint",
+      status := .derived,
+      declarationName :=
+        "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenLogKummerImageLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantRecordFamilyHullQScaleSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
+      role :=
+        "Derived lowering of the source-with-symmetry record-family q-scale source-gap route below compact-open realized exactness.  Lean constructs compact-open realized exactness from compact-open log-Kummer image laws, then enters the record-family-hull q-scale comparison, keeping the determinant/Hodge calibration and q-scale compatibility as the active mathematical scalar inputs." },
     { name := "possible-image witness family-hull theta source-gap endpoint",
       status := .derived,
       declarationName :=
@@ -1974,7 +1980,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 278 :=
+    canonicalStage1ResidualFrontier.length = 279 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1984,7 +1990,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 272 :=
+      (fun entry => entry.status = .derived)).length = 273 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -2900,6 +2906,10 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenLogKummerImageLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantFamilyHullThetaSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenLogKummerImageLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantFamilyHullThetaSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenLogKummerImageLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantRecordFamilyHullQScaleSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenLogKummerImageLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantRecordFamilyHullQScaleSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductAdjustedDeterminantRecordFamilyHullQScaleSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
