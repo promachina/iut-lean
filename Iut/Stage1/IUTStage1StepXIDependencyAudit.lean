@@ -2080,6 +2080,24 @@ def canonicalStage1ResidualFrontier :
         "compactOpenRealizedExactSourceOfCompactOpenLogKummerImageSource",
       role :=
         "Derived reusable Step (x)/Theorem 3.11 constructor from compact-open log-Kummer image laws to compact-open realized exactness.  It factors the image-law -> possible-region exactness -> log-shell image -> graph/map/correspondence -> principal realized-exact chain, so later scalar source-gap routes can consume image-law data instead of a preassembled compactOpenRealizedExactSource." },
+    { name := "compact-open pointwise realized-exact constructor",
+      status := .derived,
+      declarationName :=
+        "compactOpenRealizedExactSourceOfPrincipalPointwiseLogKummerSource",
+      role :=
+        "Derived reusable Step (x)/Theorem 3.11 constructor from pointwise local log-Kummer coordinates to compact-open realized exactness.  The pointwise valuation-ball/log-shell source supplies exactness and compact-open Haar normalization directly, so later routes do not have to pass through a separately exposed compact-open image-law boundary to obtain realized exactness." },
+    { name := "compact-open pointwise map constructor",
+      status := .derived,
+      declarationName :=
+        "compactOpenLogKummerMapSourceOfPrincipalPointwiseLogKummerSource",
+      role :=
+        "Derived reusable Step (x)/Theorem 3.11 constructor from pointwise local log-Kummer coordinates to the compact-open local Kummer map source.  The local realization map, compact-open section law, and soundness package are recovered from the same pointwise source used for realized exactness." },
+    { name := "compact-open pointwise realized/map constructor audit",
+      status := .derived,
+      declarationName :=
+        "compactOpenRealizedAndMapSourceOfPrincipalPointwiseLogKummerSourceAudit",
+      role :=
+        "Projection audit for the pointwise compact-open constructors.  It records that the constructed realized-exact and map sources preserve the same principal valuation-ball source, theta labels, cover places, and selected-principal-hull equality carried by the pointwise source." },
     { name := "compact-open log-Kummer correspondence realized-exact constructor",
       status := .derived,
       declarationName :=
@@ -2208,7 +2226,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 317 :=
+    canonicalStage1ResidualFrontier.length = 320 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -2218,7 +2236,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 311 :=
+      (fun entry => entry.status = .derived)).length = 314 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6460,6 +6478,18 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.compactOpenRealizedExactSourceOfCompactOpenLogKummerImageSource
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.compactOpenRealizedExactSourceOfCompactOpenLogKummerImageSource
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.compactOpenRealizedExactSourceOfPrincipalPointwiseLogKummerSource
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.compactOpenRealizedExactSourceOfPrincipalPointwiseLogKummerSource
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.compactOpenLogKummerMapSourceOfPrincipalPointwiseLogKummerSource
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.compactOpenLogKummerMapSourceOfPrincipalPointwiseLogKummerSource
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.compactOpenRealizedAndMapSourceOfPrincipalPointwiseLogKummerSourceAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.compactOpenRealizedAndMapSourceOfPrincipalPointwiseLogKummerSourceAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.compactOpenRealizedExactSourceOfCompactOpenLogKummerCorrespondenceSource
 #guard_msgs (drop info) in

@@ -149,7 +149,7 @@ Ob3/Ob4 determinant equality, and Lean reconstructs the localized
 determinant/scale synchronization, arithmetic-divisor endpoint, and Haar
 lower bound before any compact-open route consumes the bundle.  The
 residual-frontier manifest now has
-317 checked entries: 311 derived entries and 6 constructed countermodel
+320 checked entries: 314 derived entries and 6 constructed countermodel
 diagnostics.  The newest determinant-facing audit checks that the pointwise
 summand formula is reconstructed from determinant/Hodge calibration and the
 record-native determinant decomposition into adjusted summands.  The
@@ -160,10 +160,11 @@ pass through the compact-open log-Kummer correspondence as an exposed
 consequence boundary.  The pointwise log-Kummer projection is also audited
 structurally: the compact-open map, correspondence, image, possible-region, and
 reconstructed pointwise sources preserve the same principal valuation-ball
-source, theta labels, and cover places.  The compact-open realized-exact source
-itself is now constructed directly from pointwise log-Kummer coordinates via
-the log-shell exact source and compact-open Haar normalization, with an endpoint
-audit for the realized theta-region equality and selected principal hull.  The
+source, theta labels, and cover places.  The compact-open realized-exact and
+map sources are now constructed directly from pointwise log-Kummer coordinates
+via the log-shell exact source and compact-open Haar normalization, with an
+audit for the realized theta-region equality, selected principal hull, and
+shared source labels.  The
 Step~(xi)-to-case-procession equality is now also factored as a reusable
 arithmetic-degree bridge: if both sides equal \(a_v(D_v+C_v)\), Lean derives
 the direct local comparison.  The selected p-adic handoff is now lowered once
@@ -556,6 +557,29 @@ additive-Haar arithmetic-degree endpoints, and compiled public diagnostics. \\
 The names in this table are intentionally coarse.  A paper should not reproduce
 thousands of declaration names.  The detailed declaration surface is maintained
 in the blueprint's generated declaration index.
+
+\subsection{Review-handoff strategy}
+
+The current development is organized around one canonical corridor, not around
+proliferating endpoint variants.  The review boundary is the typed
+remaining-assumptions manifest: every public input is classified as constructed,
+derived, interface-only, or still a source obligation, and new public wrappers
+are treated as progress only when they lower or remove a manifest item.  This
+strategy incorporates the main external review feedback on the project: keep
+the trust boundary explicit, keep CI and declaration checks as the truth signal,
+split large modules only when it makes the canonical route easier to audit, and
+pair each serious lowering with a weakened-hypothesis diagnostic when the
+omitted law is mathematically essential.
+
+For the present review handoff, the strongest residual frontier is a
+zero-source-obligation submanifest with 320 checked entries: 314 derived entries
+and 6 constructed countermodel diagnostics.  The newest source slice lowers the
+compact-open realized-exact and compact-open map sources to pointwise
+log-Kummer/valuation-ball coordinates, with projection audits showing that the
+principal valuation-ball source, theta labels, cover places, and selected
+principal hull are preserved.  This is genuine source-facing mathematical
+lowering inside the Step~(x)-to-Step~(xi) route, but it is not yet a complete
+formal proof of \IUT{} III Corollary 3.12 from paper-level initial theta data.
 
 \subsection{Records as boundaries}
 
@@ -1327,7 +1351,7 @@ records the Record-Ob3/Ob5 component and valuation-ball
 localization-anchor-tensor constructors and the constructor-built
 valuation-ball determinant-source lowering, together with the possible-image
 named-HDD and family-hull q-normalized synchronized route-input lowerings, so
-it is now a 317-entry,
+it is now a 320-entry,
 zero-source-obligation sub-manifest of the preferred
 route.  The same frontier now records the finite-extension
 inverse-base-prime valuation-ball construction: Lean proves \(p^{-1}O_K\) is
@@ -4397,6 +4421,20 @@ generated declaration index are the correct place for detailed navigation.
 
 The next milestones should eliminate source-obligation families rather than
 adding more endpoint wrappers.
+
+\paragraph{Review-handoff continuation.}
+The next broad goal is to replace the remaining high-level Theorem 3.11 and
+IUT IV source interfaces by paper-level constructions.  The intended order is:
+first construct the initial-theta/Hodge-theater object that currently feeds the
+primitive source packet; next derive the multiradial \(\IndOne/\IndTwo/\IndThree\)
+and log-Kummer compatibility layer from that object; then lower the
+Remark~3.9.5 hull, determinant, and Ob3/Ob4/Ob5 synchronization fields to
+source data; after that derive the \(\IPL/\SHE/\APT\) common-container
+comparison rather than carrying it as bridge data; finally formalize the IUT IV
+local estimate package that supplies the signed \(C_\Theta\) upper bound.  A
+reviewable completion of the 3.11--3.12 corridor should expose an endpoint whose
+inputs are paper-level Hodge-theater/log-theta/lattice data and whose remaining
+assumptions are exactly those outside the stated IUT III/IUT IV source scope.
 
 \paragraph{Milestone A: Step (xi) hull/determinant construction.}
 Continue lowering the remaining pointwise Hodge-calibration and local
