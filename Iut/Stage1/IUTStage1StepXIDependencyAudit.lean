@@ -898,6 +898,12 @@ def canonicalStage1ResidualFrontier :
         "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.preferredPublicPossibleImageCompactOpenLogKummerCorrespondenceInverseBasePrimeRoute",
       role :=
         "Derived possible-image lift of the compact-open inverse-base-prime route.  Lean constructs the symmetry-labelled packet from the Theorem 3.11 possible-image witness and equality-quotient images, derives compact-open realized exactness from the log-Kummer correspondence, projects the compact-open log-Kummer map, and only then consumes the residue-module inverse-base-prime valuation-cover/additive-Haar norm-square data and synchronized Record-Ob3/Ob5 route input." },
+    { name := "possible-image correspondence product-handoff formula-realized route",
+      status := .derived,
+      declarationName :=
+        "Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.preferredPublicPossibleImageCompactOpenLogKummerCorrespondenceProductHandoffFormulaRealizedRoute",
+      role :=
+        "Derived possible-image lift of the compact-open product-handoff formula-realized route.  Lean constructs the symmetry-labelled packet from the Theorem 3.11 possible-image witness and equality-quotient images, derives compact-open realized exactness from the log-Kummer correspondence, projects the compact-open log-Kummer map, and only then consumes the product-level Theorem 1.10 Ob7 handoff, pointwise formula source, and synchronized Record-Ob3/Ob5 route input." },
     { name := "p-adic-defect/main compact-open synchronized route-input constructor",
       status := .derived,
       declarationName :=
@@ -2064,7 +2070,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 293 :=
+    canonicalStage1ResidualFrontier.length = 294 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -2074,7 +2080,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 287 :=
+      (fun entry => entry.status = .derived)).length = 288 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -8742,6 +8748,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.preferredPublicPossibleImageCompactOpenLogKummerCorrespondenceInverseBasePrimeRoute
 #guard_msgs (drop info) in
 #print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.preferredPublicPossibleImageCompactOpenLogKummerCorrespondenceInverseBasePrimeRoute
+#guard_msgs (drop info) in
+#check Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.preferredPublicPossibleImageCompactOpenLogKummerCorrespondenceProductHandoffFormulaRealizedRoute
+#guard_msgs (drop info) in
+#print axioms Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.preferredPublicPossibleImageCompactOpenLogKummerCorrespondenceProductHandoffFormulaRealizedRoute
 #guard_msgs (drop info) in
 #check IUTStage1Remark395Ob3Ob4PadicFiniteExtensionUnitBallCompactOpenNormSquareLocalizedVectorBundleDeterminantSource.toAdjustedDeterminantSource_eq_of_pointwise_normedValuedIntegerResidueSubmoduleQuotientCosetHaarCharacterFactor_componentwise_structureSheaf_weight_anchor_tensorPower
 #guard_msgs (drop info) in

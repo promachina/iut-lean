@@ -38979,6 +38979,315 @@ noncomputable def RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.pr
 
 set_option linter.style.longLine false in
 /--
+Possible-image/correspondence lift of the compact-open product-handoff
+route.
+
+This is the product-handoff sibling of
+`preferredPublicPossibleImageCompactOpenLogKummerCorrespondenceInverseBasePrimeRoute`.
+The symmetry-labelled Theorem~3.11 packet and compact-open log-Kummer map are
+constructed from possible-image witness data and the compact-open
+correspondence before the synchronized Record-Ob3/Ob5 route consumes the
+product-level Theorem~1.10 local arithmetic source.
+-/
+noncomputable def RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData.preferredPublicPossibleImageCompactOpenLogKummerCorrespondenceProductHandoffFormulaRealizedRoute
+    {sourceCopy constructorTargetCopy : Copy}
+    {coricConcrete : Type u} {lConcrete : PrimeGeFive}
+    {packageConcrete :
+      IUTStage1SourcePackage sourceCopy constructorTargetCopy
+        (IUTStage1ConcreteHodgeTheaterLogThetaChoice coricConcrete lConcrete)}
+    (packet :
+      IUTStage1ConcreteTheorem311PrimitiveSourcePacket packageConcrete)
+    (witnessSource :
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotPossibleImageWitnessSource
+        packet.primitiveConstructor.record)
+    (quotientImages :
+      (IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+          packet.verticalLogKummerSource.toProcessionNormalizedLogVolumeSource.toIndeterminacyData).EqualityQuotientPossibleImages
+        packet.primitiveConstructor.record.thetaPossibleImages.images)
+    (fiberTransport_symmetryLabelInd2ActionPacketTransport :
+      ∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coricConcrete lConcrete},
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := lConcrete) choice₁ choice₂ ->
+          IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.IUTStage1SymmetryLabelInd2ActionPacketTransport
+            coricConcrete
+            (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+              (l := lConcrete) choice₁ choice₂).local_tensor_state
+            choice₂.local_tensor_state)
+    (fiberTransport_upperSemiTransport :
+      ∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coricConcrete lConcrete},
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := lConcrete) choice₁ choice₂ ->
+          IUTStage1UpperSemiCompatibilityState.UpperSemiTransport
+            (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+              (l := lConcrete) choice₁ choice₂).upper_semi_state
+            choice₂.upper_semi_state)
+    (fiberTransport_processionTransport :
+      ∀ {choice₁ choice₂ :
+          IUTStage1ConcreteHodgeTheaterLogThetaChoice coricConcrete lConcrete},
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberTransport
+          (l := lConcrete) choice₁ choice₂ ->
+          IUTStage1ProcessionState.ProcessionTransport
+            (IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaThetaPilotFiberProcessionTensorSource.processionShiftedChoice
+              (l := lConcrete) choice₁ choice₂).procession_state
+            choice₂.procession_state)
+    {βStepXI : Type (max u a w z)} [Fintype βStepXI]
+    {γStepXI : Type w} [Fintype γStepXI]
+    {ηConcrete : Type w} {KConcrete : Type z}
+    {ΛStepXI : Type max u a z w}
+    [PseudoMetricSpace KConcrete] [MeasurableSpace KConcrete]
+    [AddGroup KConcrete] [T2Space KConcrete]
+    (compactOpenLogKummerCorrespondenceSource :
+      let sourceWithSymmetry :=
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.WithSymmetryLabelTransport.ofPossibleImageWitnessSource
+          (packet := packet) witnessSource quotientImages
+          fiberTransport_symmetryLabelInd2ActionPacketTransport
+          fiberTransport_upperSemiTransport
+          fiberTransport_processionTransport;
+      IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallCompactOpenLogKummerCorrespondencePossibleRegionSource.{u, max u a w z, w, z, w}
+        sourceWithSymmetry.fiberInd2ActionPacketTransportSource
+        packet.gluingTorsor packet.selectedQChoice
+        (η := ηConcrete) (K := KConcrete)
+        (β := βStepXI) (γ := γStepXI) (Λ := ΛStepXI))
+    {Λv : Type (max u a z w)}
+    {F : Type z} [Field F] {X C : HyperbolicOrbicurveModel F}
+    (hodgeEvaluation :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaEvaluationSource
+        lConcrete X C)
+    {p : Nat} [Fact p.Prime]
+    {K : Type w} {βHaar : Type (max u a z w)} {γHaar : Type w}
+    {κ : βHaar -> γHaar -> Type (max u a z w)}
+    [NontriviallyNormedField K] [ProperSpace K] [IsUltrametricDist K]
+    [MeasurableSpace K] [BorelSpace K] [LocallyCompactSpace K]
+    [IsTopologicalAddGroup K]
+    [NormedAlgebra ℚ_[p] K] [FiniteDimensional ℚ_[p] K]
+    [T2Space K] [Fintype βHaar] [Fintype γHaar]
+    [∀ index : βHaar, ∀ place : γHaar, Field (κ index place)]
+    [∀ index : βHaar, ∀ place : γHaar, Fintype (κ index place)]
+    {V : Type (max u a z w)} {μ : Type w} [Fintype V]
+    (localArithmeticSource :
+      let sourceWithSymmetry :=
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.WithSymmetryLabelTransport.ofPossibleImageWitnessSource
+          (packet := packet) witnessSource quotientImages
+          fiberTransport_symmetryLabelInd2ActionPacketTransport
+          fiberTransport_upperSemiTransport
+          fiberTransport_processionTransport;
+      let compactOpenRealizedExactSource :=
+        compactOpenRealizedExactSourceOfCompactOpenLogKummerCorrespondenceSource.{u, w, w, z, a}
+          (βStepXI := βStepXI) (γStepXI := γStepXI)
+          (ηConcrete := ηConcrete) (KConcrete := KConcrete)
+          (ΛStepXI := ΛStepXI)
+          packet sourceWithSymmetry compactOpenLogKummerCorrespondenceSource;
+      let compactOpenLogKummerMapSource :=
+        compactOpenRealizedExactSource.toCompactOpenLogKummerMapPossibleRegionSource;
+      let principalPointwiseSource :=
+        compactOpenLogKummerMapSource.toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource;
+      let thetaRegionSource :=
+        concretePacketThetaRegionSourceOfPrincipalPointwiseValuationBall
+          packet sourceWithSymmetry principalPointwiseSource;
+      PrincipalProductPadicFiniteExtensionRestrictionCalibratedNormSquareOb7HandoffSource
+        (Λv := Λv) (p := p) (K := K)
+        (β := βHaar) (γ := γHaar) (κ := κ)
+        packet.primitiveConstructor.sourceDataWithTargetRegions
+        thetaRegionSource.principalHullSource hodgeEvaluation V μ)
+    {lStepXI : PrimeGeFive} {FStepXI : Type z} [Field FStepXI]
+    {XStepXI CStepXI : HyperbolicOrbicurveModel FStepXI}
+    {sourceHA :
+      IUTStage1ZModSquareWeightProfile.IUTStage1HodgeArakelovThetaValueEvaluationSource
+        lStepXI XStepXI CStepXI}
+    (operation : RealLineCopy.AlgorithmicOutput.HullDetOperationId)
+    (hullOperation : RealLineCopy.AlgorithmicOutput.HullOperationId)
+    (determinantOperation :
+      RealLineCopy.AlgorithmicOutput.DeterminantLogVolumeOperationId)
+    (pointwiseFormulaSource :
+      let sourceWithSymmetry :=
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.WithSymmetryLabelTransport.ofPossibleImageWitnessSource
+          (packet := packet) witnessSource quotientImages
+          fiberTransport_symmetryLabelInd2ActionPacketTransport
+          fiberTransport_upperSemiTransport
+          fiberTransport_processionTransport;
+      let compactOpenRealizedExactSource :=
+        compactOpenRealizedExactSourceOfCompactOpenLogKummerCorrespondenceSource.{u, w, w, z, a}
+          (βStepXI := βStepXI) (γStepXI := γStepXI)
+          (ηConcrete := ηConcrete) (KConcrete := KConcrete)
+          (ΛStepXI := ΛStepXI)
+          packet sourceWithSymmetry compactOpenLogKummerCorrespondenceSource;
+      let compactOpenLogKummerMapSource :=
+        compactOpenRealizedExactSource.toCompactOpenLogKummerMapPossibleRegionSource;
+      let principalPointwiseSource :=
+        compactOpenLogKummerMapSource.toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource;
+      PrincipalPointwiseValuationBallMeasureSummandFormulaSource
+        packet sourceWithSymmetry principalPointwiseSource sourceHA)
+    (sideConditions : IUTStage1SourceSideConditions packageConcrete)
+    {estimate : IUTStage1IUTIVThetaPilotLogVolumeEstimateShadow}
+    {ηStep : Type w} {γLocal : Type w} [Fintype γLocal]
+    {recordAdjustedSource :
+      let sourceWithSymmetry :=
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.WithSymmetryLabelTransport.ofPossibleImageWitnessSource
+          (packet := packet) witnessSource quotientImages
+          fiberTransport_symmetryLabelInd2ActionPacketTransport
+          fiberTransport_upperSemiTransport
+          fiberTransport_processionTransport;
+      let compactOpenRealizedExactSource :=
+        compactOpenRealizedExactSourceOfCompactOpenLogKummerCorrespondenceSource.{u, w, w, z, a}
+          (βStepXI := βStepXI) (γStepXI := γStepXI)
+          (ηConcrete := ηConcrete) (KConcrete := KConcrete)
+          (ΛStepXI := ΛStepXI)
+          packet sourceWithSymmetry compactOpenLogKummerCorrespondenceSource;
+      let compactOpenLogKummerMapSource :=
+        compactOpenRealizedExactSource.toCompactOpenLogKummerMapPossibleRegionSource;
+      let principalPointwiseSource :=
+        compactOpenLogKummerMapSource.toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource;
+      IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource
+        (β := βStepXI) (γ := γLocal)
+        (let calibrationSource :=
+            pointwiseFormulaSource.toPointwiseCalibrationSource.toThetaRegionCalibrationSource;
+          let thetaRegionSource :=
+            concretePacketThetaRegionSourceOfPrincipalPointwiseValuationBall
+              packet sourceWithSymmetry principalPointwiseSource;
+          let thetaRegionPrincipalSource := thetaRegionSource.thetaRegionPrincipalSource;
+          let measureCalibration := calibrationSource.toMeasureCalibration;
+          let summandChartedCalibration :=
+            calibrationSource.toSummandChartedCalibration;
+          let principalHDDSource :
+            IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.PrincipalProductHullConstructedOb3Ob5AdjustedLogVolumeMeasureHodgeGapCanonicalHDDDirectCommonContainerSource
+              (β := βStepXI) (γ := γStepXI)
+              packet.primitiveConstructor.record sourceHA ΛStepXI :=
+            primitiveThetaRegionCurrentProductHullPrincipalHDDSource
+              (βStepXI := βStepXI) (γStepXI := γStepXI)
+              (sourceHA := sourceHA)
+              packet.primitiveConstructor operation hullOperation determinantOperation
+              thetaRegionPrincipalSource packet.selectedQChoice
+              measureCalibration sideConditions summandChartedCalibration;
+          principalHDDSource.toDirectCommonContainerSource.canonicalHDDRecord)}
+    {sourceData :
+      let sourceWithSymmetry :=
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.WithSymmetryLabelTransport.ofPossibleImageWitnessSource
+          (packet := packet) witnessSource quotientImages
+          fiberTransport_symmetryLabelInd2ActionPacketTransport
+          fiberTransport_upperSemiTransport
+          fiberTransport_processionTransport;
+      let compactOpenRealizedExactSource :=
+        compactOpenRealizedExactSourceOfCompactOpenLogKummerCorrespondenceSource.{u, w, w, z, a}
+          (βStepXI := βStepXI) (γStepXI := γStepXI)
+          (ηConcrete := ηConcrete) (KConcrete := KConcrete)
+          (ΛStepXI := ΛStepXI)
+          packet sourceWithSymmetry compactOpenLogKummerCorrespondenceSource;
+      let compactOpenLogKummerMapSource :=
+        compactOpenRealizedExactSource.toCompactOpenLogKummerMapPossibleRegionSource;
+      let principalPointwiseSource :=
+        compactOpenLogKummerMapSource.toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource;
+      IUTStage1SourcePackage.IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource
+        (β := βStepXI)
+        (let calibrationSource :=
+            pointwiseFormulaSource.toPointwiseCalibrationSource.toThetaRegionCalibrationSource;
+          let thetaRegionSource :=
+            concretePacketThetaRegionSourceOfPrincipalPointwiseValuationBall
+              packet sourceWithSymmetry principalPointwiseSource;
+          let thetaRegionPrincipalSource := thetaRegionSource.thetaRegionPrincipalSource;
+          let measureCalibration := calibrationSource.toMeasureCalibration;
+          let summandChartedCalibration :=
+            calibrationSource.toSummandChartedCalibration;
+          let principalHDDSource :
+            IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.PrincipalProductHullConstructedOb3Ob5AdjustedLogVolumeMeasureHodgeGapCanonicalHDDDirectCommonContainerSource
+              (β := βStepXI) (γ := γStepXI)
+              packet.primitiveConstructor.record sourceHA ΛStepXI :=
+            primitiveThetaRegionCurrentProductHullPrincipalHDDSource
+              (βStepXI := βStepXI) (γStepXI := γStepXI)
+              (sourceHA := sourceHA)
+              packet.primitiveConstructor operation hullOperation determinantOperation
+              thetaRegionPrincipalSource packet.selectedQChoice
+              measureCalibration sideConditions summandChartedCalibration;
+          principalHDDSource.toDirectCommonContainerSource.canonicalHDDRecord)}
+    {localPrime : βStepXI -> Nat}
+    [∀ place : βStepXI, Fact (Nat.Prime (localPrime place))]
+    {localField : βStepXI -> Type x}
+    [(place : βStepXI) -> NontriviallyNormedField (localField place)]
+    [∀ place : βStepXI, ProperSpace (localField place)]
+    [∀ place : βStepXI, IsUltrametricDist (localField place)]
+    [(place : βStepXI) -> MeasurableSpace (localField place)]
+    [∀ place : βStepXI, BorelSpace (localField place)]
+    [∀ place : βStepXI, LocallyCompactSpace (localField place)]
+    [∀ place : βStepXI, IsTopologicalAddGroup (localField place)]
+    [∀ place : βStepXI, T2Space (localField place)]
+    [(place : βStepXI) -> Algebra ℚ_[localPrime place] (localField place)]
+    [∀ place : βStepXI,
+      FiniteDimensional ℚ_[localPrime place] (localField place)]
+    {αHaar : Type z}
+    {hullSystem : IUTStage1Remark395HolomorphicHullSystem αHaar}
+    {αLocal : Type z} {ηLocal : Type w}
+    {localAnalyticHullSystem :
+      IUTStage1Remark395HolomorphicHullSystem αLocal}
+    {archIndex archSummand : βStepXI -> Type z}
+    [∀ place : βStepXI, Fintype (archIndex place)]
+    [∀ place : βStepXI, Fintype (archSummand place)]
+    (routeInput :
+      let sourceWithSymmetry :=
+        IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.WithSymmetryLabelTransport.ofPossibleImageWitnessSource
+          (packet := packet) witnessSource quotientImages
+          fiberTransport_symmetryLabelInd2ActionPacketTransport
+          fiberTransport_upperSemiTransport
+          fiberTransport_processionTransport;
+      let compactOpenRealizedExactSource :=
+        compactOpenRealizedExactSourceOfCompactOpenLogKummerCorrespondenceSource.{u, w, w, z, a}
+          (βStepXI := βStepXI) (γStepXI := γStepXI)
+          (ηConcrete := ηConcrete) (KConcrete := KConcrete)
+          (ΛStepXI := ΛStepXI)
+          packet sourceWithSymmetry compactOpenLogKummerCorrespondenceSource;
+      let compactOpenLogKummerMapSource :=
+        compactOpenRealizedExactSource.toCompactOpenLogKummerMapPossibleRegionSource;
+      let principalPointwiseSource :=
+        compactOpenLogKummerMapSource.toPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactSource;
+      RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData
+        (recordAdjustedSource := recordAdjustedSource)
+        (sourceData := sourceData) (estimate := estimate) (l := lStepXI)
+        (η := ηStep) (localPrime := localPrime) (localField := localField)
+        (αHaar := αHaar) (hullSystem := hullSystem)
+        (αLocal := αLocal) (ηLocal := ηLocal)
+        (localAnalyticHullSystem := localAnalyticHullSystem)
+        (archIndex := archIndex) (archSummand := archSummand)
+        (let calibrationSource :=
+            pointwiseFormulaSource.toPointwiseCalibrationSource.toThetaRegionCalibrationSource;
+          let thetaRegionSource :=
+            concretePacketThetaRegionSourceOfPrincipalPointwiseValuationBall
+              packet sourceWithSymmetry principalPointwiseSource;
+          let thetaRegionPrincipalSource := thetaRegionSource.thetaRegionPrincipalSource;
+          let measureCalibration := calibrationSource.toMeasureCalibration;
+          let summandChartedCalibration :=
+            calibrationSource.toSummandChartedCalibration;
+          let principalHDDSource :
+            IUTStage1SourcePackage.IUTStage1PossibleImageConstructorBuiltHolomorphicHullDeterminantSource.PrincipalProductHullConstructedOb3Ob5AdjustedLogVolumeMeasureHodgeGapCanonicalHDDDirectCommonContainerSource
+              (β := βStepXI) (γ := γStepXI)
+              packet.primitiveConstructor.record sourceHA ΛStepXI :=
+            primitiveThetaRegionCurrentProductHullPrincipalHDDSource
+              (βStepXI := βStepXI) (γStepXI := γStepXI)
+              (sourceHA := sourceHA)
+              packet.primitiveConstructor operation hullOperation determinantOperation
+              thetaRegionPrincipalSource packet.selectedQChoice
+              measureCalibration sideConditions summandChartedCalibration;
+          principalHDDSource.toDirectCommonContainerSource.toCanonicalHDDConstructorBuiltSource)) :=
+  let sourceWithSymmetry :=
+    IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.WithSymmetryLabelTransport.ofPossibleImageWitnessSource
+      (packet := packet) witnessSource quotientImages
+      fiberTransport_symmetryLabelInd2ActionPacketTransport
+      fiberTransport_upperSemiTransport
+      fiberTransport_processionTransport;
+  let compactOpenRealizedExactSource :=
+    compactOpenRealizedExactSourceOfCompactOpenLogKummerCorrespondenceSource.{u, w, w, z, a}
+      (βStepXI := βStepXI) (γStepXI := γStepXI)
+      (ηConcrete := ηConcrete) (KConcrete := KConcrete)
+      (ΛStepXI := ΛStepXI)
+      packet sourceWithSymmetry compactOpenLogKummerCorrespondenceSource;
+  let compactOpenLogKummerMapSource :=
+    compactOpenRealizedExactSource.toCompactOpenLogKummerMapPossibleRegionSource;
+  routeInput.preferredPublicCompactOpenLogKummerMapProductHandoffFormulaRealizedRoute
+    packet sourceWithSymmetry compactOpenLogKummerMapSource hodgeEvaluation
+    localArithmeticSource operation hullOperation determinantOperation
+    pointwiseFormulaSource sideConditions
+
+set_option linter.style.longLine false in
+/--
 Audit for the compact-open route-input endpoint.
 
 This records the actual construction performed by
