@@ -736,6 +736,18 @@ def canonicalStage1ResidualFrontier :
         "ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.endpoint_ofLocalizationAnchorTensorPowerEqLocalArithmeticDegreeLowerWeightResidualSource",
       role :=
         "Endpoint theorem for the combined primitive Ob3/Ob4 and lower-weight residual constructor.  It verifies that the constructed source satisfies adjusted-determinant synchronization, weighted determinant synchronization, the signed IUT IV local upper bound, and the Corollary 3.12 lower-bound companion after both local boundary reductions are performed internally." },
+    { name := "same-gamma primitive Ob3/Ob4 projected-weighted lower-weight constructor",
+      status := .derived,
+      declarationName :=
+        "ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.toProjectedWeightedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSourceOfLocalizationAnchorTensorPowerEqLocalArithmeticDegreeLowerWeightResidualSource",
+      role :=
+        "Derived same-gamma projection from primitive Remark 3.9.5 Ob3/Ob4 synchronization and lower-weight local residual data to the projected-weighted q-normalized local-analytic source.  Lean first constructs the full adjusted-determinant source, then projects the weighted summand, anchor, and positive tensor-power equalities internally, so this same-gamma branch no longer exposes the projected weighted fields separately." },
+    { name := "same-gamma primitive Ob3/Ob4 projected-weighted lower-weight endpoint",
+      status := .derived,
+      declarationName :=
+        "ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.projectedWeighted_endpoint_ofLocalizationAnchorTensorPowerEqLocalArithmeticDegreeLowerWeightResidualSource",
+      role :=
+        "Endpoint theorem for the same-gamma projected-weighted constructor from primitive Ob3/Ob4 and lower-weight residual data.  It verifies the projected weighted determinant synchronization, q-normalized local-analytic residual endpoint, signed IUT IV upper bound, and C_Theta lower-bound companion after projection from the full adjusted-determinant source." },
     { name := "localized vector-bundle adjusted-localization extensionality",
       status := .derived,
       declarationName :=
@@ -2094,7 +2106,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 298 :=
+    canonicalStage1ResidualFrontier.length = 300 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -2104,7 +2116,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 292 :=
+      (fun entry => entry.status = .derived)).length = 294 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6482,6 +6494,14 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.endpoint_ofLocalizationAnchorTensorPowerEqLocalArithmeticDegreeLowerWeightResidualSource
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.endpoint_ofLocalizationAnchorTensorPowerEqLocalArithmeticDegreeLowerWeightResidualSource
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.toProjectedWeightedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSourceOfLocalizationAnchorTensorPowerEqLocalArithmeticDegreeLowerWeightResidualSource
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.toProjectedWeightedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSourceOfLocalizationAnchorTensorPowerEqLocalArithmeticDegreeLowerWeightResidualSource
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.projectedWeighted_endpoint_ofLocalizationAnchorTensorPowerEqLocalArithmeticDegreeLowerWeightResidualSource
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteAdjustedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.projectedWeighted_endpoint_ofLocalizationAnchorTensorPowerEqLocalArithmeticDegreeLowerWeightResidualSource
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.ConstructorBuiltPrincipalProductPadicFiniteProjectedWeightedDeterminantQNormalizedLocalizedLocalAnalyticResidualHaarSource.weightedDeterminantSource_eq_principalProductLocalizedStepXI
 #guard_msgs (drop info) in
