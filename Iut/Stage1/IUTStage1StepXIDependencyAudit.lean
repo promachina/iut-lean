@@ -2134,6 +2134,30 @@ def canonicalStage1ResidualFrontier :
         "IUTStage1IUTIVTheorem110ValuationBallLocalAnalyticProcessionalPadicUnitBallHaarDefectResidualSource.PadicNormalizedProcessionalCaseSource.ofProcessionalEstimateSource",
       role :=
         "Derived projection from the full local-analytic processional estimate source to the p-adic-normalized processional case source.  The projection forgets the distinguished +1 upper-bound field and retains the Step (v)/(vi)/(vii) processional log-volume identities after the distinguished estimate place is aligned with the p-adic normalized finite place." },
+    { name := "source-level pointwise exact-Xi global CTheta audit",
+      status := .derived,
+      declarationName :=
+        "sourceLevelTransportPrincipalValuationBallThetaRegionDefinedPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactFamilyExactXiSelectedQRemark395GlobalCThetaAudit",
+      role :=
+        "Derived source-level global C_Theta audit for the principal pointwise log-shell exact-Xi route.  It enters the selected-q Remark 3.9.5 exact-Xi audit directly from the pointwise valuation-ball source instead of exposing the compact-open log-Kummer correspondence at this boundary." },
+    { name := "source-level pointwise exact-Xi consequences",
+      status := .derived,
+      declarationName :=
+        "sourceLevelTransportPrincipalValuationBallThetaRegionDefinedPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactFamilyExactXiSelectedQRemark395GlobalCThetaAudit_exactXiConsequences",
+      role :=
+        "Derived exact-Xi consequence theorem for the pointwise global C_Theta route.  The family-hull log-volume equality and no-Ind3-generator conclusion are obtained from the pointwise source-level audit without passing through an exposed compact-open correspondence consequence boundary." },
+    { name := "pointwise compact-open log-Kummer projection preservation audit",
+      status := .derived,
+      declarationName :=
+        "ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallPointwiseConstructedLogShellMetricZeroValuationBallExactSource.compactOpenLogKummerProjectionPreservationAudit",
+      role :=
+        "Derived preservation audit for the pointwise-to-compact-open log-Kummer projection.  It checks that the constructed map, correspondence, image, and possible-region sources retain the same principal valuation-ball source, theta labels, cover places, and selected-principal-hull equality." },
+    { name := "pointwise compact-open log-Kummer reconstruction preservation audit",
+      status := .derived,
+      declarationName :=
+        "ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallPointwiseConstructedLogShellMetricZeroValuationBallExactSource.compactOpenLogKummerMapPointwiseReconstructionPreservationAudit",
+      role :=
+        "Derived no-hidden-reconstruction audit for the pointwise log-Kummer map route.  It proves that projecting a pointwise source to the compact-open map and reconstructing the pointwise source preserves the principal valuation-ball source, theta labels, and cover places." },
     { name := "p-adic defect/main split countermodel",
       status := .constructed,
       declarationName :=
@@ -2172,7 +2196,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 311 :=
+    canonicalStage1ResidualFrontier.length = 315 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -2182,7 +2206,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 305 :=
+      (fun entry => entry.status = .derived)).length = 309 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -3593,6 +3617,14 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.sourceLevelTransportPrincipalValuationBallThetaRegionDefinedPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactFamilyExactXiSelectedQRemark395GlobalCThetaAudit_exactXiConsequences
 #guard_msgs (drop info) in
 #print axioms IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.sourceLevelTransportPrincipalValuationBallThetaRegionDefinedPrincipalPointwiseConstructedLogShellMetricZeroValuationBallExactFamilyExactXiSelectedQRemark395GlobalCThetaAudit_exactXiConsequences
+#guard_msgs (drop info) in
+#check IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallPointwiseConstructedLogShellMetricZeroValuationBallExactSource.compactOpenLogKummerProjectionPreservationAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallPointwiseConstructedLogShellMetricZeroValuationBallExactSource.compactOpenLogKummerProjectionPreservationAudit
+#guard_msgs (drop info) in
+#check IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallPointwiseConstructedLogShellMetricZeroValuationBallExactSource.compactOpenLogKummerMapPointwiseReconstructionPreservationAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.ConcreteHodgeTheaterLogThetaQuotientThetaPilotSource.ConcreteValuationBallThetaClassFiberTransportThetaRegionDefinedPrincipalValuationBallPointwiseConstructedLogShellMetricZeroValuationBallExactSource.compactOpenLogKummerMapPointwiseReconstructionPreservationAudit
 #guard_msgs (drop info) in
 #check IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.IUTStage1ConcreteTheorem311SourceSpineOneSidedComponentSelectedLabelQPilotBridgeAlignmentSource
 #guard_msgs (drop info) in
