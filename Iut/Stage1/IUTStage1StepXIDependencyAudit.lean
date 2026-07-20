@@ -1930,6 +1930,12 @@ def canonicalStage1ResidualFrontier :
         "compactOpenRealizedExactSourceOfCompactOpenLogKummerImageSource",
       role :=
         "Derived reusable Step (x)/Theorem 3.11 constructor from compact-open log-Kummer image laws to compact-open realized exactness.  It factors the image-law -> possible-region exactness -> log-shell image -> graph/map/correspondence -> principal realized-exact chain, so later scalar source-gap routes can consume image-law data instead of a preassembled compactOpenRealizedExactSource." },
+    { name := "compact-open log-Kummer correspondence realized-exact constructor",
+      status := .derived,
+      declarationName :=
+        "compactOpenRealizedExactSourceOfCompactOpenLogKummerCorrespondenceSource",
+      role :=
+        "Derived reusable Step (x)/Theorem 3.11 constructor from compact-open log-Kummer correspondence data to compact-open realized exactness.  It extracts image laws from correspondence left-totality, realization compatibility, and compact-open soundness, then reuses the image-law realized-exact constructor so scalar source-gap routes can be lowered below the image-law boundary." },
     { name := "compact-open log-Kummer correspondence local-degree source-gap endpoint",
       status := .derived,
       declarationName :=
@@ -2004,7 +2010,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 283 :=
+    canonicalStage1ResidualFrontier.length = 284 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -2014,7 +2020,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 277 :=
+      (fun entry => entry.status = .derived)).length = 278 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6186,6 +6192,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.compactOpenRealizedExactSourceOfCompactOpenLogKummerImageSource
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.compactOpenRealizedExactSourceOfCompactOpenLogKummerImageSource
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.compactOpenRealizedExactSourceOfCompactOpenLogKummerCorrespondenceSource
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.compactOpenRealizedExactSourceOfCompactOpenLogKummerCorrespondenceSource
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelCompactOpenLogKummerCorrespondenceExplicitDeterminantFormulaLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
