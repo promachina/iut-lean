@@ -1828,6 +1828,12 @@ def canonicalStage1ResidualFrontier :
         "preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelAdjustedDeterminantRecordFamilyHullQScaleSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
       role :=
         "Derived composition of the Theorem 3.11 possible-image symmetry-label constructor with the record-family-hull q-scale source-gap route.  Lean constructs the packet-indexed WithSymmetryLabelTransport from the possible-image witness, equality-quotient possible-image family, and fiber transport laws before the determinant/Hodge calibration derives the record-family hull equality and the route consumes the q-scale compatibility with the principal-product family hull." },
+    { name := "possible-image witness compact-open log-Kummer image record-family q-scale source-gap endpoint",
+      status := .derived,
+      declarationName :=
+        "preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelCompactOpenLogKummerImageAdjustedDeterminantRecordFamilyHullQScaleSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
+      role :=
+        "Derived composition of the Theorem 3.11 possible-image symmetry-label constructor with the compact-open log-Kummer image record-family q-scale route.  The endpoint constructs WithSymmetryLabelTransport from the possible-image witness and fiber transport laws, derives compact-open realized exactness from image laws, and then enters the q-scale source-gap comparison without exposing either a preassembled symmetry wrapper or compact-open realized-exact source at this boundary." },
     { name := "same-index record-family-hull q-scale source-obligation-gap endpoint",
       status := .derived,
       declarationName :=
@@ -1980,7 +1986,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 279 :=
+    canonicalStage1ResidualFrontier.length = 280 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -1990,7 +1996,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 273 :=
+      (fun entry => entry.status = .derived)).length = 274 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6106,6 +6112,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelAdjustedDeterminantRecordFamilyHullQScaleSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelAdjustedDeterminantRecordFamilyHullQScaleSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelCompactOpenLogKummerImageAdjustedDeterminantRecordFamilyHullQScaleSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelCompactOpenLogKummerImageAdjustedDeterminantRecordFamilyHullQScaleSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelRealizedExactExplicitDeterminantFormulaLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
