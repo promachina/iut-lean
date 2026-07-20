@@ -206,7 +206,7 @@ def canonicalStage1RemainingAssumptions :
       consumerDeclaration :=
         "PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource",
       note :=
-        "Pointwise determinant calibration is still a paper source package, but the determinant-normalized equality is no longer the bottom of the checked boundary.  PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.ofSummandChartedHodgeFamilyHullCalibration constructs this package from the lower pre-ledger volume/hull calibration plus the summand-charted Hodge/family-hull equality; Lean derives determinant log-volume, normalized determinant, and family-hull equalities from the finite adjusted-summand formula and record-native determinant decomposition.  The strongest packaged possible-image/correspondence branch now reconstructs this determinant formula source from theta-region measure/summand calibration before consuming the local-degree source." },
+        "Pointwise determinant calibration is still a paper source package, but the determinant-normalized equality is no longer the bottom of the checked boundary.  PrincipalPointwiseValuationBallMeasureSummandFormulaSource.summandFormulaSourceAudit exposes the lower determinant-free Step (xi) measure/log-volume identity, charted Hodge theta equality, finite adjusted-summand identity, and their determinant/family-hull/theta-signed consequences.  PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.ofSummandChartedHodgeFamilyHullCalibration constructs this package from the lower pre-ledger volume/hull calibration plus the summand-charted Hodge/family-hull equality; Lean derives determinant log-volume, normalized determinant, and family-hull equalities from the finite adjusted-summand formula and record-native determinant decomposition, with PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.ofSummandChartedHodgeFamilyHullCalibration_fullSourceAudit recording the full lower-source chain.  The strongest packaged possible-image/correspondence branch now reconstructs this determinant formula source from theta-region measure/summand calibration before consuming the local-degree source." },
     { name := "sideConditions",
       status := .sourceObligation,
       paperSource := "IUT III, Corollary 3.12 sign and normalization hypotheses",
@@ -2020,6 +2020,18 @@ def canonicalStage1ResidualFrontier :
         "PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.ofSummandChartedHodgeFamilyHullCalibration_projectionAudit",
       role :=
         "Derived audit for the summand-charted determinant lowering, recording the finite adjusted-summand, determinant log-volume, normalized determinant, family-hull, and pointwise endpoint consequences." },
+    { name := "pointwise measure/summand formula source audit",
+      status := .derived,
+      declarationName :=
+        "PrincipalPointwiseValuationBallMeasureSummandFormulaSource.summandFormulaSourceAudit",
+      role :=
+        "Derived audit for the determinant-free pointwise valuation-ball measure/summand formula source.  It records the Step (xi) measure/log-volume compatibility, charted Hodge theta equality, finite adjusted-summand identity, and the determinant, normalized determinant, family-hull, theta-signed, and endpoint consequences obtained from the summand-charted calibration." },
+    { name := "summand-charted pointwise determinant full source audit",
+      status := .derived,
+      declarationName :=
+        "PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.ofSummandChartedHodgeFamilyHullCalibration_fullSourceAudit",
+      role :=
+        "Derived full audit for constructing the pointwise determinant formula source from the lower pre-ledger volume/hull equality and summand-charted Hodge/family-hull calibration.  It verifies that the constructed determinant source projects to the lower formula endpoint and carries the finite-summand-to-determinant/family-hull/theta-signed chain." },
     { name := "source-spine-data primitive packet construction audit",
       status := .derived,
       declarationName :=
@@ -2070,7 +2082,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 294 :=
+    canonicalStage1ResidualFrontier.length = 296 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -2080,7 +2092,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 288 :=
+      (fun entry => entry.status = .derived)).length = 290 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -3832,6 +3844,12 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.ofSummandChartedHodgeFamilyHullCalibration_projectionAudit
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.ofSummandChartedHodgeFamilyHullCalibration_projectionAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallMeasureSummandFormulaSource.summandFormulaSourceAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.ofSummandChartedHodgeFamilyHullCalibration_fullSourceAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.PrincipalPointwiseValuationBallMeasureDeterminantFormulaSource.ofSummandChartedHodgeFamilyHullCalibration_fullSourceAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelPrincipalPointwiseValuationBallCalibrationConstructedHDDLocalizedRestrictionDataGoalCompletionAudit
 #guard_msgs (drop info) in
