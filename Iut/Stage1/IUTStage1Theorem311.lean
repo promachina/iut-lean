@@ -1999,6 +1999,95 @@ theorem thetaPilotClass_eq
     thetaPilotClass choice₁ = thetaPilotClass choice₂ :=
   ind2_thetaPilotClass_eq source.toStep
 
+set_option linter.style.longLine false in
+/--
+Audit for the concrete `(Ind2)` local-tensor transport source.
+
+This records the equality-side content of `(Ind2)` before it enters the typed
+Theorem~3.11 core: the Hodge-theater/history and theta-pilot coordinate are
+fixed, procession and upper-semi representatives are transported by their typed
+records, the local tensor datum is the direct-summand count equality, and these
+data construct the `(Ind2)` generator together with theta-pilot class
+invariance.
+-/
+structure Audit
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : Ind2LocalTensorTransportSource choice₁ choice₂) : Prop where
+  hodgeTheater_eq : choice₁.hodgeTheater = choice₂.hodgeTheater
+  historyLabel_eq : choice₁.historyLabel = choice₂.historyLabel
+  coordinate_eq : choice₁.coordinate = choice₂.coordinate
+  column_eq : choice₁.coordinate.column = choice₂.coordinate.column
+  row_eq : choice₁.coordinate.row = choice₂.coordinate.row
+  logThetaColumn_eq :
+    choice₁.coordinate.logThetaColumn = choice₂.coordinate.logThetaColumn
+  coric_eq : choice₁.coric = choice₂.coric
+  procession_transport :
+    IUTStage1ProcessionState.ProcessionTransport
+      choice₁.procession_state choice₂.procession_state
+  procession_eq :
+    choice₁.procession_state.procession = choice₂.procession_state.procession
+  procession_representative_eq :
+    choice₁.procession_state.representative =
+      choice₂.procession_state.representative
+  direct_summand_count_eq :
+    choice₁.local_tensor_state.directSummandCount =
+      choice₂.local_tensor_state.directSummandCount
+  upperSemiTransport :
+    IUTStage1UpperSemiCompatibilityState.UpperSemiTransport
+      choice₁.upper_semi_state choice₂.upper_semi_state
+  upperSemi_compatibility_eq :
+    choice₁.upper_semi_state.compatibility =
+      choice₂.upper_semi_state.compatibility
+  upperSemi_nonarchimedeanInclusions_eq :
+    choice₁.upper_semi_state.nonarchimedeanInclusions =
+      choice₂.upper_semi_state.nonarchimedeanInclusions
+  upperSemi_archimedeanSurjections_eq :
+    choice₁.upper_semi_state.archimedeanSurjections =
+      choice₂.upper_semi_state.archimedeanSurjections
+  upperSemi_logVolumeCompatibility_eq :
+    choice₁.upper_semi_state.logVolumeCompatibility =
+      choice₂.upper_semi_state.logVolumeCompatibility
+  upperSemi_logVolumeCompatible_eq :
+    choice₁.upper_semi_state.logVolumeCompatible =
+      choice₂.upper_semi_state.logVolumeCompatible
+  ind2_local_tensor_step : Ind2LocalTensorStep choice₁ choice₂
+  thetaPilotClass_eq : thetaPilotClass choice₁ = thetaPilotClass choice₂
+
+set_option linter.style.longLine false in
+theorem audit
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source : Ind2LocalTensorTransportSource choice₁ choice₂) :
+    Audit source :=
+  { hodgeTheater_eq := source.hodgeTheater_eq,
+    historyLabel_eq := source.historyLabel_eq,
+    coordinate_eq := source.coordinate_eq,
+    column_eq := congrArg IUTStage1Theorem311LogThetaLatticeCoordinate.column
+      source.coordinate_eq,
+    row_eq := congrArg IUTStage1Theorem311LogThetaLatticeCoordinate.row
+      source.coordinate_eq,
+    logThetaColumn_eq := congrArg
+      IUTStage1Theorem311LogThetaLatticeCoordinate.logThetaColumn
+      source.coordinate_eq,
+    coric_eq := source.coric_eq,
+    procession_transport := source.processionTransport,
+    procession_eq := source.processionTransport.procession_eq,
+    procession_representative_eq := source.processionTransport.representative_eq,
+    direct_summand_count_eq := source.direct_summand_count_eq,
+    upperSemiTransport := source.upperSemiTransport,
+    upperSemi_compatibility_eq := source.upperSemiTransport.compatibility_eq,
+    upperSemi_nonarchimedeanInclusions_eq :=
+      source.upperSemiTransport.nonarchimedeanInclusions_eq,
+    upperSemi_archimedeanSurjections_eq :=
+      source.upperSemiTransport.archimedeanSurjections_eq,
+    upperSemi_logVolumeCompatibility_eq :=
+      source.upperSemiTransport.logVolumeCompatibility_eq,
+    upperSemi_logVolumeCompatible_eq :=
+      source.upperSemiTransport.logVolumeCompatible_eq,
+    ind2_local_tensor_step := source.toStep,
+    thetaPilotClass_eq := source.thetaPilotClass_eq }
+
 end Ind2LocalTensorTransportSource
 
 set_option linter.style.longLine false in
@@ -14397,6 +14486,42 @@ theorem typedInd2LocalTensorTransportSourceAudit
   let hstep := source.toStep
   exact
     ⟨hstep,
+      core.ind2_preserves_logVolume hstep,
+      core.ind2_equalityQuotientMap_eq hstep,
+      source.thetaPilotClass_eq⟩
+
+set_option linter.style.longLine false in
+/--
+Full record-based audit for a concrete `(Ind2)` local tensor transport.
+
+This combines the source-record audit, which exposes the actual local tensor,
+procession, and upper-semi transport data, with the typed Theorem~3.11 core
+consequences: the constructed `(Ind2)` generator preserves normalized
+log-volume and descends to equality in the `(Ind1)/(Ind2)` quotient.
+-/
+theorem typedInd2LocalTensorTransportSourceFullAudit
+    (indData :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.IndeterminacyData coric l)
+    {choice₁ choice₂ :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice coric l}
+    (source :
+      IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind2LocalTensorTransportSource
+        choice₁ choice₂) :
+    let core :=
+      IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedCore
+        indData;
+    IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind2LocalTensorTransportSource.Audit
+        source ∧
+      core.ind2.step choice₁ choice₂ ∧
+        core.logVolume choice₁ = core.logVolume choice₂ ∧
+          core.equalityQuotientMap choice₁ = core.equalityQuotientMap choice₂ ∧
+            IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₁ =
+              IUTStage1ConcreteHodgeTheaterLogThetaChoice.thetaPilotClass choice₂ := by
+  intro core
+  let hstep := source.toStep
+  exact
+    ⟨source.audit,
+      hstep,
       core.ind2_preserves_logVolume hstep,
       core.ind2_equalityQuotientMap_eq hstep,
       source.thetaPilotClass_eq⟩

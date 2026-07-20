@@ -171,7 +171,7 @@ def canonicalStage1RemainingAssumptions :
       consumerDeclaration :=
         "preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
       note :=
-        "Symmetry-label/fiber transport data remains a source-level theorem to derive from the log-theta procession for the broad route, but it is no longer primitive on the packaged compact-open correspondence local-degree source-gap branch: Lean constructs this packet-indexed wrapper from possible-image witness, equality-quotient possible images, and the symmetry-label/upper-semi/procession fiber transport laws before entering that branch.  The expanded local-degree source-gap branch has the analogous checked lowering." },
+        "Symmetry-label/fiber transport data remains a source-level theorem to derive from the log-theta procession for the broad route, but it is no longer primitive on the packaged compact-open correspondence local-degree source-gap branch: Lean constructs this packet-indexed wrapper from possible-image witness, equality-quotient possible images, and the symmetry-label/upper-semi/procession fiber transport laws before entering that branch.  The expanded local-degree source-gap branch has the analogous checked lowering.  The concrete Ind2 local-tensor transport source now has a record-level audit and a typed-core audit exposing the fixed Hodge-theater/history/theta-pilot coordinate, direct-summand equality, procession transport, upper-semi transport, normalized log-volume preservation, equality-quotient compatibility, and theta-pilot class invariance." },
     { name := "compactOpenRealizedExactSource",
       status := .sourceObligation,
       paperSource := "IUT III, Remark 3.11.3 and Step (x) log-Kummer correspondence",
@@ -3636,6 +3636,14 @@ theorem weightedDeterminantShadowWithoutOb3Ob4SynchronizationToyCountermodel_not
 #guard_msgs (drop info) in
 #check IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineDataOneSidedComponentSHECodomainSelectedLabelQPilotBridgeAlignmentOutputFlagCalibrationSource_packetConstructionAudit
 #print axioms IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineDataOneSidedComponentSHECodomainSelectedLabelQPilotBridgeAlignmentOutputFlagCalibrationSource_packetConstructionAudit
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind2LocalTensorTransportSource.Audit
+#guard_msgs (drop info) in
+#check IUTStage1ConcreteHodgeTheaterLogThetaChoice.Ind2LocalTensorTransportSource.audit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedInd2LocalTensorTransportSourceFullAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311TypedIndeterminacyCore.ConcreteHodgeTheaterLogTheta.typedInd2LocalTensorTransportSourceFullAudit
 #guard_msgs (drop info) in
 #check IUTStage1ConcreteTheorem311PrimitiveSourcePacket.sourceData
 #guard_msgs (drop info) in
