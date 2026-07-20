@@ -1900,6 +1900,12 @@ def canonicalStage1ResidualFrontier :
         "preferredPublicConcretePacketPossibleImageWitnessCompactOpenLogKummerPointwiseFormulaLocalAnalyticCaseResidual311312GoalEvidenceAudit",
       role :=
         "Derived lowering of the strongest possible-image/correspondence case-bounded route below the formula-gap and residual packages.  Lean projects the formula-gap matched Theorem 1.10 source and the case-bounded residual source from the valuation-ball local-analytic arithmetic-divisor source together with the local distinguished, nondistinguished, archimedean, and +1 case inequalities before entering the existing signed Corollary 3.12 endpoint." },
+    { name := "possible-image correspondence pointwise arithmetic/formula local-analytic constructed hull-det endpoint",
+      status := .derived,
+      declarationName :=
+        "preferredPublicConcretePacketPossibleImageWitnessCompactOpenLogKummerPointwiseFormulaLocalAnalyticCaseResidualConstructedHullDetSource311312GoalEvidenceAudit",
+      role :=
+        "Derived constructed Remark 3.9.5 lowering for the strongest possible-image/local-analytic case-residual route.  Lean constructs the Stage 1 source-obligation gap from the primitive constructed-SHE bundle and IUTStage1Remark395ConstructedHolomorphicHullDeterminantSource.toHullDetObligations, so an independent IUTStage1SourceObligationGap is no longer a public input on this branch." },
     { name := "local arithmetic-degree constituent source-obligation-gap endpoint",
       status := .derived,
       declarationName :=
@@ -2046,7 +2052,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 290 :=
+    canonicalStage1ResidualFrontier.length = 291 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -2056,7 +2062,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 284 :=
+      (fun entry => entry.status = .derived)).length = 285 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6176,6 +6182,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessCompactOpenLogKummerPointwiseFormulaLocalAnalyticCaseResidual311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessCompactOpenLogKummerPointwiseFormulaLocalAnalyticCaseResidual311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessCompactOpenLogKummerPointwiseFormulaLocalAnalyticCaseResidualConstructedHullDetSource311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessCompactOpenLogKummerPointwiseFormulaLocalAnalyticCaseResidualConstructedHullDetSource311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
