@@ -192,7 +192,7 @@ def canonicalStage1RemainingAssumptions :
       consumerDeclaration :=
         "PrincipalProductPadicFiniteExtensionRestrictionCalibratedNormSquareOb7HandoffSource",
       note :=
-        "Finite-extension restriction, norm-square Ob7, and local arithmetic handoff remain exposed at this boundary." },
+        "Finite-extension restriction, norm-square Ob7, and local arithmetic handoff remain exposed at the broad source boundary, but the strongest packaged possible-image/correspondence branch now reconstructs this product handoff from the lower pointwise residue-module/unit-ball/additive-Haar restriction-calibrated source before consuming the same-index local-degree source." },
     { name := "operation/hullOperation/determinantOperation",
       status := .interfaceOnly,
       paperSource := "IUT III, Remark 3.9.5 operation choices",
@@ -1882,6 +1882,12 @@ def canonicalStage1ResidualFrontier :
         "preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelCompactOpenLogKummerCorrespondenceMeasureSummandCalibrationLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
       role :=
         "Derived lowering of the packaged possible-image/correspondence local arithmetic-degree route below the pointwise determinant-formula source.  Lean constructs the symmetry-label transport source from possible-image data, reconstructs compact-open realized exactness from log-Kummer correspondence data, obtains the principal pointwise valuation-ball source, builds the pointwise determinant formula from theta-region measure/summand Hodge-family-hull calibration, and then enters the packaged source-gap endpoint." },
+    { name := "possible-image correspondence pointwise arithmetic/formula packaged local-degree source-gap endpoint",
+      status := .derived,
+      declarationName :=
+        "preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelCompactOpenLogKummerCorrespondencePointwiseArithmeticFormulaSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit",
+      role :=
+        "Derived lowering of the strongest packaged possible-image/correspondence local arithmetic-degree route below both the product local-arithmetic handoff and the theta-region measure/summand calibration package.  Lean reconstructs the pointwise valuation-ball source from compact-open log-Kummer correspondence data, projects the Ob7 handoff from pointwise residue-module/unit-ball/additive-Haar arithmetic, builds the theta-region calibration from explicit pointwise measure/summand formulas, and then enters the packaged source-gap endpoint." },
     { name := "local arithmetic-degree constituent source-obligation-gap endpoint",
       status := .derived,
       declarationName :=
@@ -2028,7 +2034,7 @@ def canonicalStage1ResidualFrontier :
         "Constructed weakened-boundary diagnostic showing that equality of the weighted determinant shadow and the finite-sum scale does not identify the full Record-Ob3/Ob4 source; the anchor/localization payload can still differ, so the full recordOb3Ob4_eq_stepXI synchronization remains a genuine mathematical input until derived from Remark 3.9.5 source data." } ]
 
 theorem canonicalStage1ResidualFrontier_count_eq :
-    canonicalStage1ResidualFrontier.length = 287 :=
+    canonicalStage1ResidualFrontier.length = 288 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
@@ -2038,7 +2044,7 @@ theorem canonicalStage1ResidualFrontier_sourceObligation_count_eq :
 
 theorem canonicalStage1ResidualFrontier_derived_count_eq :
     (canonicalStage1ResidualFrontier.filter
-      (fun entry => entry.status = .derived)).length = 281 :=
+      (fun entry => entry.status = .derived)).length = 282 :=
   rfl
 
 theorem canonicalStage1ResidualFrontier_interfaceOnly_count_eq :
@@ -6146,6 +6152,10 @@ def inverseBasePrimeAdditiveHaarRouteEquality : String :=
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelCompactOpenLogKummerCorrespondenceMeasureSummandCalibrationLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelCompactOpenLogKummerCorrespondenceMeasureSummandCalibrationLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelCompactOpenLogKummerCorrespondencePointwiseArithmeticFormulaSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
+#guard_msgs (drop info) in
+#print axioms IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelCompactOpenLogKummerCorrespondencePointwiseArithmeticFormulaSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
 #check IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcretePacketExplicitDeterminantFormulaCompactOpenRealizedExactLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeConstituentSourceSideConditionsLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit
 #guard_msgs (drop info) in
