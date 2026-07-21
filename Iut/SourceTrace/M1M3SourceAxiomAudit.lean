@@ -105,10 +105,14 @@ end Iut.SourcePacketFiniteFieldStage
 namespace Iut.SourceNonarchimedeanLocalFieldIntegers
 
 #print axioms normalizedLogVolume_value_eq_zero
+#print axioms Iut.ThetaFinitePlace.residueCharacteristic_eq_natGenerator
+#print axioms rationalPrime_eq_residueCharacteristic
 #print axioms rationalPrime_prime
 #print axioms log_rationalPrimeScale
 #print axioms localPrimeLogVolumeShift_eq_degree_mul_packetLogVolumeShift
 #print axioms rationalPrimeQuotientModule
+#print axioms padicScalarMap
+#print axioms continuous_padicScalarMap
 #print axioms PAdicIntegralBasis.padicPrime_smul
 #print axioms PAdicIntegralBasis.coefficientReduction_surjective
 #print axioms PAdicIntegralBasis.coefficientReduction_ker
