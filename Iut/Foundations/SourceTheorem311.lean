@@ -484,16 +484,22 @@ noncomputable instance ThetaFinitePlace.rationalCompletionLocallyCompactSpace
 
 /--
 The extension structure `Q_p -> K_v` on the actual completions attached to a
-finite place `v` and its restriction to `Q`.  No replacement field is chosen:
-only the normed algebra and its compatibility with the canonical rational
-completion actions are retained as obligations.  Finite-dimensionality is
-derived below from Mathlib's completion theorem.
+finite place `v` and its restriction to `Q`.  No replacement field is chosen.
+The source requires a finite-dimensional topological module, so the algebra
+action is required to be continuous but not norm-nonincreasing: the absolute
+values on `Q_p` and `K_v` use different local-degree normalizations.
+Finite-dimensionality is derived below from Mathlib's completion theorem.
 -/
 class SourceFinitePlaceCompletionExtension
     {K : Type u} [Field K] [NumberField K]
     (place : NumberField.FinitePlace K) where
-  [normedAlgebra :
-    NormedAlgebra
+  [algebra :
+    Algebra
+      (ThetaFinitePlace.Completion
+        (ThetaFinitePlace.comap (k := ℚ) place))
+      (ThetaFinitePlace.Completion place)]
+  [continuousSMul :
+    ContinuousSMul
       (ThetaFinitePlace.Completion
         (ThetaFinitePlace.comap (k := ℚ) place))
       (ThetaFinitePlace.Completion place)]
@@ -504,9 +510,10 @@ class SourceFinitePlaceCompletionExtension
       (ThetaFinitePlace.Completion place)]
 
 attribute [implicit_reducible, instance]
-  SourceFinitePlaceCompletionExtension.normedAlgebra
+  SourceFinitePlaceCompletionExtension.algebra
 
 attribute [instance]
+  SourceFinitePlaceCompletionExtension.continuousSMul
   SourceFinitePlaceCompletionExtension.scalarTower
 
 namespace SourceFinitePlaceCompletionExtension
@@ -514,8 +521,7 @@ namespace SourceFinitePlaceCompletionExtension
 /--
 The actual completion `K_v` is finite-dimensional over the completion at the
 contracted rational place.  This is Mathlib's tensor-product/dense-range
-finiteness theorem, applied after installing the continuous scalar action
-carried by the normed algebra.
+finiteness theorem, applied to the source's continuous scalar action.
 -/
 noncomputable instance finiteDimensional
     {K : Type u} [Field K] [NumberField K]
@@ -525,11 +531,6 @@ noncomputable instance finiteDimensional
       (ThetaFinitePlace.Completion
         (ThetaFinitePlace.comap (k := ℚ) place))
       (ThetaFinitePlace.Completion place) := by
-  letI : ContinuousSMul
-      (ThetaFinitePlace.Completion
-        (ThetaFinitePlace.comap (k := ℚ) place))
-      (ThetaFinitePlace.Completion place) :=
-    IsBoundedSMul.continuousSMul
   letI : Module.Finite
       (ThetaFinitePlace.Completion
         (ThetaFinitePlace.comap (k := ℚ) place))
@@ -545,11 +546,15 @@ noncomputable instance properSpace
     {K : Type u} [Field K] [NumberField K]
     (place : NumberField.FinitePlace K)
     [SourceFinitePlaceCompletionExtension place] :
-    ProperSpace (ThetaFinitePlace.Completion place) :=
-  FiniteDimensional.proper
-    (ThetaFinitePlace.Completion
-      (ThetaFinitePlace.comap (k := ℚ) place))
-    (ThetaFinitePlace.Completion place)
+    ProperSpace (ThetaFinitePlace.Completion place) := by
+  letI : LocallyCompactSpace (ThetaFinitePlace.Completion place) :=
+    LocallyCompactSpace.of_finiteDimensional_of_complete
+      (ThetaFinitePlace.Completion
+        (ThetaFinitePlace.comap (k := ℚ) place))
+      (ThetaFinitePlace.Completion place)
+  exact
+    ProperSpace.of_nontriviallyNormedField_of_weaklyLocallyCompactSpace
+      (ThetaFinitePlace.Completion place)
 
 end SourceFinitePlaceCompletionExtension
 
@@ -566,7 +571,8 @@ structure SourceTopologicalLocalField
     (rationalPlace : SourceRationalPlace) where
   carrier : Type u
   [normedField : NormedField carrier]
-  [normedAlgebra : NormedAlgebra rationalPlace.Completion carrier]
+  [algebra : Algebra rationalPlace.Completion carrier]
+  [continuousSMul : ContinuousSMul rationalPlace.Completion carrier]
   [rationalAlgebra : Algebra ℚ carrier]
   [scalarTower : IsScalarTower ℚ rationalPlace.Completion carrier]
   [finiteDimensional :
@@ -577,7 +583,8 @@ structure SourceTopologicalLocalField
 
 attribute [instance]
   SourceTopologicalLocalField.normedField
-  SourceTopologicalLocalField.normedAlgebra
+  SourceTopologicalLocalField.algebra
+  SourceTopologicalLocalField.continuousSMul
   SourceTopologicalLocalField.rationalAlgebra
   SourceTopologicalLocalField.scalarTower
   SourceTopologicalLocalField.finiteDimensional
@@ -599,8 +606,10 @@ noncomputable abbrev ofFinitePlace
     SourceTopologicalLocalField
       (.finite (ThetaFinitePlace.comap (k := ℚ) place)) where
   carrier := ThetaFinitePlace.Completion place
-  normedAlgebra :=
-    SourceFinitePlaceCompletionExtension.normedAlgebra (place := place)
+  algebra :=
+    SourceFinitePlaceCompletionExtension.algebra (place := place)
+  continuousSMul :=
+    SourceFinitePlaceCompletionExtension.continuousSMul (place := place)
   rationalAlgebra := inferInstance
   scalarTower := by
     apply IsScalarTower.of_algebraMap_eq
@@ -674,14 +683,17 @@ structure LocalDegreeTower
     {rationalPlace : SourceRationalPlace}
     (field : SourceTopologicalLocalField.{u} rationalPlace) where
   moduliField : SourceTopologicalLocalField.{u} rationalPlace
-  [selectedNormedAlgebra : NormedAlgebra moduliField.carrier field.carrier]
+  [selectedAlgebra : Algebra moduliField.carrier field.carrier]
+  [selectedContinuousSMul :
+    ContinuousSMul moduliField.carrier field.carrier]
   [selectedScalarTower :
     IsScalarTower rationalPlace.Completion moduliField.carrier field.carrier]
   [selectedFiniteDimensional :
     FiniteDimensional moduliField.carrier field.carrier]
 
 attribute [instance]
-  LocalDegreeTower.selectedNormedAlgebra
+  LocalDegreeTower.selectedAlgebra
+  LocalDegreeTower.selectedContinuousSMul
   LocalDegreeTower.selectedScalarTower
   LocalDegreeTower.selectedFiniteDimensional
 
@@ -3261,22 +3273,22 @@ noncomputable local instance rationalPrimeFact
   ⟨integers.rationalPrime_prime⟩
 
 /--
-The canonical scalar map `Z_p → O_L`.  It is the inverse of Mathlib's
-identification of the rational adic integer ring with `Z_p`, followed by the
-given local-field algebra map.  The norm-unit-ball characterization proves
-that its image lies in the actual valuation ring.
+The scalar map `Z_p → L` obtained from the rational adic integer ring and the
+continuous local-field algebra map.
 -/
-noncomputable def padicScalarMap
+noncomputable def padicScalarFieldMap
     (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
-    PadicInt integers.rationalPrime →+* integers.integerRing.toSubring := by
+    PadicInt integers.rationalPrime →+* field.carrier := by
   cases rationalPlace with
   | finite place =>
       let prime := ThetaFinitePlace.underlyingPrime place
       letI : Fact (Nat.Prime
           (Rat.HeightOneSpectrum.natGenerator prime)) :=
         ⟨Rat.HeightOneSpectrum.prime_natGenerator prime⟩
-      letI : NormedAlgebra (prime.adicCompletion ℚ) field.carrier :=
-        field.normedAlgebra
+      letI : Algebra (prime.adicCompletion ℚ) field.carrier :=
+        field.algebra
+      letI : ContinuousSMul (prime.adicCompletion ℚ) field.carrier :=
+        field.continuousSMul
       let baseEquiv :=
         Rat.HeightOneSpectrum.adicCompletionIntegers.padicIntEquiv prime
       let baseMap :
@@ -3285,42 +3297,67 @@ noncomputable def padicScalarMap
         (ValuationSubring.subtype
           (prime.adicCompletionIntegers ℚ)).comp
             baseEquiv.symm.toRingHom
-      let fieldMap :
-          PadicInt (Rat.HeightOneSpectrum.natGenerator prime) →+*
-            field.carrier :=
-        (algebraMap (prime.adicCompletion ℚ) field.carrier).comp baseMap
-      exact RingHom.codRestrict fieldMap
-        integers.integerRing.toSubring fun value => by
-          change (fieldMap value : field.carrier) ∈ integers.integerRing
-          rw [integers.integerRing_mem_iff_norm_le_one]
-          simp only [fieldMap, RingHom.comp_apply, norm_algebraMap']
-          exact Valued.toNormedField.norm_le_one_iff.mpr
-            (baseEquiv.symm value).property
+      exact (algebraMap (prime.adicCompletion ℚ) field.carrier).comp baseMap
   | infinite _ =>
       exact nomatch integers.placeKind
 
-/-- The canonical `Z_p → O_L` scalar map is continuous. -/
-theorem continuous_padicScalarMap
+/-- The scalar map `Z_p → L` is continuous. -/
+theorem continuous_padicScalarFieldMap
     (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
-    Continuous integers.padicScalarMap := by
+    Continuous integers.padicScalarFieldMap := by
   cases rationalPlace with
   | finite place =>
-      rw [padicScalarMap]
+      rw [padicScalarFieldMap]
       let prime := ThetaFinitePlace.underlyingPrime place
       letI : Fact (Nat.Prime
           (Rat.HeightOneSpectrum.natGenerator prime)) :=
         ⟨Rat.HeightOneSpectrum.prime_natGenerator prime⟩
-      letI : NormedAlgebra (prime.adicCompletion ℚ) field.carrier :=
-        field.normedAlgebra
+      letI : Algebra (prime.adicCompletion ℚ) field.carrier :=
+        field.algebra
+      letI : ContinuousSMul (prime.adicCompletion ℚ) field.carrier :=
+        field.continuousSMul
       let baseEquiv :=
         Rat.HeightOneSpectrum.adicCompletionIntegers.padicIntEquiv prime
-      apply Continuous.subtype_mk
       apply Continuous.comp
         (continuous_algebraMap (prime.adicCompletion ℚ) field.carrier)
       apply Continuous.comp continuous_subtype_val
       exact baseEquiv.symm.continuous
   | infinite _ =>
       exact nomatch integers.placeKind
+
+/--
+Continuity forces the image of `Z_p` into the valuation ring `O_L`.  Indeed,
+natural numbers are dense in `Z_p`, their images lie in every valuation
+subring, and the norm-unit ball is closed.
+-/
+theorem padicScalarFieldMap_mem_integerRing
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
+    (value : PadicInt integers.rationalPrime) :
+    integers.padicScalarFieldMap value ∈ integers.integerRing := by
+  rw [integers.integerRing_mem_iff_norm_le_one]
+  refine DenseRange.induction_on PadicInt.denseRange_natCast value ?_ ?_
+  · exact isClosed_le
+      (continuous_norm.comp integers.continuous_padicScalarFieldMap)
+      continuous_const
+  · intro natural
+    simpa only [map_natCast] using
+      (integers.integerRing_mem_iff_norm_le_one
+        (natural : field.carrier)).mp
+        (show (natural : field.carrier) ∈ integers.integerRing from
+          (natural : integers.integerRing.toSubring).property)
+
+/-- The canonical scalar map `Z_p → O_L`. -/
+noncomputable def padicScalarMap
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    PadicInt integers.rationalPrime →+* integers.integerRing.toSubring :=
+  RingHom.codRestrict integers.padicScalarFieldMap
+    integers.integerRing.toSubring integers.padicScalarFieldMap_mem_integerRing
+
+/-- The canonical `Z_p → O_L` scalar map is continuous. -/
+theorem continuous_padicScalarMap
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    Continuous integers.padicScalarMap :=
+  Continuous.subtype_mk integers.continuous_padicScalarFieldMap _
 
 /-- The rational-completion algebra map transported to the standard field `Q_p`. -/
 noncomputable def padicFieldRingHom
@@ -3332,8 +3369,10 @@ noncomputable def padicFieldRingHom
       letI : Fact (Nat.Prime
           (Rat.HeightOneSpectrum.natGenerator prime)) :=
         ⟨Rat.HeightOneSpectrum.prime_natGenerator prime⟩
-      letI : NormedAlgebra (prime.adicCompletion ℚ) field.carrier :=
-        field.normedAlgebra
+      letI : Algebra (prime.adicCompletion ℚ) field.carrier :=
+        field.algebra
+      letI : ContinuousSMul (prime.adicCompletion ℚ) field.carrier :=
+        field.continuousSMul
       let completionToField : prime.adicCompletion ℚ →+* field.carrier :=
         algebraMap (prime.adicCompletion ℚ) field.carrier
       let padicToCompletion :
@@ -3359,8 +3398,10 @@ theorem continuous_padicFieldRingHom
       letI : Fact (Nat.Prime
           (Rat.HeightOneSpectrum.natGenerator prime)) :=
         ⟨Rat.HeightOneSpectrum.prime_natGenerator prime⟩
-      letI : NormedAlgebra (prime.adicCompletion ℚ) field.carrier :=
-        field.normedAlgebra
+      letI : Algebra (prime.adicCompletion ℚ) field.carrier :=
+        field.algebra
+      letI : ContinuousSMul (prime.adicCompletion ℚ) field.carrier :=
+        field.continuousSMul
       let completionToField : prime.adicCompletion ℚ →+* field.carrier :=
         algebraMap (prime.adicCompletion ℚ) field.carrier
       have hcompletionToField : Continuous completionToField :=
@@ -3398,8 +3439,10 @@ theorem padicScalarMap_coe_eq_padicFieldRingHom
       letI : Fact (Nat.Prime
           (Rat.HeightOneSpectrum.natGenerator prime)) :=
         ⟨Rat.HeightOneSpectrum.prime_natGenerator prime⟩
-      letI : NormedAlgebra (prime.adicCompletion ℚ) field.carrier :=
-        field.normedAlgebra
+      letI : Algebra (prime.adicCompletion ℚ) field.carrier :=
+        field.algebra
+      letI : ContinuousSMul (prime.adicCompletion ℚ) field.carrier :=
+        field.continuousSMul
       simp only [RingHom.comp_apply]
       congr 1
   | infinite _ =>
@@ -3430,10 +3473,12 @@ noncomputable def padicFieldBasis
       letI : Fact (Nat.Prime
           (Rat.HeightOneSpectrum.natGenerator prime)) :=
         ⟨Rat.HeightOneSpectrum.prime_natGenerator prime⟩
-      letI : NormedAlgebra (prime.adicCompletion ℚ) field.carrier :=
-        field.normedAlgebra
+      letI : Algebra (prime.adicCompletion ℚ) field.carrier :=
+        field.algebra
+      letI : ContinuousSMul (prime.adicCompletion ℚ) field.carrier :=
+        field.continuousSMul
       letI : Module (prime.adicCompletion ℚ) field.carrier :=
-        field.normedAlgebra.toAlgebra.toModule
+        field.algebra.toModule
       letI : FiniteDimensional (prime.adicCompletion ℚ) field.carrier :=
         field.finiteDimensional
       letI : Algebra (Padic (Rat.HeightOneSpectrum.natGenerator prime))

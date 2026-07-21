@@ -121,6 +121,9 @@ namespace Iut.SourceNonarchimedeanLocalFieldIntegers
 #print axioms log_rationalPrimeScale
 #print axioms localPrimeLogVolumeShift_eq_degree_mul_packetLogVolumeShift
 #print axioms rationalPrimeQuotientModule
+#print axioms padicScalarFieldMap
+#print axioms continuous_padicScalarFieldMap
+#print axioms padicScalarFieldMap_mem_integerRing
 #print axioms padicScalarMap
 #print axioms continuous_padicScalarMap
 #print axioms padicFieldRingHom
