@@ -87,6 +87,12 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceSelectedPlace.moduliRationalLocalDegree
 #print axioms Iut.SourcePacketMeasuredField.integral_measure_eq_one
 #print axioms Iut.SourcePacketMeasuredField.normalizationOffset_eq_zero
+#print axioms Iut.SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition_image_integralRegion
+#print axioms Iut.SourcePacketFiniteMeasuredFieldDecomposition.blockRadializedRegion_integralRegion
+#print axioms Iut.SourcePacketFiniteMeasuredFieldDecomposition.blockRadializedRegion_integralRegion_measurable
+#print axioms Iut.SourcePacketFiniteMeasuredFieldDecomposition.blockProductMeasure_integralRegion
+#print axioms Iut.SourcePacketFiniteMeasuredFieldDecomposition.blockVolume_normalizationOffset_eq_zero
+#print axioms Iut.SourcePacketFiniteMeasuredFieldDecomposition.blockVolume_value_eq_zero
 
 -- Legacy block-indexed volume lemmas remain visible but are not source endpoints.
 #print axioms Iut.SourcePacketLogVolumeDecomposition.algebraicDecomposition

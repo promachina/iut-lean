@@ -807,6 +807,9 @@ def m1m3PaperLedger : List PaperClause :=
         "SourcePacketFiniteFieldDecomposition",
         "SourcePacketFiniteFieldDecomposition.FieldSummandIndex",
         "SourcePacketFiniteFieldDecomposition.fieldSummandIndex_card",
+        "SourcePacketFiniteMeasuredFieldDecomposition.BlockFieldCoordinates",
+        "SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition",
+        "SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition_image_integralRegion",
         "SourceMonoAnalyticLogShellAlgorithm.TensorTopology",
         "SourceMonoAnalyticLogShellAlgorithm.packetOfCapsule",
         "SourceNonarchimedeanPacketIntegralConstruction",
@@ -816,7 +819,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceAbsoluteLGPGaussianLogThetaLattice.PacketIntegralConstruction",
         "SourceAbsoluteLGPGaussianLogThetaLattice.LocalConstruction.toTheorem311LocalData"]
       .partialImplementation
-      "Local packets are literal dependent tensor products of direct sums over the actual finite place fiber, with the tensor universal topology. The canonical tensor-of-direct-sums equivalence yields exactly #places^(j+1) place-tuple tensor blocks, not fields. A field-valued factor presentation and a chosen cofinal finite stage now inject each stage tensor into its ind-block and decompose its tensor algebra as a finite product of actual complete local fields; the genuine field index is the dependent sum of these internal indices, and its cardinality is derived as a sum rather than conflated with the place-tuple count. Nonarchimedean packet lattices and archimedean metrics retain their constructions. Constructing the field presentations, finite-stage CRT decompositions, span/closedness, Hermitian data, and mono-analytic/holomorphic poly-isomorphisms remains open. The legacy whole-place-tuple measured object is expressly non-accepting.",
+      "Local packets are literal dependent tensor products of direct sums over the actual finite place fiber, with the tensor universal topology. The canonical tensor-of-direct-sums equivalence yields exactly #places^(j+1) place-tuple tensor blocks, not fields. A field-valued factor presentation and a chosen cofinal finite stage now inject each stage tensor into its ind-block and decompose its tensor algebra as a finite product of actual complete local fields; the genuine field index is the dependent sum of these internal indices, and its cardinality is derived as a sum rather than conflated with the place-tuple count. The stage field decomposition is retained as a homeomorphism and carries the derived integral block exactly to the product of the fieldwise integral structures. Nonarchimedean packet lattices and archimedean metrics retain their constructions. Constructing the field presentations, finite-stage CRT decompositions, span/closedness, Hermitian data, and mono-analytic/holomorphic poly-isomorphisms remains open. The legacy whole-place-tuple measured object is expressly non-accepting.",
     clause "III.3.4" .iutIII "IUT III, Proposition 3.4"
       ["SourceLGPSplittingMonoidAction",
         "SourceLGPSplittingMonoidAction.targetMulAction"]
@@ -854,10 +857,16 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceNormalizedLogVolume.PacketNormalization.valueOn_dilateRegion",
         "SourcePacketMeasuredField",
         "SourcePacketFiniteMeasuredFieldDecomposition",
+        "SourcePacketFiniteMeasuredFieldDecomposition.BlockRadialCoordinates",
+        "SourcePacketFiniteMeasuredFieldDecomposition.blockRadializedRegion_integralRegion",
+        "SourcePacketFiniteMeasuredFieldDecomposition.blockProductMeasure_integralRegion",
+        "SourcePacketFiniteMeasuredFieldDecomposition.blockVolume",
+        "SourcePacketFiniteMeasuredFieldDecomposition.blockVolume_normalizationOffset_eq_zero",
+        "SourcePacketFiniteMeasuredFieldDecomposition.blockVolume_value_eq_zero",
         "SourceTheorem311LocalData.processionLogVolume",
         "SourceMonoAnalyticLogShellAlgorithm.transport_logVolume",
         "SourceTheorem311LocalData.logVolume"] .partialImplementation
-      "Normalized log-volume is a functional on admissible regions, not generally the logarithm of a measure on packet space. The accepted component interface is now indexed by genuine finite-stage local fields: finite components identify their radial carrier with the additive field, while infinite components identify it with NNReal through complex norm, as required by Remark 3.1.1(iii) and Absolute Anabelian Geometry III, Proposition 5.7. The existing E/W calculation is mathematically valid only for its legacy place-tuple inputs and no longer discharges this clause. It must be migrated to the dependent field-summand index, then supplied with constructed Haar/radial measures, normalization offsets, local-degree multiplicities, packet dilation, mono-analytic adjustment, Kummer transport, and the global product-formula comparison. The procession equal-weight average is present but depends on that migration.",
+      "Normalized log-volume is a functional on admissible regions, not generally the logarithm of a measure on packet space. The accepted field interface is indexed by genuine finite-stage local fields: finite components identify their radial carrier with the additive field, while infinite components identify it with NNReal through complex norm, as required by Remark 3.1.1(iii) and Absolute Anabelian Geometry III, Proposition 5.7. For each outer place tuple v, its source M_v is now derived as the dependent product of these genuine field radial carriers; the integral block radializes exactly to the fieldwise product, has product measure one, zero normalization offset, and zero normalized log-volume. The existing outer E/W calculation is mathematically valid only for its arbitrary legacy block inputs and no longer discharges this clause. It must be rebuilt on these derived M_v objects and the finite-stage embedding, then supplied with constructed Haar/radial measures, local-degree multiplicities, packet dilation, mono-analytic adjustment, Kummer transport, and the global product-formula comparison. The procession equal-weight average is present but depends on that migration.",
     clause "III.3.10" .iutIII "IUT III, Proposition 3.10"
       ["SourceTheorem311LabeledData",
         "SourceTheorem311LabeledKummerIso"] .partialImplementation

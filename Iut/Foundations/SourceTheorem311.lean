@@ -2476,6 +2476,268 @@ structure SourcePacketFiniteMeasuredFieldDecomposition
       SourcePacketMeasuredField packet.rationalPlace
         (decomposition.field index)
 
+namespace SourcePacketFiniteMeasuredFieldDecomposition
+
+variable {j : ℕ} {packet : SourceMonoAnalyticTensorPacket.{u} j}
+variable {presentation :
+  SourceMonoAnalyticTensorPacketFieldPresentation packet}
+variable {decomposition :
+  SourcePacketFiniteFieldDecomposition packet presentation}
+
+/-- The measured local field at one internal coordinate of a place-tuple block. -/
+abbrev blockMeasuredField
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex)
+    (index : (decomposition.blockStage placeTuple).fieldIndex) :=
+  measured.measuredField ⟨placeTuple, index⟩
+
+/-- The genuine local-field coordinates of one chosen finite tensor stage. -/
+abbrev BlockFieldCoordinates
+    (placeTuple : packet.PlaceTupleIndex) :=
+  ∀ index : (decomposition.blockStage placeTuple).fieldIndex,
+    ((decomposition.blockStage placeTuple).field index).carrier
+
+/--
+The radial part `M_v` of Remark 3.1.1(iii): one radial coordinate for every
+genuine field in the finite-stage decomposition of the place-tuple block.
+-/
+abbrev BlockRadialCoordinates
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex) :=
+  ∀ index : (decomposition.blockStage placeTuple).fieldIndex,
+    (measured.blockMeasuredField placeTuple index).radialCarrier
+
+/-- The finite-stage field decomposition as a homeomorphism. -/
+noncomputable def blockFieldDecomposition
+    (placeTuple : packet.PlaceTupleIndex) :
+    (decomposition.blockStage placeTuple).module ≃ₜ
+      BlockFieldCoordinates (decomposition := decomposition) placeTuple :=
+  (decomposition.blockStage placeTuple).fieldDecompositionHomeomorph
+
+/-- Apply the source-prescribed finite/radial map in every genuine field. -/
+def blockRadializeCoordinates
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex)
+    (value : BlockFieldCoordinates
+      (decomposition := decomposition) placeTuple) :
+    measured.BlockRadialCoordinates placeTuple :=
+  fun index =>
+    (measured.blockMeasuredField placeTuple index).radialization (value index)
+
+/-- The product of the fieldwise distinguished integral regions. -/
+def blockFieldIntegralRegion
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex) :
+    Set (BlockFieldCoordinates (decomposition := decomposition) placeTuple) :=
+  Set.pi Set.univ fun index =>
+    (measured.blockMeasuredField placeTuple index).volume.integralRegion
+
+/-- The distinguished integral region in the finite tensor-stage algebra. -/
+noncomputable def blockIntegralRegion
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex) :
+    Set (decomposition.blockStage placeTuple).module :=
+  (blockFieldDecomposition
+      (decomposition := decomposition) placeTuple).symm ''
+    measured.blockFieldIntegralRegion placeTuple
+
+/-- The radial image of a region in one finite place-tuple stage. -/
+def blockRadializedRegion
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex)
+    (region : Set (decomposition.blockStage placeTuple).module) :
+    Set (measured.BlockRadialCoordinates placeTuple) :=
+  measured.blockRadializeCoordinates placeTuple ''
+    (blockFieldDecomposition
+      (decomposition := decomposition) placeTuple '' region)
+
+/-- The ordinary finite product measure on the radial part `M_v`. -/
+noncomputable def blockProductMeasure
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex) :
+    MeasureTheory.Measure (measured.BlockRadialCoordinates placeTuple) :=
+  MeasureTheory.Measure.pi fun index =>
+    (measured.blockMeasuredField placeTuple index).measure
+
+/-- The field decomposition carries the integral block to the fieldwise product. -/
+theorem blockFieldDecomposition_image_integralRegion
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex) :
+    blockFieldDecomposition (decomposition := decomposition) placeTuple ''
+        measured.blockIntegralRegion placeTuple =
+      measured.blockFieldIntegralRegion placeTuple := by
+  ext value
+  constructor
+  · rintro ⟨sourceValue, ⟨fieldValue, hfieldValue, rfl⟩, rfl⟩
+    simpa using hfieldValue
+  · intro hvalue
+    refine ⟨(blockFieldDecomposition
+      (decomposition := decomposition) placeTuple).symm value, ?_, ?_⟩
+    · exact ⟨value, hvalue, rfl⟩
+    · exact (blockFieldDecomposition
+        (decomposition := decomposition) placeTuple).apply_symm_apply value
+
+/--
+The radial image of the integral block is exactly the product of the genuine
+fieldwise radial integral regions.
+-/
+theorem blockRadializedRegion_integralRegion
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex) :
+    measured.blockRadializedRegion placeTuple
+        (measured.blockIntegralRegion placeTuple) =
+      Set.pi Set.univ fun index =>
+        (measured.blockMeasuredField placeTuple index).radialization ''
+          (measured.blockMeasuredField placeTuple index).volume.integralRegion := by
+  classical
+  rw [blockRadializedRegion,
+    measured.blockFieldDecomposition_image_integralRegion placeTuple]
+  ext value
+  constructor
+  · rintro ⟨sourceValue, hsourceValue, rfl⟩ index _
+    exact ⟨sourceValue index,
+      hsourceValue index (Set.mem_univ _), rfl⟩
+  · intro hvalue
+    choose sourceValue hsourceValue hradial using
+      fun index => hvalue index (Set.mem_univ index)
+    refine ⟨sourceValue, ?_, ?_⟩
+    · intro index _
+      exact hsourceValue index
+    · funext index
+      exact hradial index
+
+/-- The distinguished radial block is Borel measurable. -/
+theorem blockRadializedRegion_integralRegion_measurable
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex) :
+    MeasurableSet
+      (measured.blockRadializedRegion placeTuple
+        (measured.blockIntegralRegion placeTuple)) := by
+  rw [measured.blockRadializedRegion_integralRegion placeTuple]
+  exact MeasurableSet.univ_pi fun index =>
+    (measured.blockMeasuredField placeTuple index).admissible_radialImage_measurable
+      (measured.blockMeasuredField placeTuple index).volume.integralAdmissibleRegion
+
+/-- Every fieldwise integral normalization multiplies to measure one on `M_v`. -/
+theorem blockProductMeasure_integralRegion
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex) :
+    measured.blockProductMeasure placeTuple
+        (measured.blockRadializedRegion placeTuple
+          (measured.blockIntegralRegion placeTuple)) = 1 := by
+  rw [blockProductMeasure,
+    measured.blockRadializedRegion_integralRegion placeTuple,
+    MeasureTheory.Measure.pi_pi]
+  simp only [SourcePacketMeasuredField.integral_measure_eq_one,
+    Finset.prod_const_one]
+
+/-- The distinguished radial block has positive measure. -/
+theorem blockProductMeasure_integralRegion_ne_zero
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex) :
+    measured.blockProductMeasure placeTuple
+        (measured.blockRadializedRegion placeTuple
+          (measured.blockIntegralRegion placeTuple)) ≠ 0 := by
+  rw [measured.blockProductMeasure_integralRegion placeTuple]
+  exact one_ne_zero
+
+/-- The distinguished radial block has finite measure. -/
+theorem blockProductMeasure_integralRegion_ne_top
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex) :
+    measured.blockProductMeasure placeTuple
+        (measured.blockRadializedRegion placeTuple
+          (measured.blockIntegralRegion placeTuple)) ≠ ⊤ := by
+  rw [measured.blockProductMeasure_integralRegion placeTuple]
+  exact ENNReal.one_ne_top
+
+/--
+The normalized log-volume of one finite place-tuple stage, constructed from
+the genuine field measures rather than supplied as an arbitrary block field.
+-/
+noncomputable def blockVolume
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex) :
+    SourceNormalizedLogVolume
+      (decomposition.blockStage placeTuple).module where
+  admissible := fun region =>
+    MeasurableSet (measured.blockRadializedRegion placeTuple region) ∧
+      measured.blockProductMeasure placeTuple
+          (measured.blockRadializedRegion placeTuple region) ≠ 0 ∧
+      measured.blockProductMeasure placeTuple
+          (measured.blockRadializedRegion placeTuple region) ≠ ⊤
+  rawLogVolume := fun region _ =>
+    Real.log
+      (measured.blockProductMeasure placeTuple
+        (measured.blockRadializedRegion placeTuple region)).toReal
+  integralRegion := measured.blockIntegralRegion placeTuple
+  integralRegion_admissible :=
+    ⟨measured.blockRadializedRegion_integralRegion_measurable placeTuple,
+      measured.blockProductMeasure_integralRegion_ne_zero placeTuple,
+      measured.blockProductMeasure_integralRegion_ne_top placeTuple⟩
+  normalizationOffset :=
+    ∑ index,
+      (measured.blockMeasuredField placeTuple index).volume.normalizationOffset
+
+/-- The block normalization offset is derived to be zero field by field. -/
+theorem blockVolume_normalizationOffset_eq_zero
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex) :
+    (measured.blockVolume placeTuple).normalizationOffset = 0 := by
+  change
+    (∑ index,
+      (measured.blockMeasuredField placeTuple index).volume.normalizationOffset) = 0
+  exact Finset.sum_eq_zero fun index _ =>
+    (measured.blockMeasuredField placeTuple index).normalizationOffset_eq_zero
+
+/-- The block raw log-volume is literally the log of its radial product measure. -/
+theorem blockVolume_rawLogVolume_eq_measure
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex)
+    (region : (measured.blockVolume placeTuple).AdmissibleRegion) :
+    (measured.blockVolume placeTuple).rawLogVolume
+        region.carrier region.isAdmissible =
+      Real.log
+        (measured.blockProductMeasure placeTuple
+          (measured.blockRadializedRegion placeTuple region.carrier)).toReal :=
+  rfl
+
+/-- The distinguished integral block has normalized log-volume zero. -/
+theorem blockVolume_value_eq_zero
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex) :
+    (measured.blockVolume placeTuple).value = 0 := by
+  rw [SourceNormalizedLogVolume.value,
+    SourceNormalizedLogVolume.valueOn]
+  change
+    Real.log
+        (measured.blockProductMeasure placeTuple
+          (measured.blockRadializedRegion placeTuple
+            (measured.blockIntegralRegion placeTuple))).toReal -
+      (measured.blockVolume placeTuple).normalizationOffset = 0
+  rw [measured.blockProductMeasure_integralRegion placeTuple,
+    measured.blockVolume_normalizationOffset_eq_zero placeTuple]
+  norm_num
+
+end SourcePacketFiniteMeasuredFieldDecomposition
+
 /--
 Legacy whole-place-tuple realization retained while the existing weighted
 volume corridor is migrated to `SourcePacketFiniteMeasuredFieldDecomposition`.
