@@ -782,6 +782,29 @@ def m1m3PaperLedger : List PaperClause :=
       ["ToyIUTIIHodgeArakelovEvaluationData"] .unformalized
       "The etale-picture compatibility is absent.",
 
+    clause "III.1.1" .iutIII "IUT III, Definition 1.1"
+      ["SourceSelectedPlace.LogFieldCarrier",
+        "SourceSelectedLocalLogFieldRealization",
+        "SourceMonoAnalyticIntegralStructure.logShellCarrier",
+        "SourceMonoAnalyticIntegralStructure.logShellCarrier_eq_lattice",
+        "SourceMonoAnalyticIntegralStructure.logShellCarrier_eq_piBall",
+        "SourceMonoAnalyticLogShell"]
+      .partialImplementation
+      "The additive log field is tied to the actual selected-place algebraic closure and its filtered field stages. The source log-shell is separated from the packet integral carrier: it is the finite-place additive lattice and the archimedean radius-pi ball of Remark 1.2.2(ii), while the latter's radius-one ball remains the packet integral structure. Compactness and the measured shell region are explicit obligations. Constructing the pre-log-shell from local units, the p-star-scaled p-adic logarithm image, the pointed archimedean universal cover, and the tautological/full log-links remains open.",
+    clause "III.1.2(vi-viii)" .iutIII
+      "IUT III, Proposition 1.2(vi)-(viii)"
+      ["SourceNonarchimedeanLogShellSymmetryCore",
+        "SourceNonarchimedeanLogShellSymmetry",
+        "SourceArchimedeanLogShellSymmetry",
+        "SourceMonoAnalyticLogShellSymmetryData",
+        "SourceMonoAnalyticLogShell",
+        "SourceMonoAnalyticLogShellAlgorithm",
+        "SourceMonoAnalyticLogShellAlgorithm.transport_logShell",
+        "SourceMonoAnalyticLogShellAlgorithm.transport_measuredRegion",
+        "SourceMonoAnalyticLogShellAlgorithm.transport_logVolume"]
+      .partialImplementation
+      "A shell carries its actual ind-topological field realization, compact source-shaped shell, finite-place Ism or independent archimedean sign symmetry, and log-volume functional. Prime-strip morphisms act by compatible continuous linear equivalences and algebra automorphisms satisfying identity and composition; preservation of the finite lattice and archimedean Hermitian seminorm derives preservation of the actual radius-pi log-shell and its measured value. Constructing these data functorially from the D-tilde and F-tilde-times-mu components via Absolute Anabelian Topics III, Proposition 5.8, and constructing the Proposition 1.2 poly-isomorphism orbits remain open.",
+
     clause "III.3.1" .iutIII "IUT III, Proposition 3.1"
       ["SourceRationalPlace", "SourceRationalPlace.Completion",
         "SourceSelectedPlaceAbove", "SourceSelectedPlaceFiberFiniteness",
@@ -1282,8 +1305,8 @@ def clauseIdsWithStatus (status : ClauseStatus) : List String :=
   m1m3PaperLedger.filterMap fun entry =>
     if entry.status = status then some entry.id else none
 
-/-- The source-closure ledger contains one hundred separately audited clauses. -/
-theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 100 :=
+/-- The source-closure ledger contains 102 separately audited clauses. -/
+theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 102 :=
   rfl
 
 /-- No source clause occurs twice in the direct-citation ledger. -/
@@ -1291,9 +1314,9 @@ theorem m1m3PaperLedger_ids_nodup :
     (m1m3PaperLedger.map PaperClause.id).Nodup := by
   decide
 
-/-- Seventy-five clauses currently have a genuine but incomplete implementation. -/
+/-- Seventy-seven clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 75 :=
+    (clauseIdsWithStatus .partialImplementation).length = 77 :=
   rfl
 
 /-- Five clauses currently point only to explicitly classified toy models. -/

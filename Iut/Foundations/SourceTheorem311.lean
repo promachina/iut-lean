@@ -3456,6 +3456,17 @@ def carrier
   | .nonarchimedean, integral => (integral.lattice : Set M)
   | .archimedean, integral => integral.unitBall
 
+/--
+The actual mono-analytic log-shell of IUT III, Proposition 1.2(vi)-(vii).
+At a finite place this is the additive lattice; at an infinite place it is the
+radius-`pi` ball of Remark 1.2.2(ii), not the radius-one packet integral ball.
+-/
+def logShellCarrier
+    (integral : SourceMonoAnalyticIntegralStructure kind M) : Set M :=
+  match kind, integral with
+  | .nonarchimedean, integral => (integral.lattice : Set M)
+  | .archimedean, integral => integral.piBall
+
 theorem zero_mem
     (integral : SourceMonoAnalyticIntegralStructure kind M) :
     (0 : M) ∈ integral.carrier := by
@@ -3469,6 +3480,14 @@ theorem isClosed
   cases kind with
   | nonarchimedean => exact integral.isClosed_lattice
   | archimedean => exact integral.isClosed_unitBall
+
+/-- The source log-shell is closed in both place cases. -/
+theorem isClosed_logShellCarrier
+    (integral : SourceMonoAnalyticIntegralStructure kind M) :
+    IsClosed integral.logShellCarrier := by
+  cases kind with
+  | nonarchimedean => exact integral.isClosed_lattice
+  | archimedean => exact integral.isClosed_piBall
 
 /-- Extract the finite-place lattice after identifying the place kind. -/
 def asNonarchimedean
@@ -3499,6 +3518,22 @@ theorem asArchimedean_unitBall
     (integral : SourceMonoAnalyticIntegralStructure kind M)
     (hkind : kind = .archimedean) :
     (integral.asArchimedean hkind).unitBall = integral.carrier := by
+  subst kind
+  rfl
+
+theorem logShellCarrier_eq_lattice
+    (integral : SourceMonoAnalyticIntegralStructure kind M)
+    (hkind : kind = .nonarchimedean) :
+    integral.logShellCarrier =
+      (integral.asNonarchimedean hkind).lattice := by
+  subst kind
+  rfl
+
+theorem logShellCarrier_eq_piBall
+    (integral : SourceMonoAnalyticIntegralStructure kind M)
+    (hkind : kind = .archimedean) :
+    integral.logShellCarrier =
+      (integral.asArchimedean hkind).piBall := by
   subst kind
   rfl
 
@@ -10870,8 +10905,10 @@ structure SourceMonoAnalyticLogShell
       place.1.toRational.kind integral
   normalizedLogVolume :
     SourceNormalizedLogVolume module.rationalCarrier
+  logShell_isCompact :
+    IsCompact integral.logShellCarrier
   normalizedLogVolume_region :
-    normalizedLogVolume.integralRegion = integral.carrier
+    normalizedLogVolume.integralRegion = integral.logShellCarrier
   packetNormalization :
     SourceNormalizedLogVolume.PacketNormalization place.1.toRational
       normalizedLogVolume
@@ -11041,7 +11078,58 @@ variable
     {theta : SourceInitialThetaCore Fmod F K}
     {models : IUTIThetaHodgeTheaterModels theta}
 
-/-- Measured integral regions are transported by the actual log-shell map. -/
+/--
+Functorial transport preserves the source log-shell.  At finite places this is
+the integral lattice; at infinite places it follows from preservation of the
+seminorm and the source-prescribed radius `pi`.
+-/
+theorem transport_logShell
+    (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
+    {source target : SourceDMonoAnalyticPrimeStrip models}
+    (map : source ⟶ target) (place : SourceSelectedPlace theta) :
+    algorithm.transport map place ''
+      (algorithm.shell source place).integral.logShellCarrier =
+      (algorithm.shell target place).integral.logShellCarrier := by
+  by_cases hnonarch :
+      place.1.toRational.kind = .nonarchimedean
+  · rw [(algorithm.shell source place).integral.logShellCarrier_eq_lattice
+        hnonarch,
+      (algorithm.shell target place).integral.logShellCarrier_eq_lattice
+        hnonarch]
+    simpa only [SourceMonoAnalyticIntegralStructure.asNonarchimedean_lattice] using
+      algorithm.transport_integral map place
+  · have harch : place.1.toRational.kind = .archimedean := by
+      cases hkind : place.1.toRational.kind with
+      | nonarchimedean => contradiction
+      | archimedean => rfl
+    rw [(algorithm.shell source place).integral.logShellCarrier_eq_piBall harch,
+      (algorithm.shell target place).integral.logShellCarrier_eq_piBall harch]
+    ext targetValue
+    constructor
+    · rintro ⟨sourceValue, hsourceValue, rfl⟩
+      rw [SourceArchimedeanIntegralStructure.piBall,
+        Seminorm.closedBall_zero_eq] at hsourceValue ⊢
+      change
+        ((algorithm.shell target place).integral.asArchimedean harch).seminorm
+            (algorithm.transport map place sourceValue) ≤ Real.pi
+      rw [algorithm.transport_archimedean_seminorm
+        map place harch sourceValue]
+      exact hsourceValue
+    · intro htargetValue
+      let sourceValue := (algorithm.transport map place).symm targetValue
+      refine ⟨sourceValue, ?_, ?_⟩
+      · rw [SourceArchimedeanIntegralStructure.piBall,
+          Seminorm.closedBall_zero_eq] at htargetValue ⊢
+        change
+          ((algorithm.shell source place).integral.asArchimedean harch).seminorm
+              sourceValue ≤ Real.pi
+        rw [← algorithm.transport_archimedean_seminorm
+          map place harch sourceValue]
+        simpa only [sourceValue,
+          (algorithm.transport map place).apply_symm_apply] using htargetValue
+      · exact (algorithm.transport map place).apply_symm_apply targetValue
+
+/-- Measured log-shell regions are transported by the actual log-shell map. -/
 theorem transport_measuredRegion
     (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
     {source target : SourceDMonoAnalyticPrimeStrip models}
@@ -11050,7 +11138,7 @@ theorem transport_measuredRegion
         (algorithm.shell source place).normalizedLogVolume.integralRegion =
       (algorithm.shell target place).normalizedLogVolume.integralRegion := by
   rw [(algorithm.shell source place).normalizedLogVolume_region,
-    algorithm.transport_integral map place,
+    algorithm.transport_logShell map place,
     (algorithm.shell target place).normalizedLogVolume_region]
 
 /--
@@ -11187,14 +11275,14 @@ noncomputable def normalizedLogVolumeAbove
   subst rationalPlace
   exact (algorithm.shell strip place).normalizedLogVolume
 
-/-- The measured region is exactly the transported summand integral shell. -/
+/-- The measured region is exactly the transported summand log-shell. -/
 theorem normalizedLogVolumeAbove_region
     (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
     (strip : SourceDMonoAnalyticPrimeStrip models)
     (rationalPlace : SourceRationalPlace)
     (place : SourceSelectedPlaceAbove theta rationalPlace) :
     (algorithm.normalizedLogVolumeAbove strip rationalPlace place).integralRegion =
-      (algorithm.integralAbove strip rationalPlace place).carrier := by
+      (algorithm.integralAbove strip rationalPlace place).logShellCarrier := by
   rcases place with ⟨place, hplace⟩
   subst rationalPlace
   exact (algorithm.shell strip place).normalizedLogVolume_region

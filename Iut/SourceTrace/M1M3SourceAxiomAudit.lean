@@ -115,6 +115,12 @@ namespace Iut.SourceInfiniteLocalFieldStages
 end Iut.SourceInfiniteLocalFieldStages
 
 #print axioms Iut.SourceMonoAnalyticLogShell.fieldPresentation
+#print axioms Iut.SourceMonoAnalyticIntegralStructure.isClosed_logShellCarrier
+#print axioms Iut.SourceMonoAnalyticIntegralStructure.logShellCarrier_eq_lattice
+#print axioms Iut.SourceMonoAnalyticIntegralStructure.logShellCarrier_eq_piBall
+#print axioms Iut.SourceMonoAnalyticLogShellAlgorithm.transport_logShell
+#print axioms Iut.SourceMonoAnalyticLogShellAlgorithm.transport_measuredRegion
+#print axioms Iut.SourceMonoAnalyticLogShellAlgorithm.transport_logVolume
 
 #print axioms Iut.SourceMonoAnalyticTensorPacket.ind2CoordinateIndex_card
 #print axioms Iut.SourceMonoAnalyticTensorPacket.placeTupleIndex_card
