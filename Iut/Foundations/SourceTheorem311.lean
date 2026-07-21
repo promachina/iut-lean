@@ -19,10 +19,12 @@ import Mathlib.LinearAlgebra.PiTensorProduct.DirectSum
 import Mathlib.MeasureTheory.Constructions.Pi
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Periodic
 import Mathlib.MeasureTheory.Measure.Haar.Basic
+import Mathlib.MeasureTheory.Measure.Haar.DistribChar
 import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
 import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
 import Mathlib.MeasureTheory.Measure.NullMeasurable
 import Mathlib.NumberTheory.NumberField.Completion.Ramification
+import Mathlib.RingTheory.Ideal.Quotient.HasFiniteQuotients
 import Mathlib.RingTheory.Valuation.ValuationSubring
 import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Basic
 
@@ -2585,6 +2587,666 @@ theorem normalizedLogVolume_value_eq_zero
         (integers.positiveCompacts : Set field.carrier) by rfl,
     MeasureTheory.Measure.addHaarMeasure_self]
   norm_num
+
+/-!
+## Nonarchimedean rational-prime dilation
+
+Absolute Anabelian Geometry III, Proposition 5.7(i), gives the raw local-field
+Haar scaling.  If `L/Q_p` has degree `d`, multiplication by the rational prime
+has scale `p^{-d}` and hence shifts raw log-volume by `-d * log p`.  IUT III,
+Remark 3.1.1(ii), obtains the packet-normalized shift `-log p` only after the
+local-degree weights are applied.  The declarations below retain this
+distinction.
+
+The proof below follows the residue-coset argument of Absolute Anabelian
+Geometry III: the actual quotient `O_L / p O_L` is indexed by its finite
+residue vector space, translation invariance computes the mass of `p O_L`, and
+Mathlib's distributive Haar character transfers that calculation to every
+measurable region.  The source boundary is the residue-field module and its
+standard cardinality/dimension identifications, not the desired Haar formula.
+-/
+
+/-- The finite rational place underlying a nonarchimedean local-field model. -/
+noncomputable def finitePlace
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    NumberField.FinitePlace ℚ :=
+  match rationalPlace with
+  | .finite place => place
+  | .infinite _ => nomatch integers.placeKind
+
+/-- The rational prime `p` below the local field, derived from its residue field. -/
+noncomputable def rationalPrime
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) : ℕ :=
+  ThetaFinitePlace.residueCharacteristic integers.finitePlace
+
+/-- The residue characteristic of a finite rational place is prime. -/
+theorem rationalPrime_prime
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    Nat.Prime integers.rationalPrime := by
+  cases rationalPlace with
+  | finite place =>
+      letI : Finite (ThetaFinitePlace.ResidueField place) :=
+        Ring.HasFiniteQuotients.finiteQuotient
+          (ThetaFinitePlace.underlyingPrime place).ne_bot
+      exact CharP.prime_ringChar (ThetaFinitePlace.ResidueField place)
+  | infinite _ =>
+      exact nomatch integers.placeKind
+
+theorem rationalPrime_pos
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    0 < integers.rationalPrime :=
+  integers.rationalPrime_prime.pos
+
+/-- The image of the rational prime in the finite local field. -/
+noncomputable def rationalPrimeScalar
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    field.carrier :=
+  algebraMap ℚ field.carrier (integers.rationalPrime : ℚ)
+
+theorem rationalPrimeScalar_ne_zero
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    integers.rationalPrimeScalar ≠ 0 := by
+  rw [rationalPrimeScalar, map_ne_zero]
+  exact_mod_cast integers.rationalPrime_prime.ne_zero
+
+/-- The rational prime as a unit of the local field. -/
+noncomputable def rationalPrimeUnit
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    field.carrierˣ :=
+  Units.mk0 integers.rationalPrimeScalar integers.rationalPrimeScalar_ne_zero
+
+/-- Multiplication by `p` as a homeomorphism of the additive local field. -/
+noncomputable def rationalPrimeDilationHomeomorph
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    field.carrier ≃ₜ field.carrier :=
+  Homeomorph.mulLeft₀ integers.rationalPrimeScalar
+    integers.rationalPrimeScalar_ne_zero
+
+/-- Multiplication by `p` as the underlying equivalence used on regions. -/
+noncomputable def rationalPrimeDilation
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    field.carrier ≃ field.carrier :=
+  integers.rationalPrimeDilationHomeomorph.toEquiv
+
+@[simp]
+theorem rationalPrimeDilation_apply
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
+    (value : field.carrier) :
+    integers.rationalPrimeDilation value =
+      integers.rationalPrimeScalar * value :=
+  rfl
+
+/-- The full local degree `[L : Q_p]` governing raw additive Haar scaling. -/
+noncomputable def localDegree
+    (_integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) : ℕ+ :=
+  ⟨Module.finrank rationalPlace.Completion field.carrier,
+    Module.finrank_pos⟩
+
+/-- The raw Haar scale `p^{-[L:Q_p]}` of multiplication by `p`. -/
+noncomputable def rationalPrimeScale
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) : NNReal :=
+  ((integers.rationalPrime : NNReal) ^ integers.localDegree.1)⁻¹
+
+theorem rationalPrimeScale_pos
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    0 < integers.rationalPrimeScale := by
+  rw [rationalPrimeScale, inv_pos]
+  exact pow_pos (by exact_mod_cast integers.rationalPrime_pos) _
+
+theorem rationalPrimeScale_ne_zero
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    integers.rationalPrimeScale ≠ 0 :=
+  integers.rationalPrimeScale_pos.ne'
+
+/-- The raw local-field log-volume shift `-[L:Q_p] * log p`. -/
+noncomputable def localPrimeLogVolumeShift
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) : ℝ :=
+  -(integers.localDegree.1 : ℝ) *
+    Real.log (integers.rationalPrime : ℝ)
+
+theorem log_rationalPrimeScale
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    Real.log (integers.rationalPrimeScale : ℝ) =
+      integers.localPrimeLogVolumeShift := by
+  rw [rationalPrimeScale, NNReal.coe_inv, NNReal.coe_pow,
+    NNReal.coe_natCast, Real.log_inv, Real.log_pow]
+  rw [localPrimeLogVolumeShift]
+  ring
+
+/-- At a finite place, the packet shift is `-log p`, without the local degree. -/
+theorem packetLogVolumeShift_eq_neg_log_rationalPrime
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    SourceNormalizedLogVolume.packetLogVolumeShift rationalPlace =
+      -Real.log (integers.rationalPrime : ℝ) := by
+  cases rationalPlace with
+  | finite _ => rfl
+  | infinite _ => exact nomatch integers.placeKind
+
+/-- Raw local scaling is the local degree times the packet-normalized shift. -/
+theorem localPrimeLogVolumeShift_eq_degree_mul_packetLogVolumeShift
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    integers.localPrimeLogVolumeShift =
+      (integers.localDegree.1 : ℝ) *
+        SourceNormalizedLogVolume.packetLogVolumeShift rationalPlace := by
+  rw [integers.packetLogVolumeShift_eq_neg_log_rationalPrime,
+    localPrimeLogVolumeShift]
+  ring
+
+/-- Multiplication by `p` as an additive homomorphism. -/
+noncomputable def rationalPrimeDilationAddMonoidHom
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    field.carrier →+ field.carrier where
+  toFun value := integers.rationalPrimeScalar * value
+  map_zero' := mul_zero _
+  map_add' _ _ := mul_add _ _ _
+
+/-- The additive group of the valuation ring `O_L`. -/
+noncomputable def integerAddSubgroup
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    AddSubgroup field.carrier :=
+  integers.integerRing.toSubring.toAddSubgroup
+
+/-- The additive subgroup `p O_L` inside the local field. -/
+noncomputable def rationalPrimeScaledAddSubgroup
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    AddSubgroup field.carrier :=
+  integers.integerAddSubgroup.map integers.rationalPrimeDilationAddMonoidHom
+
+theorem rationalPrimeScalar_mem_integerRing
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    integers.rationalPrimeScalar ∈ integers.integerRing := by
+  simpa [rationalPrimeScalar] using
+    integers.integerRing.toSubring.natCast_mem integers.rationalPrime
+
+theorem rationalPrimeScaledAddSubgroup_le_integerAddSubgroup
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    integers.rationalPrimeScaledAddSubgroup ≤ integers.integerAddSubgroup := by
+  rintro value ⟨source, hsource, rfl⟩
+  exact integers.integerRing.toSubring.mul_mem
+    integers.rationalPrimeScalar_mem_integerRing hsource
+
+@[simp]
+theorem rationalPrimeScaledAddSubgroup_coe
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    (integers.rationalPrimeScaledAddSubgroup : Set field.carrier) =
+      integers.rationalPrimeDilation ''
+        (integers.integerRing : Set field.carrier) := by
+  rfl
+
+theorem rationalPrimeScaledAddSubgroup_measurable
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    MeasurableSet
+      (integers.rationalPrimeScaledAddSubgroup : Set field.carrier) := by
+  rw [integers.rationalPrimeScaledAddSubgroup_coe]
+  exact (integers.rationalPrimeDilationHomeomorph.isOpenMap
+    _ integers.integerRing_isOpen).measurableSet
+
+/-- The actual additive quotient `O_L / p O_L`. -/
+noncomputable abbrev RationalPrimeQuotient
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :=
+  integers.integerAddSubgroup ⧸
+    integers.rationalPrimeScaledAddSubgroup.addSubgroupOf
+      integers.integerAddSubgroup
+
+/-- Finiteness and cardinality of the actual quotient `O_L / p O_L`. -/
+structure ResidueQuotientFormula
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) where
+  quotientFintype : Fintype integers.RationalPrimeQuotient
+  quotient_card_eq :
+    letI := quotientFintype
+    Fintype.card integers.RationalPrimeQuotient =
+      integers.rationalPrime ^ integers.localDegree.1
+
+noncomputable def ResidueQuotientFormula.quotientEquiv
+    {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
+    (formula : integers.ResidueQuotientFormula) :
+    Fin (integers.rationalPrime ^ integers.localDegree.1) ≃
+      integers.RationalPrimeQuotient := by
+  letI := formula.quotientFintype
+  apply Fintype.equivOfCardEq
+  simpa using formula.quotient_card_eq.symm
+
+noncomputable def ResidueQuotientFormula.representative
+    {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
+    (formula : integers.ResidueQuotientFormula)
+    (index : Fin (integers.rationalPrime ^ integers.localDegree.1)) :
+    integers.integerAddSubgroup :=
+  Classical.choose
+    (QuotientAddGroup.mk'_surjective
+      (integers.rationalPrimeScaledAddSubgroup.addSubgroupOf
+        integers.integerAddSubgroup)
+      (formula.quotientEquiv index))
+
+theorem ResidueQuotientFormula.representative_spec
+    {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
+    (formula : integers.ResidueQuotientFormula)
+    (index : Fin (integers.rationalPrime ^ integers.localDegree.1)) :
+    QuotientAddGroup.mk'
+        (integers.rationalPrimeScaledAddSubgroup.addSubgroupOf
+          integers.integerAddSubgroup)
+        (formula.representative index) =
+      formula.quotientEquiv index :=
+  Classical.choose_spec
+    (QuotientAddGroup.mk'_surjective
+      (integers.rationalPrimeScaledAddSubgroup.addSubgroupOf
+        integers.integerAddSubgroup)
+      (formula.quotientEquiv index))
+
+/--
+The source-facing residue field and its vector-space structure on
+`O_L / p O_L`.  The two identifications are the algebraic local-field content
+of `#(O_L / p O_L) = p^[L:Q_p]`; the cardinality itself is derived below.
+-/
+structure RationalPrimeResidueModule
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
+    (residueField : Type v) [Field residueField] [Fintype residueField] where
+  quotientModule : Module residueField integers.RationalPrimeQuotient
+  quotientFintype : Fintype integers.RationalPrimeQuotient
+  residueField_card_eq : Fintype.card residueField = integers.rationalPrime
+  quotient_finrank_eq :
+    letI := quotientModule
+    Module.finrank residueField integers.RationalPrimeQuotient =
+      integers.localDegree.1
+
+theorem RationalPrimeResidueModule.quotient_card_eq
+    {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
+    {residueField : Type v} [Field residueField] [Fintype residueField]
+    (residue : integers.RationalPrimeResidueModule residueField) :
+    letI := residue.quotientModule
+    letI := residue.quotientFintype
+    Fintype.card integers.RationalPrimeQuotient =
+      integers.rationalPrime ^ integers.localDegree.1 := by
+  letI := residue.quotientModule
+  letI := residue.quotientFintype
+  calc
+    Fintype.card integers.RationalPrimeQuotient =
+        Fintype.card residueField ^
+          Module.finrank residueField integers.RationalPrimeQuotient :=
+      Module.card_eq_pow_finrank
+    _ = integers.rationalPrime ^ integers.localDegree.1 := by
+      rw [residue.residueField_card_eq, residue.quotient_finrank_eq]
+
+noncomputable def RationalPrimeResidueModule.toResidueQuotientFormula
+    {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
+    {residueField : Type v} [Field residueField] [Fintype residueField]
+    (residue : integers.RationalPrimeResidueModule residueField) :
+    integers.ResidueQuotientFormula := by
+  letI := residue.quotientModule
+  exact
+    { quotientFintype := residue.quotientFintype
+      quotient_card_eq := residue.quotient_card_eq }
+
+/--
+The intermediate local Haar formula: the distributive character of the
+rational prime is `p^{-[L:Q_p]}`.  It is derived below from the actual residue
+quotient rather than accepted as the source boundary.
+-/
+structure HaarDegreeFormula
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) : Prop where
+  distribHaarChar_rationalPrimeUnit :
+    MeasureTheory.distribHaarChar field.carrier
+        integers.rationalPrimeUnit =
+      integers.rationalPrimeScale
+
+/-- A translated additive coset of `p O_L` in `O_L`. -/
+def ResidueQuotientFormula.residueCoset
+    {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
+    (formula : integers.ResidueQuotientFormula)
+    (index : Fin (integers.rationalPrime ^ integers.localDegree.1)) :
+    Set field.carrier :=
+  (fun point => (formula.representative index : field.carrier) + point) ''
+    (integers.rationalPrimeScaledAddSubgroup : Set field.carrier)
+
+theorem ResidueQuotientFormula.residueCoset_measurable
+    {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
+    (formula : integers.ResidueQuotientFormula)
+    (index : Fin (integers.rationalPrime ^ integers.localDegree.1)) :
+    MeasurableSet (formula.residueCoset index) := by
+  simpa [residueCoset] using
+    ((MeasurableEquiv.addLeft
+        (formula.representative index : field.carrier)).measurableSet_image).2
+      integers.rationalPrimeScaledAddSubgroup_measurable
+
+/-- The residue cosets cover the valuation ring. -/
+theorem ResidueQuotientFormula.residueCosets_cover_integerRing
+    {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
+    (formula : integers.ResidueQuotientFormula) :
+    (integers.integerRing : Set field.carrier) =
+      ⋃ index : Fin (integers.rationalPrime ^ integers.localDegree.1),
+        formula.residueCoset index := by
+  ext x
+  constructor
+  · intro hx
+    let xu : integers.integerAddSubgroup := ⟨x, hx⟩
+    let index : Fin (integers.rationalPrime ^ integers.localDegree.1) :=
+      formula.quotientEquiv.symm
+        (QuotientAddGroup.mk'
+          (integers.rationalPrimeScaledAddSubgroup.addSubgroupOf
+            integers.integerAddSubgroup) xu)
+    have hrep :
+        QuotientAddGroup.mk'
+            (integers.rationalPrimeScaledAddSubgroup.addSubgroupOf
+              integers.integerAddSubgroup)
+            (formula.representative index) =
+          QuotientAddGroup.mk'
+            (integers.rationalPrimeScaledAddSubgroup.addSubgroupOf
+              integers.integerAddSubgroup) xu := by
+      simpa [index] using formula.representative_spec index
+    rcases (QuotientAddGroup.mk'_eq_mk'
+        (integers.rationalPrimeScaledAddSubgroup.addSubgroupOf
+          integers.integerAddSubgroup)).mp hrep with ⟨z, hz, hz_eq⟩
+    refine Set.mem_iUnion.mpr ⟨index, ?_⟩
+    refine ⟨((z : integers.integerAddSubgroup) : field.carrier), ?_, ?_⟩
+    · change ((z : integers.integerAddSubgroup) : field.carrier) ∈
+        integers.rationalPrimeScaledAddSubgroup
+      exact hz
+    · exact congrArg Subtype.val hz_eq
+  · intro hx
+    rcases Set.mem_iUnion.mp hx with ⟨index, y, hy, rfl⟩
+    exact integers.integerAddSubgroup.add_mem
+      (formula.representative index).property
+      (integers.rationalPrimeScaledAddSubgroup_le_integerAddSubgroup hy)
+
+/-- Distinct residue representatives determine disjoint additive cosets. -/
+theorem ResidueQuotientFormula.residueCosets_pairwiseDisjoint
+    {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
+    (formula : integers.ResidueQuotientFormula) :
+    Pairwise fun index₁ index₂ :
+        Fin (integers.rationalPrime ^ integers.localDegree.1) =>
+      Disjoint (formula.residueCoset index₁) (formula.residueCoset index₂) := by
+  intro index₁ index₂ hne
+  rw [Set.disjoint_left]
+  intro x hx₁ hx₂
+  rcases hx₁ with ⟨z₁, hz₁, hz₁_eq⟩
+  rcases hx₂ with ⟨z₂, hz₂, hz₂_eq⟩
+  have hunit₁ :
+      (formula.representative index₁ : field.carrier) + z₁ ∈
+        integers.integerAddSubgroup :=
+    integers.integerAddSubgroup.add_mem
+      (formula.representative index₁).property
+      (integers.rationalPrimeScaledAddSubgroup_le_integerAddSubgroup hz₁)
+  have hunit₂ :
+      (formula.representative index₂ : field.carrier) + z₂ ∈
+        integers.integerAddSubgroup :=
+    integers.integerAddSubgroup.add_mem
+      (formula.representative index₂).property
+      (integers.rationalPrimeScaledAddSubgroup_le_integerAddSubgroup hz₂)
+  have hx_eq :
+      (formula.representative index₁ : field.carrier) + z₁ =
+        (formula.representative index₂ : field.carrier) + z₂ :=
+    hz₁_eq.trans hz₂_eq.symm
+  let z₁u : integers.integerAddSubgroup :=
+    ⟨z₁, integers.rationalPrimeScaledAddSubgroup_le_integerAddSubgroup hz₁⟩
+  let z₂u : integers.integerAddSubgroup :=
+    ⟨z₂, integers.rationalPrimeScaledAddSubgroup_le_integerAddSubgroup hz₂⟩
+  have hz₁u :
+      z₁u ∈ integers.rationalPrimeScaledAddSubgroup.addSubgroupOf
+        integers.integerAddSubgroup := by
+    change ((z₁u : integers.integerAddSubgroup) : field.carrier) ∈
+      integers.rationalPrimeScaledAddSubgroup
+    exact hz₁
+  have hz₂u :
+      z₂u ∈ integers.rationalPrimeScaledAddSubgroup.addSubgroupOf
+        integers.integerAddSubgroup := by
+    change ((z₂u : integers.integerAddSubgroup) : field.carrier) ∈
+      integers.rationalPrimeScaledAddSubgroup
+    exact hz₂
+  have hmk₁ :
+      QuotientAddGroup.mk'
+          (integers.rationalPrimeScaledAddSubgroup.addSubgroupOf
+            integers.integerAddSubgroup)
+          (formula.representative index₁) =
+        QuotientAddGroup.mk'
+          (integers.rationalPrimeScaledAddSubgroup.addSubgroupOf
+            integers.integerAddSubgroup)
+          ⟨(formula.representative index₁ : field.carrier) + z₁, hunit₁⟩ := by
+    refine (QuotientAddGroup.mk'_eq_mk'
+      (integers.rationalPrimeScaledAddSubgroup.addSubgroupOf
+        integers.integerAddSubgroup)).mpr ?_
+    exact ⟨z₁u, hz₁u, by ext; simp [z₁u]⟩
+  have hmk₂ :
+      QuotientAddGroup.mk'
+          (integers.rationalPrimeScaledAddSubgroup.addSubgroupOf
+            integers.integerAddSubgroup)
+          (formula.representative index₂) =
+        QuotientAddGroup.mk'
+          (integers.rationalPrimeScaledAddSubgroup.addSubgroupOf
+            integers.integerAddSubgroup)
+          ⟨(formula.representative index₂ : field.carrier) + z₂, hunit₂⟩ := by
+    refine (QuotientAddGroup.mk'_eq_mk'
+      (integers.rationalPrimeScaledAddSubgroup.addSubgroupOf
+        integers.integerAddSubgroup)).mpr ?_
+    exact ⟨z₂u, hz₂u, by ext; simp [z₂u]⟩
+  have hsame_subtype :
+      (⟨(formula.representative index₁ : field.carrier) + z₁, hunit₁⟩ :
+          integers.integerAddSubgroup) =
+        ⟨(formula.representative index₂ : field.carrier) + z₂, hunit₂⟩ := by
+    ext
+    exact hx_eq
+  have hquot : formula.quotientEquiv index₁ = formula.quotientEquiv index₂ := by
+    rw [← formula.representative_spec index₁,
+      ← formula.representative_spec index₂]
+    rw [hmk₁, hmk₂, hsame_subtype]
+  exact hne (formula.quotientEquiv.injective hquot)
+
+/-- Finite additivity for the residue-coset decomposition of `O_L`. -/
+theorem ResidueQuotientFormula.residueCoset_measure_sum_eq
+    {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
+    (formula : integers.ResidueQuotientFormula) :
+    integers.normalizedHaarMeasure integers.integerRing =
+      ∑ index : Fin (integers.rationalPrime ^ integers.localDegree.1),
+        integers.normalizedHaarMeasure (formula.residueCoset index) := by
+  calc
+    integers.normalizedHaarMeasure integers.integerRing =
+        integers.normalizedHaarMeasure
+          (⋃ index : Fin (integers.rationalPrime ^ integers.localDegree.1),
+            formula.residueCoset index) := by
+      rw [formula.residueCosets_cover_integerRing]
+    _ = ∑' index : Fin (integers.rationalPrime ^ integers.localDegree.1),
+        integers.normalizedHaarMeasure (formula.residueCoset index) := by
+      exact MeasureTheory.measure_iUnion
+        formula.residueCosets_pairwiseDisjoint
+        formula.residueCoset_measurable
+    _ = ∑ index : Fin (integers.rationalPrime ^ integers.localDegree.1),
+        integers.normalizedHaarMeasure (formula.residueCoset index) := by
+      rw [tsum_fintype]
+
+/-- Translation invariance gives every residue coset the mass of `p O_L`. -/
+theorem ResidueQuotientFormula.residueCoset_measure_eq_scaledRing
+    {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
+    (formula : integers.ResidueQuotientFormula)
+    (index : Fin (integers.rationalPrime ^ integers.localDegree.1)) :
+    integers.normalizedHaarMeasure (formula.residueCoset index) =
+      integers.normalizedHaarMeasure integers.rationalPrimeScaledAddSubgroup := by
+  letI : integers.normalizedHaarMeasure.IsAddHaarMeasure := by
+    unfold normalizedHaarMeasure
+    infer_instance
+  have hpre :=
+    MeasureTheory.measure_preimage_add integers.normalizedHaarMeasure
+      (formula.representative index : field.carrier)
+      ((fun point : field.carrier =>
+          (formula.representative index : field.carrier) + point) ''
+        (integers.rationalPrimeScaledAddSubgroup : Set field.carrier))
+  have hpreimage :
+      (fun point : field.carrier =>
+          (formula.representative index : field.carrier) + point) ⁻¹'
+          ((fun point : field.carrier =>
+              (formula.representative index : field.carrier) + point) ''
+            (integers.rationalPrimeScaledAddSubgroup : Set field.carrier)) =
+        (integers.rationalPrimeScaledAddSubgroup : Set field.carrier) := by
+    exact Set.preimage_image_eq _ (fun _ _ h => add_left_cancel h)
+  rw [hpreimage] at hpre
+  rw [residueCoset]
+  exact hpre.symm
+
+/-- The normalized mass of `p O_L` is the inverse residue-quotient size. -/
+theorem ResidueQuotientFormula.scaledRing_measure_eq_inv_card
+    {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
+    (formula : integers.ResidueQuotientFormula) :
+    integers.normalizedHaarMeasure integers.rationalPrimeScaledAddSubgroup =
+      (((integers.rationalPrime ^ integers.localDegree.1 : Nat) : ENNReal)⁻¹) := by
+  have hsum_one :
+      1 = ∑ index : Fin (integers.rationalPrime ^ integers.localDegree.1),
+        integers.normalizedHaarMeasure (formula.residueCoset index) := by
+    rw [← formula.residueCoset_measure_sum_eq]
+    rw [normalizedHaarMeasure,
+      show (integers.integerRing : Set field.carrier) =
+          (integers.positiveCompacts : Set field.carrier) by rfl,
+      MeasureTheory.Measure.addHaarMeasure_self]
+  have hsum_const :
+      (∑ index : Fin (integers.rationalPrime ^ integers.localDegree.1),
+          integers.normalizedHaarMeasure (formula.residueCoset index)) =
+        ((integers.rationalPrime ^ integers.localDegree.1 : Nat) : ENNReal) *
+          integers.normalizedHaarMeasure
+            integers.rationalPrimeScaledAddSubgroup := by
+    simp [formula.residueCoset_measure_eq_scaledRing]
+  have hmul :
+      integers.normalizedHaarMeasure integers.rationalPrimeScaledAddSubgroup *
+          ((integers.rationalPrime ^ integers.localDegree.1 : Nat) : ENNReal) =
+        1 := by
+    rw [hsum_const] at hsum_one
+    rw [mul_comm]
+    exact hsum_one.symm
+  exact ENNReal.eq_inv_of_mul_eq_one_left hmul
+
+/-- The residue quotient computes the exact Haar scale `p^{-[L:Q_p]}`. -/
+theorem ResidueQuotientFormula.scaledRing_measure_eq_scale
+    {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
+    (formula : integers.ResidueQuotientFormula) :
+    integers.normalizedHaarMeasure integers.rationalPrimeScaledAddSubgroup =
+      (integers.rationalPrimeScale : ENNReal) := by
+  rw [formula.scaledRing_measure_eq_inv_card]
+  rw [rationalPrimeScale,
+    ENNReal.coe_inv (pow_ne_zero _ (by
+      exact_mod_cast integers.rationalPrime_prime.ne_zero))]
+  simp
+
+/-- Pointwise multiplication by the prime is the image under its dilation. -/
+theorem pointwise_smul_eq_rationalPrimeDilation_image
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
+    (region : Set field.carrier) :
+    integers.rationalPrimeUnit • region =
+      integers.rationalPrimeDilation '' region := by
+  ext value
+  constructor
+  · rintro ⟨source, hsource, rfl⟩
+    refine ⟨source, hsource, ?_⟩
+    exact (integers.rationalPrimeDilation_apply source).symm
+  · rintro ⟨source, hsource, rfl⟩
+    refine ⟨source, hsource, ?_⟩
+    exact integers.rationalPrimeDilation_apply source
+
+/--
+The residue-coset cardinality and normalized mass calculation derive the Haar
+degree formula; it is not an independent measure-theoretic assumption.
+-/
+noncomputable def ResidueQuotientFormula.toHaarDegreeFormula
+    {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
+    (formula : integers.ResidueQuotientFormula) : integers.HaarDegreeFormula where
+  distribHaarChar_rationalPrimeUnit := by
+    letI : integers.normalizedHaarMeasure.IsAddHaarMeasure := by
+      unfold normalizedHaarMeasure
+      infer_instance
+    apply MeasureTheory.distribHaarChar_eq_of_measure_smul_eq_mul
+      (s := (integers.integerRing : Set field.carrier))
+      (integers.normalizedLogVolume.integralRegion_admissible.2.1)
+      (integers.normalizedLogVolume.integralRegion_admissible.2.2)
+    rw [integers.pointwise_smul_eq_rationalPrimeDilation_image]
+    rw [← integers.rationalPrimeScaledAddSubgroup_coe]
+    rw [formula.scaledRing_measure_eq_scale]
+    rw [normalizedHaarMeasure,
+      show (integers.integerRing : Set field.carrier) =
+          (integers.positiveCompacts : Set field.carrier) by rfl,
+      MeasureTheory.Measure.addHaarMeasure_self, mul_one]
+
+/-- Proposition 5.7(i)'s exact raw Haar scaling under multiplication by `p`. -/
+theorem normalizedHaarMeasure_rationalPrimeDilation
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
+    (formula : integers.HaarDegreeFormula)
+    (region : Set field.carrier) :
+    integers.normalizedHaarMeasure
+        (integers.rationalPrimeDilation '' region) =
+      (integers.rationalPrimeScale : ENNReal) *
+        integers.normalizedHaarMeasure region := by
+  letI : integers.normalizedHaarMeasure.IsAddHaarMeasure := by
+    unfold normalizedHaarMeasure
+    infer_instance
+  rw [← integers.pointwise_smul_eq_rationalPrimeDilation_image region,
+    ← MeasureTheory.distribHaarChar_mul
+      integers.normalizedHaarMeasure integers.rationalPrimeUnit region,
+    formula.distribHaarChar_rationalPrimeUnit]
+
+/-- Prime dilation preserves the complete admissible domain of local log-volume. -/
+theorem normalizedLogVolume_admissible_rationalPrimeDilation
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
+    (formula : integers.HaarDegreeFormula)
+    (region : integers.normalizedLogVolume.AdmissibleRegion) :
+    integers.normalizedLogVolume.admissible
+      (integers.rationalPrimeDilation '' region.carrier) := by
+  change
+    MeasurableSet (integers.rationalPrimeDilation '' region.carrier) ∧
+      integers.normalizedHaarMeasure
+          (integers.rationalPrimeDilation '' region.carrier) ≠ 0 ∧
+      integers.normalizedHaarMeasure
+          (integers.rationalPrimeDilation '' region.carrier) ≠ ⊤
+  refine ⟨integers.rationalPrimeDilationHomeomorph.measurableEmbedding
+      |>.measurableSet_image.mpr region.isAdmissible.1, ?_, ?_⟩
+  · rw [integers.normalizedHaarMeasure_rationalPrimeDilation formula]
+    exact mul_ne_zero
+      (ENNReal.coe_ne_zero.mpr integers.rationalPrimeScale_ne_zero)
+      region.isAdmissible.2.1
+  · rw [integers.normalizedHaarMeasure_rationalPrimeDilation formula]
+    exact ENNReal.mul_ne_top (by simp) region.isAdmissible.2.2
+
+/-- The raw local log-volume shifts by the full local-degree term. -/
+theorem normalizedLogVolume_rawLogVolume_rationalPrimeDilation
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
+    (formula : integers.HaarDegreeFormula)
+    (region : integers.normalizedLogVolume.AdmissibleRegion) :
+    integers.normalizedLogVolume.rawLogVolume
+        (integers.rationalPrimeDilation '' region.carrier)
+        (integers.normalizedLogVolume_admissible_rationalPrimeDilation
+          formula region) =
+      integers.normalizedLogVolume.rawLogVolume
+          region.carrier region.isAdmissible +
+        integers.localPrimeLogVolumeShift := by
+  change
+    Real.log
+        (integers.normalizedHaarMeasure
+          (integers.rationalPrimeDilation '' region.carrier)).toReal =
+      Real.log
+          (integers.normalizedHaarMeasure region.carrier).toReal +
+        integers.localPrimeLogVolumeShift
+  have hscaleToReal :
+      (integers.rationalPrimeScale : ENNReal).toReal =
+        (integers.rationalPrimeScale : ℝ) := by
+    simp
+  have hscaleNe : (integers.rationalPrimeScale : ℝ) ≠ 0 := by
+    exact_mod_cast integers.rationalPrimeScale_ne_zero
+  rw [integers.normalizedHaarMeasure_rationalPrimeDilation formula,
+    ENNReal.toReal_mul, hscaleToReal,
+    Real.log_mul hscaleNe
+      (ENNReal.toReal_ne_zero.mpr
+        ⟨region.isAdmissible.2.1, region.isAdmissible.2.2⟩),
+    integers.log_rationalPrimeScale]
+  ring
+
+/-- The normalized local value has the same raw local-degree shift. -/
+theorem normalizedLogVolume_valueOn_rationalPrimeDilation
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
+    (formula : integers.HaarDegreeFormula)
+    (region : integers.normalizedLogVolume.AdmissibleRegion) :
+    integers.normalizedLogVolume.valueOn
+        ⟨integers.rationalPrimeDilation '' region.carrier,
+          integers.normalizedLogVolume_admissible_rationalPrimeDilation
+            formula region⟩ =
+      integers.normalizedLogVolume.valueOn region +
+        integers.localPrimeLogVolumeShift := by
+  rw [SourceNormalizedLogVolume.valueOn,
+    SourceNormalizedLogVolume.valueOn]
+  rw [integers.normalizedLogVolume_rawLogVolume_rationalPrimeDilation
+    formula region]
+  ring
 
 end SourceNonarchimedeanLocalFieldIntegers
 

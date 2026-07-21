@@ -87,7 +87,25 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceNormalizedLogVolume.PacketNormalization.valueOn_dilateRegion
 #print axioms Iut.SourceSelectedPlace.moduliLocalDegree
 #print axioms Iut.SourceSelectedPlace.moduliRationalLocalDegree
-#print axioms Iut.SourceNonarchimedeanLocalFieldIntegers.normalizedLogVolume_value_eq_zero
+
+namespace Iut.SourceNonarchimedeanLocalFieldIntegers
+
+#print axioms normalizedLogVolume_value_eq_zero
+#print axioms rationalPrime_prime
+#print axioms log_rationalPrimeScale
+#print axioms localPrimeLogVolumeShift_eq_degree_mul_packetLogVolumeShift
+#print axioms RationalPrimeResidueModule.quotient_card_eq
+#print axioms ResidueQuotientFormula.residueCosets_cover_integerRing
+#print axioms ResidueQuotientFormula.residueCosets_pairwiseDisjoint
+#print axioms ResidueQuotientFormula.scaledRing_measure_eq_scale
+#print axioms ResidueQuotientFormula.toHaarDegreeFormula
+#print axioms normalizedHaarMeasure_rationalPrimeDilation
+#print axioms normalizedLogVolume_admissible_rationalPrimeDilation
+#print axioms normalizedLogVolume_rawLogVolume_rationalPrimeDilation
+#print axioms normalizedLogVolume_valueOn_rationalPrimeDilation
+
+end Iut.SourceNonarchimedeanLocalFieldIntegers
+
 #print axioms Iut.SourcePacketMeasuredField.ofNonarchimedean
 #print axioms Iut.SourceArchimedeanLocalFieldModel.complexNorm_image_integralRegion
 #print axioms Iut.SourceArchimedeanLocalFieldModel.radialLengthMeasure_unitRadialInterval
