@@ -29,6 +29,202 @@
   the final comparison theorem.
 \end{proof}
 
+\section{Source-native Definition 3.1 foundation}
+
+\begin{definition}[Etale theta quotient input]
+  \label{def:etale-theta-quotient-input}
+  \lean{Iut.EtaleTheta.ThetaQuotient}
+  \lean{Iut.EtaleTheta.ModLThetaQuotient}
+  \lean{Iut.EtaleTheta.ModLEllipticAbelianization}
+  \lean{Iut.EtaleTheta.ArithmeticThetaQuotientData}
+  \lean{Iut.EtaleTheta.CuspidalThetaSequence}
+  \lean{Iut.EtaleTheta.ArithmeticEllipticQuotientData}
+  \lean{Iut.EtaleTheta.ArithmeticEllipticConjugationAction}
+  \lean{Iut.EtaleTheta.TypeOneLTorsionQuotient}
+  \lean{Iut.EtaleTheta.ProfiniteLagrangianQuotient}
+  \lean{Iut.EtaleTheta.ProfiniteLagrangianQuotient.coverSubgroup_isOpen}
+  \lean{Iut.EtaleTheta.InversionEigenspaceSplitting}
+  \lean{Iut.EtaleTheta.ThetaRootSplittingData}
+  \lean{Iut.EtaleTheta.ThetaRootSplittingData.thetaRootSubgroup}
+  \lean{Iut.EtaleTheta.TateFactorizedLagrangian}
+  \lean{Iut.EtaleTheta.CuspidalSignStructure}
+  \lean{Iut.EtaleTheta.SignCompatibleThetaRootSplitting}
+  \lean{Iut.EtaleTheta.canonicalTateSignLabel}
+  \lean{Iut.OrbicurveSignAction}
+  \lean{Iut.OrbicurveSignInvariantMorphism}
+  \lean{Iut.OrbicurveSignQuotientWitness}
+  \lean{Iut.NormalizesProfiniteEmbeddingImage}
+  \lean{Iut.ThetaRootStackRealization.orderTwo_admissible_iff_signCoset}
+  \lean{Iut.ThetaRootStackRealization.cThetaArithmetic_generated}
+  \leanok
+  The construction preceding Etale Theta Definition~2.1 is represented by the
+  actual lower-central and exponent-\(l\) theta quotient, its distinct
+  rank-two arithmetic elliptic quotient, linked arithmetic and cuspidal exact
+  sequences, a continuous surjective rank-one profinite Lagrangian quotient
+  on the elliptic quotient that is trivial on the cuspidal decomposition
+  subgroup, its derived open kernel, the direct-product inversion eigenspaces
+  with actual arithmetic-conjugation compatibility, and the theta-root
+  subgroup derived from a Galois splitting.  The theta-root realization also
+  records Proposition~2.2(iii)'s normalizing order-two lift, unique admissible
+  coset criterion, induced arithmetic conjugation, and generation statement.
+  Existence of these interfaces from the source geometry and the
+  corresponding finite-etale orbicurve covers remain source obligations.  The
+  base stack carries a coherent \(C_2\)-action pseudofunctor, invariant maps
+  satisfy the \(C_2\) cocycle, and the quotient has the full bicategorical
+  universal property through factorization and full faithfulness on
+  2-morphisms.  At bad
+  finite places, the local quotient factors through the actual profinite
+  completion \(\widehat{\mathbb Z}\) and canonical reduction modulo \(l\);
+  the cuspidal involution, invariant splitting, and canonical sign orbit of
+  \(1\bmod l\) are explicit.
+\end{definition}
+
+\begin{definition}[Source initial theta core]
+  \label{def:source-initial-theta-core}
+  \uses{def:etale-theta-quotient-input}
+  \lean{Iut.SourceInitialThetaCore}
+  \lean{Iut.SourceThetaKCoreData}
+  \lean{Iut.SourceThetaFiniteLocalCoreData}
+  \lean{Iut.ThetaInfinitePlace.Completion}
+  \lean{Iut.SourceThetaInfiniteLocalCoreData}
+  \lean{Iut.SignQuotientOrbicurveBaseChange}
+  \lean{Iut.OrbicurveCuspidalDecompositionData}
+  \lean{Iut.TypeOneLTorsionStackScalarExtension}
+  \lean{Iut.TypeOneCuspidalAtlas}
+  \lean{Iut.TypeOneCuspidalAtlasScalarExtension}
+  \lean{Iut.TypeOneNonzeroCusp}
+  \lean{Iut.TypeOneNonzeroCusp.doubledOrigin}
+  \lean{Iut.TypeOneNonzeroCusp.ArrowedDelta}
+  \lean{Iut.ArrowedCuspidalEigenspaceData}
+  \lean{Iut.ArrowedPositiveProfiniteRealization}
+  \lean{Iut.ArrowedJQuotientData}
+  \lean{Iut.ArrowedJQuotientData.doubledCuspSectionImage_normal}
+  \lean{Iut.ArrowedTypeOneStackRealization}
+  \lean{Iut.ArrowedCuspidalEigenspaceScalarExtension}
+  \lean{Iut.ArrowedJQuotientScalarExtension}
+  \lean{Iut.ArrowedTypeOneStackScalarExtension}
+  \lean{Iut.TypeOneNonzeroCuspScalarExtension}
+  \lean{Iut.TypeOneNonzeroCuspScalarExtension.signLabel_eq}
+  \lean{Iut.SourceInitialThetaCore.globalEpsilon_canonicalAtBad}
+  \lean{Iut.SourceThetaBadLocalStandardData.thetaRootProfiniteGroup}
+  \lean{Iut.SourceThetaBadLocalStandardData.thetaRootInclusion}
+  \lean{Iut.ThetaRootStackRealization}
+  \lean{Iut.SourceThetaBadLocalThetaRootStackRealization}
+  \lean{Iut.PuncturedEllipticSchemeRealization}
+  \lean{Iut.PuncturedEllipticSchemeRealization.puncturedScheme}
+  \lean{Iut.PuncturedEllipticSchemeRealization.openImmersion}
+  \lean{Iut.PuncturedEllipticInversionRealization}
+  \lean{Iut.schemeRepresentableEtalePseudofunctor}
+  \lean{Iut.SchemeEtaleStackPresentation}
+  \lean{Iut.maximalSolvableExtension}
+  \lean{Iut.EllipticFieldOfModuliData.automorphismFixedModuliFieldInFbar}
+  \lean{Iut.EllipticFieldOfModuliData.fixes_jModuliInFbar_iff_variableChange}
+  \lean{Iut.EllipticFieldOfModuliData.fsol}
+  \lean{Iut.ThetaLTorsionRepresentationData.kernelFixedField}
+  \lean{Iut.ThetaTateParameterData}
+  \lean{Iut.ThetaTateParameterData.order}
+  \lean{Iut.TypeOneLTorsionStackRealization}
+  \lean{Iut.OrbicurveScalarExtension}
+  \lean{Iut.OrbicurveMorphismScalarExtension}
+  \lean{Iut.SignQuotientOrbicurveData}
+  \lean{Iut.ProfiniteFundamentalGroupInclusion}
+  \lean{Iut.ProfiniteDecompositionGroupData}
+  \lean{Iut.AbsoluteGaloisPlaceStabilizerData}
+  \lean{Iut.ProfiniteFundamentalExactSequenceEmbedding}
+  \lean{Iut.OrbicurveSquare.TwoPullbackWitness}
+  \leanok
+  This replacement path binds the elliptic curve and its puncture to a scheme
+  over the field, its origin section, and the complementary open subscheme with
+  its open immersion.  The \(X_F\) stack is bicategorically equivalent to the
+  representable Yoneda-style pseudofunctor of this punctured scheme, so
+  pullback, identity, and composition coherence are intrinsic; its coherent sign action
+  is identified with an involutive scheme map acting by elliptic negation on
+  rational points.  The path also binds these objects to etale stacks, strong-transformation
+  morphisms, certified fundamental groups, exact profinite sequences,
+  compatible open immersions, the distinct arithmetic theta and elliptic
+  quotients over the scalar-extended \(K\)-core, cuspidal and Lagrangian
+  quotients, inversion splitting, theta-root subgroup, canonical restriction
+  maps on places with a chosen section, all-\(K\)-place core scalar extensions,
+  type-\((1,l\text{-tors})\)
+  cover/sign-quotient stacks constrained by the derived open cover group,
+  scalar extensions of those covers at every selected finite and infinite
+  completion, compatible local-to-global fundamental-group and elliptic-quotient
+  embeddings,
+  global and bad-local theta-root/sign-quotient stack interfaces constrained
+  by the derived theta-root groups and open-subgroup chains, and a distinguished
+  complete \(Q\)-indexed and sign-orbit-indexed cusp atlas represented by
+  rational cuspidal decomposition exact sequences.  The transitive
+  Definition~1.1 construction discards all nonselected inertia, forms
+  \(\Delta^\dagger\) and its two eigenspaces, derives the doubled cusp
+  \(2\epsilon\), and records the continuous exact quotients
+  \(J_X\hookrightarrow J_C\).  The associated section is tied to the
+  doubled-cusp decomposition group, its image is proved normal, and the
+  arrowed-cover groups are the preimages of
+  \(\operatorname{Im}(\sigma)\) and
+  \(\operatorname{Im}(\sigma)\times\operatorname{Gal}(X/C)\).
+  Complete cusp atlases localize at every selected place; at every good finite
+  place the dagger quotient, \(J\)-sequences, sections, arrowed stacks, and
+  their fundamental groups commute with scalar extension.  The nonzero
+  sign-orbit label is derived from a sheet representative; localization
+  preserves this label, and the bad-place label is proved to be the sign orbit
+  of \(1\bmod l\).  Selected finite and infinite
+  completions are tied to closed decomposition subgroups and compatible
+  embeddings of fundamental exact sequences; each such subgroup is the
+  literal stabilizer of a prolongation of the place to the algebraic closure.
+  At bad places, the Tate
+  parameter is an actual contracting local-field element with a geometric
+  Galois-equivariant group-level Tate uniformization, and its positive order
+  is derived from its discrete valuation exponent.  This parameter and its
+  prime-to-\(l\) order are required at every \(F\)-place above the bad moduli
+  locus, not merely at a selected \(K\)-lift.  The embedded moduli field is
+  identified with the fixed field of the geometric-\(j\) stabilizer, its
+  maximal solvable extension is the compositum of finite solvable Galois
+  layers, and embedded \(K\) is the fixed field of the mod-\(l\)
+  representation kernel.  Analytic/topological
+  realization remains open.  The cover square carries the
+  full two-pullback universal property.  Construction of the scheme realization
+  from a concrete Weierstrass model and finite-etale derivation of the supplied
+  stack realizations, their compactifications, and their algebraic boundary
+  cusps remain open.  Thus these records specify the source constructions but
+  do not yet prove their geometric existence.  The
+  global-to-\(K\) and selected local quotient
+  maps carry invertible-modification scalar-extension comparisons pinned on
+  components and naturality 2-cells.
+\end{definition}
+
+\section{Legacy finite M2--M3 models}
+
+\begin{definition}[IUT I realization and IUT II pilots]
+  \label{def:iut-i-hodge-theater-realization-obligation}
+  \uses{def:iut-i-theater-realization,def:hodge-arakelov-concrete-pilots}
+  \lean{Iut.ToyIUTIHodgeTheaterRealization.ofStage1HodgeTheaterSource}
+  \lean{Iut.Stage1.ToyIUTIIHodgeArakelovEvaluationData.ofInitialThetaData}
+  \lean{Iut.Stage1.IUTStage1InitialThetaPrimitiveSourcePacket.ofInitialThetaData}
+  \leanok
+  This finite boundary no longer accepts arbitrary theater or
+  pilot identifiers, prime-strip identifiers, string histories, pilot values,
+  or Hodge-evaluation conclusions.  Initial theta data constructs the typed
+  source, its degree-preorder toy realization, and numerical q and theta
+  pilots. It does not discharge the cited IUT I--II clauses.
+\end{definition}
+
+\begin{definition}[Constructed Theorem 3.11 boundary]
+  \label{def:constructed-theorem-311-obligation}
+  \uses{def:iut-i-hodge-theater-realization-obligation,def:constructed-m3-procession}
+  \lean{Iut.Stage1.IUTIIITheorem311ConstructedSource.ofInitialThetaData}
+  \lean{Iut.Stage1.IUTIIIProcessionChoice.typedCore}
+  \lean{Iut.Stage1.IUTIIIProcessionChoice.equalityQuotient_no_level_collapse}
+  \lean{Iut.Stage1.IUTIIIVerticalLogKummer.correspondenceLaws}
+  \lean{Iut.Stage1.IUTIIIHorizontalCompatibility.ofM2}
+  \leanok
+  The finite model no longer accepts a primitive packet,
+  symmetry transport, quotient conclusions, possible-image witnesses, or
+  finite-coordinate exactness. These laws are constructed from the numerical
+  pilots, but they do not instantiate Theorem~3.11. The source manifest
+  classifies the packet, symmetry, and log-Kummer entries as source
+  obligations.
+\end{definition}
+
 \section{Obligations to discharge next}
 
 \begin{definition}[Step (x) finite-divisor/log-Kummer package]
@@ -129,7 +325,7 @@
   multiradial construction namespace, the source
   \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.IUTStage1ConcreteTheorem311SourceSpineOneSidedComponentSelectedLabelQPilotBridgeAlignmentSource}
   lowers this boundary once more: the component representative source is the
-  \lean{volumeSource} projected from the concrete one-sided component package,
+  \texttt{volumeSource} projected from the concrete one-sided component package,
   and the remaining data only synchronize the one-sided selected q-choice with
   the source spine and the constructed q-pilot theater.  The SHE-codomain
   variant
@@ -140,7 +336,7 @@
   \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.IUTStage1ConcreteTheorem311SourceSpineSelectedOneSidedComponentSHECodomainSelectedLabelQPilotBridgeAlignmentSource}
   removes the remaining selected-q synchronization field at this layer by
   constructing the one-sided component source with
-  \lean{sourceSpine.selectedQChoice}.  The source-spine-data variant
+  \texttt{sourceSpine.selectedQChoice}.  The source-spine-data variant
   \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.IUTStage1ConcreteTheorem311SourceSpineDataOneSidedComponentSHECodomainSelectedLabelQPilotBridgeAlignmentSource}
   additionally projects the theta possible-image source and gluing torsor from
   the unified source spine.  The primitive-packet variant
@@ -150,7 +346,7 @@
   inherited from the primitive target-region construction rather than supplied
   as a separate bridge input.  The component-kernel variant
   \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.IUTStage1ConcreteTheorem311PrimitivePacketComponentKernelOneSidedSHECodomainSelectedLabelQPilotBridgeAlignmentSource}
-  constructs the former one-sided component \lean{volumeSource} from the
+  constructs the former one-sided component \texttt{volumeSource} from the
   Frobenioid divisor-column representative kernel.  At this same
   component-kernel level,
   \lean{Iut.Stage1.IUTStage1ConcreteHodgeTheaterLogThetaChoice.LogThetaLabelProcessionVerticalLogKummerFrobenioidDivisorColumnComponentRepresentativeConstructedUpperSemiBaseVolumeZModLogShellPacketLocalObjectSource.toConstantBaseVolumeLogThetaLabelProcessionUpperSemiSource}
@@ -843,15 +1039,15 @@
   synchronization and measure calibration remain explicit lower inputs.  At
   the compact-open map boundary, Lean also provides the side-conditioned
   constructor
-  \lean{IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogKummerMapHodgeCalibratedSourceFromSideConditions}
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogKummerMapHodgeCalibratedSourceFromSideConditions}
   and endpoint
-  \lean{IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogKummerMapHodgeCalibratedSourceFromSideConditions_endpoint},
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogKummerMapHodgeCalibratedSourceFromSideConditions_endpoint},
   where q-pilot positivity and source normalization are projected from
   `IUTStage1SourceSideConditions` rather than passed as loose scalar
   hypotheses.  Its stricter source-data-backed form,
-  \lean{IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogKummerMapHodgeCalibratedSourceFromHullDetDataAndSideConditions}
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogKummerMapHodgeCalibratedSourceFromHullDetDataAndSideConditions}
   with endpoint
-  \lean{IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogKummerMapHodgeCalibratedSourceFromHullDetDataAndSideConditions_endpoint},
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Remark395RecordOb3Ob5AdjustedDeterminantLogVolumeSource.toConstructedHolomorphicHullDeterminantSourceOfCompactOpenLogKummerMapHodgeCalibratedSourceFromHullDetDataAndSideConditions_endpoint},
   projects the package hull/determinant bridge equality from
   `IUTStage1SourceHullDetData`; only the synchronization of that stored bridge
   datum with the record-canonical hull/tensor-power construction remains as an
@@ -2577,8 +2773,8 @@
   preferred route; its audit records the product-hull provenance and short-route
   localized \(C_\Theta\) evidence together, and now also records the
   constructor-sourced Step (xi) endpoint where the obligations object is
-  definitionally produced by the constructed Theorem 3.11 hull/determinant
-  constructor.  Its obligations-backed variant
+  definitionally produced by the legacy finite-route hull/determinant
+  constructor. Its obligations-backed variant
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ProductHullLocalizedCThetaRouteFromObligations}
   projects the bridge equality, q-pilot positivity, and normalization from one
   \lean{Iut.Stage1.IUTStage1SourceHullDetObligations} object; the remaining
@@ -2962,7 +3158,7 @@
   canonical constructor-built source, and the synchronized concrete route now
   consumes this named boundary internally instead of rebuilding it inline.  At
   the lower valuation-ball boundary,
-  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.RecordOb3Ob5ValuationBallNamedHDDBoundaryData}
+  \lean{Iut.Stage1.Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDBoundaryData}
   packages the Record-Ob3/Ob5 valuation-ball source over the named HDD
   constructor-built source.  Its projection audit supplies the component
   Record-Ob3/Ob5 source, the constructor-built/localized determinant-scale
@@ -2973,7 +3169,7 @@
   latter is obtained by transporting the local weighted adjusted log-volume
   across the component/valuation-ball formula-source equality.  These local
   inputs are also packaged by
-  \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData},
+  \lean{Iut.Stage1.Experiments.ConstructedTheorem311OneSidedIUTIVTheorem110AdditiveHaarMatchedLocalDegreeArithmeticDivisorBackedComponentStepXILocalTermCThetaSource.RecordOb3Ob5ValuationBallNamedHDDSynchronizedRouteInputData},
   with an audit showing that the route-input fields are the projections from
   the named-HDD boundary.  The same route-input layer exposes the source-data
   determinant equality and, once the source data is identified with the
@@ -5260,7 +5456,7 @@
   gluing torsor, and selected \(q\)-choice into the finite \(F_\ell\)
   procession/equality-quotient constructor; the comparison audit
   \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.packetAlignedFiberTransportOneSidedComparisonAudit}
-  ties this vertical packet source to the stricter fiber \((\IndTwo)\)
+  ties this vertical packet source to the stricter fiber \((\Ind{2})\)
   action-packet transport source used by the theta-region route by proving that
   both constructions have the same record possible-image family and the same
   selected \(q\)-region after forgetting to the underlying target set; the
@@ -5275,7 +5471,7 @@
   upper-semi, and procession transports; the public route
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ConcretePacketWithSymmetryLabelTheorem311ConstructedThetaRegionGoalCompletionAudit}
   consumes this wrapper directly, so the packet-facing completion theorem no
-  longer exposes an independent fiber \((\IndTwo)\) action-packet transport
+  longer exposes an independent fiber \((\Ind{2})\) action-packet transport
   source, while
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312ConcretePacketPossibleImageWitnessSymmetryLabelTheorem311ConstructedThetaRegionGoalCompletionAudit}
   removes the wrapper itself from this theorem surface, and
@@ -5415,7 +5611,7 @@
   q-pilot theater alignment.  The one-sided constructor
   \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineOneSidedComponentSelectedLabelQPilotBridgeAlignmentSource}
   now obtains that representative source from the one-sided component package's
-  \lean{volumeSource}.  Its SHE-codomain successor
+  \texttt{volumeSource}.  Its SHE-codomain successor
   \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1Theorem311HullDetSourceConstructor.IUTStage1Theorem311OneSidedMultiradialConstructionSource.IUTStage1ConcreteTheorem311PrimitiveSourcePacket.ofSourceSpineOneSidedComponentSHECodomainSelectedLabelQPilotBridgeAlignmentSource}
   derives q-pilot theater placement from the source-spine one-column law plus
   constructed SHE codomain alignment.  The source-spine-selected constructor
@@ -5464,7 +5660,7 @@
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312RestrictionCalibratedProductHullOb3Ob5AdjustedLogVolumeHodgeGapDirectCanonicalHDDLocalizedCThetaRoute}
   also removes the direct theta/family-hull equality at this boundary: the
   equality is derived from
-  \lean{Iut.Stage1.IUTStage1HodgeFamilyHullLogVolumeCalibration} for the
+  \lean{Iut.Stage1.IUTStage1SourcePackage.IUTStage1HodgeFamilyHullLogVolumeCalibration} for the
   bounded family-hull source projected from the adjusted Ob3/Ob5 determinant
   source.  The measure-calibrated variant
   \lean{Iut.Stage1.IUTStage1Theorem311ToCorollary312PaperTrace.Obligations.preferredPublicConcreteStepXI311312RestrictionCalibratedProductHullOb3Ob5AdjustedLogVolumeMeasureHodgeGapDirectCanonicalHDDLocalizedCThetaRoute}
@@ -5632,13 +5828,13 @@
   constructor-built exact-theta source.
 \end{proposition}
 
-\begin{theorem}[Construct \(\SHE\) from source data]
+\begin{theorem}[Extend \(\SHE\) through analytic Step (xi)]
   \label{thm:construct-she}
   \uses{def:she,def:initial-theta-data,def:hodge-theater-histories,def:theorem-311-ipl-she-apt-bridge,def:hodge-logtheta-logkummer-spine,prop:legacy-source-spine-route-audit,prop:preferred-step-xi-paper-source-route-audit}
   \notready
-  The simultaneous holomorphic expressibility data used in the current route
-  should be constructed from the arithmetic holomorphic structure of the
-  \(1\)-column, not supplied as a record field.
+  The legacy finite model checks a \(1\)-column transport law named
+  \(\SHE\). The source-faithful \(\SHE\) algorithm and its extension through
+  the common-container, holomorphic-hull, and determinant objects remain open.
 \end{theorem}
 
 \begin{proof}
@@ -5646,13 +5842,13 @@
   \qPilot{} log-volume associated to the input prime strip remains fixed.
 \end{proof}
 
-\begin{theorem}[Construct \(\IPL\) from the prime-strip link]
+\begin{theorem}[Extend \(\IPL\) through analytic Step (xi)]
   \label{thm:construct-ipl}
   \uses{def:prime-strip-links,thm:theorem-311-source-output,def:hodge-logtheta-logkummer-spine}
   \notready
-  The input prime-strip link property should be derived from the
-  \(\Theta^{\times\mu}_{\mathrm{LGP}}\)-link and the multiradial output of
-  Theorem 3.11.
+  The legacy finite model keeps two typed histories distinct. The source
+  theta link, its prime strips, the \(\IPL\) algorithm, and their extension
+  through the Step (xi) analytic objects remain open.
 \end{theorem}
 
 \begin{proof}
@@ -5661,13 +5857,13 @@
   simultaneous comparison needed in Step (xi).
 \end{proof}
 
-\begin{theorem}[Construct \(\APT\) and descent]
+\begin{theorem}[Extend \(\APT\) to analytic descent]
   \label{thm:construct-apt}
   \uses{def:apt,thm:theorem-311-source-output}
   \notready
-  The descent and algorithmic parallel transport part of Theorem 3.11 should
-  produce the reorganized ``3.11.5'' input before the final simultaneous
-  comparison.
+  The legacy finite model checks translations, a quotient, and a preorder.
+  The source \(\APT\) algorithm, genuine indeterminacy actions, and analytic
+  descent to the reorganized ``3.11.5'' input remain open.
 \end{theorem}
 
 \begin{proof}
@@ -5712,9 +5908,9 @@
   This manifest is attached to the same-index q-normalized route with
   compact-open additive-Haar p-adic-defect/main residual lowering and the lower
   selected p-adic unit-ball Haar-defect frontier.  It records which
-  inputs are still source obligations.  The checked count is now ten source
-  obligations, one interface-only entry, and two derived top-level entries:
-  the residual package and the replaced formula-gap package.  The p-adic finite
+  inputs are still source obligations. The checked count is now thirteen
+  source obligations, one interface-only entry, and no derived top-level paper
+  claims. The p-adic finite
   localized hull-vector-bundle source is no
   longer an independent boundary item on this route: Lean derives it from the
   finite-extension restriction-calibrated local arithmetic handoff before
@@ -5921,8 +6117,8 @@
   the full paper-level local-estimate proof.  The
   next source-level replacements should remove further entries from this
   manifest rather than introducing more public endpoint variants.  The public
-  \lean{Iut.Stage1.IUTStage1StepXI} module is now a
-  re-export facade over \lean{Iut.Stage1.IUTStage1StepXI.Core}, so further
+  \texttt{Iut.Stage1.IUTStage1StepXI} module is now a
+  re-export facade over \texttt{Iut.Stage1.IUTStage1StepXI.Core}, so further
   canonical-route slices can be split out while preserving existing names.
 \end{proof}
 

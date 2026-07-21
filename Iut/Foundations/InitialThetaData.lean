@@ -4,16 +4,25 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: IUT Lean formalization contributors
 -/
 import Mathlib.AlgebraicGeometry.EllipticCurve.ModelsWithJ
+import Mathlib.AlgebraicGeometry.EllipticCurve.Projective.Point
+import Mathlib.AlgebraicGeometry.EllipticCurve.Reduction
+import Mathlib.Algebra.Module.Torsion.Basic
 import Mathlib.FieldTheory.Galois.Basic
+import Mathlib.FieldTheory.Galois.Infinite
 import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+import Mathlib.GroupTheory.Solvable
 import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
+import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
+import Mathlib.RingTheory.Ideal.GoingUp
 import Mathlib.GroupTheory.QuotientGroup.Defs
 import Mathlib.Algebra.Ring.Action.Basic
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.Set.Basic
+import Mathlib.LinearAlgebra.Matrix.SpecialLinearGroup
 import Mathlib.Topology.Algebra.Group.Basic
+import Mathlib.Topology.Instances.ZMod
 import Mathlib.Tactic
 
 /-!
@@ -29,7 +38,7 @@ records with named proof obligations.
 
 namespace Iut
 
-universe u
+universe u v
 
 /-- A prime number `l` satisfying the IUT lower bound `5 <= l`. -/
 structure PrimeGeFive where
@@ -38,6 +47,9 @@ structure PrimeGeFive where
   ge_five : 5 ≤ value
 
 namespace PrimeGeFive
+
+instance (l : PrimeGeFive) : NeZero l.value :=
+  ⟨l.prime.ne_zero⟩
 
 theorem ne_zero (l : PrimeGeFive) : l.value ≠ 0 :=
   l.prime.ne_zero
@@ -123,15 +135,16 @@ end ThetaFieldTower
 
 /--
 A once-punctured elliptic curve represented by its ambient Weierstrass elliptic
-curve and a label for the removed point.
+curve and the point removed from that curve.
 
-The label is not intended to carry geometry.  It keeps the formal record close
-to Definition 3.1 while the later curve/open-subscheme layer is developed.
+This is the curve-and-puncture part of IUT I, Definition 3.1(b).  The
+once-punctured open subscheme and stable-reduction conditions are separate
+source obligations; the puncture itself is genuine geometric data.
 -/
 structure PuncturedEllipticCurve (F : Type u) [Field F] where
   curve : WeierstrassCurve F
   isElliptic : curve.IsElliptic
-  punctureLabel : String
+  puncture : curve.toProjective.Point
 
 namespace PuncturedEllipticCurve
 
@@ -150,7 +163,7 @@ noncomputable def ofJ (F : Type u) [Field F] [DecidableEq F] (j : F) :
     PuncturedEllipticCurve F where
   curve := WeierstrassCurve.ofJ j
   isElliptic := inferInstance
-  punctureLabel := "origin"
+  puncture := 0
 
 theorem jInvariant_ofJ (F : Type u) [Field F] [DecidableEq F] (j : F) :
     (ofJ F j).jInvariant = j := by
@@ -200,44 +213,204 @@ theorem not_isInfinite_finite (v : NumberField.FinitePlace K) :
 
 end ThetaPlace
 
+/-
+Arithmetic data canonically extracted from a finite place of a number field.
+
+Mathlib defines a finite place by the existence of a height-one prime that
+induces its absolute value. We choose such a prime once and use its residue
+field below. No numerical residue characteristic is supplied independently.
+-/
+namespace ThetaFinitePlace
+
+variable {K : Type u} [Field K] [NumberField K]
+
+/-- A height-one prime inducing the given finite place. -/
+noncomputable def underlyingPrime (v : NumberField.FinitePlace K) :
+    IsDedekindDomain.HeightOneSpectrum (NumberField.RingOfIntegers K) :=
+  Classical.choose v.property
+
+/-- The chosen height-one prime induces the original finite place. -/
+theorem mk_underlyingPrime (v : NumberField.FinitePlace K) :
+    NumberField.FinitePlace.mk (underlyingPrime v) = v := by
+  apply Subtype.ext
+  exact Classical.choose_spec v.property
+
+/-- The residue field at a finite place. -/
+abbrev ResidueField (v : NumberField.FinitePlace K) :=
+  NumberField.RingOfIntegers K ⧸ (underlyingPrime v).asIdeal
+
+/-- The residue characteristic derived from the residue field. -/
+noncomputable def residueCharacteristic
+    (v : NumberField.FinitePlace K) : ℕ :=
+  ringChar (ResidueField v)
+
+/--
+Restriction of a finite place along an extension of number fields.
+
+This is the natural map on nonarchimedean places used in IUT I,
+Definition 3.1(b),(e). It is induced by contraction of the height-one prime
+of the larger ring of integers.
+-/
+noncomputable def comap
+    {k : Type u} {K : Type v}
+    [Field k] [NumberField k] [Field K] [NumberField K]
+    [Algebra k K]
+    (v : NumberField.FinitePlace K) :
+    NumberField.FinitePlace k :=
+  NumberField.FinitePlace.mk
+    { asIdeal :=
+        v.maximalIdeal.asIdeal.comap
+          (algebraMap (NumberField.RingOfIntegers k)
+            (NumberField.RingOfIntegers K))
+      isPrime := v.maximalIdeal.asIdeal.comap_isPrime _
+      ne_bot :=
+        Ideal.IsIntegral.comap_ne_bot
+          (NumberField.RingOfIntegers k)
+          v.maximalIdeal.ne_bot }
+
+end ThetaFinitePlace
+
+namespace PuncturedEllipticCurve
+
+/--
+Stable reduction at a finite place: after passage to the associated completed
+local field, the elliptic curve has good or multiplicative reduction.
+
+This is the reduction-theoretic predicate used by IUT I, Definition 3.1(b);
+it is stated in terms of mathlib's minimal Weierstrass reduction classes.
+-/
+noncomputable def HasStableReductionAt
+    {F : Type u} [Field F] [NumberField F]
+    (X : PuncturedEllipticCurve F) (v : NumberField.FinitePlace F) : Prop :=
+  let prime := ThetaFinitePlace.underlyingPrime v
+  let localCurve := X.curve.baseChange (prime.adicCompletion F)
+  localCurve.HasGoodReduction (prime.adicCompletionIntegers F) ∨
+    localCurve.HasMultiplicativeReduction (prime.adicCompletionIntegers F)
+
+/-- Stable reduction at every nonarchimedean place. -/
+def HasStableReductionEverywhere
+    {F : Type u} [Field F] [NumberField F]
+    (X : PuncturedEllipticCurve F) : Prop :=
+  ∀ v : NumberField.FinitePlace F, X.HasStableReductionAt v
+
+/--
+Multiplicative reduction after base change from `F` to `K` and completion at
+a finite place of `K`.
+-/
+noncomputable def HasMultiplicativeReductionAtBaseChange
+    {F K : Type u} [Field F] [Field K] [NumberField K] [Algebra F K]
+    (X : PuncturedEllipticCurve F) (v : NumberField.FinitePlace K) : Prop :=
+  let prime := ThetaFinitePlace.underlyingPrime v
+  let localCurve :=
+    (X.curve.baseChange K).baseChange (prime.adicCompletion K)
+  localCurve.HasMultiplicativeReduction (prime.adicCompletionIntegers K)
+
+/-- Multiplicative reduction of the curve itself at a finite place. -/
+noncomputable def HasMultiplicativeReductionAt
+    {F : Type u} [Field F] [NumberField F]
+    (X : PuncturedEllipticCurve F) (v : NumberField.FinitePlace F) : Prop :=
+  let prime := ThetaFinitePlace.underlyingPrime v
+  let localCurve := X.curve.baseChange (prime.adicCompletion F)
+  localCurve.HasMultiplicativeReduction (prime.adicCompletionIntegers F)
+
+/--
+Every `n`-torsion point over an algebraic closure is rational over the base
+field. Rationality is expressed by membership in the image of the canonical
+base-change homomorphism on nonsingular affine points.
+-/
+noncomputable def AllNTorsionRational
+    {F : Type u} [Field F]
+    (X : PuncturedEllipticCurve F) (n : ℕ) : Prop := by
+  classical
+  exact
+    ∀ P :
+        (X.curve.toAffine.baseChange (AlgebraicClosure F)).Point,
+      n • P = 0 →
+        ∃ Q : X.curve.toAffine.Point,
+          WeierstrassCurve.Affine.Point.baseChange
+            (W' := X.curve.toAffine) F (AlgebraicClosure F) Q = P
+
+/-- Rationality of the `2 * 3 = 6` torsion required in Definition 3.1(b). -/
+noncomputable def Torsion23Rational
+    {F : Type u} [Field F] (X : PuncturedEllipticCurve F) : Prop :=
+  X.AllNTorsionRational 6
+
+/-- Nonsingular projective points of the elliptic curve over an algebraic closure. -/
+abbrev AlgebraicClosurePoint
+    {F : Type u} [Field F] (X : PuncturedEllipticCurve F) :=
+  (X.curve.toProjective.baseChange (AlgebraicClosure F)).Point
+
+/-- The actual `l`-torsion subgroup of the elliptic curve over `Fbar`. -/
+noncomputable abbrev LTorsion
+    {F : Type u} [Field F] (X : PuncturedEllipticCurve F)
+    (l : PrimeGeFive) :=
+  AddSubgroup.torsionBy (X.AlgebraicClosurePoint) l.value
+
+noncomputable instance lTorsionModule
+    {F : Type u} [Field F] (X : PuncturedEllipticCurve F)
+    (l : PrimeGeFive) :
+    Module (ZMod l.value) (X.LTorsion l) :=
+  AddSubgroup.torsionBy.zmodModule
+
+/-- The action of an absolute-Galois element on an algebraic-closure point. -/
+noncomputable def galoisActionOnPoint
+    {F : Type u} [Field F] (X : PuncturedEllipticCurve F)
+    (sigma : AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) :
+    X.AlgebraicClosurePoint →+ X.AlgebraicClosurePoint := by
+  classical
+  let Wbar := X.curve.toProjective.baseChange (AlgebraicClosure F)
+  let toAffine := WeierstrassCurve.Projective.Point.toAffineAddEquiv Wbar
+  let affineAction :=
+    WeierstrassCurve.Affine.Point.map
+      (W' := X.curve.toAffine) sigma.toAlgHom
+  exact toAffine.symm.toAddMonoidHom.comp
+    (affineAction.comp toAffine.toAddMonoidHom)
+
+end PuncturedEllipticCurve
+
 /--
 The valuation data `V`, `Vbad_mod`, and the section `V -> Vmod` from
 Definition 3.1(b),(e).
 
-The finite and infinite place types come from mathlib.  The source's natural
-surjection from places of `K` to places of `Fmod`, together with a chosen
-section, remains explicit data.
+The finite and infinite place types come from mathlib. The maps to `Fmod` are
+the canonical restrictions along `Fmod -> K`; only their sections are chosen.
 -/
 structure ThetaValuationData
     (l : PrimeGeFive) (Fmod K : Type u)
     [Field Fmod] [NumberField Fmod] [Field K] [NumberField K]
     [Algebra Fmod K] where
-  toModuli : NumberField.FinitePlace K -> NumberField.FinitePlace Fmod
   chosenLift : NumberField.FinitePlace Fmod -> NumberField.FinitePlace K
-  toModuli_chosenLift : ∀ w, toModuli (chosenLift w) = w
-  toModuliInfinite : NumberField.InfinitePlace K -> NumberField.InfinitePlace Fmod
+  toModuli_chosenLift :
+    ∀ w, ThetaFinitePlace.comap (chosenLift w) = w
   chosenInfiniteLift : NumberField.InfinitePlace Fmod -> NumberField.InfinitePlace K
   toModuliInfinite_chosenLift :
-    ∀ w, toModuliInfinite (chosenInfiniteLift w) = w
-  residueCharacteristic : NumberField.FinitePlace Fmod -> ℕ
+    ∀ w,
+      (chosenInfiniteLift w).comap (algebraMap Fmod K) = w
   badMod : Set (NumberField.FinitePlace Fmod)
   badMod_nonempty : ∃ w, w ∈ badMod
   badMod_oddResidueCharacteristic :
-    ∀ w, w ∈ badMod -> Odd (residueCharacteristic w)
+    ∀ w, w ∈ badMod -> Odd (ThetaFinitePlace.residueCharacteristic w)
   badMod_residueCharacteristic_prime :
-    ∀ w, w ∈ badMod -> Nat.Prime (residueCharacteristic w)
+    ∀ w, w ∈ badMod -> Nat.Prime (ThetaFinitePlace.residueCharacteristic w)
   badMod_residueCharacteristic_coprime_l :
-    ∀ w, w ∈ badMod -> Nat.Coprime (residueCharacteristic w) l.value
-  multiplicativeBadReductionAtLift : NumberField.FinitePlace K -> Prop
-  bad_lifts_have_multiplicative_reduction :
-    ∀ v, v ∈ Set.range chosenLift -> toModuli v ∈ badMod ->
-      multiplicativeBadReductionAtLift v
+    ∀ w, w ∈ badMod ->
+      Nat.Coprime (ThetaFinitePlace.residueCharacteristic w) l.value
 
 namespace ThetaValuationData
 
 variable {l : PrimeGeFive} {Fmod K : Type u}
 variable [Field Fmod] [NumberField Fmod] [Field K] [NumberField K]
 variable [Algebra Fmod K]
+
+/-- The canonical restriction of a finite place of `K` to `Fmod`. -/
+noncomputable def toModuli (_data : ThetaValuationData l Fmod K) :
+    NumberField.FinitePlace K -> NumberField.FinitePlace Fmod :=
+  ThetaFinitePlace.comap
+
+/-- The canonical restriction of an infinite place of `K` to `Fmod`. -/
+def toModuliInfinite (_data : ThetaValuationData l Fmod K) :
+    NumberField.InfinitePlace K -> NumberField.InfinitePlace Fmod :=
+  fun v => v.comap (algebraMap Fmod K)
 
 /-- The selected finite subset of `V(K)` supplied by the section. -/
 def selected (data : ThetaValuationData l Fmod K) :
@@ -386,12 +559,6 @@ theorem bad_nonempty (data : ThetaValuationData l Fmod K) :
     ∃ v, v ∈ data.bad := by
   rcases data.badMod_nonempty with ⟨w, hw⟩
   exact ⟨data.chosenLift w, (data.chosenLift_mem_bad_iff w).mpr hw⟩
-
-theorem badLift_has_multiplicative_reduction
-    (data : ThetaValuationData l Fmod K)
-    {v : NumberField.FinitePlace K} (hv : v ∈ data.bad) :
-    data.multiplicativeBadReductionAtLift v :=
-  data.bad_lifts_have_multiplicative_reduction v hv.1 hv.2
 
 end ThetaValuationData
 
@@ -925,6 +1092,30 @@ structure AdditiveTorsorData (G X : Type u) [AddGroup G] where
   zero_vadd : ∀ x, vadd 0 x = x
   add_vadd : ∀ g h x, vadd (g + h) x = vadd g (vadd h x)
   exists_unique_vadd_eq : ∀ x y, ∃! g, vadd g x = y
+
+namespace AdditiveTorsorData
+
+variable {G X : Type u} [AddGroup G]
+
+/-- Coordinates on a torsor relative to a chosen base point. -/
+noncomputable def orbitEquiv
+    (torsor : AdditiveTorsorData G X) (base : X) : G ≃ X where
+  toFun g := torsor.vadd g base
+  invFun x := Classical.choose (torsor.exists_unique_vadd_eq base x)
+  left_inv g := by
+    exact
+      ((Classical.choose_spec
+        (torsor.exists_unique_vadd_eq base (torsor.vadd g base))).2 g rfl).symm
+  right_inv x :=
+    (Classical.choose_spec (torsor.exists_unique_vadd_eq base x)).1
+
+@[simp]
+theorem orbitEquiv_apply
+    (torsor : AdditiveTorsorData G X) (base : X) (g : G) :
+    torsor.orbitEquiv base g = torsor.vadd g base :=
+  rfl
+
+end AdditiveTorsorData
 
 /-- The pointed quotient with carrier `ZMod l`, used as the current `F_l` model. -/
 abbrev zmodPointedQuotient (l : PrimeGeFive) : PointedEtaleQuotient where
@@ -1772,10 +1963,8 @@ structure ThetaCurveModuliData
   cF_is_quotient_by_neg_one_holds : cF_is_quotient_by_neg_one
   fmod_is_fieldOfModuli : Prop
   fmod_is_fieldOfModuli_holds : fmod_is_fieldOfModuli
-  stableReductionOverNonarchimedean : Prop
-  stableReductionOverNonarchimedean_holds : stableReductionOverNonarchimedean
-  torsion23RationalOverF : Prop
-  torsion23RationalOverF_holds : torsion23RationalOverF
+  stableReductionOverNonarchimedean : xF.HasStableReductionEverywhere
+  torsion23RationalOverF : xF.Torsion23Rational
 
 namespace ThetaCurveModuliData
 
@@ -1792,12 +1981,12 @@ theorem fmodFieldOfModuli :
   curveData.fmod_is_fieldOfModuli_holds
 
 theorem stableReduction :
-    curveData.stableReductionOverNonarchimedean :=
-  curveData.stableReductionOverNonarchimedean_holds
+    curveData.xF.HasStableReductionEverywhere :=
+  curveData.stableReductionOverNonarchimedean
 
 theorem torsion23Rational :
-    curveData.torsion23RationalOverF :=
-  curveData.torsion23RationalOverF_holds
+    curveData.xF.Torsion23Rational :=
+  curveData.torsion23RationalOverF
 
 end ThetaCurveModuliData
 
@@ -3871,6 +4060,104 @@ theorem badLocalModelCanonicalGeneratorUpToSign
 end ThetaCuspLocalData
 
 /--
+The mod-`l` representation and embedded kernel field in IUT I,
+Definition 3.1(c).
+
+The domain is the absolute Galois group of `F`; the codomain is the general
+linear group acting on a chosen two-dimensional `ZMod l` model of the
+`l`-torsion.
+-/
+structure ThetaLTorsionRepresentationData
+    (l : PrimeGeFive) (F K : Type u)
+    [Field F] [Field K] [Algebra F K]
+    (X : PuncturedEllipticCurve F) where
+  kEmbedding : K →ₐ[F] AlgebraicClosure F
+  torsionBasis :
+    (Fin 2 → ZMod l.value) ≃ₗ[ZMod l.value] X.LTorsion l
+  representation :
+    (AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) →*
+      Matrix.GeneralLinearGroup (Fin 2) (ZMod l.value)
+  representation_continuous :
+    Continuous representation
+  representation_acts_on_torsion :
+    ∀ sigma coordinates,
+      ((torsionBasis
+        ((Matrix.GeneralLinearGroup.toLin (representation sigma)).toLinearEquiv
+          coordinates) : X.LTorsion l) : X.AlgebraicClosurePoint) =
+        X.galoisActionOnPoint sigma (torsionBasis coordinates)
+
+namespace ThetaLTorsionRepresentationData
+
+variable {l : PrimeGeFive} {F K : Type u}
+variable [Field F] [Field K] [Algebra F K]
+variable {X : PuncturedEllipticCurve F}
+
+/-- The kernel subgroup of the mod-`l` representation. -/
+noncomputable def kernelSubgroup
+    (data : ThetaLTorsionRepresentationData l F K X) :
+    Subgroup (AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) :=
+  data.representation.ker
+
+/-- The fixed field in `Fbar` of the mod-`l` representation kernel. -/
+noncomputable def kernelFixedField
+    (data : ThetaLTorsionRepresentationData l F K X) :
+    IntermediateField F (AlgebraicClosure F) :=
+  IntermediateField.fixedField data.kernelSubgroup
+
+/-- The image of the chosen `F`-embedding `K -> Fbar`. -/
+noncomputable def embeddedK
+    (data : ThetaLTorsionRepresentationData l F K X) :
+    IntermediateField F (AlgebraicClosure F) :=
+  data.kEmbedding.fieldRange
+
+/--
+The field `K` is exactly the fixed field of the kernel of the mod-`l`
+representation, as required by IUT I, Definition 3.1(c).
+-/
+def IsKernelField (data : ThetaLTorsionRepresentationData l F K X) : Prop :=
+  data.embeddedK = data.kernelFixedField
+
+/--
+The image of the mod-`l` representation contains `SL₂(ZMod l)`, as required
+by IUT I, Definition 3.1(c).
+-/
+def ImageContainsSL2 (data : ThetaLTorsionRepresentationData l F K X) : Prop :=
+  ∀ g : Matrix.SpecialLinearGroup (Fin 2) (ZMod l.value),
+    ∃ sigma, data.representation sigma = Matrix.SpecialLinearGroup.toGL g
+
+end ThetaLTorsionRepresentationData
+
+/--
+Positive q-parameter orders at the selected bad places from IUT I,
+Definition 3.1(c).
+-/
+structure ThetaQParameterOrderData
+    (l : PrimeGeFive) (Fmod K : Type u)
+    [Field Fmod] [NumberField Fmod] [Field K] [NumberField K]
+    [Algebra Fmod K]
+    (valuations : ThetaValuationData l Fmod K) where
+  orderAtBadPlace :
+    (v : NumberField.FinitePlace K) -> v ∈ valuations.bad -> ℕ
+  orderAtBadPlace_pos :
+    ∀ v hv, 0 < orderAtBadPlace v hv
+
+namespace ThetaQParameterOrderData
+
+variable {l : PrimeGeFive} {Fmod K : Type u}
+variable [Field Fmod] [NumberField Fmod] [Field K] [NumberField K]
+variable [Algebra Fmod K]
+variable {valuations : ThetaValuationData l Fmod K}
+
+/--
+Every selected bad-place q-parameter order is prime to `l`, the final
+condition in IUT I, Definition 3.1(c).
+-/
+def OrdersPrimeToL (data : ThetaQParameterOrderData l Fmod K valuations) : Prop :=
+  ∀ v hv, Nat.Coprime (data.orderAtBadPlace v hv) l.value
+
+end ThetaQParameterOrderData
+
+/--
 Initial theta data in the sense of IUT I, Definition 3.1.
 
 This record captures the currently formalized core:
@@ -3882,7 +4169,8 @@ This record captures the currently formalized core:
   prime-to-`l` conditions;
 * `V -> Vmod` is a bijective valuation section with a nonempty bad moduli set;
 * `C_K` and `epsilon` are explicit typed objects;
-* not-yet-expanded source hypotheses remain named proof obligations.
+* the mod-`l` representation, its kernel field, its `SL₂` image condition,
+  and the bad-place q-parameter orders are explicit mathematical data.
 -/
 structure InitialThetaData
     (Fmod F K : Type u)
@@ -3895,17 +4183,20 @@ structure InitialThetaData
   fieldTower : ThetaFieldTower l Fmod F K
   curveModuli : ThetaCurveModuliData Fmod F
   coverData : ThetaOrbicurveCoverData l Fmod F K curveModuli
-  k_is_lTorsionKernelField : Prop
-  k_is_lTorsionKernelField_holds : k_is_lTorsionKernelField
+  lTorsionRepresentation :
+    ThetaLTorsionRepresentationData l F K curveModuli.xF
+  k_is_lTorsionKernelField : lTorsionRepresentation.IsKernelField
   valuations : ThetaValuationData l Fmod K
+  badLiftsHaveMultiplicativeReduction :
+    ∀ v, v ∈ valuations.bad →
+      curveModuli.xF.HasMultiplicativeReductionAtBaseChange v
   badLocalData : ThetaBadLocalData l Fmod F K curveModuli coverData valuations
   epsilon : CuspData coverData.cK
   cuspLocalData :
     ThetaCuspLocalData l Fmod F K curveModuli coverData valuations badLocalData epsilon
-  lTorsionImageContainsSL2 : Prop
-  lTorsionImageContainsSL2_holds : lTorsionImageContainsSL2
-  qParameterOrdersPrimeToL : Prop
-  qParameterOrdersPrimeToL_holds : qParameterOrdersPrimeToL
+  lTorsionImageContainsSL2 : lTorsionRepresentation.ImageContainsSL2
+  qParameterOrders : ThetaQParameterOrderData l Fmod K valuations
+  qParameterOrdersPrimeToL : qParameterOrders.OrdersPrimeToL
 
 namespace InitialThetaData
 
@@ -3967,8 +4258,8 @@ theorem badValuations_nonempty :
 
 theorem badValuation_has_multiplicative_reduction
     {v : NumberField.FinitePlace K} (hv : v ∈ theta.valuations.bad) :
-    theta.valuations.multiplicativeBadReductionAtLift v :=
-  theta.valuations.badLift_has_multiplicative_reduction hv
+    theta.curveModuli.xF.HasMultiplicativeReductionAtBaseChange v :=
+  theta.badLiftsHaveMultiplicativeReduction v hv
 
 theorem finitePlace_mem_vnon_iff (v : NumberField.FinitePlace K) :
     ThetaPlace.finite v ∈ theta.valuations.vnon ↔
@@ -4151,11 +4442,11 @@ theorem quotientByNegOne :
   theta.curveModuli.quotientByNegOne
 
 theorem stableReductionOverNonarchimedean :
-    theta.curveModuli.stableReductionOverNonarchimedean :=
+    theta.curveModuli.xF.HasStableReductionEverywhere :=
   theta.curveModuli.stableReduction
 
 theorem torsion23RationalOverF :
-    theta.curveModuli.torsion23RationalOverF :=
+    theta.curveModuli.xF.Torsion23Rational :=
   theta.curveModuli.torsion23Rational
 
 theorem cKType :
@@ -4423,8 +4714,16 @@ theorem profiniteGroupOpenImmersions :
   theta.coverData.openImmersions
 
 theorem kIsLTorsionKernelField :
-    theta.k_is_lTorsionKernelField :=
-  theta.k_is_lTorsionKernelField_holds
+    theta.lTorsionRepresentation.IsKernelField :=
+  theta.k_is_lTorsionKernelField
+
+theorem lTorsionImageContainsSpecialLinear :
+    theta.lTorsionRepresentation.ImageContainsSL2 :=
+  theta.lTorsionImageContainsSL2
+
+theorem qParameterOrders_prime_to_l :
+    theta.qParameterOrders.OrdersPrimeToL :=
+  theta.qParameterOrdersPrimeToL
 
 theorem cusp_arisesFromNonzeroQuotientElement :
     theta.epsilon.arisesFromNonzeroQuotientElement :=

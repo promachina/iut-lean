@@ -174,22 +174,46 @@ upper-semi target.
 
 This is deliberately not marked as settling the dispute. The experiment report
 keeps `disputeSettledByCurrentStage = false`. The remaining issue is whether the
-records consumed by this route are actually constructible from the IUT I-III
-machinery: initial theta data, Hodge theaters, Frobenioids, log-Kummer
-correspondences, holomorphic hulls, determinants, IPL, SHE, and APT.
+records consumed by the later analytic route are constructible beyond the
+legacy degree-level Hodge-theater, Hodge--Arakelov, and finite Theorem 3.11 toy models:
+full Frobenioids, holomorphic hulls, determinants, and their local-field/Haar
+compatibilities.
 
 The latest source reread gives the following interpretation:
 
-* IUT I supplies initial theta data and Hodge theaters. Our code does not yet
-  construct these objects; it only has typed shadows and source packages.
+* IUT I supplies initial theta data and Hodge theaters. The code now represents
+  the Definition 3.1 mod-`l` kernel/image and q-order conditions explicitly and
+  derives typed `0`/`1` histories, owned prime strips, bridges, and
+  `Theta^{+-ell-NF}` gluing from `InitialThetaData`. M2 also constructs the
+  effective-divisor degree preorder categories and the typed theta-link/gluing
+  equivalences. This is a degree-level categorical model, not the full
+  Frobenioid/Kummer theory.
 * IUT II supplies Hodge-Arakelov theta evaluation, Gaussian Frobenioids,
-  conjugate synchronization, and multiradial/coric behavior. Our code currently
-  formalizes finite-label and Gaussian-degree shadows, including the zero class
-  plus nonzero sign-quotient classes of `|F_l|`, not the full theory.
-* IUT III, Step (x), is represented by an `(Ind1)/(Ind2)` equality corridor plus
-  `(Ind3)` upper-semi inequality. Step (xi) is represented by hull/log-volume and
-  SHE/Hodge-descent route records. Step (xii) is represented by a local
-  Frobenioid shift quotient experiment.
+  conjugate synchronization, and multiradial/coric behavior. M2 canonically
+  constructs the bad-place q-order and `q^(j^2)` pilots, actual quotient-torsor
+  coordinates, `ZMod l` labels, sign classes, balanced-square weights, and
+  normalized orbit averages from `InitialThetaData`. These remain
+  finite-label/Gaussian-degree models, not the full theory.
+* The legacy model associated with IUT III, Theorem 3.11 and Step (x), has a
+  finite construction from the numerical pilots: a typed procession, `ZMod l`
+  `(Ind1)/(Ind2)` actions and generated quotient, directed `(Ind3)` lifts,
+  nonempty possible images, a vertical log-Kummer bijection from the bad-local
+  quotient torsor, and finite transport laws named IPL/SHE/APT. These are not
+  the paper's processions, indeterminacies, log-Kummer correspondence, or
+  algorithms. Step (xi) is represented by conditional hull/log-volume and
+  analytic descent records. Step (xii) is represented by a local Frobenioid
+  shift quotient experiment.
+  A separate source layer now contains an actual `Z x Z` family of distinct
+  Hodge theaters carried by F-theta bridges. Adjacent vertical coricity is
+  inverted and composed to obtain one fixed `n,circle` bridge and comparison
+  from every `m`. Ind1 is derived from a functor on processions; Ind2's
+  direct-sum, tensor, and full local-family actions are derived from independent
+  summand actions. The source layer also has a complete unquotiented
+  multiradial presentation, its exact Ind1/Ind2 quotient, a source-shaped Ind3
+  common-container interface, and four distinct horizontal compatibility
+  interfaces. It is still not a construction of Theorem 3.11: the presentation,
+  vertical Kummer/Ind3 data, and horizontal squares are not yet constructed
+  from the lattice and the preceding IUT I-II results.
 * IUT IV is represented only as conditional ordered-real and elementary
   estimate algebra downstream of a Corollary-3.12-shaped input.
 * The Scholze-Stix concern is addressed only at the diagnostic level: Lean keeps
@@ -224,6 +248,74 @@ Current modules:
   explicit choice-dependent transports and target regions.
 * `Iut.Foundations.QualitativeData`: structured inert IPL/SHE/APT data records,
   typed identifiers, and relation records for qualitative bookkeeping.
+* `Iut.Foundations.Orbicurve`: source-facing etale stacks over `Spec(F)`,
+  actual strong-transformation morphisms, orbifold signatures,
+  coherent sign actions as pseudofunctors, sign-invariant morphisms with the
+  `C2` cocycle, and the bicategorical quotient universal property via
+  factorization and full faithfulness on 2-cells,
+  Galois-category-certified profinite fundamental groups, open embeddings, and
+  exact profinite fundamental-group sequences.
+* `Iut.Foundations.OrbicurvePullback`: actual restriction of scalars
+  `Sch/K -> Sch/F`, scalar extension of etale stacks and orbicurves by
+  pseudofunctor equivalence, scalar extension of morphisms with component and
+  naturality comparison, 2-commutative squares, pseudo-cones, and the full
+  two-pullback universal property through compatible 2-cell lifting and faithfulness.
+* `Iut.Foundations.EtaleThetaQuotient`: lower-central theta quotients,
+  the descended elliptic quotient and theta center, rank-one/rank-two
+  realization data, continuous profinite Lagrangian `Z/lZ` quotients with
+  derived open kernels, and nonzero labels modulo sign.
+* `Iut.Foundations.EtaleThetaCovers`: linked geometric/arithmetic/Galois and
+  cuspidal exact sequences, distinct class-two theta and rank-two elliptic
+  arithmetic quotients, the type-`(1,l-torsion)` Lagrangian quotient on the
+  latter, Proposition 2.2's direct-product inversion eigenspaces with actual
+  conjugation compatibility, and the theta-root subgroup derived as the
+  preimage of a chosen Galois splitting. The theta-root realization records
+  the normalizing order-two lift, unique admissible coset, conjugation, and
+  generation data of Proposition 2.2(iii); the module also constructs the
+  profinite Tate direction and continuous reduction used by bad-place
+  standard-type factorizations, their cuspidal sign-compatible splitting, and
+  the canonical sign orbit of `1 mod l`.
+* `Iut.Foundations.SourceInitialThetaData`: the replacement path for
+  Definition 3.1, binding the elliptic curve and its puncture to a scheme over
+  the field, an origin section, and the complementary open subscheme, together
+  with a bicategorical equivalence to its representable Yoneda-style etale
+  pseudofunctor and a coherent sign
+  action identified with geometric elliptic inversion, stack morphisms,
+  certified fundamental groups, exact
+  profinite sequences, compatible open immersions, a field-of-moduli witness
+  identified inside the selected `Fbar` with the fixed field of its
+  geometric-`j` stabilizer, the maximal solvable extension in the same `Fbar`
+  as the compositum of finite solvable Galois layers, and
+  the mod-`l` kernel field as an equality of intermediate fields,
+  the induced arithmetic theta and elliptic quotients over the scalar-extended
+  `K`-core, cuspidal and Lagrangian quotients, inversion splitting,
+  theta-root subgroup, explicit
+  type-`(1,l-torsion)` cover/sign-quotient stacks constrained by the derived
+  open cover group, and global plus bad-local theta-root/sign-quotient stacks
+  with their derived arithmetic groups and open-subgroup chains. The place
+  projections are canonical restrictions and local core diagrams are supplied
+  at every `K`-place, with decomposition subgroups characterized as stabilizers
+  of actual prolongations to `Kbar`; every selected completion carries a scalar extension of
+  the type-`(1,l-torsion)` cover,
+  compatible local-to-global fundamental groups and elliptic quotient, and a
+  complete transported cusp atlas represented by cuspidal decomposition exact
+  sequences. The IUT I, Definition 1.1 dependency is explicit: discarded
+  inertia defines `Delta dagger`, its eigenspaces define continuous
+  `J_X/J_C` quotients, the doubled-cusp section has a proved normal image, and
+  the arrowed-cover subgroups are its source-prescribed preimages. At good
+  finite places this entire construction and both arrowed stacks commute with
+  scalar extension. The selected sign label is derived from a sheet
+  representative; localization preserves it, and bad-place canonicity is
+  proved. It also contains absolute
+  Galois/decomposition-subgroup diagrams, plus Tate parameters with
+  valuation-derived prime-to-`l` orders and geometric uniformizations at every
+  `F`-place above the bad moduli locus and at selected bad `K`-places. These
+  stack, compactification, and boundary-atlas
+  realizations are interfaces; their construction from compactified
+  finite-etale covers remains open.
+* `Iut.SourceTrace.M1M3PaperLedger`: exact IUT I-III and transitive Etale Theta
+  PDF hashes and a checked 98-clause source-to-Lean status matrix. It currently
+  claims one clause source-faithful: IUT I, Definition 4.10.
 * `Iut.Foundations.AlgorithmicOutput`: opaque IPL/SHE/APT qualitative-property
   interface for transported algorithmic outputs.
 * `Iut.Foundations.AlgorithmicBridge`: explicit bridge schemas from certified
@@ -245,6 +337,9 @@ Current modules:
 * `Iut.Stage1.IUTStage1Data`: pre-ledger data layer for future IUT-specific
   Stage 1 constructions, with explicit promotion obligations before the public
   endpoint is available.
+* `Iut.Stage1.IUTStage1ConstructedTheorem311`: explicitly legacy finite model
+  of translations, quotients, a preorder, and finite-coordinate transport; it
+  does not discharge Theorem 3.11.
 * `Iut.Stage1.IUTStage1SourceCore`: source-facing labels, package records,
   indeterminacy bookkeeping, finite local log-volume objects, and the initial
   Remark 3.12.2 corridor.
@@ -290,22 +385,19 @@ Near-term mathematics:
 * Extend the Gaussian-derived factored SHE construction beyond finite
   degree-evaluation and canonical-label shadows toward actual Gaussian/Frobenioid
   material corresponding to IUT II.
-* Derive the remaining packet-normalized target calibrations from the actual
-  log-Kummer construction of IUT III, Step (x), rather than treating them as
-  named source-facing inputs.
 * Replace the current hull/determinant obligation records with formal
   holomorphic-hull and determinant operations from IUT III, Remark 3.9.5 and
   Step (xi).
-* Formalize the input prime-strip link `(IPL)`, simultaneous holomorphic
-  expressibility `(SHE)`, and algorithmic parallel transport `(APT)` as
-  constructed properties, not assumed record fields.
+* Extend the constructed finite IPL/SHE/APT compatibility through the analytic
+  Step (xi) common-container and hull/determinant layers.
 * Continue testing weakened hypotheses to identify exactly which comparison
   level or preservation property is mathematically necessary.
 
 Longer-term mathematics:
 
-* Build initial theta data from IUT I rather than treating it as source metadata.
-* Formalize enough Hodge theater, Frobenioid, log-shell, prime-strip, and
-  theta-link structure to construct Theorem 3.11 inputs.
+* Refine the degree-level Frobenioid realization with the richer categorical,
+  divisor, and Kummer structures required by later source arguments.
+* Enrich the finite vertical log-Kummer correspondence with the local-field,
+  log-shell, and Haar structures required by the analytic Step (xi) route.
 * Connect the conditional IUT IV ordered-real estimates to actual arithmetic
   height, log-different, log-conductor, and bounded-discrepancy statements.

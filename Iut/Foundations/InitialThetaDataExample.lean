@@ -1237,39 +1237,33 @@ example (C : HyperbolicOrbicurveModel F) :
 
 /-- A constructor smoke test for the finite-place valuation section. -/
 def abstractThetaValuationData
-    (toModuli : NumberField.FinitePlace K -> NumberField.FinitePlace Fmod)
     (chosenLift : NumberField.FinitePlace Fmod -> NumberField.FinitePlace K)
-    (hSection : ∀ w, toModuli (chosenLift w) = w)
-    (toModuliInfinite : NumberField.InfinitePlace K -> NumberField.InfinitePlace Fmod)
+    (hSection :
+      ∀ w, ThetaFinitePlace.comap (chosenLift w) = w)
     (chosenInfiniteLift :
       NumberField.InfinitePlace Fmod -> NumberField.InfinitePlace K)
     (hInfiniteSection :
-      ∀ w, toModuliInfinite (chosenInfiniteLift w) = w)
-    (residueCharacteristic : NumberField.FinitePlace Fmod -> ℕ)
+      ∀ w,
+        (chosenInfiniteLift w).comap (algebraMap Fmod K) = w)
     (badMod : Set (NumberField.FinitePlace Fmod))
     (hBad : ∃ w, w ∈ badMod)
-    (hOdd : ∀ w, w ∈ badMod -> Odd (residueCharacteristic w))
-    (hPrime : ∀ w, w ∈ badMod -> Nat.Prime (residueCharacteristic w))
+    (hOdd : ∀ w, w ∈ badMod ->
+      Odd (ThetaFinitePlace.residueCharacteristic w))
+    (hPrime : ∀ w, w ∈ badMod ->
+      Nat.Prime (ThetaFinitePlace.residueCharacteristic w))
     (hCoprime : ∀ w, w ∈ badMod ->
-      Nat.Coprime (residueCharacteristic w) primeFive.value)
-    (multiplicativeBadReductionAtLift : NumberField.FinitePlace K -> Prop)
-    (hMult : ∀ v, v ∈ Set.range chosenLift -> toModuli v ∈ badMod ->
-      multiplicativeBadReductionAtLift v) :
+      Nat.Coprime
+        (ThetaFinitePlace.residueCharacteristic w) primeFive.value) :
     ThetaValuationData primeFive Fmod K where
-  toModuli := toModuli
   chosenLift := chosenLift
   toModuli_chosenLift := hSection
-  toModuliInfinite := toModuliInfinite
   chosenInfiniteLift := chosenInfiniteLift
   toModuliInfinite_chosenLift := hInfiniteSection
-  residueCharacteristic := residueCharacteristic
   badMod := badMod
   badMod_nonempty := hBad
   badMod_oddResidueCharacteristic := hOdd
   badMod_residueCharacteristic_prime := hPrime
   badMod_residueCharacteristic_coprime_l := hCoprime
-  multiplicativeBadReductionAtLift := multiplicativeBadReductionAtLift
-  bad_lifts_have_multiplicative_reduction := hMult
 
 /-- A constructor smoke test for the field tower part of initial theta data. -/
 def abstractThetaFieldTower
@@ -1282,12 +1276,13 @@ def abstractThetaFieldTower
 /-- A constructor smoke test for the curve/moduli part of initial theta data. -/
 noncomputable def abstractThetaCurveModuliData
     (cF : HyperbolicOrbicurveModel F)
-    (cF_is_quotient_by_neg_one fmod_is_fieldOfModuli
-      stableReductionOverNonarchimedean torsion23RationalOverF : Prop)
+    (cF_is_quotient_by_neg_one fmod_is_fieldOfModuli : Prop)
     (hQuotient : cF_is_quotient_by_neg_one)
     (hFmod : fmod_is_fieldOfModuli)
-    (hStable : stableReductionOverNonarchimedean)
-    (hTorsion : torsion23RationalOverF) :
+    (hStable :
+      (PuncturedEllipticCurve.ofJ F (37 : F)).HasStableReductionEverywhere)
+    (hTorsion :
+      (PuncturedEllipticCurve.ofJ F (37 : F)).Torsion23Rational) :
     ThetaCurveModuliData Fmod F where
   xF := PuncturedEllipticCurve.ofJ F (37 : F)
   cF := cF
@@ -1295,10 +1290,8 @@ noncomputable def abstractThetaCurveModuliData
   cF_is_quotient_by_neg_one_holds := hQuotient
   fmod_is_fieldOfModuli := fmod_is_fieldOfModuli
   fmod_is_fieldOfModuli_holds := hFmod
-  stableReductionOverNonarchimedean := stableReductionOverNonarchimedean
-  stableReductionOverNonarchimedean_holds := hStable
-  torsion23RationalOverF := torsion23RationalOverF
-  torsion23RationalOverF_holds := hTorsion
+  stableReductionOverNonarchimedean := hStable
+  torsion23RationalOverF := hTorsion
 
 /-- A constructor smoke test for the `C_K`/`X_K` cover data. -/
 def abstractThetaOrbicurveCoverData
@@ -1397,25 +1390,31 @@ noncomputable def abstractInitialThetaData
     (cuspLocalData :
       ThetaCuspLocalData primeFive Fmod F K curveModuli coverData valuations
         badLocalData epsilon)
-    (k_is_lTorsionKernelField lTorsionImageContainsSL2 qParameterOrdersPrimeToL : Prop)
-    (hK : k_is_lTorsionKernelField)
-    (hImage : lTorsionImageContainsSL2)
-    (hQ : qParameterOrdersPrimeToL) :
+    (lTorsionRepresentation :
+      ThetaLTorsionRepresentationData primeFive F K curveModuli.xF)
+    (hK : lTorsionRepresentation.IsKernelField)
+    (hImage : lTorsionRepresentation.ImageContainsSL2)
+    (hBadReduction :
+      ∀ v, v ∈ valuations.bad →
+        curveModuli.xF.HasMultiplicativeReductionAtBaseChange v)
+    (qParameterOrders :
+      ThetaQParameterOrderData primeFive Fmod K valuations)
+    (hQ : qParameterOrders.OrdersPrimeToL) :
     InitialThetaData Fmod F K where
   l := primeFive
   fieldTower := fieldTower
   curveModuli := curveModuli
   coverData := coverData
-  k_is_lTorsionKernelField := k_is_lTorsionKernelField
-  k_is_lTorsionKernelField_holds := hK
+  lTorsionRepresentation := lTorsionRepresentation
+  k_is_lTorsionKernelField := hK
   valuations := valuations
+  badLiftsHaveMultiplicativeReduction := hBadReduction
   badLocalData := badLocalData
   epsilon := epsilon
   cuspLocalData := cuspLocalData
-  lTorsionImageContainsSL2 := lTorsionImageContainsSL2
-  lTorsionImageContainsSL2_holds := hImage
-  qParameterOrdersPrimeToL := qParameterOrdersPrimeToL
-  qParameterOrdersPrimeToL_holds := hQ
+  lTorsionImageContainsSL2 := hImage
+  qParameterOrders := qParameterOrders
+  qParameterOrdersPrimeToL := hQ
 
 variable (theta : InitialThetaData Fmod F K)
 
@@ -1563,10 +1562,10 @@ example : theta.curveModuli.cF_is_quotient_by_neg_one :=
 example : theta.curveModuli.fmod_is_fieldOfModuli :=
   theta.fmodFieldOfModuli
 
-example : theta.curveModuli.stableReductionOverNonarchimedean :=
+example : theta.curveModuli.xF.HasStableReductionEverywhere :=
   theta.stableReductionOverNonarchimedean
 
-example : theta.curveModuli.torsion23RationalOverF :=
+example : theta.curveModuli.xF.Torsion23Rational :=
   theta.torsion23RationalOverF
 
 example : theta.coverData.cK_type.hasType :=
@@ -1803,7 +1802,7 @@ example : theta.coverData.finiteEtaleCoveringDiagrams :=
 example : theta.coverData.profiniteGroupOpenImmersions :=
   theta.profiniteGroupOpenImmersions
 
-example : theta.k_is_lTorsionKernelField :=
+example : theta.lTorsionRepresentation.IsKernelField :=
   theta.kIsLTorsionKernelField
 
 example (j : F) :

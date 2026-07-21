@@ -1,3 +1,4 @@
+import Iut.Basic
 import Iut.Stage1.IUTStage1Experiments
 import Iut.Stage1.IUTStage1StepXIDependencyAudit
 
@@ -15,7 +16,8 @@ def cleanLine (line : String) : Option String :=
 
 def leanInput (decls : Array String) : String := Id.run do
   let mut input :=
-    "import Iut.Stage1.IUTStage1Experiments\n\
+    "import Iut.Basic\n\
+    import Iut.Stage1.IUTStage1Experiments\n\
     import Iut.Stage1.IUTStage1StepXIDependencyAudit\n"
   for decl in decls do
     input := input ++ s!"#check {decl}\n"

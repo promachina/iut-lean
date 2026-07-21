@@ -3,7 +3,7 @@ Copyright (c) 2026 IUT Lean formalization contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: IUT Lean formalization contributors
 -/
-import Iut.Foundations.InitialThetaData
+import Iut.Stage1.IUTStage1HodgeTheaterSource
 import Iut.Stage1.IUTStage1Data
 import Mathlib.Data.ZMod.ValMinAbs
 import Mathlib.Algebra.Module.TransferInstance

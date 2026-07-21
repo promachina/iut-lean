@@ -6,35 +6,630 @@
 \begin{definition}[Initial theta and theater data]
   \label{def:initial-theta-data}
   \lean{Iut.InitialThetaData}
-  \notready
+  \lean{Iut.ThetaLTorsionRepresentationData.IsKernelField}
+  \lean{Iut.ThetaLTorsionRepresentationData.ImageContainsSL2}
+  \lean{Iut.ThetaQParameterOrderData.OrdersPrimeToL}
+  \leanok
   The source construction begins with the initial \(\Theta\)-data of \IUT{} I:
   a number field, an elliptic curve, bad places, label data, and the
-  arithmetic hypotheses from which Hodge theaters are built.  The repository
-  contains typed shadows of initial theta data, but the full arithmetic
-  construction is not yet the active Stage 1 input.
+  arithmetic hypotheses from which Hodge theaters are built.  The mod-\(l\)
+  representation, its kernel field, containment of
+  \(\mathrm{SL}_2(\mathbb Z/l\mathbb Z)\), and positive bad-place
+  q-parameter orders prime to \(l\) are explicit predicates and data rather
+  than free propositions.
 \end{definition}
 
 \begin{definition}[Hodge theater histories]
   \label{def:hodge-theater-histories}
-  \notready
+  \lean{Iut.ThetaArithmeticHistory}
+  \lean{Iut.Stage1HodgeTheaterSource}
+  \lean{Iut.Stage1HodgeTheaterSource.ofInitialThetaData}
+  \lean{Iut.Stage1HodgeTheaterSource.histories_not_identified}
+  \leanok
   A Hodge theater carries an arithmetic holomorphic structure.  The Stage 1
-  argument must keep the domain history of the \ThetaPilot{} and the codomain
-  history of the \qPilot{} distinct, even when their weakened data are compared
-  in a common container.
+  source now constructs the domain history of the \qPilot{} and the
+  codomain history of the \ThetaPilot{} as distinct constructors.  Their
+  separation is therefore a theorem of the datatype, not an inequality between
+  caller-supplied strings.
 \end{definition}
 
 \begin{definition}[Prime strips and links]
   \label{def:prime-strip-links}
-  \notready
+  \lean{Iut.ThetaPrimeStrip}
+  \lean{Iut.ThetaBridgeSource}
+  \lean{Iut.ThetaPlusMinusEllNFHodgeTheater}
+  \lean{Iut.Stage1HodgeTheaterSource.zeroColumn_primeStrip_compatible}
+  \lean{Iut.Stage1HodgeTheaterSource.oneColumn_primeStrip_compatible}
+  \leanok
   The \(\Theta^{\times\mu}_{\mathrm{LGP}}\)-link between the \(0\)- and
   \(1\)-columns has a value-group portion and a unit portion.  The value-group
-  portion relates \ThetaPilot{} data at \((0,0)\) to \qPilot{} data at
-  \((1,0)\).  The input prime-strip link property \(\IPL\) records that the
-  output possibilities of the multiradial algorithm remain linked to the input
-  prime-strip data at the comparison boundary.
+  portion relates \qPilot{} data at \((0,0)\) to \ThetaPilot{} data at
+  \((1,0)\).  At the IUT I boundary, prime strips are indexed by their owner
+  history and project the global orbicurve, selected places, local orbicurves,
+  cusps, and q-orders from the same initial theta datum.  The
+  \(\Theta^{\pm\ell}\) and \(\Theta^{\mathrm{NF}}\) components are glued by an
+  equality of their typed gluing-role prime strips.  The later \(\IPL\)
+  property remains part of the Theorem 3.11 route.
+\end{definition}
+
+\begin{definition}[Source Frobenioid prime strips]
+  \label{def:source-frobenioid-prime-strips}
+  \lean{Iut.PreFrobenioid.RationalMonoidTransport}
+  \lean{Iut.PreFrobenioid.CharacteristicSplitting}
+  \lean{Iut.SplitFrobenioidPresentation}
+  \lean{Iut.SplitTopologicalMonoidPresentation}
+  \lean{Iut.SourceFPrimeStrip}
+  \lean{Iut.SourceFMonoAnalyticPrimeStrip}
+  \lean{Iut.SourceFGloballyRealifiedMonoAnalyticPrimeStrip}
+  \lean{Iut.sourceFPrimeStripToD}
+  \lean{Iut.SourceFPrimeStripCapsule}
+  \lean{Iut.SourceThetaHodgeTheater.associatedF}
+  \lean{Iut.SourceFThetaBridge}
+  \lean{Iut.SourceFThetaBridge.associatedD}
+  \lean{Iut.SourceFThetaBridge.associatedD_lift_unique}
+  \leanok
+  The transitive Frobenioids I dependency is retained explicitly:
+  \(O^\triangleright(-)\) is a contravariant functor on the isotropic
+  linear category, and a characteristic splitting is a subfunctor whose
+  product with the units is objectwise bijective and satisfies the
+  isotropic-hull condition.  Thus a split Frobenioid is not identified with
+  a Frobenius-degree trivialization.  At nonarchimedean places an
+  \(F^{\sim}\)-component is an actual split Frobenioid; at archimedean
+  places it also carries the compact/noncompact \(TM^{\sim}\)
+  factorization, tied to the selected characteristic splitting.
+  A globally realified strip additionally carries the global Frobenioid,
+  its prime/place bijection, all local characteristic and realified monoids,
+  and commuting currency-exchange isomorphisms \(\rho_v\), compared
+  componentwise with the Example~3.5 model.
+  Holomorphic \(F\)-prime-strips form the isomorphism-only category required
+  by Definition~5.2(iii), hence admit genuine capsules, and their associated
+  \(D\)-prime-strips are functorial.  The \(F\)-strip associated to a
+  Definition~3.6 theta-Hodge theater is derived, not supplied independently.
+  Consequently, selected \(F\)-level theta-bridge arrows induce a
+  \(D\)-theta bridge, with the Corollary~5.3 uniqueness of selected lifts
+  exposed as a separate theorem.  Proposition~2.2's construction of the
+  rational-monoid transport, the Examples~3.2--3.5 model constructions,
+  mono-analyticization, global realification, and the coric reconstruction
+  clauses of Definition~5.2(v)--(viii) remain explicit source obligations.
+\end{definition}
+
+\begin{definition}[Capsules and processions]
+  \label{def:source-processions}
+  \lean{Iut.CategoryCapsule}
+  \lean{Iut.CategoryCapsule.FullPolyMorphism}
+  \lean{Iut.CategoryProcession}
+  \lean{Iut.CategoryProcession.Hom}
+  \lean{Iut.CategoryProcessionObject}
+  \lean{Iut.IUTIPositiveLabel.signLabelEquiv}
+  \lean{Iut.SourceDThetaBridgeCore}
+  \lean{Iut.SourceDThetaBridgeCore.procession}
+  \lean{Iut.SourceDThetaBridgeCore.procession_label_indeterminacy}
+  \lean{Iut.SourceDMonoAnalyticization}
+  \lean{Iut.SourceDThetaBridgeCore.monoAnalyticProcession}
+  \lean{Iut.SourceDThetaBridgeCore.monoAnalyticProcession_label_indeterminacy}
+  \leanok
+  The capsule conventions of \IUT{} I, Section 0 and Definition~4.10 are
+  formalized directly.  A capsule-full poly-morphism contains all
+  componentwise isomorphisms over a fixed injection.  An \(n\)-procession has
+  a \(j\)-capsule in position \(j\), and its morphisms use order-preserving
+  injections together with capsule-full poly-morphisms.  Capsules and
+  processions carry the identity and composition operations required by the
+  categories used in Proposition~4.11.  The positive representatives
+  \(1,\ldots,l^\ast\) are proved equivalent to the nonzero Tate labels modulo
+  sign.  Consequently, a Proposition~4.7 evaluation-label bijection derives
+  the nested holomorphic \(l^\ast\)-procession and its exact \(l^\ast!\)
+  indeterminacy.  An actual natural mono-analyticization functor maps this to
+  the mono-analytic procession while preserving the cardinality and factorial
+  proofs.  Construction of that functor from the source subcategories,
+  derivation of the label bijection from evaluation sections, and bridge
+  functoriality remain source obligations.
+\end{definition}
+
+\begin{definition}[Toy degree-preorder realization]
+  \label{def:iut-i-theater-realization}
+  \uses{def:initial-theta-data,def:hodge-theater-histories,def:prime-strip-links}
+  \lean{Iut.ToyIUTIHodgeTheaterRealization}
+  \lean{Iut.ToyIUTIHodgeTheaterRealization.ofStage1HodgeTheaterSource}
+  \lean{Iut.Stage1HodgeTheaterSource.hasToyIUTIRealization}
+  \lean{Iut.Stage1.IUTStage1InitialThetaPrimitiveSourcePacket}
+  \leanok
+  The typed source constructs local and global effective-divisor
+  degree preorder categories, the theta-link equivalence, and the
+  \(\Theta^{\pm\ell}/\Theta^{\mathrm{NF}}\) gluing equivalences.  This
+  degree-level test double does not prove Definition~3.6, Corollary~3.7,
+  Definitions~4.1 and~5.2, Proposition~6.7, Remark~6.12.2, or
+  Definition~6.13 of \IUT{} I.  Frobenioid and Kummer structure is not
+  asserted by this model.
+\end{definition}
+
+\begin{definition}[Mono-theta environments and inverse-limit group]
+  \label{def:mono-theta-environment-limit}
+  \uses{def:initial-theta-data}
+  \lean{Iut.TopologicalGroupCat}
+  \lean{Iut.ContinuousAutomorphism.inner_range_normal}
+  \lean{Iut.ContinuousOuterSubgroup}
+  \lean{Iut.SourceMonoThetaEnvironment}
+  \lean{Iut.SourceMonoThetaProjectiveSystem}
+  \lean{Iut.SourceMonoThetaProjectiveSystem.inverseLimit}
+  \lean{Iut.SourceIUTIIDefinition27PartI}
+  \lean{Iut.SourceTopologicalSubquotient}
+  \lean{Iut.SourceTopologicalSubquotient.projection}
+  \lean{Iut.SourceTopologicalSubquotient.comap}
+  \lean{Iut.SourceIUTIIDefinition27PartII}
+  \lean{Iut.SourceIUTIIDefinition27PartII.exteriorCyclotomeSubquotient}
+  \lean{Iut.SourceIUTIIDefinition27PartII.lDeltaThetaSubquotient}
+  \lean{Iut.SourceIUTIIDefinition27PartII.restrictedTemperedSubquotient}
+  \lean{Iut.SourceIUTIIDefinition27PartII.localGaloisSubquotient}
+  \lean{Iut.SourceIUTIIDefinition27PartII.cyclotomicRigidity_source}
+  \lean{Iut.SourceIUTIIDefinition27PartII.narrowInverseImage_le_wide}
+  \leanok
+  The source boundary for Etale Theta Definition~2.13 uses genuine
+  topological groups, continuous automorphisms, the proved-normal exact range
+  of inner automorphisms, the full inverse image of a subgroup of the outer
+  automorphism group, a cyclic \(\mu_N\)-kernel, and
+  the conjugacy class of the image of a continuous injective theta section.
+  The IUT~II Definition~2.7 system is an actual functor with a certified
+  categorical inverse limit; its ambient homomorphism has the exterior
+  cyclotome as exact kernel and the tempered subgroup as exact image.  The two
+  groups in Definition~2.7(ii) are computed as inverse images, and each of its
+  four subquotients is represented by an actual topological quotient \(U/N\)
+  by a normal subgroup.  Pullback is the derived quotient
+  \(f^{-1}(U)/f^{-1}(N)\): the exterior cyclotome is restricted from the exact
+  kernel in part (i), and the other three objects are pulled back from ambient
+  subquotients.  Restricted cyclotomic rigidity is a continuous group
+  equivalence between these derived endpoints.  Construction from tempered
+  geometry, the three precise ambient subquotients, the full reduction
+  morphisms, and the link to Corollary~2.8 remain source obligations.
+\end{definition}
+
+\begin{definition}[Continuous theta-value germs and Gaussian monoids]
+  \label{def:continuous-theta-evaluation}
+  \uses{def:mono-theta-environment-limit}
+  \lean{Iut.ContinuousOneCocycle}
+  \lean{Iut.ContinuousH1}
+  \lean{Iut.ContinuousH1.toGerm}
+  \lean{Iut.ContinuousH1Germ}
+  \lean{Iut.ContinuousH1GermRepresentative.pullback}
+  \lean{Iut.ContinuousH1Germ.restrict}
+  \lean{Iut.ContinuousH1Germ.restrictMonoidHom}
+  \lean{Iut.EquivariantOrbitMap}
+  \lean{Iut.EquivariantOrbitMap.onOrbitQuotients}
+  \lean{Iut.independentConjugacyMulAction}
+  \lean{Iut.SourceIUTIIThetaEvaluationOrbits}
+  \lean{Iut.SourceIUTIIIndependentConjugacyEvaluationAlgorithm}
+  \lean{Iut.SourceIUTIIIndependentConjugacyEvaluationAlgorithm.toEquivariantOrbitMap}
+  \lean{Iut.SourceIUTIIIndependentConjugacyEvaluationAlgorithm.onIndependentConjugacyClasses}
+  \lean{Iut.SourceIUTIICorollary28RestrictionStages}
+  \lean{Iut.SourceIUTIICorollary28RestrictionStages.afterSecond}
+  \lean{Iut.SourceIUTIICorollary28RestrictionStages.totalRestrictionMonoidHom}
+  \lean{Iut.SourceIUTIICorollary28RestrictionStages.afterSecond_zero_representatives}
+  \lean{Iut.sourceConstantTorsion}
+  \lean{Iut.sourceSplittingUpToTorsionMap}
+  \lean{Iut.SourceSplittingUpToTorsion}
+  \lean{Iut.sourceZeroLabelSplittingUpToTorsion}
+  \lean{Iut.SourceIUTIIZeroLabelConstantComparison}
+  \lean{Iut.SourceIUTIIZeroLabelConstantComparison.zeroToDiagonalMonoidHom}
+  \lean{Iut.SourceIUTIIZeroLabelConstantComparison.zeroDiagonalSubmonoid_eq_diagonalRangeSubmonoid}
+  \lean{Iut.SourceIUTIIZeroLabelConstantComparison.zeroToDiagonalMulEquiv}
+  \lean{Iut.SourceIUTIIZeroLabelConstantComparison.zeroToDiagonalContinuousMulEquiv}
+  \lean{Iut.SourceIUTIIZeroLabelConstantComparison.zeroToDiagonalMonoidHom_equivariant}
+  \lean{Iut.etaleThetaUnitActionOnSignLabel}
+  \lean{Iut.iutIISignQuotientPermHom}
+  \lean{Iut.iutIISignQuotientPermHom_transitive}
+  \lean{Iut.iutIISignQuotientAction_transitive}
+  \lean{Iut.SourceTopologicalGroupMonoidActionPair}
+  \lean{Iut.SourceTopologicalGroupMonoidActionPair.Iso}
+  \lean{Iut.SourceTopologicalGroupMonoidActionPair.Iso.castTarget}
+  \lean{Iut.SourceIUTIISymmetrizingIsomorphisms}
+  \lean{Iut.SourceIUTIISymmetrizingIsomorphisms.outerTransport_one}
+  \lean{Iut.SourceIUTIISymmetrizingIsomorphisms.outerTransport_mul}
+  \lean{Iut.SourceIUTIISymmetrizingIsomorphisms.fromBase}
+  \lean{Iut.SourceIUTIISymmetrizingIsomorphisms.diagonalMonoidHom}
+  \lean{Iut.SourceIUTIISymmetrizingIsomorphisms.diagonalMonoidHom_injective}
+  \lean{Iut.SourceIUTIISymmetrizingIsomorphisms.diagonalRangeSubmonoid}
+  \lean{Iut.SourceIUTIISymmetrizingIsomorphisms.diagonalRangeContinuousMulEquiv}
+  \lean{Iut.SourceIUTIISymmetrizingIsomorphisms.diagonalRangeContinuousMulEquiv_equivariant}
+  \lean{Iut.SourceIUTIISymmetrizingIsomorphisms.diagonalUnitSubmonoid}
+  \lean{Iut.SourceIUTIISymmetrizingIsomorphisms.diagonalActionHom}
+  \lean{Iut.SourceIUTIISymmetrizingIsomorphisms.diagonalMonoidHom_equivariant}
+  \lean{Iut.SourceIUTIISymmetrizingIsomorphisms.gaussianMonoid}
+  \lean{Iut.SourceIUTIISymmetrizingIsomorphisms.profile_mem_gaussianMonoid}
+  \lean{Iut.SourceIUTIISymmetrizingIsomorphisms.gaussianMonoidActionHom}
+  \lean{Iut.MulEquivsDifferBySingleInner}
+  \lean{Iut.singleInnerIsomorphismSetoid}
+  \lean{Iut.SourceSingleInnerIsomorphismClass}
+  \lean{Iut.SourceIUTIISynchronizedRestrictionIsomorphismClass}
+  \lean{Iut.SourceIUTIICorollary35RestrictionContext}
+  \lean{Iut.SourceIUTIICorollary35RestrictionDiagram}
+  \lean{Iut.SourceIUTIICorollary35SingleBasepointAction}
+  \lean{Iut.RestrictionDiagramsDifferBySingleInner}
+  \lean{Iut.singleInnerRestrictionDiagramSetoid}
+  \lean{Iut.SourceIUTIISynchronizedRestrictionDiagramClass}
+  \lean{Iut.SourceIUTIICorollary35RestrictionDiagram.synchronizedClassToMonoidIsomorphismClass}
+  \lean{Iut.SourceIUTIIValueProfile}
+  \lean{Iut.TorsionUnitSubgroup}
+  \lean{Iut.SourceIUTIIMultiplicativeTorsionAction}
+  \lean{Iut.SourceIUTIIMultiplicativeTorsionAction.actionMap_injective}
+  \lean{Iut.SourceIUTIIMultiplicativeTorsionAction.toTorsionUnitSubgroup}
+  \lean{Iut.SourceIUTIIMultiplicativeTorsionAction.toTorsionThetaValueFamily}
+  \lean{Iut.SourceIUTIIMultiplicativeTorsionAction.thetaValues_eq_orbitCarriers}
+  \lean{Iut.SourceIUTIIMultiplicativeTorsionAction.toFiniteOrderAction}
+  \lean{Iut.SourceIUTIIMultiplicativeFiniteOrderAction}
+  \lean{Iut.SourceIUTIIMultiplicativeFiniteOrderAction.orbitCarrier_subset_torsion}
+  \lean{Iut.SourceIUTIITorsionThetaValueFamily}
+  \lean{Iut.SourceIUTIIInfiniteThetaRelation}
+  \lean{Iut.SourceTorsionCyclotomicCommMonoid}
+  \lean{Iut.SourceTorsionCyclotomicTopologicalCommMonoid}
+  \lean{Iut.SourceMonoidCyclotome}
+  \lean{Iut.SourceMLFAlgebraicIntegerRing}
+  \lean{Iut.SourceMLFIntegralMonoid}
+  \lean{Iut.SourceMLFAbsoluteGaloisGroup}
+  \lean{Iut.SourceMLFIntegralMonoid.galoisAction}
+  \lean{Iut.SourceMLFIntegralMonoid.algebraicClosure_isFractionRing}
+  \lean{Iut.SourceMLFIntegralMonoid.groupificationEquivAlgebraicClosureUnits}
+  \lean{Iut.SourceMLFIntegralMonoid.torsionUnit}
+  \lean{Iut.SourceMLFIntegralMonoid.torsionUnit_image}
+  \lean{Iut.SourceMLFIntegralMonoid.groupificationRootableByNat}
+  \lean{Iut.SourceTorsionCyclotomicCommMonoid.rootsOfUnity_finite}
+  \lean{Iut.SourceTorsionCyclotomicCommMonoid.rationalCircle_torsion_natCard}
+  \lean{Iut.SourceTorsionCyclotomicCommMonoid.rootsOfUnityEquiv}
+  \lean{Iut.SourceTorsionCyclotomicCommMonoid.rootsOfUnity_natCard}
+  \lean{Iut.SourceTorsionCyclotomicCommMonoid.RootsOfUnityGroup}
+  \lean{Iut.SourceTorsionCyclotomicCommMonoid.rootsOfUnityGroup_natCard}
+  \lean{Iut.SourceKummerFaithfulness.eq_one_of_roots_of_residuallyFinite}
+  \lean{Iut.SourceKummerFaithfulness.residuallyFinite_of_profinite}
+  \lean{Iut.SourceKummerFaithfulness.eq_one_of_roots_in_profinite}
+  \lean{Iut.SourceMonoidCyclotome.topology}
+  \lean{Iut.SourceMonoidCyclotome.boundedCoe_isClosedEmbedding}
+  \lean{Iut.SourceMonoidCyclotome.asProfinite}
+  \lean{Iut.SourceMonoidCyclotome.eq_one_of_roots}
+  \lean{Iut.SourceMLFModelTMStructure}
+  \lean{Iut.SourceMLFModelTMPair}
+  \lean{Iut.SourceMLFGaloisTMPairData}
+  \lean{Iut.SourceMLFGaloisTMPairData.cyclotomeAction}
+  \lean{Iut.SourceMLFGaloisTMPair}
+  \lean{Iut.SourceMLFGaloisTMPair.grothendieckAction}
+  \lean{Iut.SourceMLFGaloisTMPair.fixedSubmonoid}
+  \lean{Iut.SourceMLFIntegralMonoid.absoluteOpenStabilizer}
+  \lean{Iut.SourceMLFGaloisTMPair.openStabilizer}
+  \lean{Iut.SourceMLFGaloisTMPair.openStabilizer_fixed}
+  \lean{Iut.SourceMLFGaloisTMPair.continuousCyclotomeAction}
+  \lean{Iut.SourceMLFGaloisTMPair.rootableRationalPowers}
+  \lean{Iut.SourceMLFGaloisTMPair.groupificationRootableByNat}
+  \lean{Iut.SourceMLFGaloisTMPair.CompatibleRootSystem}
+  \lean{Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.ofModel}
+  \lean{Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.quotient_pow_den}
+  \lean{Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.galoisTranslate}
+  \lean{Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.quotientUnit_exists}
+  \lean{Iut.SourceMLFGaloisTMPair.KummerRootRealization}
+  \lean{Iut.SourceMLFGaloisTMPair.KummerRootRealization.ofRootSystem}
+  \lean{Iut.SourceMLFGaloisTMPair.KummerRootRealization.ratioCyclotome}
+  \lean{Iut.SourceMLFGaloisTMPair.KummerRootRealization.ratioCyclotome_continuous}
+  \lean{Iut.SourceMLFGaloisTMPair.ContinuousKummerRootRealization}
+  \lean{Iut.SourceMLFGaloisTMPair.ContinuousKummerRootRealization.cocycle}
+  \lean{Iut.SourceMLFGaloisTMPair.CompatibleRootComparison}
+  \lean{Iut.SourceMLFGaloisTMPair.CompatibleRootComparison.comparisonUnit_exists}
+  \lean{Iut.SourceMLFGaloisTMPair.CompatibleRootComparison.ofModel}
+  \lean{Iut.SourceMLFGaloisTMPair.CompatibleRootComparison.germ_eq}
+  \lean{Iut.SourceMLFGaloisTMPair.CompatibleRootComparison.localClass_eq}
+  \lean{Iut.SourceMLFGaloisTMPair.ContinuousModelKummerRootChoice}
+  \lean{Iut.SourceMLFGaloisTMPair.KummerRootTheory}
+  \lean{Iut.SourceMLFGaloisTMPair.KummerRootTheory.ofContinuousEquiv}
+  \lean{Iut.SourceMLFGaloisTMPair.KummerRootTheory.chosen_rootSystem}
+  \lean{Iut.SourceMLFGaloisTMPair.KummerRootTheory.kummerMap}
+  \lean{Iut.SourceMLFGaloisTMPair.KummerRootTheory.canonicalKummerMap}
+  \lean{Iut.SourceMLFGaloisTMPair.ContinuousLocalModelKummerRootRealization}
+  \lean{Iut.SourceMLFGaloisTMPair.LocalKummerRootTheory}
+  \lean{Iut.SourceMLFGaloisTMPair.LocalKummerRootTheory.ofContinuousEquiv}
+  \lean{Iut.SourceMLFGaloisTMPair.LocalKummerRootTheory.chosen_rootSystem}
+  \lean{Iut.SourceMLFGaloisTMPair.LocalKummerRootTheory.kummerMap}
+  \lean{Iut.SourceMLFGaloisTMPair.LocalKummerRootTheory.local_toGerm_eq_global}
+  \lean{Iut.SourceMLFGaloisTMPair.LocalKummerRootTheory.canonicalKummerMap}
+  \lean{Iut.SourceMLFGaloisTMPair.LocalKummerRootTheory.canonicalKummerMap_toGerm}
+  \lean{Iut.SourceMLFGaloisTMPair.augmentation}
+  \lean{Iut.SourceMLFGaloisTMPair.augmentation_surjective}
+  \lean{Iut.SourceIUTIIUnitKummerEmbedding}
+  \lean{Iut.SourceIUTIIUnitKummerEmbedding.monoidKummer}
+  \lean{Iut.SourceIUTIIUnitKummerEmbedding.unitKummer}
+  \lean{Iut.SourceIUTIIUnitKummerEmbedding.constantSubgroup}
+  \lean{Iut.SourceIUTIIUnitKummerEmbedding.torsionUnitImage}
+  \lean{Iut.SourceIUTIIUnitKummerEmbedding.torsionUnitImage_eq_constant_torsion}
+  \lean{Iut.SourceIUTIIThetaEvaluationOrbits.toTorsionThetaValueFamily}
+  \lean{Iut.SourceIUTIIThetaEvaluationOrbits.toTorsionThetaValueFamily_thetaValues}
+  \lean{Iut.SourceIUTIITorsionThetaValueFamily.representativeProfile}
+  \lean{Iut.SourceIUTIITorsionThetaValueFamily.profiles_differByPointwiseTorsion}
+  \lean{Iut.SourceIUTIIValueProfile.equivPi}
+  \lean{Iut.SourceIUTIIValueProfile.natCard_eq_twoEll_pow_lStar}
+  \lean{Iut.sourceGaussianMonoid}
+  \lean{Iut.ValueProfilesDifferByPointwiseTorsion}
+  \lean{Iut.sourceTwoEllGaussianSubmonoid}
+  \lean{Iut.sourceTwoEllGaussianSubmonoid_eq}
+  \lean{Iut.SourceIUTIITorsionThetaValueFamily.twoEllGaussianSubmonoid_eq}
+  \lean{Iut.SourceIUTIITorsionThetaValueFamily.profileIndependentTwoEllGaussianSubmonoid}
+  \lean{Iut.SourceIUTIITorsionThetaValueFamily.twoEllGaussianSubmonoid_eq_profileIndependent}
+  \lean{Iut.ValueProfileRootSystemsDifferByDiagonalTorsion}
+  \lean{Iut.sourceInfiniteGaussianMonoid}
+  \lean{Iut.sourceInfiniteGaussianMonoid_eq_of_differByDiagonalTorsion}
+  \lean{Iut.sourceConstantTorsion_unitKummer}
+  \lean{Iut.sourceConstantTorsion_map}
+  \lean{Iut.sourceConstantTorsionQuotientCongr}
+  \lean{Iut.SourceSplittingUpToTorsion.map}
+  \lean{Iut.SourceFiniteGaussianSplittingUpToTorsion}
+  \lean{Iut.SourceInfiniteGaussianSplittingUpToTorsion}
+  \lean{Iut.sourceGaussianMonoid_carrier_eq_splittingFactorProduct}
+  \lean{Iut.sourceInfiniteGaussianMonoid_carrier_eq_splittingFactorProduct}
+  \lean{Iut.sourceCorollary35FiniteGaussianSplittingOfProposition31}
+  \lean{Iut.sourceCorollary35InfiniteGaussianSplittingOfProposition31}
+  \lean{Iut.SourceTorsionDetectingRestriction}
+  \lean{Iut.SourceTorsionDetectingRestriction.splittingUpToTorsion}
+  \lean{Iut.SourceIUTIIPointedInversion}
+  \lean{Iut.SourceIUTIIPointedInversion.decompositionInclusion}
+  \lean{Iut.SourceIUTIICorollary112PointedRestriction}
+  \lean{Iut.SourceIUTIICorollary112PointedRestriction.detects_constant_torsion}
+  \lean{Iut.SourceIUTIICorollary112PointedRestriction.toTorsionDetectingRestriction}
+  \lean{Iut.SourceIUTIICorollary112PointedRestriction.splittingUpToTorsion}
+  \lean{Iut.sourceCorollary35FiniteGaussianSplittingOfRestrictionData}
+  \lean{Iut.sourceCorollary35InfiniteGaussianSplittingOfRestrictionData}
+  \lean{Iut.SourceIUTIICorollary28RestrictionStages.totalRestriction_mem_afterSecond_theta_carrier}
+  \lean{Iut.SourceIUTIICorollary28RestrictionStages.totalRestriction_mem_afterSecond_infiniteTheta_carrier}
+  \lean{Iut.SourceIUTIICorollary28RestrictionStages.zeroThetaTorsionDetectingRestriction}
+  \lean{Iut.SourceIUTIICorollary28RestrictionStages.zeroInfiniteThetaTorsionDetectingRestriction}
+  \lean{Iut.SourceIUTIICorollary28RestrictionStages.zeroThetaSplittingUpToTorsion}
+  \lean{Iut.SourceIUTIICorollary28RestrictionStages.zeroInfiniteThetaSplittingUpToTorsion}
+  \lean{Iut.thetaPowerValueProfile}
+  \lean{Iut.thetaPowerGaussianMonoid}
+  \lean{Iut.SourceIUTIIHodgeArakelovThetaPilot}
+  \lean{Iut.SourceIUTIIHodgeArakelovThetaPilot.thetaPowerProfile}
+  \lean{Iut.SourceIUTIIHodgeArakelovThetaPilot.finiteGaussianMonoid}
+  \lean{Iut.SourceIUTIIHodgeArakelovThetaPilot.infiniteGaussianMonoid}
+  \lean{Iut.SourceIUTIIHodgeArakelovThetaPilot.twoEllGaussianSubmonoid_eq_profileIndependent}
+  \lean{Iut.SourceIUTIIHodgeArakelovThetaPilot.thetaOrbit_natCard}
+  \lean{Iut.SourceIUTIIHodgeArakelovThetaPilot.valueProfiles_natCard}
+  \lean{Iut.SourceIUTIIHodgeArakelovThetaPilot.zeroTheta_carrier_subset_torsion}
+  \leanok
+  Continuous nonabelian \(H^1\) is defined as continuous crossed
+  homomorphisms modulo coboundaries.  The displayed direct limit over open
+  subgroups is an explicit quotient of cocycle germs.  Pullback along a
+  continuous group homomorphism is constructed on representatives and proved
+  to descend to the quotient.  For abelian coefficients, pointwise
+  multiplication descends to commutative group structures on both continuous
+  \(H^1\) and its germ colimit, and restriction is a homomorphism.  Given the
+  two paper homomorphisms and
+  equivariance with the \(\mu_{2\ell}\)- and \(\mu\)-actions, the first and
+  second restricted theta-orbit families are derived rather than stored as
+  output fields.  Identity representatives at the zero label survive both
+  restrictions, and every ambient orbit value is proved to map into the
+  corresponding final orbit.  The inertia choice and ambient-subgroup choice carry
+  independent copies of the conjugacy action; a two-variable equivariant
+  evaluation descends to the corresponding product-action orbit quotients.
+  The defining infinite-theta condition is stated exactly: membership means
+  that some positive power agrees with a theta value up to torsion.  At the
+  constant boundary, the model arithmetic monoid is literally the nonzero
+  part of the integral closure of the MLF valuation ring in its algebraic
+  closure.  Its Krull-topological absolute Galois group and algebraic action
+  are constructed, a model pair has a continuous surjective Galois
+  augmentation, and every general pair is required to be isomorphic to such
+  a model.  Following Absolute Anabelian Topics~III, Remark~3.1.1, the exact
+  \(T_{\rm M}\) certificate uses the equivalent topology-free monoid
+  presentation; an arbitrary topology therefore cannot certify a model.
+  The fraction-field theorem identifies the actual Grothendieck group of this
+  cancellative monoid with \(\overline{k}^{\times}\).  Algebraic closedness
+  makes this group rootable, and injectivity of divisible abelian groups
+  extends the prescribed map \(\mathbb Z\to\overline{k}^{\times}\) across
+  \(\mathbb Z\to\mathbb Q\).  Thus coherent compatible rational roots are
+  now constructed from the literal model and transported to every model pair;
+  Kummer theories must realize those roots rather than supply arbitrary ones.
+  Two systems agree on integer exponents, so their quotient at \(q\) has order
+  dividing the denominator of \(q\).  This finite-order element and its inverse
+  are integral, hence construct an actual unit of
+  \(O_{\overline{k}}^{\triangle}\); transport through the model isomorphism
+  constructs every root-system comparison rather than assuming it.
+  Applying Galois to the constructed root system and comparing it with the
+  original constructs every integral Galois root ratio from a fixed-point
+  proof.  Krull stabilizers of the underlying algebraic integers are open and
+  transport to the general pair.  The root ratios are locally constant in
+  discrete units, hence continuous in the pointwise cyclotome topology.  The
+  latter is a closed subspace of a product of finite root-of-unity groups, so
+  Lean proves that it is compact, Hausdorff, totally disconnected, and bundles
+  it as a profinite space.  The ratios are proved multiplicative, killed
+  on \(\mathbb Z\), descended through \(\mathbb Q/\mathbb Z\), and assembled
+  into continuous cocycles.  Comparing two root systems gives the explicit
+  coboundary between their cocycles.  Hence both Kummer maps
+  \(M^H\to H^1(H,\mu_{\mathbb Z}(M))\) and
+  \(M\to\varinjlim_JH^1(J,\mu_{\mathbb Z}(M))\) are derived monoid
+  homomorphisms, and the canonical local map is proved compatible with the
+  canonical germ map.
+  The unit Kummer homomorphism is its restriction, never an independently
+  supplied field; injectivity proves that \(M_{\rm TM}^{\mu}\) is exactly the
+  image of the torsion units.  Proposition~3.2(ii) constructs the map but does
+  not assert injectivity; the remaining precise source obligation is its
+  separate MLF Kummer-faithfulness proof from Definition~1.5 and
+  Remark~1.5.4(i).
+  A pointed inversion carries an
+  actual decomposition subgroup; restriction along its continuous inclusion
+  derives torsion detection from the precise equality
+  \(M_{\rm TM}^{\times}\cap\operatorname{res}^{-1}(\mathrm{tors})=
+  M_{\rm TM}^{\mu}\), and hence derives the splitting.
+  Quotienting an actual constant subgroup by its exact torsion
+  subgroup gives a precise multiplication parametrization; it is proved
+  bijective when every zero-label theta value is constant torsion.  Given a
+  zero-to-base action-pair comparison, the zero-to-label comparisons derive a
+  graph proved equal to the diagonal range from Corollary~3.5(i).  The zero
+  factor is continuously and multiplicatively equivalent to this graph,
+  equivariant for all transported labeled actions.
+  Multiplication by \((\mathbb Z/\ell)^\times\) descends to
+  the exact EtaleTheta sign-label quotient, factors through
+  \((\mathbb Z/\ell)^\times/\{\pm1\}\), and the resulting action on all
+  nonzero absolute labels is proved transitive.  After sign identification,
+  symmetrization retains one
+  topological group/monoid action pair at every nonzero absolute label;
+  its outer transports satisfy identity and multiplication coherence, and
+  action-compatible isomorphisms derive an injective diagonal monoid map.  Its
+  actual range is a submonoid continuously and multiplicatively equivalent to
+  the base monoid, and this equivalence intertwines the transported action.
+  Thus the label set is not replaced by a coarse one-point quotient.  Its diagonal
+  restriction-isomorphism synchronization is represented first by the exact
+  quotient for the equivalence relation ``differ by one global inner action.''
+  More precisely, the full compatible diagram
+  \(\Pi_X\leftarrow\Pi_v\leftarrow G_v^{\langle|F_l|\rangle}\), together with
+  its equivariant monoid isomorphism, is quotiented by one base-group element
+  that acts simultaneously on the group map and monoid map.  This full
+  quotient maps to the monoid-only quotient.  Thus the conjugator cannot
+  depend on a label, group element, or monoid element.  Construction of the
+  diagram and action from the paper data remains open.  The diagonal
+  unit submonoid and finite Gaussian monoid are constructed inside the
+  heterogeneous direct product of these labeled factors.  The base group acts
+  diagonally through the symmetrizing group isomorphisms; constants are
+  equivariant, diagonal units are stable, and profile stability induces an
+  actual action by automorphisms of the Gaussian monoid.  For a value
+  profile, the homogeneous finite Gaussian monoid is the submonoid of
+  the direct product generated by diagonal units and natural profile powers;
+  a chosen compatible root system gives the rational-root Gaussian monoid,
+  with root ambiguity stated as diagonal torsion.  Root systems differing by
+  this permitted ambiguity are proved to generate the same infinite Gaussian
+  monoid.  The specialized profile consists of the actual elements
+  \(q^{j^2}\).  The \(n\)-torsion of \(\mathbb Q/\mathbb Z\) is proved to
+  have exactly \(n\) elements and is explicitly equivalent to the
+  roots-of-unity group of a torsion-cyclotomic monoid.  A multiplicative
+  realization of the \(\mu_{2\ell}\)-action is required to be injective,
+  hence acts freely, and derives its exact torsion-unit range and the
+  theta-value family from the continuous \(H^1\) orbits; the resulting
+  multiplicative orbit set is proved equal to the original action orbit at
+  every label.  Any two
+  simultaneous choices from it are proved to differ by independent
+  coordinatewise \(2\ell\)-torsion.  Its representative family constructs a
+  canonical common \(2\ell\)-multiple Gaussian submonoid.  The ambiguity
+  vanishes after taking \(2\ell\)-th powers, so every selected profile yields
+  exactly this common object.  The source Hodge--Arakelov pilot places every
+  \(q^{j^2}\) in its actual continuous-\(H^1\) theta orbit and every
+  compatible positive root in the corresponding infinite-theta orbit.  It
+  derives both Gaussian monoids, every \(2\ell\)-element orbit cardinality,
+  the full \((2\ell)^{\ell^\ast}\) profile count, and zero-label torsion.
+  Multiplicative equivalences preserve the exact
+  constant-torsion subgroup, the two quotient factors, and splitting
+  bijectivity.  The finite and infinite Gaussian carriers are proved to be
+  precisely the products
+  \(\Psi_{\rm cns}^{\times}\cdot\xi^{\mathbb N}\) and
+  \(\Psi_{\rm cns}^{\times}\cdot\xi^{\mathbb Q_{\geq 0}}\).
+  A multiplicative finite-order action proves that a zero-label orbit based at
+  the identity consists entirely of torsion.  Thus the actual composite
+  continuous-\(H^1\) restriction constructs both finite and infinite
+  zero-label splittings once torsion detection on the constant subgroup is
+  proved.  More generally, a restriction homomorphism that sends theta values to torsion and detects
+  torsion on constants is proved to derive the splitting used in
+  Corollaries~1.12, 2.6, 2.8 and Proposition~3.1.  Consequently, once that
+  restriction datum and the Corollary~2.8 Gaussian restriction equivalence
+  are supplied together with the two factor identifications, both Gaussian
+  splittings and their compatibility are derived without accepting a
+  Proposition~3.1 splitting proof as input.
+  Construction of the paper's
+  subgroup/subquotient and decomposition-group homomorphisms, their actions
+  and input orbits from the mono-theta system, the symmetrizing isomorphisms,
+  root choices, independent conjugacy compatibility, and both restriction
+  maps with their torsion and factor-identification proofs remain source
+  obligations.
+\end{definition}
+
+\begin{definition}[Toy Hodge--Arakelov degree pilots]
+  \label{def:hodge-arakelov-concrete-pilots}
+  \uses{def:initial-theta-data,def:iut-i-theater-realization}
+  \lean{Iut.Stage1.ToyIUTIIHodgeArakelovEvaluationData}
+  \lean{Iut.Stage1.ToyIUTIIHodgeArakelovEvaluationData.ofInitialThetaData}
+  \lean{Iut.Stage1.ToyIUTIIHodgeArakelovEvaluationData.thetaValueEvaluationSource}
+  \lean{Iut.Stage1.ToyIUTIIHodgeArakelovEvaluationData.signOrbitAverage_eq}
+  \lean{Iut.Stage1.ToyIUTIIHodgeArakelovEvaluationData.coordinateAverage_translation_invariant}
+  \lean{Iut.Stage1.IUTStage1InitialThetaPrimitiveSourcePacket.ofInitialThetaData}
+  \leanok
+  This finite degree model computes the positive, \(l\)-prime q-order and
+  the square-weight profile expected from \(q^{j^2}\).  At each bad place,
+  the calculation uses the theta-root torsor, its base-point coordinate
+  equivalence, typed
+  \(\mathbb Z/l\mathbb Z\) labels, sign classes, balanced-square weights, and
+  coordinate, weighted, and sign-orbit averages.  Positivity, normalization,
+  sign invariance, and translation invariance are proved.  It does not
+  construct the cohomology classes, restriction algorithm, Gaussian monoids,
+  or Gaussian Frobenioids of IUT~II, and therefore discharges no paper-level
+  evaluation claim.
 \end{definition}
 
 \section{Theorem 3.11 and Step (x)}
+
+\begin{definition}[Source-shaped Theorem 3.11 interfaces]
+  \label{def:source-theorem-311-interfaces}
+  \lean{Iut.SourceMonoAnalyticTensorPacket}
+  \lean{Iut.SourceMonoAnalyticTensorPacket.distinguishedSubmodule}
+  \lean{Iut.SourceLGPGaussianLogThetaLattice}
+  \lean{Iut.SourceLGPGaussianLogThetaLattice.monoAnalyticProcession}
+  \lean{Iut.SourceLGPGaussianLogThetaLattice.verticalCoricityToCommon}
+  \lean{Iut.SourceLGPGaussianLogThetaLattice.commonMonoAnalyticProcession}
+  \lean{Iut.SourceTheorem311LocalData}
+  \lean{Iut.SourceTheorem311Ind1Action.ofProcessionFunctor}
+  \lean{Iut.SourceTheorem311Ind2Action}
+  \lean{Iut.SourceTheorem311LocalInd2Action.action}
+  \lean{Iut.SourceTheorem311Ind2SummandAction.packetAction_on_tensor}
+  \lean{Iut.SourceTensorPacketKummerIso}
+  \lean{Iut.SourceTheorem311VerticalLocalKummer}
+  \lean{Iut.SourceTheorem311VerticalLogLink.logarithm_eq_of_differsByRootOfUnity}
+  \lean{Iut.SourceTheorem311VerticalLogLinkFamily.adjacent_logarithm_eq_on_overlap}
+  \lean{Iut.SourceTheorem311CoricContainer}
+  \lean{Iut.SourceTheorem311Ind3System}
+  \lean{Iut.SourceLGPSplittingMonoidAction}
+  \lean{Iut.SourceTheorem311BadPrimeUpperSemiCompatibility.logarithm_eq_of_relatedAcrossLog}
+  \lean{Iut.SourceTheorem311LabeledData}
+  \lean{Iut.SourceTheorem311LabeledKummerIso}
+  \lean{Iut.SourceTheorem311MultiradialPresentation}
+  \lean{Iut.SourceTheorem311MultiradialAlgorithm.Quotient}
+  \lean{Iut.SourceTheorem311PermutationBiCoricCompatibility.quotientEquiv}
+  \lean{Iut.SourceHorizontalKummerCompatibility}
+  \lean{Iut.SourceMonoThetaHorizontalKummerCompatibility.toArrowCompatibility}
+  \lean{Iut.SourceTheorem311HorizontalCompatibilitySystem}
+  \lean{Iut.SourceTheorem311HorizontalEvaluationCompatibility.descend}
+  \leanok
+  The source layer now represents a local packet by the genuine dependent
+  tensor product of its \(j+1\) place-indexed direct sums.  The
+  \(I_{\mathbb Q}(S_{j+1,j};v)\) submodule is the span of pure tensors whose
+  distinguished factor lies in the summand indexed by \(v\).  Integral
+  regions must be either nonarchimedean lattices or archimedean seminorm unit
+  balls and must prove their rational spans.  The \(\mathbb Z^2\)-indexed
+  lattice contains actual F-theta bridges and distinct Hodge theaters; its
+  horizontal theta-links, mono-analytic processions, and vertically coric
+  procession maps are constructed.  \(\Ind{1}\) is derived from a functor on
+  the category of processions.  \(\Ind{2}\) accepts only the independent
+  actions on individual place summands; the direct-sum action, tensor action,
+  full dependent-product action, and their laws are derived.  The complete
+  presentation also carries its bad-place splitting monoids, number-field
+  embeddings, and objects of the four Frobenioid categories.  Its exact
+  quotient is the equivalence closure generated by Ind1 and Ind2.  A bi-coric
+  bridge member induces a procession isomorphism, and a transport intertwining
+  both actions descends, by a proved relation-induction argument, to an
+  equivalence of these quotients.
+
+  The vertical interface uses placewise continuous linear Kummer
+  equivalences, their induced tensor maps, profinite-group isomorphisms,
+  number-field ring equivalences, splitting-monoid equivalences, and
+  structure-preserving equivalences of the realified and non-realified split
+  Frobenioids.  \(\Ind{3}\) fixes one vertically coric \(n,\circ\) container
+  while \(m\) varies.  At nonarchimedean places it contains both direct Kummer
+  images and forward iterated-log images.  At archimedean places it contains
+  direct unit and radius-\(\pi\) images, while a subset of each radius-\(\pi\)
+  ball surjects onto the relevant iterated-log domain.  Equality to the common
+  measure-derived log-volume implies independence of \(m\).  A multiplicative log-link into
+  a rational module provably kills roots of unity, so root-equivalent inputs
+  have the same additive log image; this also gives the stated bad-prime
+  compatibility for the portions of splitting actions related across a link.
+  Horizontal compatibility uses distinct arrow-category squares for the two
+  prime-strip clauses and the profinite clause, plus a natural-isomorphism
+  square of actual mono-theta projective systems with levelwise environment
+  realizations.  These squares transport the full automorphism groups.
+  Compatible evaluations descend
+  to the equivalence relation generated jointly by \(\Ind{1}\)--\(\Ind{3}\).
+
+  These declarations are source-shaped interfaces, not a construction of
+  Theorem~3.11.  Constructing the tensor packets, splitting monoids, fields,
+  Frobenioids, vertical Kummer maps, and Ind3 system from this lattice and the
+  IUT~II Kummer/log-link results remains open, as do the four horizontal
+  compatibility constructors.
+\end{definition}
 
 \begin{definition}[Indeterminacy generator interface]
   \label{def:indeterminacy-generator-interface}
@@ -76,14 +671,43 @@
   the normalization conventions for averaging over labels.
 \end{proof}
 
-\begin{theorem}[Theorem 3.11 source output]
+\begin{definition}[Legacy finite M3 procession model]
+  \label{def:constructed-m3-procession}
+  \uses{def:hodge-arakelov-concrete-pilots,prop:step-x-corridor}
+  \lean{Iut.Stage1.IUTIIIProcessionChoice}
+  \lean{Iut.Stage1.IUTIIIProcessionChoice.typedCore}
+  \lean{Iut.Stage1.IUTIIIProcessionChoice.quotientPossibleImage}
+  \lean{Iut.Stage1.IUTIIIVerticalLogKummer.correspondenceLaws}
+  \lean{Iut.Stage1.IUTIIIHorizontalCompatibility.ofM2}
+  \leanok
+  The numerical Gaussian pilots construct a finite coordinate model with two
+  actual \(\mathbb Z/l\mathbb Z\)-translation actions.  Their generated
+  equality quotient preserves orbit averages and nonempty possible images.
+  Natural-number lifts give the correctly oriented \(\Ind{3}\) upper-semi
+  relation and do not collapse in that quotient. At every model point,
+  the bad-local quotient torsor maps bijectively to the evaluated vertical
+  target; its graph, range, and log-volume image are exact, and its finite
+  discrete image is compact-open.  The horizontal object retains the distinct
+  zero/one histories and carries the typed theta link, gluing, Gaussian
+  evaluation, and finite transport laws named \(\IPL/\SHE/\APT\). This
+  definition is a regression model and does not discharge Theorem~3.11.
+\end{definition}
+
+\begin{theorem}[Legacy degree-level Theorem 3.11 wrapper]
   \label{thm:theorem-311-source-output}
-  \uses{def:initial-theta-data,def:hodge-theater-histories,def:prime-strip-links,prop:step-x-corridor}
-  \notready
-  From the initial \(\Theta\)-data and the machinery of \IUT{} I--III,
-  Theorem 3.11 should construct multiradial output possibilities, equipped
-  with the \(\Ind{1}\), \(\Ind{2}\), and \(\Ind{3}\) behavior needed for
-  the Stage 1 comparison.
+  \uses{def:initial-theta-data,def:hodge-theater-histories,def:prime-strip-links,def:constructed-m3-procession}
+  \lean{Iut.Stage1.IUTIIITheorem311ConstructedSource}
+  \lean{Iut.Stage1.IUTIIITheorem311ConstructedSource.ofInitialThetaData}
+  \lean{Iut.Stage1.IUTStage1InitialThetaPrimitiveSourcePacket.ofInitialThetaData}
+  \leanok
+  Initial \(\Theta\)-data constructs a finite degree-level regression wrapper
+  shaped after Theorem 3.11, including model multiradial possibilities and
+  \(\Ind{1}\), \(\Ind{2}\), and \(\Ind{3}\) behavior.  The older qualitative
+  packet is not a field of this source and is available only through an
+  explicitly named legacy adapter.  It does not construct the source objects
+  of Definition~\ref{def:source-theorem-311-interfaces} and does not prove
+  Theorem~3.11.  Analytic Step (xi) hull and determinant enrichment is outside
+  this wrapper.
 \end{theorem}
 
 \section{Step (xi)}
