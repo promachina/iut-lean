@@ -10,12 +10,14 @@ import Iut.Foundations.SourceThetaEvaluation
 import Mathlib.Algebra.Category.ModuleCat.Topology.Basic
 import Mathlib.Algebra.DirectSum.Module
 import Mathlib.Analysis.Seminorm
+import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 import Mathlib.CategoryTheory.Endomorphism
 import Mathlib.CategoryTheory.Comma.Arrow
 import Mathlib.Data.Setoid.Basic
 import Mathlib.LinearAlgebra.PiTensorProduct
 import Mathlib.LinearAlgebra.PiTensorProduct.DirectSum
 import Mathlib.MeasureTheory.Constructions.Pi
+import Mathlib.MeasureTheory.Integral.IntervalIntegral.Periodic
 import Mathlib.MeasureTheory.Measure.Haar.Basic
 import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
 import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
@@ -2868,6 +2870,549 @@ theorem normalizedLogVolume_value_eq_zero
           (model.completedRadialization '' model.integralRegion)).toReal - 0 = 0
   rw [model.completedRadialLengthMeasure_image_integralRegion]
   norm_num
+
+open MeasureTheory Set
+
+private def angularFundamentalInterval (T : ℝ) (n : ℤ) : Set ℝ :=
+  Set.Ioc (n • T) (n • T + T)
+
+private def angularFundamentalPiece
+    (T : ℝ) (region : Set ℝ) (n : ℤ) : Set ℝ :=
+  region ∩ angularFundamentalInterval T n
+
+private theorem angularFundamentalPiece_measurable
+    {T : ℝ} {region : Set ℝ} (hregion : MeasurableSet region) (n : ℤ) :
+    MeasurableSet (angularFundamentalPiece T region n) :=
+  hregion.inter measurableSet_Ioc
+
+private theorem iUnion_angularFundamentalPiece
+    {T : ℝ} [hT : Fact (0 < T)] (region : Set ℝ) :
+    ⋃ n : ℤ, angularFundamentalPiece T region n = region := by
+  change (⋃ n : ℤ, region ∩ Set.Ioc (n • T) (n • T + T)) = region
+  rw [← inter_iUnion]
+  simpa only [add_smul, one_smul, inter_univ] using
+    congrArg (region ∩ ·) (iUnion_Ioc_zsmul hT.out)
+
+private theorem pairwise_disjoint_angularFundamentalPiece
+    {T : ℝ} (region : Set ℝ) :
+    ∀ ⦃i j : ℤ⦄, i ≠ j →
+      Disjoint (angularFundamentalPiece T region i)
+        (angularFundamentalPiece T region j) := by
+  change ∀ ⦃i j : ℤ⦄, i ≠ j →
+    Disjoint (region ∩ Set.Ioc (i • T) (i • T + T))
+      (region ∩ Set.Ioc (j • T) (j • T + T))
+  intro i j hij
+  have hdisjoint := pairwise_disjoint_Ioc_add_zsmul (0 : ℝ) T hij
+  simpa only [zero_add, add_smul, one_smul] using
+    hdisjoint.mono inter_subset_right inter_subset_right
+
+private theorem angularQuotient_image_fundamentalPiece_measurable
+    {T : ℝ} [Fact (0 < T)] {region : Set ℝ}
+    (hregion : MeasurableSet region) (n : ℤ) :
+    MeasurableSet
+      (((↑) : ℝ → AddCircle T) '' angularFundamentalPiece T region n) := by
+  let intervalSubtype : Set (angularFundamentalInterval T n) :=
+    Subtype.val ⁻¹' angularFundamentalPiece T region n
+  have hintervalSubtype : MeasurableSet intervalSubtype := by
+    exact (angularFundamentalPiece_measurable hregion n).preimage
+      measurable_subtype_coe
+  have himage :
+      ((↑) : ℝ → AddCircle T) '' angularFundamentalPiece T region n =
+        (AddCircle.measurableEquivIoc T (n • T)).symm '' intervalSubtype := by
+    ext angle
+    constructor
+    · rintro ⟨value, hvalue, rfl⟩
+      refine ⟨⟨value, hvalue.2⟩, hvalue, rfl⟩
+    · rintro ⟨value, hvalue, rfl⟩
+      exact ⟨value, hvalue, rfl⟩
+  rw [himage]
+  exact
+    (AddCircle.measurableEquivIoc T (n • T)).symm.measurableSet_image.mpr
+      hintervalSubtype
+
+private theorem volume_angularQuotient_image_fundamentalPiece
+    {T : ℝ} [Fact (0 < T)] {region : Set ℝ}
+    (hregion : MeasurableSet region) (n : ℤ) :
+    volume (((↑) : ℝ → AddCircle T) ''
+        angularFundamentalPiece T region n) =
+      volume (angularFundamentalPiece T region n) := by
+  let intervalSubtype : Set (angularFundamentalInterval T n) :=
+    Subtype.val ⁻¹' angularFundamentalPiece T region n
+  have hinterval :
+      MeasurableSet (angularFundamentalInterval T n) := measurableSet_Ioc
+  have hintervalSubtype : MeasurableSet intervalSubtype := by
+    exact (angularFundamentalPiece_measurable hregion n).preimage
+      measurable_subtype_coe
+  have himage :
+      ((↑) : ℝ → AddCircle T) '' angularFundamentalPiece T region n =
+        (AddCircle.measurableEquivIoc T (n • T)).symm '' intervalSubtype := by
+    ext angle
+    constructor
+    · rintro ⟨value, hvalue, rfl⟩
+      refine ⟨⟨value, hvalue.2⟩, hvalue, rfl⟩
+    · rintro ⟨value, hvalue, rfl⟩
+      exact ⟨value, hvalue, rfl⟩
+  rw [himage]
+  have hpreserving :
+      MeasurePreserving (AddCircle.measurableEquivIoc T (n • T)).symm
+        (Measure.comap Subtype.val volume) volume :=
+    MeasurePreserving.symm (AddCircle.measurableEquivIoc T (n • T))
+      (AddCircle.measurePreserving_equivIoc (T := T) (a := n • T))
+  rw [← hpreserving.measure_preimage_equiv]
+  have hpreimage :
+      (AddCircle.measurableEquivIoc T (n • T)).symm ⁻¹'
+          ((AddCircle.measurableEquivIoc T (n • T)).symm ''
+            intervalSubtype) =
+        intervalSubtype := by
+    exact
+      (AddCircle.measurableEquivIoc T
+        (n • T)).symm.injective.preimage_image _
+  rw [hpreimage]
+  calc
+    (Measure.comap Subtype.val volume) intervalSubtype =
+        volume (Subtype.val '' intervalSubtype) := by
+      exact Measure.comap_apply Subtype.val Subtype.coe_injective
+        (fun measurableRegion hmeasurableRegion =>
+          MeasurableSet.subtype_image hinterval hmeasurableRegion)
+        volume hintervalSubtype
+    _ = volume (angularFundamentalPiece T region n) := by
+      congr 1
+      ext value
+      simp [intervalSubtype, angularFundamentalPiece, and_comm]
+
+/--
+Lebesgue length descends unchanged along the additive-circle quotient on
+every measurable set on which the quotient is injective.  The proof uses all
+translated fundamental intervals, so no connectedness or single-branch
+assumption is imposed on the source set.
+-/
+theorem addCircleVolume_image_of_injOn
+    {T : ℝ} [Fact (0 < T)] {region : Set ℝ}
+    (hregion : MeasurableSet region)
+    (hinjective : Set.InjOn ((↑) : ℝ → AddCircle T) region) :
+    volume (((↑) : ℝ → AddCircle T) '' region) = volume region := by
+  rw [← iUnion_angularFundamentalPiece (T := T) region, image_iUnion]
+  rw [measure_iUnion]
+  · rw [measure_iUnion
+      (pairwise_disjoint_angularFundamentalPiece (T := T) region)
+      (angularFundamentalPiece_measurable hregion)]
+    congr 1
+    funext n
+    exact volume_angularQuotient_image_fundamentalPiece hregion n
+  · intro i j hij
+    exact Disjoint.image
+      (pairwise_disjoint_angularFundamentalPiece (T := T) region hij)
+      hinjective inter_subset_left inter_subset_left
+  · exact angularQuotient_image_fundamentalPiece_measurable hregion
+
+/-- Absolute value preserves Lebesgue length on any measurable injectivity set. -/
+theorem realVolume_abs_image_of_injOn
+    {region : Set ℝ} (hregion : MeasurableSet region)
+    (hinjective : Set.InjOn abs region) :
+    volume (abs '' region) = volume region := by
+  let nonpositivePiece := region ∩ Set.Iic 0
+  let positivePiece := region ∩ Set.Ioi 0
+  have hnonpositive : MeasurableSet nonpositivePiece :=
+    hregion.inter measurableSet_Iic
+  have hpositive : MeasurableSet positivePiece :=
+    hregion.inter measurableSet_Ioi
+  have hunion : nonpositivePiece ∪ positivePiece = region := by
+    ext value
+    rcases le_or_gt value 0 with hvalue | hvalue <;>
+      simp [nonpositivePiece, positivePiece, hvalue]
+  have hpieces : Disjoint nonpositivePiece positivePiece := by
+    apply Set.disjoint_left.2
+    intro value hnonpositive hpositive
+    have hle : value ≤ 0 := hnonpositive.2
+    have hlt : 0 < value := hpositive.2
+    exact (not_lt_of_ge hle) hlt
+  have habsNonpositive :
+      abs '' nonpositivePiece = (-·) '' nonpositivePiece := by
+    apply Set.image_congr
+    intro value hvalue
+    exact abs_of_nonpos hvalue.2
+  have habsPositive : abs '' positivePiece = positivePiece := by
+    ext value
+    constructor
+    · rintro ⟨source, hsource, rfl⟩
+      have hsourcePos : 0 < source := hsource.2
+      rw [abs_of_pos hsourcePos]
+      exact hsource
+    · intro hvalue
+      have hvaluePos : 0 < value := hvalue.2
+      exact ⟨value, hvalue, abs_of_pos hvaluePos⟩
+  have hmeasureNonpositive :
+      volume (abs '' nonpositivePiece) = volume nonpositivePiece := by
+    have hmapNeg : Measure.map (-·) volume = (volume : Measure ℝ) := by
+      simpa using
+        (Real.map_volume_mul_left (a := (-1 : ℝ)) (by norm_num))
+    rw [habsNonpositive]
+    calc
+      volume ((-·) '' nonpositivePiece) =
+          (Measure.map (-·) volume) ((-·) '' nonpositivePiece) := by
+        rw [hmapNeg]
+      _ = volume ((-·) ⁻¹' ((-·) '' nonpositivePiece)) := by
+        rw [Measure.map_apply measurable_neg
+          ((measurableEmbedding_neg.measurableSet_image).mpr hnonpositive)]
+      _ = volume nonpositivePiece := by simp
+  have himageUnion :
+      abs '' region = abs '' nonpositivePiece ∪ abs '' positivePiece := by
+    rw [← hunion, Set.image_union]
+  have himageDisjoint :
+      Disjoint (abs '' nonpositivePiece) (abs '' positivePiece) :=
+    Disjoint.image hpieces hinjective
+      (by exact hunion ▸ subset_union_left)
+      (by exact hunion ▸ subset_union_right)
+  rw [himageUnion, measure_union himageDisjoint]
+  · rw [hmeasureNonpositive, habsPositive,
+      ← measure_union hpieces hpositive, hunion]
+  · rw [habsPositive]
+    exact hpositive
+
+noncomputable instance angularCircleMeasurableSpace : MeasurableSpace Circle :=
+  borel Circle
+
+instance angularCircleBorelSpace : BorelSpace Circle :=
+  ⟨rfl⟩
+
+instance twoPiPositive : Fact (0 < 2 * Real.pi) :=
+  ⟨by positivity⟩
+
+/-- Angular Riemannian length, transported from the circle of circumference `2π`. -/
+noncomputable def angularLengthMeasure : Measure Circle :=
+  Measure.map AddCircle.homeomorphCircle'
+    (volume : Measure (AddCircle (2 * Real.pi)))
+
+/-- The angular volume of the full unit circle is `2π`. -/
+theorem angularLengthMeasure_univ :
+    angularLengthMeasure Set.univ = ENNReal.ofReal (2 * Real.pi) := by
+  rw [angularLengthMeasure,
+    Measure.map_apply AddCircle.homeomorphCircle'.measurable MeasurableSet.univ]
+  simp [AddCircle.measure_univ]
+
+/--
+The exact hypotheses on the complex region in Topics in Absolute Anabelian
+Geometry III, Proposition 5.7(ii)(c): compact regular radial projection,
+unit-circle exponential image, and bijectivity onto both displayed images.
+-/
+structure ExponentialRegion where
+  carrier : Set ℂ
+  isCompact : IsCompact carrier
+  nonempty : carrier.Nonempty
+  radial_regular : closure (interior (norm '' carrier)) = norm '' carrier
+  exponential_unit : ∀ value ∈ carrier, ‖Complex.exp value‖ = 1
+  radial_injective : Set.InjOn norm carrier
+  exponential_injective : Set.InjOn Complex.exp carrier
+
+namespace ExponentialRegion
+
+/-- The imaginary parameters of a Proposition 5.7(ii)(c) region. -/
+noncomputable def parameterSet (region : ExponentialRegion) : Set ℝ :=
+  Complex.im '' region.carrier
+
+/-- The exponential image, regarded as a subset of the unit circle. -/
+def angularImage (region : ExponentialRegion) : Set Circle :=
+  {angle | ∃ value ∈ region.carrier, (angle : ℂ) = Complex.exp value}
+
+theorem real_part_eq_zero (region : ExponentialRegion)
+    {value : ℂ} (hvalue : value ∈ region.carrier) : value.re = 0 := by
+  have hnorm := region.exponential_unit value hvalue
+  rw [Complex.norm_exp, Real.exp_eq_one_iff] at hnorm
+  exact hnorm
+
+theorem value_eq_im_mul_I (region : ExponentialRegion)
+    {value : ℂ} (hvalue : value ∈ region.carrier) :
+    value = value.im * Complex.I := by
+  rw [← Complex.re_add_im value, region.real_part_eq_zero hvalue]
+  simp
+
+theorem parameterSet_isCompact (region : ExponentialRegion) :
+    IsCompact region.parameterSet :=
+  region.isCompact.image Complex.continuous_im
+
+theorem parameterSet_measurable (region : ExponentialRegion) :
+    MeasurableSet region.parameterSet :=
+  region.parameterSet_isCompact.measurableSet
+
+theorem homeomorphCircle_preimage_angularImage
+    (region : ExponentialRegion) :
+    AddCircle.homeomorphCircle' ⁻¹' region.angularImage =
+      ((↑) : ℝ → AddCircle (2 * Real.pi)) '' region.parameterSet := by
+  ext angle
+  constructor
+  · rintro ⟨value, hvalue, hangle⟩
+    refine ⟨value.im, ⟨value, hvalue, rfl⟩, ?_⟩
+    apply AddCircle.homeomorphCircle'.injective
+    rw [AddCircle.homeomorphCircle'_apply_mk]
+    apply Circle.ext
+    change Complex.exp (value.im * Complex.I) = _
+    rw [← region.value_eq_im_mul_I hvalue, ← hangle]
+  · rintro ⟨parameter, ⟨value, hvalue, rfl⟩, hangle⟩
+    refine ⟨value, hvalue, ?_⟩
+    subst angle
+    rw [AddCircle.homeomorphCircle'_apply_mk]
+    change Complex.exp (value.im * Complex.I) = Complex.exp value
+    rw [← region.value_eq_im_mul_I hvalue]
+
+theorem angularImage_isCompact (region : ExponentialRegion) :
+    IsCompact region.angularImage := by
+  rw [← AddCircle.homeomorphCircle'.isCompact_preimage]
+  rw [region.homeomorphCircle_preimage_angularImage]
+  exact region.parameterSet_isCompact.image
+    (AddCircle.continuous_mk' (2 * Real.pi))
+
+theorem angularImage_measurable (region : ExponentialRegion) :
+    MeasurableSet region.angularImage :=
+  region.angularImage_isCompact.measurableSet
+
+theorem quotient_injective_on_parameterSet (region : ExponentialRegion) :
+    Set.InjOn ((↑) : ℝ → AddCircle (2 * Real.pi)) region.parameterSet := by
+  rintro first ⟨firstValue, hfirstValue, rfl⟩
+    second ⟨secondValue, hsecondValue, rfl⟩ heq
+  have hexp : Complex.exp firstValue = Complex.exp secondValue := by
+    have hcircle := congrArg AddCircle.homeomorphCircle' heq
+    have himaginaryExp :
+        Complex.exp (firstValue.im * Complex.I) =
+          Complex.exp (secondValue.im * Complex.I) := by
+      simpa only [AddCircle.homeomorphCircle'_apply_mk] using
+        congrArg Subtype.val hcircle
+    rw [region.value_eq_im_mul_I hfirstValue,
+      region.value_eq_im_mul_I hsecondValue]
+    exact himaginaryExp
+  have hvalue := region.exponential_injective hfirstValue hsecondValue hexp
+  exact congrArg Complex.im hvalue
+
+/-- Angular length of the exponential image equals parameter-set length. -/
+theorem angularLengthMeasure_angularImage
+    (region : ExponentialRegion) :
+    angularLengthMeasure region.angularImage = volume region.parameterSet := by
+  rw [angularLengthMeasure,
+    Measure.map_apply AddCircle.homeomorphCircle'.measurable
+      region.angularImage_measurable,
+    region.homeomorphCircle_preimage_angularImage]
+  exact addCircleVolume_image_of_injOn
+    region.parameterSet_measurable region.quotient_injective_on_parameterSet
+
+theorem norm_eq_abs_im (region : ExponentialRegion)
+    {value : ℂ} (hvalue : value ∈ region.carrier) :
+    ‖value‖ = |value.im| := by
+  calc
+    ‖value‖ = ‖(value.im : ℂ) * Complex.I‖ :=
+      congrArg norm (region.value_eq_im_mul_I hvalue)
+    _ = |value.im| := by
+      rw [Complex.norm_mul, Complex.norm_real, Complex.norm_I,
+        mul_one, Real.norm_eq_abs]
+
+theorem norm_image_eq_abs_parameterSet (region : ExponentialRegion) :
+    norm '' region.carrier = abs '' region.parameterSet := by
+  ext radius
+  constructor
+  · rintro ⟨value, hvalue, rfl⟩
+    exact ⟨value.im, ⟨value, hvalue, rfl⟩,
+      (region.norm_eq_abs_im hvalue).symm⟩
+  · rintro ⟨parameter, ⟨value, hvalue, rfl⟩, rfl⟩
+    exact ⟨value, hvalue, region.norm_eq_abs_im hvalue⟩
+
+theorem abs_injective_on_parameterSet (region : ExponentialRegion) :
+    Set.InjOn abs region.parameterSet := by
+  rintro first ⟨firstValue, hfirstValue, rfl⟩
+    second ⟨secondValue, hsecondValue, rfl⟩ heq
+  have hnorm : ‖firstValue‖ = ‖secondValue‖ := by
+    rw [region.norm_eq_abs_im hfirstValue,
+      region.norm_eq_abs_im hsecondValue]
+    exact heq
+  exact congrArg Complex.im
+    (region.radial_injective hfirstValue hsecondValue hnorm)
+
+theorem coe_nnnorm_image_eq_norm_image (region : ExponentialRegion) :
+    ((↑) : NNReal → ℝ) '' (nnnorm '' region.carrier) =
+      norm '' region.carrier := by
+  ext radius
+  constructor
+  · rintro ⟨nnradius, ⟨value, hvalue, rfl⟩, rfl⟩
+    exact ⟨value, hvalue, rfl⟩
+  · rintro ⟨value, hvalue, rfl⟩
+    exact ⟨nnnorm value, ⟨value, hvalue, rfl⟩, rfl⟩
+
+theorem nnnorm_image_measurable (region : ExponentialRegion) :
+    MeasurableSet (nnnorm '' region.carrier) :=
+  (region.isCompact.image continuous_nnnorm).measurableSet
+
+theorem nnrealLengthMeasure_nnnorm_image (region : ExponentialRegion) :
+    nnrealLengthMeasure (nnnorm '' region.carrier) =
+      volume region.parameterSet := by
+  rw [nnrealLengthMeasure,
+    NNReal.isClosedEmbedding_coe.measurableEmbedding.comap_apply]
+  rw [region.coe_nnnorm_image_eq_norm_image,
+    region.norm_image_eq_abs_parameterSet,
+    realVolume_abs_image_of_injOn region.parameterSet_measurable
+      region.abs_injective_on_parameterSet]
+
+theorem radialLogVolume_eq_angularLogVolume (region : ExponentialRegion) :
+    Real.log (nnrealLengthMeasure (nnnorm '' region.carrier)).toReal =
+      Real.log (angularLengthMeasure region.angularImage).toReal := by
+  rw [region.nnrealLengthMeasure_nnnorm_image,
+    region.angularLengthMeasure_angularImage]
+
+theorem norm_image_nonempty (region : ExponentialRegion) :
+    (norm '' region.carrier).Nonempty :=
+  region.nonempty.image norm
+
+theorem norm_image_interior_nonempty (region : ExponentialRegion) :
+    (interior (norm '' region.carrier)).Nonempty := by
+  by_contra hempty
+  have hregular := region.radial_regular
+  rw [Set.not_nonempty_iff_eq_empty.mp hempty, closure_empty] at hregular
+  exact region.norm_image_nonempty.ne_empty hregular.symm
+
+theorem volume_norm_image_pos (region : ExponentialRegion) :
+    0 < volume (norm '' region.carrier) := by
+  exact lt_of_lt_of_le
+    (isOpen_interior.measure_pos volume region.norm_image_interior_nonempty)
+    (measure_mono interior_subset)
+
+theorem volume_parameterSet_pos (region : ExponentialRegion) :
+    0 < volume region.parameterSet := by
+  rw [← realVolume_abs_image_of_injOn region.parameterSet_measurable
+      region.abs_injective_on_parameterSet,
+    ← region.norm_image_eq_abs_parameterSet]
+  exact region.volume_norm_image_pos
+
+theorem volume_parameterSet_lt_top (region : ExponentialRegion) :
+    volume region.parameterSet < ⊤ :=
+  region.parameterSet_isCompact.measure_lt_top
+
+def fieldCarrier
+    (region : ExponentialRegion)
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    Set field.carrier :=
+  model.complexEquiv ⁻¹' region.carrier
+
+theorem fieldCarrier_isCompact
+    (region : ExponentialRegion)
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    IsCompact (region.fieldCarrier model) :=
+  model.complexEquiv.isCompact_preimage.mpr region.isCompact
+
+theorem complexNorm_image_fieldCarrier
+    (region : ExponentialRegion)
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    model.complexNorm '' region.fieldCarrier model =
+      nnnorm '' region.carrier := by
+  ext radius
+  constructor
+  · rintro ⟨value, hvalue, rfl⟩
+    exact ⟨model.complexEquiv value, hvalue, rfl⟩
+  · rintro ⟨complexValue, hvalue, rfl⟩
+    refine ⟨model.complexEquiv.symm complexValue, ?_, ?_⟩
+    · change model.complexEquiv (model.complexEquiv.symm complexValue) ∈
+        region.carrier
+      simpa using hvalue
+    · simp [SourceArchimedeanLocalFieldModel.complexNorm]
+
+theorem radialization_image_fieldCarrier
+    (region : ExponentialRegion)
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    model.radialization '' region.fieldCarrier model =
+      ULift.up '' (nnnorm '' region.carrier) := by
+  ext radius
+  constructor
+  · rintro ⟨value, hvalue, rfl⟩
+    refine ⟨model.complexNorm value, ?_, rfl⟩
+    rw [← region.complexNorm_image_fieldCarrier model]
+    exact ⟨value, hvalue, rfl⟩
+  · rintro ⟨nnradius, hnnradius, rfl⟩
+    rw [← region.complexNorm_image_fieldCarrier model] at hnnradius
+    rcases hnnradius with ⟨value, hvalue, hnorm⟩
+    refine ⟨value, hvalue, ?_⟩
+    simp only [SourceArchimedeanLocalFieldModel.radialization]
+    rw [hnorm]
+
+theorem radialLengthMeasure_image_fieldCarrier
+    (region : ExponentialRegion)
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    radialLengthMeasure.{u}
+        (model.radialization '' region.fieldCarrier model) =
+      nnrealLengthMeasure (nnnorm '' region.carrier) := by
+  rw [region.radialization_image_fieldCarrier model,
+    radialLengthMeasure,
+    (MeasurableEquiv.ulift :
+      RadialCarrier.{u} ≃ᵐ NNReal).measurableEmbedding.comap_apply]
+  congr 1
+  ext radius
+  constructor
+  · rintro ⟨lifted, ⟨source, hsource, rfl⟩, rfl⟩
+    exact hsource
+  · intro hradius
+    exact ⟨ULift.up radius, ⟨radius, hradius, rfl⟩, rfl⟩
+
+/--
+The completed radial volume of the transported field region is its angular
+volume.  This is the measure equality underlying Proposition 5.7(ii)(c).
+-/
+theorem completedRadialLengthMeasure_fieldCarrier_eq_angular
+    (region : ExponentialRegion)
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    radialLengthMeasure.{u}.completion
+        (model.completedRadialization '' region.fieldCarrier model) =
+      angularLengthMeasure region.angularImage := by
+  rw [Measure.completion_apply]
+  change radialLengthMeasure.{u}
+      (model.radialization '' region.fieldCarrier model) = _
+  rw [region.radialLengthMeasure_image_fieldCarrier model,
+    region.nnrealLengthMeasure_nnnorm_image,
+    region.angularLengthMeasure_angularImage]
+
+/-- Proposition 5.7(ii)(c)'s radial/angular log-volume equality. -/
+theorem modelRadialLogVolume_eq_angularLogVolume
+    (region : ExponentialRegion)
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    Real.log
+        (radialLengthMeasure.{u}.completion
+          (model.completedRadialization '' region.fieldCarrier model)).toReal =
+      Real.log (angularLengthMeasure region.angularImage).toReal := by
+  rw [region.completedRadialLengthMeasure_fieldCarrier_eq_angular model]
+
+/-- The source hypotheses derive an admissible normalized-log-volume region. -/
+noncomputable def toAdmissibleRegion
+    (region : ExponentialRegion)
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    SourceNormalizedLogVolume.AdmissibleRegion model.normalizedLogVolume where
+  carrier := region.fieldCarrier model
+  isAdmissible := by
+    refine ⟨?_, ?_, ?_⟩
+    · change MeasureTheory.NullMeasurableSet
+        (model.radialization '' region.fieldCarrier model)
+        radialLengthMeasure.{u}
+      rw [region.radialization_image_fieldCarrier model]
+      apply MeasurableSet.nullMeasurableSet
+      exact (MeasurableEquiv.ulift.symm.measurableSet_image).2
+        region.nnnorm_image_measurable
+    · rw [region.completedRadialLengthMeasure_fieldCarrier_eq_angular model,
+        region.angularLengthMeasure_angularImage]
+      exact region.volume_parameterSet_pos.ne'
+    · rw [region.completedRadialLengthMeasure_fieldCarrier_eq_angular model,
+        region.angularLengthMeasure_angularImage]
+      exact region.volume_parameterSet_lt_top.ne
+
+/--
+Proposition 5.7(ii)(c) for the normalized log-volume used by the finite-stage
+packet construction.
+-/
+theorem normalizedLogVolume_valueOn_eq_angularLogVolume
+    (region : ExponentialRegion)
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    model.normalizedLogVolume.valueOn (region.toAdmissibleRegion model) =
+      Real.log (angularLengthMeasure region.angularImage).toReal := by
+  rw [SourceNormalizedLogVolume.valueOn]
+  change
+    Real.log
+        (radialLengthMeasure.{u}.completion
+          (model.completedRadialization '' region.fieldCarrier model)).toReal - 0 =
+      Real.log (angularLengthMeasure region.angularImage).toReal
+  rw [region.completedRadialLengthMeasure_fieldCarrier_eq_angular model, sub_zero]
+
+end ExponentialRegion
 
 /-- The archimedean packet-normalization factor `e = exp(1)`. -/
 noncomputable def packetScale : NNReal :=

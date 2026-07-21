@@ -93,6 +93,17 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceArchimedeanLocalFieldModel.radialLengthMeasure_unitRadialInterval
 #print axioms Iut.SourceArchimedeanLocalFieldModel.completedRadialLengthMeasure_image_integralRegion
 #print axioms Iut.SourceArchimedeanLocalFieldModel.normalizedLogVolume_value_eq_zero
+#print axioms Iut.SourceArchimedeanLocalFieldModel.addCircleVolume_image_of_injOn
+#print axioms Iut.SourceArchimedeanLocalFieldModel.angularLengthMeasure_univ
+
+namespace Iut.SourceArchimedeanLocalFieldModel.ExponentialRegion
+
+#print axioms angularLengthMeasure_angularImage
+#print axioms completedRadialLengthMeasure_fieldCarrier_eq_angular
+#print axioms normalizedLogVolume_valueOn_eq_angularLogVolume
+
+end Iut.SourceArchimedeanLocalFieldModel.ExponentialRegion
+
 #print axioms Iut.SourceArchimedeanLocalFieldModel.radialLengthMeasure_packetScale
 #print axioms Iut.SourceArchimedeanLocalFieldModel.radialization_image_packetDilation
 #print axioms Iut.SourceArchimedeanLocalFieldModel.completedRadialLengthMeasure_packetDilation
