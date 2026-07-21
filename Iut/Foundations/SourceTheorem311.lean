@@ -29,6 +29,7 @@ import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
 import Mathlib.MeasureTheory.Measure.NullMeasurable
 import Mathlib.NumberTheory.NumberField.Completion.Ramification
 import Mathlib.NumberTheory.Padics.HeightOneSpectrum
+import Mathlib.NumberTheory.Padics.ProperSpace
 import Mathlib.NumberTheory.Padics.RingHoms
 import Mathlib.RingTheory.DedekindDomain.IntegralClosure
 import Mathlib.RingTheory.Ideal.Int
@@ -427,17 +428,29 @@ noncomputable def rationalCarrier
 end SourceIndTopologicalLocalModule
 
 /--
-The remaining properness fact about a number-field adic completion that is
-needed to use it as a finite local field in Remark 3.1.1(iii).  The carrier and
-its metric topology are fixed by `place`; second countability is proved below.
+The completion at a finite place is nontrivially normed.  A uniformizer in the
+global field embeds as an element whose norm is not one.
 -/
-class SourceFinitePlaceCompletionTopology
+noncomputable instance ThetaFinitePlace.completionNontriviallyNormedField
     {K : Type u} [Field K] [NumberField K]
-    (place : NumberField.FinitePlace K) where
-  [properSpace : ProperSpace (ThetaFinitePlace.Completion place)]
-
-attribute [instance]
-  SourceFinitePlaceCompletionTopology.properSpace
+    (place : NumberField.FinitePlace K) :
+    NontriviallyNormedField (ThetaFinitePlace.Completion place) :=
+  NontriviallyNormedField.ofNormNeOne <| by
+    let prime := ThetaFinitePlace.underlyingPrime place
+    obtain ⟨uniformizer, huniformizer⟩ :=
+      prime.valuation_exists_uniformizer K
+    have hne : uniformizer ≠ 0 := by
+      apply (prime.valuation K).ne_zero_iff.mp
+      rw [huniformizer]
+      simp
+    refine ⟨NumberField.FinitePlace.embedding prime uniformizer,
+      (map_ne_zero (NumberField.FinitePlace.embedding prime)).mpr hne, ?_⟩
+    rw [NumberField.FinitePlace.norm_embedding', huniformizer]
+    norm_cast
+    rw [WithZeroMulInt.toNNReal_eq_one_iff _
+      (NumberField.HeightOneSpectrum.absNorm_ne_zero prime)
+      (ne_of_gt (NumberField.HeightOneSpectrum.one_lt_absNorm_nnreal prime))]
+    simp
 
 /--
 The completion at a finite place is second countable.  A number field is a
@@ -456,6 +469,18 @@ noncomputable instance ThetaFinitePlace.completionSecondCountableTopology
       (WithVal.equiv
         ((ThetaFinitePlace.underlyingPrime place).valuation K)).symm.toEquiv
   infer_instance
+
+/-- The rational finite-place completion is locally compact via `Q_p`. -/
+noncomputable instance ThetaFinitePlace.rationalCompletionLocallyCompactSpace
+    (place : NumberField.FinitePlace ℚ) :
+    LocallyCompactSpace (ThetaFinitePlace.Completion place) := by
+  letI : Algebra ℚ (ThetaFinitePlace.Completion place) :=
+    IsDedekindDomain.HeightOneSpectrum.instAlgebraAdicCompletion
+      (NumberField.RingOfIntegers ℚ) ℚ
+      (ThetaFinitePlace.underlyingPrime place)
+  exact (Rat.HeightOneSpectrum.adicCompletion.padicEquiv
+    (ThetaFinitePlace.underlyingPrime place)).toHomeomorph
+      |>.locallyCompactSpace_iff.mpr inferInstance
 
 /--
 The extension structure `Q_p -> K_v` on the actual completions attached to a
@@ -515,6 +540,17 @@ noncomputable instance finiteDimensional
       (ThetaFinitePlace.underlyingPrime place)
   infer_instance
 
+/-- A finite extension of the locally compact rational completion is proper. -/
+noncomputable instance properSpace
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K)
+    [SourceFinitePlaceCompletionExtension place] :
+    ProperSpace (ThetaFinitePlace.Completion place) :=
+  FiniteDimensional.proper
+    (ThetaFinitePlace.Completion
+      (ThetaFinitePlace.comap (k := ℚ) place))
+    (ThetaFinitePlace.Completion place)
+
 end SourceFinitePlaceCompletionExtension
 
 /--
@@ -553,13 +589,12 @@ namespace SourceTopologicalLocalField
 
 /--
 The source local field at a finite place, with the actual `v`-adic completion
-as carrier.  Local compactness follows from the explicit properness obligation;
-all other analytic and extension data are inherited from the completion.
+as carrier.  Local compactness and second countability are derived above; all
+other analytic and extension data are inherited from the completion.
 -/
 noncomputable abbrev ofFinitePlace
     {K : Type u} [Field K] [NumberField K]
     (place : NumberField.FinitePlace K)
-    [SourceFinitePlaceCompletionTopology place]
     [SourceFinitePlaceCompletionExtension place] :
     SourceTopologicalLocalField
       (.finite (ThetaFinitePlace.comap (k := ℚ) place)) where
@@ -579,7 +614,6 @@ noncomputable abbrev ofFinitePlace
 noncomputable def finitePlaceIntegerRing
     {K : Type u} [Field K] [NumberField K]
     (place : NumberField.FinitePlace K)
-    [SourceFinitePlaceCompletionTopology place]
     [SourceFinitePlaceCompletionExtension place] :
     ValuationSubring (ofFinitePlace place).carrier :=
   (ThetaFinitePlace.underlyingPrime place).adicCompletionIntegers K
@@ -588,7 +622,6 @@ noncomputable def finitePlaceIntegerRing
 theorem finitePlaceIntegerRing_mem_iff_norm_le_one
     {K : Type u} [Field K] [NumberField K]
     (place : NumberField.FinitePlace K)
-    [SourceFinitePlaceCompletionTopology place]
     [SourceFinitePlaceCompletionExtension place]
     (value : (ofFinitePlace place).carrier) :
     value ∈ finitePlaceIntegerRing place ↔ ‖value‖ ≤ 1 := by
@@ -602,7 +635,6 @@ theorem finitePlaceIntegerRing_mem_iff_norm_le_one
 theorem finitePlaceIntegerRing_isCompact
     {K : Type u} [Field K] [NumberField K]
     (place : NumberField.FinitePlace K)
-    [SourceFinitePlaceCompletionTopology place]
     [SourceFinitePlaceCompletionExtension place] :
     IsCompact
       (finitePlaceIntegerRing place : Set (ofFinitePlace place).carrier) := by
@@ -617,7 +649,6 @@ theorem finitePlaceIntegerRing_isCompact
 theorem finitePlaceIntegerRing_isOpen
     {K : Type u} [Field K] [NumberField K]
     (place : NumberField.FinitePlace K)
-    [SourceFinitePlaceCompletionTopology place]
     [SourceFinitePlaceCompletionExtension place] :
     IsOpen
       (finitePlaceIntegerRing place : Set (ofFinitePlace place).carrier) := by
@@ -2874,7 +2905,6 @@ completion rather than supplied independently.
 noncomputable def ofFinitePlace
     {K : Type u} [Field K] [NumberField K]
     (place : NumberField.FinitePlace K)
-    [SourceFinitePlaceCompletionTopology place]
     [SourceFinitePlaceCompletionExtension place] :
     SourceNonarchimedeanLocalFieldIntegers
       (.finite (ThetaFinitePlace.comap (k := ℚ) place))

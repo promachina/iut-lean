@@ -786,10 +786,12 @@ def m1m3PaperLedger : List PaperClause :=
       ["SourceRationalPlace", "SourceRationalPlace.Completion",
         "SourceSelectedPlaceAbove", "SourceSelectedPlaceFiberFiniteness",
         "SourceIndTopologicalLocalModule",
-        "SourceFinitePlaceCompletionTopology",
+        "ThetaFinitePlace.completionNontriviallyNormedField",
         "ThetaFinitePlace.completionSecondCountableTopology",
+        "ThetaFinitePlace.rationalCompletionLocallyCompactSpace",
         "SourceFinitePlaceCompletionExtension",
         "SourceFinitePlaceCompletionExtension.finiteDimensional",
+        "SourceFinitePlaceCompletionExtension.properSpace",
         "SourceTopologicalLocalField",
         "SourceTopologicalLocalField.ofFinitePlace",
         "SourceTopologicalLocalField.localDegree",
@@ -805,7 +807,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceMonoAnalyticLogShellAlgorithm.integralAbove",
         "SourceMonoAnalyticLogShellAlgorithm.normalizedLogVolumeAbove"]
       .partialImplementation
-      "Rational places are literal places of Q; selected fibers v above v_Q are derived and only those fibers are required finite. Local logarithmic modules are filtered colimits over the actual completion Q_(v_Q). A finite-place constructor now has the literal v-adic completion K_v as carrier. Its canonical Q_p normed algebra and scalar-tower law remain explicit Mathlib integration obligations, while Mathlib's tensor-product/dense-range completion theorem derives module-finiteness and finite-dimensionality. Countability of the number field derives separability and second countability of the completion; only properness remains an exact topology obligation rather than a property of a replacement field. A separate field presentation exhibits every stage as a finite-dimensional complete locally compact local field and every transition as a continuous field embedding commuting with the module diagram; identity and composition laws are derived. Algebraic restriction to Q remains separate from topology. Instantiating every field stage by the canonical completion, constructing these presentations and the log-shell algorithm from Proposition 1.2, and proving every Proposition 3.1 poly-isomorphism remain open.",
+      "Rational places are literal places of Q; selected fibers v above v_Q are derived and only those fibers are required finite. Local logarithmic modules are filtered colimits over the actual completion Q_(v_Q). A finite-place constructor now has the literal v-adic completion K_v as carrier. Its canonical Q_p normed algebra and scalar-tower law remain explicit Mathlib integration obligations, while Mathlib's tensor-product/dense-range completion theorem derives module-finiteness and finite-dimensionality. A global uniformizer proves the completion nontrivially normed; the rational completion is locally compact via its continuous equivalence with Q_p; finite-dimensionality then proves K_v proper and locally compact. Countability of the number field derives separability and second countability. Thus no independent topology or replacement-field obligation remains. A separate field presentation exhibits every stage as a finite-dimensional complete locally compact local field and every transition as a continuous field embedding commuting with the module diagram; identity and composition laws are derived. Algebraic restriction to Q remains separate from topology. Instantiating every field stage by the canonical completion, constructing these presentations and the log-shell algorithm from Proposition 1.2, and proving every Proposition 3.1 poly-isomorphism remain open.",
     clause "III.3.2" .iutIII "IUT III, Proposition 3.2"
       ["SourceLocalLogDirectSum", "SourceMonoAnalyticTensorPacket",
         "SourceMonoAnalyticTensorPacket.PlaceTupleIndex",
