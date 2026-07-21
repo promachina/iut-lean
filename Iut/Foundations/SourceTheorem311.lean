@@ -55,7 +55,7 @@ a finite translation or degree quotient.
 
 open CategoryTheory
 open scoped DirectSum TensorProduct Pointwise
-open scoped NumberField.LiesOver
+open scoped NumberField.LiesOver WithZero
 
 namespace Iut
 
@@ -482,41 +482,232 @@ noncomputable instance ThetaFinitePlace.rationalCompletionLocallyCompactSpace
     (ThetaFinitePlace.underlyingPrime place)).toHomeomorph
       |>.locallyCompactSpace_iff.mpr inferInstance
 
-/--
-The extension structure `Q_p -> K_v` on the actual completions attached to a
-finite place `v` and its restriction to `Q`.  No replacement field is chosen.
-The source requires a finite-dimensional topological module, so the algebra
-action is required to be continuous but not norm-nonincreasing: the absolute
-values on `Q_p` and `K_v` use different local-degree normalizations.
-Finite-dimensionality is derived below from Mathlib's completion theorem.
--/
-class SourceFinitePlaceCompletionExtension
+namespace ThetaFinitePlace
+
+/-- The chosen rational prime is the contraction of the chosen prime of `K`. -/
+theorem underlyingPrime_comap_asIdeal
     {K : Type u} [Field K] [NumberField K]
-    (place : NumberField.FinitePlace K) where
-  [algebra :
-    Algebra
-      (ThetaFinitePlace.Completion
-        (ThetaFinitePlace.comap (k := ℚ) place))
-      (ThetaFinitePlace.Completion place)]
-  [continuousSMul :
-    ContinuousSMul
-      (ThetaFinitePlace.Completion
-        (ThetaFinitePlace.comap (k := ℚ) place))
-      (ThetaFinitePlace.Completion place)]
-  [scalarTower :
-    IsScalarTower ℚ
-      (ThetaFinitePlace.Completion
-        (ThetaFinitePlace.comap (k := ℚ) place))
-      (ThetaFinitePlace.Completion place)]
+    (place : NumberField.FinitePlace K) :
+    (underlyingPrime (comap (k := ℚ) place)).asIdeal =
+      (underlyingPrime place).asIdeal.comap
+        (algebraMap (NumberField.RingOfIntegers ℚ)
+          (NumberField.RingOfIntegers K)) := by
+  change
+    (NumberField.FinitePlace.maximalIdeal
+      (comap (k := ℚ) place)).asIdeal = _
+  unfold comap
+  rw [NumberField.FinitePlace.maximalIdeal_mk]
+  rfl
 
-attribute [implicit_reducible, instance]
-  SourceFinitePlaceCompletionExtension.algebra
+/--
+The rational valuation and the restriction of the `v`-adic valuation from
+`K` define the same topology.  Their values need not be equal: the latter
+retains the ramification/local-degree normalization of the target place.
+-/
+theorem rationalValuation_isEquiv_restriction
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K) :
+    let rationalPrime := underlyingPrime (comap (k := ℚ) place)
+    let targetPrime := underlyingPrime place
+    (rationalPrime.valuation ℚ).IsEquiv
+      ((targetPrime.valuation K).comap (algebraMap ℚ K)) := by
+  let rationalPrime := underlyingPrime (comap (k := ℚ) place)
+  let targetPrime := underlyingPrime place
+  rw [Valuation.isEquiv_iff_val_le_one]
+  intro value
+  rw [Rat.valuation_le_one_iff_den]
+  change (value.den : NumberField.RingOfIntegers ℚ) ∉ rationalPrime.asIdeal ↔
+    targetPrime.valuation K (algebraMap ℚ K value) ≤ 1
+  let numerator : NumberField.RingOfIntegers K :=
+    algebraMap (NumberField.RingOfIntegers ℚ)
+      (NumberField.RingOfIntegers K) value.num
+  let denominator : NumberField.RingOfIntegers K :=
+    algebraMap (NumberField.RingOfIntegers ℚ)
+      (NumberField.RingOfIntegers K) value.den
+  have hdenominator : denominator ≠ 0 := by
+    simp [denominator]
+  have hcoprime : denominator ∈ targetPrime.asIdeal →
+      numerator ∉ targetPrime.asIdeal := by
+    intro hdenominator_mem hnumerator_mem
+    have hdenominator_rational :
+        (value.den : NumberField.RingOfIntegers ℚ) ∈ rationalPrime.asIdeal := by
+      rw [underlyingPrime_comap_asIdeal place]
+      exact hdenominator_mem
+    have hnumerator_rational :
+        (value.num : NumberField.RingOfIntegers ℚ) ∈ rationalPrime.asIdeal := by
+      rw [underlyingPrime_comap_asIdeal place]
+      exact hnumerator_mem
+    exact (Ideal.IsPrime.notMem_of_isCoprime_of_mem
+      (mod_cast value.isCoprime_num_den.symm.intCast)
+      hdenominator_rational) hnumerator_rational
+  have hvalue : algebraMap ℚ K value =
+      algebraMap (NumberField.RingOfIntegers K) K numerator /
+        algebraMap (NumberField.RingOfIntegers K) K denominator := by
+    rw [← value.num_div_den]
+    simp [numerator, denominator]
+  rw [hvalue, targetPrime.valuation_div_le_one_iff K numerator
+    hdenominator hcoprime]
+  rw [underlyingPrime_comap_asIdeal place]
+  rfl
 
-attribute [instance]
-  SourceFinitePlaceCompletionExtension.continuousSMul
-  SourceFinitePlaceCompletionExtension.scalarTower
+/--
+The inclusion of rational valued fields is uniformly continuous after the
+source valuation is replaced by its equivalent restricted valuation.
+-/
+theorem rationalWithValMap_uniformContinuous
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K) :
+    let targetPrime := underlyingPrime place
+    let restrictedValuation :=
+      (targetPrime.valuation K).comap (algebraMap ℚ K)
+    UniformContinuous
+      (WithVal.map restrictedValuation (targetPrime.valuation K)
+        (algebraMap ℚ K)) := by
+  let targetPrime := underlyingPrime place
+  let restrictedValuation :=
+    (targetPrime.valuation K).comap (algebraMap ℚ K)
+  refine uniformContinuous_of_continuousAt_zero _ ?_
+  simp_rw [ContinuousAt, map_zero,
+    (Valued.hasBasis_nhds_zero _ _).tendsto_iff
+      (Valued.hasBasis_nhds_zero _ _), true_and, forall_const]
+  intro gamma
+  let rationalPrime := underlyingPrime (comap (k := ℚ) place)
+  obtain ⟨uniformizer, huniformizer⟩ :=
+    rationalPrime.valuation_exists_uniformizer ℚ
+  have huniformizer_ne : uniformizer ≠ 0 := by
+    apply (rationalPrime.valuation ℚ).ne_zero_iff.mp
+    rw [huniformizer]
+    simp
+  have huniformizer_lt : restrictedValuation uniformizer < 1 :=
+    (rationalValuation_isEquiv_restriction place).lt_one_iff_lt_one.mp <| by
+      rw [huniformizer, ← WithZero.exp_zero, WithZero.exp_lt_exp]
+      norm_num
+  obtain ⟨power, hpower⟩ := exists_pow_lt₀ huniformizer_lt
+    (Units.map
+      (MonoidWithZeroHom.ValueGroup₀.embedding
+        (f := (Valued.v : Valuation
+          (WithVal (targetPrime.valuation K)) ℤᵐ⁰))) gamma)
+  let boundValue : WithVal restrictedValuation :=
+    WithVal.toVal restrictedValuation (uniformizer ^ power)
+  have hboundValue : boundValue ≠ 0 := by
+    simp [boundValue, huniformizer_ne]
+  let bound :
+      (MonoidWithZeroHom.ValueGroup₀
+        (Valued.v : Valuation (WithVal restrictedValuation) _))ˣ :=
+    Units.mk0 (Valued.v.restrict boundValue) <| by
+      simp [Valuation.restrict_def, hboundValue]
+  refine ⟨bound, fun value hvalue => ?_⟩
+  change Valued.v.restrict value < bound.1 at hvalue
+  change Valued.v.restrict
+    (WithVal.map restrictedValuation (targetPrime.valuation K)
+      (algebraMap ℚ K) value) < gamma.1
+  rw [Valuation.restrict_lt_iff_lt_embedding] at hvalue ⊢
+  have hembed_bound :
+      MonoidWithZeroHom.ValueGroup₀.embedding
+        (Valued.v.restrict boundValue) = Valued.v boundValue :=
+    Valuation.embedding_restrict
+      (Valued.v : Valuation (WithVal restrictedValuation) ℤᵐ⁰) boundValue
+  have hvalue' : Valued.v value < Valued.v boundValue :=
+    hvalue.trans_eq hembed_bound
+  rw [← WithVal.apply_ofVal] at hvalue'
+  change restrictedValuation value.ofVal <
+    restrictedValuation (uniformizer ^ power) at hvalue'
+  change restrictedValuation value.ofVal <
+    MonoidWithZeroHom.ValueGroup₀.embedding gamma.1
+  exact hvalue'.trans (by simpa using hpower)
 
-namespace SourceFinitePlaceCompletionExtension
+/-- The dense rational map into the target completion. -/
+noncomputable def rationalDenseRingHom
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K) :
+    WithVal ((underlyingPrime (comap (k := ℚ) place)).valuation ℚ) →+*
+      Completion place := by
+  let rationalPrime := underlyingPrime (comap (k := ℚ) place)
+  let targetPrime := underlyingPrime place
+  let restrictedValuation :=
+    (targetPrime.valuation K).comap (algebraMap ℚ K)
+  exact UniformSpace.Completion.coeRingHom.comp <|
+    (WithVal.map restrictedValuation (targetPrime.valuation K)
+      (algebraMap ℚ K)).comp
+        (WithVal.congr (rationalPrime.valuation ℚ) restrictedValuation
+          (.refl ℚ)).toRingHom
+
+/-- The dense rational map is continuous for the two valuation topologies. -/
+theorem continuous_rationalDenseRingHom
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K) :
+    Continuous (rationalDenseRingHom place) := by
+  let equivalence := rationalValuation_isEquiv_restriction place
+  exact UniformSpace.Completion.continuous_coeRingHom.comp <|
+    (rationalWithValMap_uniformContinuous place).continuous.comp
+      equivalence.uniformEquiv.continuous
+
+/-- The canonical continuous ring map `Q_p -> K_v`. -/
+noncomputable def completionRingHom
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K) :
+    Completion (comap (k := ℚ) place) →+* Completion place :=
+  UniformSpace.Completion.extensionHom
+    (rationalDenseRingHom place) (continuous_rationalDenseRingHom place)
+
+/-- The canonical completion map is continuous. -/
+theorem continuous_completionRingHom
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K) :
+    Continuous (completionRingHom place) :=
+  UniformSpace.Completion.continuous_extension
+
+/-- The canonical completion map preserves rational scalars. -/
+theorem completionRingHom_ratCast
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K) (scalar : ℚ) :
+    completionRingHom place
+        (scalar : Completion (comap (k := ℚ) place)) =
+      (scalar : Completion place) := by
+  exact map_ratCast (completionRingHom place) scalar
+
+/-- The canonical algebra action of `Q_p` on `K_v`. -/
+noncomputable instance completionAlgebra
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K) :
+    Algebra (Completion (comap (k := ℚ) place)) (Completion place) :=
+  (completionRingHom place).toAlgebra
+
+/-- The canonical `Q_p` scalar action on `K_v` is continuous. -/
+noncomputable instance completionContinuousSMul
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K) :
+    ContinuousSMul (Completion (comap (k := ℚ) place)) (Completion place) :=
+  continuousSMul_of_algebraMap _ _ (continuous_completionRingHom place)
+
+/-- The canonical actions form the rational scalar tower `Q -> Q_p -> K_v`. -/
+noncomputable instance completionScalarTower
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K) :
+    IsScalarTower ℚ (Completion (comap (k := ℚ) place)) (Completion place) := by
+  let rationalPrime := underlyingPrime (comap (k := ℚ) place)
+  let targetPrime := underlyingPrime place
+  letI : Algebra ℚ (Completion (comap (k := ℚ) place)) :=
+    IsDedekindDomain.HeightOneSpectrum.instAlgebraAdicCompletion
+      (NumberField.RingOfIntegers ℚ) ℚ rationalPrime
+  letI : Algebra ℚ (Completion place) :=
+    IsDedekindDomain.HeightOneSpectrum.instAlgebraAdicCompletion
+      (NumberField.RingOfIntegers K) K targetPrime
+  apply IsScalarTower.of_algebraMap_eq
+    (R := ℚ) (S := Completion (comap (k := ℚ) place))
+    (A := Completion place)
+  intro scalar
+  have htarget : algebraMap ℚ (Completion place) scalar =
+      (scalar : Completion place) := by
+    simpa using map_ratCast (algebraMap ℚ (Completion place)) scalar
+  have hbase : algebraMap ℚ (Completion (comap (k := ℚ) place)) scalar =
+      (scalar : Completion (comap (k := ℚ) place)) := by
+    simpa using map_ratCast
+      (algebraMap ℚ (Completion (comap (k := ℚ) place))) scalar
+  rw [htarget, hbase]
+  change (scalar : Completion place) = completionRingHom place
+    (scalar : Completion (comap (k := ℚ) place))
+  exact (completionRingHom_ratCast place scalar).symm
 
 /--
 The actual completion `K_v` is finite-dimensional over the completion at the
@@ -525,8 +716,7 @@ finiteness theorem, applied to the source's continuous scalar action.
 -/
 noncomputable instance finiteDimensional
     {K : Type u} [Field K] [NumberField K]
-    (place : NumberField.FinitePlace K)
-    [SourceFinitePlaceCompletionExtension place] :
+    (place : NumberField.FinitePlace K) :
     FiniteDimensional
       (ThetaFinitePlace.Completion
         (ThetaFinitePlace.comap (k := ℚ) place))
@@ -544,8 +734,7 @@ noncomputable instance finiteDimensional
 /-- A finite extension of the locally compact rational completion is proper. -/
 noncomputable instance properSpace
     {K : Type u} [Field K] [NumberField K]
-    (place : NumberField.FinitePlace K)
-    [SourceFinitePlaceCompletionExtension place] :
+    (place : NumberField.FinitePlace K) :
     ProperSpace (ThetaFinitePlace.Completion place) := by
   letI : LocallyCompactSpace (ThetaFinitePlace.Completion place) :=
     LocallyCompactSpace.of_finiteDimensional_of_complete
@@ -556,7 +745,7 @@ noncomputable instance properSpace
     ProperSpace.of_nontriviallyNormedField_of_weaklyLocallyCompactSpace
       (ThetaFinitePlace.Completion place)
 
-end SourceFinitePlaceCompletionExtension
+end ThetaFinitePlace
 
 /--
 A finite local field occurring at one stage of the ind-topological log field.
@@ -601,15 +790,12 @@ other analytic and extension data are inherited from the completion.
 -/
 noncomputable abbrev ofFinitePlace
     {K : Type u} [Field K] [NumberField K]
-    (place : NumberField.FinitePlace K)
-    [SourceFinitePlaceCompletionExtension place] :
+    (place : NumberField.FinitePlace K) :
     SourceTopologicalLocalField
       (.finite (ThetaFinitePlace.comap (k := ℚ) place)) where
   carrier := ThetaFinitePlace.Completion place
-  algebra :=
-    SourceFinitePlaceCompletionExtension.algebra (place := place)
-  continuousSMul :=
-    SourceFinitePlaceCompletionExtension.continuousSMul (place := place)
+  algebra := inferInstance
+  continuousSMul := inferInstance
   rationalAlgebra := inferInstance
   scalarTower := by
     apply IsScalarTower.of_algebraMap_eq
@@ -622,8 +808,7 @@ noncomputable abbrev ofFinitePlace
 /-- The valuation ring in the actual selected finite-place completion. -/
 noncomputable def finitePlaceIntegerRing
     {K : Type u} [Field K] [NumberField K]
-    (place : NumberField.FinitePlace K)
-    [SourceFinitePlaceCompletionExtension place] :
+    (place : NumberField.FinitePlace K) :
     ValuationSubring (ofFinitePlace place).carrier :=
   (ThetaFinitePlace.underlyingPrime place).adicCompletionIntegers K
 
@@ -631,7 +816,6 @@ noncomputable def finitePlaceIntegerRing
 theorem finitePlaceIntegerRing_mem_iff_norm_le_one
     {K : Type u} [Field K] [NumberField K]
     (place : NumberField.FinitePlace K)
-    [SourceFinitePlaceCompletionExtension place]
     (value : (ofFinitePlace place).carrier) :
     value ∈ finitePlaceIntegerRing place ↔ ‖value‖ ≤ 1 := by
   change Valued.v value ≤ 1 ↔ ‖value‖ ≤ 1
@@ -643,8 +827,7 @@ theorem finitePlaceIntegerRing_mem_iff_norm_le_one
 /-- The actual valuation ring is compact in the completion topology. -/
 theorem finitePlaceIntegerRing_isCompact
     {K : Type u} [Field K] [NumberField K]
-    (place : NumberField.FinitePlace K)
-    [SourceFinitePlaceCompletionExtension place] :
+    (place : NumberField.FinitePlace K) :
     IsCompact
       (finitePlaceIntegerRing place : Set (ofFinitePlace place).carrier) := by
   rw [show
@@ -657,8 +840,7 @@ theorem finitePlaceIntegerRing_isCompact
 /-- The actual valuation ring is open in the ultrametric completion topology. -/
 theorem finitePlaceIntegerRing_isOpen
     {K : Type u} [Field K] [NumberField K]
-    (place : NumberField.FinitePlace K)
-    [SourceFinitePlaceCompletionExtension place] :
+    (place : NumberField.FinitePlace K) :
     IsOpen
       (finitePlaceIntegerRing place : Set (ofFinitePlace place).carrier) := by
   rw [show
@@ -2916,8 +3098,7 @@ completion rather than supplied independently.
 -/
 noncomputable def ofFinitePlace
     {K : Type u} [Field K] [NumberField K]
-    (place : NumberField.FinitePlace K)
-    [SourceFinitePlaceCompletionExtension place] :
+    (place : NumberField.FinitePlace K) :
     SourceNonarchimedeanLocalFieldIntegers
       (.finite (ThetaFinitePlace.comap (k := ℚ) place))
       (SourceTopologicalLocalField.ofFinitePlace place) where
