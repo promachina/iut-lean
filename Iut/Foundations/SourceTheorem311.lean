@@ -4374,6 +4374,50 @@ end Compatible
 end SourcePacketFiniteStageLogVolume
 
 /--
+The complete accepted finite-stage volume realization of one ind-topological
+tensor packet.  The stage embeds into the packet; it is not identified with
+the entire filtered colimit.
+-/
+structure SourcePacketFiniteStageVolume
+    {j : ℕ} (packet : SourceMonoAnalyticTensorPacket.{u} j) where
+  presentation : SourceMonoAnalyticTensorPacketFieldPresentation packet
+  decomposition :
+    SourcePacketFiniteFieldDecomposition packet presentation
+  measured :
+    SourcePacketFiniteMeasuredFieldDecomposition packet decomposition
+  logVolume :
+    SourcePacketFiniteStageLogVolume packet decomposition measured
+
+namespace SourcePacketFiniteStageVolume
+
+variable {j : ℕ} {packet : SourceMonoAnalyticTensorPacket.{u} j}
+
+/-- The selected finite-stage rational module. -/
+noncomputable def stageModule
+    (volume : SourcePacketFiniteStageVolume packet) :
+    SourceTopologicalQModule.{u} :=
+  volume.decomposition.stageModule
+
+/-- The exact E/W normalized log-volume on the selected finite stage. -/
+noncomputable def normalizedLogVolume
+    (volume : SourcePacketFiniteStageVolume packet) :
+    SourceNormalizedLogVolume volume.stageModule :=
+  volume.logVolume.toNormalizedLogVolume
+
+/-- The selected stage's integral product inside the actual ind-packet. -/
+noncomputable def embeddedIntegralRegion
+    (volume : SourcePacketFiniteStageVolume packet) : Set packet.carrier :=
+  volume.measured.embeddedPacketIntegralRegion
+
+/-- The finite-stage integral product has normalized log-volume zero. -/
+theorem normalizedLogVolume_value_eq_zero
+    (volume : SourcePacketFiniteStageVolume packet) :
+    volume.normalizedLogVolume.value = 0 :=
+  volume.logVolume.toNormalizedLogVolume_value_eq_zero
+
+end SourcePacketFiniteStageVolume
+
+/--
 Legacy whole-place-tuple realization retained while the existing weighted
 volume corridor is migrated to `SourcePacketFiniteMeasuredFieldDecomposition`.
 It is a tensor block, not a field summand, and must not discharge Proposition
@@ -7267,13 +7311,8 @@ structure SourceTheorem311LocalData (l : PrimeGeFive) where
     ∀ vQ label, (packet vQ label).place ≃ placeAbove vQ
   integralConstruction :
     ∀ vQ label, SourcePacketIntegralConstruction (packet vQ label)
-  normalizedLogVolume :
-    ∀ vQ label,
-      SourceNormalizedLogVolume (packet vQ label).carrier
-  normalizedLogVolume_region :
-    ∀ vQ label,
-      (normalizedLogVolume vQ label).integralRegion =
-        (integralConstruction vQ label).fullRegion.carrier
+  finiteStageVolume :
+    ∀ vQ label, SourcePacketFiniteStageVolume (packet vQ label)
 
 attribute [instance]
   SourceTheorem311LocalData.placeAboveFintype
@@ -7330,7 +7369,7 @@ noncomputable def logVolume
     (data : SourceTheorem311LocalData.{u} l)
     (vQ : data.rationalPlace)
     (label : IUTIIAbsoluteThetaLabel.{u} l) : ℝ :=
-  (data.normalizedLogVolume vQ label).value
+  (data.finiteStageVolume vQ label).normalizedLogVolume.value
 
 /--
 The procession-normalized log-volume is the ordinary equal-weight average over
@@ -7994,17 +8033,16 @@ structure PacketIntegralConstruction
       (construction.asArchimedean hkind).summandMetric factor place =
         lattice.archimedeanSummandMetric algorithm n rationalPlace label
           topology hkind factor place
-  logVolumeDecomposition :
-    SourcePacketLogVolumeDecomposition
+  finiteStageVolume :
+    SourcePacketFiniteStageVolume
       (lattice.localPacket algorithm n rationalPlace label topology)
-      construction.fullRegion.carrier
-  logVolume_placeMultiplicity :
+  finiteStage_placeMultiplicity :
     ∀ place,
-      logVolumeDecomposition.placeMultiplicity place =
+      finiteStageVolume.logVolume.placeMultiplicity place =
         SourceSelectedPlace.moduliLocalDegree place.1
-  logVolume_placeNormalizationDegree :
+  finiteStage_placeNormalizationDegree :
     ∀ place,
-      logVolumeDecomposition.placeNormalizationDegree place =
+      finiteStageVolume.logVolume.placeNormalizationDegree place =
         SourceSelectedPlace.moduliRationalLocalDegree place.1
 
 /--
@@ -8053,10 +8091,8 @@ noncomputable def toTheorem311LocalData
   packetPlaceEquiv _ _ := Equiv.refl _
   integralConstruction rationalPlace label :=
     (construction.integral rationalPlace label).construction
-  normalizedLogVolume rationalPlace label :=
-    (construction.integral rationalPlace label).logVolumeDecomposition
-      |>.toNormalizedLogVolume
-  normalizedLogVolume_region _ _ := rfl
+  finiteStageVolume rationalPlace label :=
+    (construction.integral rationalPlace label).finiteStageVolume
 
 end LocalConstruction
 
@@ -8941,12 +8977,16 @@ structure SourceTheorem311VerticalLocalKummer
         (target.distinguishedIntegral
           (rationalPlaceEquiv vQ) label
           ((packetKummer vQ label).placeEquiv place)).carrier
-  logVolumeFunctional_compatible :
+  finiteStageCompatible :
     ∀ vQ label,
-      SourceNormalizedLogVolume.Compatible
-        (source.normalizedLogVolume vQ label)
-        (target.normalizedLogVolume (rationalPlaceEquiv vQ) label)
+      SourcePacketFiniteStageLogVolume.Compatible
+        (source.finiteStageVolume vQ label).logVolume
+        (target.finiteStageVolume (rationalPlaceEquiv vQ) label).logVolume
         (packetKummer vQ label).packetKummer
+  finiteStageCompatible_placeEquiv :
+    ∀ vQ label,
+      (finiteStageCompatible vQ label).placeEquiv =
+        (packetKummer vQ label).placeEquiv
 
 namespace SourceTheorem311VerticalLocalKummer
 
@@ -8965,21 +9005,7 @@ theorem logVolume_compatible
     (label : IUTIIAbsoluteThetaLabel.{u} l) :
     source.logVolume vQ label =
       target.logVolume (kummer.rationalPlaceEquiv vQ) label := by
-  apply (kummer.logVolumeFunctional_compatible vQ label).value_eq
-  calc
-    (kummer.packetKummer vQ label).packetKummer ''
-        (source.normalizedLogVolume vQ label).integralRegion =
-        (kummer.packetKummer vQ label).packetKummer ''
-          (source.fullIntegral vQ label).carrier := by
-            rw [source.normalizedLogVolume_region]
-            rw [source.fullIntegral_carrier]
-    _ = (target.fullIntegral
-          (kummer.rationalPlaceEquiv vQ) label).carrier :=
-      kummer.fullIntegral_image vQ label
-    _ = (target.normalizedLogVolume
-          (kummer.rationalPlaceEquiv vQ) label).integralRegion := by
-      rw [target.normalizedLogVolume_region]
-      rw [target.fullIntegral_carrier]
+  exact (kummer.finiteStageCompatible vQ label).normalizedLogVolume_value_eq
 
 end SourceTheorem311VerticalLocalKummer
 
@@ -9133,12 +9159,8 @@ structure SourceTheorem311CoricContainer (l : PrimeGeFive) where
     ∀ vQ label, (packet vQ label).rationalPlace = vQ
   integralConstruction :
     ∀ vQ label, SourcePacketIntegralConstruction (packet vQ label)
-  normalizedLogVolume :
-    ∀ vQ label, SourceNormalizedLogVolume (packet vQ label).carrier
-  normalizedLogVolume_region :
-    ∀ vQ label,
-      (normalizedLogVolume vQ label).integralRegion =
-        (integralConstruction vQ label).fullRegion.carrier
+  finiteStageVolume :
+    ∀ vQ label, SourcePacketFiniteStageVolume (packet vQ label)
 
 namespace SourceTheorem311CoricContainer
 
@@ -9176,7 +9198,7 @@ noncomputable def logVolume
     (container : SourceTheorem311CoricContainer.{u} l)
     (vQ : container.rationalPlace)
     (label : IUTIIAbsoluteThetaLabel.{u} l) : ℝ :=
-  (container.normalizedLogVolume vQ label).value
+  (container.finiteStageVolume vQ label).normalizedLogVolume.value
 
 /-- The local Theorem 3.11 data is itself the fixed vertically coric container. -/
 noncomputable def ofLocalData
@@ -9185,8 +9207,7 @@ noncomputable def ofLocalData
   packet := data.packet
   packet_rationalPlace := data.packet_rationalPlace
   integralConstruction := data.integralConstruction
-  normalizedLogVolume := data.normalizedLogVolume
-  normalizedLogVolume_region := data.normalizedLogVolume_region
+  finiteStageVolume := data.finiteStageVolume
 
 end SourceTheorem311CoricContainer
 
@@ -9296,19 +9317,18 @@ structure SourceTheorem311Ind3System (l : PrimeGeFive) where
     ∀ m steps vQ label,
       common.placeKind vQ = .archimedean ->
         Function.Surjective (archLogIterate m steps vQ label)
-  sourceNormalizedLogVolume :
+  sourceFiniteStageVolume :
+    ∀ m vQ label, SourcePacketFiniteStageVolume (packet m vQ label)
+  finiteStageCompatible :
     ∀ m vQ label,
-      SourceNormalizedLogVolume (packet m vQ label).carrier
-  sourceNormalizedLogVolume_region :
-    ∀ m vQ label,
-      (sourceNormalizedLogVolume m vQ label).integralRegion =
-        (integralConstruction m vQ label).fullRegion.carrier
-  logVolumeFunctional_compatible :
-    ∀ m vQ label,
-      SourceNormalizedLogVolume.Compatible
-        (sourceNormalizedLogVolume m vQ label)
-        (common.normalizedLogVolume vQ label)
+      SourcePacketFiniteStageLogVolume.Compatible
+        (sourceFiniteStageVolume m vQ label).logVolume
+        (common.finiteStageVolume vQ label).logVolume
         (directKummer m vQ label).packetKummer
+  finiteStageCompatible_placeEquiv :
+    ∀ m vQ label,
+      (finiteStageCompatible m vQ label).placeEquiv =
+        (directKummer m vQ label).placeEquiv
 
 namespace SourceTheorem311Ind3System
 
@@ -9337,29 +9357,17 @@ theorem logVolume_eq_common
     (system : SourceTheorem311Ind3System.{u} l)
     (m : ℤ) (vQ : system.common.rationalPlace)
     (label : IUTIIAbsoluteThetaLabel.{u} l) :
-    (system.sourceNormalizedLogVolume m vQ label).value =
+    (system.sourceFiniteStageVolume m vQ label).normalizedLogVolume.value =
       system.common.logVolume vQ label := by
-  apply (system.logVolumeFunctional_compatible m vQ label).value_eq
-  calc
-    (system.directKummer m vQ label).packetKummer ''
-        (system.sourceNormalizedLogVolume m vQ label).integralRegion =
-        (system.directKummer m vQ label).packetKummer ''
-          (system.sourceIntegral m vQ label).carrier := by
-      rw [system.sourceNormalizedLogVolume_region,
-        system.sourceIntegral_carrier]
-    _ = (system.common.integral vQ label).carrier :=
-      system.directKummerIntegral_image m vQ label
-    _ = (system.common.normalizedLogVolume vQ label).integralRegion := by
-      rw [system.common.normalizedLogVolume_region,
-        system.common.integral_carrier]
+  exact (system.finiteStageCompatible m vQ label).normalizedLogVolume_value_eq
 
 /-- Precise common-container compatibility makes log-volume independent of `m`. -/
 theorem logVolume_eq_logVolume
     (system : SourceTheorem311Ind3System.{u} l)
     (first second : ℤ) (vQ : system.common.rationalPlace)
     (label : IUTIIAbsoluteThetaLabel.{u} l) :
-    (system.sourceNormalizedLogVolume first vQ label).value =
-      (system.sourceNormalizedLogVolume second vQ label).value :=
+    (system.sourceFiniteStageVolume first vQ label).normalizedLogVolume.value =
+      (system.sourceFiniteStageVolume second vQ label).normalizedLogVolume.value :=
   (system.logVolume_eq_common first vQ label).trans
     (system.logVolume_eq_common second vQ label).symm
 
@@ -9903,17 +9911,16 @@ structure SitePacketIntegralConstruction
       (construction.asArchimedean hkind).summandMetric factor place =
         lattice.siteArchimedeanSummandMetric algorithm n m rationalPlace label
           topology hkind factor place
-  logVolumeDecomposition :
-    SourcePacketLogVolumeDecomposition
+  finiteStageVolume :
+    SourcePacketFiniteStageVolume
       (lattice.siteLocalPacket algorithm n m rationalPlace label topology)
-      construction.fullRegion.carrier
-  logVolume_placeMultiplicity :
+  finiteStage_placeMultiplicity :
     ∀ place,
-      logVolumeDecomposition.placeMultiplicity place =
+      finiteStageVolume.logVolume.placeMultiplicity place =
         SourceSelectedPlace.moduliLocalDegree place.1
-  logVolume_placeNormalizationDegree :
+  finiteStage_placeNormalizationDegree :
     ∀ place,
-      logVolumeDecomposition.placeNormalizationDegree place =
+      finiteStageVolume.logVolume.placeNormalizationDegree place =
         SourceSelectedPlace.moduliRationalLocalDegree place.1
 
 /--
@@ -9982,14 +9989,14 @@ structure VerticalPacketIntegralConstruction
     rationalPlace label siteTopology
   commonIntegral : PacketIntegralConstruction lattice algorithm n
     rationalPlace label commonTopology
-  logVolumeCompatible :
-    SourcePacketLogVolumeDecomposition.Compatible
-      siteIntegral.logVolumeDecomposition
-      commonIntegral.logVolumeDecomposition
+  finiteStageCompatible :
+    SourcePacketFiniteStageLogVolume.Compatible
+      siteIntegral.finiteStageVolume.logVolume
+      commonIntegral.finiteStageVolume.logVolume
       (lattice.verticalPacketKummerIso algorithm n m rationalPlace label
         siteTopology commonTopology).packetKummer
-  logVolumeCompatible_placeEquiv :
-    logVolumeCompatible.coordinatePlaceEquiv =
+  finiteStageCompatible_placeEquiv :
+    finiteStageCompatible.placeEquiv =
       (lattice.verticalPacketKummerIso algorithm n m rationalPlace label
         siteTopology commonTopology).placeEquiv
 
@@ -10019,11 +10026,10 @@ theorem logVolumeFunctional_compatible
     (construction : VerticalPacketIntegralConstruction lattice algorithm n m
       rationalPlace label siteTopology commonTopology) :
     SourceNormalizedLogVolume.Compatible
-      construction.siteIntegral.logVolumeDecomposition.toNormalizedLogVolume
-      construction.commonIntegral.logVolumeDecomposition.toNormalizedLogVolume
-      (lattice.verticalPacketKummerIso algorithm n m rationalPlace label
-        siteTopology commonTopology).packetKummer :=
-  construction.logVolumeCompatible.toNormalizedLogVolume_compatible
+      construction.siteIntegral.finiteStageVolume.normalizedLogVolume
+      construction.commonIntegral.finiteStageVolume.normalizedLogVolume
+      construction.finiteStageCompatible.stageKummer :=
+  construction.finiteStageCompatible.toNormalizedLogVolume_compatible
 
 end VerticalPacketIntegralConstruction
 
@@ -11067,10 +11073,8 @@ noncomputable def toTheorem311LocalData
   packetPlaceEquiv _ _ := Equiv.refl _
   integralConstruction rationalPlace label :=
     (construction.integral rationalPlace label).construction
-  normalizedLogVolume rationalPlace label :=
-    (construction.integral rationalPlace label).logVolumeDecomposition
-      |>.toNormalizedLogVolume
-  normalizedLogVolume_region _ _ := rfl
+  finiteStageVolume rationalPlace label :=
+    (construction.integral rationalPlace label).finiteStageVolume
 
 end SiteLocalConstruction
 
@@ -11086,17 +11090,17 @@ structure VerticalLocalConstruction
     (n m : ℤ) where
   common : LocalConstruction lattice algorithm n
   site : SiteLocalConstruction lattice algorithm n m
-  logVolumeCompatible :
+  finiteStageCompatible :
     ∀ rationalPlace label,
-      SourcePacketLogVolumeDecomposition.Compatible
-        (site.integral rationalPlace label).logVolumeDecomposition
-        (common.integral rationalPlace label).logVolumeDecomposition
+      SourcePacketFiniteStageLogVolume.Compatible
+        (site.integral rationalPlace label).finiteStageVolume.logVolume
+        (common.integral rationalPlace label).finiteStageVolume.logVolume
         (lattice.verticalPacketKummerIso algorithm n m rationalPlace label
           (site.topology rationalPlace label)
           (common.topology rationalPlace label)).packetKummer
-  logVolumeCompatible_placeEquiv :
+  finiteStageCompatible_placeEquiv :
     ∀ rationalPlace label,
-      (logVolumeCompatible rationalPlace label).coordinatePlaceEquiv =
+      (finiteStageCompatible rationalPlace label).placeEquiv =
         (lattice.verticalPacketKummerIso algorithm n m rationalPlace label
           (site.topology rationalPlace label)
           (common.topology rationalPlace label)).placeEquiv
@@ -11117,9 +11121,10 @@ noncomputable def packetComparison
         (construction.common.topology rationalPlace label) where
   siteIntegral := construction.site.integral rationalPlace label
   commonIntegral := construction.common.integral rationalPlace label
-  logVolumeCompatible := construction.logVolumeCompatible rationalPlace label
-  logVolumeCompatible_placeEquiv :=
-    construction.logVolumeCompatible_placeEquiv rationalPlace label
+  finiteStageCompatible :=
+    construction.finiteStageCompatible rationalPlace label
+  finiteStageCompatible_placeEquiv :=
+    construction.finiteStageCompatible_placeEquiv rationalPlace label
 
 /--
 The concrete lattice, shell algorithm, integral regions, and radial measures
@@ -11174,9 +11179,10 @@ noncomputable def toTheorem311VerticalLocalKummer
       (construction.site.integral rationalPlace label)
       (construction.common.integral rationalPlace label)
       label.distinguishedFactor place
-  logVolumeFunctional_compatible rationalPlace label :=
-    (construction.logVolumeCompatible rationalPlace label)
-      |>.toNormalizedLogVolume_compatible
+  finiteStageCompatible rationalPlace label :=
+    construction.finiteStageCompatible rationalPlace label
+  finiteStageCompatible_placeEquiv rationalPlace label :=
+    construction.finiteStageCompatible_placeEquiv rationalPlace label
 
 end VerticalLocalConstruction
 
@@ -11192,17 +11198,17 @@ structure VerticalFamilyConstruction
     (n : ℤ) where
   common : LocalConstruction lattice algorithm n
   site : ∀ m : ℤ, SiteLocalConstruction lattice algorithm n m
-  logVolumeCompatible :
+  finiteStageCompatible :
     ∀ m rationalPlace label,
-      SourcePacketLogVolumeDecomposition.Compatible
-        ((site m).integral rationalPlace label).logVolumeDecomposition
-        (common.integral rationalPlace label).logVolumeDecomposition
+      SourcePacketFiniteStageLogVolume.Compatible
+        ((site m).integral rationalPlace label).finiteStageVolume.logVolume
+        (common.integral rationalPlace label).finiteStageVolume.logVolume
         (lattice.verticalPacketKummerIso algorithm n m rationalPlace label
           ((site m).topology rationalPlace label)
           (common.topology rationalPlace label)).packetKummer
-  logVolumeCompatible_placeEquiv :
+  finiteStageCompatible_placeEquiv :
     ∀ m rationalPlace label,
-      (logVolumeCompatible m rationalPlace label).coordinatePlaceEquiv =
+      (finiteStageCompatible m rationalPlace label).placeEquiv =
         (lattice.verticalPacketKummerIso algorithm n m rationalPlace label
           ((site m).topology rationalPlace label)
           (common.topology rationalPlace label)).placeEquiv
@@ -11219,9 +11225,9 @@ noncomputable def verticalAt
     (m : ℤ) : VerticalLocalConstruction lattice algorithm n m where
   common := family.common
   site := family.site m
-  logVolumeCompatible := family.logVolumeCompatible m
-  logVolumeCompatible_placeEquiv :=
-    family.logVolumeCompatible_placeEquiv m
+  finiteStageCompatible := family.finiteStageCompatible m
+  finiteStageCompatible_placeEquiv :=
+    family.finiteStageCompatible_placeEquiv m
 
 /-- The actual non-coric packet at one site of the family. -/
 noncomputable abbrev sourcePacket
@@ -11411,13 +11417,11 @@ noncomputable def toTheorem311Ind3System
   archLogPreimage_mem_piBall := upperSemi.archLogPreimage_mem_piBall
   archLogIterate := upperSemi.archLogIterate
   archLogIterate_surjective := upperSemi.archLogIterate_surjective
-  sourceNormalizedLogVolume m rationalPlace label :=
-    ((family.site m).integral rationalPlace label).logVolumeDecomposition
-      |>.toNormalizedLogVolume
-  sourceNormalizedLogVolume_region _ _ _ := rfl
-  logVolumeFunctional_compatible m rationalPlace label :=
-    (family.logVolumeCompatible m rationalPlace label)
-      |>.toNormalizedLogVolume_compatible
+  sourceFiniteStageVolume m rationalPlace label :=
+    ((family.site m).integral rationalPlace label).finiteStageVolume
+  finiteStageCompatible := family.finiteStageCompatible
+  finiteStageCompatible_placeEquiv :=
+    family.finiteStageCompatible_placeEquiv
 
 end VerticalFamilyConstruction
 

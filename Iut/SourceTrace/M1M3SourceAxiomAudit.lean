@@ -130,6 +130,8 @@ end Compatible
 
 end Iut.SourcePacketFiniteStageLogVolume
 
+#print axioms Iut.SourcePacketFiniteStageVolume.normalizedLogVolume_value_eq_zero
+
 -- Legacy block-indexed volume lemmas remain visible but are not source endpoints.
 #print axioms Iut.SourcePacketLogVolumeDecomposition.algebraicDecomposition
 #print axioms Iut.SourcePacketLogVolumeDecomposition.radializedRegion_integralRegion

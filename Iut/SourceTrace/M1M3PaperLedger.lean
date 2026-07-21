@@ -881,6 +881,8 @@ def m1m3PaperLedger : List PaperClause :=
         "SourcePacketFiniteStageLogVolume.normalized_log_weightedContent_productRegion",
         "SourcePacketFiniteStageLogVolume.toNormalizedLogVolume",
         "SourcePacketFiniteStageLogVolume.toNormalizedLogVolume_valueOn_admissibleProductRegion_eq_weightedSum",
+        "SourcePacketFiniteStageVolume",
+        "SourcePacketFiniteStageVolume.normalizedLogVolume_value_eq_zero",
         "SourcePacketFiniteStageLogVolume.Compatible.blockRadial_measurePreserving",
         "SourcePacketFiniteStageLogVolume.Compatible.stageKummer_image_packetIntegralRegion",
         "SourcePacketFiniteStageLogVolume.Compatible.packetRadialEquiv_image_radializedRegion",
@@ -892,7 +894,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceTheorem311LocalData.processionLogVolume",
         "SourceMonoAnalyticLogShellAlgorithm.transport_logVolume",
         "SourceTheorem311LocalData.logVolume"] .partialImplementation
-      "Normalized log-volume is a functional on admissible regions, not generally the logarithm of a measure on packet space. The accepted field interface is indexed by genuine finite-stage local fields: finite components identify their radial carrier with the additive field, while infinite components identify it with NNReal through complex norm, as required by Remark 3.1.1(iii) and Absolute Anabelian Geometry III, Proposition 5.7. For each outer place tuple v, M_v, its integral block, and its product measure are derived fieldwise. The outer E/W construction derives E, E_{not v}, W, M_V, M_W, S_E, mu_E, and the exact reciprocal-weight formula. A finite-stage Proposition 3.2 poly-isomorphism equipped only with fieldwise measure preservation now derives preservation of block products, S_E, mu_E, admissibility, the complete normalized functional, its integral value, and the embedded packet integral region. The legacy arbitrary block calculation and vertical wrapper remain non-accepting. Constructing the field presentations, Haar/radial measures, local degrees, packet dilation, and mono-analytic adjustment from the theta data, then migrating Theorem 3.11 vertical compatibility and proving the global product-formula comparison, remain open.",
+      "Normalized log-volume is a functional on admissible regions, not generally the logarithm of a measure on packet space. The accepted field interface is indexed by genuine finite-stage local fields: finite components identify their radial carrier with the additive field, while infinite components identify it with NNReal through complex norm, as required by Remark 3.1.1(iii) and Absolute Anabelian Geometry III, Proposition 5.7. For each outer place tuple v, M_v, its integral block, and its product measure are derived fieldwise. The outer E/W construction derives E, E_{not v}, W, M_V, M_W, S_E, mu_E, and the exact reciprocal-weight formula. A finite-stage Proposition 3.2 poly-isomorphism equipped only with fieldwise measure preservation derives preservation of block products, S_E, mu_E, admissibility, the complete normalized functional, its integral value, and the embedded packet integral region. This finite-stage functional now supplies the local-data, vertical-container, and Ind3 path; the legacy arbitrary block calculation is non-accepting. Constructing the field presentations, Haar/radial measures, local degrees, packet dilation, and mono-analytic adjustment from the theta data, then proving the global product-formula comparison, remain open.",
     clause "III.3.10" .iutIII "IUT III, Proposition 3.10"
       ["SourceTheorem311LabeledData",
         "SourceTheorem311LabeledKummerIso"] .partialImplementation
@@ -986,16 +988,18 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceAbsoluteLGPGaussianLogThetaLattice.verticalDistinguishedArchimedeanIntegral_image",
         "SourceAbsoluteLGPGaussianLogThetaLattice.verticalFullIntegral_image",
         "SourceAbsoluteLGPGaussianLogThetaLattice.verticalDistinguishedIntegral_image",
-        "SourcePacketLogVolumeDecomposition.Compatible",
-        "SourcePacketLogVolumeDecomposition.Compatible.radializeCoordinates_coordinateEquiv",
-        "SourcePacketLogVolumeDecomposition.Compatible.coordinate_measurePreserving",
-        "SourcePacketLogVolumeDecomposition.Compatible.replica_measurePreserving",
-        "SourcePacketLogVolumeDecomposition.Compatible.weightedContent_image",
-        "SourcePacketLogVolumeDecomposition.Compatible.toNormalizedLogVolume_compatible",
+        "SourcePacketFiniteStageVolume",
+        "SourcePacketFiniteStageLogVolume.Compatible",
+        "SourcePacketFiniteStageLogVolume.Compatible.blockRadial_measurePreserving",
+        "SourcePacketFiniteStageLogVolume.Compatible.packetRadialEquiv_image_radializedRegion",
+        "SourcePacketFiniteStageLogVolume.Compatible.replica_measurePreserving",
+        "SourcePacketFiniteStageLogVolume.Compatible.weightedContent_image",
+        "SourcePacketFiniteStageLogVolume.Compatible.toNormalizedLogVolume_compatible",
+        "SourcePacketFiniteStageLogVolume.Compatible.packetKummer_image_embeddedPacketIntegralRegion",
         "SourceAbsoluteLGPGaussianLogThetaLattice.VerticalLocalConstruction.toTheorem311VerticalLocalKummer",
         "SourceTheorem311VerticalLocalKummer",
         "SourceTheorem311LabeledKummerIso"] .partialImplementation
-      "For every actual `(n,m)` absolute-label capsule, vertical coricity constructs the placewise, direct-sum, and continuous tensor-packet Kummer maps to the fixed `(n,circle)` packet. Finite-place transport passes through shell lattices, tensor generation, closure, and distinguished intersections; infinite-place transport preserves the rationalized packet seminorm. Full and distinguished region images hold for both place kinds. The Kummer place map is the exact reindexing used by the weighted decomposition; local degrees derive multiplicities and scale, while a commuting tensor-module/radial-carrier square plus radial measure and offset preservation transports E, W, M_W, weighted lifts, weighted content, and the normalized functional. Constructing the radial maps, component measures, and offset comparison from local shell maps, and constructing the profinite, number-field, and split-Frobenioid maps from IUT II Corollaries 4.6 and 4.8, remain open.",
+      "For every actual `(n,m)` absolute-label capsule, vertical coricity constructs the placewise, direct-sum, and continuous tensor-packet Kummer maps to the fixed `(n,circle)` packet. Finite-place transport passes through shell lattices, tensor generation, closure, and distinguished intersections; infinite-place transport preserves the rationalized packet seminorm. Full and distinguished ind-packet region images hold for both place kinds. Separately, each packet carries a genuine finite-stage field presentation. The Kummer place map reindexes its field stages, and fieldwise radial measure preservation derives transport of E, W, M_W, weighted lifts, weighted content, the normalized functional, and the embedded finite-stage integral product. The local-data, vertical-container, and Ind3 APIs use this finite-stage path and expose no legacy whole-packet decomposition. Constructing the field-stage and radial maps from local shell maps, and constructing the profinite, number-field, and split-Frobenioid maps from IUT II Corollaries 4.6 and 4.8, remain open.",
     clause "III.3.11(ii).objects" .iutIII "IUT III, Theorem 3.11(ii): tensor and Frobenioid compatibility"
       ["SourceTensorPacketKummerIso.distinguishedSubmodule_map",
         "SourceMonoAnalyticLogShellAlgorithm.TensorTopology.congr_distinguishedSubmodule",
@@ -1019,13 +1023,15 @@ def m1m3PaperLedger : List PaperClause :=
     clause "III.3.11(ii).Ind3" .iutIII "IUT III, Theorem 3.11(ii): Ind3 and log-volume"
       ["SourceTheorem311CoricContainer",
         "SourceTheorem311Ind3System",
+        "SourcePacketFiniteStageVolume",
+        "SourcePacketFiniteStageLogVolume.Compatible.normalizedLogVolume_value_eq",
         "SourceAbsoluteLGPGaussianLogThetaLattice.VerticalFamilyConstruction",
         "SourceAbsoluteLGPGaussianLogThetaLattice.VerticalUpperSemiData",
         "SourceAbsoluteLGPGaussianLogThetaLattice.VerticalFamilyConstruction.toTheorem311Ind3System",
         "SourceTheorem311Ind3System.logVolume_eq_common",
         "SourceTheorem311Ind3System.logVolume_eq_logVolume"]
       .partialImplementation
-      "Ind3 is expressed relative to one fixed vertically coric n-circle container, not as maps between adjacent packets. A concrete vertical family fixes one common construction for all m and derives every packet, direct Kummer isomorphism, integral-region image, replicated weighted content, and normalized functional from the lattice and decompositions. Given the remaining unit-group and iterated-log obligations of Proposition 3.5(ii)(a)-(b), it constructs the Ind3 system; equality with the common normalized value and independence of m follow. Constructing the Psi_cns unit groups, Galois-invariant tensor actions, radius-pi source subsets, and actual iterated log correspondences remains open.",
+      "Ind3 is expressed relative to one fixed vertically coric n-circle container, not as maps between adjacent packets. A concrete vertical family fixes one common construction for all m and derives every ind-packet, direct Kummer isomorphism, full integral-region image, finite-stage field volume, replicated weighted content, and normalized functional from the lattice data. Given the remaining unit-group and iterated-log obligations of Proposition 3.5(ii)(a)-(b), it constructs the Ind3 system; equality with the common finite-stage normalized value and independence of m follow. Constructing the Psi_cns unit groups, Galois-invariant tensor actions, radius-pi source subsets, and actual iterated log correspondences remains open.",
     clause "III.3.11(iii).horizontal" .iutIII "IUT III, Theorem 3.11(iii): horizontal theta link"
       ["SourceHorizontalKummerCompatibility",
         "SourceHorizontalKummerCompatibility.commutes",
