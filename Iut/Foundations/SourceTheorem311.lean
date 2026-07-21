@@ -16,9 +16,11 @@ import Mathlib.Data.Setoid.Basic
 import Mathlib.LinearAlgebra.PiTensorProduct
 import Mathlib.LinearAlgebra.PiTensorProduct.DirectSum
 import Mathlib.MeasureTheory.Constructions.Pi
+import Mathlib.MeasureTheory.Measure.Haar.Basic
 import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
 import Mathlib.MeasureTheory.Measure.NullMeasurable
 import Mathlib.NumberTheory.NumberField.Completion.Ramification
+import Mathlib.RingTheory.Valuation.ValuationSubring
 import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Basic
 
 /-!
@@ -2457,6 +2459,133 @@ end PacketNormalization
 end SourceNormalizedLogVolume
 
 /--
+The ring of integers of one nonarchimedean finite-stage local field.  The
+valuation-subring condition records that this is the valuation ring, while
+compactness and openness are the local-field properties used to normalize
+additive Haar measure in Absolute Anabelian Geometry III, Proposition 5.7(i).
+-/
+structure SourceNonarchimedeanLocalFieldIntegers
+    (rationalPlace : SourceRationalPlace)
+    (field : SourceTopologicalLocalField.{u} rationalPlace) where
+  placeKind : rationalPlace.kind = .nonarchimedean
+  integerRing : ValuationSubring field.carrier
+  integerRing_isCompact : IsCompact (integerRing : Set field.carrier)
+  integerRing_isOpen : IsOpen (integerRing : Set field.carrier)
+
+namespace SourceNonarchimedeanLocalFieldIntegers
+
+variable {rationalPlace : SourceRationalPlace}
+variable {field : SourceTopologicalLocalField.{u} rationalPlace}
+
+/-- The compact-open valuation ring as a positive compact normalization set. -/
+noncomputable def positiveCompacts
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    TopologicalSpace.PositiveCompacts field.carrier where
+  toCompacts :=
+    ⟨(integers.integerRing : Set field.carrier),
+      integers.integerRing_isCompact⟩
+  interior_nonempty' := by
+    rw [integers.integerRing_isOpen.interior_eq]
+    exact ⟨1, integers.integerRing.one_mem⟩
+
+/-- Additive Haar measure normalized to give the valuation ring mass one. -/
+noncomputable def normalizedHaarMeasure
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    MeasureTheory.Measure field.carrier :=
+  MeasureTheory.Measure.addHaarMeasure integers.positiveCompacts
+
+noncomputable instance normalizedHaarMeasureSigmaFinite
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    MeasureTheory.SigmaFinite integers.normalizedHaarMeasure := by
+  unfold normalizedHaarMeasure
+  infer_instance
+
+/-- The completed normalized Haar measure remains sigma-finite. -/
+noncomputable instance completedNormalizedHaarMeasureSigmaFinite
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    MeasureTheory.SigmaFinite integers.normalizedHaarMeasure.completion := by
+  rw [MeasureTheory.sigmaFinite_iff]
+  let spanning := integers.normalizedHaarMeasure.toFiniteSpanningSetsIn
+  exact ⟨{
+    set := spanning.set
+    set_mem := fun _ => Set.mem_univ _
+    finite := fun index => spanning.finite index
+    spanning := spanning.spanning
+  }⟩
+
+/-- The carrier equipped with the completed normalized-Haar sigma algebra. -/
+noncomputable abbrev CompletedRadialCarrier
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :=
+  MeasureTheory.NullMeasurableSpace field.carrier
+    integers.normalizedHaarMeasure
+
+/-- The nonarchimedean radialization is the identity into the completion tag. -/
+def completedRadialization
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    field.carrier → integers.CompletedRadialCarrier :=
+  fun value => value
+
+@[simp]
+theorem completedRadialization_image
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
+    (region : Set field.carrier) :
+    integers.completedRadialization '' region = region := by
+  ext value
+  constructor
+  · rintro ⟨source, hsource, rfl⟩
+    exact hsource
+  · intro hvalue
+    exact ⟨value, hvalue, rfl⟩
+
+/-- Proposition 5.7(i)'s normalized log-volume on measurable finite regions. -/
+noncomputable def normalizedLogVolume
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    SourceNormalizedLogVolume field.rationalModule where
+  admissible := fun region =>
+    MeasurableSet region ∧
+      integers.normalizedHaarMeasure region ≠ 0 ∧
+      integers.normalizedHaarMeasure region ≠ ⊤
+  rawLogVolume := fun region _ =>
+    Real.log (integers.normalizedHaarMeasure region).toReal
+  integralRegion := fun value => value ∈ integers.integerRing
+  integralRegion_admissible := by
+    change
+      MeasurableSet (integers.integerRing : Set field.carrier) ∧
+        integers.normalizedHaarMeasure integers.integerRing ≠ 0 ∧
+        integers.normalizedHaarMeasure integers.integerRing ≠ ⊤
+    refine ⟨integers.integerRing_isCompact.isClosed.measurableSet, ?_, ?_⟩
+    · rw [normalizedHaarMeasure,
+        show (integers.integerRing : Set field.carrier) =
+            (integers.positiveCompacts : Set field.carrier) by rfl,
+        MeasureTheory.Measure.addHaarMeasure_self]
+      exact one_ne_zero
+    · rw [normalizedHaarMeasure,
+        show (integers.integerRing : Set field.carrier) =
+            (integers.positiveCompacts : Set field.carrier) by rfl,
+        MeasureTheory.Measure.addHaarMeasure_self]
+      exact ENNReal.one_ne_top
+  normalizationOffset := 0
+
+/-- The normalized valuation ring has log-volume zero. -/
+theorem normalizedLogVolume_value_eq_zero
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    integers.normalizedLogVolume.value = 0 := by
+  rw [SourceNormalizedLogVolume.value,
+    SourceNormalizedLogVolume.valueOn]
+  simp only [normalizedLogVolume]
+  change
+    Real.log
+        (integers.normalizedHaarMeasure
+          (integers.integerRing : Set field.carrier)).toReal - 0 = 0
+  rw [normalizedHaarMeasure,
+    show (integers.integerRing : Set field.carrier) =
+        (integers.positiveCompacts : Set field.carrier) by rfl,
+    MeasureTheory.Measure.addHaarMeasure_self]
+  norm_num
+
+end SourceNonarchimedeanLocalFieldIntegers
+
+/--
 One genuine finite-stage field summand, together with the measure space on
 which Proposition 3.9 computes its component log-volume.
 
@@ -2475,9 +2604,8 @@ structure SourcePacketMeasuredField
   [radialLocallyCompactSpace : LocallyCompactSpace radialCarrier]
   [radialSecondCountableTopology : SecondCountableTopology radialCarrier]
   [radialMeasurableSpace : MeasurableSpace radialCarrier]
-  [radialBorelSpace : BorelSpace radialCarrier]
+  radial_borel_le : borel radialCarrier ≤ radialMeasurableSpace
   radialization : field.carrier → radialCarrier
-  radialization_measurable : Measurable radialization
   nonarchimedeanRadialEquiv :
     rationalPlace.kind = .nonarchimedean →
       radialCarrier ≃ₜ field.carrier
@@ -2519,9 +2647,79 @@ attribute [instance]
   SourcePacketMeasuredField.radialLocallyCompactSpace
   SourcePacketMeasuredField.radialSecondCountableTopology
   SourcePacketMeasuredField.radialMeasurableSpace
-  SourcePacketMeasuredField.radialBorelSpace
 
 namespace SourcePacketMeasuredField
+
+/--
+Construct the nonarchimedean measured field from its compact-open valuation
+ring. The measure is the completion of the additive Haar measure normalized
+on that ring; its log-volume and integral normalization are derived.
+-/
+noncomputable def ofNonarchimedean
+    {rationalPlace : SourceRationalPlace}
+    {field : SourceTopologicalLocalField.{u} rationalPlace}
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    SourcePacketMeasuredField rationalPlace field where
+  radialCarrier :=
+    integers.CompletedRadialCarrier
+  radialTopologicalSpace :=
+    (inferInstance : TopologicalSpace field.carrier)
+  radialT2Space :=
+    (inferInstance : T2Space field.carrier)
+  radialLocallyCompactSpace :=
+    (inferInstance : LocallyCompactSpace field.carrier)
+  radialSecondCountableTopology :=
+    (inferInstance : SecondCountableTopology field.carrier)
+  radial_borel_le := by
+    intro region hregion
+    exact hregion.nullMeasurableSet
+  radialization := integers.completedRadialization
+  nonarchimedeanRadialEquiv := fun _ => Homeomorph.refl field.carrier
+  nonarchimedean_radialization := fun _ _ => rfl
+  archimedeanComplexEquiv := fun hkind =>
+    nomatch integers.placeKind.symm.trans hkind
+  archimedeanRadialEquiv := fun hkind =>
+    nomatch integers.placeKind.symm.trans hkind
+  archimedean_radialization := fun hkind =>
+    nomatch integers.placeKind.symm.trans hkind
+  volume := integers.normalizedLogVolume
+  measure := integers.normalizedHaarMeasure.completion
+  measureSigmaFinite := inferInstance
+  measureComplete := inferInstance
+  admissible_radialImage_measurable := by
+    intro region
+    rw [integers.completedRadialization_image]
+    exact region.isAdmissible.1.nullMeasurableSet
+  admissible_measure_ne_zero := by
+    intro region
+    rw [integers.completedRadialization_image,
+      MeasureTheory.Measure.completion_apply]
+    exact region.isAdmissible.2.1
+  admissible_measure_ne_top := by
+    intro region
+    rw [integers.completedRadialization_image,
+      MeasureTheory.Measure.completion_apply]
+    exact region.isAdmissible.2.2
+  integral_measure_eq_one := by
+    change integers.normalizedHaarMeasure.completion
+        (integers.completedRadialization ''
+          (integers.integerRing : Set field.carrier)) = 1
+    rw [integers.completedRadialization_image,
+      MeasureTheory.Measure.completion_apply,
+      SourceNonarchimedeanLocalFieldIntegers.normalizedHaarMeasure,
+      show (integers.integerRing : Set field.carrier) =
+          (integers.positiveCompacts : Set field.carrier) by rfl,
+      MeasureTheory.Measure.addHaarMeasure_self]
+  normalizationOffset_eq_zero := rfl
+  rawLogVolume_eq_measure := by
+    intro region
+    change
+      Real.log (integers.normalizedHaarMeasure region.carrier).toReal =
+        Real.log
+          (integers.normalizedHaarMeasure.completion
+            (integers.completedRadialization '' region.carrier)).toReal
+    rw [integers.completedRadialization_image,
+      MeasureTheory.Measure.completion_apply]
 
 instance sigmaFinite
     {rationalPlace : SourceRationalPlace}

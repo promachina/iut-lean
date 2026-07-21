@@ -862,7 +862,13 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceNormalizedLogVolume.Compatible.valueOn_mapRegion",
         "SourceNormalizedLogVolume.PacketNormalization",
         "SourceNormalizedLogVolume.PacketNormalization.valueOn_dilateRegion",
+        "SourceNonarchimedeanLocalFieldIntegers",
+        "SourceNonarchimedeanLocalFieldIntegers.positiveCompacts",
+        "SourceNonarchimedeanLocalFieldIntegers.normalizedHaarMeasure",
+        "SourceNonarchimedeanLocalFieldIntegers.normalizedLogVolume",
+        "SourceNonarchimedeanLocalFieldIntegers.normalizedLogVolume_value_eq_zero",
         "SourcePacketMeasuredField",
+        "SourcePacketMeasuredField.ofNonarchimedean",
         "SourcePacketFiniteMeasuredFieldDecomposition",
         "SourcePacketFiniteMeasuredFieldDecomposition.BlockRadialCoordinates",
         "SourcePacketFiniteMeasuredFieldDecomposition.blockRadializedRegion_integralRegion",
@@ -894,7 +900,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceTheorem311LocalData.processionLogVolume",
         "SourceMonoAnalyticLogShellAlgorithm.transport_logVolume",
         "SourceTheorem311LocalData.logVolume"] .partialImplementation
-      "Normalized log-volume is a functional on admissible regions, not generally the logarithm of a measure on packet space. The accepted field interface is indexed by genuine finite-stage local fields: finite components identify their radial carrier with the additive field, while infinite components identify it with NNReal through complex norm, as required by Remark 3.1.1(iii) and Absolute Anabelian Geometry III, Proposition 5.7. For each outer place tuple v, M_v, its integral block, and its product measure are derived fieldwise. The outer E/W construction derives E, E_{not v}, W, M_V, M_W, S_E, mu_E, and the exact reciprocal-weight formula. A finite-stage Proposition 3.2 poly-isomorphism equipped only with fieldwise measure preservation derives preservation of block products, S_E, mu_E, admissibility, the complete normalized functional, its integral value, and the embedded packet integral region. This finite-stage functional now supplies the local-data, vertical-container, and Ind3 path; the legacy arbitrary block calculation is non-accepting. Constructing the field presentations, Haar/radial measures, local degrees, packet dilation, and mono-analytic adjustment from the theta data, then proving the global product-formula comparison, remain open.",
+      "Normalized log-volume is a functional on admissible regions, not generally the logarithm of a measure on packet space. The accepted field interface is indexed by genuine finite-stage local fields and models a complete measurable extension containing the Borel sets. At a finite component, a compact-open valuation subring now derives the normalized additive Haar measure, its completion, the full measurable finite-region log-volume, and zero volume of the integer ring, as in Absolute Anabelian Geometry III, Proposition 5.7(i). Infinite components identify their radial carrier with NNReal through complex norm. For each outer place tuple v, M_v, its integral block, and its product measure are derived fieldwise. The outer E/W construction derives E, E_{not v}, W, M_V, M_W, S_E, mu_E, and the exact reciprocal-weight formula. A finite-stage Proposition 3.2 poly-isomorphism equipped only with fieldwise measure preservation derives preservation of block products, S_E, mu_E, admissibility, the complete normalized functional, its integral value, and the embedded packet integral region. This finite-stage functional supplies the local-data, vertical-container, and Ind3 path; the legacy arbitrary block calculation is non-accepting. Constructing compact-open valuation rings from the log-shells, the archimedean radial measure, field presentations, local degrees, packet dilation, and mono-analytic adjustment from theta data, then proving the global product-formula comparison, remain open.",
     clause "III.3.10" .iutIII "IUT III, Proposition 3.10"
       ["SourceTheorem311LabeledData",
         "SourceTheorem311LabeledKummerIso"] .partialImplementation

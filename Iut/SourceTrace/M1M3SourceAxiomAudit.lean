@@ -87,6 +87,8 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceNormalizedLogVolume.PacketNormalization.valueOn_dilateRegion
 #print axioms Iut.SourceSelectedPlace.moduliLocalDegree
 #print axioms Iut.SourceSelectedPlace.moduliRationalLocalDegree
+#print axioms Iut.SourceNonarchimedeanLocalFieldIntegers.normalizedLogVolume_value_eq_zero
+#print axioms Iut.SourcePacketMeasuredField.ofNonarchimedean
 #print axioms Iut.SourcePacketMeasuredField.integral_measure_eq_one
 #print axioms Iut.SourcePacketMeasuredField.normalizationOffset_eq_zero
 #print axioms SourcePacketFiniteFieldDecomposition.stageEmbedding_injective
