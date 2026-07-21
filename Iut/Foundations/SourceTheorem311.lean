@@ -11,6 +11,7 @@ import Mathlib.Algebra.Category.ModuleCat.Topology.Basic
 import Mathlib.Algebra.DirectSum.Module
 import Mathlib.Algebra.Module.ZMod
 import Mathlib.Analysis.Seminorm
+import Mathlib.Analysis.Normed.Unbundled.SpectralNorm
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 import Mathlib.CategoryTheory.Endomorphism
 import Mathlib.CategoryTheory.Comma.Arrow
@@ -31,6 +32,8 @@ import Mathlib.NumberTheory.NumberField.Completion.Ramification
 import Mathlib.NumberTheory.Padics.HeightOneSpectrum
 import Mathlib.NumberTheory.Padics.ProperSpace
 import Mathlib.NumberTheory.Padics.RingHoms
+import Mathlib.FieldTheory.Galois.GaloisClosure
+import Mathlib.FieldTheory.Galois.Infinite
 import Mathlib.RingTheory.DedekindDomain.IntegralClosure
 import Mathlib.RingTheory.Ideal.Int
 import Mathlib.RingTheory.Ideal.Quotient.HasFiniteQuotients
@@ -1010,6 +1013,326 @@ theorem transition_comp
   simp [sourceValue]
 
 end SourceIndTopologicalLocalFieldPresentation
+
+/-
+The canonical finite-place stages of `log(alpha F_v)` in IUT III,
+Proposition 3.1.  Finite Galois subextensions are cofinal among finite
+subextensions of the algebraic closure and correspond to open normal subgroups
+of the absolute Galois group.
+-/
+namespace SourceFiniteLocalFieldStages
+
+/-- The algebraic closure of the rational local field `Q_(v_Q)`. -/
+abbrev AlgebraicClosure
+    (place : NumberField.FinitePlace ℚ) :=
+  _root_.AlgebraicClosure (ThetaFinitePlace.Completion place)
+
+/-- The canonical spectral norm on the nonarchimedean algebraic closure. -/
+noncomputable instance algebraicClosureNormedField
+    (place : NumberField.FinitePlace ℚ) :
+    NormedField (AlgebraicClosure place) :=
+  spectralNorm.normedField (ThetaFinitePlace.Completion place)
+    (AlgebraicClosure place)
+
+/-- The spectral norm extends the norm of `Q_(v_Q)`. -/
+noncomputable instance algebraicClosureNormedAlgebra
+    (place : NumberField.FinitePlace ℚ) :
+    NormedAlgebra (ThetaFinitePlace.Completion place)
+      (AlgebraicClosure place) :=
+  spectralNorm.normedAlgebra (ThetaFinitePlace.Completion place)
+    (AlgebraicClosure place)
+
+/-- The filtered index of finite Galois local subfields. -/
+abbrev StageIndex
+    (place : NumberField.FinitePlace ℚ) :=
+  FiniteGaloisIntermediateField
+    (ThetaFinitePlace.Completion place) (AlgebraicClosure place)
+
+/-- The linear inclusion attached to an inclusion of finite local subfields. -/
+noncomputable def transitionLinearMap
+    (place : NumberField.FinitePlace ℚ)
+    {source target : StageIndex place} (map : source ≤ target) :
+    source →ₗ[ThetaFinitePlace.Completion place] target :=
+  (IntermediateField.inclusion map).toLinearMap
+
+/-- Finite-stage inclusions are continuous for their local-field topologies. -/
+noncomputable def transitionContinuousLinearMap
+    (place : NumberField.FinitePlace ℚ)
+    {source target : StageIndex place} (map : source ≤ target) :
+    source →L[ThetaFinitePlace.Completion place] target :=
+  (transitionLinearMap place map).mkContinuous 1 (fun value => by
+    simp [transitionLinearMap])
+
+noncomputable instance stageDecidableEq
+    (place : NumberField.FinitePlace ℚ) :
+    DecidableEq (StageIndex place) := Classical.decEq _
+
+noncomputable instance transitionDirectedSystem
+    (place : NumberField.FinitePlace ℚ) :
+    DirectedSystem (fun stage : StageIndex place => stage)
+      (fun _source _target map => transitionLinearMap place map) where
+  map_self _ _ := rfl
+  map_map _ _ _ _ _ _ := rfl
+
+/-- The actual filtered diagram of finite topological local fields. -/
+noncomputable abbrev stageDiagram
+    (place : NumberField.FinitePlace ℚ) :
+    StageIndex place ⥤
+      TopModuleCat (ThetaFinitePlace.Completion place) where
+  obj stage := TopModuleCat.of (ThetaFinitePlace.Completion place) stage
+  map map := TopModuleCat.ofHom
+    (transitionContinuousLinearMap place map.le)
+  map_id _ := by ext; rfl
+  map_comp _ _ := by ext; rfl
+
+/-- The underlying module direct-limit cocone. -/
+noncomputable def moduleCocone
+    (place : NumberField.FinitePlace ℚ) :
+    Limits.Cocone
+      (stageDiagram place ⋙
+        forget₂ (TopModuleCat (ThetaFinitePlace.Completion place))
+          (ModuleCat (ThetaFinitePlace.Completion place))) :=
+  ModuleCat.directLimitCocone
+    (fun stage : StageIndex place => stage)
+    (fun _source _target map => transitionLinearMap place map)
+
+/-- The module cocone satisfies the direct-limit universal property. -/
+noncomputable def moduleIsColimit
+    (place : NumberField.FinitePlace ℚ) :
+    Limits.IsColimit (moduleCocone place) :=
+  ModuleCat.directLimitIsColimit
+    (fun stage : StageIndex place => stage)
+    (fun _source _target map => transitionLinearMap place map)
+
+noncomputable instance stageCompleteSpace
+    (place : NumberField.FinitePlace ℚ) (stage : StageIndex place) :
+    CompleteSpace stage :=
+  FiniteDimensional.complete (ThetaFinitePlace.Completion place) stage
+
+noncomputable instance stageLocallyCompactSpace
+    (place : NumberField.FinitePlace ℚ) (stage : StageIndex place) :
+    LocallyCompactSpace stage :=
+  LocallyCompactSpace.of_finiteDimensional_of_complete
+    (ThetaFinitePlace.Completion place) stage
+
+noncomputable instance stageSecondCountableTopology
+    (place : NumberField.FinitePlace ℚ) (stage : StageIndex place) :
+    SecondCountableTopology stage := by
+  let dimension := Module.finrank (ThetaFinitePlace.Completion place) stage
+  let equivalence :
+      stage ≃L[ThetaFinitePlace.Completion place]
+        Fin dimension → ThetaFinitePlace.Completion place :=
+    ContinuousLinearEquiv.ofFinrankEq
+      (Module.finrank_fin_fun
+        (ThetaFinitePlace.Completion place)).symm
+  exact equivalence.toHomeomorph.secondCountableTopology
+
+/-- A finite Galois intermediate field as an actual source local-field stage. -/
+noncomputable def stageField
+    (place : NumberField.FinitePlace ℚ) (stage : StageIndex place) :
+    SourceTopologicalLocalField (.finite place) where
+  carrier := stage
+  normedField := inferInstance
+  algebra := inferInstance
+  continuousSMul := inferInstance
+  rationalAlgebra := inferInstance
+  scalarTower := inferInstance
+  finiteDimensional := inferInstance
+  completeSpace := inferInstance
+  locallyCompactSpace := inferInstance
+  secondCountableTopology := inferInstance
+
+/--
+The source ind-topological module with its final topology from all finite
+Galois local subfields.
+-/
+noncomputable abbrev module
+    (place : NumberField.FinitePlace ℚ) :
+    SourceIndTopologicalLocalModule (.finite place) where
+  stageIndex := StageIndex place
+  stageDiagram := stageDiagram place
+  stage_finiteDimensional := fun stage => by infer_instance
+  colimitCocone := TopModuleCat.ofCocone (moduleCocone place)
+  colimitIsColimit := TopModuleCat.isColimit (moduleIsColimit place)
+
+/-- Proposition 3.1's field presentation with genuine field embeddings. -/
+noncomputable def fieldPresentation
+    (place : NumberField.FinitePlace ℚ) :
+    SourceIndTopologicalLocalFieldPresentation (module place) where
+  fieldStage stage := {
+    field := stageField place stage
+    stageIso := ContinuousLinearEquiv.refl
+      (ThetaFinitePlace.Completion place) stage }
+  transition map := IntermediateField.inclusion map.le
+  transition_continuous map :=
+    (transitionContinuousLinearMap place map.le).continuous
+  transition_commutes _ _ := rfl
+
+/-- The compatible inclusions from the direct limit to the algebraic closure. -/
+noncomputable def toAlgebraicClosureLinearMap
+    (place : NumberField.FinitePlace ℚ) :
+    (module place).carrier →ₗ[ThetaFinitePlace.Completion place]
+      AlgebraicClosure place :=
+  Module.DirectLimit.lift
+    (ThetaFinitePlace.Completion place) (StageIndex place)
+    (fun stage : StageIndex place => stage)
+    (fun _source _target map => transitionLinearMap place map)
+    (fun stage => stage.toIntermediateField.val.toLinearMap)
+    (fun _ _ _ _ => rfl)
+
+/-- Distinct direct-limit elements remain distinct in the algebraic closure. -/
+theorem toAlgebraicClosureLinearMap_injective
+    (place : NumberField.FinitePlace ℚ) :
+    Function.Injective (toAlgebraicClosureLinearMap place) := by
+  apply Module.DirectLimit.lift_injective
+  intro stage
+  exact stage.toIntermediateField.val.injective
+
+/-- Every algebraic element occurs in a finite Galois stage. -/
+theorem toAlgebraicClosureLinearMap_surjective
+    (place : NumberField.FinitePlace ℚ) :
+    Function.Surjective (toAlgebraicClosureLinearMap place) := by
+  intro value
+  let stage : StageIndex place :=
+    FiniteGaloisIntermediateField.adjoin
+      (ThetaFinitePlace.Completion place) ({value} : Set (AlgebraicClosure place))
+  have hvalue : value ∈ stage.toIntermediateField :=
+    FiniteGaloisIntermediateField.subset_adjoin
+      (ThetaFinitePlace.Completion place) ({value} : Set (AlgebraicClosure place))
+      (Set.mem_singleton value)
+  let stageValue : stage := ⟨value, hvalue⟩
+  refine ⟨Module.DirectLimit.of
+    (ThetaFinitePlace.Completion place) (StageIndex place)
+    (fun stage : StageIndex place => stage)
+    (fun _source _target map => transitionLinearMap place map)
+    stage stageValue, ?_⟩
+  dsimp only [toAlgebraicClosureLinearMap]
+  calc
+    _ = stage.toIntermediateField.val.toLinearMap stageValue :=
+      Module.DirectLimit.lift_of
+        (fun stage : StageIndex place =>
+          stage.toIntermediateField.val.toLinearMap)
+        (fun (_source _target : StageIndex place)
+          (_map : _source ≤ _target) (_value : _source) => rfl)
+        stageValue
+    _ = value := rfl
+
+/-- The constructed colimit is the algebraic closure as a local-field module. -/
+noncomputable def carrierEquivAlgebraicClosure
+    (place : NumberField.FinitePlace ℚ) :
+    (module place).carrier ≃ₗ[ThetaFinitePlace.Completion place]
+      AlgebraicClosure place :=
+  LinearEquiv.ofBijective (toAlgebraicClosureLinearMap place)
+    ⟨toAlgebraicClosureLinearMap_injective place,
+      toAlgebraicClosureLinearMap_surjective place⟩
+
+/-- The chosen embedding of the actual selected completion `K_v` into the closure. -/
+noncomputable def selectedCompletionEmbedding
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K) :
+    ThetaFinitePlace.Completion place →ₐ[
+      ThetaFinitePlace.Completion (ThetaFinitePlace.comap (k := ℚ) place)]
+      AlgebraicClosure (ThetaFinitePlace.comap (k := ℚ) place) :=
+  IsAlgClosed.lift
+
+/-- The selected local-field embedding is continuous. -/
+theorem continuous_selectedCompletionEmbedding
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K) :
+    Continuous (selectedCompletionEmbedding place) :=
+  (selectedCompletionEmbedding place).toLinearMap.continuous_of_finiteDimensional
+
+/-- Each finite stage is fixed by an open subgroup of the absolute Galois group. -/
+theorem stage_fixingSubgroup_isOpen
+    (place : NumberField.FinitePlace ℚ) (stage : StageIndex place) :
+    IsOpen (stage.toIntermediateField.fixingSubgroup :
+      Set (AlgebraicClosure place ≃ₐ[ThetaFinitePlace.Completion place]
+        AlgebraicClosure place)) :=
+  stage.toIntermediateField.fixingSubgroup_isOpen
+
+/-- The open-subgroup invariants recover the corresponding finite stage. -/
+theorem stage_fixedField_fixingSubgroup
+    (place : NumberField.FinitePlace ℚ) (stage : StageIndex place) :
+    IntermediateField.fixedField stage.toIntermediateField.fixingSubgroup =
+      stage.toIntermediateField :=
+  InfiniteGalois.fixedField_fixingSubgroup stage.toIntermediateField
+
+/-- A finite basis index for the actual selected completion over `Q_(v_Q)`. -/
+abbrev SelectedBasisIndex
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K) :=
+  Module.Free.ChooseBasisIndex
+    (ThetaFinitePlace.Completion (ThetaFinitePlace.comap (k := ℚ) place))
+    (ThetaFinitePlace.Completion place)
+
+/-- A basis used only to exhibit a finite stage containing the selected completion. -/
+noncomputable def selectedCompletionBasis
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K) :
+    Module.Basis (SelectedBasisIndex place)
+      (ThetaFinitePlace.Completion (ThetaFinitePlace.comap (k := ℚ) place))
+      (ThetaFinitePlace.Completion place) :=
+  Module.Free.chooseBasis
+    (ThetaFinitePlace.Completion (ThetaFinitePlace.comap (k := ℚ) place))
+    (ThetaFinitePlace.Completion place)
+
+noncomputable instance selectedBasisIndexFintype
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K) :
+    Fintype (SelectedBasisIndex place) :=
+  Fintype.ofFinite (SelectedBasisIndex place)
+
+/-- The finite set of embedded basis vectors generating a selected stage. -/
+noncomputable def selectedStageGenerators
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K) :
+    Finset (AlgebraicClosure (ThetaFinitePlace.comap (k := ℚ) place)) := by
+  classical
+  exact Finset.univ.image fun index =>
+    selectedCompletionEmbedding place (selectedCompletionBasis place index)
+
+/-- A finite Galois stage containing the image of the actual completion `K_v`. -/
+noncomputable def selectedStage
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K) :
+    StageIndex (ThetaFinitePlace.comap (k := ℚ) place) :=
+  FiniteGaloisIntermediateField.adjoin
+    (ThetaFinitePlace.Completion
+      (ThetaFinitePlace.comap (k := ℚ) place))
+    (selectedStageGenerators place :
+      Set (AlgebraicClosure (ThetaFinitePlace.comap (k := ℚ) place)))
+
+/-- Every point of `K_v` lies in the selected finite Galois stage. -/
+theorem selectedCompletionEmbedding_mem_selectedStage
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K)
+    (value : ThetaFinitePlace.Completion place) :
+    selectedCompletionEmbedding place value ∈
+      (selectedStage place).toIntermediateField := by
+  classical
+  rw [← (selectedCompletionBasis place).sum_repr value, map_sum]
+  change (∑ index, selectedCompletionEmbedding place
+    (((selectedCompletionBasis place).repr value) index •
+      selectedCompletionBasis place index)) ∈
+      (selectedStage place).toIntermediateField.toSubmodule
+  apply (selectedStage place).toIntermediateField.toSubmodule.sum_mem
+  intro index _
+  change (selectedCompletionEmbedding place).toLinearMap
+    (((selectedCompletionBasis place).repr value) index •
+      selectedCompletionBasis place index) ∈
+        (selectedStage place).toIntermediateField.toSubmodule
+  rw [(selectedCompletionEmbedding place).toLinearMap.map_smul]
+  apply (selectedStage place).toIntermediateField.smul_mem
+  apply FiniteGaloisIntermediateField.subset_adjoin
+    (ThetaFinitePlace.Completion (ThetaFinitePlace.comap (k := ℚ) place))
+    (selectedStageGenerators place :
+      Set (AlgebraicClosure (ThetaFinitePlace.comap (k := ℚ) place)))
+  change selectedCompletionEmbedding place
+    (selectedCompletionBasis place index) ∈
+    selectedStageGenerators place
+  simp [selectedStageGenerators]
+
+end SourceFiniteLocalFieldStages
 
 /--
 One factor of a local tensor packet.
