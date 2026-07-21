@@ -426,6 +426,59 @@ noncomputable def rationalCarrier
 end SourceIndTopologicalLocalModule
 
 /--
+The two topological facts about a number-field adic completion that are needed
+to use it as a finite local field in Remark 3.1.1(iii).  The carrier and its
+metric topology are fixed by `place`; this class contains only the presently
+missing Mathlib theorems about that topology.
+-/
+class SourceFinitePlaceCompletionTopology
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K) where
+  [properSpace : ProperSpace (ThetaFinitePlace.Completion place)]
+  [secondCountableTopology :
+    SecondCountableTopology (ThetaFinitePlace.Completion place)]
+
+attribute [instance]
+  SourceFinitePlaceCompletionTopology.properSpace
+  SourceFinitePlaceCompletionTopology.secondCountableTopology
+
+/--
+The extension structure `Q_p -> K_v` on the actual completions attached to a
+finite place `v` and its restriction to `Q`.  No replacement field is chosen:
+only the algebra map, scalar-tower law, and finite-dimensionality theorem that
+are not yet constructed by Mathlib are retained as obligations.
+-/
+class SourceFinitePlaceCompletionExtension
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K) where
+  [normedAlgebra :
+    NormedAlgebra
+      (ThetaFinitePlace.Completion
+        (ThetaFinitePlace.comap (k := ℚ) place))
+      (ThetaFinitePlace.Completion place)]
+  [scalarTower :
+    @IsScalarTower ℚ
+      (ThetaFinitePlace.Completion
+        (ThetaFinitePlace.comap (k := ℚ) place))
+      (ThetaFinitePlace.Completion place)
+      (SourceRationalPlace.completionAlgebra
+        (.finite (ThetaFinitePlace.comap (k := ℚ) place))).toSMul
+      normedAlgebra.toSMul
+      DivisionRing.toRatAlgebra.toSMul]
+  [finiteDimensional :
+    FiniteDimensional
+      (ThetaFinitePlace.Completion
+        (ThetaFinitePlace.comap (k := ℚ) place))
+      (ThetaFinitePlace.Completion place)]
+
+attribute [implicit_reducible, instance]
+  SourceFinitePlaceCompletionExtension.normedAlgebra
+
+attribute [instance]
+  SourceFinitePlaceCompletionExtension.scalarTower
+  SourceFinitePlaceCompletionExtension.finiteDimensional
+
+/--
 A finite local field occurring at one stage of the ind-topological log field.
 
 The scalar field is the actual completion `Q_(v_Q)`.  The rational algebra and
@@ -458,6 +511,83 @@ attribute [instance]
   SourceTopologicalLocalField.secondCountableTopology
 
 namespace SourceTopologicalLocalField
+
+/--
+The source local field at a finite place, with the actual `v`-adic completion
+as carrier.  Local compactness follows from the explicit properness obligation;
+all other analytic and extension data are inherited from the completion.
+-/
+noncomputable abbrev ofFinitePlace
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K)
+    [SourceFinitePlaceCompletionTopology place]
+    [SourceFinitePlaceCompletionExtension place] :
+    SourceTopologicalLocalField
+      (.finite (ThetaFinitePlace.comap (k := ℚ) place)) where
+  carrier := ThetaFinitePlace.Completion place
+  normedAlgebra :=
+    SourceFinitePlaceCompletionExtension.normedAlgebra (place := place)
+  rationalAlgebra := DivisionRing.toRatAlgebra
+  scalarTower :=
+    SourceFinitePlaceCompletionExtension.scalarTower (place := place)
+  finiteDimensional :=
+    SourceFinitePlaceCompletionExtension.finiteDimensional (place := place)
+  locallyCompactSpace := by infer_instance
+  secondCountableTopology :=
+    SourceFinitePlaceCompletionTopology.secondCountableTopology (place := place)
+
+/-- The valuation ring in the actual selected finite-place completion. -/
+noncomputable def finitePlaceIntegerRing
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K)
+    [SourceFinitePlaceCompletionTopology place]
+    [SourceFinitePlaceCompletionExtension place] :
+    ValuationSubring (ofFinitePlace place).carrier :=
+  (ThetaFinitePlace.underlyingPrime place).adicCompletionIntegers K
+
+/-- Membership in the completion's valuation ring is exactly the norm bound. -/
+theorem finitePlaceIntegerRing_mem_iff_norm_le_one
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K)
+    [SourceFinitePlaceCompletionTopology place]
+    [SourceFinitePlaceCompletionExtension place]
+    (value : (ofFinitePlace place).carrier) :
+    value ∈ finitePlaceIntegerRing place ↔ ‖value‖ ≤ 1 := by
+  change Valued.v value ≤ 1 ↔ ‖value‖ ≤ 1
+  rw [NumberField.FinitePlace.norm_def]
+  exact (WithZeroMulInt.toNNReal_le_one_iff
+    (NumberField.HeightOneSpectrum.one_lt_absNorm_nnreal
+      (ThetaFinitePlace.underlyingPrime place))).symm
+
+/-- The actual valuation ring is compact in the completion topology. -/
+theorem finitePlaceIntegerRing_isCompact
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K)
+    [SourceFinitePlaceCompletionTopology place]
+    [SourceFinitePlaceCompletionExtension place] :
+    IsCompact
+      (finitePlaceIntegerRing place : Set (ofFinitePlace place).carrier) := by
+  rw [show
+      (finitePlaceIntegerRing place : Set (ofFinitePlace place).carrier) =
+        Metric.closedBall 0 1 from Set.ext (fun value => by
+          simpa only [SetLike.mem_coe, Metric.mem_closedBall, dist_zero_right]
+            using finitePlaceIntegerRing_mem_iff_norm_le_one place value)]
+  exact isCompact_closedBall 0 1
+
+/-- The actual valuation ring is open in the ultrametric completion topology. -/
+theorem finitePlaceIntegerRing_isOpen
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K)
+    [SourceFinitePlaceCompletionTopology place]
+    [SourceFinitePlaceCompletionExtension place] :
+    IsOpen
+      (finitePlaceIntegerRing place : Set (ofFinitePlace place).carrier) := by
+  rw [show
+      (finitePlaceIntegerRing place : Set (ofFinitePlace place).carrier) =
+        Metric.closedBall 0 1 from Set.ext (fun value => by
+          simpa only [SetLike.mem_coe, Metric.mem_closedBall, dist_zero_right]
+            using finitePlaceIntegerRing_mem_iff_norm_le_one place value)]
+  exact IsUltrametricDist.isOpen_closedBall 0 one_ne_zero
 
 /-- The actual local degree over `Q_(v_Q)`. -/
 noncomputable def localDegree
@@ -2696,6 +2826,28 @@ namespace SourceNonarchimedeanLocalFieldIntegers
 
 variable {rationalPlace : SourceRationalPlace}
 variable {field : SourceTopologicalLocalField.{u} rationalPlace}
+
+/--
+The ring of integers in the actual completion at `place`.  Its valuation-ring,
+norm-unit-ball, compactness, and openness fields are all derived from the
+completion rather than supplied independently.
+-/
+noncomputable def ofFinitePlace
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K)
+    [SourceFinitePlaceCompletionTopology place]
+    [SourceFinitePlaceCompletionExtension place] :
+    SourceNonarchimedeanLocalFieldIntegers
+      (.finite (ThetaFinitePlace.comap (k := ℚ) place))
+      (SourceTopologicalLocalField.ofFinitePlace place) where
+  placeKind := rfl
+  integerRing := SourceTopologicalLocalField.finitePlaceIntegerRing place
+  integerRing_mem_iff_norm_le_one :=
+    SourceTopologicalLocalField.finitePlaceIntegerRing_mem_iff_norm_le_one place
+  integerRing_isCompact :=
+    SourceTopologicalLocalField.finitePlaceIntegerRing_isCompact place
+  integerRing_isOpen :=
+    SourceTopologicalLocalField.finitePlaceIntegerRing_isOpen place
 
 /-- The compact-open valuation ring as a positive compact normalization set. -/
 noncomputable def positiveCompacts

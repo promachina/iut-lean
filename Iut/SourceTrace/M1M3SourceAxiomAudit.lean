@@ -87,6 +87,11 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceNormalizedLogVolume.PacketNormalization.valueOn_dilateRegion
 #print axioms Iut.SourceSelectedPlace.moduliLocalDegree
 #print axioms Iut.SourceSelectedPlace.moduliRationalLocalDegree
+#print axioms Iut.SourceTopologicalLocalField.ofFinitePlace
+#print axioms Iut.SourceTopologicalLocalField.finitePlaceIntegerRing_mem_iff_norm_le_one
+#print axioms Iut.SourceTopologicalLocalField.finitePlaceIntegerRing_isCompact
+#print axioms Iut.SourceTopologicalLocalField.finitePlaceIntegerRing_isOpen
+#print axioms Iut.SourceNonarchimedeanLocalFieldIntegers.ofFinitePlace
 
 namespace Iut.SourceTopologicalLocalField.LocalDegreeTower
 
