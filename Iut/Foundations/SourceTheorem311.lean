@@ -445,8 +445,9 @@ attribute [instance]
 /--
 The extension structure `Q_p -> K_v` on the actual completions attached to a
 finite place `v` and its restriction to `Q`.  No replacement field is chosen:
-only the algebra map, scalar-tower law, and finite-dimensionality theorem that
-are not yet constructed by Mathlib are retained as obligations.
+only the normed algebra and its compatibility with the canonical rational
+completion actions are retained as obligations.  Finite-dimensionality is
+derived below from Mathlib's completion theorem.
 -/
 class SourceFinitePlaceCompletionExtension
     {K : Type u} [Field K] [NumberField K]
@@ -457,16 +458,7 @@ class SourceFinitePlaceCompletionExtension
         (ThetaFinitePlace.comap (k := ℚ) place))
       (ThetaFinitePlace.Completion place)]
   [scalarTower :
-    @IsScalarTower ℚ
-      (ThetaFinitePlace.Completion
-        (ThetaFinitePlace.comap (k := ℚ) place))
-      (ThetaFinitePlace.Completion place)
-      (SourceRationalPlace.completionAlgebra
-        (.finite (ThetaFinitePlace.comap (k := ℚ) place))).toSMul
-      normedAlgebra.toSMul
-      DivisionRing.toRatAlgebra.toSMul]
-  [finiteDimensional :
-    FiniteDimensional
+    IsScalarTower ℚ
       (ThetaFinitePlace.Completion
         (ThetaFinitePlace.comap (k := ℚ) place))
       (ThetaFinitePlace.Completion place)]
@@ -476,7 +468,39 @@ attribute [implicit_reducible, instance]
 
 attribute [instance]
   SourceFinitePlaceCompletionExtension.scalarTower
-  SourceFinitePlaceCompletionExtension.finiteDimensional
+
+namespace SourceFinitePlaceCompletionExtension
+
+/--
+The actual completion `K_v` is finite-dimensional over the completion at the
+contracted rational place.  This is Mathlib's tensor-product/dense-range
+finiteness theorem, applied after installing the continuous scalar action
+carried by the normed algebra.
+-/
+noncomputable instance finiteDimensional
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K)
+    [SourceFinitePlaceCompletionExtension place] :
+    FiniteDimensional
+      (ThetaFinitePlace.Completion
+        (ThetaFinitePlace.comap (k := ℚ) place))
+      (ThetaFinitePlace.Completion place) := by
+  letI : ContinuousSMul
+      (ThetaFinitePlace.Completion
+        (ThetaFinitePlace.comap (k := ℚ) place))
+      (ThetaFinitePlace.Completion place) :=
+    IsBoundedSMul.continuousSMul
+  letI : Module.Finite
+      (ThetaFinitePlace.Completion
+        (ThetaFinitePlace.comap (k := ℚ) place))
+      (ThetaFinitePlace.Completion place) :=
+    NumberField.HeightOneSpectrum.instFiniteAdicCompletionRingOfIntegers
+      (ThetaFinitePlace.underlyingPrime
+        (ThetaFinitePlace.comap (k := ℚ) place))
+      (ThetaFinitePlace.underlyingPrime place)
+  infer_instance
+
+end SourceFinitePlaceCompletionExtension
 
 /--
 A finite local field occurring at one stage of the ind-topological log field.
@@ -527,11 +551,12 @@ noncomputable abbrev ofFinitePlace
   carrier := ThetaFinitePlace.Completion place
   normedAlgebra :=
     SourceFinitePlaceCompletionExtension.normedAlgebra (place := place)
-  rationalAlgebra := DivisionRing.toRatAlgebra
-  scalarTower :=
-    SourceFinitePlaceCompletionExtension.scalarTower (place := place)
-  finiteDimensional :=
-    SourceFinitePlaceCompletionExtension.finiteDimensional (place := place)
+  rationalAlgebra := inferInstance
+  scalarTower := by
+    apply IsScalarTower.of_algebraMap_eq
+    intro scalar
+    simp
+  finiteDimensional := by infer_instance
   locallyCompactSpace := by infer_instance
   secondCountableTopology :=
     SourceFinitePlaceCompletionTopology.secondCountableTopology (place := place)
