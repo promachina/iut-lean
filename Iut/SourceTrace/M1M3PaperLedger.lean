@@ -785,12 +785,20 @@ def m1m3PaperLedger : List PaperClause :=
     clause "III.1.1" .iutIII "IUT III, Definition 1.1"
       ["SourceSelectedPlace.LogFieldCarrier",
         "SourceSelectedLocalLogFieldRealization",
+        "sourcePStar",
+        "sourcePStar_pos",
+        "SourceNonarchimedeanLogShellDefinition",
+        "SourceArchimedeanLogShellDefinition.fundamentalSegment",
+        "SourceArchimedeanLogShellDefinition.rotationOrbit",
+        "SourceArchimedeanLogShellDefinition.rotationOrbit_eq_closedBall",
+        "SourceArchimedeanLogShellDefinition.image_piBall_eq_rotationOrbit",
+        "SourceMonoAnalyticLogShellDefinition",
         "SourceMonoAnalyticIntegralStructure.logShellCarrier",
         "SourceMonoAnalyticIntegralStructure.logShellCarrier_eq_lattice",
         "SourceMonoAnalyticIntegralStructure.logShellCarrier_eq_piBall",
         "SourceMonoAnalyticLogShell"]
       .partialImplementation
-      "The additive log field is tied to the actual selected-place algebraic closure and its filtered field stages. The source log-shell is separated from the packet integral carrier: it is the finite-place additive lattice and the archimedean radius-pi ball of Remark 1.2.2(ii), while the latter's radius-one ball remains the packet integral structure. Compactness and the measured shell region are explicit obligations. Constructing the pre-log-shell from local units, the p-star-scaled p-adic logarithm image, the pointed archimedean universal cover, and the tautological/full log-links remains open.",
+      "The additive log field is tied to the actual selected-place algebraic closure and its filtered field stages. The source log-shell is separated from the packet integral carrier: it is the finite-place additive lattice and the archimedean radius-pi ball of Remark 1.2.2(ii), while the latter's radius-one ball remains the packet integral structure. At finite places, the residue prime, invariant local-unit group, p-adic logarithm range, compact pre-log-shell, and exact p-star scaling equation are explicit obligations. At archimedean places, the rotation orbit of the real fundamental segment [-pi,pi] is proved equal to the radius-pi complex disk and transported to the abstract shell. Constructing the finite obligations from the Frobenioid, the pointed archimedean universal cover and exponential diagram, and the tautological/full log-links remains open.",
     clause "III.1.2(vi-viii)" .iutIII
       "IUT III, Proposition 1.2(vi)-(viii)"
       ["SourceNonarchimedeanLogShellSymmetryCore",

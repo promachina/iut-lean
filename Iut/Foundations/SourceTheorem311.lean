@@ -3539,6 +3539,177 @@ theorem logShellCarrier_eq_piBall
 
 end SourceMonoAnalyticIntegralStructure
 
+/-- The modified residue prime `p*`: `p` for odd `p`, and `p^2` for `p = 2`. -/
+def sourcePStar (residuePrime : ℕ) : ℕ :=
+  if residuePrime = 2 then residuePrime ^ 2 else residuePrime
+
+theorem sourcePStar_pos {residuePrime : ℕ}
+    (hprime : residuePrime.Prime) : 0 < sourcePStar residuePrime := by
+  simp only [sourcePStar]
+  split
+  · subst residuePrime
+    norm_num
+  · exact hprime.pos
+
+theorem sourcePStar_ne_zero {residuePrime : ℕ}
+    (hprime : residuePrime.Prime) : sourcePStar residuePrime ≠ 0 :=
+  (sourcePStar_pos hprime).ne'
+
+/--
+The finite-place construction in IUT III, Definition 1.1(i), and Remark
+1.2.2(i).  The local-unit group and its p-adic logarithm are explicit source
+obligations; the final equation says literally `I = (p*)^-1 * I*`.
+-/
+structure SourceNonarchimedeanLogShellDefinition
+    (M : SourceTopologicalQModule.{u})
+    (integral : SourceNonarchimedeanIntegralStructure M) where
+  residuePrime : ℕ
+  residuePrime_prime : residuePrime.Prime
+  invariantLocalUnits : Type u
+  [invariantLocalUnitsCommGroup : CommGroup invariantLocalUnits]
+  padicLog : invariantLocalUnits →* Multiplicative M
+  preLogShell : AddSubgroup M
+  preLogShell_eq_logRange :
+    ∀ value,
+      value ∈ preLogShell ↔
+        ∃ unit, padicLog unit = Multiplicative.ofAdd value
+  preLogShell_isCompact : IsCompact (preLogShell : Set M)
+  shell_mem_iff_scaled_preLogShell :
+    ∀ value,
+      value ∈ integral.lattice ↔
+        ((sourcePStar residuePrime : ℚ) • value) ∈ preLogShell
+
+attribute [instance]
+  SourceNonarchimedeanLogShellDefinition.invariantLocalUnitsCommGroup
+
+namespace SourceArchimedeanLogShellDefinition
+
+/-- A length-`2*pi` fundamental segment in the pointed complex logarithm. -/
+def fundamentalSegment : Set ℂ :=
+  {value | value.im = 0 ∧ |value.re| ≤ Real.pi}
+
+/-- The orbit of the fundamental segment under complex rotations. -/
+def rotationOrbit : Set ℂ :=
+  {value |
+    ∃ segmentValue ∈ fundamentalSegment,
+      ∃ rotation : ℂ, ‖rotation‖ = 1 ∧ value = rotation * segmentValue}
+
+/-- The source rotation-orbit construction is exactly the radius-`pi` disk. -/
+theorem rotationOrbit_eq_closedBall :
+    rotationOrbit = Metric.closedBall (0 : ℂ) Real.pi := by
+  ext value
+  constructor
+  · rintro ⟨segmentValue, ⟨himaginary, hreal⟩, rotation,
+      hrotation, rfl⟩
+    rw [Metric.mem_closedBall, dist_zero_right, norm_mul, hrotation, one_mul]
+    rw [Complex.norm_def, Complex.normSq_apply, himaginary, mul_zero,
+      add_zero, ← pow_two, Real.sqrt_sq_eq_abs]
+    exact hreal
+  · intro hvalue
+    rw [Metric.mem_closedBall, dist_zero_right] at hvalue
+    by_cases hzero : value = 0
+    · subst value
+      refine ⟨0, ⟨rfl, by simpa using Real.pi_pos.le⟩,
+        1, norm_one, by simp⟩
+    · let radius : ℂ := (norm value : ℝ)
+      let direction : ℂ := value / radius
+      refine ⟨radius, ?_, direction, ?_, ?_⟩
+      · constructor
+        · simp [radius]
+        · simpa [radius, abs_of_nonneg (norm_nonneg value)] using hvalue
+      · rw [norm_div]
+        simp [radius, norm_ne_zero_iff.mpr hzero]
+      · simp only [direction]
+        rw [div_mul_cancel₀ value]
+        intro hradius
+        apply norm_ne_zero_iff.mpr hzero
+        have hreal := congrArg Complex.re hradius
+        simpa [radius] using hreal
+
+end SourceArchimedeanLogShellDefinition
+
+/--
+The complex realization of the archimedean mono-analytic reconstruction in
+Absolute Anabelian Topics III, Proposition 5.8(v).
+-/
+structure SourceArchimedeanLogShellDefinition
+    (M : SourceTopologicalQModule.{u})
+    (integral : SourceArchimedeanIntegralStructure M) where
+  complexEquiv : M ≃ₜ ℂ
+  seminorm_eq_complexNorm :
+    ∀ value, integral.seminorm value = ‖complexEquiv value‖
+
+namespace SourceArchimedeanLogShellDefinition
+
+/-- The abstract log-shell maps to the source's rotation-orbit construction. -/
+theorem image_piBall_eq_rotationOrbit
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (definition : SourceArchimedeanLogShellDefinition M integral) :
+    definition.complexEquiv '' integral.piBall = rotationOrbit := by
+  rw [rotationOrbit_eq_closedBall]
+  ext value
+  constructor
+  · rintro ⟨source, hsource, rfl⟩
+    rw [Metric.mem_closedBall, dist_zero_right,
+      ← definition.seminorm_eq_complexNorm]
+    rw [SourceArchimedeanIntegralStructure.piBall,
+      Seminorm.closedBall_zero_eq] at hsource
+    exact hsource
+  · intro hvalue
+    let source := definition.complexEquiv.symm value
+    refine ⟨source, ?_, definition.complexEquiv.apply_symm_apply value⟩
+    rw [SourceArchimedeanIntegralStructure.piBall,
+      Seminorm.closedBall_zero_eq]
+    change integral.seminorm source ≤ Real.pi
+    rw [definition.seminorm_eq_complexNorm]
+    simpa only [source, definition.complexEquiv.apply_symm_apply,
+      Metric.mem_closedBall, dist_zero_right] using hvalue
+
+end SourceArchimedeanLogShellDefinition
+
+/-- The place-indexed source construction of a mono-analytic log-shell. -/
+inductive SourceMonoAnalyticLogShellDefinition
+    (M : SourceTopologicalQModule.{u}) :
+    ∀ kind : SourceRationalPlaceKind,
+      SourceMonoAnalyticIntegralStructure kind M → Type (u + 1)
+  | nonarchimedean
+      (integral : SourceNonarchimedeanIntegralStructure M)
+      (definition : SourceNonarchimedeanLogShellDefinition M integral) :
+      SourceMonoAnalyticLogShellDefinition M .nonarchimedean integral
+  | archimedean
+      (integral : SourceArchimedeanIntegralStructure M)
+      (definition : SourceArchimedeanLogShellDefinition M integral) :
+      SourceMonoAnalyticLogShellDefinition M .archimedean integral
+
+namespace SourceMonoAnalyticLogShellDefinition
+
+variable {kind : SourceRationalPlaceKind}
+variable {M : SourceTopologicalQModule.{u}}
+variable {integral : SourceMonoAnalyticIntegralStructure kind M}
+
+/-- Extract the finite source construction after identifying the place kind. -/
+def asNonarchimedean
+    (definition : SourceMonoAnalyticLogShellDefinition M kind integral)
+    (hkind : kind = .nonarchimedean) :
+    SourceNonarchimedeanLogShellDefinition M
+      (integral.asNonarchimedean hkind) := by
+  subst kind
+  cases definition with
+  | nonarchimedean _ definition => exact definition
+
+/-- Extract the archimedean source construction after identifying the place kind. -/
+def asArchimedean
+    (definition : SourceMonoAnalyticLogShellDefinition M kind integral)
+    (hkind : kind = .archimedean) :
+    SourceArchimedeanLogShellDefinition M
+      (integral.asArchimedean hkind) := by
+  subst kind
+  cases definition with
+  | archimedean _ definition => exact definition
+
+end SourceMonoAnalyticLogShellDefinition
+
 /-- An open subgroup of a topological group. -/
 def SourceOpenSubgroup (G : Type u) [Group G] [TopologicalSpace G] :=
   {subgroup : Subgroup G | IsOpen (subgroup : Set G)}
@@ -10900,6 +11071,9 @@ structure SourceMonoAnalyticLogShell
   integral :
     SourceMonoAnalyticIntegralStructure
       place.1.toRational.kind module.rationalCarrier
+  sourceDefinition :
+    SourceMonoAnalyticLogShellDefinition module.rationalCarrier
+      place.1.toRational.kind integral
   symmetryData :
     SourceMonoAnalyticLogShellSymmetryData module.rationalCarrier
       place.1.toRational.kind integral
