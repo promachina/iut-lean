@@ -9,6 +9,7 @@ import Iut.Foundations.SourceProcession
 import Iut.Foundations.SourceThetaEvaluation
 import Mathlib.Algebra.Category.ModuleCat.Topology.Basic
 import Mathlib.Algebra.DirectSum.Module
+import Mathlib.Algebra.Field.ULift
 import Mathlib.Algebra.Module.ZMod
 import Mathlib.Analysis.Seminorm
 import Mathlib.Analysis.Normed.Unbundled.SpectralNorm
@@ -203,6 +204,48 @@ noncomputable def toAbove (place : SourceSelectedBadPlace theta) :
   ⟨toSelected place, rfl⟩
 
 end SourceSelectedBadPlace
+
+namespace SourceSelectedFinitePlace
+
+variable
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+
+/-- A selected finite place determines a place in the full selected set `V`. -/
+def toSelected (place : SourceSelectedFinitePlace theta) :
+    SourceSelectedPlace theta :=
+  ⟨ThetaPlace.finite place.1,
+    (theta.valuations.finite_mem_selectedPlaces_iff place.1).mpr place.2⟩
+
+end SourceSelectedFinitePlace
+
+namespace SourceSelectedInfinitePlace
+
+variable
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+
+/-- A selected infinite place determines a place in the full selected set `V`. -/
+def toSelected (place : SourceSelectedInfinitePlace theta) :
+    SourceSelectedPlace theta :=
+  ⟨ThetaPlace.infinite place.1,
+    (theta.valuations.infinite_mem_selectedPlaces_iff place.1).mpr place.2⟩
+
+end SourceSelectedInfinitePlace
 
 /--
 The arithmetic finiteness theorem for the fibers of `V -> V(ℚ)`.
@@ -1614,6 +1657,248 @@ theorem selectedCompletion_isAlgebraicClosure
   exact {
     isAlgClosed := inferInstance
     isAlgebraic := Algebra.IsAlgebraic.of_finite place.Completion ℂ }
+
+end SourceInfiniteLocalFieldStages
+
+/-
+Source-faithful realization of each `log(alpha F_v)`.  The target is universe
+lifted because prime-strip categories may live above the universe of the
+number fields; the lift carries no additional mathematical choice.
+-/
+namespace SourceSelectedPlace
+
+/-- The algebraic closure underlying `log(alpha F_v)` in Proposition 3.1. -/
+noncomputable def LogFieldCarrier
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    (place : SourceSelectedPlace theta) : Type u :=
+  match place.1 with
+  | .finite finitePlace =>
+      ULift.{u} (SourceFiniteLocalFieldStages.AlgebraicClosure
+        (ThetaFinitePlace.comap (k := ℚ) finitePlace))
+  | .infinite _ => ULift.{u} ℂ
+
+noncomputable instance logFieldCarrierField
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    (place : SourceSelectedPlace theta) :
+    Field (LogFieldCarrier place) := by
+  rcases place with ⟨place, hselected⟩
+  cases place <;> simp only [LogFieldCarrier] <;> infer_instance
+
+noncomputable instance logFieldCarrierAlgebra
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    (place : SourceSelectedPlace theta) :
+    Algebra place.1.toRational.Completion (LogFieldCarrier place) := by
+  rcases place with ⟨place, hselected⟩
+  cases place with
+  | finite finitePlace =>
+      simpa only [ThetaPlace.toRational, LogFieldCarrier] using
+        (ULift.algebra : Algebra
+          (ThetaFinitePlace.Completion
+            (ThetaFinitePlace.comap (k := ℚ) finitePlace))
+          (ULift.{u} (SourceFiniteLocalFieldStages.AlgebraicClosure
+            (ThetaFinitePlace.comap (k := ℚ) finitePlace))))
+  | infinite infinitePlace =>
+      letI : Algebra
+          (ThetaInfinitePlace.Completion
+            (infinitePlace.comap (algebraMap ℚ K))) ℂ :=
+        SourceInfiniteLocalFieldStages.complexAlgebra
+          (infinitePlace.comap (algebraMap ℚ K))
+      simpa only [ThetaPlace.toRational, LogFieldCarrier] using
+        (ULift.algebra : Algebra
+          (ThetaInfinitePlace.Completion
+            (infinitePlace.comap (algebraMap ℚ K)))
+          (ULift.{u} ℂ))
+
+end SourceSelectedPlace
+
+/--
+A field presentation whose colimit is the actual algebraic closure specified
+by Proposition 3.1.  The stage embeddings commute with transitions, and the
+colimit equivalence agrees with every cocone leg, ruling out an unrelated
+filtered system with the same underlying vector-space cardinality.
+-/
+structure SourceSelectedLocalLogFieldRealization
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    (place : SourceSelectedPlace theta)
+    (module : SourceIndTopologicalLocalModule.{u} place.1.toRational) where
+  presentation : SourceIndTopologicalLocalFieldPresentation module
+  stageEmbedding :
+    ∀ stage,
+      (presentation.fieldStage stage).field.carrier →ₐ[
+        place.1.toRational.Completion]
+        (SourceSelectedPlace.LogFieldCarrier place)
+  stageEmbedding_transition :
+    ∀ {source target} (map : source ⟶ target) value,
+      stageEmbedding target (presentation.transition map value) =
+        stageEmbedding source value
+  carrierEquiv :
+    module.carrier ≃ₗ[place.1.toRational.Completion]
+      (SourceSelectedPlace.LogFieldCarrier place)
+  carrierEquiv_cocone :
+    ∀ stage value,
+      carrierEquiv
+          ((module.colimitCocone.ι.app stage).hom
+            ((presentation.fieldStage stage).stageIso.symm value)) =
+        stageEmbedding stage value
+
+namespace SourceFiniteLocalFieldStages
+
+/-- A finite Galois stage embedded in the lifted algebraic closure. -/
+noncomputable def stageEmbeddingUlift
+    (place : NumberField.FinitePlace ℚ)
+    (stage : StageIndex place) :
+    stage →ₐ[ThetaFinitePlace.Completion place]
+      ULift (AlgebraicClosure place) where
+  toFun value := ULift.up value.1
+  map_one' := rfl
+  map_mul' _ _ := rfl
+  map_zero' := rfl
+  map_add' _ _ := rfl
+  commutes' _ := rfl
+
+/-- The direct limit identified with the lifted algebraic closure. -/
+noncomputable def carrierEquivLogFieldCarrier
+    (place : NumberField.FinitePlace ℚ) :
+    (module place).carrier ≃ₗ[ThetaFinitePlace.Completion place]
+      ULift (AlgebraicClosure place) :=
+  (carrierEquivAlgebraicClosure place).trans ULift.moduleEquiv.symm
+
+/--
+The complete realization certificate for the canonical finite-place system,
+attached to an actual selected finite place.
+-/
+noncomputable def localFieldRealization
+    {Fmod F K : Type}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    (selected : SourceSelectedFinitePlace theta) :
+    SourceSelectedLocalLogFieldRealization selected.toSelected
+      (module (ThetaFinitePlace.comap (k := ℚ) selected.1)) := by
+  letI : Algebra
+      (ThetaFinitePlace.Completion
+        (ThetaFinitePlace.comap (k := ℚ) selected.1))
+      (SourceSelectedPlace.LogFieldCarrier selected.toSelected) :=
+    SourceSelectedPlace.logFieldCarrierAlgebra selected.toSelected
+  exact {
+    presentation := fieldPresentation
+      (ThetaFinitePlace.comap (k := ℚ) selected.1)
+    stageEmbedding := stageEmbeddingUlift
+      (ThetaFinitePlace.comap (k := ℚ) selected.1)
+    stageEmbedding_transition := fun _ _ => rfl
+    carrierEquiv := carrierEquivLogFieldCarrier
+      (ThetaFinitePlace.comap (k := ℚ) selected.1)
+    carrierEquiv_cocone := fun stage value => by
+      change ULift.up
+        (toAlgebraicClosureLinearMap
+          (ThetaFinitePlace.comap (k := ℚ) selected.1)
+          (Module.DirectLimit.of
+            (ThetaFinitePlace.Completion
+              (ThetaFinitePlace.comap (k := ℚ) selected.1))
+            (StageIndex (ThetaFinitePlace.comap (k := ℚ) selected.1))
+            (fun stage : StageIndex
+              (ThetaFinitePlace.comap (k := ℚ) selected.1) => stage)
+            (fun _source _target map => transitionLinearMap
+              (ThetaFinitePlace.comap (k := ℚ) selected.1) map)
+            stage value)) = ULift.up value.1
+      apply congrArg ULift.up
+      exact Module.DirectLimit.lift_of
+        (fun stage : StageIndex
+            (ThetaFinitePlace.comap (k := ℚ) selected.1) =>
+          stage.toIntermediateField.val.toLinearMap)
+        (fun (_source _target : StageIndex
+            (ThetaFinitePlace.comap (k := ℚ) selected.1))
+          (_map : _source ≤ _target) (_value : _source) => rfl)
+        value }
+
+end SourceFiniteLocalFieldStages
+
+namespace SourceInfiniteLocalFieldStages
+
+/-- The sole archimedean stage embedded in the lifted copy of `C`. -/
+noncomputable def stageEmbeddingUlift
+    (place : NumberField.InfinitePlace ℚ) (_stage : StageIndex) :
+    ℂ →ₐ[place.Completion] ULift ℂ where
+  toFun := ULift.up
+  map_one' := rfl
+  map_mul' _ _ := rfl
+  map_zero' := rfl
+  map_add' _ _ := rfl
+  commutes' _ := rfl
+
+noncomputable def carrierEquivLogFieldCarrier
+    (place : NumberField.InfinitePlace ℚ) :
+    (module place).carrier ≃ₗ[place.Completion] ULift ℂ :=
+  ULift.moduleEquiv.symm
+
+/--
+The complete realization certificate for the canonical archimedean system,
+attached to an actual selected infinite place.
+-/
+noncomputable def localFieldRealization
+    {Fmod F K : Type}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    (selected : SourceSelectedInfinitePlace theta) :
+    SourceSelectedLocalLogFieldRealization selected.toSelected
+      (module (selected.1.comap (algebraMap ℚ K))) := by
+  letI : Algebra
+      (ThetaInfinitePlace.Completion
+        (selected.1.comap (algebraMap ℚ K)))
+      (SourceSelectedPlace.LogFieldCarrier selected.toSelected) :=
+    SourceSelectedPlace.logFieldCarrierAlgebra selected.toSelected
+  exact {
+    presentation := fieldPresentation
+      (selected.1.comap (algebraMap ℚ K))
+    stageEmbedding := stageEmbeddingUlift
+      (selected.1.comap (algebraMap ℚ K))
+    stageEmbedding_transition := fun _ _ => rfl
+    carrierEquiv := carrierEquivLogFieldCarrier
+      (selected.1.comap (algebraMap ℚ K))
+    carrierEquiv_cocone := fun _ _ => rfl }
 
 end SourceInfiniteLocalFieldStages
 
@@ -10575,6 +10860,8 @@ structure SourceMonoAnalyticLogShell
     (place : SourceSelectedPlace theta) where
   module :
     SourceIndTopologicalLocalModule.{u} place.1.toRational
+  fieldRealization :
+    SourceSelectedLocalLogFieldRealization place module
   integral :
     SourceMonoAnalyticIntegralStructure
       place.1.toRational.kind module.rationalCarrier
@@ -10604,6 +10891,12 @@ variable
     {models : IUTIThetaHodgeTheaterModels theta}
     {strip : SourceDMonoAnalyticPrimeStrip models}
     {place : SourceSelectedPlace theta}
+
+/-- The field-stage presentation of the shell's actual `log(alpha F_v)`. -/
+noncomputable def fieldPresentation
+    (shell : SourceMonoAnalyticLogShell strip place) :
+    SourceIndTopologicalLocalFieldPresentation shell.module :=
+  shell.fieldRealization.presentation
 
 /-- The exact source symmetry group attached to one mono-analytic summand. -/
 noncomputable def ind2Symmetry
@@ -10674,6 +10967,18 @@ structure SourceMonoAnalyticLogShellAlgorithm
       (map : source ⟶ target) (place : SourceSelectedPlace theta),
       (shell source place).module.rationalCarrier ≃L[ℚ]
         (shell target place).module.rationalCarrier
+  realizationTransport :
+    ∀ {source target : SourceDMonoAnalyticPrimeStrip models}
+      (map : source ⟶ target) (place : SourceSelectedPlace theta),
+      SourceSelectedPlace.LogFieldCarrier place ≃ₐ[
+        place.1.toRational.Completion]
+        SourceSelectedPlace.LogFieldCarrier place
+  transport_realization :
+    ∀ {source target} (map : source ⟶ target) place value,
+      (shell target place).fieldRealization.carrierEquiv
+          (transport map place value) =
+        realizationTransport map place
+          ((shell source place).fieldRealization.carrierEquiv value)
   transport_integral :
     ∀ {source target} (map : source ⟶ target) place,
       transport map place '' (shell source place).integral.carrier =
@@ -10707,11 +11012,20 @@ structure SourceMonoAnalyticLogShellAlgorithm
       transport (𝟙 strip) place =
         ContinuousLinearEquiv.refl ℚ
           (shell strip place).module.rationalCarrier
+  realizationTransport_id :
+    ∀ (strip : SourceDMonoAnalyticPrimeStrip models) place,
+      realizationTransport (𝟙 strip) place = AlgEquiv.refl
   transport_comp :
     ∀ {source middle target : SourceDMonoAnalyticPrimeStrip models}
       (first : source ⟶ middle) (second : middle ⟶ target) place,
       transport (first ≫ second) place =
         (transport first place).trans (transport second place)
+  realizationTransport_comp :
+    ∀ {source middle target : SourceDMonoAnalyticPrimeStrip models}
+      (first : source ⟶ middle) (second : middle ⟶ target) place,
+      realizationTransport (first ≫ second) place =
+        (realizationTransport first place).trans
+          (realizationTransport second place)
 
 namespace SourceMonoAnalyticLogShellAlgorithm
 

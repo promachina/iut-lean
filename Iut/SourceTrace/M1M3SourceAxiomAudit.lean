@@ -56,6 +56,9 @@ visible to Lean's axiom reporter.
 #print axioms Iut.IUTIIAbsoluteThetaLabel.card_eq_lPlusMinus
 #print axioms Iut.SourceIndTopologicalLocalFieldPresentation.transition_id
 #print axioms Iut.SourceIndTopologicalLocalFieldPresentation.transition_comp
+#print axioms Iut.SourceSelectedFinitePlace.toSelected
+#print axioms Iut.SourceSelectedInfinitePlace.toSelected
+#print axioms Iut.SourceSelectedPlace.LogFieldCarrier
 
 namespace Iut.SourceFiniteLocalFieldStages
 
@@ -79,6 +82,9 @@ namespace Iut.SourceFiniteLocalFieldStages
 #print axioms selectedStageGenerators
 #print axioms selectedStage
 #print axioms selectedCompletionEmbedding_mem_selectedStage
+#print axioms stageEmbeddingUlift
+#print axioms carrierEquivLogFieldCarrier
+#print axioms localFieldRealization
 
 end Iut.SourceFiniteLocalFieldStages
 
@@ -102,8 +108,13 @@ namespace Iut.SourceInfiniteLocalFieldStages
 #print axioms selectedCompletionEmbedding_algebraMap
 #print axioms selectedCompletion_finiteDimensional
 #print axioms selectedCompletion_isAlgebraicClosure
+#print axioms stageEmbeddingUlift
+#print axioms carrierEquivLogFieldCarrier
+#print axioms localFieldRealization
 
 end Iut.SourceInfiniteLocalFieldStages
+
+#print axioms Iut.SourceMonoAnalyticLogShell.fieldPresentation
 
 #print axioms Iut.SourceMonoAnalyticTensorPacket.ind2CoordinateIndex_card
 #print axioms Iut.SourceMonoAnalyticTensorPacket.placeTupleIndex_card

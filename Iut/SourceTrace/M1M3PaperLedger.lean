@@ -785,6 +785,9 @@ def m1m3PaperLedger : List PaperClause :=
     clause "III.3.1" .iutIII "IUT III, Proposition 3.1"
       ["SourceRationalPlace", "SourceRationalPlace.Completion",
         "SourceSelectedPlaceAbove", "SourceSelectedPlaceFiberFiniteness",
+        "SourceSelectedFinitePlace.toSelected",
+        "SourceSelectedInfinitePlace.toSelected",
+        "SourceSelectedPlace.LogFieldCarrier",
         "SourceIndTopologicalLocalModule",
         "ThetaFinitePlace.completionNontriviallyNormedField",
         "ThetaFinitePlace.completionSecondCountableTopology",
@@ -834,6 +837,9 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceFiniteLocalFieldStages.selectedStageGenerators",
         "SourceFiniteLocalFieldStages.selectedStage",
         "SourceFiniteLocalFieldStages.selectedCompletionEmbedding_mem_selectedStage",
+        "SourceFiniteLocalFieldStages.stageEmbeddingUlift",
+        "SourceFiniteLocalFieldStages.carrierEquivLogFieldCarrier",
+        "SourceFiniteLocalFieldStages.localFieldRealization",
         "SourceInfiniteLocalFieldStages.rationalPlace_isReal",
         "SourceInfiniteLocalFieldStages.rationalCompletionEquivReal",
         "SourceInfiniteLocalFieldStages.rationalCompletionEmbedding",
@@ -848,12 +854,17 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceInfiniteLocalFieldStages.selectedCompletionEmbedding_algebraMap",
         "SourceInfiniteLocalFieldStages.selectedCompletion_finiteDimensional",
         "SourceInfiniteLocalFieldStages.selectedCompletion_isAlgebraicClosure",
+        "SourceInfiniteLocalFieldStages.stageEmbeddingUlift",
+        "SourceInfiniteLocalFieldStages.carrierEquivLogFieldCarrier",
+        "SourceInfiniteLocalFieldStages.localFieldRealization",
+        "SourceSelectedLocalLogFieldRealization",
         "SourceMonoAnalyticLogShell",
+        "SourceMonoAnalyticLogShell.fieldPresentation",
         "SourceMonoAnalyticLogShellAlgorithm",
         "SourceMonoAnalyticLogShellAlgorithm.integralAbove",
         "SourceMonoAnalyticLogShellAlgorithm.normalizedLogVolumeAbove"]
       .partialImplementation
-      "Rational places are literal places of Q; selected fibers v above v_Q are derived and only those fibers are required finite. Local logarithmic modules are filtered colimits over the actual completion Q_(v_Q). A finite-place constructor now has the literal v-adic completion K_v as carrier. In accordance with Proposition 3.1 and the local-degree normalization of Remark 3.1.1(ii), the contracted rational valuation is proved equivalent to the restriction of the K-valuation, rather than equal to it. This equivalence and a cofinal uniformizer argument construct the uniformly continuous dense rational map and its unique continuous extension Q_p -> K_v. The resulting algebra, continuous scalar action, and Q -> Q_p -> K_v tower are derived, so no completion-extension structure is accepted as input. Mathlib's tensor-product/dense-range theorem then derives module-finiteness and finite-dimensionality. A global uniformizer proves the completion nontrivially normed; the rational completion is locally compact via its continuous equivalence with Q_p; finite-dimensional topological local compactness and the intrinsic norm prove K_v proper. Countability of the number field derives separability and second countability. Thus no independent topology, replacement field, or completion algebra obligation remains. At a nonarchimedean rational place, the finite Galois intermediate subfields of the spectral-normed algebraic closure form the actual filtered diagram. Its transitions are continuous field inclusions, its final TopModuleCat cocone is colimiting, and its direct limit is linearly equivalent to the algebraic closure. Open-subgroup invariants recover every stage, while an embedded basis puts each selected K_v inside one stage. At the infinite rational place, the completion is canonically R and the source log field is the constant filtered C diagram. The explicit basis {1,i} proves finite dimensionality over Q_infinity. Every actual selected archimedean completion embeds continuously and injectively into C, compatibly with Q_infinity; a real/complex case proof makes C finite over K_v and hence its algebraic closure. Thus both local field presentations are constructed rather than accepted as data. Connecting these canonical modules functorially to every holomorphic prime strip, constructing the log-shell algorithm from Proposition 1.2, and proving every Proposition 3.1 poly-isomorphism remain open.",
+      "Rational places are literal places of Q; selected fibers v above v_Q are derived and only those fibers are required finite. Local logarithmic modules are filtered colimits over the actual completion Q_(v_Q). A finite-place constructor now has the literal v-adic completion K_v as carrier. In accordance with Proposition 3.1 and the local-degree normalization of Remark 3.1.1(ii), the contracted rational valuation is proved equivalent to the restriction of the K-valuation, rather than equal to it. This equivalence and a cofinal uniformizer argument construct the uniformly continuous dense rational map and its unique continuous extension Q_p -> K_v. The resulting algebra, continuous scalar action, and Q -> Q_p -> K_v tower are derived, so no completion-extension structure is accepted as input. Mathlib's tensor-product/dense-range theorem then derives module-finiteness and finite-dimensionality. A global uniformizer proves the completion nontrivially normed; the rational completion is locally compact via its continuous equivalence with Q_p; finite-dimensional topological local compactness and the intrinsic norm prove K_v proper. Countability of the number field derives separability and second countability. Thus no independent topology, replacement field, or completion algebra obligation remains. At a nonarchimedean rational place, the finite Galois intermediate subfields of the spectral-normed algebraic closure form the actual filtered diagram. Its transitions are continuous field inclusions, its final TopModuleCat cocone is colimiting, and its direct limit is linearly equivalent to the algebraic closure. Open-subgroup invariants recover every stage, while an embedded basis puts each selected K_v inside one stage. At the infinite rational place, the completion is canonically R and the source log field is the constant filtered C diagram. The explicit basis {1,i} proves finite dimensionality over Q_infinity. Every actual selected archimedean completion embeds continuously and injectively into C, compatibly with Q_infinity; a real/complex case proof makes C finite over K_v and hence its algebraic closure. Both canonical diagrams now have realization certificates whose stage embeddings commute with transitions and whose colimit equivalence agrees with every cocone leg. Every mono-analytic shell must carry such a realization, and every prime-strip morphism must carry a compatible algebra automorphism satisfying identity and composition. Constructing these shell and transport choices from Proposition 1.2's source categories, constructing its integral log-shell algorithm, and proving Proposition 3.1's poly-isomorphisms remain open.",
     clause "III.3.2" .iutIII "IUT III, Proposition 3.2"
       ["SourceLocalLogDirectSum", "SourceMonoAnalyticTensorPacket",
         "SourceMonoAnalyticTensorPacket.PlaceTupleIndex",
