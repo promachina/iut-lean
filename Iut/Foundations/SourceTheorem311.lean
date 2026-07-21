@@ -1334,6 +1334,289 @@ theorem selectedCompletionEmbedding_mem_selectedStage
 
 end SourceFiniteLocalFieldStages
 
+/-
+The canonical archimedean stage of `log(alpha F_v)` in IUT III,
+Proposition 3.1.  The unique infinite place of the rationals has completion
+`R`, and the algebraic closure at every selected archimedean place is `C`.
+-/
+namespace SourceInfiniteLocalFieldStages
+
+open NumberField.InfinitePlace
+
+/-- Every infinite place of the rationals is the real place. -/
+theorem rationalPlace_isReal (place : NumberField.InfinitePlace ℚ) :
+    place.IsReal := by
+  rw [Subsingleton.elim place Rat.infinitePlace]
+  exact Rat.isReal_infinitePlace
+
+/-- The rational infinite completion is canonically isomorphic to `R`. -/
+noncomputable def rationalCompletionEquivReal
+    (place : NumberField.InfinitePlace ℚ) :
+    place.Completion ≃+* ℝ :=
+  Completion.ringEquivRealOfIsReal (rationalPlace_isReal place)
+
+/-- The canonical inclusion of the rational infinite completion into `C`. -/
+noncomputable def rationalCompletionEmbedding
+    (place : NumberField.InfinitePlace ℚ) :
+    place.Completion →+* ℂ :=
+  Complex.ofRealHom.comp
+    (Completion.extensionEmbeddingOfIsReal (rationalPlace_isReal place))
+
+theorem rationalCompletionEmbedding_apply
+    (place : NumberField.InfinitePlace ℚ) (value : place.Completion) :
+    rationalCompletionEmbedding place value =
+      (rationalCompletionEquivReal place value : ℂ) := rfl
+
+/-- The canonical inclusion `Q_infinity -> C` is continuous. -/
+theorem continuous_rationalCompletionEmbedding
+    (place : NumberField.InfinitePlace ℚ) :
+    Continuous (rationalCompletionEmbedding place) :=
+  Complex.continuous_ofReal.comp
+    (Completion.isometry_extensionEmbeddingOfIsReal
+      (rationalPlace_isReal place)).continuous
+
+noncomputable instance complexAlgebra
+    (place : NumberField.InfinitePlace ℚ) : Algebra place.Completion ℂ :=
+  (rationalCompletionEmbedding place).toAlgebra
+
+noncomputable instance complexContinuousSMul
+    (place : NumberField.InfinitePlace ℚ) :
+    ContinuousSMul place.Completion ℂ :=
+  continuousSMul_of_algebraMap _ _
+    (continuous_rationalCompletionEmbedding place)
+
+/-- The rational action obtained through `Q_infinity -> C`. -/
+noncomputable abbrev complexRationalAlgebra
+    (place : NumberField.InfinitePlace ℚ) : Algebra ℚ ℂ := by
+  letI : Algebra ℚ place.Completion :=
+    SourceRationalPlace.completionAlgebra (.infinite place)
+  exact ((rationalCompletionEmbedding place).comp
+    (algebraMap ℚ place.Completion)).toAlgebra
+
+/-- The canonical actions form the scalar tower `Q -> Q_infinity -> C`. -/
+theorem complexScalarTower
+    (place : NumberField.InfinitePlace ℚ) :
+    @IsScalarTower ℚ place.Completion ℂ
+      (SourceRationalPlace.completionAlgebra (.infinite place)).toSMul
+      (complexAlgebra place).toSMul
+      (complexRationalAlgebra place).toSMul := by
+  letI : Algebra ℚ place.Completion :=
+    SourceRationalPlace.completionAlgebra (.infinite place)
+  letI : Algebra place.Completion ℂ := complexAlgebra place
+  letI : Algebra ℚ ℂ := complexRationalAlgebra place
+  apply IsScalarTower.of_algebraMap_eq
+  intro _
+  rfl
+
+/-- The vectors `1, i` span `C` over the actual rational completion. -/
+noncomputable instance complexFiniteDimensional
+    (place : NumberField.InfinitePlace ℚ) :
+    FiniteDimensional place.Completion ℂ := by
+  let coordinateMap :
+      (Fin 2 → place.Completion) →ₗ[place.Completion] ℂ := {
+    toFun := fun coefficients =>
+      coefficients 0 • (1 : ℂ) + coefficients 1 • Complex.I
+    map_add' := by
+      intro left right
+      simp only [Pi.add_apply, add_smul]
+      abel
+    map_smul' := by
+      intro scalar coefficients
+      simp only [Pi.smul_apply, smul_add, smul_smul, RingHom.id_apply,
+        smul_eq_mul]
+  }
+  apply Module.Finite.of_surjective coordinateMap
+  intro value
+  let realCoefficient : place.Completion :=
+    (rationalCompletionEquivReal place).symm value.re
+  let imaginaryCoefficient : place.Completion :=
+    (rationalCompletionEquivReal place).symm value.im
+  refine ⟨![realCoefficient, imaginaryCoefficient], ?_⟩
+  change realCoefficient • (1 : ℂ) + imaginaryCoefficient • Complex.I = value
+  change
+    (rationalCompletionEquivReal place realCoefficient : ℂ) * 1 +
+        (rationalCompletionEquivReal place imaginaryCoefficient : ℂ) *
+          Complex.I = value
+  rw [RingEquiv.apply_symm_apply, RingEquiv.apply_symm_apply]
+  rw [mul_one]
+  exact Complex.re_add_im value
+
+/-- The actual topological local field `C` at the rational infinite place. -/
+noncomputable def stageField
+    (place : NumberField.InfinitePlace ℚ) :
+    SourceTopologicalLocalField (.infinite place) where
+  carrier := ℂ
+  normedField := inferInstance
+  algebra := complexAlgebra place
+  continuousSMul := complexContinuousSMul place
+  rationalAlgebra := complexRationalAlgebra place
+  scalarTower := complexScalarTower place
+  finiteDimensional := complexFiniteDimensional place
+  completeSpace := inferInstance
+  locallyCompactSpace := inferInstance
+  secondCountableTopology := inferInstance
+
+/-- A one-object filtered system suffices because the archimedean log field is `C`. -/
+abbrev StageIndex := Discrete PUnit
+
+noncomputable abbrev stageDiagram
+    (place : NumberField.InfinitePlace ℚ) :
+    StageIndex ⥤ TopModuleCat place.Completion :=
+  (Functor.const StageIndex).obj (TopModuleCat.of place.Completion ℂ)
+
+/-- The constant `C` diagram with its genuine colimit topology. -/
+noncomputable abbrev module
+    (place : NumberField.InfinitePlace ℚ) :
+    SourceIndTopologicalLocalModule (.infinite place) where
+  stageIndex := StageIndex
+  stageDiagram := stageDiagram place
+  stage_finiteDimensional := fun _ => complexFiniteDimensional place
+  colimitCocone := Limits.constCocone StageIndex
+    (TopModuleCat.of place.Completion ℂ)
+  colimitIsColimit := Limits.isColimitConstCocone StageIndex
+    (TopModuleCat.of place.Completion ℂ)
+
+/-- Proposition 3.1's archimedean field-valued presentation. -/
+noncomputable def fieldPresentation
+    (place : NumberField.InfinitePlace ℚ) :
+    SourceIndTopologicalLocalFieldPresentation (module place) where
+  fieldStage _ := {
+    field := stageField place
+    stageIso := ContinuousLinearEquiv.refl place.Completion ℂ }
+  transition _ := AlgHom.id place.Completion ℂ
+  transition_continuous _ := continuous_id
+  transition_commutes _ _ := rfl
+
+/-- The canonical embedding of an actual selected archimedean completion into `C`. -/
+noncomputable def selectedCompletionEmbedding
+    {K : Type*} [Field K] [NumberField K]
+    (place : NumberField.InfinitePlace K) :
+    place.Completion →+* ℂ :=
+  Completion.extensionEmbedding place
+
+theorem continuous_selectedCompletionEmbedding
+    {K : Type*} [Field K] [NumberField K]
+    (place : NumberField.InfinitePlace K) :
+    Continuous (selectedCompletionEmbedding place) :=
+  (Completion.isometry_extensionEmbedding place).continuous
+
+theorem selectedCompletionEmbedding_injective
+    {K : Type*} [Field K] [NumberField K]
+    (place : NumberField.InfinitePlace K) :
+    Function.Injective (selectedCompletionEmbedding place) :=
+  (Completion.isometry_extensionEmbedding place).injective
+
+/-- The canonical continuous map from the contracted rational completion to `K_v`. -/
+noncomputable def selectedBaseCompletionRingHom
+    {K : Type*} [Field K] [NumberField K]
+    (place : NumberField.InfinitePlace K) :
+    (place.comap (algebraMap ℚ K)).Completion →+* place.Completion := by
+  let rationalPlace := place.comap (algebraMap ℚ K)
+  letI : place.1.LiesOver rationalPlace.1 := ⟨rfl⟩
+  exact (NumberField.InfinitePlace.LiesOver.isometry_algebraMap
+    place rationalPlace).mapRingHom
+
+theorem continuous_selectedBaseCompletionRingHom
+    {K : Type*} [Field K] [NumberField K]
+    (place : NumberField.InfinitePlace K) :
+    Continuous (selectedBaseCompletionRingHom place) := by
+  let rationalPlace := place.comap (algebraMap ℚ K)
+  letI : place.1.LiesOver rationalPlace.1 := ⟨rfl⟩
+  exact UniformSpace.Completion.continuous_map
+
+/-- The selected embedding extends the canonical rational embedding into `C`. -/
+theorem selectedCompletionEmbedding_algebraMap
+    {K : Type*} [Field K] [NumberField K]
+    (place : NumberField.InfinitePlace K)
+    (value : (place.comap (algebraMap ℚ K)).Completion) :
+    selectedCompletionEmbedding place
+        (selectedBaseCompletionRingHom place value) =
+      rationalCompletionEmbedding
+        (place.comap (algebraMap ℚ K)) value := by
+  let rationalPlace := place.comap (algebraMap ℚ K)
+  letI : place.1.LiesOver rationalPlace.1 := ⟨rfl⟩
+  letI : NumberField.ComplexEmbedding.LiesOver
+      (Completion.extensionEmbedding place)
+      (Completion.extensionEmbedding rationalPlace) :=
+    NumberField.InfinitePlace.LiesOver.extensionEmbedding_liesOver_of_isReal
+      place (rationalPlace_isReal rationalPlace)
+  change Completion.extensionEmbedding place
+      ((NumberField.InfinitePlace.LiesOver.isometry_algebraMap
+        place rationalPlace).mapRingHom value) =
+    Complex.ofRealHom
+      (Completion.extensionEmbeddingOfIsReal
+        (rationalPlace_isReal rationalPlace) value)
+  change Completion.extensionEmbedding place
+      (algebraMap rationalPlace.Completion place.Completion value) = _
+  rw [Completion.liesOver_extensionEmbedding_apply]
+  exact (Completion.extensionEmbeddingOfIsReal_apply
+    (rationalPlace_isReal rationalPlace) value).symm
+
+/-- `C` is finite-dimensional over every actual archimedean completion `K_v`. -/
+theorem selectedCompletion_finiteDimensional
+    {K : Type*} [Field K] [NumberField K]
+    (place : NumberField.InfinitePlace K) :
+    letI : Algebra place.Completion ℂ :=
+      (selectedCompletionEmbedding place).toAlgebra
+    FiniteDimensional place.Completion ℂ := by
+  letI : Algebra place.Completion ℂ :=
+    (selectedCompletionEmbedding place).toAlgebra
+  rcases place.isReal_or_isComplex with hreal | hcomplex
+  · let coordinateMap :
+        (Fin 2 → place.Completion) →ₗ[place.Completion] ℂ := {
+      toFun := fun coefficients =>
+        coefficients 0 • (1 : ℂ) + coefficients 1 • Complex.I
+      map_add' := by
+        intro left right
+        simp only [Pi.add_apply, add_smul]
+        abel
+      map_smul' := by
+        intro scalar coefficients
+        simp only [Pi.smul_apply, smul_add, smul_smul, RingHom.id_apply,
+          smul_eq_mul]
+    }
+    apply Module.Finite.of_surjective coordinateMap
+    intro value
+    let realCoefficient : place.Completion :=
+      (Completion.ringEquivRealOfIsReal hreal).symm value.re
+    let imaginaryCoefficient : place.Completion :=
+      (Completion.ringEquivRealOfIsReal hreal).symm value.im
+    refine ⟨![realCoefficient, imaginaryCoefficient], ?_⟩
+    change realCoefficient • (1 : ℂ) + imaginaryCoefficient • Complex.I = value
+    change
+      (Completion.extensionEmbedding place realCoefficient : ℂ) * 1 +
+          (Completion.extensionEmbedding place imaginaryCoefficient : ℂ) *
+            Complex.I = value
+    rw [← Completion.extensionEmbeddingOfIsReal_apply hreal,
+      ← Completion.extensionEmbeddingOfIsReal_apply hreal]
+    change
+      (Completion.ringEquivRealOfIsReal hreal realCoefficient : ℂ) * 1 +
+          (Completion.ringEquivRealOfIsReal hreal imaginaryCoefficient : ℂ) *
+            Complex.I = value
+    rw [RingEquiv.apply_symm_apply, RingEquiv.apply_symm_apply]
+    rw [mul_one]
+    exact Complex.re_add_im value
+  · apply Module.Finite.of_surjective
+      (Algebra.linearMap place.Completion ℂ)
+    exact Completion.surjective_extensionEmbedding_of_isComplex hcomplex
+
+/-- Thus `C` is an algebraic closure of the actual selected completion `K_v`. -/
+theorem selectedCompletion_isAlgebraicClosure
+    {K : Type*} [Field K] [NumberField K]
+    (place : NumberField.InfinitePlace K) :
+    letI : Algebra place.Completion ℂ :=
+      (selectedCompletionEmbedding place).toAlgebra
+    IsAlgClosure place.Completion ℂ := by
+  letI : Algebra place.Completion ℂ :=
+    (selectedCompletionEmbedding place).toAlgebra
+  letI : FiniteDimensional place.Completion ℂ :=
+    selectedCompletion_finiteDimensional place
+  exact {
+    isAlgClosed := inferInstance
+    isAlgebraic := Algebra.IsAlgebraic.of_finite place.Completion ℂ }
+
+end SourceInfiniteLocalFieldStages
+
 /--
 One factor of a local tensor packet.
 

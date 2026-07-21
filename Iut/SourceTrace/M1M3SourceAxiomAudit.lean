@@ -82,6 +82,29 @@ namespace Iut.SourceFiniteLocalFieldStages
 
 end Iut.SourceFiniteLocalFieldStages
 
+namespace Iut.SourceInfiniteLocalFieldStages
+
+#print axioms rationalPlace_isReal
+#print axioms rationalCompletionEquivReal
+#print axioms rationalCompletionEmbedding
+#print axioms continuous_rationalCompletionEmbedding
+#print axioms complexScalarTower
+#print axioms complexFiniteDimensional
+#print axioms stageField
+#print axioms stageDiagram
+#print axioms module
+#print axioms fieldPresentation
+#print axioms selectedCompletionEmbedding
+#print axioms continuous_selectedCompletionEmbedding
+#print axioms selectedCompletionEmbedding_injective
+#print axioms selectedBaseCompletionRingHom
+#print axioms continuous_selectedBaseCompletionRingHom
+#print axioms selectedCompletionEmbedding_algebraMap
+#print axioms selectedCompletion_finiteDimensional
+#print axioms selectedCompletion_isAlgebraicClosure
+
+end Iut.SourceInfiniteLocalFieldStages
+
 #print axioms Iut.SourceMonoAnalyticTensorPacket.ind2CoordinateIndex_card
 #print axioms Iut.SourceMonoAnalyticTensorPacket.placeTupleIndex_card
 #print axioms Iut.SourcePacketFiniteFieldDecomposition.fieldSummandIndex_card
