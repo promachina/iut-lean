@@ -12,6 +12,7 @@ import Mathlib.Algebra.DirectSum.Module
 import Mathlib.Algebra.Field.ULift
 import Mathlib.Algebra.Module.ZMod
 import Mathlib.Analysis.Seminorm
+import Mathlib.Analysis.Complex.CoveringMap
 import Mathlib.Analysis.Normed.Unbundled.SpectralNorm
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 import Mathlib.CategoryTheory.Endomorphism
@@ -3684,9 +3685,37 @@ end SourceNonarchimedeanLogShellDefinition
 
 namespace SourceArchimedeanLogShellDefinition
 
-/-- A length-`2*pi` fundamental segment in the pointed complex logarithm. -/
+/-- The kernel-generator segment in the pointed complex logarithm. -/
 def fundamentalSegment : Set ℂ :=
-  {value | value.im = 0 ∧ |value.re| ≤ Real.pi}
+  {value | value.re = 0 ∧ |value.im| ≤ Real.pi}
+
+noncomputable def lowerEndpoint : ℂ :=
+  -Real.pi * Complex.I
+
+noncomputable def upperEndpoint : ℂ :=
+  Real.pi * Complex.I
+
+theorem lowerEndpoint_mem : lowerEndpoint ∈ fundamentalSegment := by
+  constructor
+  · simp [lowerEndpoint]
+  · simp [lowerEndpoint, abs_of_pos Real.pi_pos]
+
+theorem upperEndpoint_mem : upperEndpoint ∈ fundamentalSegment := by
+  constructor
+  · simp [upperEndpoint]
+  · simp [upperEndpoint, abs_of_pos Real.pi_pos]
+
+/-- The endpoint difference is the generator of the exponential deck group. -/
+theorem upperEndpoint_sub_lowerEndpoint :
+    upperEndpoint - lowerEndpoint = 2 * Real.pi * Complex.I := by
+  simp only [upperEndpoint, lowerEndpoint]
+  ring
+
+/-- The pointed fundamental segment is preserved by multiplication by `-1`. -/
+theorem neg_mem_iff (value : ℂ) :
+    -value ∈ fundamentalSegment ↔ value ∈ fundamentalSegment := by
+  simp only [fundamentalSegment, Set.mem_setOf_eq, Complex.neg_re,
+    neg_eq_zero, Complex.neg_im, abs_neg]
 
 /-- The orbit of the fundamental segment under complex rotations. -/
 def rotationOrbit : Set ℂ :=
@@ -3702,8 +3731,8 @@ theorem rotationOrbit_eq_closedBall :
   · rintro ⟨segmentValue, ⟨himaginary, hreal⟩, rotation,
       hrotation, rfl⟩
     rw [Metric.mem_closedBall, dist_zero_right, norm_mul, hrotation, one_mul]
-    rw [Complex.norm_def, Complex.normSq_apply, himaginary, mul_zero,
-      add_zero, ← pow_two, Real.sqrt_sq_eq_abs]
+    rw [Complex.norm_def, Complex.normSq_apply, himaginary, zero_mul,
+      zero_add, ← pow_two, Real.sqrt_sq_eq_abs]
     exact hreal
   · intro hvalue
     rw [Metric.mem_closedBall, dist_zero_right] at hvalue
@@ -3711,7 +3740,7 @@ theorem rotationOrbit_eq_closedBall :
     · subst value
       refine ⟨0, ⟨rfl, by simpa using Real.pi_pos.le⟩,
         1, norm_one, by simp⟩
-    · let radius : ℂ := (norm value : ℝ)
+    · let radius : ℂ := (norm value : ℝ) * Complex.I
       let direction : ℂ := value / radius
       refine ⟨radius, ?_, direction, ?_, ?_⟩
       · constructor
@@ -3722,9 +3751,32 @@ theorem rotationOrbit_eq_closedBall :
       · simp only [direction]
         rw [div_mul_cancel₀ value]
         intro hradius
-        apply norm_ne_zero_iff.mpr hzero
-        have hreal := congrArg Complex.re hradius
-        simpa [radius] using hreal
+        have himaginary := congrArg Complex.im hradius
+        have himaginary' : norm value = 0 := by
+          simpa [radius] using himaginary
+        exact (norm_ne_zero_iff.mpr hzero) himaginary'
+
+/-- The canonical pointed complex exponential into the nonzero complex numbers. -/
+noncomputable def complexExponential
+    (value : ℂ) : {value : ℂ // value ≠ 0} :=
+  ⟨Complex.exp value, Complex.exp_ne_zero value⟩
+
+/-- The pointed identity in the nonzero complex numbers. -/
+def complexOne : {value : ℂ // value ≠ 0} :=
+  ⟨1, one_ne_zero⟩
+
+theorem complexExponential_isCoveringMap :
+    IsCoveringMap complexExponential :=
+  Complex.isCoveringMap_exp
+
+/-- The kernel of the pointed exponential is exactly `ℤ * (2*pi*i)`. -/
+theorem complexExponential_eq_one_iff (value : ℂ) :
+    complexExponential value = complexOne ↔
+      value ∈ AddSubgroup.zmultiples (2 * Real.pi * Complex.I) := by
+  rw [Subtype.ext_iff]
+  change Complex.exp value = 1 ↔ _
+  simpa only [Complex.exp_eq_one_iff, AddSubgroup.mem_zmultiples_iff,
+    zsmul_eq_mul, eq_comm]
 
 end SourceArchimedeanLogShellDefinition
 
@@ -3735,11 +3787,55 @@ Absolute Anabelian Topics III, Proposition 5.8(v).
 structure SourceArchimedeanLogShellDefinition
     (M : SourceTopologicalQModule.{u})
     (integral : SourceArchimedeanIntegralStructure M) where
-  complexEquiv : M ≃ₜ ℂ
+  complexEquiv : M ≃L[ℚ] ℂ
   seminorm_eq_complexNorm :
     ∀ value, integral.seminorm value = ‖complexEquiv value‖
 
 namespace SourceArchimedeanLogShellDefinition
+
+/-- The pointed exponential transported to the reconstructed logarithmic module. -/
+noncomputable def exponential
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (definition : SourceArchimedeanLogShellDefinition M integral)
+    (value : M) : {value : ℂ // value ≠ 0} :=
+  complexExponential (definition.complexEquiv value)
+
+/-- The reconstructed exponential is the source's pointed universal covering. -/
+theorem exponential_isCoveringMap
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (definition : SourceArchimedeanLogShellDefinition M integral) :
+    IsCoveringMap definition.exponential := by
+  change IsCoveringMap (complexExponential ∘ definition.complexEquiv)
+  exact complexExponential_isCoveringMap.comp_homeomorph
+    definition.complexEquiv.toHomeomorph
+
+/-- The period generator transported from `2*pi*i`. -/
+noncomputable def periodGenerator
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (definition : SourceArchimedeanLogShellDefinition M integral) : M :=
+  definition.complexEquiv.symm (2 * Real.pi * Complex.I)
+
+/-- The reconstructed exponential has exactly the transported period lattice as kernel. -/
+theorem exponential_eq_one_iff
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (definition : SourceArchimedeanLogShellDefinition M integral)
+    (value : M) :
+    definition.exponential value = complexOne ↔
+      value ∈ AddSubgroup.zmultiples definition.periodGenerator := by
+  rw [exponential, complexExponential_eq_one_iff,
+    AddSubgroup.mem_zmultiples_iff, AddSubgroup.mem_zmultiples_iff]
+  constructor
+  · rintro ⟨integer, hinteger⟩
+    refine ⟨integer, ?_⟩
+    apply definition.complexEquiv.injective
+    simpa [periodGenerator] using hinteger
+  · rintro ⟨integer, rfl⟩
+    refine ⟨integer, ?_⟩
+    simp [periodGenerator]
 
 /-- The abstract log-shell maps to the source's rotation-orbit construction. -/
 theorem image_piBall_eq_rotationOrbit

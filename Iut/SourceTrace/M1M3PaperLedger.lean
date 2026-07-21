@@ -792,8 +792,16 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceNonarchimedeanLogShellDefinition",
         "SourceNonarchimedeanLogShellDefinition.preLogShell_isCompact",
         "SourceArchimedeanLogShellDefinition.fundamentalSegment",
+        "SourceArchimedeanLogShellDefinition.lowerEndpoint_mem",
+        "SourceArchimedeanLogShellDefinition.upperEndpoint_mem",
+        "SourceArchimedeanLogShellDefinition.upperEndpoint_sub_lowerEndpoint",
+        "SourceArchimedeanLogShellDefinition.neg_mem_iff",
         "SourceArchimedeanLogShellDefinition.rotationOrbit",
         "SourceArchimedeanLogShellDefinition.rotationOrbit_eq_closedBall",
+        "SourceArchimedeanLogShellDefinition.complexExponential_isCoveringMap",
+        "SourceArchimedeanLogShellDefinition.complexExponential_eq_one_iff",
+        "SourceArchimedeanLogShellDefinition.exponential_isCoveringMap",
+        "SourceArchimedeanLogShellDefinition.exponential_eq_one_iff",
         "SourceArchimedeanLogShellDefinition.image_piBall_eq_rotationOrbit",
         "SourceMonoAnalyticLogShellDefinition",
         "SourceMonoAnalyticIntegralStructure.logShellCarrier",
@@ -801,7 +809,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceMonoAnalyticIntegralStructure.logShellCarrier_eq_piBall",
         "SourceMonoAnalyticLogShell"]
       .partialImplementation
-      "The additive log field is tied to the actual selected-place algebraic closure and its filtered field stages. The source log-shell is separated from the packet integral carrier: it is the finite-place additive lattice and the archimedean radius-pi ball of Remark 1.2.2(ii), while the latter's radius-one ball remains the packet integral structure. At finite places, the residue prime is derived from the actual rational place; compact topological invariant local units, a continuous p-adic logarithm with exact range, and the p-star scaling equation are explicit obligations. Compactness of the pre-log-shell is proved from compactness of the units and continuity. At archimedean places, the rotation orbit of the real fundamental segment [-pi,pi] is proved equal to the radius-pi complex disk and transported to the abstract shell. Constructing the finite obligations from the Frobenioid, the pointed archimedean universal cover and exponential diagram, and the tautological/full log-links remains open.",
+      "The additive log field is tied to the actual selected-place algebraic closure and its filtered field stages. The source log-shell is separated from the packet integral carrier: it is the finite-place additive lattice and the archimedean radius-pi ball of Remark 1.2.2(ii), while the latter's radius-one ball remains the packet integral structure. At finite places, the residue prime is derived from the actual rational place; compact topological invariant local units, a continuous p-adic logarithm with exact range, and the p-star scaling equation are explicit obligations. Compactness of the pre-log-shell is proved from compactness of the units and continuity. At archimedean places, the source segment is correctly oriented on the imaginary axis: it is sign-stable and its endpoints differ by the exponential period 2*pi*i. Its unit-rotation orbit is proved equal to the radius-pi complex disk. The abstract log module is continuously linearly equivalent to C; the transported pointed exponential is proved to be a covering map with kernel exactly the integer span of the transported period generator. Constructing the finite obligations from the Frobenioid, the universal cover after quotient by arbitrary N-th roots of unity, and the tautological/full log-links remains open.",
     clause "III.1.2(vi-viii)" .iutIII
       "IUT III, Proposition 1.2(vi)-(viii)"
       ["SourceNonarchimedeanLogShellSymmetryCore",
