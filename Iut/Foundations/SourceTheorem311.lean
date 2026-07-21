@@ -17,6 +17,7 @@ import Mathlib.LinearAlgebra.PiTensorProduct
 import Mathlib.LinearAlgebra.PiTensorProduct.DirectSum
 import Mathlib.MeasureTheory.Constructions.Pi
 import Mathlib.MeasureTheory.Measure.Haar.Basic
+import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
 import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
 import Mathlib.MeasureTheory.Measure.NullMeasurable
 import Mathlib.NumberTheory.NumberField.Completion.Ramification
@@ -39,7 +40,7 @@ a finite translation or degree quotient.
 -/
 
 open CategoryTheory
-open scoped DirectSum TensorProduct
+open scoped DirectSum TensorProduct Pointwise
 open scoped NumberField.LiesOver
 
 namespace Iut
@@ -2867,6 +2868,255 @@ theorem normalizedLogVolume_value_eq_zero
           (model.completedRadialization '' model.integralRegion)).toReal - 0 = 0
   rw [model.completedRadialLengthMeasure_image_integralRegion]
   norm_num
+
+/-- The archimedean packet-normalization factor `e = exp(1)`. -/
+noncomputable def packetScale : NNReal :=
+  ⟨Real.exp 1, (Real.exp_pos 1).le⟩
+
+theorem packetScale_pos : 0 < packetScale := by
+  exact_mod_cast Real.exp_pos 1
+
+@[simp]
+theorem packetScale_coe : (packetScale : ℝ) = Real.exp 1 :=
+  rfl
+
+/-- Multiplication by `e` as an equivalence of the radial half-line. -/
+noncomputable def nnrealPacketScale : NNReal ≃ NNReal :=
+  Equiv.mulLeft₀ packetScale packetScale_pos.ne'
+
+/-- Lebesgue radial length scales by `e`. -/
+theorem nnrealLengthMeasure_packetScale (region : Set NNReal) :
+    nnrealLengthMeasure (nnrealPacketScale '' region) =
+      ENNReal.ofReal (Real.exp 1) * nnrealLengthMeasure region := by
+  rw [nnrealLengthMeasure,
+    NNReal.isClosedEmbedding_coe.measurableEmbedding.comap_apply,
+    NNReal.isClosedEmbedding_coe.measurableEmbedding.comap_apply]
+  have himage :
+      ((↑) : NNReal → ℝ) '' (nnrealPacketScale '' region) =
+        (Real.exp 1) • (((↑) : NNReal → ℝ) '' region) := by
+    ext value
+    simp [Set.mem_smul_set, nnrealPacketScale, packetScale,
+      Equiv.mulLeft₀, mul_comm]
+    constructor
+    · rintro ⟨source, hsource, hvalue⟩
+      exact ⟨source, hsource, by simpa using hvalue⟩
+    · rintro ⟨source, hsource, hvalue⟩
+      exact ⟨source, hsource, by simpa using hvalue⟩
+  rw [himage]
+  simpa using
+    (MeasureTheory.Measure.addHaar_smul_of_nonneg
+      (MeasureTheory.volume : MeasureTheory.Measure ℝ)
+      (Real.exp_pos 1).le
+      (((↑) : NNReal → ℝ) '' region))
+
+/-- Multiplication by `e` on the universe-polymorphic radial carrier. -/
+noncomputable def radialPacketScaleHomeomorph :
+    RadialCarrier.{u} ≃ₜ RadialCarrier.{u} :=
+  Homeomorph.ulift.trans
+    ((Homeomorph.mulLeft₀ packetScale packetScale_pos.ne').trans
+      Homeomorph.ulift.symm)
+
+theorem radialLengthMeasure_packetScale
+    (region : Set RadialCarrier.{u}) :
+    radialLengthMeasure.{u} (radialPacketScaleHomeomorph '' region) =
+      ENNReal.ofReal (Real.exp 1) * radialLengthMeasure.{u} region := by
+  rw [radialLengthMeasure,
+    (MeasurableEquiv.ulift :
+      RadialCarrier.{u} ≃ᵐ NNReal).measurableEmbedding.comap_apply,
+    (MeasurableEquiv.ulift :
+      RadialCarrier.{u} ≃ᵐ NNReal).measurableEmbedding.comap_apply]
+  have himage :
+      (MeasurableEquiv.ulift : RadialCarrier.{u} ≃ᵐ NNReal) ''
+          (radialPacketScaleHomeomorph '' region) =
+        nnrealPacketScale ''
+          ((MeasurableEquiv.ulift : RadialCarrier.{u} ≃ᵐ NNReal) ''
+            region) := by
+    ext radius
+    constructor
+    · rintro ⟨lifted, ⟨source, hsource, rfl⟩, hvalue⟩
+      refine ⟨source.down, ⟨source, hsource, rfl⟩, ?_⟩
+      simpa [radialPacketScaleHomeomorph, nnrealPacketScale] using hvalue
+    · rintro ⟨scaled, ⟨source, hsource, rfl⟩, hvalue⟩
+      refine
+        ⟨radialPacketScaleHomeomorph source,
+          ⟨source, hsource, rfl⟩, ?_⟩
+      simpa [radialPacketScaleHomeomorph, nnrealPacketScale] using hvalue
+  rw [himage, nnrealLengthMeasure_packetScale]
+
+/-- The completed radial measure has the same `e`-scaling law. -/
+theorem completedRadialLengthMeasure_packetScale
+    (region : Set RadialCarrier.{u}) :
+    radialLengthMeasure.{u}.completion
+        (radialPacketScaleHomeomorph '' region) =
+      ENNReal.ofReal (Real.exp 1) *
+        radialLengthMeasure.{u}.completion region := by
+  rw [MeasureTheory.Measure.completion_apply,
+    MeasureTheory.Measure.completion_apply]
+  exact radialLengthMeasure_packetScale region
+
+theorem radialLengthMeasure_comap_radialPacketScale :
+    MeasureTheory.Measure.comap radialPacketScaleHomeomorph
+        radialLengthMeasure.{u} =
+      ENNReal.ofReal (Real.exp 1) • radialLengthMeasure.{u} := by
+  ext region hregion
+  rw [MeasureTheory.Measure.comap_apply radialPacketScaleHomeomorph
+      radialPacketScaleHomeomorph.injective
+      (fun measurableRegion hmeasurableRegion =>
+        radialPacketScaleHomeomorph.toMeasurableEquiv.measurableSet_image.mpr
+          hmeasurableRegion)
+      radialLengthMeasure.{u} hregion,
+    radialLengthMeasure_packetScale, MeasureTheory.Measure.smul_apply]
+  rfl
+
+/-- Multiplication by `e` preserves completed radial measurability. -/
+theorem nullMeasurableSet_radialPacketScale
+    {region : Set RadialCarrier.{u}}
+    (hregion :
+      MeasureTheory.NullMeasurableSet region radialLengthMeasure.{u}) :
+    MeasureTheory.NullMeasurableSet
+      (radialPacketScaleHomeomorph '' region) radialLengthMeasure.{u} := by
+  have hcomap :
+      MeasureTheory.NullMeasurableSet region
+        (MeasureTheory.Measure.comap radialPacketScaleHomeomorph
+          radialLengthMeasure.{u}) := by
+    rw [radialLengthMeasure_comap_radialPacketScale]
+    exact hregion.smul_measure _
+  exact MeasureTheory.Measure.NullMeasurableSet.image
+    radialPacketScaleHomeomorph radialLengthMeasure.{u}
+    radialPacketScaleHomeomorph.injective
+    (fun measurableRegion hmeasurableRegion =>
+      (radialPacketScaleHomeomorph.toMeasurableEquiv.measurableSet_image.mpr
+        hmeasurableRegion).nullMeasurableSet)
+    hcomap
+
+/-- The positive real packet scale regarded as a complex scalar. -/
+noncomputable def complexPacketScale : ℂ :=
+  (packetScale : ℝ)
+
+theorem complexPacketScale_ne_zero : complexPacketScale ≠ 0 := by
+  change ((Real.exp 1 : ℝ) : ℂ) ≠ 0
+  exact_mod_cast (Real.exp_pos 1).ne'
+
+noncomputable def complexPacketScaleHomeomorph : ℂ ≃ₜ ℂ :=
+  Homeomorph.mulLeft₀ complexPacketScale complexPacketScale_ne_zero
+
+/-- Multiplication by `e`, transported through the chosen complex model. -/
+noncomputable def packetDilation
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    field.carrier ≃ field.carrier :=
+  (model.complexEquiv.trans
+    (complexPacketScaleHomeomorph.trans model.complexEquiv.symm)).toEquiv
+
+theorem radialization_packetDilation
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field)
+    (value : field.carrier) :
+    model.radialization (model.packetDilation value) =
+      radialPacketScaleHomeomorph (model.radialization value) := by
+  apply ULift.ext
+  simp [packetDilation, radialization, complexNorm,
+    radialPacketScaleHomeomorph, complexPacketScaleHomeomorph,
+    complexPacketScale, packetScale, nnnorm_mul, Homeomorph.ulift]
+
+theorem radialization_image_packetDilation
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field)
+    (region : Set field.carrier) :
+    model.radialization '' (model.packetDilation '' region) =
+      radialPacketScaleHomeomorph '' (model.radialization '' region) := by
+  rw [Set.image_image, Set.image_image]
+  apply Set.image_congr
+  intro value _
+  exact model.radialization_packetDilation value
+
+/-- Completed radial length of a field region scales by `e`. -/
+theorem completedRadialLengthMeasure_packetDilation
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field)
+    (region : Set field.carrier) :
+    radialLengthMeasure.{u}.completion
+        (model.radialization '' (model.packetDilation '' region)) =
+      ENNReal.ofReal (Real.exp 1) *
+        radialLengthMeasure.{u}.completion
+          (model.radialization '' region) := by
+  rw [MeasureTheory.Measure.completion_apply,
+    MeasureTheory.Measure.completion_apply]
+  change radialLengthMeasure.{u}
+      (model.radialization '' (model.packetDilation '' region)) =
+    ENNReal.ofReal (Real.exp 1) *
+      radialLengthMeasure.{u} (model.radialization '' region)
+  rw [model.radialization_image_packetDilation,
+    radialLengthMeasure_packetScale]
+
+theorem packetLogVolumeShift_eq_one
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    SourceNormalizedLogVolume.packetLogVolumeShift rationalPlace = 1 := by
+  cases rationalPlace with
+  | finite place =>
+      have hkind := model.placeKind
+      simp [SourceRationalPlace.kind] at hkind
+  | infinite place =>
+      rfl
+
+/--
+The archimedean packet normalization of IUT III, Proposition 3.9(i), derived
+from radial multiplication by `e` and Proposition 5.7(ii)(b).
+-/
+noncomputable def packetNormalization
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    SourceNormalizedLogVolume.PacketNormalization rationalPlace
+      model.normalizedLogVolume where
+  dilation := model.packetDilation
+  admissible_image := by
+    intro region
+    have hmeasurable := region.isAdmissible.1
+    have hneZero := region.isAdmissible.2.1
+    have hneTop := region.isAdmissible.2.2
+    change MeasureTheory.NullMeasurableSet
+      (model.radialization '' region.carrier) radialLengthMeasure.{u}
+      at hmeasurable
+    change radialLengthMeasure.{u}.completion
+      (model.radialization '' region.carrier) ≠ 0 at hneZero
+    change radialLengthMeasure.{u}.completion
+      (model.radialization '' region.carrier) ≠ ⊤ at hneTop
+    refine ⟨?_, ?_, ?_⟩
+    · change MeasureTheory.NullMeasurableSet
+        (model.radialization ''
+          (model.packetDilation '' region.carrier))
+        radialLengthMeasure.{u}
+      rw [model.radialization_image_packetDilation]
+      exact nullMeasurableSet_radialPacketScale hmeasurable
+    · change radialLengthMeasure.{u}.completion
+        (model.radialization ''
+          (model.packetDilation '' region.carrier)) ≠ 0
+      rw [model.completedRadialLengthMeasure_packetDilation]
+      exact mul_ne_zero (by positivity) hneZero
+    · change radialLengthMeasure.{u}.completion
+        (model.radialization ''
+          (model.packetDilation '' region.carrier)) ≠ ⊤
+      rw [model.completedRadialLengthMeasure_packetDilation]
+      exact ENNReal.mul_ne_top ENNReal.ofReal_ne_top hneTop
+  rawLogVolume_dilation := by
+    intro region
+    have hneZero := region.isAdmissible.2.1
+    have hneTop := region.isAdmissible.2.2
+    change radialLengthMeasure.{u}.completion
+      (model.radialization '' region.carrier) ≠ 0 at hneZero
+    change radialLengthMeasure.{u}.completion
+      (model.radialization '' region.carrier) ≠ ⊤ at hneTop
+    change
+      Real.log
+          (radialLengthMeasure.{u}.completion
+            (model.radialization ''
+              (model.packetDilation '' region.carrier))).toReal =
+        Real.log
+            (radialLengthMeasure.{u}.completion
+              (model.radialization '' region.carrier)).toReal +
+          SourceNormalizedLogVolume.packetLogVolumeShift rationalPlace
+    rw [model.completedRadialLengthMeasure_packetDilation,
+      ENNReal.toReal_mul,
+      ENNReal.toReal_ofReal (Real.exp_pos 1).le,
+      Real.log_mul (Real.exp_ne_zero 1)
+        (ENNReal.toReal_ne_zero.mpr ⟨hneZero, hneTop⟩),
+      Real.log_exp, model.packetLogVolumeShift_eq_one]
+    ring
 
 end SourceArchimedeanLocalFieldModel
 
