@@ -15,6 +15,7 @@ import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 import Mathlib.CategoryTheory.Endomorphism
 import Mathlib.CategoryTheory.Comma.Arrow
 import Mathlib.Data.Setoid.Basic
+import Mathlib.LinearAlgebra.Dimension.Free
 import Mathlib.LinearAlgebra.PiTensorProduct
 import Mathlib.LinearAlgebra.PiTensorProduct.Basis
 import Mathlib.LinearAlgebra.PiTensorProduct.DirectSum
@@ -26,6 +27,7 @@ import Mathlib.MeasureTheory.Measure.Lebesgue.EqHaar
 import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
 import Mathlib.MeasureTheory.Measure.NullMeasurable
 import Mathlib.NumberTheory.NumberField.Completion.Ramification
+import Mathlib.NumberTheory.Padics.RingHoms
 import Mathlib.RingTheory.Ideal.Quotient.HasFiniteQuotients
 import Mathlib.RingTheory.Finiteness.Cardinality
 import Mathlib.RingTheory.Valuation.ValuationSubring
@@ -2980,6 +2982,199 @@ noncomputable abbrev rationalPrimeQuotientModule
     simp [rationalPrimeDilationAddMonoidHom, rationalPrimeScalar,
       nsmul_eq_mul])
 
+noncomputable local instance rationalPrimeFact
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    Fact (Nat.Prime integers.rationalPrime) :=
+  ⟨integers.rationalPrime_prime⟩
+
+/-- The identity additive equivalence between the two valuation-ring carriers. -/
+def integerAddEquivIntegerSubring
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    integers.integerAddSubgroup ≃+ integers.integerRing.toSubring where
+  toFun value := ⟨value, value.property⟩
+  invFun value := ⟨value, value.property⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+  map_add' _ _ := rfl
+
+/-- Transport a `Z_p`-algebra action on the valuation ring to its additive carrier. -/
+@[reducible]
+noncomputable def padicModuleOfRingHom
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
+    (scalarMap : PadicInt integers.rationalPrime →+*
+      integers.integerRing.toSubring) :
+    Module (PadicInt integers.rationalPrime)
+      integers.integerAddSubgroup := by
+  letI : Algebra (PadicInt integers.rationalPrime)
+      integers.integerRing.toSubring := scalarMap.toAlgebra
+  exact integers.integerAddEquivIntegerSubring.module
+    (PadicInt integers.rationalPrime)
+
+/--
+The integral `Z_p`-lattice presentation of a finite extension `L/Q_p`.
+
+This is the remaining local-completion input: the continuous scalar map lands
+in the actual valuation ring, and the valuation ring has a basis indexed by
+the actual local degree.  The residue module, its basis, and its cardinality
+are derived below rather than stored here.
+-/
+class PAdicIntegralBasis
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) where
+  scalarMap : PadicInt integers.rationalPrime →+*
+    integers.integerRing.toSubring
+  scalarMap_continuous : Continuous scalarMap
+  basis : letI := integers.padicModuleOfRingHom scalarMap
+    Module.Basis (Fin integers.localDegree.1)
+      (PadicInt integers.rationalPrime) integers.integerAddSubgroup
+
+namespace PAdicIntegralBasis
+
+variable {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
+variable [integral : integers.PAdicIntegralBasis]
+
+noncomputable local instance padicModule :
+    Module (PadicInt integers.rationalPrime)
+      integers.integerAddSubgroup :=
+  integers.padicModuleOfRingHom integral.scalarMap
+
+/-- The scalar `p` acts on the integral lattice by multiplication by `p`. -/
+theorem padicPrime_smul
+    (source : integers.integerAddSubgroup) :
+    (integers.rationalPrime : PadicInt integers.rationalPrime) • source =
+      ⟨integers.rationalPrimeScalar * (source : field.carrier),
+        integers.integerRing.toSubring.mul_mem
+          integers.rationalPrimeScalar_mem_integerRing source.property⟩ := by
+  apply Subtype.ext
+  change
+    ((integral.scalarMap
+      (integers.rationalPrime : PadicInt integers.rationalPrime) :
+        integers.integerRing.toSubring) : field.carrier) * source =
+      integers.rationalPrimeScalar * source
+  rw [map_natCast]
+  simp [rationalPrimeScalar]
+
+/-- Reduce every integral-basis coefficient modulo `p`. -/
+noncomputable def coefficientReduction :
+    integers.integerAddSubgroup →+
+      (Fin integers.localDegree.1 → ZMod integers.rationalPrime) where
+  toFun value index := PadicInt.toZMod (integral.basis.repr value index)
+  map_zero' := by
+    funext index
+    simp
+  map_add' left right := by
+    funext index
+    simp
+
+/-- Every tuple of residue coefficients lifts to integral coefficients. -/
+theorem coefficientReduction_surjective :
+    Function.Surjective (coefficientReduction (integers := integers)) := by
+  intro values
+  choose coefficients hcoefficients using fun index =>
+    ZMod.ringHom_surjective PadicInt.toZMod (values index)
+  refine ⟨integral.basis.repr.symm
+    ((Finsupp.linearEquivFunOnFinite
+      (PadicInt integers.rationalPrime)
+      (PadicInt integers.rationalPrime)
+      (Fin integers.localDegree.1)).symm coefficients), ?_⟩
+  funext index
+  simpa [coefficientReduction] using hcoefficients index
+
+/-- A lattice element reduces to zero exactly when it is divisible by `p`. -/
+theorem coefficientReduction_eq_zero_iff
+    (value : integers.integerAddSubgroup) :
+    coefficientReduction (integers := integers) value = 0 ↔
+      ∃ source : integers.integerAddSubgroup,
+        (integers.rationalPrime : PadicInt integers.rationalPrime) • source =
+          value := by
+  constructor
+  · intro hvalue
+    have hcoefficients : ∀ index,
+        ∃ coefficient : PadicInt integers.rationalPrime,
+          (integers.rationalPrime : PadicInt integers.rationalPrime) *
+              coefficient =
+            integral.basis.repr value index := by
+      intro index
+      have hzero :
+          PadicInt.toZMod (integral.basis.repr value index) = 0 := by
+        simpa [coefficientReduction] using congr_fun hvalue index
+      have hmem : integral.basis.repr value index ∈
+          IsLocalRing.maximalIdeal (PadicInt integers.rationalPrime) := by
+        rw [← PadicInt.ker_toZMod]
+        exact hzero
+      rw [PadicInt.maximalIdeal_eq_span_p,
+        Ideal.mem_span_singleton] at hmem
+      rcases hmem with ⟨coefficient, hcoefficient⟩
+      exact ⟨coefficient, hcoefficient.symm⟩
+    choose coefficients hcoefficients using hcoefficients
+    let source := integral.basis.repr.symm
+      ((Finsupp.linearEquivFunOnFinite
+        (PadicInt integers.rationalPrime)
+        (PadicInt integers.rationalPrime)
+        (Fin integers.localDegree.1)).symm coefficients)
+    refine ⟨source, integral.basis.repr.injective ?_⟩
+    ext index
+    simp [source, hcoefficients]
+  · rintro ⟨source, rfl⟩
+    funext index
+    simp [coefficientReduction]
+
+/-- The kernel of coefficient reduction is the actual subgroup `p O_L`. -/
+theorem coefficientReduction_ker :
+    (coefficientReduction (integers := integers)).ker =
+      integers.rationalPrimeScaledAddSubgroup.addSubgroupOf
+        integers.integerAddSubgroup := by
+  ext value
+  rw [AddMonoidHom.mem_ker, coefficientReduction_eq_zero_iff]
+  constructor
+  · rintro ⟨source, hsource⟩
+    change (value : field.carrier) ∈
+      integers.rationalPrimeScaledAddSubgroup
+    refine ⟨source, source.property, ?_⟩
+    have hsource_value := congr_arg Subtype.val hsource
+    simpa [padicPrime_smul] using hsource_value
+  · intro hvalue
+    change (value : field.carrier) ∈
+      integers.rationalPrimeScaledAddSubgroup at hvalue
+    rcases hvalue with ⟨source, hsource, hsource_eq⟩
+    let source' : integers.integerAddSubgroup := ⟨source, hsource⟩
+    refine ⟨source', Subtype.ext ?_⟩
+    simpa [source', padicPrime_smul] using hsource_eq
+
+private noncomputable def quotientAddEquivOfEq
+    {M : Type*} [AddCommGroup M] {left right : AddSubgroup M}
+    (h : left = right) : (M ⧸ left) ≃+ (M ⧸ right) := by
+  subst h
+  exact AddEquiv.refl _
+
+/-- Reduction identifies `O_L/pO_L` with one `F_p` coordinate per basis vector. -/
+noncomputable def quotientLinearEquiv :
+    letI := integers.rationalPrimeQuotientModule
+    integers.RationalPrimeQuotient ≃ₗ[ZMod integers.rationalPrime]
+      (Fin integers.localDegree.1 → ZMod integers.rationalPrime) := by
+  letI := integers.rationalPrimeQuotientModule
+  let addEquiv : integers.RationalPrimeQuotient ≃+
+      (Fin integers.localDegree.1 → ZMod integers.rationalPrime) :=
+    (quotientAddEquivOfEq (coefficientReduction_ker
+      (integers := integers)).symm).trans
+      (QuotientAddGroup.quotientKerEquivOfSurjective
+        (coefficientReduction (integers := integers))
+        (coefficientReduction_surjective (integers := integers)))
+  exact
+    { addEquiv with
+      map_smul' := ZMod.map_smul addEquiv }
+
+/-- The integral basis derives `dim_(F_p)(O_L/pO_L) = [L:Q_p]`. -/
+theorem quotient_finrank_eq :
+    letI := integers.rationalPrimeQuotientModule
+    Module.finrank (ZMod integers.rationalPrime)
+        integers.RationalPrimeQuotient = integers.localDegree.1 := by
+  letI := integers.rationalPrimeQuotientModule
+  rw [LinearEquiv.finrank_eq
+    (quotientLinearEquiv (integers := integers))]
+  simp
+
+end PAdicIntegralBasis
+
 /-- Finiteness and cardinality of the actual quotient `O_L / p O_L`. -/
 structure ResidueQuotientFormula
     (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) where
@@ -3024,16 +3219,20 @@ theorem ResidueQuotientFormula.representative_spec
         integers.integerAddSubgroup)
       (formula.quotientEquiv index))
 
-/--
-The sole local-field input for the canonical `F_p`-vector space
-`O_L / p O_L`: its dimension is `[L : Q_p]`.
--/
+/-- The derived dimension identity consumed by the residue-coset argument. -/
 structure RationalPrimeResidueModule
     (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) where
   quotient_finrank_eq :
     letI := integers.rationalPrimeQuotientModule
     Module.finrank (ZMod integers.rationalPrime)
         integers.RationalPrimeQuotient = integers.localDegree.1
+
+/-- Build the residue-module identity from the actual integral `Z_p` basis. -/
+noncomputable def PAdicIntegralBasis.toRationalPrimeResidueModule
+    {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
+    [integers.PAdicIntegralBasis] :
+    integers.RationalPrimeResidueModule where
+  quotient_finrank_eq := PAdicIntegralBasis.quotient_finrank_eq
 
 /-- Finiteness of `O_L / p O_L` follows from its positive finite dimension. -/
 noncomputable abbrev RationalPrimeResidueModule.quotientFintype
@@ -4983,28 +5182,32 @@ def dilateRegion
   ⟨normalization.dilation '' region.carrier,
     normalization.admissible_image region⟩
 
-/-- The residue quotient derives the raw prime dilation on a measured field. -/
+/-- The integral `Z_p` basis derives the raw prime dilation on a measured field. -/
 noncomputable def ofIntegers
     (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
-    (residue : integers.RationalPrimeResidueModule) :
+    [integers.PAdicIntegralBasis] :
     NonarchimedeanPrimeDilation
-      (SourcePacketMeasuredField.ofNonarchimedean integers) where
-  dilation := integers.rationalPrimeDilation
-  admissible_image := by
-    intro region
-    exact integers.normalizedLogVolume_admissible_rationalPrimeDilation
-      (residue.toResidueQuotientFormula.toHaarDegreeFormula) region
-  valueOn_dilation := by
-    intro region
-    change
-      integers.normalizedLogVolume.valueOn
-          ⟨integers.rationalPrimeDilation '' region.carrier, _⟩ =
-        integers.normalizedLogVolume.valueOn region +
-          (integers.localDegree.1 : ℝ) *
-            SourceNormalizedLogVolume.packetLogVolumeShift rationalPlace
-    rw [integers.normalizedLogVolume_valueOn_rationalPrimeDilation
-      (residue.toResidueQuotientFormula.toHaarDegreeFormula) region]
-    rw [integers.localPrimeLogVolumeShift_eq_degree_mul_packetLogVolumeShift]
+      (SourcePacketMeasuredField.ofNonarchimedean integers) := by
+  let residue :=
+    SourceNonarchimedeanLocalFieldIntegers.PAdicIntegralBasis.toRationalPrimeResidueModule
+      (integers := integers)
+  exact
+    { dilation := integers.rationalPrimeDilation
+      admissible_image := by
+        intro region
+        exact integers.normalizedLogVolume_admissible_rationalPrimeDilation
+          (residue.toResidueQuotientFormula.toHaarDegreeFormula) region
+      valueOn_dilation := by
+        intro region
+        change
+          integers.normalizedLogVolume.valueOn
+              ⟨integers.rationalPrimeDilation '' region.carrier, _⟩ =
+            integers.normalizedLogVolume.valueOn region +
+              (integers.localDegree.1 : ℝ) *
+                SourceNormalizedLogVolume.packetLogVolumeShift rationalPlace
+        rw [integers.normalizedLogVolume_valueOn_rationalPrimeDilation
+          (residue.toResidueQuotientFormula.toHaarDegreeFormula) region]
+        rw [integers.localPrimeLogVolumeShift_eq_degree_mul_packetLogVolumeShift] }
 
 end NonarchimedeanPrimeDilation
 

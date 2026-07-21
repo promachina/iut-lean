@@ -109,6 +109,12 @@ namespace Iut.SourceNonarchimedeanLocalFieldIntegers
 #print axioms log_rationalPrimeScale
 #print axioms localPrimeLogVolumeShift_eq_degree_mul_packetLogVolumeShift
 #print axioms rationalPrimeQuotientModule
+#print axioms PAdicIntegralBasis.padicPrime_smul
+#print axioms PAdicIntegralBasis.coefficientReduction_surjective
+#print axioms PAdicIntegralBasis.coefficientReduction_ker
+#print axioms PAdicIntegralBasis.quotientLinearEquiv
+#print axioms PAdicIntegralBasis.quotient_finrank_eq
+#print axioms PAdicIntegralBasis.toRationalPrimeResidueModule
 #print axioms RationalPrimeResidueModule.quotientFintype
 #print axioms RationalPrimeResidueModule.quotient_card_eq
 #print axioms ResidueQuotientFormula.residueCosets_cover_integerRing
