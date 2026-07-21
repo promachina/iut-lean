@@ -3090,6 +3090,203 @@ theorem angularLengthMeasure_univ :
     Measure.map_apply AddCircle.homeomorphCircle'.measurable MeasurableSet.univ]
   simp [AddCircle.measure_univ]
 
+/-- Angular length is invariant under rotations of the unit circle. -/
+noncomputable instance angularLengthMeasureIsMulLeftInvariant :
+    angularLengthMeasure.IsMulLeftInvariant where
+  map_mul_left_eq_self unit := by
+    rw [angularLengthMeasure,
+      Measure.map_map (measurable_const_mul unit)
+        AddCircle.homeomorphCircle'.measurable]
+    let theta : AddCircle (2 * Real.pi) :=
+      AddCircle.homeomorphCircle'.symm unit
+    have hfunction :
+        (unit * ·) ∘ AddCircle.homeomorphCircle' =
+          AddCircle.homeomorphCircle' ∘ (theta + ·) := by
+      funext angle
+      change unit * AddCircle.homeomorphCircle' angle =
+        AddCircle.homeomorphCircle' (theta + angle)
+      rw [← AddCircle.homeomorphCircle'.apply_symm_apply unit]
+      exact (Real.Angle.toCircle_add theta angle).symm
+    rw [hfunction,
+      ← Measure.map_map AddCircle.homeomorphCircle'.measurable
+        (measurable_const_add theta),
+      MeasureTheory.map_add_left_eq_self]
+
+theorem angularLengthMeasure_mul_image
+    (unit : Circle) (region : Set Circle) :
+    angularLengthMeasure ((unit * ·) '' region) =
+      angularLengthMeasure region := by
+  rw [Set.image_mul_left, MeasureTheory.measure_preimage_mul]
+
+noncomputable instance angularLengthMeasureIsOpenPosMeasure :
+    angularLengthMeasure.IsOpenPosMeasure := by
+  change
+    (Measure.map AddCircle.homeomorphCircle'
+      (volume : Measure (AddCircle (2 * Real.pi)))).IsOpenPosMeasure
+  exact AddCircle.homeomorphCircle'.continuous.isOpenPosMeasure_map
+    AddCircle.homeomorphCircle'.surjective
+
+/-- The unit-circle component of a nonzero complex scalar. -/
+noncomputable def complexAngularUnit (scalar : ℂˣ) : Circle where
+  val := (scalar : ℂ) / ‖(scalar : ℂ)‖
+  property := mem_sphere_zero_iff_norm.2 <| by
+    rw [norm_div, Complex.norm_real, Real.norm_of_nonneg (norm_nonneg _),
+      div_self (norm_ne_zero_iff.mpr scalar.ne_zero)]
+
+@[simp]
+theorem complexAngularUnit_one : complexAngularUnit 1 = 1 := by
+  apply Circle.ext
+  simp [complexAngularUnit]
+
+@[simp]
+theorem complexAngularUnit_mul (left right : ℂˣ) :
+    complexAngularUnit (left * right) =
+      complexAngularUnit left * complexAngularUnit right := by
+  apply Circle.ext
+  change
+    ((left : ℂ) * (right : ℂ)) / ‖(left : ℂ) * (right : ℂ)‖ =
+      (left : ℂ) / ‖(left : ℂ)‖ * ((right : ℂ) / ‖(right : ℂ)‖)
+  rw [norm_mul]
+  push_cast
+  field_simp
+
+/-- Angular projection of the source-paper multiplicative group `k×`. -/
+noncomputable def complexAngularProjection : ℂˣ →* Circle where
+  toFun := complexAngularUnit
+  map_one' := complexAngularUnit_one
+  map_mul' := complexAngularUnit_mul
+
+theorem continuous_complexAngularProjection :
+    Continuous complexAngularProjection := by
+  apply Continuous.subtype_mk
+  exact Units.continuous_val.div
+    (Complex.continuous_ofReal.comp
+      (continuous_norm.comp Units.continuous_val))
+    (fun scalar => Complex.ofReal_ne_zero.mpr
+      (norm_ne_zero_iff.mpr scalar.ne_zero))
+
+/-- Angular projection of a subset of the multiplicative group. -/
+noncomputable def angularProjectionImage (region : Set ℂˣ) : Set Circle :=
+  complexAngularProjection '' region
+
+/-- The source domain `M-check(k)` from Proposition 5.7(ii). -/
+structure AngularRegion where
+  carrier : Set ℂˣ
+  isCompact : IsCompact carrier
+  nonempty : carrier.Nonempty
+  projection_regular :
+    closure (interior (angularProjectionImage carrier)) =
+      angularProjectionImage carrier
+
+namespace AngularRegion
+
+theorem projection_isCompact (region : AngularRegion) :
+    IsCompact (angularProjectionImage region.carrier) :=
+  region.isCompact.image continuous_complexAngularProjection
+
+theorem projection_nonempty (region : AngularRegion) :
+    (angularProjectionImage region.carrier).Nonempty :=
+  region.nonempty.image complexAngularProjection
+
+theorem projection_interior_nonempty (region : AngularRegion) :
+    (interior (angularProjectionImage region.carrier)).Nonempty := by
+  by_contra hinterior
+  have hprojection : angularProjectionImage region.carrier = ∅ := by
+    rw [← region.projection_regular,
+      Set.not_nonempty_iff_eq_empty.mp hinterior, closure_empty]
+  exact region.projection_nonempty.ne_empty hprojection
+
+/-- Angular volume on the paper's source domain. -/
+noncomputable def angularVolume (region : AngularRegion) : ENNReal :=
+  angularLengthMeasure (angularProjectionImage region.carrier)
+
+theorem angularVolume_pos (region : AngularRegion) :
+    0 < region.angularVolume := by
+  exact MeasureTheory.Measure.measure_pos_of_nonempty_interior
+    angularLengthMeasure
+    region.projection_interior_nonempty
+
+theorem angularVolume_lt_top (region : AngularRegion) :
+    region.angularVolume < ⊤ := by
+  calc
+    region.angularVolume ≤ angularLengthMeasure Set.univ :=
+      measure_mono (Set.subset_univ _)
+    _ = ENNReal.ofReal (2 * Real.pi) := angularLengthMeasure_univ
+    _ < ⊤ := ENNReal.ofReal_lt_top
+
+/-- Angular log-volume on the paper's source domain. -/
+noncomputable def angularLogVolume (region : AngularRegion) : ℝ :=
+  Real.log region.angularVolume.toReal
+
+end AngularRegion
+
+theorem angularProjectionImage_mul_left
+    (scalar : ℂˣ) (region : Set ℂˣ) :
+    angularProjectionImage ((scalar * ·) '' region) =
+      (complexAngularProjection scalar * ·) '' angularProjectionImage region := by
+  simp only [angularProjectionImage, Set.image_image]
+  apply Set.image_congr
+  intro value hvalue
+  exact complexAngularProjection.map_mul scalar value
+
+namespace AngularRegion
+
+/-- Multiplication by `x ∈ k×` preserves the source domain `M-check(k)`. -/
+noncomputable def mulLeft (scalar : ℂˣ) (region : AngularRegion) : AngularRegion where
+  carrier := (scalar * ·) '' region.carrier
+  isCompact := by
+    exact (Homeomorph.mulLeft scalar).isCompact_image.mpr region.isCompact
+  nonempty := region.nonempty.image (scalar * ·)
+  projection_regular := by
+    rw [angularProjectionImage_mul_left]
+    let rotation : Circle ≃ₜ Circle :=
+      Homeomorph.mulLeft (complexAngularProjection scalar)
+    change
+      closure
+          (interior
+            (rotation '' angularProjectionImage region.carrier)) =
+        rotation '' angularProjectionImage region.carrier
+    rw [← rotation.image_interior, ← rotation.image_closure,
+      region.projection_regular]
+
+@[simp]
+theorem mulLeft_carrier (scalar : ℂˣ) (region : AngularRegion) :
+    (region.mulLeft scalar).carrier = (scalar * ·) '' region.carrier :=
+  rfl
+
+/-- Proposition 5.7(ii)(b): angular volume is invariant under `x ∈ k×`. -/
+theorem angularVolume_mulLeft (scalar : ℂˣ) (region : AngularRegion) :
+    (region.mulLeft scalar).angularVolume = region.angularVolume := by
+  change
+    angularLengthMeasure
+        (angularProjectionImage ((scalar * ·) '' region.carrier)) =
+      angularLengthMeasure (angularProjectionImage region.carrier)
+  rw [angularProjectionImage_mul_left,
+    angularLengthMeasure_mul_image]
+
+/-- Proposition 5.7(ii)(b), in the angular log-volume normalization. -/
+theorem angularLogVolume_mulLeft (scalar : ℂˣ) (region : AngularRegion) :
+    (region.mulLeft scalar).angularLogVolume = region.angularLogVolume := by
+  rw [angularLogVolume, angularLogVolume, angularVolume_mulLeft]
+
+end AngularRegion
+
+theorem angularLengthMeasure_projection_mul_left
+    (scalar : ℂˣ) (region : Set ℂˣ) :
+    angularLengthMeasure (angularProjectionImage ((scalar * ·) '' region)) =
+      angularLengthMeasure (angularProjectionImage region) := by
+  rw [angularProjectionImage_mul_left,
+    angularLengthMeasure_mul_image]
+
+theorem angularLogVolume_projection_mul_left
+    (scalar : ℂˣ) (region : Set ℂˣ) :
+    Real.log
+        (angularLengthMeasure
+          (angularProjectionImage ((scalar * ·) '' region))).toReal =
+      Real.log
+        (angularLengthMeasure (angularProjectionImage region)).toReal := by
+  rw [angularLengthMeasure_projection_mul_left]
+
 /--
 The exact hypotheses on the complex region in Topics in Absolute Anabelian
 Geometry III, Proposition 5.7(ii)(c): compact regular radial projection,

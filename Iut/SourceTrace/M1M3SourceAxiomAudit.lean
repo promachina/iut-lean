@@ -95,6 +95,17 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceArchimedeanLocalFieldModel.normalizedLogVolume_value_eq_zero
 #print axioms Iut.SourceArchimedeanLocalFieldModel.addCircleVolume_image_of_injOn
 #print axioms Iut.SourceArchimedeanLocalFieldModel.angularLengthMeasure_univ
+#print axioms Iut.SourceArchimedeanLocalFieldModel.angularLengthMeasure_mul_image
+#print axioms Iut.SourceArchimedeanLocalFieldModel.continuous_complexAngularProjection
+
+namespace Iut.SourceArchimedeanLocalFieldModel.AngularRegion
+
+#print axioms angularVolume_pos
+#print axioms angularVolume_lt_top
+#print axioms angularVolume_mulLeft
+#print axioms angularLogVolume_mulLeft
+
+end Iut.SourceArchimedeanLocalFieldModel.AngularRegion
 
 namespace Iut.SourceArchimedeanLocalFieldModel.ExponentialRegion
 
