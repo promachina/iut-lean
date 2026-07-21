@@ -29,6 +29,7 @@ import Mathlib.MeasureTheory.Measure.NullMeasurable
 import Mathlib.NumberTheory.NumberField.Completion.Ramification
 import Mathlib.NumberTheory.Padics.HeightOneSpectrum
 import Mathlib.NumberTheory.Padics.RingHoms
+import Mathlib.RingTheory.DedekindDomain.IntegralClosure
 import Mathlib.RingTheory.Ideal.Int
 import Mathlib.RingTheory.Ideal.Quotient.HasFiniteQuotients
 import Mathlib.RingTheory.Finiteness.Cardinality
@@ -3100,6 +3101,143 @@ theorem continuous_padicScalarMap
   | infinite _ =>
       exact nomatch integers.placeKind
 
+/-- The rational-completion algebra map transported to the standard field `Q_p`. -/
+noncomputable def padicFieldRingHom
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    Padic integers.rationalPrime →+* field.carrier := by
+  cases rationalPlace with
+  | finite place =>
+      let prime := ThetaFinitePlace.underlyingPrime place
+      letI : Fact (Nat.Prime
+          (Rat.HeightOneSpectrum.natGenerator prime)) :=
+        ⟨Rat.HeightOneSpectrum.prime_natGenerator prime⟩
+      letI : NormedAlgebra (prime.adicCompletion ℚ) field.carrier :=
+        field.normedAlgebra
+      let completionToField : prime.adicCompletion ℚ →+* field.carrier :=
+        algebraMap (prime.adicCompletion ℚ) field.carrier
+      let padicToCompletion :
+          Padic (Rat.HeightOneSpectrum.natGenerator prime) →+*
+            prime.adicCompletion ℚ := by
+        letI : Algebra ℚ (prime.adicCompletion ℚ) :=
+          IsDedekindDomain.HeightOneSpectrum.instAlgebraAdicCompletion
+            (NumberField.RingOfIntegers ℚ) ℚ prime
+        exact
+          (Rat.HeightOneSpectrum.adicCompletion.padicEquiv prime).symm.toRingHom
+      exact completionToField.comp padicToCompletion
+  | infinite _ =>
+      exact nomatch integers.placeKind
+
+/-- The transported `Q_p → L` field map is continuous. -/
+theorem continuous_padicFieldRingHom
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    Continuous integers.padicFieldRingHom := by
+  cases rationalPlace with
+  | finite place =>
+      rw [padicFieldRingHom]
+      let prime := ThetaFinitePlace.underlyingPrime place
+      letI : Fact (Nat.Prime
+          (Rat.HeightOneSpectrum.natGenerator prime)) :=
+        ⟨Rat.HeightOneSpectrum.prime_natGenerator prime⟩
+      letI : NormedAlgebra (prime.adicCompletion ℚ) field.carrier :=
+        field.normedAlgebra
+      let completionToField : prime.adicCompletion ℚ →+* field.carrier :=
+        algebraMap (prime.adicCompletion ℚ) field.carrier
+      have hcompletionToField : Continuous completionToField :=
+        continuous_algebraMap (prime.adicCompletion ℚ) field.carrier
+      let padicToCompletion :
+          Padic (Rat.HeightOneSpectrum.natGenerator prime) →+*
+            prime.adicCompletion ℚ := by
+        letI : Algebra ℚ (prime.adicCompletion ℚ) :=
+          IsDedekindDomain.HeightOneSpectrum.instAlgebraAdicCompletion
+            (NumberField.RingOfIntegers ℚ) ℚ prime
+        exact
+          (Rat.HeightOneSpectrum.adicCompletion.padicEquiv prime).symm.toRingHom
+      have hpadicToCompletion : Continuous padicToCompletion := by
+        letI : Algebra ℚ (prime.adicCompletion ℚ) :=
+          IsDedekindDomain.HeightOneSpectrum.instAlgebraAdicCompletion
+            (NumberField.RingOfIntegers ℚ) ℚ prime
+        exact
+          (Rat.HeightOneSpectrum.adicCompletion.padicEquiv prime).symm.continuous
+      exact hcompletionToField.comp hpadicToCompletion
+  | infinite _ =>
+      exact nomatch integers.placeKind
+
+/-- The canonical `Z_p` scalar map is the restriction of the `Q_p` field map. -/
+theorem padicScalarMap_coe_eq_padicFieldRingHom
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
+    (value : PadicInt integers.rationalPrime) :
+    ((integers.padicScalarMap value : integers.integerRing.toSubring) :
+        field.carrier) =
+      integers.padicFieldRingHom
+        (value : Padic integers.rationalPrime) := by
+  cases rationalPlace with
+  | finite place =>
+      rw [padicScalarMap, padicFieldRingHom]
+      let prime := ThetaFinitePlace.underlyingPrime place
+      letI : Fact (Nat.Prime
+          (Rat.HeightOneSpectrum.natGenerator prime)) :=
+        ⟨Rat.HeightOneSpectrum.prime_natGenerator prime⟩
+      letI : NormedAlgebra (prime.adicCompletion ℚ) field.carrier :=
+        field.normedAlgebra
+      simp only [RingHom.comp_apply]
+      congr 1
+  | infinite _ =>
+      exact nomatch integers.placeKind
+
+/-- The `Z_p → L` map obtained from the transported `Q_p` algebra. -/
+noncomputable def padicIntegerFieldRingHom
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    PadicInt integers.rationalPrime →+* field.carrier :=
+  integers.padicFieldRingHom.comp
+    (algebraMap (PadicInt integers.rationalPrime)
+      (Padic integers.rationalPrime))
+
+/--
+The original completion basis transported through the actual continuous
+`Q_p` equivalence.  In particular, changing from the rational adic completion
+to Mathlib's standard `Q_p` does not change the local degree.
+-/
+noncomputable def padicFieldBasis
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    letI : Algebra (Padic integers.rationalPrime) field.carrier :=
+      integers.padicFieldRingHom.toAlgebra
+    Module.Basis (Fin integers.localDegree.1)
+      (Padic integers.rationalPrime) field.carrier := by
+  cases rationalPlace with
+  | finite place =>
+      let prime := ThetaFinitePlace.underlyingPrime place
+      letI : Fact (Nat.Prime
+          (Rat.HeightOneSpectrum.natGenerator prime)) :=
+        ⟨Rat.HeightOneSpectrum.prime_natGenerator prime⟩
+      letI : NormedAlgebra (prime.adicCompletion ℚ) field.carrier :=
+        field.normedAlgebra
+      letI : Module (prime.adicCompletion ℚ) field.carrier :=
+        field.normedAlgebra.toAlgebra.toModule
+      letI : FiniteDimensional (prime.adicCompletion ℚ) field.carrier :=
+        field.finiteDimensional
+      letI : Algebra (Padic (Rat.HeightOneSpectrum.natGenerator prime))
+          field.carrier := integers.padicFieldRingHom.toAlgebra
+      let completionPadicRingEquiv :
+          prime.adicCompletion ℚ ≃+*
+            Padic (Rat.HeightOneSpectrum.natGenerator prime) := by
+        letI : Algebra ℚ (prime.adicCompletion ℚ) :=
+          IsDedekindDomain.HeightOneSpectrum.instAlgebraAdicCompletion
+            (NumberField.RingOfIntegers ℚ) ℚ prime
+        exact
+          (Rat.HeightOneSpectrum.adicCompletion.padicEquiv prime).toRingEquiv
+      change Module.Basis (Fin integers.localDegree.1)
+        (Padic (Rat.HeightOneSpectrum.natGenerator prime)) field.carrier
+      exact (Module.finBasis (prime.adicCompletion ℚ) field.carrier).mapCoeffs
+        completionPadicRingEquiv fun scalar value => by
+          simp only [Algebra.smul_def]
+          change algebraMap (prime.adicCompletion ℚ) field.carrier
+              (completionPadicRingEquiv.symm
+                (completionPadicRingEquiv scalar)) * value =
+            algebraMap (prime.adicCompletion ℚ) field.carrier scalar * value
+          rw [completionPadicRingEquiv.symm_apply_apply]
+  | infinite _ =>
+      exact nomatch integers.placeKind
+
 /-- The identity additive equivalence between the two valuation-ring carriers. -/
 def integerAddEquivIntegerSubring
     (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
@@ -3124,20 +3262,82 @@ noncomputable def padicModuleOfRingHom
     (PadicInt integers.rationalPrime)
 
 /--
-The integral `Z_p`-lattice presentation of a finite extension `L/Q_p`.
+The source-theoretic characterization of the integer ring of `L/Q_p`.
 
-The scalar map into the actual valuation ring is derived above.  The remaining
-local-completion input is a basis of that valuation ring, indexed by the actual
-local degree.  The residue module, its basis, and its cardinality are derived
-below rather than stored here.
+The remaining local-completion obligation is the canonical statement that the
+norm unit ball `O_L` is the integral closure of `Z_p` in `L`.  A basis is not
+stored: finite generation, freeness, rank, and the basis are derived from this
+property and the transported `Q_p` field basis below.
 -/
-class PAdicIntegralBasis
-    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) where
-  basis : letI := integers.padicModuleOfRingHom integers.padicScalarMap
-    Module.Basis (Fin integers.localDegree.1)
-      (PadicInt integers.rationalPrime) integers.integerAddSubgroup
+class PAdicIntegralClosure
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) : Prop where
+  isIntegralClosure :
+    letI : Algebra (PadicInt integers.rationalPrime) field.carrier :=
+      integers.padicIntegerFieldRingHom.toAlgebra
+    letI : Algebra integers.integerRing.toSubring field.carrier :=
+      (ValuationSubring.subtype integers.integerRing).toAlgebra
+    IsIntegralClosure integers.integerRing.toSubring
+      (PadicInt integers.rationalPrime) field.carrier
 
-namespace PAdicIntegralBasis
+/--
+The integral `Z_p` basis of `O_L`, derived from integral closure rather than
+accepted as local presentation data.
+-/
+noncomputable def padicIntegralBasis
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
+    [closure : integers.PAdicIntegralClosure] :
+    letI := integers.padicModuleOfRingHom integers.padicScalarMap
+    Module.Basis (Fin integers.localDegree.1)
+      (PadicInt integers.rationalPrime) integers.integerAddSubgroup := by
+  let baseIntegers := PadicInt integers.rationalPrime
+  let baseField := Padic integers.rationalPrime
+  let localField := field.carrier
+  let localIntegers := integers.integerRing.toSubring
+  letI : Algebra baseField localField := integers.padicFieldRingHom.toAlgebra
+  letI : Algebra baseIntegers localField :=
+    integers.padicIntegerFieldRingHom.toAlgebra
+  letI : Algebra localIntegers localField :=
+    (ValuationSubring.subtype integers.integerRing).toAlgebra
+  letI : Algebra baseIntegers localIntegers := integers.padicScalarMap.toAlgebra
+  letI : IsScalarTower baseIntegers baseField localField :=
+    IsScalarTower.of_algebraMap_eq' rfl
+  letI : IsScalarTower baseIntegers localIntegers localField :=
+    IsScalarTower.of_algebraMap_eq fun value => by
+      change integers.padicIntegerFieldRingHom value =
+        ((integers.padicScalarMap value : localIntegers) : localField)
+      symm
+      exact integers.padicScalarMap_coe_eq_padicFieldRingHom value
+  letI : IsIntegralClosure localIntegers baseIntegers localField :=
+    closure.isIntegralClosure
+  letI : Module.IsTorsionFree baseIntegers localField :=
+    Module.IsTorsionFree.trans_faithfulSMul
+      baseIntegers baseField localField
+  letI : Module.Finite baseField localField :=
+    Module.Finite.of_basis integers.padicFieldBasis
+  letI : Module.Free baseIntegers localIntegers :=
+    IsIntegralClosure.module_free
+      baseIntegers baseField localField localIntegers
+  letI : Module.Finite baseIntegers localIntegers :=
+    IsIntegralClosure.finite
+      baseIntegers baseField localField localIntegers
+  have hfieldRank :
+      Module.finrank baseField localField = integers.localDegree.1 := by
+    rw [Module.finrank_eq_card_basis integers.padicFieldBasis]
+    simp
+  have hintegerRank :
+      Module.finrank baseIntegers localIntegers = integers.localDegree.1 :=
+    (IsIntegralClosure.rank
+      baseIntegers baseField localField localIntegers).trans hfieldRank
+  let basis : Module.Basis (Fin integers.localDegree.1)
+      baseIntegers localIntegers :=
+    Module.finBasisOfFinrankEq
+      baseIntegers localIntegers hintegerRank
+  letI : Module baseIntegers integers.integerAddSubgroup :=
+    integers.padicModuleOfRingHom integers.padicScalarMap
+  exact basis.map
+    (integers.integerAddEquivIntegerSubring.linearEquiv baseIntegers).symm
+
+namespace PAdicIntegralClosure
 
 variable {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
 
@@ -3162,13 +3362,13 @@ theorem padicPrime_smul
   rw [map_natCast]
   simp [rationalPrimeScalar]
 
-variable [integral : integers.PAdicIntegralBasis]
+variable [closure : integers.PAdicIntegralClosure]
 
 /-- Reduce every integral-basis coefficient modulo `p`. -/
 noncomputable def coefficientReduction :
     integers.integerAddSubgroup →+
       (Fin integers.localDegree.1 → ZMod integers.rationalPrime) where
-  toFun value index := PadicInt.toZMod (integral.basis.repr value index)
+  toFun value index := PadicInt.toZMod (integers.padicIntegralBasis.repr value index)
   map_zero' := by
     funext index
     simp
@@ -3182,7 +3382,7 @@ theorem coefficientReduction_surjective :
   intro values
   choose coefficients hcoefficients using fun index =>
     ZMod.ringHom_surjective PadicInt.toZMod (values index)
-  refine ⟨integral.basis.repr.symm
+  refine ⟨integers.padicIntegralBasis.repr.symm
     ((Finsupp.linearEquivFunOnFinite
       (PadicInt integers.rationalPrime)
       (PadicInt integers.rationalPrime)
@@ -3203,12 +3403,12 @@ theorem coefficientReduction_eq_zero_iff
         ∃ coefficient : PadicInt integers.rationalPrime,
           (integers.rationalPrime : PadicInt integers.rationalPrime) *
               coefficient =
-            integral.basis.repr value index := by
+            integers.padicIntegralBasis.repr value index := by
       intro index
       have hzero :
-          PadicInt.toZMod (integral.basis.repr value index) = 0 := by
+          PadicInt.toZMod (integers.padicIntegralBasis.repr value index) = 0 := by
         simpa [coefficientReduction] using congr_fun hvalue index
-      have hmem : integral.basis.repr value index ∈
+      have hmem : integers.padicIntegralBasis.repr value index ∈
           IsLocalRing.maximalIdeal (PadicInt integers.rationalPrime) := by
         rw [← PadicInt.ker_toZMod]
         exact hzero
@@ -3217,12 +3417,12 @@ theorem coefficientReduction_eq_zero_iff
       rcases hmem with ⟨coefficient, hcoefficient⟩
       exact ⟨coefficient, hcoefficient.symm⟩
     choose coefficients hcoefficients using hcoefficients
-    let source := integral.basis.repr.symm
+    let source := integers.padicIntegralBasis.repr.symm
       ((Finsupp.linearEquivFunOnFinite
         (PadicInt integers.rationalPrime)
         (PadicInt integers.rationalPrime)
         (Fin integers.localDegree.1)).symm coefficients)
-    refine ⟨source, integral.basis.repr.injective ?_⟩
+    refine ⟨source, integers.padicIntegralBasis.repr.injective ?_⟩
     ext index
     simp [source, hcoefficients]
   · rintro ⟨source, rfl⟩
@@ -3284,7 +3484,7 @@ theorem quotient_finrank_eq :
     (quotientLinearEquiv (integers := integers))]
   simp
 
-end PAdicIntegralBasis
+end PAdicIntegralClosure
 
 /-- Finiteness and cardinality of the actual quotient `O_L / p O_L`. -/
 structure ResidueQuotientFormula
@@ -3338,12 +3538,12 @@ structure RationalPrimeResidueModule
     Module.finrank (ZMod integers.rationalPrime)
         integers.RationalPrimeQuotient = integers.localDegree.1
 
-/-- Build the residue-module identity from the actual integral `Z_p` basis. -/
-noncomputable def PAdicIntegralBasis.toRationalPrimeResidueModule
+/-- Build the residue-module identity from the derived integral `Z_p` basis. -/
+noncomputable def PAdicIntegralClosure.toRationalPrimeResidueModule
     {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
-    [integers.PAdicIntegralBasis] :
+    [integers.PAdicIntegralClosure] :
     integers.RationalPrimeResidueModule where
-  quotient_finrank_eq := PAdicIntegralBasis.quotient_finrank_eq
+  quotient_finrank_eq := PAdicIntegralClosure.quotient_finrank_eq
 
 /-- Finiteness of `O_L / p O_L` follows from its positive finite dimension. -/
 noncomputable abbrev RationalPrimeResidueModule.quotientFintype
@@ -5293,14 +5493,14 @@ def dilateRegion
   ⟨normalization.dilation '' region.carrier,
     normalization.admissible_image region⟩
 
-/-- The integral `Z_p` basis derives the raw prime dilation on a measured field. -/
+/-- Integral closure derives the raw prime dilation on a measured field. -/
 noncomputable def ofIntegers
     (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
-    [integers.PAdicIntegralBasis] :
+    [integers.PAdicIntegralClosure] :
     NonarchimedeanPrimeDilation
       (SourcePacketMeasuredField.ofNonarchimedean integers) := by
   let residue :=
-    SourceNonarchimedeanLocalFieldIntegers.PAdicIntegralBasis.toRationalPrimeResidueModule
+    SourceNonarchimedeanLocalFieldIntegers.PAdicIntegralClosure.toRationalPrimeResidueModule
       (integers := integers)
   exact
     { dilation := integers.rationalPrimeDilation
