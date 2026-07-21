@@ -787,7 +787,10 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceSelectedLocalLogFieldRealization",
         "sourcePStar",
         "sourcePStar_pos",
+        "SourceRationalPlace.residuePrime",
+        "SourceRationalPlace.residuePrime_prime",
         "SourceNonarchimedeanLogShellDefinition",
+        "SourceNonarchimedeanLogShellDefinition.preLogShell_isCompact",
         "SourceArchimedeanLogShellDefinition.fundamentalSegment",
         "SourceArchimedeanLogShellDefinition.rotationOrbit",
         "SourceArchimedeanLogShellDefinition.rotationOrbit_eq_closedBall",
@@ -798,7 +801,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceMonoAnalyticIntegralStructure.logShellCarrier_eq_piBall",
         "SourceMonoAnalyticLogShell"]
       .partialImplementation
-      "The additive log field is tied to the actual selected-place algebraic closure and its filtered field stages. The source log-shell is separated from the packet integral carrier: it is the finite-place additive lattice and the archimedean radius-pi ball of Remark 1.2.2(ii), while the latter's radius-one ball remains the packet integral structure. At finite places, the residue prime, invariant local-unit group, p-adic logarithm range, compact pre-log-shell, and exact p-star scaling equation are explicit obligations. At archimedean places, the rotation orbit of the real fundamental segment [-pi,pi] is proved equal to the radius-pi complex disk and transported to the abstract shell. Constructing the finite obligations from the Frobenioid, the pointed archimedean universal cover and exponential diagram, and the tautological/full log-links remains open.",
+      "The additive log field is tied to the actual selected-place algebraic closure and its filtered field stages. The source log-shell is separated from the packet integral carrier: it is the finite-place additive lattice and the archimedean radius-pi ball of Remark 1.2.2(ii), while the latter's radius-one ball remains the packet integral structure. At finite places, the residue prime is derived from the actual rational place; compact topological invariant local units, a continuous p-adic logarithm with exact range, and the p-star scaling equation are explicit obligations. Compactness of the pre-log-shell is proved from compactness of the units and continuity. At archimedean places, the rotation orbit of the real fundamental segment [-pi,pi] is proved equal to the radius-pi complex disk and transported to the abstract shell. Constructing the finite obligations from the Frobenioid, the pointed archimedean universal cover and exponential diagram, and the tautological/full log-links remains open.",
     clause "III.1.2(vi-viii)" .iutIII
       "IUT III, Proposition 1.2(vi)-(viii)"
       ["SourceNonarchimedeanLogShellSymmetryCore",
@@ -807,11 +810,16 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceMonoAnalyticLogShellSymmetryData",
         "SourceMonoAnalyticLogShell",
         "SourceMonoAnalyticLogShellAlgorithm",
+        "SourceNonarchimedeanLogShellDefinition.Transport",
+        "SourceNonarchimedeanLogShellDefinition.Transport.preLogShell_image",
+        "SourceMonoAnalyticLogShellAlgorithm.transport_preLogShell",
+        "SourceMonoAnalyticLogShellAlgorithm.sourceLocalUnitsEquiv_id",
+        "SourceMonoAnalyticLogShellAlgorithm.sourceLocalUnitsEquiv_comp",
         "SourceMonoAnalyticLogShellAlgorithm.transport_logShell",
         "SourceMonoAnalyticLogShellAlgorithm.transport_measuredRegion",
         "SourceMonoAnalyticLogShellAlgorithm.transport_logVolume"]
       .partialImplementation
-      "A shell carries its actual ind-topological field realization, compact source-shaped shell, finite-place Ism or independent archimedean sign symmetry, and log-volume functional. Prime-strip morphisms act by compatible continuous linear equivalences and algebra automorphisms satisfying identity and composition; preservation of the finite lattice and archimedean Hermitian seminorm derives preservation of the actual radius-pi log-shell and its measured value. Constructing these data functorially from the D-tilde and F-tilde-times-mu components via Absolute Anabelian Topics III, Proposition 5.8, and constructing the Proposition 1.2 poly-isomorphism orbits remain open.",
+      "A shell carries its actual ind-topological field realization, compact source-shaped shell, finite-place Ism or independent archimedean sign symmetry, and log-volume functional. At finite places, prime-strip morphisms also carry continuous local-unit equivalences commuting with the p-adic logarithm; exact preservation of the pre-log-shell is derived, and the unit equivalences satisfy identity and composition. The module and field transports satisfy the same category laws; preservation of the finite lattice and archimedean Hermitian seminorm derives preservation of the actual radius-pi log-shell and its measured value. Constructing these data functorially from the D-tilde and F-tilde-times-mu components via Absolute Anabelian Topics III, Proposition 5.8, and constructing the Proposition 1.2 poly-isomorphism orbits remain open.",
 
     clause "III.3.1" .iutIII "IUT III, Proposition 3.1"
       ["SourceRationalPlace", "SourceRationalPlace.Completion",

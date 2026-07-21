@@ -101,6 +101,26 @@ def kind : SourceRationalPlace -> SourceRationalPlaceKind
   | .finite _ => .nonarchimedean
   | .infinite _ => .archimedean
 
+/-- The rational residue prime determined by a nonarchimedean rational place. -/
+noncomputable def residuePrime
+    (place : SourceRationalPlace)
+    (hkind : place.kind = .nonarchimedean) : ℕ :=
+  match place with
+  | .finite finitePlace =>
+      Rat.HeightOneSpectrum.natGenerator
+        (ThetaFinitePlace.underlyingPrime finitePlace)
+  | .infinite _ => nomatch hkind
+
+theorem residuePrime_prime
+    (place : SourceRationalPlace)
+    (hkind : place.kind = .nonarchimedean) :
+    Nat.Prime (place.residuePrime hkind) := by
+  cases place with
+  | finite finitePlace =>
+      exact Rat.HeightOneSpectrum.prime_natGenerator
+        (ThetaFinitePlace.underlyingPrime finitePlace)
+  | infinite _ => exact nomatch hkind
+
 end SourceRationalPlace
 
 namespace ThetaPlace
@@ -3567,13 +3587,17 @@ structure SourceNonarchimedeanLogShellDefinition
   residuePrime_prime : residuePrime.Prime
   invariantLocalUnits : Type u
   [invariantLocalUnitsCommGroup : CommGroup invariantLocalUnits]
+  [invariantLocalUnitsTopology : TopologicalSpace invariantLocalUnits]
+  [invariantLocalUnitsTopologicalGroup :
+    IsTopologicalGroup invariantLocalUnits]
+  [invariantLocalUnitsCompactSpace : CompactSpace invariantLocalUnits]
   padicLog : invariantLocalUnits →* Multiplicative M
+  padicLog_continuous : Continuous (fun unit => (padicLog unit).toAdd)
   preLogShell : AddSubgroup M
   preLogShell_eq_logRange :
     ∀ value,
       value ∈ preLogShell ↔
         ∃ unit, padicLog unit = Multiplicative.ofAdd value
-  preLogShell_isCompact : IsCompact (preLogShell : Set M)
   shell_mem_iff_scaled_preLogShell :
     ∀ value,
       value ∈ integral.lattice ↔
@@ -3581,6 +3605,82 @@ structure SourceNonarchimedeanLogShellDefinition
 
 attribute [instance]
   SourceNonarchimedeanLogShellDefinition.invariantLocalUnitsCommGroup
+  SourceNonarchimedeanLogShellDefinition.invariantLocalUnitsTopology
+  SourceNonarchimedeanLogShellDefinition.invariantLocalUnitsTopologicalGroup
+  SourceNonarchimedeanLogShellDefinition.invariantLocalUnitsCompactSpace
+
+namespace SourceNonarchimedeanLogShellDefinition
+
+variable {M N : SourceTopologicalQModule.{u}}
+variable {integralM : SourceNonarchimedeanIntegralStructure M}
+variable {integralN : SourceNonarchimedeanIntegralStructure N}
+
+/-- Compactness of the pre-log-shell follows from compact local units and continuity. -/
+theorem preLogShell_isCompact
+    (definition : SourceNonarchimedeanLogShellDefinition M integralM) :
+    IsCompact (definition.preLogShell : Set M) := by
+  have himage : IsCompact
+      ((fun unit => (definition.padicLog unit).toAdd) '' Set.univ) :=
+    isCompact_univ.image definition.padicLog_continuous
+  have hset :
+      ((fun unit => (definition.padicLog unit).toAdd) '' Set.univ) =
+        (definition.preLogShell : Set M) := by
+    ext value
+    simp only [Set.mem_image, Set.mem_univ, true_and]
+    exact definition.preLogShell_eq_logRange value |>.symm
+  rwa [hset] at himage
+
+/-- A functorial finite-place comparison before passing to the scaled shell. -/
+structure Transport
+    (source : SourceNonarchimedeanLogShellDefinition M integralM)
+    (target : SourceNonarchimedeanLogShellDefinition N integralN)
+    (transport : M ≃L[ℚ] N) where
+  localUnitsEquiv :
+    source.invariantLocalUnits ≃ₜ* target.invariantLocalUnits
+  padicLog_commutes :
+    ∀ unit,
+      transport (source.padicLog unit).toAdd =
+        (target.padicLog (localUnitsEquiv unit)).toAdd
+
+namespace Transport
+
+/-- A commuting local-unit logarithm square transports the pre-log-shell exactly. -/
+theorem preLogShell_image
+    {source : SourceNonarchimedeanLogShellDefinition M integralM}
+    {target : SourceNonarchimedeanLogShellDefinition N integralN}
+    {transport : M ≃L[ℚ] N}
+    (compatible : Transport source target transport) :
+    transport '' (source.preLogShell : Set M) =
+      (target.preLogShell : Set N) := by
+  ext targetValue
+  constructor
+  · rintro ⟨sourceValue, hsourceValue, rfl⟩
+    apply (target.preLogShell_eq_logRange _).mpr
+    rcases (source.preLogShell_eq_logRange sourceValue).mp hsourceValue with
+      ⟨sourceUnit, hsourceUnit⟩
+    refine ⟨compatible.localUnitsEquiv sourceUnit, ?_⟩
+    apply Multiplicative.toAdd.injective
+    have hsourceAdd := congrArg Multiplicative.toAdd hsourceUnit
+    rw [← compatible.padicLog_commutes]
+    exact congrArg transport hsourceAdd
+  · intro htargetValue
+    rcases (target.preLogShell_eq_logRange targetValue).mp htargetValue with
+      ⟨targetUnit, htargetUnit⟩
+    let sourceUnit := compatible.localUnitsEquiv.symm targetUnit
+    let sourceValue := transport.symm targetValue
+    refine ⟨sourceValue, ?_, transport.apply_symm_apply targetValue⟩
+    apply (source.preLogShell_eq_logRange sourceValue).mpr
+    refine ⟨sourceUnit, ?_⟩
+    apply Multiplicative.toAdd.injective
+    have htargetAdd := congrArg Multiplicative.toAdd htargetUnit
+    apply transport.injective
+    rw [compatible.padicLog_commutes]
+    simpa only [sourceUnit, compatible.localUnitsEquiv.apply_symm_apply,
+      sourceValue, toAdd_ofAdd, transport.apply_symm_apply] using htargetAdd
+
+end Transport
+
+end SourceNonarchimedeanLogShellDefinition
 
 namespace SourceArchimedeanLogShellDefinition
 
@@ -11074,6 +11174,10 @@ structure SourceMonoAnalyticLogShell
   sourceDefinition :
     SourceMonoAnalyticLogShellDefinition module.rationalCarrier
       place.1.toRational.kind integral
+  sourceDefinition_residuePrime :
+    ∀ hkind : place.1.toRational.kind = .nonarchimedean,
+      (sourceDefinition.asNonarchimedean hkind).residuePrime =
+        place.1.toRational.residuePrime hkind
   symmetryData :
     SourceMonoAnalyticLogShellSymmetryData module.rationalCarrier
       place.1.toRational.kind integral
@@ -11218,6 +11322,13 @@ structure SourceMonoAnalyticLogShellAlgorithm
           ((shell source place).packetNormalization.dilation value) =
         (shell target place).packetNormalization.dilation
           (transport map place value)
+  sourceDefinitionTransport :
+    ∀ {source target} (map : source ⟶ target) place
+      (hkind : place.1.toRational.kind = .nonarchimedean),
+      SourceNonarchimedeanLogShellDefinition.Transport
+        ((shell source place).sourceDefinition.asNonarchimedean hkind)
+        ((shell target place).sourceDefinition.asNonarchimedean hkind)
+        (transport map place)
   transport_id :
     ∀ (strip : SourceDMonoAnalyticPrimeStrip models) place,
       transport (𝟙 strip) place =
@@ -11226,6 +11337,12 @@ structure SourceMonoAnalyticLogShellAlgorithm
   realizationTransport_id :
     ∀ (strip : SourceDMonoAnalyticPrimeStrip models) place,
       realizationTransport (𝟙 strip) place = AlgEquiv.refl
+  sourceDefinitionTransport_id :
+    ∀ (strip : SourceDMonoAnalyticPrimeStrip models) place hkind,
+      (sourceDefinitionTransport (𝟙 strip) place hkind).localUnitsEquiv =
+        ContinuousMulEquiv.refl
+          ((shell strip place).sourceDefinition.asNonarchimedean
+            hkind).invariantLocalUnits
   transport_comp :
     ∀ {source middle target : SourceDMonoAnalyticPrimeStrip models}
       (first : source ⟶ middle) (second : middle ⟶ target) place,
@@ -11237,6 +11354,13 @@ structure SourceMonoAnalyticLogShellAlgorithm
       realizationTransport (first ≫ second) place =
         (realizationTransport first place).trans
           (realizationTransport second place)
+  sourceDefinitionTransport_comp :
+    ∀ {source middle target : SourceDMonoAnalyticPrimeStrip models}
+      (first : source ⟶ middle) (second : middle ⟶ target) place hkind,
+      (sourceDefinitionTransport
+          (first ≫ second) place hkind).localUnitsEquiv =
+        (sourceDefinitionTransport first place hkind).localUnitsEquiv.trans
+          (sourceDefinitionTransport second place hkind).localUnitsEquiv
 
 namespace SourceMonoAnalyticLogShellAlgorithm
 
@@ -11302,6 +11426,59 @@ theorem transport_logShell
         simpa only [sourceValue,
           (algorithm.transport map place).apply_symm_apply] using htargetValue
       · exact (algorithm.transport map place).apply_symm_apply targetValue
+
+/-- The rational residue prime in every finite shell is the prime below the place. -/
+theorem sourceDefinition_residuePrime
+    (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
+    (strip : SourceDMonoAnalyticPrimeStrip models)
+    (place : SourceSelectedPlace theta)
+    (hkind : place.1.toRational.kind = .nonarchimedean) :
+    ((algorithm.shell strip place).sourceDefinition.asNonarchimedean
+      hkind).residuePrime = place.1.toRational.residuePrime hkind :=
+  (algorithm.shell strip place).sourceDefinition_residuePrime hkind
+
+/-- Finite prime-strip transport preserves the unscaled logarithm range. -/
+theorem transport_preLogShell
+    (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
+    {source target : SourceDMonoAnalyticPrimeStrip models}
+    (map : source ⟶ target) (place : SourceSelectedPlace theta)
+    (hkind : place.1.toRational.kind = .nonarchimedean) :
+    algorithm.transport map place ''
+        (((algorithm.shell source place).sourceDefinition.asNonarchimedean
+          hkind).preLogShell :
+          Set (algorithm.shell source place).module.rationalCarrier) =
+      (((algorithm.shell target place).sourceDefinition.asNonarchimedean
+        hkind).preLogShell :
+        Set (algorithm.shell target place).module.rationalCarrier) :=
+  (algorithm.sourceDefinitionTransport map place hkind).preLogShell_image
+
+/-- The local-unit portion of finite transport is the identity on identity arrows. -/
+theorem sourceLocalUnitsEquiv_id
+    (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
+    (strip : SourceDMonoAnalyticPrimeStrip models)
+    (place : SourceSelectedPlace theta)
+    (hkind : place.1.toRational.kind = .nonarchimedean) :
+    (algorithm.sourceDefinitionTransport
+      (𝟙 strip) place hkind).localUnitsEquiv =
+        ContinuousMulEquiv.refl
+          ((algorithm.shell strip place).sourceDefinition.asNonarchimedean
+            hkind).invariantLocalUnits :=
+  algorithm.sourceDefinitionTransport_id strip place hkind
+
+/-- Local-unit transport composes with prime-strip morphisms. -/
+theorem sourceLocalUnitsEquiv_comp
+    (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
+    {source middle target : SourceDMonoAnalyticPrimeStrip models}
+    (first : source ⟶ middle) (second : middle ⟶ target)
+    (place : SourceSelectedPlace theta)
+    (hkind : place.1.toRational.kind = .nonarchimedean) :
+    (algorithm.sourceDefinitionTransport
+      (first ≫ second) place hkind).localUnitsEquiv =
+        (algorithm.sourceDefinitionTransport
+          first place hkind).localUnitsEquiv.trans
+          (algorithm.sourceDefinitionTransport
+            second place hkind).localUnitsEquiv :=
+  algorithm.sourceDefinitionTransport_comp first second place hkind
 
 /-- Measured log-shell regions are transported by the actual log-shell map. -/
 theorem transport_measuredRegion

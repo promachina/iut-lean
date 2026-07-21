@@ -120,8 +120,15 @@ end Iut.SourceInfiniteLocalFieldStages
 #print axioms Iut.SourceMonoAnalyticIntegralStructure.logShellCarrier_eq_piBall
 #print axioms Iut.sourcePStar_pos
 #print axioms Iut.sourcePStar_ne_zero
+#print axioms Iut.SourceRationalPlace.residuePrime_prime
+#print axioms Iut.SourceNonarchimedeanLogShellDefinition.preLogShell_isCompact
+#print axioms Iut.SourceNonarchimedeanLogShellDefinition.Transport.preLogShell_image
 #print axioms Iut.SourceArchimedeanLogShellDefinition.rotationOrbit_eq_closedBall
 #print axioms Iut.SourceArchimedeanLogShellDefinition.image_piBall_eq_rotationOrbit
+#print axioms Iut.SourceMonoAnalyticLogShellAlgorithm.sourceDefinition_residuePrime
+#print axioms Iut.SourceMonoAnalyticLogShellAlgorithm.transport_preLogShell
+#print axioms Iut.SourceMonoAnalyticLogShellAlgorithm.sourceLocalUnitsEquiv_id
+#print axioms Iut.SourceMonoAnalyticLogShellAlgorithm.sourceLocalUnitsEquiv_comp
 #print axioms Iut.SourceMonoAnalyticLogShellAlgorithm.transport_logShell
 #print axioms Iut.SourceMonoAnalyticLogShellAlgorithm.transport_measuredRegion
 #print axioms Iut.SourceMonoAnalyticLogShellAlgorithm.transport_logVolume
