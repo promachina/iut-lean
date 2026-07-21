@@ -88,6 +88,20 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceSelectedPlace.moduliLocalDegree
 #print axioms Iut.SourceSelectedPlace.moduliRationalLocalDegree
 
+namespace Iut.SourceTopologicalLocalField.LocalDegreeTower
+
+#print axioms localDegree_eq_relativeDegree_mul_moduliDegree
+
+end Iut.SourceTopologicalLocalField.LocalDegreeTower
+
+namespace Iut.SourcePacketFiniteFieldStage
+
+#print axioms localTensor_finrank
+#print axioms field_finrank_sum
+#print axioms field_finrank_sum_eq_factor_finrank_product
+
+end Iut.SourcePacketFiniteFieldStage
+
 namespace Iut.SourceNonarchimedeanLocalFieldIntegers
 
 #print axioms normalizedLogVolume_value_eq_zero
@@ -119,6 +133,8 @@ end Iut.SourcePacketFiniteMeasuredFieldDecomposition
 
 namespace Iut.SourcePacketFiniteStageLogVolume.DirectProductPrimeNormalization
 
+#print axioms factor_localDegree
+#print axioms block_degree_sum
 #print axioms blockDilation_image_blockFieldProductRegion
 #print axioms blockVolume_valueOn_dilatedFieldRegions_eq_degreeProduct
 #print axioms stageDilation_image_packetAdmissibleRegion

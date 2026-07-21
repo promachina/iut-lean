@@ -15,6 +15,7 @@ import Mathlib.CategoryTheory.Endomorphism
 import Mathlib.CategoryTheory.Comma.Arrow
 import Mathlib.Data.Setoid.Basic
 import Mathlib.LinearAlgebra.PiTensorProduct
+import Mathlib.LinearAlgebra.PiTensorProduct.Basis
 import Mathlib.LinearAlgebra.PiTensorProduct.DirectSum
 import Mathlib.MeasureTheory.Constructions.Pi
 import Mathlib.MeasureTheory.Integral.IntervalIntegral.Periodic
@@ -430,10 +431,9 @@ structure SourceTopologicalLocalField
     (rationalPlace : SourceRationalPlace) where
   carrier : Type u
   [normedField : NormedField carrier]
-  [localAlgebra : Algebra rationalPlace.Completion carrier]
+  [normedAlgebra : NormedAlgebra rationalPlace.Completion carrier]
   [rationalAlgebra : Algebra ℚ carrier]
   [scalarTower : IsScalarTower ℚ rationalPlace.Completion carrier]
-  [normedSpace : NormedSpace rationalPlace.Completion carrier]
   [finiteDimensional :
     FiniteDimensional rationalPlace.Completion carrier]
   [completeSpace : CompleteSpace carrier]
@@ -442,16 +442,65 @@ structure SourceTopologicalLocalField
 
 attribute [instance]
   SourceTopologicalLocalField.normedField
-  SourceTopologicalLocalField.localAlgebra
+  SourceTopologicalLocalField.normedAlgebra
   SourceTopologicalLocalField.rationalAlgebra
   SourceTopologicalLocalField.scalarTower
-  SourceTopologicalLocalField.normedSpace
   SourceTopologicalLocalField.finiteDimensional
   SourceTopologicalLocalField.completeSpace
   SourceTopologicalLocalField.locallyCompactSpace
   SourceTopologicalLocalField.secondCountableTopology
 
 namespace SourceTopologicalLocalField
+
+/-- The actual local degree over `Q_(v_Q)`. -/
+noncomputable def localDegree
+    {rationalPlace : SourceRationalPlace}
+    (field : SourceTopologicalLocalField.{u} rationalPlace) : ℕ+ :=
+  ⟨Module.finrank rationalPlace.Completion field.carrier,
+    Module.finrank_pos⟩
+
+/--
+An actual local-field tower
+`Q_(v_Q) ⊆ (F_mod)_v ⊆ K_v` attached to one finite packet factor.
+-/
+structure LocalDegreeTower
+    {rationalPlace : SourceRationalPlace}
+    (field : SourceTopologicalLocalField.{u} rationalPlace) where
+  moduliField : SourceTopologicalLocalField.{u} rationalPlace
+  [selectedNormedAlgebra : NormedAlgebra moduliField.carrier field.carrier]
+  [selectedScalarTower :
+    IsScalarTower rationalPlace.Completion moduliField.carrier field.carrier]
+  [selectedFiniteDimensional :
+    FiniteDimensional moduliField.carrier field.carrier]
+
+attribute [instance]
+  LocalDegreeTower.selectedNormedAlgebra
+  LocalDegreeTower.selectedScalarTower
+  LocalDegreeTower.selectedFiniteDimensional
+
+namespace LocalDegreeTower
+
+variable {rationalPlace : SourceRationalPlace}
+variable {field : SourceTopologicalLocalField.{u} rationalPlace}
+
+/-- The relative degree `[K_v : (F_mod)_v]`. -/
+noncomputable def relativeDegree
+    (tower : field.LocalDegreeTower) : ℕ+ :=
+  ⟨Module.finrank tower.moduliField.carrier field.carrier,
+    Module.finrank_pos⟩
+
+/-- The local tower law for the two degrees in Remark 3.1.1(ii). -/
+theorem localDegree_eq_relativeDegree_mul_moduliDegree
+    (tower : field.LocalDegreeTower) :
+    field.localDegree.1 =
+      tower.relativeDegree.1 * tower.moduliField.localDegree.1 := by
+  change
+    Module.finrank rationalPlace.Completion field.carrier =
+      Module.finrank tower.moduliField.carrier field.carrier *
+        Module.finrank rationalPlace.Completion tower.moduliField.carrier
+  rw [mul_comm, Module.finrank_mul_finrank]
+
+end LocalDegreeTower
 
 /-- The Borel sigma-algebra on a finite local-field stage. -/
 noncomputable instance measurableSpace
@@ -868,6 +917,10 @@ structure SourcePacketFiniteFieldStage
   tensorAlgebra : Type u
   [tensorAlgebraCommRing : CommRing tensorAlgebra]
   [tensorAlgebraRationalAlgebra : Algebra ℚ tensorAlgebra]
+  [tensorAlgebraLocalAlgebra :
+    Algebra packet.rationalPlace.Completion tensorAlgebra]
+  [tensorAlgebraScalarTower :
+    IsScalarTower ℚ packet.rationalPlace.Completion tensorAlgebra]
   [tensorAlgebraTopologicalSpace : TopologicalSpace tensorAlgebra]
   [tensorAlgebraIsTopologicalRing : IsTopologicalRing tensorAlgebra]
   stageTensorIso :
@@ -877,8 +930,16 @@ structure SourcePacketFiniteFieldStage
           ((presentation.factorPresentation factor
               (placeTuple factor)).fieldStage
                 (factorStage factor)).field.rationalModule))
+  localStageTensorIso :
+    ModuleCat.of packet.rationalPlace.Completion tensorAlgebra ≅
+      ModuleCat.of packet.rationalPlace.Completion
+        (PiTensorProduct packet.rationalPlace.Completion (fun factor ↦
+          ((presentation.factorPresentation factor
+              (placeTuple factor)).fieldStage
+                (factorStage factor)).field.carrier))
   fieldDecomposition :
-    tensorAlgebra ≃ₐ[ℚ] (∀ index, (field index).carrier)
+    tensorAlgebra ≃ₐ[packet.rationalPlace.Completion]
+      (∀ index, (field index).carrier)
   fieldDecomposition_continuous : Continuous fieldDecomposition
   fieldDecomposition_symm_continuous : Continuous fieldDecomposition.symm
   blockEmbedding :
@@ -904,6 +965,8 @@ attribute [instance]
   SourcePacketFiniteFieldStage.fieldIndexNonempty
   SourcePacketFiniteFieldStage.tensorAlgebraCommRing
   SourcePacketFiniteFieldStage.tensorAlgebraRationalAlgebra
+  SourcePacketFiniteFieldStage.tensorAlgebraLocalAlgebra
+  SourcePacketFiniteFieldStage.tensorAlgebraScalarTower
   SourcePacketFiniteFieldStage.tensorAlgebraTopologicalSpace
   SourcePacketFiniteFieldStage.tensorAlgebraIsTopologicalRing
 
@@ -913,6 +976,8 @@ variable {j : ℕ} {packet : SourceMonoAnalyticTensorPacket.{u} j}
 variable {presentation :
   SourceMonoAnalyticTensorPacketFieldPresentation packet}
 variable {placeTuple : packet.PlaceTupleIndex}
+
+open Module
 
 /-- The rational topological module underlying the chosen finite tensor stage. -/
 noncomputable def module
@@ -927,6 +992,115 @@ noncomputable def fieldDecompositionHomeomorph
   toEquiv := stage.fieldDecomposition.toEquiv
   continuous_toFun := stage.fieldDecomposition_continuous
   continuous_invFun := stage.fieldDecomposition_symm_continuous
+
+/--
+The local dimension of a finite tensor stage is the product of the local
+dimensions of its factors.  This is the finite-stage dimension calculation
+behind the weights in Remark 3.1.1(ii).
+-/
+theorem localTensor_finrank
+    (stage : SourcePacketFiniteFieldStage packet presentation placeTuple) :
+    Module.finrank packet.rationalPlace.Completion stage.tensorAlgebra =
+      ∏ factor,
+        Module.finrank packet.rationalPlace.Completion
+          ((presentation.factorPresentation factor
+              (placeTuple factor)).fieldStage
+                (stage.factorStage factor)).field.carrier := by
+  classical
+  let factorField : Fin (j + 1) → Type u := fun factor =>
+    ((presentation.factorPresentation factor
+        (placeTuple factor)).fieldStage
+          (stage.factorStage factor)).field.carrier
+  let basis : ∀ factor,
+      Basis
+        (Module.Free.ChooseBasisIndex packet.rationalPlace.Completion
+          (factorField factor))
+        packet.rationalPlace.Completion (factorField factor) :=
+    fun factor => Module.Free.chooseBasis _ _
+  calc
+    Module.finrank packet.rationalPlace.Completion stage.tensorAlgebra =
+        Module.finrank packet.rationalPlace.Completion
+          (PiTensorProduct packet.rationalPlace.Completion factorField) :=
+      stage.localStageTensorIso.toLinearEquiv.finrank_eq
+    _ = Fintype.card
+          (∀ factor,
+            Module.Free.ChooseBasisIndex packet.rationalPlace.Completion
+              (factorField factor)) :=
+      Module.finrank_eq_card_basis (Basis.piTensorProduct basis)
+    _ = ∏ factor,
+          Fintype.card
+            (Module.Free.ChooseBasisIndex packet.rationalPlace.Completion
+              (factorField factor)) := Fintype.card_pi
+    _ = ∏ factor,
+          Module.finrank packet.rationalPlace.Completion
+            (factorField factor) := by
+      apply Finset.prod_congr rfl
+      intro factor _
+      exact (Module.finrank_eq_card_basis (basis factor)).symm
+
+/--
+The algebra decomposition, viewed with the canonical pointwise local scalar
+action on the product of field summands.
+-/
+noncomputable def fieldDecompositionPiLinear
+    (stage : SourcePacketFiniteFieldStage packet presentation placeTuple) :
+    @LinearEquiv packet.rationalPlace.Completion
+      packet.rationalPlace.Completion _ _
+      (RingHom.id packet.rationalPlace.Completion)
+      (RingHom.id packet.rationalPlace.Completion) _ _
+      stage.tensorAlgebra
+      (∀ index, (stage.field index).carrier) _ _
+      stage.tensorAlgebraLocalAlgebra.toModule
+      (Pi.module stage.fieldIndex
+        (fun index => (stage.field index).carrier)
+        packet.rationalPlace.Completion) where
+  toEquiv := stage.fieldDecomposition.toEquiv
+  map_add' := stage.fieldDecomposition.map_add
+  map_smul' := by
+    intro scalar value
+    funext index
+    simpa only [Pi.smul_apply, RingHom.id_apply] using congrFun
+      (stage.fieldDecomposition.toLinearEquiv.map_smul scalar value) index
+
+/--
+The direct-product decomposition computes the same local dimension as the sum
+of the dimensions of its actual field summands.
+-/
+theorem field_finrank_sum
+    (stage : SourcePacketFiniteFieldStage packet presentation placeTuple) :
+    (∑ index,
+      Module.finrank packet.rationalPlace.Completion
+        (stage.field index).carrier) =
+      Module.finrank packet.rationalPlace.Completion stage.tensorAlgebra := by
+  classical
+  calc
+    (∑ index,
+        Module.finrank packet.rationalPlace.Completion
+          (stage.field index).carrier) =
+        @Module.finrank packet.rationalPlace.Completion
+          (∀ index, (stage.field index).carrier) _ _
+          (Pi.module stage.fieldIndex
+            (fun index => (stage.field index).carrier)
+            packet.rationalPlace.Completion) :=
+      (Module.finrank_pi_fintype packet.rationalPlace.Completion).symm
+    _ = Module.finrank packet.rationalPlace.Completion stage.tensorAlgebra :=
+      stage.fieldDecompositionPiLinear.finrank_eq.symm
+
+/--
+Consequently the sum of the degrees of the decomposed fields equals the
+product of the degrees of the tensor factors.
+-/
+theorem field_finrank_sum_eq_factor_finrank_product
+    (stage : SourcePacketFiniteFieldStage packet presentation placeTuple) :
+    (∑ index,
+      Module.finrank packet.rationalPlace.Completion
+        (stage.field index).carrier) =
+      ∏ factor,
+        Module.finrank packet.rationalPlace.Completion
+          ((presentation.factorPresentation factor
+              (placeTuple factor)).fieldStage
+                (stage.factorStage factor)).field.carrier := by
+  rw [stage.field_finrank_sum, stage.localTensor_finrank]
 
 end SourcePacketFiniteFieldStage
 
@@ -2679,8 +2853,7 @@ theorem rationalPrimeDilation_apply
 /-- The full local degree `[L : Q_p]` governing raw additive Haar scaling. -/
 noncomputable def localDegree
     (_integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) : ℕ+ :=
-  ⟨Module.finrank rationalPlace.Completion field.carrier,
-    Module.finrank_pos⟩
+  field.localDegree
 
 /-- The raw Haar scale `p^{-[L:Q_p]}` of multiplication by `p`. -/
 noncomputable def rationalPrimeScale
@@ -4737,7 +4910,6 @@ variable {field : SourceTopologicalLocalField.{u} rationalPlace}
 /-- Raw rational-prime dilation data on one genuine measured local field. -/
 structure NonarchimedeanPrimeDilation
     (measured : SourcePacketMeasuredField rationalPlace field) where
-  localDegree : ℕ+
   dilation : field.carrier ≃ field.carrier
   admissible_image :
     ∀ region : measured.volume.AdmissibleRegion,
@@ -4747,10 +4919,16 @@ structure NonarchimedeanPrimeDilation
       measured.volume.valueOn
           ⟨dilation '' region.carrier, admissible_image region⟩ =
         measured.volume.valueOn region +
-          (localDegree.1 : ℝ) *
+          (field.localDegree.1 : ℝ) *
             SourceNormalizedLogVolume.packetLogVolumeShift rationalPlace
 
 namespace NonarchimedeanPrimeDilation
+
+/-- The dilation degree is the actual degree of its local field. -/
+noncomputable def localDegree
+    {measured : SourcePacketMeasuredField rationalPlace field}
+    (_normalization : measured.NonarchimedeanPrimeDilation) : ℕ+ :=
+  field.localDegree
 
 def dilateRegion
     {measured : SourcePacketMeasuredField rationalPlace field}
@@ -4767,7 +4945,6 @@ noncomputable def ofIntegers
     (residue : integers.RationalPrimeResidueModule residueField) :
     NonarchimedeanPrimeDilation
       (SourcePacketMeasuredField.ofNonarchimedean integers) where
-  localDegree := integers.localDegree
   dilation := integers.rationalPrimeDilation
   admissible_image := by
     intro region
@@ -5905,24 +6082,95 @@ theorem toNormalizedLogVolume_valueOn_admissibleProductRegion_eq_weightedSum
     (measured.blockVolume placeTuple).valueOn (regions placeTuple)]
 
 /--
-Fieldwise rational-prime dilations together with the tensor-decomposition
-degree identity used in Remark 3.1.1(ii).
+Fieldwise rational-prime dilations together with the factorwise local-degree
+identification used in Remark 3.1.1(ii).  The tensor-block degree identity is
+derived below from the actual local tensor product and field decomposition.
 -/
 structure DirectProductPrimeNormalization
     (data : SourcePacketFiniteStageLogVolume packet decomposition measured) where
   fieldDilation : ∀ index : decomposition.FieldSummandIndex,
     (measured.measuredField index).NonarchimedeanPrimeDilation
-  block_degree_sum : ∀ placeTuple : packet.PlaceTupleIndex,
-    (∑ index : (decomposition.blockStage placeTuple).fieldIndex,
-      (fieldDilation ⟨placeTuple, index⟩).localDegree.1) =
-      (data.multiplicity placeTuple).1 *
-        ∏ factor,
-          (data.placeNormalizationDegree (placeTuple factor)).1
+  factorDegreeTower :
+    ∀ (placeTuple : packet.PlaceTupleIndex) (factor : Fin (j + 1)),
+      SourceTopologicalLocalField.LocalDegreeTower
+        (((presentation.factorPresentation factor
+            (placeTuple factor)).fieldStage
+              ((decomposition.blockStage placeTuple).factorStage factor)).field)
+  factorMultiplicity_eq :
+    ∀ (placeTuple : packet.PlaceTupleIndex) (factor : Fin (j + 1)),
+      data.placeMultiplicity (placeTuple factor) =
+        (factorDegreeTower placeTuple factor).relativeDegree
+  factorNormalizationDegree_eq :
+    ∀ (placeTuple : packet.PlaceTupleIndex) (factor : Fin (j + 1)),
+      data.placeNormalizationDegree (placeTuple factor) =
+        (factorDegreeTower placeTuple factor).moduliField.localDegree
 
 namespace DirectProductPrimeNormalization
 
 variable
     {data : SourcePacketFiniteStageLogVolume packet decomposition measured}
+
+/-- Each factor degree is derived from its actual local-field tower. -/
+theorem factor_localDegree
+    (normalization : data.DirectProductPrimeNormalization)
+    (placeTuple : packet.PlaceTupleIndex) (factor : Fin (j + 1)) :
+    Module.finrank packet.rationalPlace.Completion
+        (((presentation.factorPresentation factor
+            (placeTuple factor)).fieldStage
+              ((decomposition.blockStage placeTuple).factorStage factor))
+          |>.field.carrier) =
+      (data.placeMultiplicity (placeTuple factor)).1 *
+        (data.placeNormalizationDegree (placeTuple factor)).1 := by
+  rw [normalization.factorMultiplicity_eq placeTuple factor,
+    normalization.factorNormalizationDegree_eq placeTuple factor]
+  exact (normalization.factorDegreeTower placeTuple factor)
+    |>.localDegree_eq_relativeDegree_mul_moduliDegree
+
+/--
+The tensor-block degree sum is a theorem: field decomposition converts it to
+the tensor dimension, local tensor rank converts that dimension to the product
+of factor degrees, and the factorwise tower formula separates the two source
+weights.
+-/
+theorem block_degree_sum
+    (normalization : data.DirectProductPrimeNormalization)
+    (placeTuple : packet.PlaceTupleIndex) :
+    (∑ index : (decomposition.blockStage placeTuple).fieldIndex,
+      (normalization.fieldDilation ⟨placeTuple, index⟩).localDegree.1) =
+      (data.multiplicity placeTuple).1 *
+        ∏ factor,
+          (data.placeNormalizationDegree (placeTuple factor)).1 := by
+  classical
+  calc
+    (∑ index : (decomposition.blockStage placeTuple).fieldIndex,
+        (normalization.fieldDilation ⟨placeTuple, index⟩).localDegree.1) =
+        ∑ index : (decomposition.blockStage placeTuple).fieldIndex,
+          Module.finrank packet.rationalPlace.Completion
+            ((decomposition.blockStage placeTuple).field index).carrier := by
+      rfl
+    _ = ∏ factor,
+          Module.finrank packet.rationalPlace.Completion
+            (((presentation.factorPresentation factor
+                (placeTuple factor)).fieldStage
+                  ((decomposition.blockStage placeTuple).factorStage factor))
+              |>.field.carrier) :=
+      (decomposition.blockStage placeTuple)
+        |>.field_finrank_sum_eq_factor_finrank_product
+    _ = ∏ factor,
+          ((data.placeMultiplicity (placeTuple factor)).1 *
+            (data.placeNormalizationDegree (placeTuple factor)).1) := by
+      apply Finset.prod_congr rfl
+      intro factor _
+      exact normalization.factor_localDegree placeTuple factor
+    _ = (∏ factor,
+          (data.placeMultiplicity (placeTuple factor)).1) *
+        ∏ factor,
+          (data.placeNormalizationDegree (placeTuple factor)).1 :=
+      Finset.prod_mul_distrib
+    _ = (data.multiplicity placeTuple).1 *
+        ∏ factor,
+          (data.placeNormalizationDegree (placeTuple factor)).1 := by
+      rw [data.multiplicity_val]
 
 /-- Apply the prime dilation in every genuine field of one tensor block. -/
 noncomputable def blockDilation
