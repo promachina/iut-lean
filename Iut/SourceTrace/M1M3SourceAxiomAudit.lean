@@ -94,6 +94,7 @@ visible to Lean's axiom reporter.
 namespace Iut.SourcePacketFiniteMeasuredFieldDecomposition
 
 #print axioms blockFieldDecomposition_image_integralRegion
+#print axioms blockIntegralRegion_iff
 #print axioms blockRadializedRegion_integralRegion
 #print axioms blockRadializedRegion_integralRegion_measurable
 #print axioms blockProductMeasure_integralRegion
@@ -112,6 +113,20 @@ namespace Iut.SourcePacketFiniteStageLogVolume
 #print axioms weightedContent_productRegion
 #print axioms normalized_log_weightedContent_productRegion
 #print axioms toNormalizedLogVolume_valueOn_admissibleProductRegion_eq_weightedSum
+
+namespace Compatible
+
+#print axioms blockRadial_measurePreserving
+#print axioms stageKummer_image_packetIntegralRegion
+#print axioms packetRadialEquiv_image_radializedRegion
+#print axioms replica_measurePreserving
+#print axioms replicaEquiv_image_weightedLift
+#print axioms weightedContent_image
+#print axioms toNormalizedLogVolume_compatible
+#print axioms normalizedLogVolume_value_eq
+#print axioms packetKummer_image_embeddedPacketIntegralRegion
+
+end Compatible
 
 end Iut.SourcePacketFiniteStageLogVolume
 

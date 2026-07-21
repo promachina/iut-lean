@@ -2671,6 +2671,25 @@ theorem blockFieldDecomposition_image_integralRegion
     · exact (blockFieldDecomposition
         (decomposition := decomposition) placeTuple).apply_symm_apply value
 
+/-- Membership in the integral block is detected in genuine field coordinates. -/
+theorem blockIntegralRegion_iff
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex)
+    (value : (decomposition.blockStage placeTuple).module) :
+    value ∈ measured.blockIntegralRegion placeTuple ↔
+      blockFieldDecomposition (decomposition := decomposition) placeTuple value ∈
+        measured.blockFieldIntegralRegion placeTuple := by
+  constructor
+  · intro hvalue
+    rw [← measured.blockFieldDecomposition_image_integralRegion placeTuple]
+    exact ⟨value, hvalue, rfl⟩
+  · intro hvalue
+    rw [← measured.blockFieldDecomposition_image_integralRegion placeTuple] at hvalue
+    obtain ⟨sourceValue, hsourceValue, heq⟩ := hvalue
+    exact (blockFieldDecomposition
+      (decomposition := decomposition) placeTuple).injective heq ▸ hsourceValue
+
 /--
 The radial image of the integral block is exactly the product of the genuine
 fieldwise radial integral regions.
@@ -3493,6 +3512,864 @@ theorem toNormalizedLogVolume_valueOn_admissibleProductRegion_eq_weightedSum
   rw [data.toNormalizedLogVolume_valueOn_admissibleProductRegion]
   rw [data.normalizedReplicaSum_eq_inverseMultiplicitySum fun placeTuple =>
     (measured.blockVolume placeTuple).valueOn (regions placeTuple)]
+
+/-!
+## Finite-stage mono-analytic/holomorphic compatibility
+
+Proposition 3.2(i) transports the actual finite local fields in the tensor
+packet, while Proposition 3.9(ii) asserts compatibility of the resulting
+packet-normalized log-volumes.  The structure below records only the geometric
+transport.  Compatibility of the complete E/W functional is derived below.
+-/
+
+/--
+A source-faithful finite-stage realization of the poly-isomorphisms of
+Proposition 3.2(i), tied to the tensor-packet Kummer isomorphism.
+-/
+structure Compatible
+    {targetPacket : SourceMonoAnalyticTensorPacket.{u} j}
+    {targetPresentation :
+      SourceMonoAnalyticTensorPacketFieldPresentation targetPacket}
+    {targetDecomposition :
+      SourcePacketFiniteFieldDecomposition targetPacket targetPresentation}
+    {targetMeasured :
+      SourcePacketFiniteMeasuredFieldDecomposition targetPacket
+        targetDecomposition}
+    (source :
+      SourcePacketFiniteStageLogVolume packet decomposition measured)
+    (target :
+      SourcePacketFiniteStageLogVolume targetPacket targetDecomposition
+        targetMeasured)
+    (packetKummer : packet.carrier ≃L[ℚ] targetPacket.carrier) where
+  placeEquiv : packet.place ≃ targetPacket.place
+  fieldIndexEquiv :
+    ∀ placeTuple : packet.PlaceTupleIndex,
+      (decomposition.blockStage placeTuple).fieldIndex ≃
+        (targetDecomposition.blockStage
+          (SourceMonoAnalyticTensorPacket.placeTupleIndexEquivOf
+            packet targetPacket placeEquiv placeTuple)).fieldIndex
+  fieldKummer :
+    ∀ (placeTuple : packet.PlaceTupleIndex)
+      (index : (decomposition.blockStage placeTuple).fieldIndex),
+      ((decomposition.blockStage placeTuple).field index).rationalModule ≃L[ℚ]
+        ((targetDecomposition.blockStage
+          (SourceMonoAnalyticTensorPacket.placeTupleIndexEquivOf
+            packet targetPacket placeEquiv placeTuple)).field
+              (fieldIndexEquiv placeTuple index)).rationalModule
+  radialKummer :
+    ∀ (placeTuple : packet.PlaceTupleIndex)
+      (index : (decomposition.blockStage placeTuple).fieldIndex),
+      (measured.blockMeasuredField placeTuple index).radialCarrier ≃ᵐ
+        (targetMeasured.blockMeasuredField
+          (SourceMonoAnalyticTensorPacket.placeTupleIndexEquivOf
+            packet targetPacket placeEquiv placeTuple)
+          (fieldIndexEquiv placeTuple index)).radialCarrier
+  radial_measurePreserving :
+    ∀ (placeTuple : packet.PlaceTupleIndex)
+      (index : (decomposition.blockStage placeTuple).fieldIndex),
+      MeasureTheory.MeasurePreserving (radialKummer placeTuple index)
+        (measured.blockMeasuredField placeTuple index).measure
+        (targetMeasured.blockMeasuredField
+          (SourceMonoAnalyticTensorPacket.placeTupleIndexEquivOf
+            packet targetPacket placeEquiv placeTuple)
+          (fieldIndexEquiv placeTuple index)).measure
+  radialization_commutes :
+    ∀ (placeTuple : packet.PlaceTupleIndex)
+      (index : (decomposition.blockStage placeTuple).fieldIndex) value,
+      radialKummer placeTuple index
+          ((measured.blockMeasuredField placeTuple index).radialization value) =
+        (targetMeasured.blockMeasuredField
+          (SourceMonoAnalyticTensorPacket.placeTupleIndexEquivOf
+            packet targetPacket placeEquiv placeTuple)
+          (fieldIndexEquiv placeTuple index)).radialization
+            (fieldKummer placeTuple index value)
+  fieldIntegralRegion_image :
+    ∀ (placeTuple : packet.PlaceTupleIndex)
+      (index : (decomposition.blockStage placeTuple).fieldIndex),
+      fieldKummer placeTuple index ''
+          (measured.blockMeasuredField placeTuple index).volume.integralRegion =
+        (targetMeasured.blockMeasuredField
+          (SourceMonoAnalyticTensorPacket.placeTupleIndexEquivOf
+            packet targetPacket placeEquiv placeTuple)
+          (fieldIndexEquiv placeTuple index)).volume.integralRegion
+  placeMultiplicity_eq :
+    ∀ place,
+      target.placeMultiplicity (placeEquiv place) =
+        source.placeMultiplicity place
+  placeNormalizationDegree_eq :
+    ∀ place,
+      target.placeNormalizationDegree (placeEquiv place) =
+        source.placeNormalizationDegree place
+  stageKummer :
+    decomposition.stageModule ≃L[ℚ] targetDecomposition.stageModule
+  stageKummer_fieldCoordinates :
+    ∀ value (placeTuple : packet.PlaceTupleIndex)
+      (index : (decomposition.blockStage placeTuple).fieldIndex),
+      SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+          (decomposition := targetDecomposition)
+          (SourceMonoAnalyticTensorPacket.placeTupleIndexEquivOf
+            packet targetPacket placeEquiv placeTuple)
+          (stageKummer value
+            (SourceMonoAnalyticTensorPacket.placeTupleIndexEquivOf
+              packet targetPacket placeEquiv placeTuple))
+          (fieldIndexEquiv placeTuple index) =
+        fieldKummer placeTuple index
+          (SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+            (decomposition := decomposition) placeTuple (value placeTuple) index)
+  packetKummer_stageEmbedding :
+    ∀ value,
+      packetKummer (decomposition.stageEmbedding value) =
+        targetDecomposition.stageEmbedding (stageKummer value)
+
+namespace Compatible
+
+variable
+    {targetPacket : SourceMonoAnalyticTensorPacket.{u} j}
+    {targetPresentation :
+      SourceMonoAnalyticTensorPacketFieldPresentation targetPacket}
+    {targetDecomposition :
+      SourcePacketFiniteFieldDecomposition targetPacket targetPresentation}
+    {targetMeasured :
+      SourcePacketFiniteMeasuredFieldDecomposition targetPacket
+        targetDecomposition}
+    {source :
+      SourcePacketFiniteStageLogVolume packet decomposition measured}
+    {target :
+      SourcePacketFiniteStageLogVolume targetPacket targetDecomposition
+        targetMeasured}
+    {packetKummer : packet.carrier ≃L[ℚ] targetPacket.carrier}
+
+/-- The factorwise place transport on outer place-tuple blocks. -/
+def placeTupleEquiv
+    (compatible : Compatible source target packetKummer) :
+    packet.PlaceTupleIndex ≃ targetPacket.PlaceTupleIndex :=
+  SourceMonoAnalyticTensorPacket.placeTupleIndexEquivOf
+    packet targetPacket compatible.placeEquiv
+
+@[simp]
+theorem placeTupleEquiv_apply
+    (compatible : Compatible source target packetKummer)
+    (placeTuple : packet.PlaceTupleIndex) :
+    compatible.placeTupleEquiv placeTuple =
+      SourceMonoAnalyticTensorPacket.placeTupleIndexEquivOf
+        packet targetPacket compatible.placeEquiv placeTuple :=
+  rfl
+
+/-- Named form of the stored field-coordinate compatibility. -/
+theorem stageKummer_fieldCoordinates_apply
+    (compatible : Compatible source target packetKummer)
+    (value : decomposition.stageModule)
+    (placeTuple : packet.PlaceTupleIndex)
+    (index : (decomposition.blockStage placeTuple).fieldIndex) :
+    SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+        (decomposition := targetDecomposition)
+        (compatible.placeTupleEquiv placeTuple)
+        (compatible.stageKummer value
+          (compatible.placeTupleEquiv placeTuple))
+        (compatible.fieldIndexEquiv placeTuple index) =
+      compatible.fieldKummer placeTuple index
+        (SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+          (decomposition := decomposition) placeTuple (value placeTuple) index) := by
+  simpa only [placeTupleEquiv] using
+    compatible.stageKummer_fieldCoordinates value placeTuple index
+
+/-- Named form of fieldwise preservation of the integral region. -/
+theorem fieldIntegralRegion_image_apply
+    (compatible : Compatible source target packetKummer)
+    (placeTuple : packet.PlaceTupleIndex)
+    (index : (decomposition.blockStage placeTuple).fieldIndex) :
+    compatible.fieldKummer placeTuple index ''
+        (measured.blockMeasuredField placeTuple index).volume.integralRegion =
+      (targetMeasured.blockMeasuredField
+        (compatible.placeTupleEquiv placeTuple)
+        (compatible.fieldIndexEquiv placeTuple index)).volume.integralRegion := by
+  simpa only [placeTupleEquiv] using
+    compatible.fieldIntegralRegion_image placeTuple index
+
+/-- Product multiplicities are preserved by the selected-place transport. -/
+theorem multiplicity_eq
+    (compatible : Compatible source target packetKummer)
+    (placeTuple : packet.PlaceTupleIndex) :
+    target.multiplicity (compatible.placeTupleEquiv placeTuple) =
+      source.multiplicity placeTuple := by
+  apply Subtype.ext
+  simp only [multiplicity_val]
+  apply Finset.prod_congr rfl
+  intro factor _
+  exact congrArg (·.1)
+    (compatible.placeMultiplicity_eq (placeTuple factor))
+
+/-- The normalized degree denominator is invariant under the place transport. -/
+theorem normalizationDenominator_eq
+    (compatible : Compatible source target packetKummer) :
+    target.normalizationDenominator = source.normalizationDenominator := by
+  classical
+  calc
+    target.normalizationDenominator =
+        ∑ placeTuple : packet.PlaceTupleIndex,
+          ∏ factor,
+            (target.placeNormalizationDegree
+              (compatible.placeTupleEquiv placeTuple factor)).1 := by
+      exact (compatible.placeTupleEquiv.sum_comp
+        (fun targetTuple : targetPacket.PlaceTupleIndex =>
+          ∏ factor,
+            (target.placeNormalizationDegree (targetTuple factor)).1)).symm
+    _ = source.normalizationDenominator := by
+      apply Finset.sum_congr rfl
+      intro placeTuple _
+      apply Finset.prod_congr rfl
+      intro factor _
+      exact congrArg (·.1)
+        (compatible.placeNormalizationDegree_eq (placeTuple factor))
+
+/-- The real reciprocal normalization scale is consequently preserved. -/
+theorem normalizationScale_eq
+    (compatible : Compatible source target packetKummer) :
+    target.normalizationScale = source.normalizationScale := by
+  rw [normalizationScale, normalizationScale,
+    compatible.normalizationDenominator_eq]
+
+/-- Transport one field coordinate inside a fixed outer tensor block. -/
+noncomputable def blockRadialEquiv
+    (compatible : Compatible source target packetKummer)
+    (placeTuple : packet.PlaceTupleIndex) :
+    measured.BlockRadialCoordinates placeTuple ≃ᵐ
+      targetMeasured.BlockRadialCoordinates
+        (compatible.placeTupleEquiv placeTuple) :=
+  (MeasurableEquiv.piCongrRight
+    (compatible.radialKummer placeTuple)).trans
+      (MeasurableEquiv.piCongrLeft
+        (fun index =>
+          (targetMeasured.blockMeasuredField
+            (compatible.placeTupleEquiv placeTuple) index).radialCarrier)
+        (compatible.fieldIndexEquiv placeTuple))
+
+@[simp]
+theorem blockRadialEquiv_apply
+    (compatible : Compatible source target packetKummer)
+    (placeTuple : packet.PlaceTupleIndex)
+    (value : measured.BlockRadialCoordinates placeTuple)
+    (index : (decomposition.blockStage placeTuple).fieldIndex) :
+    compatible.blockRadialEquiv placeTuple value
+        (compatible.fieldIndexEquiv placeTuple index) =
+      compatible.radialKummer placeTuple index (value index) := by
+  change
+    (MeasurableEquiv.piCongrLeft
+      (fun targetIndex =>
+        (targetMeasured.blockMeasuredField
+          (SourceMonoAnalyticTensorPacket.placeTupleIndexEquivOf
+            packet targetPacket compatible.placeEquiv placeTuple)
+          targetIndex).radialCarrier)
+      (compatible.fieldIndexEquiv placeTuple)
+      ((MeasurableEquiv.piCongrRight
+        (compatible.radialKummer placeTuple)) value))
+          (compatible.fieldIndexEquiv placeTuple index) = _
+  rw [MeasurableEquiv.piCongrLeft_apply_apply]
+  rfl
+
+/-- Fieldwise measure preservation gives preservation of the block product. -/
+theorem blockRadial_measurePreserving
+    (compatible : Compatible source target packetKummer)
+    (placeTuple : packet.PlaceTupleIndex) :
+    MeasureTheory.MeasurePreserving
+      (compatible.blockRadialEquiv placeTuple)
+      (measured.blockProductMeasure placeTuple)
+      (targetMeasured.blockProductMeasure
+        (compatible.placeTupleEquiv placeTuple)) := by
+  have hfactor : MeasureTheory.MeasurePreserving
+      (fun value index =>
+        compatible.radialKummer placeTuple index (value index))
+      (measured.blockProductMeasure placeTuple)
+      (MeasureTheory.Measure.pi fun index =>
+        (targetMeasured.blockMeasuredField
+          (compatible.placeTupleEquiv placeTuple)
+          (compatible.fieldIndexEquiv placeTuple index)).measure) :=
+    MeasureTheory.measurePreserving_pi
+      (fun index =>
+        (measured.blockMeasuredField placeTuple index).measure)
+      (fun index =>
+        (targetMeasured.blockMeasuredField
+          (compatible.placeTupleEquiv placeTuple)
+          (compatible.fieldIndexEquiv placeTuple index)).measure)
+      (compatible.radial_measurePreserving placeTuple)
+  have hreindex := MeasureTheory.measurePreserving_piCongrLeft
+    (fun index =>
+      (targetMeasured.blockMeasuredField
+        (compatible.placeTupleEquiv placeTuple) index).measure)
+    (compatible.fieldIndexEquiv placeTuple)
+  exact hreindex.comp hfactor
+
+/-- Transport all radial blocks of the selected finite packet stage. -/
+noncomputable def packetRadialEquiv
+    (compatible : Compatible source target packetKummer) :
+    measured.PacketRadialCoordinates ≃ᵐ
+      targetMeasured.PacketRadialCoordinates :=
+  (MeasurableEquiv.piCongrRight compatible.blockRadialEquiv).trans
+    (MeasurableEquiv.piCongrLeft
+      (fun placeTuple =>
+        targetMeasured.BlockRadialCoordinates placeTuple)
+      compatible.placeTupleEquiv)
+
+@[simp]
+theorem packetRadialEquiv_apply
+    (compatible : Compatible source target packetKummer)
+    (value : measured.PacketRadialCoordinates)
+    (placeTuple : packet.PlaceTupleIndex) :
+    compatible.packetRadialEquiv value
+        (compatible.placeTupleEquiv placeTuple) =
+      compatible.blockRadialEquiv placeTuple (value placeTuple) := by
+  change
+    (MeasurableEquiv.piCongrLeft
+      (fun targetTuple =>
+        targetMeasured.BlockRadialCoordinates targetTuple)
+      compatible.placeTupleEquiv
+      (MeasurableEquiv.piCongrRight
+        compatible.blockRadialEquiv value))
+          (compatible.placeTupleEquiv placeTuple) = _
+  rw [MeasurableEquiv.piCongrLeft_apply_apply]
+  rfl
+
+/-- Radialization commutes with the genuine finite-stage Kummer map. -/
+theorem packetRadializeCoordinates_stageKummer
+    (compatible : Compatible source target packetKummer)
+    (value : decomposition.stageModule) :
+    targetMeasured.packetRadializeCoordinates
+        (compatible.stageKummer value) =
+      compatible.packetRadialEquiv
+        (measured.packetRadializeCoordinates value) := by
+  funext targetTuple
+  obtain ⟨placeTuple, rfl⟩ :=
+    compatible.placeTupleEquiv.surjective targetTuple
+  apply funext
+  intro targetIndex
+  obtain ⟨index, rfl⟩ :=
+    (compatible.fieldIndexEquiv placeTuple).surjective targetIndex
+  change
+    (targetMeasured.blockMeasuredField
+      (compatible.placeTupleEquiv placeTuple)
+      (compatible.fieldIndexEquiv placeTuple index)).radialization
+        (SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+          (decomposition := targetDecomposition)
+          (compatible.placeTupleEquiv placeTuple)
+          (compatible.stageKummer value
+            (compatible.placeTupleEquiv placeTuple))
+          (compatible.fieldIndexEquiv placeTuple index)) = _
+  rw [compatible.packetRadialEquiv_apply,
+    compatible.blockRadialEquiv_apply]
+  rw [compatible.stageKummer_fieldCoordinates_apply value placeTuple index]
+  exact (compatible.radialization_commutes placeTuple index _).symm
+
+/-- A transported field value belongs to the target integral region exactly. -/
+theorem fieldKummer_mem_integralRegion_iff
+    (compatible : Compatible source target packetKummer)
+    (placeTuple : packet.PlaceTupleIndex)
+    (index : (decomposition.blockStage placeTuple).fieldIndex)
+    (value : (decomposition.blockStage placeTuple).field index |>.carrier) :
+    compatible.fieldKummer placeTuple index value ∈
+        (targetMeasured.blockMeasuredField
+          (compatible.placeTupleEquiv placeTuple)
+          (compatible.fieldIndexEquiv placeTuple index)).volume.integralRegion ↔
+      value ∈
+        (measured.blockMeasuredField placeTuple index).volume.integralRegion := by
+  rw [← compatible.fieldIntegralRegion_image_apply placeTuple index]
+  constructor
+  · rintro ⟨sourceValue, hsourceValue, heq⟩
+    exact (compatible.fieldKummer placeTuple index).injective heq ▸ hsourceValue
+  · intro hvalue
+    exact ⟨value, hvalue, rfl⟩
+
+/-- The finite-stage Kummer map preserves the complete product integral region. -/
+theorem stageKummer_mem_packetIntegralRegion_iff
+    (compatible : Compatible source target packetKummer)
+    (value : decomposition.stageModule) :
+    compatible.stageKummer value ∈ targetMeasured.packetIntegralRegion ↔
+      value ∈ measured.packetIntegralRegion := by
+  classical
+  constructor
+  · intro htarget
+    change
+      compatible.stageKummer value ∈ Set.pi Set.univ
+        (fun targetTuple =>
+          targetMeasured.blockIntegralRegion targetTuple) at htarget
+    change
+      value ∈ Set.pi Set.univ
+        (fun placeTuple => measured.blockIntegralRegion placeTuple)
+    intro placeTuple _
+    apply (measured.blockIntegralRegion_iff placeTuple _).mpr
+    intro index _
+    have htargetBlock := htarget
+      (compatible.placeTupleEquiv placeTuple) (Set.mem_univ _)
+    have htargetFields :=
+      (targetMeasured.blockIntegralRegion_iff
+        (compatible.placeTupleEquiv placeTuple) _).mp htargetBlock
+    have htargetField := htargetFields
+      (compatible.fieldIndexEquiv placeTuple index) (Set.mem_univ _)
+    rw [compatible.stageKummer_fieldCoordinates_apply value placeTuple index]
+      at htargetField
+    exact (compatible.fieldKummer_mem_integralRegion_iff
+      placeTuple index _).mp htargetField
+  · intro hsource
+    change
+      value ∈ Set.pi Set.univ
+        (fun placeTuple => measured.blockIntegralRegion placeTuple) at hsource
+    change
+      compatible.stageKummer value ∈ Set.pi Set.univ
+        (fun targetTuple =>
+          targetMeasured.blockIntegralRegion targetTuple)
+    intro targetTuple _
+    obtain ⟨placeTuple, rfl⟩ :=
+      compatible.placeTupleEquiv.surjective targetTuple
+    apply (targetMeasured.blockIntegralRegion_iff
+      (compatible.placeTupleEquiv placeTuple) _).mpr
+    intro targetIndex _
+    obtain ⟨index, rfl⟩ :=
+      (compatible.fieldIndexEquiv placeTuple).surjective targetIndex
+    rw [compatible.stageKummer_fieldCoordinates_apply value placeTuple index]
+    apply (compatible.fieldKummer_mem_integralRegion_iff
+      placeTuple index _).mpr
+    exact (measured.blockIntegralRegion_iff placeTuple _).mp
+      (hsource placeTuple (Set.mem_univ _)) index (Set.mem_univ _)
+
+/-- The distinguished finite packet stage maps exactly onto its target. -/
+theorem stageKummer_image_packetIntegralRegion
+    (compatible : Compatible source target packetKummer) :
+    compatible.stageKummer '' measured.packetIntegralRegion =
+      targetMeasured.packetIntegralRegion := by
+  ext targetValue
+  constructor
+  · rintro ⟨sourceValue, hsourceValue, rfl⟩
+    exact (compatible.stageKummer_mem_packetIntegralRegion_iff sourceValue).mpr
+      hsourceValue
+  · intro htargetValue
+    refine ⟨compatible.stageKummer.symm targetValue, ?_,
+      compatible.stageKummer.apply_symm_apply targetValue⟩
+    apply (compatible.stageKummer_mem_packetIntegralRegion_iff
+      (compatible.stageKummer.symm targetValue)).mp
+    simpa only [compatible.stageKummer.apply_symm_apply] using htargetValue
+
+/-- Radialized finite-stage regions transport exactly under Kummer. -/
+theorem packetRadialEquiv_image_radializedRegion
+    (compatible : Compatible source target packetKummer)
+    (region : Set decomposition.stageModule) :
+    compatible.packetRadialEquiv ''
+        measured.packetRadializedRegion region =
+      targetMeasured.packetRadializedRegion
+        (compatible.stageKummer '' region) := by
+  ext targetValue
+  constructor
+  · rintro ⟨sourceValue, ⟨stageValue, hstageValue, rfl⟩, rfl⟩
+    exact ⟨compatible.stageKummer stageValue,
+      ⟨stageValue, hstageValue, rfl⟩,
+      compatible.packetRadializeCoordinates_stageKummer stageValue⟩
+  · rintro ⟨targetStageValue,
+      ⟨sourceStageValue, hsourceStageValue, rfl⟩, hradial⟩
+    refine ⟨measured.packetRadializeCoordinates sourceStageValue,
+      ⟨sourceStageValue, hsourceStageValue, rfl⟩, ?_⟩
+    exact (compatible.packetRadializeCoordinates_stageKummer
+      sourceStageValue).symm.trans hradial
+
+/-- Multiplicity preservation identifies one finite `E_v` coordinate. -/
+noncomputable def weightCoordinateEquiv
+    (compatible : Compatible source target packetKummer)
+    (placeTuple : packet.PlaceTupleIndex) :
+    Fin (source.multiplicity placeTuple).1 ≃
+      Fin (target.multiplicity
+        (compatible.placeTupleEquiv placeTuple)).1 :=
+  finCongr (congrArg (·.1) (compatible.multiplicity_eq placeTuple).symm)
+
+/-- Reindexing place tuples and their finite coordinates identifies `E`. -/
+noncomputable def weightChoiceEquiv
+    (compatible : Compatible source target packetKummer) :
+    source.WeightChoice ≃ target.WeightChoice :=
+  (Equiv.piCongrRight fun placeTuple =>
+    compatible.weightCoordinateEquiv placeTuple).trans
+      (Equiv.piCongrLeft
+        (fun targetTuple =>
+          Fin (target.multiplicity targetTuple).1)
+        compatible.placeTupleEquiv)
+
+@[simp]
+theorem weightChoiceEquiv_apply
+    (compatible : Compatible source target packetKummer)
+    (choice : source.WeightChoice)
+    (placeTuple : packet.PlaceTupleIndex) :
+    compatible.weightChoiceEquiv choice
+        (compatible.placeTupleEquiv placeTuple) =
+      compatible.weightCoordinateEquiv placeTuple (choice placeTuple) := by
+  change
+    (Equiv.piCongrLeft
+      (fun targetTuple => Fin (target.multiplicity targetTuple).1)
+      compatible.placeTupleEquiv
+      ((Equiv.piCongrRight fun sourceTuple =>
+        compatible.weightCoordinateEquiv sourceTuple) choice))
+          (compatible.placeTupleEquiv placeTuple) = _
+  rw [Equiv.piCongrLeft_apply_apply]
+  rfl
+
+/-- Place tuples away from one selected tuple reindex equivariantly. -/
+def otherPlaceTupleEquiv
+    (compatible : Compatible source target packetKummer)
+    (placeTuple : packet.PlaceTupleIndex) :
+    {other : packet.PlaceTupleIndex // other ≠ placeTuple} ≃
+      {other : targetPacket.PlaceTupleIndex //
+        other ≠ compatible.placeTupleEquiv placeTuple} :=
+  compatible.placeTupleEquiv.subtypeEquiv fun other => by
+    constructor
+    · intro hne heq
+      exact hne (compatible.placeTupleEquiv.injective heq)
+    · intro hne heq
+      exact hne (congrArg compatible.placeTupleEquiv heq)
+
+/-- The choices in `E_{≠v}` transport coordinatewise. -/
+noncomputable def replicaFiberEquiv
+    (compatible : Compatible source target packetKummer)
+    (placeTuple : packet.PlaceTupleIndex) :
+    source.ReplicaFiber placeTuple ≃
+      target.ReplicaFiber (compatible.placeTupleEquiv placeTuple) :=
+  (Equiv.piCongrRight fun other :
+      {other : packet.PlaceTupleIndex // other ≠ placeTuple} =>
+    compatible.weightCoordinateEquiv other.1).trans
+      (Equiv.piCongrLeft
+        (fun other : {other : targetPacket.PlaceTupleIndex //
+          other ≠ compatible.placeTupleEquiv placeTuple} =>
+            Fin (target.multiplicity other.1).1)
+        (compatible.otherPlaceTupleEquiv placeTuple))
+
+@[simp]
+theorem replicaFiberEquiv_apply
+    (compatible : Compatible source target packetKummer)
+    (placeTuple : packet.PlaceTupleIndex)
+    (choice : source.ReplicaFiber placeTuple)
+    (other : {other : packet.PlaceTupleIndex // other ≠ placeTuple}) :
+    compatible.replicaFiberEquiv placeTuple choice
+        (compatible.otherPlaceTupleEquiv placeTuple other) =
+      compatible.weightCoordinateEquiv other.1 (choice other) := by
+  change
+    (Equiv.piCongrLeft
+      (fun targetOther : {other : targetPacket.PlaceTupleIndex //
+        other ≠ compatible.placeTupleEquiv placeTuple} =>
+          Fin (target.multiplicity targetOther.1).1)
+      (compatible.otherPlaceTupleEquiv placeTuple)
+      ((Equiv.piCongrRight fun sourceOther :
+        {other : packet.PlaceTupleIndex // other ≠ placeTuple} =>
+          compatible.weightCoordinateEquiv sourceOther.1) choice))
+            (compatible.otherPlaceTupleEquiv placeTuple other) = _
+  rw [Equiv.piCongrLeft_apply_apply]
+  rfl
+
+/-- The source data canonically identifies the replicated index `W`. -/
+noncomputable def replicaIndexEquiv
+    (compatible : Compatible source target packetKummer) :
+    source.ReplicaIndex ≃ target.ReplicaIndex :=
+  Equiv.sigmaCongr compatible.placeTupleEquiv
+    compatible.replicaFiberEquiv
+
+/-- Slice indices commute with the induced equivalences of `E` and `W`. -/
+theorem replicaIndexEquiv_sliceIndex
+    (compatible : Compatible source target packetKummer)
+    (choice : source.WeightChoice)
+    (placeTuple : packet.PlaceTupleIndex) :
+    compatible.replicaIndexEquiv
+        ⟨placeTuple, fun other => choice other.1⟩ =
+      ⟨compatible.placeTupleEquiv placeTuple,
+        fun other =>
+          compatible.weightChoiceEquiv choice other.1⟩ := by
+  apply Sigma.ext
+  · rfl
+  · exact heq_of_eq (by
+      funext targetOther
+      obtain ⟨sourceOther, rfl⟩ :=
+        (compatible.otherPlaceTupleEquiv placeTuple).surjective targetOther
+      change
+        compatible.replicaFiberEquiv placeTuple
+            (fun other => choice other.1)
+            (compatible.otherPlaceTupleEquiv placeTuple sourceOther) =
+          compatible.weightChoiceEquiv choice
+            (compatible.placeTupleEquiv sourceOther.1)
+      rw [compatible.replicaFiberEquiv_apply,
+        compatible.weightChoiceEquiv_apply])
+
+/-- A replicated radial block is transported by its derived block map. -/
+noncomputable def replicaBlockEquiv
+    (compatible : Compatible source target packetKummer)
+    (replica : source.ReplicaIndex) :
+    measured.BlockRadialCoordinates replica.1 ≃ᵐ
+      targetMeasured.BlockRadialCoordinates
+        (compatible.replicaIndexEquiv replica).1 := by
+  change
+    measured.BlockRadialCoordinates replica.1 ≃ᵐ
+      targetMeasured.BlockRadialCoordinates
+        (compatible.placeTupleEquiv replica.1)
+  exact compatible.blockRadialEquiv replica.1
+
+/-- The induced Borel equivalence of the replicated radial spaces `M_W`. -/
+noncomputable def replicaEquiv
+    (compatible : Compatible source target packetKummer) :
+    source.ReplicaSpace ≃ᵐ target.ReplicaSpace :=
+  (MeasurableEquiv.piCongrRight compatible.replicaBlockEquiv).trans
+    (MeasurableEquiv.piCongrLeft
+      (fun replica : target.ReplicaIndex =>
+        targetMeasured.BlockRadialCoordinates replica.1)
+      compatible.replicaIndexEquiv)
+
+@[simp]
+theorem replicaEquiv_apply
+    (compatible : Compatible source target packetKummer)
+    (value : source.ReplicaSpace)
+    (replica : source.ReplicaIndex) :
+    compatible.replicaEquiv value
+        (compatible.replicaIndexEquiv replica) =
+      compatible.replicaBlockEquiv replica (value replica) := by
+  change
+    (MeasurableEquiv.piCongrLeft
+      (fun targetReplica : target.ReplicaIndex =>
+        targetMeasured.BlockRadialCoordinates targetReplica.1)
+      compatible.replicaIndexEquiv
+      (MeasurableEquiv.piCongrRight
+        compatible.replicaBlockEquiv value))
+          (compatible.replicaIndexEquiv replica) = _
+  rw [MeasurableEquiv.piCongrLeft_apply_apply]
+  rfl
+
+/-- Slicing `M_W` commutes with the finite-stage radial transport. -/
+theorem slice_replicaEquiv_weightChoiceEquiv
+    (compatible : Compatible source target packetKummer)
+    (value : source.ReplicaSpace)
+    (choice : source.WeightChoice) :
+    target.slice (compatible.replicaEquiv value)
+        (compatible.weightChoiceEquiv choice) =
+      compatible.packetRadialEquiv (source.slice value choice) := by
+  funext targetTuple
+  obtain ⟨placeTuple, rfl⟩ :=
+    compatible.placeTupleEquiv.surjective targetTuple
+  change
+    compatible.replicaEquiv value
+        ⟨compatible.placeTupleEquiv placeTuple,
+          fun other => compatible.weightChoiceEquiv choice other.1⟩ =
+      compatible.packetRadialEquiv (source.slice value choice)
+        (compatible.placeTupleEquiv placeTuple)
+  rw [compatible.packetRadialEquiv_apply]
+  let sourceReplica : source.ReplicaIndex :=
+    ⟨placeTuple, fun other => choice other.1⟩
+  let targetReplica : target.ReplicaIndex :=
+    ⟨compatible.placeTupleEquiv placeTuple,
+      fun other => compatible.weightChoiceEquiv choice other.1⟩
+  have hindex :
+      compatible.replicaIndexEquiv sourceReplica = targetReplica :=
+    compatible.replicaIndexEquiv_sliceIndex choice placeTuple
+  have htransport :
+      compatible.replicaEquiv value
+          (compatible.replicaIndexEquiv sourceReplica) =
+        compatible.replicaEquiv value targetReplica :=
+    eq_of_heq (congr_arg_heq (compatible.replicaEquiv value) hindex)
+  have happly := compatible.replicaEquiv_apply value sourceReplica
+  change
+    compatible.replicaEquiv value
+        (compatible.replicaIndexEquiv sourceReplica) =
+      compatible.blockRadialEquiv placeTuple (value sourceReplica) at happly
+  exact htransport.symm.trans happly
+
+/-- Every replicated block map preserves its genuine product measure. -/
+theorem replicaBlock_measurePreserving
+    (compatible : Compatible source target packetKummer)
+    (replica : source.ReplicaIndex) :
+    MeasureTheory.MeasurePreserving
+      (compatible.replicaBlockEquiv replica)
+      (measured.blockProductMeasure replica.1)
+      (targetMeasured.blockProductMeasure
+        (compatible.replicaIndexEquiv replica).1) := by
+  change MeasureTheory.MeasurePreserving
+    (compatible.blockRadialEquiv replica.1)
+    (measured.blockProductMeasure replica.1)
+    (targetMeasured.blockProductMeasure
+      (compatible.placeTupleEquiv replica.1))
+  exact compatible.blockRadial_measurePreserving replica.1
+
+/-- Product measure on `M_W` is preserved by the induced replica transport. -/
+theorem replica_measurePreserving
+    (compatible : Compatible source target packetKummer) :
+    MeasureTheory.MeasurePreserving compatible.replicaEquiv
+      source.replicaProductMeasure target.replicaProductMeasure := by
+  have hfactor : MeasureTheory.MeasurePreserving
+      (fun value replica =>
+        compatible.replicaBlockEquiv replica (value replica))
+      source.replicaProductMeasure
+      (MeasureTheory.Measure.pi fun replica : source.ReplicaIndex =>
+        targetMeasured.blockProductMeasure
+          (compatible.replicaIndexEquiv replica).1) :=
+    MeasureTheory.measurePreserving_pi
+      (fun replica : source.ReplicaIndex =>
+        measured.blockProductMeasure replica.1)
+      (fun replica : source.ReplicaIndex =>
+        targetMeasured.blockProductMeasure
+          (compatible.replicaIndexEquiv replica).1)
+      compatible.replicaBlock_measurePreserving
+  have hreindex := MeasureTheory.measurePreserving_piCongrLeft
+    (fun replica : target.ReplicaIndex =>
+      targetMeasured.blockProductMeasure replica.1)
+    compatible.replicaIndexEquiv
+  exact hreindex.comp hfactor
+
+/-- Membership in a radialized region is reflected by radial transport. -/
+theorem packetRadialEquiv_mem_radializedRegion_iff
+    (compatible : Compatible source target packetKummer)
+    (region : Set decomposition.stageModule)
+    (value : measured.PacketRadialCoordinates) :
+    compatible.packetRadialEquiv value ∈
+        targetMeasured.packetRadializedRegion
+          (compatible.stageKummer '' region) ↔
+      value ∈ measured.packetRadializedRegion region := by
+  rw [← compatible.packetRadialEquiv_image_radializedRegion region]
+  constructor
+  · rintro ⟨sourceValue, hsourceValue, heq⟩
+    exact compatible.packetRadialEquiv.injective heq ▸ hsourceValue
+  · intro hvalue
+    exact ⟨value, hvalue, rfl⟩
+
+/-- Weighted-lift membership is reflected by the map on `M_W`. -/
+theorem replicaEquiv_mem_weightedLift_iff
+    (compatible : Compatible source target packetKummer)
+    (region : Set decomposition.stageModule)
+    (value : source.ReplicaSpace) :
+    compatible.replicaEquiv value ∈
+        target.weightedLift (compatible.stageKummer '' region) ↔
+      value ∈ source.weightedLift region := by
+  constructor
+  · intro htarget sourceChoice
+    have hslice := htarget (compatible.weightChoiceEquiv sourceChoice)
+    rw [compatible.slice_replicaEquiv_weightChoiceEquiv] at hslice
+    exact (compatible.packetRadialEquiv_mem_radializedRegion_iff
+      region (source.slice value sourceChoice)).mp hslice
+  · intro hsource targetChoice
+    let sourceChoice := compatible.weightChoiceEquiv.symm targetChoice
+    have hslice := hsource sourceChoice
+    have htarget :=
+      (compatible.packetRadialEquiv_mem_radializedRegion_iff
+        region (source.slice value sourceChoice)).mpr hslice
+    rw [← compatible.slice_replicaEquiv_weightChoiceEquiv] at htarget
+    simpa only [sourceChoice, Equiv.apply_symm_apply] using htarget
+
+/-- The induced replica map carries `S_E` exactly onto its target. -/
+theorem replicaEquiv_image_weightedLift
+    (compatible : Compatible source target packetKummer)
+    (region : Set decomposition.stageModule) :
+    compatible.replicaEquiv '' source.weightedLift region =
+      target.weightedLift (compatible.stageKummer '' region) := by
+  ext targetValue
+  constructor
+  · rintro ⟨sourceValue, hsourceValue, rfl⟩
+    exact (compatible.replicaEquiv_mem_weightedLift_iff
+      region sourceValue).mpr hsourceValue
+  · intro htargetValue
+    refine ⟨compatible.replicaEquiv.symm targetValue, ?_,
+      compatible.replicaEquiv.apply_symm_apply targetValue⟩
+    apply (compatible.replicaEquiv_mem_weightedLift_iff region
+      (compatible.replicaEquiv.symm targetValue)).mp
+    simpa only [compatible.replicaEquiv.apply_symm_apply] using htargetValue
+
+/-- The derived `E`-weighted content is invariant under finite-stage Kummer. -/
+theorem weightedContent_image
+    (compatible : Compatible source target packetKummer)
+    (region : Set decomposition.stageModule) :
+    target.weightedContent (compatible.stageKummer '' region) =
+      source.weightedContent region := by
+  rw [weightedContent, weightedContent,
+    ← compatible.replicaEquiv_image_weightedLift region]
+  rw [← compatible.replica_measurePreserving.map_eq]
+  exact (compatible.replicaEquiv.map_apply
+      (compatible.replicaEquiv '' source.weightedLift region)).trans
+    (congrArg source.replicaProductMeasure
+      (compatible.replicaEquiv.injective.preimage_image
+        (source.weightedLift region)))
+
+/-- Measurability of `S_E` transports through the replica equivalence. -/
+theorem weightedLift_image_measurable
+    (compatible : Compatible source target packetKummer)
+    (region : Set decomposition.stageModule)
+    (hmeasurable : MeasurableSet (source.weightedLift region)) :
+    MeasurableSet
+      (target.weightedLift (compatible.stageKummer '' region)) := by
+  rw [← compatible.replicaEquiv_image_weightedLift region]
+  exact compatible.replicaEquiv.measurableEmbedding.measurableSet_image.mpr
+    hmeasurable
+
+/-- The induced equivalence of weight choices preserves `#E`. -/
+theorem weightChoice_card_eq
+    (compatible : Compatible source target packetKummer) :
+    Fintype.card target.WeightChoice = Fintype.card source.WeightChoice :=
+  (Fintype.card_congr compatible.weightChoiceEquiv).symm
+
+/-- The complete finite-stage E/W functionals are Kummer compatible. -/
+theorem toNormalizedLogVolume_compatible
+    (compatible : Compatible source target packetKummer) :
+    SourceNormalizedLogVolume.Compatible
+      source.toNormalizedLogVolume target.toNormalizedLogVolume
+        compatible.stageKummer := by
+  refine
+    { admissible_image := ?_
+      rawLogVolume_image := ?_
+      normalizationOffset_eq := ?_ }
+  · intro region
+    rcases region.isAdmissible with ⟨hmeasurable, hneZero, hneTop⟩
+    refine ⟨compatible.weightedLift_image_measurable
+      region.carrier hmeasurable, ?_, ?_⟩
+    · rwa [compatible.weightedContent_image]
+    · rwa [compatible.weightedContent_image]
+  · intro region
+    change
+      target.normalizationScale *
+          (Real.log
+              (target.weightedContent
+                (compatible.stageKummer '' region.carrier)).toReal /
+            Fintype.card target.WeightChoice) =
+        source.normalizationScale *
+          (Real.log
+              (source.weightedContent region.carrier).toReal /
+            Fintype.card source.WeightChoice)
+    rw [compatible.weightedContent_image,
+      compatible.normalizationScale_eq,
+      compatible.weightChoice_card_eq]
+  · rw [target.toNormalizedLogVolume_normalizationOffset_eq_zero,
+      source.toNormalizedLogVolume_normalizationOffset_eq_zero]
+
+/-- Exact finite-stage compatibility implies equality of normalized values. -/
+theorem normalizedLogVolume_value_eq
+    (compatible : Compatible source target packetKummer) :
+    source.toNormalizedLogVolume.value =
+      target.toNormalizedLogVolume.value :=
+  (compatible.toNormalizedLogVolume_compatible).value_eq
+    compatible.stageKummer_image_packetIntegralRegion
+
+/--
+The selected finite stage commutes with the actual packet Kummer isomorphism,
+including its full product integral structure.
+-/
+theorem packetKummer_image_embeddedPacketIntegralRegion
+    (compatible : Compatible source target packetKummer) :
+    packetKummer '' measured.embeddedPacketIntegralRegion =
+      targetMeasured.embeddedPacketIntegralRegion := by
+  ext targetValue
+  constructor
+  · rintro ⟨sourcePacketValue,
+      ⟨sourceStageValue, hsourceStageValue, rfl⟩, rfl⟩
+    rw [compatible.packetKummer_stageEmbedding]
+    exact ⟨compatible.stageKummer sourceStageValue,
+      (compatible.stageKummer_mem_packetIntegralRegion_iff
+        sourceStageValue).mpr hsourceStageValue, rfl⟩
+  · rintro ⟨targetStageValue, htargetStageValue, rfl⟩
+    let sourceStageValue := compatible.stageKummer.symm targetStageValue
+    refine ⟨decomposition.stageEmbedding sourceStageValue, ?_, ?_⟩
+    · exact ⟨sourceStageValue,
+        (compatible.stageKummer_mem_packetIntegralRegion_iff
+          sourceStageValue).mp (by
+            simpa only [sourceStageValue,
+              compatible.stageKummer.apply_symm_apply] using htargetStageValue),
+        rfl⟩
+    · rw [compatible.packetKummer_stageEmbedding]
+      exact congrArg targetDecomposition.stageEmbedding
+        (compatible.stageKummer.apply_symm_apply targetStageValue)
+
+end Compatible
 
 end SourcePacketFiniteStageLogVolume
 

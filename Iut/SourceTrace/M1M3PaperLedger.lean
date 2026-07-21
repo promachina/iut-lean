@@ -814,6 +814,9 @@ def m1m3PaperLedger : List PaperClause :=
         "SourcePacketFiniteMeasuredFieldDecomposition.BlockFieldCoordinates",
         "SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition",
         "SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition_image_integralRegion",
+        "SourcePacketFiniteMeasuredFieldDecomposition.blockIntegralRegion_iff",
+        "SourcePacketFiniteStageLogVolume.Compatible",
+        "SourcePacketFiniteStageLogVolume.Compatible.packetKummer_image_embeddedPacketIntegralRegion",
         "SourceMonoAnalyticLogShellAlgorithm.TensorTopology",
         "SourceMonoAnalyticLogShellAlgorithm.packetOfCapsule",
         "SourceNonarchimedeanPacketIntegralConstruction",
@@ -823,7 +826,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceAbsoluteLGPGaussianLogThetaLattice.PacketIntegralConstruction",
         "SourceAbsoluteLGPGaussianLogThetaLattice.LocalConstruction.toTheorem311LocalData"]
       .partialImplementation
-      "Local packets are literal dependent tensor products of direct sums over the actual finite place fiber, with the tensor universal topology. The canonical tensor-of-direct-sums equivalence yields exactly #places^(j+1) place-tuple tensor blocks, not fields. A field-valued factor presentation and a chosen cofinal finite stage now inject each stage tensor into its ind-block and decompose its tensor algebra as a finite product of actual complete local fields; the genuine field index is the dependent sum of these internal indices, and its cardinality is derived as a sum rather than conflated with the place-tuple count. The simultaneous product of finite stages has a proved injective rational-linear map into the actual ind-packet, not a false equivalence. Each stage field decomposition is retained as a homeomorphism and carries the derived integral block exactly to the product of the fieldwise integral structures. Nonarchimedean packet lattices and archimedean metrics retain their constructions. Constructing the field presentations, finite-stage CRT decompositions, span/closedness, Hermitian data, and mono-analytic/holomorphic poly-isomorphisms remains open. The legacy whole-place-tuple measured object is expressly non-accepting.",
+      "Local packets are literal dependent tensor products of direct sums over the actual finite place fiber, with the tensor universal topology. The canonical tensor-of-direct-sums equivalence yields exactly #places^(j+1) place-tuple tensor blocks, not fields. A field-valued factor presentation and a chosen cofinal finite stage inject each stage tensor into its ind-block and decompose its tensor algebra as a finite product of actual complete local fields; the genuine field index is the dependent sum of these internal indices, and its cardinality is derived as a sum rather than conflated with the place-tuple count. The simultaneous product of finite stages has a proved injective rational-linear map into the actual ind-packet, not a false equivalence. Each stage field decomposition is retained as a homeomorphism and detects the fieldwise product integral structure. A finite-stage poly-isomorphism now carries actual field indices, continuous field maps, radial maps, and the stage embedding, and its commutation with the packet Kummer map is explicit. Constructing these presentations, CRT decompositions, and poly-isomorphisms from the cited prime strips remains open. The legacy whole-place-tuple measured object is expressly non-accepting.",
     clause "III.3.4" .iutIII "IUT III, Proposition 3.4"
       ["SourceLGPSplittingMonoidAction",
         "SourceLGPSplittingMonoidAction.targetMulAction"]
@@ -878,10 +881,18 @@ def m1m3PaperLedger : List PaperClause :=
         "SourcePacketFiniteStageLogVolume.normalized_log_weightedContent_productRegion",
         "SourcePacketFiniteStageLogVolume.toNormalizedLogVolume",
         "SourcePacketFiniteStageLogVolume.toNormalizedLogVolume_valueOn_admissibleProductRegion_eq_weightedSum",
+        "SourcePacketFiniteStageLogVolume.Compatible.blockRadial_measurePreserving",
+        "SourcePacketFiniteStageLogVolume.Compatible.stageKummer_image_packetIntegralRegion",
+        "SourcePacketFiniteStageLogVolume.Compatible.packetRadialEquiv_image_radializedRegion",
+        "SourcePacketFiniteStageLogVolume.Compatible.replica_measurePreserving",
+        "SourcePacketFiniteStageLogVolume.Compatible.replicaEquiv_image_weightedLift",
+        "SourcePacketFiniteStageLogVolume.Compatible.weightedContent_image",
+        "SourcePacketFiniteStageLogVolume.Compatible.toNormalizedLogVolume_compatible",
+        "SourcePacketFiniteStageLogVolume.Compatible.normalizedLogVolume_value_eq",
         "SourceTheorem311LocalData.processionLogVolume",
         "SourceMonoAnalyticLogShellAlgorithm.transport_logVolume",
         "SourceTheorem311LocalData.logVolume"] .partialImplementation
-      "Normalized log-volume is a functional on admissible regions, not generally the logarithm of a measure on packet space. The accepted field interface is indexed by genuine finite-stage local fields: finite components identify their radial carrier with the additive field, while infinite components identify it with NNReal through complex norm, as required by Remark 3.1.1(iii) and Absolute Anabelian Geometry III, Proposition 5.7. For each outer place tuple v, its source M_v is derived as the dependent product of these genuine field radial carriers; the integral block radializes exactly to the fieldwise product and has measure one and normalized value zero. The outer E/W construction is now rebuilt over the finite packet-stage embedding: E, E_{not v}, W, M_V, M_W, S_E, the replica product measure, arbitrary direct-product regions, #E = N_v * #E_{not v}, and the exact reciprocal-weight formula (#E)^-1 log(mu_E) = sum_v (N_v)^-1 log(mu_v) are all derived. The legacy arbitrary block calculation remains non-accepting. Constructing the field presentations, Haar/radial measures, and local degrees from the theta data, then proving packet dilation, mono-analytic adjustment, vertical Kummer transport, and the global product-formula comparison, remain open. The procession equal-weight average depends on that vertical migration.",
+      "Normalized log-volume is a functional on admissible regions, not generally the logarithm of a measure on packet space. The accepted field interface is indexed by genuine finite-stage local fields: finite components identify their radial carrier with the additive field, while infinite components identify it with NNReal through complex norm, as required by Remark 3.1.1(iii) and Absolute Anabelian Geometry III, Proposition 5.7. For each outer place tuple v, M_v, its integral block, and its product measure are derived fieldwise. The outer E/W construction derives E, E_{not v}, W, M_V, M_W, S_E, mu_E, and the exact reciprocal-weight formula. A finite-stage Proposition 3.2 poly-isomorphism equipped only with fieldwise measure preservation now derives preservation of block products, S_E, mu_E, admissibility, the complete normalized functional, its integral value, and the embedded packet integral region. The legacy arbitrary block calculation and vertical wrapper remain non-accepting. Constructing the field presentations, Haar/radial measures, local degrees, packet dilation, and mono-analytic adjustment from the theta data, then migrating Theorem 3.11 vertical compatibility and proving the global product-formula comparison, remain open.",
     clause "III.3.10" .iutIII "IUT III, Proposition 3.10"
       ["SourceTheorem311LabeledData",
         "SourceTheorem311LabeledKummerIso"] .partialImplementation
