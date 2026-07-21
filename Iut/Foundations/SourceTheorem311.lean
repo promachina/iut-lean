@@ -9,6 +9,7 @@ import Iut.Foundations.SourceProcession
 import Iut.Foundations.SourceThetaEvaluation
 import Mathlib.Algebra.Category.ModuleCat.Topology.Basic
 import Mathlib.Algebra.DirectSum.Module
+import Mathlib.Algebra.Module.ZMod
 import Mathlib.Analysis.Seminorm
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 import Mathlib.CategoryTheory.Endomorphism
@@ -26,6 +27,7 @@ import Mathlib.MeasureTheory.Measure.MeasureSpaceDef
 import Mathlib.MeasureTheory.Measure.NullMeasurable
 import Mathlib.NumberTheory.NumberField.Completion.Ramification
 import Mathlib.RingTheory.Ideal.Quotient.HasFiniteQuotients
+import Mathlib.RingTheory.Finiteness.Cardinality
 import Mathlib.RingTheory.Valuation.ValuationSubring
 import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Basic
 
@@ -2776,8 +2778,9 @@ The proof below follows the residue-coset argument of Absolute Anabelian
 Geometry III: the actual quotient `O_L / p O_L` is indexed by its finite
 residue vector space, translation invariance computes the mass of `p O_L`, and
 Mathlib's distributive Haar character transfers that calculation to every
-measurable region.  The source boundary is the residue-field module and its
-standard cardinality/dimension identifications, not the desired Haar formula.
+measurable region.  The source boundary is the local-field dimension identity
+`dim_(F_p)(O_L / p O_L) = [L : Q_p]`, not a chosen residue-field model or the
+desired Haar formula.
 -/
 
 /-- The finite rational place underlying a nonarchimedean local-field model. -/
@@ -2961,6 +2964,22 @@ noncomputable abbrev RationalPrimeQuotient
     integers.rationalPrimeScaledAddSubgroup.addSubgroupOf
       integers.integerAddSubgroup
 
+/--
+The canonical `F_p`-vector-space action on `O_L / p O_L`.  Multiplication by
+`p` vanishes in the quotient by construction, so the additive quotient carries
+a `ZMod p` module structure without choosing a residue-field model.
+-/
+noncomputable abbrev rationalPrimeQuotientModule
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    Module (ZMod integers.rationalPrime) integers.RationalPrimeQuotient :=
+  QuotientAddGroup.zmodModule (by
+    intro value
+    change integers.rationalPrime • (value : field.carrier) ∈
+      integers.rationalPrimeScaledAddSubgroup
+    refine ⟨value, value.property, ?_⟩
+    simp [rationalPrimeDilationAddMonoidHom, rationalPrimeScalar,
+      nsmul_eq_mul])
+
 /-- Finiteness and cardinality of the actual quotient `O_L / p O_L`. -/
 structure ResidueQuotientFormula
     (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) where
@@ -3006,45 +3025,71 @@ theorem ResidueQuotientFormula.representative_spec
       (formula.quotientEquiv index))
 
 /--
-The source-facing residue field and its vector-space structure on
-`O_L / p O_L`.  The two identifications are the algebraic local-field content
-of `#(O_L / p O_L) = p^[L:Q_p]`; the cardinality itself is derived below.
+The sole local-field input for the canonical `F_p`-vector space
+`O_L / p O_L`: its dimension is `[L : Q_p]`.
 -/
 structure RationalPrimeResidueModule
-    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
-    (residueField : Type v) [Field residueField] [Fintype residueField] where
-  quotientModule : Module residueField integers.RationalPrimeQuotient
-  quotientFintype : Fintype integers.RationalPrimeQuotient
-  residueField_card_eq : Fintype.card residueField = integers.rationalPrime
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) where
   quotient_finrank_eq :
-    letI := quotientModule
-    Module.finrank residueField integers.RationalPrimeQuotient =
-      integers.localDegree.1
+    letI := integers.rationalPrimeQuotientModule
+    Module.finrank (ZMod integers.rationalPrime)
+        integers.RationalPrimeQuotient = integers.localDegree.1
+
+/-- Finiteness of `O_L / p O_L` follows from its positive finite dimension. -/
+noncomputable abbrev RationalPrimeResidueModule.quotientFintype
+    {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
+    (residue : integers.RationalPrimeResidueModule) :
+    Fintype integers.RationalPrimeQuotient := by
+  letI : Fact (Nat.Prime integers.rationalPrime) :=
+    ⟨integers.rationalPrime_prime⟩
+  let quotientModule := integers.rationalPrimeQuotientModule
+  letI : Module (ZMod integers.rationalPrime)
+      integers.RationalPrimeQuotient := quotientModule
+  let quotientFree : Module.Free (ZMod integers.rationalPrime)
+      integers.RationalPrimeQuotient :=
+    Module.Free.of_divisionRing _ _
+  letI : Module.Free (ZMod integers.rationalPrime)
+      integers.RationalPrimeQuotient := quotientFree
+  let quotientFinite : Module.Finite (ZMod integers.rationalPrime)
+      integers.RationalPrimeQuotient :=
+    @Module.finite_of_finrank_pos
+      (ZMod integers.rationalPrime) integers.RationalPrimeQuotient
+      _ _ quotientModule quotientFree _ (by
+        rw [residue.quotient_finrank_eq]
+        exact integers.localDegree.2)
+  letI : Module.Finite (ZMod integers.rationalPrime)
+      integers.RationalPrimeQuotient := quotientFinite
+  letI : Finite integers.RationalPrimeQuotient :=
+    @Module.finite_of_finite
+      (ZMod integers.rationalPrime) integers.RationalPrimeQuotient
+      _ _ quotientModule _ quotientFinite
+  exact Fintype.ofFinite integers.RationalPrimeQuotient
 
 theorem RationalPrimeResidueModule.quotient_card_eq
     {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
-    {residueField : Type v} [Field residueField] [Fintype residueField]
-    (residue : integers.RationalPrimeResidueModule residueField) :
-    letI := residue.quotientModule
+    (residue : integers.RationalPrimeResidueModule) :
+    letI := integers.rationalPrimeQuotientModule
     letI := residue.quotientFintype
     Fintype.card integers.RationalPrimeQuotient =
       integers.rationalPrime ^ integers.localDegree.1 := by
-  letI := residue.quotientModule
+  letI : Fact (Nat.Prime integers.rationalPrime) :=
+    ⟨integers.rationalPrime_prime⟩
+  letI := integers.rationalPrimeQuotientModule
   letI := residue.quotientFintype
   calc
     Fintype.card integers.RationalPrimeQuotient =
-        Fintype.card residueField ^
-          Module.finrank residueField integers.RationalPrimeQuotient :=
+        Fintype.card (ZMod integers.rationalPrime) ^
+          Module.finrank (ZMod integers.rationalPrime)
+            integers.RationalPrimeQuotient :=
       Module.card_eq_pow_finrank
     _ = integers.rationalPrime ^ integers.localDegree.1 := by
-      rw [residue.residueField_card_eq, residue.quotient_finrank_eq]
+      rw [ZMod.card, residue.quotient_finrank_eq]
 
 noncomputable def RationalPrimeResidueModule.toResidueQuotientFormula
     {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
-    {residueField : Type v} [Field residueField] [Fintype residueField]
-    (residue : integers.RationalPrimeResidueModule residueField) :
+    (residue : integers.RationalPrimeResidueModule) :
     integers.ResidueQuotientFormula := by
-  letI := residue.quotientModule
+  letI := integers.rationalPrimeQuotientModule
   exact
     { quotientFintype := residue.quotientFintype
       quotient_card_eq := residue.quotient_card_eq }
@@ -4941,8 +4986,7 @@ def dilateRegion
 /-- The residue quotient derives the raw prime dilation on a measured field. -/
 noncomputable def ofIntegers
     (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
-    {residueField : Type u} [Field residueField] [Fintype residueField]
-    (residue : integers.RationalPrimeResidueModule residueField) :
+    (residue : integers.RationalPrimeResidueModule) :
     NonarchimedeanPrimeDilation
       (SourcePacketMeasuredField.ofNonarchimedean integers) where
   dilation := integers.rationalPrimeDilation
