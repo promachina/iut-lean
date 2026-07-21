@@ -104,18 +104,91 @@ log-theta, local arithmetic, and IUT IV estimates of the papers.  The current
 result is a checked conditional Stage 1 corridor, not a closed proof of
 Corollary 3.12 from Mochizuki's published hypotheses.
 
+\medskip
+\noindent\textbf{Scope correction.}
+Names such as ``Theorem311'', ``HodgeArakelov'', ``logKummer'', ``IPL'',
+``SHE'', and ``APT'' in the current Lean declarations label finite or
+conditional interfaces. They do not certify that the corresponding IUT I--III
+definitions, constructions, or theorem clauses have been formalized. The
+machine-readable primary-source ledger currently marks no cited M1--M3 clause
+source-faithful.
+
+The source-reconstruction branch now contains actual topological
+mono-theta environments and a categorical inverse limit for IUT~II,
+Definition~2.7(i).  For Definition~2.7(ii), the nested groups are inverse
+images under the ambient homomorphism and the four indicated subquotients are
+actual topological quotients by normal subgroups.  Subquotient restriction is
+implemented as \(f^{-1}(U)/f^{-1}(N)\): the exterior cyclotome comes from the
+exact kernel in part (i), while the other three narrow-level objects are
+pullbacks of ambient subquotients.  Cyclotomic rigidity is represented by a
+continuous group equivalence between the derived endpoints.  Continuous nonabelian
+\(H^1\) and its direct limit over open subgroups are quotient constructions,
+and pullback along a continuous group homomorphism descends to this direct
+limit.  With abelian coefficients, both quotient constructions carry proved
+commutative group laws and restriction is a homomorphism.  Consequently, given
+the paper's two homomorphisms and the required
+\(\mu_{2l}\)- and \(\mu\)-equivariance, both Corollary~2.8 restriction stages
+derive their output orbit families and preserve identity representatives at
+the zero label.  The two independent conjugacy actions on inertia and ambient
+subgroup choices are represented by a product action; any evaluation
+equivariant for this action is proved to descend to the associated orbit
+quotients.  The exact quotient by torsion in a constant subgroup and its
+constant/theta multiplication map are also constructed; if every zero-label
+theta value is torsion, this map is proved bijective.  Given a zero-to-base
+action-pair comparison, the zero-labeled constant monoid is also proved
+multiplicatively equivalent to its actual diagonal range, compatibly with the
+transported labeled actions.  Construction of the
+precise geometric
+subquotients, homomorphisms, actions, input theta orbits, and independent
+conjugacy compatibility, together with the paper-specific splitting
+compatibility, remains open.
+
+For IUT~II, Corollary~3.5, multiplication by
+\((\mathbb Z/l\mathbb Z)^\times\) has been descended through the sign-label
+quotient and factored through the exact quotient by \(\{\pm1\}\); the resulting
+action on nonzero absolute labels is proved transitive.  A label-indexed family
+of topological group/monoid action pairs now requires coherent identity and
+multiplication laws for its outer transports.  Such transports derive the
+symmetrizing maps, an injective diagonal monoid, and the heterogeneous Gaussian
+monoid.  The transported base-group action is proved to preserve diagonal
+units, and profile stability yields an actual action by automorphisms of the
+Gaussian monoid.  Exponent-\(2l\) unit orbits also imply equality of the corresponding
+\(2l\)-multiple Gaussian submonoids.  These are conditional source interfaces:
+their construction from the paper's outer action, theta-value restrictions,
+and single-inner-automorphism synchronization remains open.
+
+At the legacy toy boundary, initial theta data constructs typed zero/one
+histories, owned prime strips, an effective-divisor degree-category realization
+of the IUT I Hodge theater, and bad-place Hodge--Arakelov q and theta pilots.
+The theta pilot is the Gaussian \(q^{j^2}\) degree family on
+\(\mathbb Z/l\mathbb Z\), using coordinates from the actual theta-root quotient
+torsor.  The formalization proves q-order positivity and coprimality, zero/one
+normalization, sign invariance, and translation/orbit-average identities.
+The next finite toy layer constructs a typed procession,
+\(\mathbb Z/l\mathbb Z\) \(\IndOne/\IndTwo\) actions and their generated
+quotient, a directed \(\IndThree\) upper-semi relation, nonempty possible
+images, and a finite-coordinate bijection from the bad-local quotient torsor.
+The vertical graph and image are exact, and the finite discrete image is
+compact-open.  Typed theta-link, gluing, and \(\IPL/\SHE/\APT\)
+compatibilities retain distinct zero/one histories. These calculations test
+formal variance and quotient bookkeeping only: they do not construct the
+processions, indeterminacies, vertical log-Kummer correspondence, or
+IPL/SHE/APT algorithms of Theorem~3.11.
+
 The current audit now freezes one canonical Stage 1 route instead of treating
 new endpoint variants as progress by themselves.  Its remaining-assumption
 manifest now names the same-index q-normalized route with compact-open
 additive-Haar p-adic-defect/main residual lowering and the lower
 selected p-adic unit-ball Haar-defect frontier.  It classifies each
 public input as constructed, derived, interface-only, or still a source
-obligation.  The current manifest has ten source-obligation entries, one
-interface-only entry, and two derived top-level entries: the residual package
-and the replaced formula-gap package.  On this canonical route the
+obligation.  The current manifest has thirteen source-obligation entries, one
+interface-only entry, and no derived top-level paper claims. In particular,
+the Hodge-theater/Hodge--Arakelov and Theorem~3.11 finite models remain source
+obligations. On this
+canonical route the
 p-adic finite localized
 hull-vector-bundle source is derived from the finite-extension
-restriction-calibrated local arithmetic handoff.  The concrete \(\Ind2\)
+restriction-calibrated local arithmetic handoff.  The concrete \(\IndTwo\)
 local-tensor source now has a checked record audit and typed-core audit,
 recording the direct-summand equality, procession and upper-semi transports,
 normalized log-volume preservation, equality-quotient compatibility, and
@@ -897,17 +970,128 @@ the local estimates of \IUT{} IV.
 
 \section{What Remains Mathematically Open}
 
-\subsection{Theorem 3.11 from source data}
+\subsection{Source-faithful construction before the Theorem 3.11 boundary}
 
-The largest remaining mathematical task is to construct the Theorem 3.11
-multiradial output from actual \IUT{} I--III source data.  The present code has
-a unified Hodge-theater/log-theta/log-Kummer source spine that projects to the
-typed core, possible-image quotient, input-prime-strip link, \(\SHE/\IPL/\APT\)
-bridge, and Step (x) finite-divisor/log-Kummer payload.  The preferred
-paper-trace API no longer asks for those Theorem 3.11 and Step (x) pieces as
-parallel flags; they are read from the spine.  The implementation does not yet
-derive that spine, or the structured bridge and Step (x) packages inside it,
-from the full Hodge-theater, local LGP, and Frobenioid constructions.  The
+The machine-checked source-closure ledger now contains 65 clauses from
+\IUT{} I--III together with the transitive dependencies in \emph{The
+Etale Theta Function}.  It classifies 19 clauses as partially implemented, 20
+as toy models, and 26 as unformalized; it classifies none as source-faithful.
+The new partial Definition~3.1 path constructs etale stacks and
+strong-transformation morphisms, a coherent \(C_2\)-action pseudofunctor and
+coherent invariant maps satisfying the \(C_2\) cocycle.  Both sign quotients
+carry the bicategorical universal property: invariant maps factor through the
+quotient, compatible 2-morphisms lift, and equality is detected after
+precomposition.  The path also constructs certified fundamental groups, exact
+profinite sequences and compatible open immersions.  It also ties the elliptic curve and
+puncture to a scheme over the field, its origin section, and the complementary
+open subscheme with its open immersion; deriving this realization from a
+concrete projective Weierstrass model remains open.  Its \(X_F\) stack is
+bicategorically equivalent to the scheme's representable Yoneda-style
+pseudofunctor, so pullback, identity, and composition coherence are intrinsic,
+and the coherent
+sign action is identified with an involutive scheme map that acts by elliptic
+negation on rational points.  The path constructs the
+lower-central and exponent-\(l\)
+theta quotient, its distinct rank-two arithmetic elliptic quotient, and the
+theta center.  It supplies linked arithmetic and cuspidal exact sequences, a
+surjective Lagrangian quotient on the elliptic quotient, its kernel cover, and
+the Proposition~2.2 direct-product inversion eigenspace interface with actual
+arithmetic-conjugation compatibility.  It also supplies the
+theta-root subgroup derived from a Galois splitting and records the normalizing
+order-two lift, unique admissible coset, induced conjugation, and generation
+statement of Proposition~2.2(iii).  Global and bad-local
+theta-root/sign-quotient stack realization interfaces are present.  The cusp
+data is a complete atlas: nonzero \(X\)-cusps are indexed by nonidentity
+\(Q\)-labels and \(C\)-cusps by inversion orbits, with rational inertia and
+decomposition exact sequences, sheet conjugacy, and sign compatibility.  The
+selected \(Q/\{\pm1\}\) label is derived from an actual sheet representative.
+The transitive Definition~1.1 construction forms the normal closure of all
+nonselected inertia, \(\Delta^\dagger\), and its positive and negative
+eigenspaces.  The doubled label \(2\epsilon\) is derived and proved distinct
+from both selected sheets.  Continuous exact quotients
+\(J_X\hookrightarrow J_C\) are recorded; their section is pinned to the
+doubled-cusp decomposition group, and Lean proves its image normal from
+exactness and the trivial kernel action.  The arrowed stack subgroups are
+required to be the preimages of \(\operatorname{Im}(\sigma)\) and
+\(\operatorname{Im}(\sigma)\times\operatorname{Gal}(X/C)\).  The absolute Galois quotients are constrained to
+mathlib's algebraic-closure automorphism groups with their Krull topology.
+Inside the selected \(\overline F\), the embedded field of moduli is proved
+equal to the fixed field of the geometric-\(j\) automorphism stabilizer, and
+its maximal solvable extension in that same ambient field is defined as the
+compositum of all finite solvable Galois layers.  The embedded
+\(K\) is required to equal, as an intermediate field, the fixed field of the
+kernel of the mod-\(l\) representation.  Restriction from \(K\)-places to
+\(F_{\mathrm{mod}}\)-places is canonical; only a section is chosen.
+The Lagrangian quotient is
+continuous between profinite groups, so its finite-cover kernel is proved
+open rather than stored as an assumption.  The quotient data is attached only
+after scalar extension of the curve and \(X_F/C_F\) stacks to the \(K\)-core
+through the actual restriction-of-scalars pseudofunctor.  The quotient map
+itself is compared by an invertible modification whose components and
+naturality cells are pinned to the restricted global map.  It does not yet
+derive the explicit type-\((1,l\text{-tors})\) cover/sign-quotient stacks as
+finite-etale covers, though their arithmetic cover group is fixed to be the
+profinite group of the open Lagrangian kernel.  The global and local
+theta-root stack interfaces likewise fix their arithmetic groups to the
+derived open theta-root subgroups and supply the open subgroup chains.  The construction and
+finite-etale representability of both kinds of stack realization remain open.
+Their cover squares carry
+the full pseudo-cone cartesian universal property: compatible cone
+2-morphisms lift, and the lift is unique.
+
+At every finite and infinite \(K\)-place, the base curve and core stacks are
+scalar-extended over the actual completion.  At selected finite places, the
+type-\((1,l\text{-tors})\) cover stacks are also scalar-extended.  Selected
+infinite places carry the analogous cover,
+stack, absolute-Galois/decomposition-subgroup, and exact-sequence data over
+mathlib's archimedean completions.  At every selected place, compatible
+local-to-global cover fundamental groups and rank-two elliptic quotients are
+recorded, the local quotient map satisfies the same morphism-level
+scalar-extension comparison, and the complete cuspidal atlases commute with
+the cover diagrams.  At good finite places the \(\Delta^\dagger\) quotient,
+positive profinite quotient, \(J_X/J_C\) sequences, doubled-cusp sections,
+arrowed stacks, and their fundamental groups all commute with scalar
+extension.  Lean derives equality of each selected local cusp sign label with
+the global label.  At bad
+places, the standard rank-one quotient is
+required to factor continuously through the profinite completion
+\(\widehat{\mathbb Z}\) and its canonical reduction modulo \(l\).  Their
+absolute Galois groups are identified with closed decomposition subgroups of
+the global group, with compatible embeddings of fundamental exact sequences.
+Each closed subgroup is identified with the literal stabilizer of a chosen
+prolongation of the corresponding place to the algebraic closure.
+The localized cusp label is proved to be the canonical sign orbit of
+\(1\bmod l\).  Constructing the algebraic boundary atlas, compactifications,
+and the supplied finite-etale stack realizations remains open; the records
+above specify their source contracts but do not prove geometric existence.
+At every \(F\)-place above the bad moduli locus, and at each selected bad
+\(K\)-place, the \(q\)-parameter is a nonzero contracting element of the adic
+completion equipped with a Tate uniformization over its algebraic closure; its
+group-level uniformization is equivariant for the local absolute Galois action,
+its positive local height is derived from the discrete valuation exponent,
+and this height is required to be prime to \(l\).
+Analytic/topological realization of this uniformization remains open.
+The cuspidal involution fixes inertia and the Galois quotient, the selected
+splitting is sign-compatible, and the bad cusp label is the sign orbit of
+\(1\bmod l\).  Each bad place carries source-shaped theta-root and
+sign-quotient stacks, a coherent quotient universal property, a full
+two-pullback witness, the derived arithmetic theta-root group, and the two
+open fundamental-group inclusions.  Producing these structures from the
+source hypotheses and proving finite-etale representability remain open.
+
+The current finite route from \texttt{InitialThetaData} is an explicitly
+classified toy model. Its \(\mathbb Z/l\mathbb Z\) translations,
+natural-number preorder, finite-coordinate bijection, and transport laws do
+not instantiate Theorem~3.11. The paper-level procession, \(\IndOne\),
+\(\IndTwo\), \(\IndThree\), vertical log-Kummer, and horizontal
+\(\IPL/\SHE/\APT\) clauses remain source obligations.
+
+The largest remaining IUT III task is to enrich this finite route with the
+analytic common-container, holomorphic-hull, determinant, local-field, and
+Haar data consumed by Step (xi).  The older downstream route still has a
+unified Hodge-theater/log-theta/log-Kummer source spine that projects to its
+analytic bridge and finite-divisor payload.  It is now a legacy adapter target,
+not the canonical M3 input boundary.  The
 current bridge component is no longer a fully free qualitative packet: Lean can
 construct it from the lower constructed qualitative certificate and audits the
 SHE/APT/IPL no-collapse projections at the primitive packet boundary.  The
@@ -1072,8 +1256,8 @@ The
 missing source construction includes:
 \[
 \begin{array}{l}
-\text{initial theta data and Hodge-theater histories},\\
-\text{prime strips and the derivation of the structured input link},\\
+\text{the richer Frobenioid/Kummer structure beyond the degree model},\\
+\text{the derivation of the structured input link from the typed prime strips},\\
 \text{the multiradial algorithm and its possible images},\\
 \text{the log-theta-lattice procession and \(F_\ell\)-symmetry},\\
 \text{the derivation of the \(1\)-column \(\SHE/\IPL/\APT\) bridge},\\
@@ -2061,8 +2245,9 @@ it from the possible-image witness, the equality-quotient possible-image
 family, and the symmetry-label, upper-semi, and procession fiber transport
 laws before applying the compact-open correspondence route.  Thus this packaged
 branch now exposes the Theorem~3.11 possible-image/transport data itself, not a
-separate wrapper, although those possible-image and transport laws remain
-source obligations until the full multiradial construction is internalized.
+separate wrapper.  On the canonical M3 boundary those possible-image and
+transport laws are now constructed; this older analytic branch receives them
+through the explicit legacy adapter while its Step~(xi) enrichments remain.
 A measure/summand-calibrated variant,
 \texttt{\detokenize{preferredPublicConcretePacketPossibleImageWitnessSymmetryLabelCompactOpenLogKummerCorrespondenceMeasureSummandCalibrationLocalArithmeticHandoffSameIndexProjectedPrincipalProductWeightedDeterminantQNormalizedLocalArithmeticDegreeSourceSourceObligationGapLocalUpperTheorem110ValuationBallIUTIVLocalizedStepXI311312GoalEvidenceAudit}},
 then lowers the same packaged branch below the pointwise determinant-formula
@@ -3231,7 +3416,7 @@ variant removes the ambient `IUTStage1SourceHullDetObligations` object from
 this selected weighted-partition path: it builds the selected possible-image
 constructor directly from the record-canonical bridge equality, q-positivity,
 and normalization, and proves that the obligations visible at the endpoint are
-definitionally the obligations produced by the constructed Theorem 3.11
+definitionally the obligations produced by the legacy finite-route
 hull/determinant constructor.  The bridge equality and side conditions are
 still explicit lower inputs on this variant.
 The exact-theta selected Step (xi) paper-trace constructor now
@@ -3852,7 +4037,7 @@ theta/family-hull log-volume equalities before entering this short preferred
 route; its audit carries product-hull provenance together with the localized
 \(C_\Theta\) payload derivation.  The same audit now exposes the
 constructor-sourced Step (xi) endpoint, where the obligations object is
-definitionally the one produced by the constructed Theorem 3.11
+definitionally the one produced by the legacy finite-route
 hull/determinant constructor.  The obligations-backed variant projects the
 bridge equality, q-pilot positivity, and normalization from a single
 \(\texttt{IUTStage1SourceHullDetObligations}\) object, leaving only the
@@ -4423,14 +4608,13 @@ The next milestones should eliminate source-obligation families rather than
 adding more endpoint wrappers.
 
 \paragraph{Review-handoff continuation.}
-The next broad goal is to replace the remaining high-level Theorem 3.11 and
-IUT IV source interfaces by paper-level constructions.  The intended order is:
-first construct the initial-theta/Hodge-theater object that currently feeds the
-primitive source packet; next derive the multiradial \(\IndOne/\IndTwo/\IndThree\)
-and log-Kummer compatibility layer from that object; then lower the
-Remark~3.9.5 hull, determinant, and Ob3/Ob4/Ob5 synchronization fields to
-source data; after that derive the \(\IPL/\SHE/\APT\) common-container
-comparison rather than carrying it as bridge data; finally formalize the IUT IV
+The next broad goal is to replace the remaining analytic Step (xi) and
+IUT IV source interfaces by paper-level constructions.  The initial-theta
+Hodge-theater source, concrete Hodge--Arakelov pilots, and finite Theorem 3.11
+procession/log-Kummer route are now constructed.  The intended next order is:
+lower the Remark~3.9.5 hull, determinant, and Ob3/Ob4/Ob5 synchronization
+fields to source data; extend the constructed \(\IPL/\SHE/\APT\)
+compatibility through the analytic common container; finally formalize the IUT IV
 local estimate package that supplies the signed \(C_\Theta\) upper bound.  A
 reviewable completion of the 3.11--3.12 corridor should expose an endpoint whose
 inputs are paper-level Hodge-theater/log-theta/lattice data and whose remaining
@@ -4732,10 +4916,13 @@ local-analytic ledger and p-adic unit-ball projection.  The remaining work is
 to derive this smaller source package from the underlying
 Theorem~3.11/Hodge-theater and local-field constructions.
 
-\paragraph{Milestone C: Theorem 3.11 source derivation.}
-Work backward from the typed indeterminacy core to actual Hodge-theater,
-Frobenioid, log-Kummer, and log-theta-lattice source data.  This is the largest
-milestone and the one most directly connected to the Scholze--Stix objection.
+\paragraph{Milestone C: Source-faithful Theorem 3.11 reconstruction (open).}
+The existing finite translations, quotient, preorder, coordinate bijection,
+and transport laws are regression models only. Completion requires the LGP
+Gaussian log-theta lattice, D-prime-strip processions, tensor packets, integral
+structures, splitting monoids, Frobenioids, genuine indeterminacy actions,
+vertical Kummer isomorphisms, normalized log volumes, and horizontal
+equivariance from the cited IUT I--III clauses.
 
 \paragraph{Milestone D: Blueprint expansion.}
 Expand the blueprint from a slim guide plus declaration index into a richer
@@ -4754,8 +4941,8 @@ prose annotation of the papers; it is an executable audit of a precise corridor.
 
 What remains is real mathematics, not formatting.  To settle the 3.11--3.12
 issue inside this project, the source obligations must be discharged from
-Mochizuki's constructions: full Theorem 3.11 multiradial data, genuine
-Remark 3.9.5 hull/determinant operations, \IUT{} IV local estimates, and the
+Mochizuki's constructions: genuine Remark 3.9.5 hull/determinant operations,
+\IUT{} IV local estimates, and the
 local arithmetic infrastructure connecting them.  The formalization has made
 that task sharper.  It has not made it disappear.
 
