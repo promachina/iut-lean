@@ -4729,6 +4729,66 @@ instance complete
 
 end SourcePacketMeasuredField
 
+namespace SourcePacketMeasuredField
+
+variable {rationalPlace : SourceRationalPlace}
+variable {field : SourceTopologicalLocalField.{u} rationalPlace}
+
+/-- Raw rational-prime dilation data on one genuine measured local field. -/
+structure NonarchimedeanPrimeDilation
+    (measured : SourcePacketMeasuredField rationalPlace field) where
+  localDegree : ℕ+
+  dilation : field.carrier ≃ field.carrier
+  admissible_image :
+    ∀ region : measured.volume.AdmissibleRegion,
+      measured.volume.admissible (dilation '' region.carrier)
+  valueOn_dilation :
+    ∀ region : measured.volume.AdmissibleRegion,
+      measured.volume.valueOn
+          ⟨dilation '' region.carrier, admissible_image region⟩ =
+        measured.volume.valueOn region +
+          (localDegree.1 : ℝ) *
+            SourceNormalizedLogVolume.packetLogVolumeShift rationalPlace
+
+namespace NonarchimedeanPrimeDilation
+
+def dilateRegion
+    {measured : SourcePacketMeasuredField rationalPlace field}
+    (normalization : measured.NonarchimedeanPrimeDilation)
+    (region : measured.volume.AdmissibleRegion) :
+    measured.volume.AdmissibleRegion :=
+  ⟨normalization.dilation '' region.carrier,
+    normalization.admissible_image region⟩
+
+/-- The residue quotient derives the raw prime dilation on a measured field. -/
+noncomputable def ofIntegers
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
+    {residueField : Type u} [Field residueField] [Fintype residueField]
+    (residue : integers.RationalPrimeResidueModule residueField) :
+    NonarchimedeanPrimeDilation
+      (SourcePacketMeasuredField.ofNonarchimedean integers) where
+  localDegree := integers.localDegree
+  dilation := integers.rationalPrimeDilation
+  admissible_image := by
+    intro region
+    exact integers.normalizedLogVolume_admissible_rationalPrimeDilation
+      (residue.toResidueQuotientFormula.toHaarDegreeFormula) region
+  valueOn_dilation := by
+    intro region
+    change
+      integers.normalizedLogVolume.valueOn
+          ⟨integers.rationalPrimeDilation '' region.carrier, _⟩ =
+        integers.normalizedLogVolume.valueOn region +
+          (integers.localDegree.1 : ℝ) *
+            SourceNormalizedLogVolume.packetLogVolumeShift rationalPlace
+    rw [integers.normalizedLogVolume_valueOn_rationalPrimeDilation
+      (residue.toResidueQuotientFormula.toHaarDegreeFormula) region]
+    rw [integers.localPrimeLogVolumeShift_eq_degree_mul_packetLogVolumeShift]
+
+end NonarchimedeanPrimeDilation
+
+end SourcePacketMeasuredField
+
 /--
 A simultaneous finite-stage decomposition equipped with component volume data
 on every genuine field summand.
@@ -5144,6 +5204,147 @@ theorem packetRadializedRegion_integralRegion
   congr 1
   funext placeTuple
   exact measured.blockRadializedRegion_integralRegion placeTuple
+
+/-- A product of field regions, transported into one tensor-algebra block. -/
+noncomputable def blockFieldProductRegion
+    (_measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex)
+    (regions : ∀ index : (decomposition.blockStage placeTuple).fieldIndex,
+      Set ((decomposition.blockStage placeTuple).field index).carrier) :
+    Set (decomposition.blockStage placeTuple).module :=
+  (blockFieldDecomposition (decomposition := decomposition) placeTuple).symm ''
+    Set.pi Set.univ regions
+
+theorem blockFieldDecomposition_image_blockFieldProductRegion
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex)
+    (regions : ∀ index : (decomposition.blockStage placeTuple).fieldIndex,
+      Set ((decomposition.blockStage placeTuple).field index).carrier) :
+    blockFieldDecomposition (decomposition := decomposition) placeTuple ''
+        measured.blockFieldProductRegion placeTuple regions =
+      Set.pi Set.univ regions := by
+  ext value
+  constructor
+  · rintro ⟨source, ⟨fieldValue, hfieldValue, rfl⟩, rfl⟩
+    simpa using hfieldValue
+  · intro hvalue
+    refine ⟨(blockFieldDecomposition
+      (decomposition := decomposition) placeTuple).symm value, ?_, ?_⟩
+    · exact ⟨value, hvalue, rfl⟩
+    · exact (blockFieldDecomposition
+        (decomposition := decomposition) placeTuple).apply_symm_apply value
+
+theorem blockRadializedRegion_blockFieldProductRegion
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex)
+    (regions : ∀ index : (decomposition.blockStage placeTuple).fieldIndex,
+      Set ((decomposition.blockStage placeTuple).field index).carrier) :
+    measured.blockRadializedRegion placeTuple
+        (measured.blockFieldProductRegion placeTuple regions) =
+      Set.pi Set.univ fun index =>
+        (measured.blockMeasuredField placeTuple index).radialization ''
+          regions index := by
+  classical
+  rw [blockRadializedRegion,
+    measured.blockFieldDecomposition_image_blockFieldProductRegion]
+  ext value
+  constructor
+  · rintro ⟨source, hsource, rfl⟩ index _
+    exact ⟨source index, hsource index (Set.mem_univ _), rfl⟩
+  · intro hvalue
+    choose source hsource hradial using
+      fun index => hvalue index (Set.mem_univ index)
+    refine ⟨source, ?_, ?_⟩
+    · intro index _
+      exact hsource index
+    · funext index
+      exact hradial index
+
+theorem blockProductMeasure_blockFieldProductRegion
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex)
+    (regions : ∀ index : (decomposition.blockStage placeTuple).fieldIndex,
+      Set ((decomposition.blockStage placeTuple).field index).carrier) :
+    measured.blockProductMeasure placeTuple
+        (measured.blockRadializedRegion placeTuple
+          (measured.blockFieldProductRegion placeTuple regions)) =
+      ∏ index,
+        (measured.blockMeasuredField placeTuple index).measure
+          ((measured.blockMeasuredField placeTuple index).radialization ''
+            regions index) := by
+  rw [blockProductMeasure,
+    measured.blockRadializedRegion_blockFieldProductRegion]
+  exact MeasureTheory.Measure.pi_pi _ _
+
+/-- Fieldwise admissible regions give an admissible tensor-block product. -/
+noncomputable def blockFieldProductAdmissibleRegion
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex)
+    (regions : ∀ index : (decomposition.blockStage placeTuple).fieldIndex,
+      (measured.blockMeasuredField placeTuple index).volume.AdmissibleRegion) :
+    (measured.blockVolume placeTuple).AdmissibleRegion where
+  carrier := measured.blockFieldProductRegion placeTuple fun index =>
+    (regions index).carrier
+  isAdmissible := by
+    refine ⟨?_, ?_, ?_⟩
+    · rw [measured.blockRadializedRegion_blockFieldProductRegion]
+      exact MeasurableSet.univ_pi fun index =>
+        (measured.blockMeasuredField placeTuple index)
+          |>.admissible_radialImage_measurable (regions index)
+    · rw [measured.blockProductMeasure_blockFieldProductRegion]
+      exact Finset.prod_ne_zero_iff.mpr fun index _ =>
+        (measured.blockMeasuredField placeTuple index)
+          |>.admissible_measure_ne_zero (regions index)
+    · rw [measured.blockProductMeasure_blockFieldProductRegion]
+      exact ENNReal.prod_ne_top fun index _ =>
+        (measured.blockMeasuredField placeTuple index)
+          |>.admissible_measure_ne_top (regions index)
+
+/-- A tensor-block product value is the sum of its genuine field values. -/
+theorem blockVolume_valueOn_blockFieldProductAdmissibleRegion
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex)
+    (regions : ∀ index : (decomposition.blockStage placeTuple).fieldIndex,
+      (measured.blockMeasuredField placeTuple index).volume.AdmissibleRegion) :
+    (measured.blockVolume placeTuple).valueOn
+        (measured.blockFieldProductAdmissibleRegion placeTuple regions) =
+      ∑ index,
+        (measured.blockMeasuredField placeTuple index).volume.valueOn
+          (regions index) := by
+  have hpositive : ∀ index,
+      0 < ((measured.blockMeasuredField placeTuple index).measure
+        ((measured.blockMeasuredField placeTuple index).radialization ''
+          (regions index).carrier)).toReal := by
+    intro index
+    exact ENNReal.toReal_pos
+      ((measured.blockMeasuredField placeTuple index)
+        |>.admissible_measure_ne_zero (regions index))
+      ((measured.blockMeasuredField placeTuple index)
+        |>.admissible_measure_ne_top (regions index))
+  rw [SourceNormalizedLogVolume.valueOn,
+    measured.blockVolume_rawLogVolume_eq_measure,
+    measured.blockVolume_normalizationOffset_eq_zero, sub_zero]
+  change
+    Real.log
+        (measured.blockProductMeasure placeTuple
+          (measured.blockRadializedRegion placeTuple
+            (measured.blockFieldProductRegion placeTuple fun index =>
+              (regions index).carrier))).toReal = _
+  rw [measured.blockProductMeasure_blockFieldProductRegion]
+  rw [ENNReal.toReal_prod,
+    Real.log_prod (fun index _ => (hpositive index).ne')]
+  apply Finset.sum_congr rfl
+  intro index _
+  rw [SourceNormalizedLogVolume.valueOn,
+    (measured.blockMeasuredField placeTuple index).rawLogVolume_eq_measure,
+    (measured.blockMeasuredField placeTuple index).normalizationOffset_eq_zero,
+    sub_zero]
 
 end SourcePacketFiniteMeasuredFieldDecomposition
 
@@ -5702,6 +5903,360 @@ theorem toNormalizedLogVolume_valueOn_admissibleProductRegion_eq_weightedSum
   rw [data.toNormalizedLogVolume_valueOn_admissibleProductRegion]
   rw [data.normalizedReplicaSum_eq_inverseMultiplicitySum fun placeTuple =>
     (measured.blockVolume placeTuple).valueOn (regions placeTuple)]
+
+/--
+Fieldwise rational-prime dilations together with the tensor-decomposition
+degree identity used in Remark 3.1.1(ii).
+-/
+structure DirectProductPrimeNormalization
+    (data : SourcePacketFiniteStageLogVolume packet decomposition measured) where
+  fieldDilation : ∀ index : decomposition.FieldSummandIndex,
+    (measured.measuredField index).NonarchimedeanPrimeDilation
+  block_degree_sum : ∀ placeTuple : packet.PlaceTupleIndex,
+    (∑ index : (decomposition.blockStage placeTuple).fieldIndex,
+      (fieldDilation ⟨placeTuple, index⟩).localDegree.1) =
+      (data.multiplicity placeTuple).1 *
+        ∏ factor,
+          (data.placeNormalizationDegree (placeTuple factor)).1
+
+namespace DirectProductPrimeNormalization
+
+variable
+    {data : SourcePacketFiniteStageLogVolume packet decomposition measured}
+
+/-- Apply the prime dilation in every genuine field of one tensor block. -/
+noncomputable def blockDilation
+    (normalization : data.DirectProductPrimeNormalization)
+    (placeTuple : packet.PlaceTupleIndex) :
+    (decomposition.blockStage placeTuple).module ≃
+      (decomposition.blockStage placeTuple).module :=
+  (SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+      (decomposition := decomposition) placeTuple).toEquiv |>.trans
+    ((Equiv.piCongrRight fun index =>
+      (normalization.fieldDilation ⟨placeTuple, index⟩).dilation).trans
+        (SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+          (decomposition := decomposition) placeTuple).symm.toEquiv)
+
+@[simp]
+theorem blockFieldDecomposition_blockDilation_apply
+    (normalization : data.DirectProductPrimeNormalization)
+    (placeTuple : packet.PlaceTupleIndex)
+    (value : (decomposition.blockStage placeTuple).module) :
+    SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+        (decomposition := decomposition) placeTuple
+        (normalization.blockDilation placeTuple value) =
+      fun index =>
+        (normalization.fieldDilation ⟨placeTuple, index⟩).dilation
+          (SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+            (decomposition := decomposition) placeTuple value index) := by
+  change
+    SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+        (decomposition := decomposition) placeTuple
+        ((SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+          (decomposition := decomposition) placeTuple).symm
+            (fun index =>
+              (normalization.fieldDilation ⟨placeTuple, index⟩).dilation
+                (SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+                  (decomposition := decomposition) placeTuple value index))) = _
+  rw [(SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+    (decomposition := decomposition) placeTuple).apply_symm_apply]
+
+theorem blockFieldProductRegion_iff
+    (placeTuple : packet.PlaceTupleIndex)
+    (regions : ∀ index : (decomposition.blockStage placeTuple).fieldIndex,
+      Set ((decomposition.blockStage placeTuple).field index).carrier)
+    (value : (decomposition.blockStage placeTuple).module) :
+    value ∈ measured.blockFieldProductRegion placeTuple regions ↔
+      ∀ index,
+        SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+            (decomposition := decomposition) placeTuple value index ∈
+          regions index := by
+  constructor
+  · rintro ⟨coordinates, hcoordinates, rfl⟩ index
+    simpa using hcoordinates index (Set.mem_univ index)
+  · intro hvalue
+    refine ⟨SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+      (decomposition := decomposition) placeTuple value, ?_, ?_⟩
+    · intro index _
+      exact hvalue index
+    · exact (SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+        (decomposition := decomposition) placeTuple).symm_apply_apply value
+
+/-- Componentwise field dilation transports an exact block product. -/
+theorem blockDilation_image_blockFieldProductRegion
+    (normalization : data.DirectProductPrimeNormalization)
+    (placeTuple : packet.PlaceTupleIndex)
+    (regions : ∀ index : (decomposition.blockStage placeTuple).fieldIndex,
+      Set ((decomposition.blockStage placeTuple).field index).carrier) :
+    normalization.blockDilation placeTuple ''
+        measured.blockFieldProductRegion placeTuple regions =
+      measured.blockFieldProductRegion placeTuple fun index =>
+        (normalization.fieldDilation ⟨placeTuple, index⟩).dilation ''
+          regions index := by
+  ext value
+  constructor
+  · rintro ⟨source, hsource, rfl⟩
+    rw [blockFieldProductRegion_iff]
+    intro index
+    refine ⟨(SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+      (decomposition := decomposition) placeTuple source) index, ?_, ?_⟩
+    · exact (blockFieldProductRegion_iff
+        placeTuple regions source).mp hsource index
+    · exact congrFun
+        (normalization.blockFieldDecomposition_blockDilation_apply
+          placeTuple source) index |>.symm
+  · intro hvalue
+    have hcoordinate :=
+      (blockFieldProductRegion_iff placeTuple _ value).mp hvalue
+    choose source hsource hdilated using hcoordinate
+    let sourceValue :=
+      (SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+        (decomposition := decomposition) placeTuple).symm source
+    refine ⟨sourceValue, ?_, ?_⟩
+    · rw [blockFieldProductRegion_iff]
+      intro index
+      rw [show
+        SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+            (decomposition := decomposition) placeTuple sourceValue = source by
+          exact (SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+            (decomposition := decomposition) placeTuple).apply_symm_apply source]
+      exact hsource index
+    · apply (SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+        (decomposition := decomposition) placeTuple).injective
+      funext index
+      rw [normalization.blockFieldDecomposition_blockDilation_apply]
+      rw [show
+        SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+            (decomposition := decomposition) placeTuple sourceValue = source by
+          exact (SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition
+            (decomposition := decomposition) placeTuple).apply_symm_apply source]
+      exact hdilated index
+
+/-- Dilate every fieldwise admissible region in one block. -/
+noncomputable def dilatedFieldRegions
+    (normalization : data.DirectProductPrimeNormalization)
+    (placeTuple : packet.PlaceTupleIndex)
+    (regions : ∀ index : (decomposition.blockStage placeTuple).fieldIndex,
+      (measured.blockMeasuredField placeTuple index).volume.AdmissibleRegion) :
+    ∀ index : (decomposition.blockStage placeTuple).fieldIndex,
+      (measured.blockMeasuredField placeTuple index).volume.AdmissibleRegion :=
+  fun index =>
+    (normalization.fieldDilation ⟨placeTuple, index⟩).dilateRegion
+      (regions index)
+
+/-- The value shift of a block product is the sum of raw local-degree shifts. -/
+theorem blockVolume_valueOn_dilatedFieldRegions
+    (normalization : data.DirectProductPrimeNormalization)
+    (placeTuple : packet.PlaceTupleIndex)
+    (regions : ∀ index : (decomposition.blockStage placeTuple).fieldIndex,
+      (measured.blockMeasuredField placeTuple index).volume.AdmissibleRegion) :
+    (measured.blockVolume placeTuple).valueOn
+        (measured.blockFieldProductAdmissibleRegion placeTuple
+          (normalization.dilatedFieldRegions placeTuple regions)) =
+      (measured.blockVolume placeTuple).valueOn
+          (measured.blockFieldProductAdmissibleRegion placeTuple regions) +
+        (∑ index : (decomposition.blockStage placeTuple).fieldIndex,
+          ((normalization.fieldDilation ⟨placeTuple, index⟩).localDegree.1 : ℝ)) *
+          SourceNormalizedLogVolume.packetLogVolumeShift packet.rationalPlace := by
+  rw [measured.blockVolume_valueOn_blockFieldProductAdmissibleRegion,
+    measured.blockVolume_valueOn_blockFieldProductAdmissibleRegion]
+  calc
+    (∑ index,
+        (measured.blockMeasuredField placeTuple index).volume.valueOn
+          (normalization.dilatedFieldRegions placeTuple regions index)) =
+        ∑ index,
+          ((measured.blockMeasuredField placeTuple index).volume.valueOn
+              (regions index) +
+            ((normalization.fieldDilation
+              ⟨placeTuple, index⟩).localDegree.1 : ℝ) *
+              SourceNormalizedLogVolume.packetLogVolumeShift
+                packet.rationalPlace) := by
+      apply Finset.sum_congr rfl
+      intro index _
+      exact (normalization.fieldDilation ⟨placeTuple, index⟩)
+        |>.valueOn_dilation (regions index)
+    _ = _ := by rw [Finset.sum_add_distrib, Finset.sum_mul]
+
+/-- The source degree identity gives the block's normalized raw shift. -/
+theorem blockVolume_valueOn_dilatedFieldRegions_eq_degreeProduct
+    (normalization : data.DirectProductPrimeNormalization)
+    (placeTuple : packet.PlaceTupleIndex)
+    (regions : ∀ index : (decomposition.blockStage placeTuple).fieldIndex,
+      (measured.blockMeasuredField placeTuple index).volume.AdmissibleRegion) :
+    (measured.blockVolume placeTuple).valueOn
+        (measured.blockFieldProductAdmissibleRegion placeTuple
+          (normalization.dilatedFieldRegions placeTuple regions)) =
+      (measured.blockVolume placeTuple).valueOn
+          (measured.blockFieldProductAdmissibleRegion placeTuple regions) +
+        ((data.multiplicity placeTuple).1 : ℝ) *
+          (∏ factor,
+            ((data.placeNormalizationDegree (placeTuple factor)).1 : ℝ)) *
+          SourceNormalizedLogVolume.packetLogVolumeShift packet.rationalPlace := by
+  rw [normalization.blockVolume_valueOn_dilatedFieldRegions]
+  congr 1
+  rw [← Nat.cast_sum, normalization.block_degree_sum, Nat.cast_mul,
+    Nat.cast_prod]
+
+/-- Apply the block prime dilation at every outer place tuple. -/
+noncomputable def stageDilation
+    (normalization : data.DirectProductPrimeNormalization) :
+    decomposition.stageModule ≃ decomposition.stageModule :=
+  Equiv.piCongrRight fun placeTuple =>
+    normalization.blockDilation placeTuple
+
+/-- The block product assembled from one family of genuine field regions. -/
+noncomputable def blockAdmissibleRegion
+    (_normalization : data.DirectProductPrimeNormalization)
+    (regions : ∀ index : decomposition.FieldSummandIndex,
+      (measured.measuredField index).volume.AdmissibleRegion)
+    (placeTuple : packet.PlaceTupleIndex) :
+    (measured.blockVolume placeTuple).AdmissibleRegion :=
+  measured.blockFieldProductAdmissibleRegion placeTuple fun index =>
+    regions ⟨placeTuple, index⟩
+
+/-- The block product after every genuine local field is multiplied by `p`. -/
+noncomputable def dilatedBlockAdmissibleRegion
+    (normalization : data.DirectProductPrimeNormalization)
+    (regions : ∀ index : decomposition.FieldSummandIndex,
+      (measured.measuredField index).volume.AdmissibleRegion)
+    (placeTuple : packet.PlaceTupleIndex) :
+    (measured.blockVolume placeTuple).AdmissibleRegion :=
+  measured.blockFieldProductAdmissibleRegion placeTuple
+    (normalization.dilatedFieldRegions placeTuple fun index =>
+      regions ⟨placeTuple, index⟩)
+
+/-- The source-relevant direct-product region in the complete E/W functional. -/
+noncomputable def packetAdmissibleRegion
+    (normalization : data.DirectProductPrimeNormalization)
+    (regions : ∀ index : decomposition.FieldSummandIndex,
+      (measured.measuredField index).volume.AdmissibleRegion) :
+    data.toNormalizedLogVolume.AdmissibleRegion :=
+  data.admissibleProductRegion
+    (normalization.blockAdmissibleRegion regions)
+
+/-- The fieldwise prime-dilated direct-product region in the E/W functional. -/
+noncomputable def dilatedPacketAdmissibleRegion
+    (normalization : data.DirectProductPrimeNormalization)
+    (regions : ∀ index : decomposition.FieldSummandIndex,
+      (measured.measuredField index).volume.AdmissibleRegion) :
+    data.toNormalizedLogVolume.AdmissibleRegion :=
+  data.admissibleProductRegion
+    (normalization.dilatedBlockAdmissibleRegion regions)
+
+/-- The explicit stage equivalence transports the packet product componentwise. -/
+theorem stageDilation_image_packetAdmissibleRegion
+    (normalization : data.DirectProductPrimeNormalization)
+    (regions : ∀ index : decomposition.FieldSummandIndex,
+      (measured.measuredField index).volume.AdmissibleRegion) :
+    normalization.stageDilation ''
+        (normalization.packetAdmissibleRegion regions).carrier =
+      (normalization.dilatedPacketAdmissibleRegion regions).carrier := by
+  change
+    normalization.stageDilation ''
+        SourcePacketFiniteMeasuredFieldDecomposition.packetProductRegion
+          (decomposition := decomposition) (fun placeTuple =>
+            measured.blockFieldProductRegion placeTuple fun index =>
+              (regions ⟨placeTuple, index⟩).carrier) =
+      SourcePacketFiniteMeasuredFieldDecomposition.packetProductRegion
+        (decomposition := decomposition) (fun placeTuple =>
+          measured.blockFieldProductRegion placeTuple fun index =>
+            (normalization.fieldDilation ⟨placeTuple, index⟩).dilation ''
+              (regions ⟨placeTuple, index⟩).carrier)
+  ext value
+  constructor
+  · rintro ⟨source, hsource, rfl⟩
+    intro placeTuple _
+    change normalization.blockDilation placeTuple (source placeTuple) ∈
+      measured.blockFieldProductRegion placeTuple (fun index =>
+        (normalization.fieldDilation ⟨placeTuple, index⟩).dilation ''
+          (regions ⟨placeTuple, index⟩).carrier)
+    rw [← normalization.blockDilation_image_blockFieldProductRegion]
+    exact ⟨source placeTuple,
+      hsource placeTuple (Set.mem_univ placeTuple), rfl⟩
+  · intro hvalue
+    have hblock : ∀ placeTuple,
+        value placeTuple ∈
+          normalization.blockDilation placeTuple ''
+            measured.blockFieldProductRegion placeTuple fun index =>
+              (regions ⟨placeTuple, index⟩).carrier := by
+      intro placeTuple
+      rw [normalization.blockDilation_image_blockFieldProductRegion]
+      exact hvalue placeTuple (Set.mem_univ placeTuple)
+    choose source hsource hdilated using hblock
+    refine ⟨source, ?_, ?_⟩
+    · intro placeTuple _
+      exact hsource placeTuple
+    · funext placeTuple
+      exact hdilated placeTuple
+
+/--
+Remark 3.1.1(ii)'s full cancellation on actual direct-product regions: raw
+local-degree shifts pass through the E/W weights and become exactly the
+packet-normalized shift `-log p`.
+-/
+theorem valueOn_dilatedPacketAdmissibleRegion
+    (normalization : data.DirectProductPrimeNormalization)
+    (regions : ∀ index : decomposition.FieldSummandIndex,
+      (measured.measuredField index).volume.AdmissibleRegion) :
+    data.toNormalizedLogVolume.valueOn
+        (normalization.dilatedPacketAdmissibleRegion regions) =
+      data.toNormalizedLogVolume.valueOn
+          (normalization.packetAdmissibleRegion regions) +
+        SourceNormalizedLogVolume.packetLogVolumeShift
+          packet.rationalPlace := by
+  simp only [dilatedPacketAdmissibleRegion, packetAdmissibleRegion]
+  rw [data.toNormalizedLogVolume_valueOn_admissibleProductRegion_eq_weightedSum,
+    data.toNormalizedLogVolume_valueOn_admissibleProductRegion_eq_weightedSum]
+  simp only [dilatedBlockAdmissibleRegion, blockAdmissibleRegion]
+  simp_rw [normalization.blockVolume_valueOn_dilatedFieldRegions_eq_degreeProduct]
+  have hmultiplicity : ∀ placeTuple : packet.PlaceTupleIndex,
+      ((data.multiplicity placeTuple).1 : ℝ) ≠ 0 := by
+    intro placeTuple
+    exact_mod_cast (data.multiplicity placeTuple).ne_zero
+  have hterm : ∀ placeTuple : packet.PlaceTupleIndex,
+      ((measured.blockVolume placeTuple).valueOn
+            (measured.blockFieldProductAdmissibleRegion placeTuple fun index =>
+              regions ⟨placeTuple, index⟩) +
+          ((data.multiplicity placeTuple).1 : ℝ) *
+            (∏ factor,
+              ((data.placeNormalizationDegree
+                (placeTuple factor)).1 : ℝ)) *
+            SourceNormalizedLogVolume.packetLogVolumeShift
+              packet.rationalPlace) /
+          ((data.multiplicity placeTuple).1 : ℝ) =
+        (measured.blockVolume placeTuple).valueOn
+            (measured.blockFieldProductAdmissibleRegion placeTuple fun index =>
+              regions ⟨placeTuple, index⟩) /
+            ((data.multiplicity placeTuple).1 : ℝ) +
+          (∏ factor,
+            ((data.placeNormalizationDegree (placeTuple factor)).1 : ℝ)) *
+            SourceNormalizedLogVolume.packetLogVolumeShift
+              packet.rationalPlace := by
+    intro placeTuple
+    rw [add_div, mul_assoc,
+      mul_div_cancel_left₀ _ (hmultiplicity placeTuple)]
+  simp_rw [hterm, Finset.sum_add_distrib, ← Finset.sum_mul]
+  have hdenominator :
+      (data.normalizationDenominator : ℝ) =
+        ∑ placeTuple : packet.PlaceTupleIndex,
+          ∏ factor,
+            ((data.placeNormalizationDegree (placeTuple factor)).1 : ℝ) := by
+    rw [normalizationDenominator, Nat.cast_sum]
+    apply Finset.sum_congr rfl
+    intro placeTuple _
+    rw [Nat.cast_prod]
+  have hdenominator_ne : (data.normalizationDenominator : ℝ) ≠ 0 := by
+    exact_mod_cast Nat.ne_of_gt data.normalizationDenominator_pos
+  have hscale :
+      data.normalizationScale * (data.normalizationDenominator : ℝ) = 1 := by
+    rw [normalizationScale]
+    exact inv_mul_cancel₀ hdenominator_ne
+  rw [← hdenominator]
+  ring_nf
+  rw [hscale]
+  ring
+
+end DirectProductPrimeNormalization
 
 /-!
 ## Finite-stage mono-analytic/holomorphic compatibility

@@ -106,6 +106,26 @@ namespace Iut.SourceNonarchimedeanLocalFieldIntegers
 
 end Iut.SourceNonarchimedeanLocalFieldIntegers
 
+#print axioms Iut.SourcePacketMeasuredField.NonarchimedeanPrimeDilation.ofIntegers
+
+namespace Iut.SourcePacketFiniteMeasuredFieldDecomposition
+
+#print axioms blockFieldDecomposition_image_blockFieldProductRegion
+#print axioms blockRadializedRegion_blockFieldProductRegion
+#print axioms blockProductMeasure_blockFieldProductRegion
+#print axioms blockVolume_valueOn_blockFieldProductAdmissibleRegion
+
+end Iut.SourcePacketFiniteMeasuredFieldDecomposition
+
+namespace Iut.SourcePacketFiniteStageLogVolume.DirectProductPrimeNormalization
+
+#print axioms blockDilation_image_blockFieldProductRegion
+#print axioms blockVolume_valueOn_dilatedFieldRegions_eq_degreeProduct
+#print axioms stageDilation_image_packetAdmissibleRegion
+#print axioms valueOn_dilatedPacketAdmissibleRegion
+
+end Iut.SourcePacketFiniteStageLogVolume.DirectProductPrimeNormalization
+
 #print axioms Iut.SourcePacketMeasuredField.ofNonarchimedean
 #print axioms Iut.SourceArchimedeanLocalFieldModel.complexNorm_image_integralRegion
 #print axioms Iut.SourceArchimedeanLocalFieldModel.radialLengthMeasure_unitRadialInterval
