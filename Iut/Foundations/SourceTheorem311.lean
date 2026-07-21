@@ -3708,31 +3708,328 @@ noncomputable def padicModuleOfRingHom
   exact integers.integerAddEquivIntegerSubring.module
     (PadicInt integers.rationalPrime)
 
-/--
-The source-theoretic characterization of the integer ring of `L/Q_p`.
+noncomputable local instance padicLatticeModule
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    Module (PadicInt integers.rationalPrime)
+      integers.integerAddSubgroup :=
+  integers.padicModuleOfRingHom integers.padicScalarMap
 
-The remaining local-completion obligation is the canonical statement that the
-norm unit ball `O_L` is the integral closure of `Z_p` in `L`.  A basis is not
-stored: finite generation, freeness, rank, and the basis are derived from this
-property and the transported `Q_p` field basis below.
--/
-class PAdicIntegralClosure
-    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) : Prop where
-  isIntegralClosure :
+noncomputable local instance padicLatticeFieldAlgebra
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    Algebra (Padic integers.rationalPrime) field.carrier :=
+  integers.padicFieldRingHom.toAlgebra
+
+noncomputable local instance padicLatticeFieldContinuousSMul
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    ContinuousSMul (Padic integers.rationalPrime) field.carrier :=
+  continuousSMul_of_algebraMap _ _ integers.continuous_padicFieldRingHom
+
+noncomputable local instance padicLatticeFieldFiniteDimensional
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    FiniteDimensional (Padic integers.rationalPrime) field.carrier :=
+  Module.Finite.of_basis integers.padicFieldBasis
+
+/-- A common power of `p` puts every transported field-basis vector in `O_L`. -/
+theorem eventually_padicPrime_pow_smul_basis_mem
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    ∀ᶠ exponent : ℕ in Filter.atTop,
+      ∀ index : Fin integers.localDegree.1,
+        ((integers.rationalPrime : Padic integers.rationalPrime) ^ exponent) •
+            integers.padicFieldBasis index ∈ integers.integerRing := by
+  rw [Filter.eventually_all]
+  intro index
+  have htendsto : Filter.Tendsto
+      (fun exponent : ℕ =>
+        ((integers.rationalPrime : Padic integers.rationalPrime) ^ exponent) •
+          integers.padicFieldBasis index)
+      Filter.atTop (nhds 0) := by
+    have hpow : Filter.Tendsto
+        (fun exponent : ℕ =>
+          (integers.rationalPrime : Padic integers.rationalPrime) ^ exponent)
+        Filter.atTop (nhds 0) :=
+      tendsto_pow_atTop_nhds_zero_of_norm_lt_one Padic.norm_p_lt_one
+    simpa using hpow.smul_const (integers.padicFieldBasis index)
+  exact htendsto (integers.integerRing_isOpen.mem_nhds
+    integers.integerRing.zero_mem)
+
+/-- A chosen common power putting the finite field basis in `O_L`. -/
+noncomputable def padicIntegralScaleExponent
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) : ℕ :=
+  Classical.choose integers.eventually_padicPrime_pow_smul_basis_mem.exists
+
+theorem padicIntegralScaleExponent_spec
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
+    (index : Fin integers.localDegree.1) :
+    ((integers.rationalPrime : Padic integers.rationalPrime) ^
+        integers.padicIntegralScaleExponent) •
+        integers.padicFieldBasis index ∈ integers.integerRing :=
+  (Classical.choose_spec
+    integers.eventually_padicPrime_pow_smul_basis_mem.exists) index
+
+/-- The field basis after a common nonzero `p`-power scaling. -/
+noncomputable def scaledPadicFieldBasis
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    Module.Basis (Fin integers.localDegree.1)
+      (Padic integers.rationalPrime) field.carrier :=
+  integers.padicFieldBasis.unitsSMul fun _ =>
+    Units.mk0
+      ((integers.rationalPrime : Padic integers.rationalPrime) ^
+        integers.padicIntegralScaleExponent)
+      (pow_ne_zero _ (by exact_mod_cast integers.rationalPrime_prime.ne_zero))
+
+@[simp]
+theorem scaledPadicFieldBasis_apply
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
+    (index : Fin integers.localDegree.1) :
+    integers.scaledPadicFieldBasis index =
+      ((integers.rationalPrime : Padic integers.rationalPrime) ^
+        integers.padicIntegralScaleExponent) •
+        integers.padicFieldBasis index := by
+  rw [scaledPadicFieldBasis, Module.Basis.unitsSMul_apply]
+  rfl
+
+/-- The scaled field-basis vectors, regarded as elements of `O_L`. -/
+noncomputable def integralBasisVector
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
+    (index : Fin integers.localDegree.1) : integers.integerAddSubgroup :=
+  ⟨integers.scaledPadicFieldBasis index, by
+    rw [integers.scaledPadicFieldBasis_apply]
+    exact integers.padicIntegralScaleExponent_spec index⟩
+
+/-- The finite `Z_p`-span of a scaled `Q_p` field basis inside `O_L`. -/
+noncomputable def padicBasisLattice
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    Submodule (PadicInt integers.rationalPrime)
+      integers.integerAddSubgroup :=
+  Submodule.span (PadicInt integers.rationalPrime)
+    (Set.range integers.integralBasisVector)
+
+theorem padicBasisLattice_fg
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    integers.padicBasisLattice.FG :=
+  Submodule.fg_span (Set.finite_range integers.integralBasisVector)
+
+private theorem padic_unit_ball_isOpen
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    IsOpen {value : Padic integers.rationalPrime | ‖value‖ ≤ 1} := by
+  rw [show {value : Padic integers.rationalPrime | ‖value‖ ≤ 1} =
+      Metric.closedBall 0 1 from Set.ext (fun value => by
+        simp only [Metric.mem_closedBall, dist_zero_right, Set.mem_setOf_eq])]
+  exact IsUltrametricDist.isOpen_closedBall 0 one_ne_zero
+
+private theorem coe_padic_smul_integralBasisVector
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
+    (coefficient : PadicInt integers.rationalPrime)
+    (index : Fin integers.localDegree.1) :
+    (((coefficient • integers.integralBasisVector index :
+          integers.integerAddSubgroup) : field.carrier)) =
+      (coefficient : Padic integers.rationalPrime) •
+        integers.scaledPadicFieldBasis index := by
+  change integers.padicScalarMap coefficient *
+      integers.scaledPadicFieldBasis index = _
+  rw [Algebra.smul_def, integers.padicScalarMap_coe_eq_padicFieldRingHom]
+  rfl
+
+/-- The scaled `Z_p` basis lattice is an open subgroup of `O_L`. -/
+theorem padicBasisLattice_isOpen
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    IsOpen (integers.padicBasisLattice :
+      Set integers.integerAddSubgroup) := by
+  let coordinateNeighborhood : Set integers.integerAddSubgroup :=
+    {value | ∀ index, ‖integers.scaledPadicFieldBasis.repr
+      (value : field.carrier) index‖ ≤ 1}
+  have hopen : IsOpen coordinateNeighborhood := by
+    rw [show coordinateNeighborhood =
+        ⋂ index, {value : integers.integerAddSubgroup |
+          ‖integers.scaledPadicFieldBasis.repr
+            (value : field.carrier) index‖ ≤ 1} by
+      ext value
+      simp [coordinateNeighborhood]]
+    apply isOpen_iInter_of_finite
+    intro index
+    exact integers.padic_unit_ball_isOpen.preimage <|
+      (integers.scaledPadicFieldBasis.coord index).continuous_of_finiteDimensional.comp
+        continuous_subtype_val
+  have hzero : (0 : integers.integerAddSubgroup) ∈ coordinateNeighborhood := by
+    simp [coordinateNeighborhood]
+  apply integers.padicBasisLattice.toAddSubgroup.isOpen_of_mem_nhds
+  apply Filter.mem_of_superset (hopen.mem_nhds hzero)
+  intro value hvalue
+  change value ∈ integers.padicBasisLattice
+  let coefficients : Fin integers.localDegree.1 →
+      PadicInt integers.rationalPrime := fun index =>
+    ⟨integers.scaledPadicFieldBasis.repr
+        (value : field.carrier) index,
+      hvalue index⟩
+  have hsum : value = ∑ index,
+      coefficients index • integers.integralBasisVector index := by
+    apply Subtype.ext
+    change (value : field.carrier) =
+      integers.integerAddSubgroup.subtype
+        (∑ index, coefficients index • integers.integralBasisVector index)
+    rw [map_sum]
+    change (value : field.carrier) = ∑ index,
+      (((coefficients index • integers.integralBasisVector index :
+        integers.integerAddSubgroup) : field.carrier))
+    rw [show (value : field.carrier) = ∑ index,
+        integers.scaledPadicFieldBasis.repr
+            (value : field.carrier) index •
+          integers.scaledPadicFieldBasis index by
+      simpa using (integers.scaledPadicFieldBasis.sum_repr
+        (value : field.carrier)).symm]
+    apply Finset.sum_congr rfl
+    intro index _
+    exact (integers.coe_padic_smul_integralBasisVector
+      (coefficients index) index).symm
+  rw [hsum]
+  apply Submodule.sum_mem
+  intro index _
+  exact integers.padicBasisLattice.smul_mem (coefficients index)
+    (Submodule.subset_span (Set.mem_range_self index))
+
+/-- Compactness of `O_L` and openness of the basis lattice make `O_L` finite over `Z_p`. -/
+noncomputable instance integerAddSubgroupModuleFinite
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    Module.Finite (PadicInt integers.rationalPrime)
+      integers.integerAddSubgroup := by
+  letI : CompactSpace integers.integerAddSubgroup :=
+    isCompact_iff_compactSpace.mp integers.integerRing_isCompact
+  letI : Finite (integers.integerAddSubgroup ⧸
+      integers.padicBasisLattice) :=
+    integers.padicBasisLattice.toAddSubgroup.quotient_finite_of_isOpen
+      integers.padicBasisLattice_isOpen
+  letI : Module.Finite (PadicInt integers.rationalPrime)
+      integers.padicBasisLattice :=
+    Module.Finite.of_fg integers.padicBasisLattice_fg
+  letI : Module.Finite (PadicInt integers.rationalPrime)
+      (integers.integerAddSubgroup ⧸ integers.padicBasisLattice) :=
+    Module.Finite.of_finite
+  exact Module.Finite.of_submodule_quotient integers.padicBasisLattice
+
+/-- The valuation subring itself is a finite `Z_p` module. -/
+noncomputable instance integerSubringModuleFinite
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
+    letI : Algebra (PadicInt integers.rationalPrime)
+        integers.integerRing.toSubring := integers.padicScalarMap.toAlgebra
+    Module.Finite (PadicInt integers.rationalPrime)
+      integers.integerRing.toSubring := by
+  letI : Algebra (PadicInt integers.rationalPrime)
+      integers.integerRing.toSubring := integers.padicScalarMap.toAlgebra
+  exact Module.Finite.equiv
+    (integers.integerAddEquivIntegerSubring.linearEquiv
+      (PadicInt integers.rationalPrime))
+
+/-- Elements of the valuation ring are exactly the elements integral over `Z_p`. -/
+theorem isIntegral_iff_mem_integerRing
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
+    (value : field.carrier) :
+    letI : Algebra (PadicInt integers.rationalPrime) field.carrier :=
+      integers.padicIntegerFieldRingHom.toAlgebra
+    IsIntegral (PadicInt integers.rationalPrime) value ↔
+      value ∈ integers.integerRing := by
+  let baseIntegers := PadicInt integers.rationalPrime
+  let localField := field.carrier
+  let localIntegers := integers.integerRing.toSubring
+  letI : Algebra baseIntegers localField :=
+    integers.padicIntegerFieldRingHom.toAlgebra
+  constructor
+  · rintro ⟨polynomial, hmonic, heval⟩
+    rw [← integers.integerRing.valuation_le_one_iff]
+    by_cases hdegree : polynomial.natDegree = 0
+    · rw [Polynomial.natDegree_eq_zero] at hdegree
+      obtain ⟨coefficient, rfl⟩ := hdegree
+      have hbaseInjective : Function.Injective
+          (algebraMap baseIntegers localField) := by
+        change Function.Injective integers.padicIntegerFieldRingHom
+        intro left right hequal
+        apply PadicInt.ext
+        apply (RingHom.injective integers.padicFieldRingHom)
+        simpa [padicIntegerFieldRingHom] using hequal
+      exfalso
+      apply hmonic.ne_zero_of_C
+      apply hbaseInjective
+      simpa using heval
+    simp only [Polynomial.eval₂_eq_sum_range, Finset.sum_range_succ,
+      hmonic.coeff_natDegree, map_one, one_mul,
+      add_eq_zero_iff_eq_neg] at heval
+    apply_fun integers.integerRing.valuation at heval
+    have hright : integers.integerRing.valuation
+        (-value ^ polynomial.natDegree) =
+        integers.integerRing.valuation value ^ polynomial.natDegree := by
+      rw [integers.integerRing.valuation.map_neg, map_pow]
+    rw [hright] at heval
+    contrapose! heval
+    refine ne_of_lt (integers.integerRing.valuation.map_sum_lt ?_ ?_)
+    · simp [hdegree, (heval.trans' (zero_lt_one)).ne']
+    · simp only [map_mul, map_pow]
+      intro index hindex
+      have hcoefficient :
+          integers.integerRing.valuation
+              (algebraMap baseIntegers localField
+                (polynomial.coeff index)) ≤ 1 := by
+        rw [integers.integerRing.valuation_le_one_iff]
+        change integers.padicIntegerFieldRingHom
+            (polynomial.coeff index) ∈ integers.integerRing
+        change integers.padicFieldRingHom
+            ((polynomial.coeff index : PadicInt integers.rationalPrime) :
+              Padic integers.rationalPrime) ∈ integers.integerRing
+        rw [← integers.padicScalarMap_coe_eq_padicFieldRingHom]
+        exact (integers.padicScalarMap (polynomial.coeff index)).property
+      exact mul_lt_of_le_one_of_lt hcoefficient
+        (pow_lt_pow_right₀ heval (Finset.mem_range.mp hindex))
+  · intro hvalue
+    letI : Algebra baseIntegers localIntegers :=
+      integers.padicScalarMap.toAlgebra
+    letI : Algebra localIntegers localField :=
+      (ValuationSubring.subtype integers.integerRing).toAlgebra
+    letI : IsScalarTower baseIntegers localIntegers localField :=
+      IsScalarTower.of_algebraMap_eq fun coefficient => by
+        change integers.padicIntegerFieldRingHom coefficient =
+          ((integers.padicScalarMap coefficient : localIntegers) : localField)
+        symm
+        exact integers.padicScalarMap_coe_eq_padicFieldRingHom coefficient
+    letI : Module.Finite baseIntegers localIntegers :=
+      integers.integerSubringModuleFinite
+    rw [show value = algebraMap localIntegers localField
+        (⟨value, hvalue⟩ : localIntegers) from rfl]
+    apply (isIntegral_algHom_iff
+      (IsScalarTower.toAlgHom baseIntegers localIntegers localField)
+      (ValuationSubring.subtype_injective integers.integerRing)).mpr
+    exact IsIntegral.of_finite baseIntegers (⟨value, hvalue⟩ : localIntegers)
+
+/-- The valuation ring is canonically the integral closure of `Z_p` in `L`. -/
+theorem padicIsIntegralClosure
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
     letI : Algebra (PadicInt integers.rationalPrime) field.carrier :=
       integers.padicIntegerFieldRingHom.toAlgebra
     letI : Algebra integers.integerRing.toSubring field.carrier :=
       (ValuationSubring.subtype integers.integerRing).toAlgebra
     IsIntegralClosure integers.integerRing.toSubring
-      (PadicInt integers.rationalPrime) field.carrier
+      (PadicInt integers.rationalPrime) field.carrier := by
+  let baseIntegers := PadicInt integers.rationalPrime
+  let localField := field.carrier
+  let localIntegers := integers.integerRing.toSubring
+  letI : Algebra baseIntegers localField :=
+    integers.padicIntegerFieldRingHom.toAlgebra
+  letI : Algebra localIntegers localField :=
+    (ValuationSubring.subtype integers.integerRing).toAlgebra
+  refine
+    { algebraMap_injective :=
+        (ValuationSubring.subtype_injective integers.integerRing)
+      isIntegral_iff := fun {value} => ?_ }
+  rw [integers.isIntegral_iff_mem_integerRing]
+  constructor
+  · intro hvalue
+    exact ⟨⟨value, hvalue⟩, rfl⟩
+  · rintro ⟨integralValue, rfl⟩
+    exact integralValue.property
 
 /--
 The integral `Z_p` basis of `O_L`, derived from integral closure rather than
 accepted as local presentation data.
 -/
 noncomputable def padicIntegralBasis
-    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
-    [closure : integers.PAdicIntegralClosure] :
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
     letI := integers.padicModuleOfRingHom integers.padicScalarMap
     Module.Basis (Fin integers.localDegree.1)
       (PadicInt integers.rationalPrime) integers.integerAddSubgroup := by
@@ -3755,7 +4052,7 @@ noncomputable def padicIntegralBasis
       symm
       exact integers.padicScalarMap_coe_eq_padicFieldRingHom value
   letI : IsIntegralClosure localIntegers baseIntegers localField :=
-    closure.isIntegralClosure
+    integers.padicIsIntegralClosure
   letI : Module.IsTorsionFree baseIntegers localField :=
     Module.IsTorsionFree.trans_faithfulSMul
       baseIntegers baseField localField
@@ -3808,8 +4105,6 @@ theorem padicPrime_smul
       integers.rationalPrimeScalar * source
   rw [map_natCast]
   simp [rationalPrimeScalar]
-
-variable [closure : integers.PAdicIntegralClosure]
 
 /-- Reduce every integral-basis coefficient modulo `p`. -/
 noncomputable def coefficientReduction :
@@ -3987,8 +4282,7 @@ structure RationalPrimeResidueModule
 
 /-- Build the residue-module identity from the derived integral `Z_p` basis. -/
 noncomputable def PAdicIntegralClosure.toRationalPrimeResidueModule
-    {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field}
-    [integers.PAdicIntegralClosure] :
+    {integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field} :
     integers.RationalPrimeResidueModule where
   quotient_finrank_eq := PAdicIntegralClosure.quotient_finrank_eq
 
@@ -5942,8 +6236,7 @@ def dilateRegion
 
 /-- Integral closure derives the raw prime dilation on a measured field. -/
 noncomputable def ofIntegers
-    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field)
-    [integers.PAdicIntegralClosure] :
+    (integers : SourceNonarchimedeanLocalFieldIntegers rationalPlace field) :
     NonarchimedeanPrimeDilation
       (SourcePacketMeasuredField.ofNonarchimedean integers) := by
   let residue :=
