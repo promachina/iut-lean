@@ -6,6 +6,8 @@ Authors: IUT Lean formalization contributors
 import Iut.Foundations.SourceHodgeArakelovEvaluation
 import Iut.Foundations.SourceTheorem311
 
+open Iut
+
 /-!
 # M1-M3 source endpoint axiom audit
 
@@ -87,12 +89,31 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceSelectedPlace.moduliRationalLocalDegree
 #print axioms Iut.SourcePacketMeasuredField.integral_measure_eq_one
 #print axioms Iut.SourcePacketMeasuredField.normalizationOffset_eq_zero
-#print axioms Iut.SourcePacketFiniteMeasuredFieldDecomposition.blockFieldDecomposition_image_integralRegion
-#print axioms Iut.SourcePacketFiniteMeasuredFieldDecomposition.blockRadializedRegion_integralRegion
-#print axioms Iut.SourcePacketFiniteMeasuredFieldDecomposition.blockRadializedRegion_integralRegion_measurable
-#print axioms Iut.SourcePacketFiniteMeasuredFieldDecomposition.blockProductMeasure_integralRegion
-#print axioms Iut.SourcePacketFiniteMeasuredFieldDecomposition.blockVolume_normalizationOffset_eq_zero
-#print axioms Iut.SourcePacketFiniteMeasuredFieldDecomposition.blockVolume_value_eq_zero
+#print axioms SourcePacketFiniteFieldDecomposition.stageEmbedding_injective
+
+namespace Iut.SourcePacketFiniteMeasuredFieldDecomposition
+
+#print axioms blockFieldDecomposition_image_integralRegion
+#print axioms blockRadializedRegion_integralRegion
+#print axioms blockRadializedRegion_integralRegion_measurable
+#print axioms blockProductMeasure_integralRegion
+#print axioms blockVolume_normalizationOffset_eq_zero
+#print axioms blockVolume_value_eq_zero
+#print axioms packetRadializedRegion_productRegion
+#print axioms stageEmbedding_preimage_embeddedPacketIntegralRegion
+
+end Iut.SourcePacketFiniteMeasuredFieldDecomposition
+
+namespace Iut.SourcePacketFiniteStageLogVolume
+
+#print axioms weightChoice_card_factor
+#print axioms normalizedReplicaSum_eq_inverseMultiplicitySum
+#print axioms weightedLift_productRegion
+#print axioms weightedContent_productRegion
+#print axioms normalized_log_weightedContent_productRegion
+#print axioms toNormalizedLogVolume_valueOn_admissibleProductRegion_eq_weightedSum
+
+end Iut.SourcePacketFiniteStageLogVolume
 
 -- Legacy block-indexed volume lemmas remain visible but are not source endpoints.
 #print axioms Iut.SourcePacketLogVolumeDecomposition.algebraicDecomposition

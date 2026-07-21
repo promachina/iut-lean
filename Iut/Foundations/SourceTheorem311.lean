@@ -979,6 +979,84 @@ theorem fieldSummandIndex_card
     (α := fun placeTuple ↦
       (decomposition.blockStage placeTuple).fieldIndex)
 
+/-- The product of the place-tuple tensor blocks in Proposition 3.1. -/
+abbrev PlaceTupleBlockCoordinates
+    (packet : SourceMonoAnalyticTensorPacket.{u} j) :=
+  ∀ placeTuple : packet.PlaceTupleIndex,
+    PiTensorProduct ℚ fun factor =>
+      (packet.factor factor).summand (placeTuple factor)
+
+/--
+The canonical expansion
+`tensor_product (direct_sum_v M_v) = direct_sum_(v_t) tensor_product M_(v_t)`,
+followed by the finite direct-sum/function equivalence.
+-/
+noncomputable def placeTupleDecomposition
+    (packet : SourceMonoAnalyticTensorPacket.{u} j) :
+    packet.carrier ≃ₗ[ℚ] PlaceTupleBlockCoordinates packet :=
+  packet.tensorIso.toLinearEquiv |>.trans
+    (PiTensorProduct.congr
+      (fun factor => (packet.factor factor).directSumIso.toLinearEquiv)) |>.trans
+    PiTensorProduct.ofDirectSumEquiv |>.trans
+    (DirectSum.linearEquivFunOnFintype ℚ packet.PlaceTupleIndex
+      (fun placeTuple => PiTensorProduct ℚ
+        (fun factor =>
+          (packet.factor factor).summand (placeTuple factor))))
+
+/-- The dependent product of all simultaneously chosen finite tensor stages. -/
+abbrev StageCoordinates
+    (decomposition :
+      SourcePacketFiniteFieldDecomposition packet presentation) :=
+  ∀ placeTuple : packet.PlaceTupleIndex,
+    (decomposition.blockStage placeTuple).tensorAlgebra
+
+/-- The rational topological module underlying the chosen finite packet stage. -/
+noncomputable def stageModule
+    (decomposition :
+      SourcePacketFiniteFieldDecomposition packet presentation) :
+    SourceTopologicalQModule.{u} :=
+  SourceTopologicalQModule.of decomposition.StageCoordinates
+
+/-- Apply the selected finite-stage embedding in every place-tuple block. -/
+noncomputable def stageBlockEmbedding
+    (decomposition :
+      SourcePacketFiniteFieldDecomposition packet presentation) :
+    decomposition.stageModule →ₗ[ℚ] PlaceTupleBlockCoordinates packet where
+  toFun := fun value placeTuple =>
+    (decomposition.blockStage placeTuple).blockEmbedding (value placeTuple)
+  map_add' := by
+    intro first second
+    funext placeTuple
+    exact map_add (decomposition.blockStage placeTuple).blockEmbedding
+      (first placeTuple) (second placeTuple)
+  map_smul' := by
+    intro scalar value
+    funext placeTuple
+    exact map_smul (decomposition.blockStage placeTuple).blockEmbedding
+      scalar (value placeTuple)
+
+/-- The chosen finite packet stage maps into, rather than equals, the ind-packet. -/
+noncomputable def stageEmbedding
+    (decomposition :
+      SourcePacketFiniteFieldDecomposition packet presentation) :
+    decomposition.stageModule →ₗ[ℚ] packet.carrier :=
+  (placeTupleDecomposition packet).symm.toLinearMap.comp
+    decomposition.stageBlockEmbedding
+
+/-- The simultaneous finite-stage map into the ind-packet is injective. -/
+theorem stageEmbedding_injective
+    (decomposition :
+      SourcePacketFiniteFieldDecomposition packet presentation) :
+    Function.Injective decomposition.stageEmbedding := by
+  intro first second heq
+  have hblocks :
+      decomposition.stageBlockEmbedding first =
+        decomposition.stageBlockEmbedding second :=
+    (placeTupleDecomposition packet).symm.injective heq
+  funext placeTuple
+  exact (decomposition.blockStage placeTuple).blockEmbedding_injective
+    (congrFun hblocks placeTuple)
+
 end SourcePacketFiniteFieldDecomposition
 
 namespace IUTIIAbsoluteThetaLabel
@@ -2566,6 +2644,14 @@ noncomputable def blockProductMeasure
   MeasureTheory.Measure.pi fun index =>
     (measured.blockMeasuredField placeTuple index).measure
 
+noncomputable instance blockProductMeasureSigmaFinite
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (placeTuple : packet.PlaceTupleIndex) :
+    MeasureTheory.SigmaFinite (measured.blockProductMeasure placeTuple) := by
+  unfold blockProductMeasure
+  infer_instance
+
 /-- The field decomposition carries the integral block to the fieldwise product. -/
 theorem blockFieldDecomposition_image_integralRegion
     (measured :
@@ -2736,7 +2822,679 @@ theorem blockVolume_value_eq_zero
     measured.blockVolume_normalizationOffset_eq_zero placeTuple]
   norm_num
 
+/-- The outer product `M_V` of the radial place-tuple blocks. -/
+abbrev PacketRadialCoordinates
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition) :=
+  ∀ placeTuple : packet.PlaceTupleIndex,
+    measured.BlockRadialCoordinates placeTuple
+
+/-- Radialize every field in every place-tuple block of the finite packet stage. -/
+noncomputable def packetRadializeCoordinates
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (value : decomposition.stageModule) :
+    measured.PacketRadialCoordinates :=
+  fun placeTuple =>
+    measured.blockRadializeCoordinates placeTuple
+      (blockFieldDecomposition
+        (decomposition := decomposition) placeTuple (value placeTuple))
+
+/-- A direct product region in the selected finite packet stage. -/
+def packetProductRegion
+    (regions : ∀ placeTuple : packet.PlaceTupleIndex,
+      Set (decomposition.blockStage placeTuple).module) :
+    Set decomposition.stageModule :=
+  Set.pi Set.univ regions
+
+/-- The radial image of a finite packet-stage region in `M_V`. -/
+def packetRadializedRegion
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (region : Set decomposition.stageModule) :
+    Set measured.PacketRadialCoordinates :=
+  measured.packetRadializeCoordinates '' region
+
+/--
+Radialization carries a direct product of place-tuple stage regions to the
+direct product of their derived radial images.
+-/
+theorem packetRadializedRegion_productRegion
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition)
+    (regions : ∀ placeTuple : packet.PlaceTupleIndex,
+      Set (decomposition.blockStage placeTuple).module) :
+    measured.packetRadializedRegion
+        (packetProductRegion (decomposition := decomposition) regions) =
+      Set.pi Set.univ fun placeTuple =>
+        measured.blockRadializedRegion placeTuple (regions placeTuple) := by
+  classical
+  ext value
+  constructor
+  · rintro ⟨sourceValue, hsourceValue, rfl⟩ placeTuple _
+    refine ⟨blockFieldDecomposition
+      (decomposition := decomposition) placeTuple (sourceValue placeTuple), ?_, rfl⟩
+    exact ⟨sourceValue placeTuple,
+      hsourceValue placeTuple (Set.mem_univ _), rfl⟩
+  · intro hvalue
+    choose fieldValue hfieldValue hradial using
+      fun placeTuple => hvalue placeTuple (Set.mem_univ placeTuple)
+    choose sourceValue hsourceValue hfield using hfieldValue
+    refine ⟨sourceValue, ?_, ?_⟩
+    · intro placeTuple _
+      exact hsourceValue placeTuple
+    · funext placeTuple
+      change
+        measured.blockRadializeCoordinates placeTuple
+            (blockFieldDecomposition
+              (decomposition := decomposition) placeTuple
+                (sourceValue placeTuple)) = value placeTuple
+      rw [hfield placeTuple]
+      exact hradial placeTuple
+
+/-- The product of all fieldwise integral structures in the finite packet stage. -/
+def packetIntegralRegion
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition) :
+    Set decomposition.stageModule :=
+  packetProductRegion (decomposition := decomposition) fun placeTuple =>
+    measured.blockIntegralRegion placeTuple
+
+/-- The distinguished finite packet-stage region inside the actual ind-packet. -/
+noncomputable def embeddedPacketIntegralRegion
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition) :
+    Set packet.carrier :=
+  decomposition.stageEmbedding '' measured.packetIntegralRegion
+
+/-- Injectivity identifies the preimage of the embedded integral region exactly. -/
+theorem stageEmbedding_preimage_embeddedPacketIntegralRegion
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition) :
+    decomposition.stageEmbedding ⁻¹'
+        measured.embeddedPacketIntegralRegion =
+      measured.packetIntegralRegion := by
+  ext value
+  constructor
+  · rintro ⟨sourceValue, hsourceValue, heq⟩
+    exact (decomposition.stageEmbedding_injective heq).symm ▸ hsourceValue
+  · intro hvalue
+    exact ⟨value, hvalue, rfl⟩
+
+/-- The integral packet stage radializes to the exact product of field regions. -/
+theorem packetRadializedRegion_integralRegion
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition) :
+    measured.packetRadializedRegion measured.packetIntegralRegion =
+      Set.pi Set.univ fun placeTuple =>
+        Set.pi Set.univ fun index =>
+          (measured.blockMeasuredField placeTuple index).radialization ''
+            (measured.blockMeasuredField placeTuple index).volume.integralRegion := by
+  rw [packetIntegralRegion,
+    measured.packetRadializedRegion_productRegion]
+  congr 1
+  funext placeTuple
+  exact measured.blockRadializedRegion_integralRegion placeTuple
+
 end SourcePacketFiniteMeasuredFieldDecomposition
+
+/--
+The source-faithful finite-stage E/W log-volume data of Remark 3.1.1(ii)-(iv).
+
+Only the two families of local degrees remain as arithmetic inputs. The packet
+stage, every `M_v`, every component measure, and every component integral
+region are derived from the genuine finite-stage field decomposition.
+-/
+structure SourcePacketFiniteStageLogVolume
+    {j : ℕ} (packet : SourceMonoAnalyticTensorPacket.{u} j)
+    {presentation :
+      SourceMonoAnalyticTensorPacketFieldPresentation packet}
+    (decomposition :
+      SourcePacketFiniteFieldDecomposition packet presentation)
+    (measured :
+      SourcePacketFiniteMeasuredFieldDecomposition packet decomposition) where
+  place_nonempty : Nonempty packet.place
+  placeMultiplicity : packet.place → ℕ+
+  placeNormalizationDegree : packet.place → ℕ+
+
+namespace SourcePacketFiniteStageLogVolume
+
+variable {j : ℕ} {packet : SourceMonoAnalyticTensorPacket.{u} j}
+variable {presentation :
+  SourceMonoAnalyticTensorPacketFieldPresentation packet}
+variable {decomposition :
+  SourcePacketFiniteFieldDecomposition packet presentation}
+variable {measured :
+  SourcePacketFiniteMeasuredFieldDecomposition packet decomposition}
+
+/-- The cardinality `N_v`, obtained as the product of selected local degrees. -/
+noncomputable def multiplicity
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured)
+    (placeTuple : packet.PlaceTupleIndex) : ℕ+ :=
+  ∏ factor, data.placeMultiplicity (placeTuple factor)
+
+@[simp]
+theorem multiplicity_val
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured)
+    (placeTuple : packet.PlaceTupleIndex) :
+    (data.multiplicity placeTuple).1 =
+      ∏ factor, (data.placeMultiplicity (placeTuple factor)).1 := by
+  change PNat.coeMonoidHom
+    (∏ factor, data.placeMultiplicity (placeTuple factor)) = _
+  rw [map_prod]
+  rfl
+
+/-- The denominator in the normalized weights of Remark 3.1.1(ii). -/
+noncomputable def normalizationDenominator
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured) : ℕ :=
+  ∑ placeTuple : packet.PlaceTupleIndex,
+    ∏ factor,
+      (data.placeNormalizationDegree (placeTuple factor)).1
+
+/-- The source weight denominator is strictly positive. -/
+theorem normalizationDenominator_pos
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured) :
+    0 < data.normalizationDenominator := by
+  classical
+  obtain ⟨place⟩ := data.place_nonempty
+  let placeTuple : packet.PlaceTupleIndex := fun _ => place
+  refine Finset.sum_pos' (fun _ _ => Nat.zero_le _)
+    ⟨placeTuple, Finset.mem_univ _, ?_⟩
+  exact Finset.prod_pos fun factor _ =>
+    (data.placeNormalizationDegree (placeTuple factor)).2
+
+/-- The reciprocal source weight normalization. -/
+noncomputable def normalizationScale
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured) : ℝ :=
+  (data.normalizationDenominator : ℝ)⁻¹
+
+theorem normalizationScale_pos
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured) :
+    0 < data.normalizationScale := by
+  rw [normalizationScale, inv_pos]
+  exact_mod_cast data.normalizationDenominator_pos
+
+/-- The product `E = ∏_v E_v`, with `#E_v = N_v`. -/
+abbrev WeightChoice
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured) :=
+  ∀ placeTuple, Fin (data.multiplicity placeTuple).1
+
+/-- The product `E_{≠v}` of all weight coordinates away from `v`. -/
+abbrev ReplicaFiber
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured)
+    (placeTuple : packet.PlaceTupleIndex) :=
+  ∀ other : {other : packet.PlaceTupleIndex // other ≠ placeTuple},
+    Fin (data.multiplicity other.1).1
+
+/-- The paper's replica index `W = ⨆_v E_{≠v}`. -/
+abbrev ReplicaIndex
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured) :=
+  Σ placeTuple : packet.PlaceTupleIndex,
+    data.ReplicaFiber placeTuple
+
+/-- The product `M_W` of replicated, derived radial place-tuple blocks. -/
+abbrev ReplicaSpace
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured) :=
+  ∀ replica : data.ReplicaIndex,
+    measured.BlockRadialCoordinates replica.1
+
+/-- Splitting off the `v`-coordinate identifies `E` with `E_v × E_{≠v}`. -/
+noncomputable def weightChoiceEquiv
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured)
+    (placeTuple : packet.PlaceTupleIndex) :
+    data.WeightChoice ≃
+      Fin (data.multiplicity placeTuple).1 × data.ReplicaFiber placeTuple where
+  toFun := fun choice =>
+    ⟨choice placeTuple, fun other => choice other.1⟩
+  invFun := fun split other =>
+    if hother : other = placeTuple then
+      Fin.cast
+        (congrArg (fun index => (data.multiplicity index).1) hother.symm)
+        split.1
+    else
+      split.2 ⟨other, hother⟩
+  left_inv := by
+    intro choice
+    funext other
+    by_cases hother : other = placeTuple
+    · subst other
+      simp
+    · simp [hother]
+  right_inv := by
+    rintro ⟨selected, away⟩
+    apply Prod.ext
+    · simp
+    · funext other
+      simp [other.2]
+
+/-- The source identity `#E = N_v · #E_{≠v}`. -/
+theorem weightChoice_card_factor
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured)
+    (placeTuple : packet.PlaceTupleIndex) :
+    Fintype.card data.WeightChoice =
+      (data.multiplicity placeTuple).1 *
+        Fintype.card (data.ReplicaFiber placeTuple) := by
+  rw [Fintype.card_congr (data.weightChoiceEquiv placeTuple)]
+  simp
+
+/-- Grouping a sum over `W = ⨆_v E_{≠v}` by its image in `V`. -/
+theorem sum_replica_fst
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured)
+    (value : packet.PlaceTupleIndex → ℝ) :
+    (∑ replica : data.ReplicaIndex, value replica.1) =
+      ∑ placeTuple : packet.PlaceTupleIndex,
+        (Fintype.card (data.ReplicaFiber placeTuple) : ℝ) *
+          value placeTuple := by
+  calc
+    (∑ replica : data.ReplicaIndex, value replica.1) =
+        ∑ placeTuple : packet.PlaceTupleIndex,
+          ∑ _away : data.ReplicaFiber placeTuple, value placeTuple :=
+      Fintype.sum_sigma fun replica : data.ReplicaIndex => value replica.1
+    _ = _ := by
+      apply Finset.sum_congr rfl
+      intro placeTuple _
+      simp
+
+/--
+The combinatorial identity in the final display of Remark 3.1.1(iv): dividing
+the replicated sum by `#E` gives the sum of the reciprocal-`N_v` weights.
+-/
+theorem normalizedReplicaSum_eq_inverseMultiplicitySum
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured)
+    (value : packet.PlaceTupleIndex → ℝ) :
+    (∑ replica : data.ReplicaIndex, value replica.1) /
+        Fintype.card data.WeightChoice =
+      ∑ placeTuple : packet.PlaceTupleIndex,
+        value placeTuple / (data.multiplicity placeTuple).1 := by
+  rw [data.sum_replica_fst value, Finset.sum_div]
+  apply Finset.sum_congr rfl
+  intro placeTuple _
+  rw [data.weightChoice_card_factor placeTuple, Nat.cast_mul]
+  have hmultiplicity :
+      (data.multiplicity placeTuple).1 ≠ 0 :=
+    Nat.ne_of_gt (data.multiplicity placeTuple).pos
+  have hfiber :
+      Fintype.card (data.ReplicaFiber placeTuple) ≠ 0 := by
+    exact Nat.ne_of_gt (Fintype.card_pos_iff.mpr
+      ⟨fun other => ⟨0, (data.multiplicity other.1).pos⟩⟩)
+  field_simp
+
+/-- Read from `M_W` the `M_V` tuple associated to one `e ∈ E`. -/
+def slice
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured)
+    (value : data.ReplicaSpace) (choice : data.WeightChoice) :
+    measured.PacketRadialCoordinates :=
+  fun placeTuple =>
+    value ⟨placeTuple, fun other => choice other.1⟩
+
+/-- The exact subset `S_E ⊆ M_W` in Remark 3.1.1(iv). -/
+def weightedLift
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured)
+    (region : Set decomposition.stageModule) :
+    Set data.ReplicaSpace :=
+  {value | ∀ choice,
+    data.slice value choice ∈ measured.packetRadializedRegion region}
+
+/-- The ordinary product measure on the replicated radial space `M_W`. -/
+noncomputable def replicaProductMeasure
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured) :
+    MeasureTheory.Measure data.ReplicaSpace :=
+  MeasureTheory.Measure.pi fun replica =>
+    measured.blockProductMeasure replica.1
+
+/-- Mochizuki's `E`-weighted content, which is not a measure in `region`. -/
+noncomputable def weightedContent
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured)
+    (region : Set decomposition.stageModule) : ENNReal :=
+  data.replicaProductMeasure (data.weightedLift region)
+
+/--
+For every direct product region, the weighted lift is exactly the product of
+the replicated derived block radial regions.
+-/
+theorem weightedLift_productRegion
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured)
+    (regions : ∀ placeTuple : packet.PlaceTupleIndex,
+      Set (decomposition.blockStage placeTuple).module) :
+    data.weightedLift
+        (SourcePacketFiniteMeasuredFieldDecomposition.packetProductRegion
+          (decomposition := decomposition) regions) =
+      Set.pi Set.univ fun replica : data.ReplicaIndex =>
+        measured.blockRadializedRegion replica.1 (regions replica.1) := by
+  classical
+  have himage := measured.packetRadializedRegion_productRegion regions
+  ext value
+  constructor
+  · intro hvalue replica _
+    let choice : data.WeightChoice := fun placeTuple =>
+      if hindex : placeTuple = replica.1 then
+        ⟨0, (data.multiplicity placeTuple).pos⟩
+      else
+        replica.2 ⟨placeTuple, hindex⟩
+    have hslice := hvalue choice
+    rw [himage] at hslice
+    have hcomponent := hslice replica.1 (Set.mem_univ _)
+    change value replica ∈
+      measured.blockRadializedRegion replica.1 (regions replica.1)
+    convert hcomponent using 1
+    congr 1
+    apply Sigma.ext
+    · rfl
+    · exact heq_of_eq (by
+        funext other
+        simp only [choice, dif_neg other.2])
+  · intro hvalue choice
+    rw [himage]
+    intro placeTuple _
+    exact hvalue
+      ⟨placeTuple, fun other => choice other.1⟩ (Set.mem_univ _)
+
+/-- The weighted content of a direct product is the replicated product measure. -/
+theorem weightedContent_productRegion
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured)
+    (regions : ∀ placeTuple : packet.PlaceTupleIndex,
+      Set (decomposition.blockStage placeTuple).module) :
+    data.weightedContent
+        (SourcePacketFiniteMeasuredFieldDecomposition.packetProductRegion
+          (decomposition := decomposition) regions) =
+      ∏ replica : data.ReplicaIndex,
+        measured.blockProductMeasure replica.1
+          (measured.blockRadializedRegion replica.1 (regions replica.1)) := by
+  rw [weightedContent, data.weightedLift_productRegion regions]
+  exact MeasureTheory.Measure.pi_pi
+    (fun replica : data.ReplicaIndex =>
+      measured.blockProductMeasure replica.1)
+    (fun replica : data.ReplicaIndex =>
+      measured.blockRadializedRegion replica.1 (regions replica.1))
+
+/-- Measurable block radial regions give a measurable weighted lift. -/
+theorem weightedLift_productRegion_measurable
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured)
+    (regions : ∀ placeTuple : packet.PlaceTupleIndex,
+      Set (decomposition.blockStage placeTuple).module)
+    (hmeasurable : ∀ placeTuple,
+      MeasurableSet
+        (measured.blockRadializedRegion placeTuple (regions placeTuple))) :
+    MeasurableSet
+      (data.weightedLift
+        (SourcePacketFiniteMeasuredFieldDecomposition.packetProductRegion
+          (decomposition := decomposition) regions)) := by
+  rw [data.weightedLift_productRegion regions]
+  exact MeasurableSet.univ_pi fun replica => hmeasurable replica.1
+
+/-- The distinguished integral weighted lift is an exact replicated product. -/
+theorem weightedLift_integralRegion
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured) :
+    data.weightedLift measured.packetIntegralRegion =
+      Set.pi Set.univ fun replica : data.ReplicaIndex =>
+        measured.blockRadializedRegion replica.1
+          (measured.blockIntegralRegion replica.1) := by
+  simpa only [SourcePacketFiniteMeasuredFieldDecomposition.packetIntegralRegion]
+    using data.weightedLift_productRegion
+      (fun placeTuple => measured.blockIntegralRegion placeTuple)
+
+/-- The distinguished integral weighted lift is Borel measurable. -/
+theorem weightedLift_integralRegion_measurable
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured) :
+    MeasurableSet (data.weightedLift measured.packetIntegralRegion) := by
+  simpa only [SourcePacketFiniteMeasuredFieldDecomposition.packetIntegralRegion]
+    using data.weightedLift_productRegion_measurable
+      (fun placeTuple => measured.blockIntegralRegion placeTuple)
+      (fun placeTuple =>
+        measured.blockRadializedRegion_integralRegion_measurable placeTuple)
+
+/-- The integral weighted content is the product of the derived block measures. -/
+theorem weightedContent_integralRegion
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured) :
+    data.weightedContent measured.packetIntegralRegion =
+      ∏ replica : data.ReplicaIndex,
+        measured.blockProductMeasure replica.1
+          (measured.blockRadializedRegion replica.1
+            (measured.blockIntegralRegion replica.1)) := by
+  simpa only [SourcePacketFiniteMeasuredFieldDecomposition.packetIntegralRegion]
+    using data.weightedContent_productRegion
+      (fun placeTuple => measured.blockIntegralRegion placeTuple)
+
+/-- Every normalized integral block has measure one, hence so does `μ_E`. -/
+theorem weightedContent_integralRegion_eq_one
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured) :
+    data.weightedContent measured.packetIntegralRegion = 1 := by
+  rw [data.weightedContent_integralRegion]
+  simp only [measured.blockProductMeasure_integralRegion,
+    Finset.prod_const_one]
+
+/-- The integral weighted content is positive. -/
+theorem weightedContent_integralRegion_ne_zero
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured) :
+    data.weightedContent measured.packetIntegralRegion ≠ 0 := by
+  rw [data.weightedContent_integralRegion_eq_one]
+  exact one_ne_zero
+
+/-- The integral weighted content is finite. -/
+theorem weightedContent_integralRegion_ne_top
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured) :
+    data.weightedContent measured.packetIntegralRegion ≠ ⊤ := by
+  rw [data.weightedContent_integralRegion_eq_one]
+  exact ENNReal.one_ne_top
+
+/--
+The finite-stage packet functional obtained from the exact E/W construction.
+The factor `1 / #E` and the normalized local-degree scale are both retained.
+-/
+noncomputable def toNormalizedLogVolume
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured) :
+    SourceNormalizedLogVolume decomposition.stageModule where
+  admissible := fun region =>
+    MeasurableSet (data.weightedLift region) ∧
+      data.weightedContent region ≠ 0 ∧
+      data.weightedContent region ≠ ⊤
+  rawLogVolume := fun region _ =>
+    data.normalizationScale *
+      (Real.log (data.weightedContent region).toReal /
+        Fintype.card data.WeightChoice)
+  integralRegion := measured.packetIntegralRegion
+  integralRegion_admissible :=
+    ⟨data.weightedLift_integralRegion_measurable,
+      data.weightedContent_integralRegion_ne_zero,
+      data.weightedContent_integralRegion_ne_top⟩
+  normalizationOffset :=
+    data.normalizationScale *
+      ((∑ replica : data.ReplicaIndex,
+        (measured.blockVolume replica.1).normalizationOffset) /
+          Fintype.card data.WeightChoice)
+
+/-- The complete finite-stage weighted normalization offset is zero. -/
+theorem toNormalizedLogVolume_normalizationOffset_eq_zero
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured) :
+    data.toNormalizedLogVolume.normalizationOffset = 0 := by
+  change
+    data.normalizationScale *
+      ((∑ replica : data.ReplicaIndex,
+        (measured.blockVolume replica.1).normalizationOffset) /
+          Fintype.card data.WeightChoice) = 0
+  simp only [measured.blockVolume_normalizationOffset_eq_zero,
+    Finset.sum_const_zero,
+    zero_div, mul_zero]
+
+/-- The integral finite packet stage has normalized weighted log-volume zero. -/
+theorem toNormalizedLogVolume_value_eq_zero
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured) :
+    data.toNormalizedLogVolume.value = 0 := by
+  rw [SourceNormalizedLogVolume.value,
+    SourceNormalizedLogVolume.valueOn]
+  change
+    data.normalizationScale *
+        (Real.log
+          (data.weightedContent measured.packetIntegralRegion).toReal /
+            Fintype.card data.WeightChoice) -
+      data.toNormalizedLogVolume.normalizationOffset = 0
+  rw [data.weightedContent_integralRegion_eq_one,
+    data.toNormalizedLogVolume_normalizationOffset_eq_zero]
+  norm_num
+
+/-- A direct product of admissible derived blocks is an admissible packet region. -/
+noncomputable def admissibleProductRegion
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured)
+    (regions : ∀ placeTuple : packet.PlaceTupleIndex,
+      (measured.blockVolume placeTuple).AdmissibleRegion) :
+    data.toNormalizedLogVolume.AdmissibleRegion where
+  carrier :=
+    SourcePacketFiniteMeasuredFieldDecomposition.packetProductRegion
+      (decomposition := decomposition) fun placeTuple =>
+        (regions placeTuple).carrier
+  isAdmissible := by
+    refine ⟨data.weightedLift_productRegion_measurable
+      (fun placeTuple => (regions placeTuple).carrier)
+      (fun placeTuple => (regions placeTuple).isAdmissible.1), ?_, ?_⟩
+    · rw [data.weightedContent_productRegion]
+      exact Finset.prod_ne_zero_iff.mpr fun replica _ =>
+        (regions replica.1).isAdmissible.2.1
+    · rw [data.weightedContent_productRegion]
+      exact ENNReal.prod_ne_top fun replica _ =>
+        (regions replica.1).isAdmissible.2.2
+
+/--
+For a direct product region, the E/W value is the normalized replicated sum
+of the genuine finite-stage block log-volumes.
+-/
+theorem toNormalizedLogVolume_valueOn_admissibleProductRegion
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured)
+    (regions : ∀ placeTuple : packet.PlaceTupleIndex,
+      (measured.blockVolume placeTuple).AdmissibleRegion) :
+    data.toNormalizedLogVolume.valueOn
+        (data.admissibleProductRegion regions) =
+      data.normalizationScale *
+        ((∑ replica : data.ReplicaIndex,
+          (measured.blockVolume replica.1).valueOn (regions replica.1)) /
+            Fintype.card data.WeightChoice) := by
+  change
+    data.normalizationScale *
+          (Real.log
+            (data.weightedContent
+              (SourcePacketFiniteMeasuredFieldDecomposition.packetProductRegion
+                (decomposition := decomposition) fun placeTuple =>
+                  (regions placeTuple).carrier)).toReal /
+            Fintype.card data.WeightChoice) -
+        data.normalizationScale *
+          ((∑ replica : data.ReplicaIndex,
+            (measured.blockVolume replica.1).normalizationOffset) /
+              Fintype.card data.WeightChoice) =
+      data.normalizationScale *
+        ((∑ replica : data.ReplicaIndex,
+          (measured.blockVolume replica.1).valueOn (regions replica.1)) /
+            Fintype.card data.WeightChoice)
+  have hblock : ∀ replica : data.ReplicaIndex,
+      (measured.blockVolume replica.1).valueOn (regions replica.1) =
+        Real.log
+            (measured.blockProductMeasure replica.1
+              (measured.blockRadializedRegion replica.1
+                (regions replica.1).carrier)).toReal -
+          (measured.blockVolume replica.1).normalizationOffset := by
+    intro replica
+    rw [SourceNormalizedLogVolume.valueOn]
+    rw [measured.blockVolume_rawLogVolume_eq_measure]
+  have hpositive : ∀ replica : data.ReplicaIndex,
+      0 < (measured.blockProductMeasure replica.1
+        (measured.blockRadializedRegion replica.1
+          (regions replica.1).carrier)).toReal := by
+    intro replica
+    apply ENNReal.toReal_pos
+    · exact (regions replica.1).isAdmissible.2.1
+    · exact (regions replica.1).isAdmissible.2.2
+  simp_rw [hblock]
+  rw [data.weightedContent_productRegion,
+    ENNReal.toReal_prod,
+    Real.log_prod (fun replica _ => (hpositive replica).ne'),
+    Finset.sum_sub_distrib]
+  ring
+
+/--
+The exact final formula of Remark 3.1.1(iv) for direct product regions:
+`(#E)⁻¹ log μ_E(S) = ∑_v (N_v)⁻¹ log μ_v(S_v)`.
+-/
+theorem normalized_log_weightedContent_productRegion
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured)
+    (regions : ∀ placeTuple : packet.PlaceTupleIndex,
+      (measured.blockVolume placeTuple).AdmissibleRegion) :
+    Real.log
+          (data.weightedContent
+            (SourcePacketFiniteMeasuredFieldDecomposition.packetProductRegion
+              (decomposition := decomposition) fun placeTuple =>
+                (regions placeTuple).carrier)).toReal /
+        Fintype.card data.WeightChoice =
+      ∑ placeTuple : packet.PlaceTupleIndex,
+        Real.log
+            (measured.blockProductMeasure placeTuple
+              (measured.blockRadializedRegion placeTuple
+                (regions placeTuple).carrier)).toReal /
+          (data.multiplicity placeTuple).1 := by
+  have hpositive : ∀ replica : data.ReplicaIndex,
+      0 < (measured.blockProductMeasure replica.1
+        (measured.blockRadializedRegion replica.1
+          (regions replica.1).carrier)).toReal := by
+    intro replica
+    apply ENNReal.toReal_pos
+    · exact (regions replica.1).isAdmissible.2.1
+    · exact (regions replica.1).isAdmissible.2.2
+  rw [data.weightedContent_productRegion,
+    ENNReal.toReal_prod,
+    Real.log_prod (fun replica _ => (hpositive replica).ne')]
+  exact data.normalizedReplicaSum_eq_inverseMultiplicitySum fun placeTuple =>
+    Real.log
+      (measured.blockProductMeasure placeTuple
+        (measured.blockRadializedRegion placeTuple
+          (regions placeTuple).carrier)).toReal
+
+/-- The packet value is the reciprocal-`N_v` weighted sum of block values. -/
+theorem toNormalizedLogVolume_valueOn_admissibleProductRegion_eq_weightedSum
+    (data :
+      SourcePacketFiniteStageLogVolume packet decomposition measured)
+    (regions : ∀ placeTuple : packet.PlaceTupleIndex,
+      (measured.blockVolume placeTuple).AdmissibleRegion) :
+    data.toNormalizedLogVolume.valueOn
+        (data.admissibleProductRegion regions) =
+      data.normalizationScale *
+        ∑ placeTuple : packet.PlaceTupleIndex,
+          (measured.blockVolume placeTuple).valueOn (regions placeTuple) /
+            (data.multiplicity placeTuple).1 := by
+  rw [data.toNormalizedLogVolume_valueOn_admissibleProductRegion]
+  rw [data.normalizedReplicaSum_eq_inverseMultiplicitySum fun placeTuple =>
+    (measured.blockVolume placeTuple).valueOn (regions placeTuple)]
+
+end SourcePacketFiniteStageLogVolume
 
 /--
 Legacy whole-place-tuple realization retained while the existing weighted
