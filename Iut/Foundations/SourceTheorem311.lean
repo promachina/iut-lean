@@ -15,6 +15,7 @@ import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 import Mathlib.CategoryTheory.Endomorphism
 import Mathlib.CategoryTheory.Comma.Arrow
 import Mathlib.Data.Setoid.Basic
+import Mathlib.LinearAlgebra.Countable
 import Mathlib.LinearAlgebra.Dimension.Free
 import Mathlib.LinearAlgebra.PiTensorProduct
 import Mathlib.LinearAlgebra.PiTensorProduct.Basis
@@ -426,21 +427,35 @@ noncomputable def rationalCarrier
 end SourceIndTopologicalLocalModule
 
 /--
-The two topological facts about a number-field adic completion that are needed
-to use it as a finite local field in Remark 3.1.1(iii).  The carrier and its
-metric topology are fixed by `place`; this class contains only the presently
-missing Mathlib theorems about that topology.
+The remaining properness fact about a number-field adic completion that is
+needed to use it as a finite local field in Remark 3.1.1(iii).  The carrier and
+its metric topology are fixed by `place`; second countability is proved below.
 -/
 class SourceFinitePlaceCompletionTopology
     {K : Type u} [Field K] [NumberField K]
     (place : NumberField.FinitePlace K) where
   [properSpace : ProperSpace (ThetaFinitePlace.Completion place)]
-  [secondCountableTopology :
-    SecondCountableTopology (ThetaFinitePlace.Completion place)]
 
 attribute [instance]
   SourceFinitePlaceCompletionTopology.properSpace
-  SourceFinitePlaceCompletionTopology.secondCountableTopology
+
+/--
+The completion at a finite place is second countable.  A number field is a
+finite, hence countable, rational vector space; its valued copy is countable
+and therefore separable, and uniform completion preserves separability.
+-/
+noncomputable instance ThetaFinitePlace.completionSecondCountableTopology
+    {K : Type u} [Field K] [NumberField K]
+    (place : NumberField.FinitePlace K) :
+    SecondCountableTopology (ThetaFinitePlace.Completion place) := by
+  letI : Countable K :=
+    Finsupp.Countable.of_moduleFinite (R := ℚ) (M := K)
+  letI : Countable
+      (WithVal ((ThetaFinitePlace.underlyingPrime place).valuation K)) :=
+    Countable.of_equiv K
+      (WithVal.equiv
+        ((ThetaFinitePlace.underlyingPrime place).valuation K)).symm.toEquiv
+  infer_instance
 
 /--
 The extension structure `Q_p -> K_v` on the actual completions attached to a
@@ -558,8 +573,7 @@ noncomputable abbrev ofFinitePlace
     simp
   finiteDimensional := by infer_instance
   locallyCompactSpace := by infer_instance
-  secondCountableTopology :=
-    SourceFinitePlaceCompletionTopology.secondCountableTopology (place := place)
+  secondCountableTopology := by infer_instance
 
 /-- The valuation ring in the actual selected finite-place completion. -/
 noncomputable def finitePlaceIntegerRing
