@@ -2586,6 +2586,291 @@ theorem normalizedLogVolume_value_eq_zero
 end SourceNonarchimedeanLocalFieldIntegers
 
 /--
+An archimedean finite-stage local field together with its complex model.
+Topics in Absolute Anabelian Geometry III, Proposition 5.7(ii)(a), defines
+radial volume through the complex absolute value, so the topological
+identification with `ℂ` is retained as construction data rather than replaced
+by planar measure.
+-/
+structure SourceArchimedeanLocalFieldModel
+    (rationalPlace : SourceRationalPlace)
+    (field : SourceTopologicalLocalField.{u} rationalPlace) where
+  placeKind : rationalPlace.kind = .archimedean
+  complexEquiv : field.carrier ≃ₜ ℂ
+
+namespace SourceArchimedeanLocalFieldModel
+
+variable {rationalPlace : SourceRationalPlace}
+variable {field : SourceTopologicalLocalField.{u} rationalPlace}
+
+/-- Lebesgue length on `R_{≥0}`, pulled back along its closed embedding in `ℝ`. -/
+noncomputable def nnrealLengthMeasure : MeasureTheory.Measure NNReal :=
+  MeasureTheory.Measure.comap ((↑) : NNReal → ℝ) MeasureTheory.volume
+
+noncomputable instance nnrealLengthMeasureSigmaFinite :
+    MeasureTheory.SigmaFinite nnrealLengthMeasure := by
+  apply MeasureTheory.SigmaFinite.of_map nnrealLengthMeasure
+    measurable_coe_nnreal_real.aemeasurable
+  rw [nnrealLengthMeasure,
+    NNReal.isClosedEmbedding_coe.measurableEmbedding.map_comap]
+  infer_instance
+
+/-- A universe-polymorphic copy of the radial half-line. -/
+abbrev RadialCarrier : Type u := ULift.{u} NNReal
+
+/-- Radial length transported to the universe of the finite-stage field. -/
+noncomputable def radialLengthMeasure :
+    MeasureTheory.Measure RadialCarrier.{u} :=
+  MeasureTheory.Measure.comap
+    (MeasurableEquiv.ulift : RadialCarrier.{u} ≃ᵐ NNReal)
+    nnrealLengthMeasure
+
+noncomputable instance radialLengthMeasureSigmaFinite :
+    MeasureTheory.SigmaFinite radialLengthMeasure.{u} := by
+  apply MeasureTheory.SigmaFinite.of_map radialLengthMeasure
+    (MeasurableEquiv.ulift :
+      RadialCarrier.{u} ≃ᵐ NNReal).measurable.aemeasurable
+  rw [radialLengthMeasure,
+    (MeasurableEquiv.ulift :
+      RadialCarrier.{u} ≃ᵐ NNReal).measurableEmbedding.map_comap]
+  infer_instance
+
+noncomputable instance radialCarrierLocallyCompactSpace :
+    LocallyCompactSpace RadialCarrier.{u} :=
+  Homeomorph.ulift.isOpenEmbedding.locallyCompactSpace
+
+/-- Completing radial length preserves sigma-finiteness. -/
+noncomputable instance completedRadialLengthMeasureSigmaFinite :
+    MeasureTheory.SigmaFinite radialLengthMeasure.{u}.completion := by
+  rw [MeasureTheory.sigmaFinite_iff]
+  let spanning := radialLengthMeasure.{u}.toFiniteSpanningSetsIn
+  exact ⟨{
+    set := spanning.set
+    set_mem := fun _ => Set.mem_univ _
+    finite := fun index => spanning.finite index
+    spanning := spanning.spanning
+  }⟩
+
+/-- The radial half-line equipped with completed Lebesgue measurability. -/
+noncomputable def CompletedRadialCarrier : Type u :=
+  MeasureTheory.NullMeasurableSpace
+    RadialCarrier.{u} radialLengthMeasure.{u}
+
+noncomputable instance completedRadialCarrierTopologicalSpace :
+    TopologicalSpace CompletedRadialCarrier.{u} :=
+  (inferInstance : TopologicalSpace RadialCarrier.{u})
+
+noncomputable instance completedRadialCarrierT2Space :
+    T2Space CompletedRadialCarrier.{u} :=
+  (inferInstance : T2Space RadialCarrier.{u})
+
+noncomputable instance completedRadialCarrierLocallyCompactSpace :
+    LocallyCompactSpace CompletedRadialCarrier.{u} :=
+  (inferInstance : LocallyCompactSpace RadialCarrier.{u})
+
+noncomputable instance completedRadialCarrierSecondCountableTopology :
+    SecondCountableTopology CompletedRadialCarrier.{u} :=
+  (inferInstance : SecondCountableTopology RadialCarrier.{u})
+
+noncomputable instance completedRadialCarrierMeasurableSpace :
+    MeasurableSpace CompletedRadialCarrier.{u} :=
+  @MeasureTheory.NullMeasurableSpace.instMeasurableSpace
+    RadialCarrier.{u} inferInstance
+    radialLengthMeasure.{u}
+
+/-- Borel radial sets remain measurable after completing radial length. -/
+theorem completedRadialCarrier_borel_le :
+    borel CompletedRadialCarrier.{u} ≤
+      completedRadialCarrierMeasurableSpace.{u} := by
+  intro region hregion
+  have hborel :
+      @borel CompletedRadialCarrier.{u}
+          completedRadialCarrierTopologicalSpace.{u} =
+        (inferInstance : MeasurableSpace RadialCarrier.{u}) := by
+    simpa only [completedRadialCarrierTopologicalSpace,
+      CompletedRadialCarrier] using
+        (BorelSpace.measurable_eq (α := RadialCarrier.{u})).symm
+  rw [hborel] at hregion
+  simpa only [completedRadialCarrierMeasurableSpace,
+    CompletedRadialCarrier] using
+      hregion.nullMeasurableSet (μ := radialLengthMeasure.{u})
+
+/-- The source-prescribed radial coordinate is the complex absolute value. -/
+noncomputable def complexNorm
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    field.carrier → NNReal :=
+  fun value => nnnorm (model.complexEquiv value)
+
+/-- The complex absolute value in the universe-polymorphic radial carrier. -/
+noncomputable def radialization
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    field.carrier → RadialCarrier.{u} :=
+  fun value => ULift.up (model.complexNorm value)
+
+/-- Radialization into the completed radial measure space. -/
+noncomputable def completedRadialization
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    field.carrier → CompletedRadialCarrier.{u} :=
+  fun value => model.radialization value
+
+/-- The archimedean integral structure is the complex closed unit disk. -/
+def integralRegion
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    Set field.carrier :=
+  {value | model.complexNorm value ≤ 1}
+
+/-- Complex absolute value maps the closed unit disk onto `[0, 1]`. -/
+theorem complexNorm_image_integralRegion
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    model.complexNorm '' model.integralRegion = Set.Icc 0 1 := by
+  ext radius
+  constructor
+  · rintro ⟨value, hvalue, rfl⟩
+    exact ⟨bot_le, hvalue⟩
+  · intro hradius
+    let complexValue : ℂ := (radius : ℝ)
+    let value : field.carrier := model.complexEquiv.symm complexValue
+    refine ⟨value, ?_, ?_⟩
+    · change nnnorm (model.complexEquiv value) ≤ 1
+      rw [show model.complexEquiv value = complexValue by
+        exact model.complexEquiv.apply_symm_apply complexValue]
+      change nnnorm ((radius : ℝ) : ℂ) ≤ 1
+      simpa [Complex.nnnorm_real, Real.nnnorm_of_nonneg radius.coe_nonneg]
+        using hradius.2
+    · change nnnorm (model.complexEquiv value) = radius
+      rw [show model.complexEquiv value = complexValue by
+        exact model.complexEquiv.apply_symm_apply complexValue]
+      change nnnorm ((radius : ℝ) : ℂ) = radius
+      apply NNReal.eq
+      simp [Complex.nnnorm_real, Real.nnnorm_of_nonneg radius.coe_nonneg]
+
+/-- The lifted closed unit interval in the radial carrier. -/
+def unitRadialInterval : Set RadialCarrier.{u} :=
+  ULift.up '' Set.Icc (0 : NNReal) 1
+
+/-- Radialization maps the integral unit disk onto the lifted unit interval. -/
+theorem radialization_image_integralRegion
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    model.radialization '' model.integralRegion = unitRadialInterval := by
+  ext radius
+  constructor
+  · rintro ⟨value, hvalue, rfl⟩
+    refine ⟨model.complexNorm value, ?_, rfl⟩
+    rw [← model.complexNorm_image_integralRegion]
+    exact ⟨value, hvalue, rfl⟩
+  · rintro ⟨radius, hradius, rfl⟩
+    rw [← model.complexNorm_image_integralRegion] at hradius
+    rcases hradius with ⟨value, hvalue, hnorm⟩
+    refine ⟨value, hvalue, ?_⟩
+    simp only [radialization]
+    rw [hnorm]
+
+/-- The radial interval `[0, 1]` has length one. -/
+theorem nnrealLengthMeasure_Icc_zero_one :
+    nnrealLengthMeasure (Set.Icc 0 1) = 1 := by
+  rw [nnrealLengthMeasure,
+    NNReal.isClosedEmbedding_coe.measurableEmbedding.comap_apply]
+  have himage :
+      ((↑) : NNReal → ℝ) '' Set.Icc 0 1 = Set.Icc 0 1 := by
+    ext value
+    constructor
+    · rintro ⟨source, hsource, rfl⟩
+      exact ⟨by positivity, by exact_mod_cast hsource.2⟩
+    · intro hvalue
+      refine ⟨⟨value, hvalue.1⟩, ?_, rfl⟩
+      exact ⟨by simp, by exact_mod_cast hvalue.2⟩
+  rw [himage, Real.volume_Icc]
+  norm_num
+
+/-- Transported radial length gives the lifted unit interval mass one. -/
+theorem radialLengthMeasure_unitRadialInterval :
+    radialLengthMeasure.{u} unitRadialInterval.{u} = 1 := by
+  rw [radialLengthMeasure,
+    (MeasurableEquiv.ulift :
+      RadialCarrier.{u} ≃ᵐ NNReal).measurableEmbedding.comap_apply]
+  have himage :
+      (MeasurableEquiv.ulift : RadialCarrier.{u} ≃ᵐ NNReal) ''
+          unitRadialInterval.{u} = Set.Icc 0 1 := by
+    ext radius
+    constructor
+    · rintro ⟨lifted, ⟨source, hsource, rfl⟩, rfl⟩
+      exact hsource
+    · intro hradius
+      exact ⟨ULift.up radius, ⟨radius, hradius, rfl⟩, rfl⟩
+  rw [himage, nnrealLengthMeasure_Icc_zero_one]
+
+theorem completedRadialization_image_integralRegion_measurable
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    MeasurableSet
+      (model.completedRadialization '' model.integralRegion) := by
+  change MeasureTheory.NullMeasurableSet
+    (model.radialization '' model.integralRegion) radialLengthMeasure.{u}
+  rw [model.radialization_image_integralRegion]
+  apply MeasurableSet.nullMeasurableSet
+  exact
+    (MeasurableEquiv.ulift.symm.measurableSet_image).2
+      measurableSet_Icc
+
+/-- The completed radial measure gives the integral unit disk mass one. -/
+theorem completedRadialLengthMeasure_image_integralRegion
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    radialLengthMeasure.{u}.completion
+      (model.completedRadialization '' model.integralRegion) = 1 := by
+  change radialLengthMeasure.{u}.completion
+    (model.radialization '' model.integralRegion) = 1
+  rw [MeasureTheory.Measure.completion_apply]
+  change radialLengthMeasure.{u}
+    (model.radialization '' model.integralRegion) = 1
+  calc
+    radialLengthMeasure.{u}
+        (model.radialization '' model.integralRegion) =
+      radialLengthMeasure.{u} unitRadialInterval.{u} :=
+        congrArg
+          (fun region : Set RadialCarrier.{u} =>
+            radialLengthMeasure.{u} region)
+          model.radialization_image_integralRegion
+    _ = 1 := radialLengthMeasure_unitRadialInterval
+
+/-- Proposition 5.7(ii)(a)'s radial log-volume on measurable finite regions. -/
+noncomputable def normalizedLogVolume
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    SourceNormalizedLogVolume field.rationalModule where
+  admissible := fun region =>
+    MeasurableSet (model.completedRadialization '' region) ∧
+      radialLengthMeasure.{u}.completion
+          (model.completedRadialization '' region) ≠ 0 ∧
+      radialLengthMeasure.{u}.completion
+          (model.completedRadialization '' region) ≠ ⊤
+  rawLogVolume := fun region _ =>
+    Real.log
+      (radialLengthMeasure.{u}.completion
+        (model.completedRadialization '' region)).toReal
+  integralRegion := model.integralRegion
+  integralRegion_admissible := by
+    refine ⟨model.completedRadialization_image_integralRegion_measurable,
+      ?_, ?_⟩
+    · rw [model.completedRadialLengthMeasure_image_integralRegion]
+      exact one_ne_zero
+    · rw [model.completedRadialLengthMeasure_image_integralRegion]
+      exact ENNReal.one_ne_top
+  normalizationOffset := 0
+
+/-- The normalized archimedean integral structure has log-volume zero. -/
+theorem normalizedLogVolume_value_eq_zero
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    model.normalizedLogVolume.value = 0 := by
+  rw [SourceNormalizedLogVolume.value,
+    SourceNormalizedLogVolume.valueOn]
+  change
+    Real.log
+        (radialLengthMeasure.{u}.completion
+          (model.completedRadialization '' model.integralRegion)).toReal - 0 = 0
+  rw [model.completedRadialLengthMeasure_image_integralRegion]
+  norm_num
+
+end SourceArchimedeanLocalFieldModel
+
+/--
 One genuine finite-stage field summand, together with the measure space on
 which Proposition 3.9 computes its component log-volume.
 
@@ -2720,6 +3005,59 @@ noncomputable def ofNonarchimedean
             (integers.completedRadialization '' region.carrier)).toReal
     rw [integers.completedRadialization_image,
       MeasureTheory.Measure.completion_apply]
+
+/--
+Construct the archimedean measured field from its complex model. The measure
+is completed Lebesgue length on the radial half-line, and the mass-one unit
+disk normalization is derived from its radial image `[0, 1]`.
+-/
+noncomputable def ofArchimedean
+    {rationalPlace : SourceRationalPlace}
+    {field : SourceTopologicalLocalField.{u} rationalPlace}
+    (model : SourceArchimedeanLocalFieldModel rationalPlace field) :
+    SourcePacketMeasuredField rationalPlace field := by
+  exact {
+    radialCarrier :=
+      SourceArchimedeanLocalFieldModel.CompletedRadialCarrier.{u}
+    radialTopologicalSpace :=
+      SourceArchimedeanLocalFieldModel.completedRadialCarrierTopologicalSpace.{u}
+    radialT2Space :=
+      SourceArchimedeanLocalFieldModel.completedRadialCarrierT2Space.{u}
+    radialLocallyCompactSpace :=
+      SourceArchimedeanLocalFieldModel.completedRadialCarrierLocallyCompactSpace.{u}
+    radialSecondCountableTopology :=
+      SourceArchimedeanLocalFieldModel.completedRadialCarrierSecondCountableTopology.{u}
+    radialMeasurableSpace :=
+      SourceArchimedeanLocalFieldModel.completedRadialCarrierMeasurableSpace.{u}
+    radial_borel_le :=
+      SourceArchimedeanLocalFieldModel.completedRadialCarrier_borel_le.{u}
+    radialization := model.completedRadialization
+    nonarchimedeanRadialEquiv := fun hkind =>
+      nomatch model.placeKind.symm.trans hkind
+    nonarchimedean_radialization := fun hkind =>
+      nomatch model.placeKind.symm.trans hkind
+    archimedeanComplexEquiv := fun _ => model.complexEquiv
+    archimedeanRadialEquiv := fun _ => Homeomorph.ulift
+    archimedean_radialization := fun _ _ => rfl
+    volume := model.normalizedLogVolume
+    measure :=
+      SourceArchimedeanLocalFieldModel.radialLengthMeasure.{u}.completion
+    measureSigmaFinite :=
+      SourceArchimedeanLocalFieldModel.completedRadialLengthMeasureSigmaFinite.{u}
+    measureComplete :=
+      MeasureTheory.Measure.completion.isComplete
+        SourceArchimedeanLocalFieldModel.radialLengthMeasure.{u}
+    admissible_radialImage_measurable := fun region =>
+      region.isAdmissible.1
+    admissible_measure_ne_zero := fun region =>
+      region.isAdmissible.2.1
+    admissible_measure_ne_top := fun region =>
+      region.isAdmissible.2.2
+    integral_measure_eq_one := by
+      exact model.completedRadialLengthMeasure_image_integralRegion
+    normalizationOffset_eq_zero := rfl
+    rawLogVolume_eq_measure := fun _ => rfl
+  }
 
 instance sigmaFinite
     {rationalPlace : SourceRationalPlace}

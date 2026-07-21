@@ -89,6 +89,11 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceSelectedPlace.moduliRationalLocalDegree
 #print axioms Iut.SourceNonarchimedeanLocalFieldIntegers.normalizedLogVolume_value_eq_zero
 #print axioms Iut.SourcePacketMeasuredField.ofNonarchimedean
+#print axioms Iut.SourceArchimedeanLocalFieldModel.complexNorm_image_integralRegion
+#print axioms Iut.SourceArchimedeanLocalFieldModel.radialLengthMeasure_unitRadialInterval
+#print axioms Iut.SourceArchimedeanLocalFieldModel.completedRadialLengthMeasure_image_integralRegion
+#print axioms Iut.SourceArchimedeanLocalFieldModel.normalizedLogVolume_value_eq_zero
+#print axioms Iut.SourcePacketMeasuredField.ofArchimedean
 #print axioms Iut.SourcePacketMeasuredField.integral_measure_eq_one
 #print axioms Iut.SourcePacketMeasuredField.normalizationOffset_eq_zero
 #print axioms SourcePacketFiniteFieldDecomposition.stageEmbedding_injective
