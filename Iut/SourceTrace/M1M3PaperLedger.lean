@@ -756,6 +756,19 @@ def m1m3PaperLedger : List PaperClause :=
     clause "II.4.8" .iutII "IUT II, Corollary 4.8"
       ["ToyIUTIIHodgeArakelovEvaluationData"] .unformalized
       "The cited global compatibility needed by the pilot construction is not implemented.",
+    clause "II.4.9(i)" .iutII "IUT II, Definition 4.9(i)"
+      ["SourceMLFGaloisTMPair.UnitModuloTorsion",
+        "SourceMLFGaloisTMPair.unitModuloTorsion_eq_one_iff",
+        "SourceMLFGaloisTMPair.unitModuloTorsionAction",
+        "SourceMLFGaloisTMPair.fixedUnitSubgroup",
+        "SourceMLFGaloisTMPair.invariantUnitImage",
+        "SourceMLFGaloisTMPair.IsKummerIsometry",
+        "SourceMLFGaloisTMPair.kummerIsmSubgroup",
+        "SourceMLFGaloisTMPair.TimesMuKummerIsomorphism",
+        "SourceMLFGaloisTMPair.TimesMuKummerOrbit",
+        "SourceMLFGaloisTMPair.TimesMuKummerIsomorphism.orbitOf_eq"]
+      .partialImplementation
+      "For the literal MLF-Galois model, O-times-mu is the actual quotient of the arithmetic-monoid units by their full torsion subgroup, and the quotient map is proved to kill exactly torsion. The Galois action descends to this quotient. For every Krull-open subgroup H, I_H^kappa is the image of the actual H-fixed unit subgroup. Ism is the subgroup of equivariant quotient automorphisms preserving every such invariant image. A times-mu Kummer structure is the resulting orbit of compatible isomorphisms, and any two compatible representatives are proved to lie in the same orbit. The intrinsic ind-topology and the split Kummer Frobenioids of Definition 4.9(ii)-(v) remain open.",
     clause "II.4.9(vi-viii)" .iutII "IUT II, Definition 4.9(vi)-(viii)"
       ["ToyIUTIIQPilot", "ToyIUTIIThetaPilot"] .toyModel
       "Numerical q-orders and square weights do not define the realized Frobenioid pilot objects and prime strips.",
@@ -1342,8 +1355,8 @@ def clauseIdsWithStatus (status : ClauseStatus) : List String :=
   m1m3PaperLedger.filterMap fun entry =>
     if entry.status = status then some entry.id else none
 
-/-- The source-closure ledger contains 102 separately audited clauses. -/
-theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 102 :=
+/-- The source-closure ledger contains 103 separately audited clauses. -/
+theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 103 :=
   rfl
 
 /-- No source clause occurs twice in the direct-citation ledger. -/
@@ -1351,9 +1364,9 @@ theorem m1m3PaperLedger_ids_nodup :
     (m1m3PaperLedger.map PaperClause.id).Nodup := by
   decide
 
-/-- Seventy-seven clauses currently have a genuine but incomplete implementation. -/
+/-- Seventy-eight clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 77 :=
+    (clauseIdsWithStatus .partialImplementation).length = 78 :=
   rfl
 
 /-- Five clauses currently point only to explicitly classified toy models. -/

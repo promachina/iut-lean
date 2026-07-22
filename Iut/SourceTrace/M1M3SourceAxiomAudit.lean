@@ -31,6 +31,12 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceMLFGaloisTMPair.augmentation_surjective
 #print axioms Iut.SourceMLFGaloisTMPair.openStabilizer_fixed
 #print axioms Iut.SourceMLFGaloisTMPair.continuousCyclotomeAction
+#print axioms Iut.SourceMLFGaloisTMPair.unitModuloTorsion_eq_one_iff
+#print axioms Iut.SourceMLFGaloisTMPair.unitAction_mem_torsion_iff
+#print axioms Iut.SourceMLFGaloisTMPair.unitModuloTorsionActionHom_mk
+#print axioms Iut.SourceMLFGaloisTMPair.unitModuloTorsionActionMulAut_mk
+#print axioms Iut.SourceMLFGaloisTMPair.TimesMuKummerIsomorphism.sourceDifference_smul_first
+#print axioms Iut.SourceMLFGaloisTMPair.TimesMuKummerIsomorphism.orbitOf_eq
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.quotientUnit_exists
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootRealization.ofRootSystem

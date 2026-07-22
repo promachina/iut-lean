@@ -2656,6 +2656,454 @@ theorem unitAction_continuous_discrete
   exact continuousSMul_iff_stabilizer_isOpen.mpr
     pair.unit_stabilizer_isOpen
 
+/-!
+## The `times-mu` Kummer quotient
+
+The following declarations implement IUT II, Definition 4.9(i).  In
+particular, `O^{times-mu}` is the actual unit group modulo all torsion, and
+the Kummer indeterminacy is the orbit under the exact `Ism` subgroup determined
+by the images of the open-subgroup invariants.
+-/
+
+/-- The literal quotient `O^times / O^mu` of units by all torsion units. -/
+abbrev UnitModuloTorsion (pair : SourceMLFGaloisTMPair G) :=
+  pair.arithmeticMonoid.carrierˣ ⧸
+    CommGroup.torsion pair.arithmeticMonoid.carrierˣ
+
+/-- The quotient map kills exactly the torsion units. -/
+theorem unitModuloTorsion_eq_one_iff
+    (pair : SourceMLFGaloisTMPair G)
+    (unit : pair.arithmeticMonoid.carrierˣ) :
+    (QuotientGroup.mk unit : pair.UnitModuloTorsion) = 1 ↔
+      unit ∈ CommGroup.torsion pair.arithmeticMonoid.carrierˣ := by
+  exact QuotientGroup.eq_one_iff
+    (N := CommGroup.torsion pair.arithmeticMonoid.carrierˣ) unit
+
+/-- Every Galois automorphism preserves the subgroup of torsion units. -/
+theorem unitAction_mem_torsion_iff
+    (pair : SourceMLFGaloisTMPair G) (g : G)
+    (unit : pair.arithmeticMonoid.carrierˣ) :
+    pair.unitActionMulAut g unit ∈
+        CommGroup.torsion pair.arithmeticMonoid.carrierˣ ↔
+      unit ∈ CommGroup.torsion pair.arithmeticMonoid.carrierˣ := by
+  rw [CommGroup.mem_torsion, CommGroup.mem_torsion]
+  constructor
+  · intro hfinite
+    rcases isOfFinOrder_iff_pow_eq_one.mp hfinite with
+      ⟨n, hn, hpow⟩
+    apply isOfFinOrder_iff_pow_eq_one.mpr
+    refine ⟨n, hn, ?_⟩
+    apply (pair.unitActionMulAut g).injective
+    rw [map_pow, map_one]
+    exact hpow
+  · intro hfinite
+    rcases isOfFinOrder_iff_pow_eq_one.mp hfinite with
+      ⟨n, hn, hpow⟩
+    apply isOfFinOrder_iff_pow_eq_one.mpr
+    refine ⟨n, hn, ?_⟩
+    rw [← map_pow, hpow, map_one]
+
+/-- One Galois automorphism descended to the quotient by all torsion. -/
+noncomputable def unitModuloTorsionActionHom
+    (pair : SourceMLFGaloisTMPair G) (g : G) :
+    pair.UnitModuloTorsion →* pair.UnitModuloTorsion :=
+  QuotientGroup.map
+    (CommGroup.torsion pair.arithmeticMonoid.carrierˣ)
+    (CommGroup.torsion pair.arithmeticMonoid.carrierˣ)
+    (pair.unitActionMulAut g).toMonoidHom
+    (by
+      intro unit hunit
+      exact (pair.unitAction_mem_torsion_iff g unit).mpr hunit)
+
+@[simp]
+theorem unitModuloTorsionActionHom_mk
+    (pair : SourceMLFGaloisTMPair G) (g : G)
+    (unit : pair.arithmeticMonoid.carrierˣ) :
+    pair.unitModuloTorsionActionHom g
+        (QuotientGroup.mk unit) =
+      QuotientGroup.mk (pair.unitActionMulAut g unit) :=
+  rfl
+
+/-- The descended map is an automorphism of `O^{times-mu}`. -/
+noncomputable def unitModuloTorsionActionMulAut
+    (pair : SourceMLFGaloisTMPair G) (g : G) :
+    MulAut pair.UnitModuloTorsion where
+  toFun := pair.unitModuloTorsionActionHom g
+  invFun := pair.unitModuloTorsionActionHom g⁻¹
+  left_inv value := by
+    induction value using QuotientGroup.induction_on with
+    | _ unit =>
+      change QuotientGroup.mk
+          (pair.unitActionMulAut g⁻¹
+            (pair.unitActionMulAut g unit)) =
+        QuotientGroup.mk unit
+      congr 1
+      apply Units.ext
+      simp [unitActionMulAut]
+  right_inv value := by
+    induction value using QuotientGroup.induction_on with
+    | _ unit =>
+      change QuotientGroup.mk
+          (pair.unitActionMulAut g
+            (pair.unitActionMulAut g⁻¹ unit)) =
+        QuotientGroup.mk unit
+      congr 1
+      apply Units.ext
+      simp [unitActionMulAut]
+  map_mul' := map_mul (pair.unitModuloTorsionActionHom g)
+
+@[simp]
+theorem unitModuloTorsionActionMulAut_mk
+    (pair : SourceMLFGaloisTMPair G) (g : G)
+    (unit : pair.arithmeticMonoid.carrierˣ) :
+    pair.unitModuloTorsionActionMulAut g
+        (QuotientGroup.mk unit) =
+      QuotientGroup.mk (pair.unitActionMulAut g unit) :=
+  rfl
+
+/-- The descended automorphisms form the Galois action on `O^{times-mu}`. -/
+noncomputable def unitModuloTorsionAction
+    (pair : SourceMLFGaloisTMPair G) :
+    G →* MulAut pair.UnitModuloTorsion where
+  toFun := pair.unitModuloTorsionActionMulAut
+  map_one' := by
+    apply MulEquiv.ext
+    intro value
+    induction value using QuotientGroup.induction_on with
+    | _ unit =>
+      change QuotientGroup.mk (pair.unitActionMulAut 1 unit) =
+        QuotientGroup.mk unit
+      congr 1
+      apply Units.ext
+      simp [unitActionMulAut]
+  map_mul' first second := by
+    apply MulEquiv.ext
+    intro value
+    induction value using QuotientGroup.induction_on with
+    | _ unit =>
+      change QuotientGroup.mk
+          (pair.unitActionMulAut (first * second) unit) =
+        QuotientGroup.mk
+          (pair.unitActionMulAut first
+            (pair.unitActionMulAut second unit))
+      congr 1
+      apply Units.ext
+      simp [unitActionMulAut]
+
+/-- The subgroup of units fixed by one Krull-open subgroup `H`. -/
+def fixedUnitSubgroup
+    (pair : SourceMLFGaloisTMPair G)
+    (subgroup : OpenSubgroup G) :
+    Subgroup pair.arithmeticMonoid.carrierˣ where
+  carrier :=
+    {unit | ∀ g : subgroup,
+      pair.unitActionMulAut (g : G) unit = unit}
+  one_mem' := fun _ => map_one _
+  mul_mem' := by
+    intro first second hfirst hsecond g
+    rw [map_mul, hfirst g, hsecond g]
+  inv_mem' := by
+    intro unit hunit g
+    rw [map_inv, hunit g]
+
+/--
+The submodule `I_H^kappa`: the image of the `H`-fixed units in
+`O^{times-mu}`.
+-/
+noncomputable def invariantUnitImage
+    (pair : SourceMLFGaloisTMPair G)
+    (subgroup : OpenSubgroup G) :
+    Subgroup pair.UnitModuloTorsion :=
+  (pair.fixedUnitSubgroup subgroup).map
+    (QuotientGroup.mk'
+      (CommGroup.torsion pair.arithmeticMonoid.carrierˣ))
+
+/-- The defining predicate for the group `Ism` in IUT II, Example 1.8(iv). -/
+def IsKummerIsometry
+    (pair : SourceMLFGaloisTMPair G)
+    (automorphism : MulAut pair.UnitModuloTorsion) : Prop :=
+  (∀ g value,
+      automorphism (pair.unitModuloTorsionAction g value) =
+        pair.unitModuloTorsionAction g (automorphism value)) ∧
+    ∀ subgroup,
+      automorphism '' (pair.invariantUnitImage subgroup :
+          Set pair.UnitModuloTorsion) =
+        (pair.invariantUnitImage subgroup :
+          Set pair.UnitModuloTorsion)
+
+/--
+The actual `Ism` subgroup: equivariant automorphisms preserving every
+open-subgroup invariant image.
+-/
+noncomputable def kummerIsmSubgroup
+    (pair : SourceMLFGaloisTMPair G) :
+    Subgroup (MulAut pair.UnitModuloTorsion) where
+  carrier := pair.IsKummerIsometry
+  one_mem' := by
+    constructor
+    · intro g value
+      rfl
+    · intro subgroup
+      ext value
+      change
+        (∃ source ∈ pair.invariantUnitImage subgroup,
+            source = value) ↔
+          value ∈ pair.invariantUnitImage subgroup
+      simp
+  mul_mem' := by
+    intro first second hfirst hsecond
+    constructor
+    · intro g value
+      change first (second (pair.unitModuloTorsionAction g value)) =
+        pair.unitModuloTorsionAction g (first (second value))
+      rw [hsecond.1, hfirst.1]
+    · intro subgroup
+      ext value
+      constructor
+      · rintro ⟨source, hsource, hvalue⟩
+        change first (second source) = value at hvalue
+        have hsecondSource :
+            second source ∈ pair.invariantUnitImage subgroup := by
+          have : second source ∈
+              second '' (pair.invariantUnitImage subgroup :
+                Set pair.UnitModuloTorsion) :=
+            ⟨source, hsource, rfl⟩
+          simpa only [hsecond.2 subgroup] using this
+        have hfirstSource :
+            first (second source) ∈
+              pair.invariantUnitImage subgroup := by
+          have : first (second source) ∈
+              first '' (pair.invariantUnitImage subgroup :
+                Set pair.UnitModuloTorsion) :=
+            ⟨second source, hsecondSource, rfl⟩
+          simpa only [hfirst.2 subgroup] using this
+        rwa [hvalue] at hfirstSource
+      · intro hvalue
+        have hfirstImage : value ∈
+            first '' (pair.invariantUnitImage subgroup :
+              Set pair.UnitModuloTorsion) := by
+          simpa only [hfirst.2 subgroup] using hvalue
+        rcases hfirstImage with ⟨middle, hmiddle, rfl⟩
+        have hsecondImage : middle ∈
+            second '' (pair.invariantUnitImage subgroup :
+              Set pair.UnitModuloTorsion) := by
+          simpa only [hsecond.2 subgroup] using hmiddle
+        rcases hsecondImage with ⟨source, hsource, rfl⟩
+        exact ⟨source, hsource, rfl⟩
+  inv_mem' := by
+    intro automorphism hautomorphism
+    constructor
+    · intro g value
+      apply automorphism.injective
+      change
+        automorphism (automorphism.symm
+          (pair.unitModuloTorsionAction g value)) =
+        automorphism
+          (pair.unitModuloTorsionAction g
+            (automorphism.symm value))
+      rw [automorphism.apply_symm_apply]
+      rw [hautomorphism.1 g (automorphism.symm value)]
+      rw [automorphism.apply_symm_apply]
+    · intro subgroup
+      ext value
+      constructor
+      · rintro ⟨source, hsource, rfl⟩
+        change automorphism.symm source ∈
+          pair.invariantUnitImage subgroup
+        have himage : source ∈
+            automorphism '' (pair.invariantUnitImage subgroup :
+              Set pair.UnitModuloTorsion) := by
+          simpa only [hautomorphism.2 subgroup] using hsource
+        rcases himage with ⟨preimage, hpreimage, heq⟩
+        have hinverse : automorphism.symm source = preimage := by
+          rw [← heq, automorphism.symm_apply_apply]
+        rw [hinverse]
+        exact hpreimage
+      · intro hvalue
+        refine ⟨automorphism value, ?_, ?_⟩
+        · have : automorphism value ∈
+              automorphism '' (pair.invariantUnitImage subgroup :
+                Set pair.UnitModuloTorsion) :=
+            ⟨value, hvalue, rfl⟩
+          simpa only [hautomorphism.2 subgroup] using this
+        · exact automorphism.symm_apply_apply value
+
+/-- The group `Ism` attached to the literal `times-mu` quotient. -/
+noncomputable abbrev KummerIsm (pair : SourceMLFGaloisTMPair G) :=
+  pair.kummerIsmSubgroup
+
+/--
+One representative of a `times-mu` Kummer structure between two literal MLF
+models: it is equivariant and carries every `I_H^kappa` onto its counterpart.
+-/
+structure TimesMuKummerIsomorphism
+    (source target : SourceMLFGaloisTMPair G) where
+  equiv : source.UnitModuloTorsion ≃* target.UnitModuloTorsion
+  equivariant :
+    ∀ g value,
+      equiv (source.unitModuloTorsionAction g value) =
+        target.unitModuloTorsionAction g (equiv value)
+  invariantImage :
+    ∀ subgroup,
+      equiv '' (source.invariantUnitImage subgroup :
+          Set source.UnitModuloTorsion) =
+        (target.invariantUnitImage subgroup :
+          Set target.UnitModuloTorsion)
+
+namespace TimesMuKummerIsomorphism
+
+@[ext]
+theorem ext
+    {source target : SourceMLFGaloisTMPair G}
+    (first second : TimesMuKummerIsomorphism source target)
+    (equiv_eq : first.equiv = second.equiv) :
+    first = second := by
+  cases first
+  cases second
+  cases equiv_eq
+  rfl
+
+/-- The identity representative of the `times-mu` Kummer orbit. -/
+noncomputable def refl (pair : SourceMLFGaloisTMPair G) :
+    TimesMuKummerIsomorphism pair pair where
+  equiv := MulEquiv.refl _
+  equivariant _ _ := rfl
+  invariantImage _ := by
+    ext value
+    simp
+
+/-- Precomposition by `Ism`, with the inverse convention for a left action. -/
+noncomputable def precompose
+    {source target : SourceMLFGaloisTMPair G}
+    (isometry : source.KummerIsm)
+    (comparison : TimesMuKummerIsomorphism source target) :
+    TimesMuKummerIsomorphism source target := by
+  let inverse : source.KummerIsm := isometry⁻¹
+  refine
+    { equiv := inverse.1.trans comparison.equiv
+      equivariant := ?_
+      invariantImage := ?_ }
+  · intro g value
+    change
+      comparison.equiv
+          (inverse.1 (source.unitModuloTorsionAction g value)) =
+        target.unitModuloTorsionAction g
+          (comparison.equiv (inverse.1 value))
+    rw [inverse.property.1]
+    exact comparison.equivariant g (inverse.1 value)
+  · intro subgroup
+    change
+      (comparison.equiv ∘ inverse.1) ''
+          (source.invariantUnitImage subgroup :
+            Set source.UnitModuloTorsion) =
+        (target.invariantUnitImage subgroup :
+          Set target.UnitModuloTorsion)
+    rw [Set.image_comp, inverse.property.2 subgroup,
+      comparison.invariantImage subgroup]
+
+/-- The defining left action of `Ism` on compatible Kummer isomorphisms. -/
+@[implicit_reducible]
+noncomputable def mulAction
+    (source target : SourceMLFGaloisTMPair G) :
+    MulAction source.KummerIsm
+      (TimesMuKummerIsomorphism source target) where
+  smul := precompose
+  one_smul comparison := by
+    apply ext
+    apply MulEquiv.ext
+    intro value
+    rfl
+  mul_smul first second comparison := by
+    apply ext
+    apply MulEquiv.ext
+    intro value
+    rfl
+
+/-- Two compatible representatives differ by an actual source `Ism` element. -/
+noncomputable def sourceDifference
+    {source target : SourceMLFGaloisTMPair G}
+    (first second : TimesMuKummerIsomorphism source target) :
+    source.KummerIsm := by
+  refine ⟨first.equiv.trans second.equiv.symm, ?_⟩
+  constructor
+  · intro g value
+    apply second.equiv.injective
+    change
+      second.equiv
+          (second.equiv.symm
+            (first.equiv
+              (source.unitModuloTorsionAction g value))) =
+        second.equiv
+          (source.unitModuloTorsionAction g
+            (second.equiv.symm (first.equiv value)))
+    rw [second.equiv.apply_symm_apply]
+    rw [first.equivariant]
+    rw [second.equivariant]
+    rw [second.equiv.apply_symm_apply]
+  · intro subgroup
+    change
+      (second.equiv.symm ∘ first.equiv) ''
+          (source.invariantUnitImage subgroup :
+            Set source.UnitModuloTorsion) =
+        (source.invariantUnitImage subgroup :
+          Set source.UnitModuloTorsion)
+    rw [Set.image_comp, first.invariantImage subgroup,
+      ← second.invariantImage subgroup]
+    exact Equiv.symm_image_image second.equiv.toEquiv _
+
+theorem sourceDifference_smul_first
+    {source target : SourceMLFGaloisTMPair G}
+    (first second : TimesMuKummerIsomorphism source target) :
+    letI := mulAction source target
+    sourceDifference first second • first = second := by
+  letI := mulAction source target
+  apply ext
+  apply MulEquiv.ext
+  intro value
+  change
+    first.equiv
+        ((first.equiv.trans second.equiv.symm).symm value) =
+      second.equiv value
+  simp
+
+noncomputable instance
+    {source target : SourceMLFGaloisTMPair G} :
+    MulAction source.KummerIsm
+      (TimesMuKummerIsomorphism source target) :=
+  mulAction source target
+
+/--
+A `times-mu` Kummer structure is the `Ism`-orbit of all compatible
+representatives, exactly as in Definition 4.9(i).
+-/
+abbrev TimesMuKummerOrbit
+    (source target : SourceMLFGaloisTMPair G) :=
+  MulAction.orbitRel.Quotient source.KummerIsm
+    (TimesMuKummerIsomorphism source target)
+
+/-- The orbit represented by one compatible Kummer isomorphism. -/
+noncomputable def orbitOf
+    {source target : SourceMLFGaloisTMPair G}
+    (comparison : TimesMuKummerIsomorphism source target) :
+    TimesMuKummerOrbit source target :=
+  Quotient.mk'' comparison
+
+/--
+The invariant-image conditions determine a unique `Ism`-orbit: any two
+compatible Kummer isomorphisms represent the same Kummer structure.
+-/
+theorem orbitOf_eq
+    {source target : SourceMLFGaloisTMPair G}
+    (first second : TimesMuKummerIsomorphism source target) :
+    orbitOf first = orbitOf second := by
+  apply Quotient.sound
+  change first ∈ MulAction.orbit source.KummerIsm second
+  rw [MulAction.mem_orbit_iff]
+  exact ⟨sourceDifference second first,
+    sourceDifference_smul_first second first⟩
+
+end TimesMuKummerIsomorphism
+
 /-- The profinite cyclotome with its canonical continuous Galois action. -/
 noncomputable def continuousCyclotomeAction
     (pair : SourceMLFGaloisTMPair G) :
