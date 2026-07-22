@@ -1236,7 +1236,14 @@ uses the arithmetic fundamental group of \(X_v\) for the group represented by
 the arithmetic fundamental group of \(C_v\), and Lean proves injectivity and
 openness of its image.  This constructs the geometric target; recovering it
 functorially from the abstract \(D_v\) group by Absolute Anabelian Topics~II
-is still open.  Lean also
+is still open.  For each actual finite place, Lean constructs the algebraic
+closure as the filtered topological-module colimit of its finite Galois local
+subfields.  The nonzero integral submonoid is exhausted by continuous
+finite-stage maps and is multiplicatively equivalent to
+\(O_{\overline{K_v}}^\triangleright\); the equivalence intertwines the literal
+absolute-Galois action.  Continuity of this transported action for the
+ind-topology, and reconstruction of the construction from the abstract
+\(D_v\) group, remain open.  Lean also
 constructs the fixed carrier as an actual sub-pseudo-monoid and proves that
 every product defined in the original carrier remains defined after passage
 to invariants.  It also constructs the descended action through a surjective
@@ -1244,9 +1251,9 @@ profinite quotient from kernel triviality, derives continuity from the
 compact-to-Hausdorff quotient topology, and proves that pullback recovers the
 original action.  This formalizes the invariant and
 $\pi_1^{\kappa\text{-sol}}$ factorization steps only.  The Absolute Anabelian
-Topics II/III algorithms that construct the overgroup, rational fundamental
-group, ind-topological integral monoid, and coric rational-function carriers
-remain source obligations.
+Topics II/III algorithms that reconstruct the overgroup, rational fundamental
+group, integral monoid, and coric rational-function carriers from the abstract
+group remain source obligations.
 Horizontal and vertical Kummer isomorphisms preserve both arrows; their
 site/common compatibility is equality of complete diagram transports.  Each
 naturality square is an isomorphism in an arrow category, so equivariance under

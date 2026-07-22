@@ -103,6 +103,11 @@
   \lean{Iut.IUTINonarchimedeanLocalModel.dToCoreOpenEmbedding}
   \lean{Iut.IUTINonarchimedeanLocalModel.dToCore_injective}
   \lean{Iut.IUTINonarchimedeanLocalModel.dToCore_open_range}
+  \lean{Iut.SourceFinitePlaceReconstruction.carrierEquivAlgebraicClosure}
+  \lean{Iut.SourceFinitePlaceReconstruction.continuous_stageIntegralToInd}
+  \lean{Iut.SourceFinitePlaceReconstruction.exists_stage_representation}
+  \lean{Iut.SourceFinitePlaceReconstruction.indIntegralMonoidEquivSourceMLF}
+  \lean{Iut.SourceFinitePlaceReconstruction.indIntegralMonoidEquivSourceMLF_galois}
   \lean{Iut.SourceFMonoAnalyticPrimeStrip}
   \lean{Iut.SourceFGloballyRealifiedMonoAnalyticPrimeStrip}
   \lean{Iut.sourceFPrimeStripToD}
@@ -130,6 +135,13 @@
   image proved.  This is the geometric target of Definition~5.2(v), not yet
   the absolute-anabelian algorithm recovering it from an abstract \(D_v\)
   group.
+  For an actual finite place, the algebraic closure is now the filtered
+  topological-module colimit of its finite Galois local subfields.  Restricting
+  this colimit to its nonzero integral elements gives continuous finite-stage
+  inclusions that exhaust the carrier, a multiplicative equivalence with
+  \(O_{\overline{K_v}}^\triangleright\), and the literal compatible absolute
+  Galois action.  Continuity of this action for the ind-topology and its
+  reconstruction from the abstract \(D_v\) group remain open.
   A globally realified strip additionally carries the global Frobenioid,
   its prime/place bijection, all local characteristic and realified monoids,
   and commuting currency-exchange isomorphisms \(\rho_v\), compared

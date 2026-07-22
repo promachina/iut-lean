@@ -44,6 +44,11 @@ visible to Lean's axiom reporter.
 #print axioms Iut.IUTINonarchimedeanLocalModel.dToCoreOpenEmbedding
 #print axioms Iut.IUTINonarchimedeanLocalModel.dToCore_injective
 #print axioms Iut.IUTINonarchimedeanLocalModel.dToCore_open_range
+#print axioms Iut.SourceFinitePlaceReconstruction.carrierEquivAlgebraicClosure
+#print axioms Iut.SourceFinitePlaceReconstruction.continuous_stageIntegralToInd
+#print axioms Iut.SourceFinitePlaceReconstruction.exists_stage_representation
+#print axioms Iut.SourceFinitePlaceReconstruction.indIntegralMonoidEquivSourceMLF
+#print axioms Iut.SourceFinitePlaceReconstruction.indIntegralMonoidEquivSourceMLF_galois
 #print axioms Iut.SourceTopologicalGroupPseudoMonoidActionPair.Iso.trans_hom
 #print axioms Iut.SourceKappaLocalizationDiagram.inclusion_injective
 #print axioms Iut.PuncturedEllipticCurveScalarExtension.curve_eq_baseChange

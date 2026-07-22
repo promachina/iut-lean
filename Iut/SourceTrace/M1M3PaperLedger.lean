@@ -661,13 +661,19 @@ def m1m3PaperLedger : List PaperClause :=
         "IUTINonarchimedeanLocalModel.dToCoreOpenEmbedding",
         "IUTINonarchimedeanLocalModel.dToCore_injective",
         "IUTINonarchimedeanLocalModel.dToCore_open_range",
+        "SourceFinitePlaceReconstruction.module",
+        "SourceFinitePlaceReconstruction.carrierEquivAlgebraicClosure",
+        "SourceFinitePlaceReconstruction.continuous_stageIntegralToInd",
+        "SourceFinitePlaceReconstruction.exists_stage_representation",
+        "SourceFinitePlaceReconstruction.indIntegralMonoidEquivSourceMLF",
+        "SourceFinitePlaceReconstruction.indIntegralMonoidEquivSourceMLF_galois",
         "SourceProfinitePseudoMonoidActionPair",
         "SourceProfinitePseudoMonoidActionPair.quotientAction_comp",
         "SourceProfinitePseudoMonoidActionPair.descend",
         "SourceProfinitePseudoMonoidActionPair.comap_descend",
         "SourceProfinitePseudoMonoidActionPair.comap_kernelActsTrivially"]
       .partialImplementation
-      "The exact Section 0 pseudo-monoid and continuous action-pair targets are available. The D_v group is correctly the X_v arithmetic fundamental group, and the actual sign-quotient geometry constructs its open embedding into the C_v group, with injectivity and open image proved. The invariant sub-pseudo-monoid is constructed and proved to inherit every originally defined product. A continuous profinite action descends through a surjective quotient from kernel triviality; continuity is derived from the compact-to-Hausdorff quotient topology, and descent/pullback are proved inverse. Thus the geometric overgroup target, fixed-point mechanism, and kappa-sol action-factorization mechanism are formalized. The cited Absolute Anabelian Topics II/III algorithm recovering the C_v overgroup from the abstract D_v group, and its construction of the rational fundamental group, ind-topological integral monoid, and infinity-kappa/infinity-kappa-times rational-function carriers, remain absent.",
+      "The exact Section 0 pseudo-monoid and continuous action-pair targets are available. The D_v group is correctly the X_v arithmetic fundamental group, and the actual sign-quotient geometry constructs its open embedding into the C_v group, with injectivity and open image proved. For every actual number-field completion K_v, the algebraic closure is constructed as the filtered topological-module colimit of its finite Galois local subfields; its nonzero integral submonoid is exhausted by continuous finite-stage maps, identified with O_(Kbar_v)^triangle, and this identification is Galois-equivariant. The invariant sub-pseudo-monoid and continuous quotient descent are also proved. The cited Absolute Anabelian Topics II/III algorithms recovering these objects from the abstract D_v group, the rational fundamental group, continuity of the transported Galois action for the ind-topology, and the infinity-kappa/infinity-kappa-times rational-function carriers remain absent.",
     clause "I.5.2(vi)" .iutI "IUT I, Definition 5.2(vi)"
       ["SourceTopologicalPseudoMonoid.IsCyclotomic"] .unformalized
       "The exact cyclotomic pseudo-monoid predicate is available, but the nonarchimedean infinity-kappa coric structures, cyclotomic comparison, uniqueness, critical-point restriction criterion, and field reconstruction algorithms are absent.",
