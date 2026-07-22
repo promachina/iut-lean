@@ -362,9 +362,21 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.linearBaseIdentityEndomorphism_isIso",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalFunctionEndomorphism_groupifiedDivisorClass",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.isModelTypeForColimitBirationalization",
-        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.comparisonEquivalence"]
-      .partialImplementation
-      "The model category, concrete birational target, and actual canonical Hom-colimit target are full Frobenioid presentations. All seven Definition 1.3 axiom groups, source roof composition, canonical model type, group-like and Frobenius-normalized type, objectwise rational-function equivalence, invertibility, and groupified DivB compatibility are proved. Naturality of the O-times isomorphism over D remains open.",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.comparisonEquivalence",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.linearEndomorphismPullback_conjugates",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalMonoidTransport",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.zeroIsotropicLinearFunctor",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalMonoidFunctor",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.inputRationalFunctionFunctor",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalFunctionNatIso",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalFunctionNatIso_divisor_compatible",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.linearEndomorphismUnit",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalUnitEquiv",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalUnitFunctor",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalUnitNatIso",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalUnitNatIso_divisor_compatible"]
+      .sourceFaithful
+      "The model category, concrete birational target, and actual canonical Hom-colimit target are full Frobenioid presentations. All seven Definition 1.3 axiom groups, source roof composition, canonical model type, group-like and Frobenius-normalized type are proved. Proposition 2.2 transport is constructed on the actual Hom-colimit and characterized by its conjugation square. Every O-triangle element is constructed as a literal unit; restriction of this units subfunctor along the canonical zero-object section gives O-times on D, with a natural isomorphism to B compatible with the groupified divisor maps, exactly as asserted.",
     clause "FrdII.5.1" .frobenioidsII
       "Frobenioids II, Definition 5.1"
       [] .unformalized
@@ -1611,9 +1623,9 @@ theorem m1m3PaperLedger_ids_nodup :
     (m1m3PaperLedger.map PaperClause.id).Nodup := by
   decide
 
-/-- Eighty-two clauses currently have a genuine but incomplete implementation. -/
+/-- Eighty-one clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 82 :=
+    (clauseIdsWithStatus .partialImplementation).length = 81 :=
   rfl
 
 /-- Five clauses currently point only to explicitly classified toy models. -/
@@ -1626,10 +1638,10 @@ theorem unformalized_count :
     (clauseIdsWithStatus .unformalized).length = 19 :=
   rfl
 
-/-- Four clauses currently pass the clause-level source audit. -/
+/-- Five clauses currently pass the clause-level source audit. -/
 theorem sourceFaithfulClauseIds_eq :
     sourceFaithfulClauseIds =
-      ["FrdI.2.7", "FrdI.4.4", "FrdI.5.2(i)", "I.4.10"] :=
+      ["FrdI.2.7", "FrdI.4.4", "FrdI.5.2(i)", "FrdI.5.2(ii)", "I.4.10"] :=
   rfl
 
 end Iut.SourceTrace

@@ -6,7 +6,7 @@ Authors: IUT Lean formalization contributors
 import Iut.Foundations.SourceHodgeArakelovEvaluation
 import Iut.Foundations.SourceSplitKummerFrobenioid
 import Iut.Foundations.SourceArchimedeanKummerSystem
-import Iut.Foundations.SourceModelFrobenioidColimitAxioms
+import Iut.Foundations.SourceModelFrobenioidRationalNaturality
 import Iut.Foundations.SourceTheorem311
 
 open Iut
@@ -167,6 +167,28 @@ visible to Lean's axiom reporter.
   Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalFunctionEndomorphism_groupifiedDivisorClass
 #print axioms
   Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.isModelTypeForColimitBirationalization
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.linearEndomorphismPullback_conjugates
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalMonoidTransport
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.zeroIsotropicLinearFunctor
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalMonoidFunctor
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalFunctionNatIso
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalFunctionNatIso_divisor_compatible
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.linearEndomorphismUnit
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalUnitEquiv
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalUnitFunctor
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalUnitNatIso
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalUnitNatIso_divisor_compatible
 #print axioms Iut.SourceModelFrobenioid.BirationalObject.isIso_iff_isPreStep
 #print axioms Iut.SourceModelFrobenioid.BirationalObject.isIsotropic
 #print axioms Iut.SourceModelFrobenioid.BirationalObject.isPullback_iff_isLinear
