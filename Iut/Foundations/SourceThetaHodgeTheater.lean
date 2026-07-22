@@ -2169,6 +2169,81 @@ structure SourceThetaHodgeTheater
           (globalPrimeEquivalence p) =
         global.primeEquivSelectedPlace p
 
+namespace SourceThetaHodgeTheater
+
+/--
+The structure-preserving transport needed before the mono-analytic
+`F^\vdash`-prime-strip of a theta-Hodge theater may be formed.
+
+The bare equivalences between the `F^tilde` carrier categories stored by the
+theater do not determine the rational-monoid transport, the characteristic
+splittings, or the selected archimedean splitting.  IUT II, Corollaries 4.5
+and 4.6, construct precisely this stronger data.
+-/
+structure MonoAnalyticTransport
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    (theater : SourceThetaHodgeTheater models) where
+  nonarchimedean :
+    ∀ v,
+      SplitFrobenioidEquivalence
+        (theater.nonarchimedean v).fTildeSplit
+        (models.nonarchimedean v).fTildeSplit
+  nonarchimedean_carrier_compatible :
+    ∀ v,
+      (nonarchimedean v).carrier.functor ⋙
+          (models.nonarchimedean v).fTildeSplitCarrier.functor =
+        (theater.nonarchimedean v).fTildeSplitCarrier.functor ⋙
+          (theater.nonarchimedeanFTildeEquivalence v).functor
+  archimedean :
+    ∀ v,
+      ArchimedeanSplitFrobenioidEquivalence
+        (theater.archimedean v).fTildeMonoAnalytic
+        (models.archimedean v).fTildeMonoAnalytic
+  archimedean_carrier_compatible :
+    ∀ v,
+      (archimedean v).frobenioid.carrier.functor ⋙
+          (models.archimedean v).fTildeSplitCarrier.functor =
+        (theater.archimedean v).fTildeSplitCarrier.functor ⋙
+          (theater.archimedeanFTildeEquivalence v).functor
+
+/--
+Construct the actual mono-analytic `F^\vdash`-prime-strip after the required
+Corollaries 4.5/4.6 transport has been supplied.
+-/
+def associatedFMonoAnalytic
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    (theater : SourceThetaHodgeTheater models)
+    (transport : theater.MonoAnalyticTransport) :
+    SourceFMonoAnalyticPrimeStrip models where
+  nonarchimedean v :=
+    (theater.nonarchimedean v).fTildeSplit
+  nonarchimedeanEquivalence v :=
+    transport.nonarchimedean v
+  archimedean v :=
+    (theater.archimedean v).fTildeMonoAnalytic
+  archimedeanEquivalence v :=
+    transport.archimedean v
+
+end SourceThetaHodgeTheater
+
 /--
 The F-prime-strip tautologically associated to a theta-Hodge theater, as used
 in IUT I, Definition 5.5(ii)(c).

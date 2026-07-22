@@ -64,6 +64,8 @@
   \lean{Iut.sourceFPrimeStripToD}
   \lean{Iut.SourceFPrimeStripCapsule}
   \lean{Iut.SourceThetaHodgeTheater.associatedF}
+  \lean{Iut.SourceThetaHodgeTheater.MonoAnalyticTransport}
+  \lean{Iut.SourceThetaHodgeTheater.associatedFMonoAnalytic}
   \lean{Iut.SourceFThetaBridge}
   \lean{Iut.SourceFThetaBridge.associatedD}
   \lean{Iut.SourceFThetaBridge.associatedD_lift_unique}
@@ -85,6 +87,10 @@
   by Definition~5.2(iii), hence admit genuine capsules, and their associated
   \(D\)-prime-strips are functorial.  The \(F\)-strip associated to a
   Definition~3.6 theta-Hodge theater is derived, not supplied independently.
+  Its mono-analytic \(F^\vdash\)-strip is constructed only from an explicit
+  structure-preserving transport of the rational monoids, characteristic
+  splittings, and selected archimedean splitting; equivalences of the bare
+  carrier categories are insufficient.
   Consequently, selected \(F\)-level theta-bridge arrows induce a
   \(D\)-theta bridge, with the Corollary~5.3 uniqueness of selected lifts
   exposed as a separate theorem.  Proposition~2.2's construction of the
@@ -288,6 +294,11 @@
   \lean{Iut.SourceMLFGaloisTMPairData}
   \lean{Iut.SourceMLFGaloisTMPairData.cyclotomeAction}
   \lean{Iut.SourceMLFGaloisTMPair}
+  \lean{Iut.SourceFiniteTimesMuKummerInput}
+  \lean{Iut.SourceFiniteTimesMuKummerInput.timesMuMonoid}
+  \lean{Iut.SourceFiniteTimesMuKummerInput.timesMuUnitsEquiv}
+  \lean{Iut.SourceFiniteTimesMuKummerFrobenioid}
+  \lean{Iut.SourceFiniteTimesMuKummerFrobenioid.rationalUnitsEquiv}
   \lean{Iut.SourceMLFGaloisTMPair.grothendieckAction}
   \lean{Iut.SourceMLFGaloisTMPair.fixedSubmonoid}
   \lean{Iut.SourceMLFIntegralMonoid.absoluteOpenStabilizer}
@@ -445,6 +456,16 @@
   not assert injectivity; the remaining precise source obligation is its
   separate MLF Kummer-faithfulness proof from Definition~1.5 and
   Remark~1.5.4(i).
+  At a finite place, the Definition~4.9 input now ties the selected splitting
+  at an isotropic reference object to an actual MLF-Galois \(TM\)-pair, a
+  stable characteristic submonoid, and the genuine \(\operatorname{Ism}\)
+  Kummer orbit.  Lean constructs the bad-place quotient by
+  \(\mu_{2\ell}\) and the good-place characteristic factor, forms the literal
+  product with \(O^{\times\mu}\), and proves that this is its complete unit
+  group.  The reconstruction output must have the original base category and
+  this exact reference rational monoid, so an unrelated Frobenioid cannot
+  inhabit the interface.  Derivation of that output from Frobenioids~I,
+  Theorem~5.2(ii), remains explicit.
   A pointed inversion carries an
   actual decomposition subgroup; restriction along its continuous inclusion
   derives torsion detection from the precise equality
@@ -737,8 +758,11 @@
   Horizontal compatibility is no longer an unindexed field of a single
   column.  Its boundary contains two column assemblies, proves that they use
   the same lattice at indices \(n\) and \(n+1\), and fixes all four corners of
-  every square.  Following the convention of IUT~I, Section~0, an
-  \(F\)-prime-strip full poly-isomorphism is represented by a componentwise
+  every square.  The present prime-strip square is an ordinary-\(F\)
+  precursor, not yet clause~(iii)(a), whose corners in the source are the
+  Definition~4.9 \(F^{\vdash\times\mu}\)-prime-strips.  Following the
+  convention of IUT~I, Section~0, an ordinary \(F\)-prime-strip full
+  poly-isomorphism is represented by a componentwise
   equivalence map modulo natural isomorphism on its categorical components;
   it is not a strict categorical isomorphism of prime-strip records.  Lean
   proves that identity and composition descend to these classes, together
@@ -750,7 +774,11 @@
   and environment prime-strip squares range over every \(m\); the environment
   family carries two-sided natural comparison classes with the triangle
   strips, and its square is proved class-by-class in both directions by
-  conjugating the triangle square and cancelling those comparisons.  The
+  conjugating the triangle square and cancelling those comparisons.  These
+  facts validate the coarsification and conjugation mechanism but cannot
+  discharge clauses~(a)--(b) until the finite Frobenioid reconstruction,
+  archimedean inductive Frobenioid system, and isomorphism category for
+  \(F^{\vdash\times\mu}\) have been constructed.  The
   mono-theta square ranges over every \(m\) and bad
   place and uses actual projective systems with levelwise environment
   realizations.  The \(\kappa\)-sol/\(M_\infty^\kappa\) squares range over every

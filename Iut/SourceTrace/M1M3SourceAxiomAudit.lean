@@ -100,6 +100,8 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceMLFGaloisTMPair.badCharacteristicAction_mk
 #print axioms Iut.SourceMLFGaloisTMPair.badTimesMuUnitsEquiv_equivariant
 #print axioms Iut.SourceMLFGaloisTMPair.goodTimesMuUnitsEquiv_equivariant
+#print axioms Iut.SourceFiniteTimesMuKummerInput.timesMuUnitsEquiv
+#print axioms Iut.SourceFiniteTimesMuKummerFrobenioid.rationalUnitsEquiv
 #print axioms Iut.SourceArchimedeanKummerSystem.rootsOfUnity_isClosed
 #print axioms Iut.SourceArchimedeanKummerSystem.continuousQuotientMap_isOpenQuotientMap
 #print axioms Iut.SourceArchimedeanKummerSystem.rootsOfUnity_le_of_dvd

@@ -298,6 +298,161 @@ noncomputable def goodTimesMuUnitsEquiv
 
 end SourceMLFGaloisTMPair
 
+/-!
+## Finite-place split `times-mu` Kummer Frobenioids
+
+The preceding constructions give the literal monoids and their Galois
+actions.  The records below state the remaining Frobenioid reconstruction
+boundary of IUT II, Definition 4.9(ii)--(iv), without replacing it by an
+unrelated carrier type.
+-/
+
+/-- The two finite-place cases of IUT II, Definition 4.9(ii)--(iv). -/
+inductive SourceFiniteTimesMuPlaceKind
+  | bad
+  | good
+  deriving DecidableEq
+
+/--
+The exact input from a split `F^\vdash` Frobenioid at one finite place.
+
+The rational monoid at the selected universal-cover reference object is
+identified with the arithmetic monoid of an actual MLF-Galois `TM` pair.  The
+selected characteristic splitting is transported to a stable submonoid, and
+the `times-mu` Kummer structure is the genuine `Ism` orbit of Definition
+4.9(i), not a proposition recording that some Kummer map exists.
+-/
+structure SourceFiniteTimesMuKummerInput
+    (ell : PrimeGeFive)
+    (underlying : SplitFrobenioidPresentation.{u}) where
+  kind : SourceFiniteTimesMuPlaceKind
+  referenceObject : underlying.frobenioid.carrier
+  referenceObject_isotropic :
+    underlying.frobenioid.preFrobenioid.IsIsotropic referenceObject
+  selectedSplitting : underlying.splittingIndex
+  galoisGroup : TopologicalGroupCat.{u}
+  groupPair : SourceMLFGaloisTMPair galoisGroup
+  coverPair : SourceMLFGaloisTMPair galoisGroup
+  rationalMonoidIso :
+    underlying.frobenioid.preFrobenioid.LinearBaseIdentityEndomorphism
+        referenceObject ≃*
+      coverPair.arithmeticMonoid.carrier
+  characteristic : Submonoid coverPair.arithmeticMonoid.carrier
+  characteristic_eq_splitting :
+    ∀ value :
+        underlying.frobenioid.preFrobenioid.LinearBaseIdentityEndomorphism
+          referenceObject,
+      value ∈
+          (underlying.splitting selectedSplitting).tau
+            { obj := referenceObject
+              isotropic := referenceObject_isotropic } ↔
+        rationalMonoidIso value ∈ characteristic
+  characteristic_stable :
+    ∀ g value,
+      value ∈ characteristic →
+        coverPair.action g value ∈ characteristic
+  unit_characteristic_injective :
+    Function.Injective
+      (SourceSplitKummerMonoid.unitCharacteristicMultiplication
+        characteristic)
+  kummerStructure :
+    SourceMLFGaloisTMPair.TimesMuKummerIsomorphism.TimesMuKummerOrbit
+      groupPair coverPair
+
+namespace SourceFiniteTimesMuKummerInput
+
+/--
+The literal `O^(square times-mu)` monoid dictated by the place kind: quotient
+by `mu_(2 ell)` at a bad place and the unquotiented characteristic factor at a
+good place.
+-/
+abbrev timesMuMonoid
+    {ell : PrimeGeFive}
+    {underlying : SplitFrobenioidPresentation.{u}}
+    (input : SourceFiniteTimesMuKummerInput ell underlying) : Type u :=
+  match input.kind with
+  | .bad =>
+      input.coverPair.badTimesMuMonoid ell input.characteristic
+  | .good =>
+      input.coverPair.goodTimesMuMonoid input.characteristic
+
+noncomputable instance timesMuMonoidCommMonoid
+    {ell : PrimeGeFive}
+    {underlying : SplitFrobenioidPresentation.{u}}
+    (input : SourceFiniteTimesMuKummerInput ell underlying) :
+    CommMonoid input.timesMuMonoid := by
+  rcases input with
+    ⟨kind, referenceObject, referenceObject_isotropic,
+      selectedSplitting, galoisGroup, groupPair, coverPair,
+      rationalMonoidIso, characteristic, characteristic_eq_splitting,
+      characteristic_stable, unit_characteristic_injective,
+      kummerStructure⟩
+  cases kind with
+  | bad => infer_instance
+  | good => infer_instance
+
+/-- The complete unit group of the reconstructed monoid is `O^(times-mu)`. -/
+noncomputable def timesMuUnitsEquiv
+    {ell : PrimeGeFive}
+    {underlying : SplitFrobenioidPresentation.{u}}
+    (input : SourceFiniteTimesMuKummerInput ell underlying) :
+    input.timesMuMonoidˣ ≃* input.coverPair.UnitModuloTorsion := by
+  rcases input with
+    ⟨kind, referenceObject, referenceObject_isotropic,
+      selectedSplitting, galoisGroup, groupPair, coverPair,
+      rationalMonoidIso, characteristic, characteristic_eq_splitting,
+      characteristic_stable, unit_characteristic_injective,
+      kummerStructure⟩
+  cases kind with
+  | bad =>
+      exact coverPair.badTimesMuUnitsEquiv ell characteristic
+        unit_characteristic_injective
+  | good =>
+      exact coverPair.goodTimesMuUnitsEquiv characteristic
+        unit_characteristic_injective
+
+end SourceFiniteTimesMuKummerInput
+
+/--
+The output of the model-Frobenioid reconstruction in Definition 4.9(iii)-(iv).
+
+Its reference rational monoid is identified with the monoid constructed from
+the input, and its base category is the base category of the original split
+Frobenioid.  Thus this record cannot be inhabited merely by choosing an
+unrelated split Frobenioid.
+-/
+structure SourceFiniteTimesMuKummerFrobenioid
+    (ell : PrimeGeFive)
+    (underlying : SplitFrobenioidPresentation.{u}) where
+  input : SourceFiniteTimesMuKummerInput ell underlying
+  reconstructed : SplitFrobenioidPresentation.{u}
+  referenceObject : reconstructed.frobenioid.carrier
+  referenceObject_isotropic :
+    reconstructed.frobenioid.preFrobenioid.IsIsotropic referenceObject
+  rationalMonoidIso :
+    reconstructed.frobenioid.preFrobenioid.LinearBaseIdentityEndomorphism
+        referenceObject ≃*
+      input.timesMuMonoid
+  baseEquivalence :
+    CategoryTheory.Equivalence
+      reconstructed.frobenioid.baseCategory
+      underlying.frobenioid.baseCategory
+
+namespace SourceFiniteTimesMuKummerFrobenioid
+
+/-- The reconstructed rational monoid has exactly the required `times-mu` units. -/
+noncomputable def rationalUnitsEquiv
+    {ell : PrimeGeFive}
+    {underlying : SplitFrobenioidPresentation.{u}}
+    (output : SourceFiniteTimesMuKummerFrobenioid ell underlying) :
+    (output.reconstructed.frobenioid.preFrobenioid.LinearBaseIdentityEndomorphism
+        output.referenceObject)ˣ ≃*
+      output.input.coverPair.UnitModuloTorsion :=
+  (Units.mapEquiv output.rationalMonoidIso).trans
+    output.input.timesMuUnitsEquiv
+
+end SourceFiniteTimesMuKummerFrobenioid
+
 namespace SourceSplitKummerMonoid
 
 variable {M : Type u} [CommMonoid M]

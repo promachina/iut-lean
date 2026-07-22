@@ -14,9 +14,13 @@ records those indices and fixes every corner of the resulting squares to an
 actual lattice, prime-strip, projective-system, or labeled-data object.
 
 The structures here are source obligations: they do not construct the
-horizontal poly-isomorphisms from the theta link.  They do prevent one
-unindexed arrow-category square, unrelated to the lattice, from standing in
-for all of clauses (a)--(d).
+horizontal poly-isomorphisms from the theta link.  In particular, the
+prime-strip square below is still formulated for the ordinary `F`-prime-strip
+associated to a theater.  The source theorem uses the Definition 4.9
+`F^(turnstile times-mu)`-prime-strip, so this square is preparatory scaffolding
+until it is retargeted through the actual `times-mu` construction.  The indexed
+corners nevertheless prevent one unrelated arrow-category square from
+standing in for all of clauses (a)--(d).
 -/
 
 open CategoryTheory
@@ -116,9 +120,11 @@ structure SourceFPrimeStripPolyIsomorphismSquare
           SourceFPrimeStripFullPolyIsomorphism.comp upper rightKummer
 
 /--
-The exact clause (iii)(a) square at `(n,m)`: the upper row consists of the
-two site theaters and the lower row of the two vertically coric theaters.
-Its arrows are the paper's full poly-isomorphisms modulo natural isomorphism.
+The ordinary-`F` precursor of clause (iii)(a) at `(n,m)`: the upper row
+consists of the two site theaters and the lower row of the two vertically
+coric theaters.  Its arrows obey the paper's Section 0 coarsification, but the
+corners must still be replaced by their Definition 4.9
+`F^(turnstile times-mu)` constructions before this is clause (iii)(a) itself.
 -/
 abbrev SourceTheorem311TrianglePrimeStripSquare
     {Fmod F K : Type u}
@@ -192,7 +198,7 @@ structure SourceTheorem311EnvironmentPrimeStripFamily
         SourceFPrimeStripFullPolyIsomorphism.id
           (lattice.commonBridge n).theater.associatedF
 
-/-- The fixed-corner environment-prime-strip square of clause (iii)(b). -/
+/-- The ordinary-`F` precursor of the fixed-corner square in clause (iii)(b). -/
 abbrev SourceTheorem311EnvironmentPrimeStripSquare
     {Fmod F K : Type u}
     [Field Fmod] [NumberField Fmod]
