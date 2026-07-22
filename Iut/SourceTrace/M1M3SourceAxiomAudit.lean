@@ -74,6 +74,11 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceModelFrobenioid.Carrier.isIsotropic
 #print axioms Iut.SourceModelFrobenioid.Carrier.isCoAngular
 #print axioms Iut.SourceModelFrobenioid.Carrier.isOfFrobeniusType_iff
+#print axioms Iut.SourceModelFrobenioid.Carrier.zeroFrobeniusTrivialization
+#print axioms Iut.SourceModelFrobenioid.Carrier.baseRepresented
+#print axioms Iut.SourceModelFrobenioid.Carrier.frobeniusDegreeWitness
+#print axioms Iut.SourceModelFrobenioid.Carrier.isotropicHull
+#print axioms Iut.SourceModelFrobenioid.Carrier.coAngular_comp
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.quotientUnit_exists
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootRealization.ofRootSystem

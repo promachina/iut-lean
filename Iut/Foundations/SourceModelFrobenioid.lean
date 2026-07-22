@@ -719,6 +719,241 @@ theorem isOfFrobeniusType_iff {source target : Carrier Phi data}
         (preFrobenioid Phi data).IsBaseIso arrow := by
   rw [PreFrobenioid.IsOfFrobeniusType, isLBInvertible_iff Phi data]
 
+theorem zeroFrobeniusBalance (data : Input Phi) (X : D) (degree : ℕ+) :
+    degree.val •
+          (0 : Algebra.GrothendieckAddGroup (Phi.obj X).carrier) +
+        Algebra.GrothendieckAddGroup.of 0 =
+      gpPullback Phi (𝟙 X) 0 + data.divisor X 0 := by
+  simp
+
+/-- A degree-`n` Frobenius endomorphism of a zero-divisor object. -/
+def zeroFrobenius (data : Input Phi) (X : D) (degree : ℕ+) :
+    zeroObject Phi data X ⟶ zeroObject Phi data X where
+  frobeniusDegree := degree
+  base := 𝟙 X
+  divisor := 0
+  rationalFunction := 0
+  balance := by
+    dsimp [zeroObject]
+    exact zeroFrobeniusBalance Phi data X degree
+
+/-- The Frobenius trivialization of the paper's objects `(A_D, 0)`. -/
+def zeroFrobeniusTrivialization (data : Input Phi) (X : D) :
+    (preFrobenioid Phi data).FrobeniusTrivialization
+      (zeroObject Phi data X) where
+  lift := zeroFrobenius Phi data X
+  map_one := by
+    apply Hom.ext <;> rfl
+  map_mul m n := by
+    apply Hom.ext
+    · rfl
+    · change 𝟙 X = 𝟙 X ≫ 𝟙 X
+      simp
+    · simp [zeroFrobenius]
+    · simp [zeroFrobenius]
+  degree_section _ := rfl
+  base_identity _ := by
+    change 𝟙 X = 𝟙 X
+    rfl
+  of_frobenius_type degree := by
+    rw [isOfFrobeniusType_iff Phi data]
+    constructor
+    · rfl
+    · change IsIso (𝟙 X)
+      infer_instance
+
+theorem zeroObject_isFrobeniusTrivial (data : Input Phi) (X : D) :
+    (preFrobenioid Phi data).IsFrobeniusTrivial
+      (zeroObject Phi data X) :=
+  ⟨zeroFrobeniusTrivialization Phi data X⟩
+
+/-- Definition 1.3(i)(a) for the model category. -/
+theorem baseRepresented (data : Input Phi) (B : D) :
+    ∃ A : Carrier Phi data,
+      (preFrobenioid Phi data).IsFrobeniusTrivial A ∧
+        Nonempty (((preFrobenioid Phi data).base).obj A ≅ B) :=
+  ⟨zeroObject Phi data B, zeroObject_isFrobeniusTrivial Phi data B,
+    ⟨Iso.refl B⟩⟩
+
+/-- The codomain `(A_D, n alpha)` of the canonical degree-`n` arrow. -/
+def frobeniusCodomain (data : Input Phi) (object : Carrier Phi data)
+    (degree : ℕ+) : Carrier Phi data where
+  base := Object.base object
+  divisorClass := degree.val • object.divisorClass
+
+/-- The canonical degree-`n` Frobenius-type arrow from a model object. -/
+def frobeniusArrow (data : Input Phi) (object : Carrier Phi data)
+    (degree : ℕ+) :
+    object ⟶ frobeniusCodomain Phi data object degree where
+  frobeniusDegree := degree
+  base := 𝟙 (Object.base object)
+  divisor := 0
+  rationalFunction := 0
+  balance := by
+    dsimp [frobeniusCodomain]
+    rw [gpPullback_id]
+    simp only [map_zero, add_zero]
+    change degree.val • object.divisorClass =
+      degree.val • object.divisorClass
+    rfl
+
+theorem frobeniusArrow_ofFrobeniusType (data : Input Phi)
+    (object : Carrier Phi data) (degree : ℕ+) :
+    (preFrobenioid Phi data).IsOfFrobeniusType
+      (frobeniusArrow Phi data object degree) := by
+  rw [isOfFrobeniusType_iff Phi data]
+  constructor
+  · rfl
+  · change IsIso (𝟙 (Object.base object))
+    infer_instance
+
+/--
+The comparison from `(A_D, n alpha)` to the codomain of any competing
+degree-`n` Frobenius-type arrow.
+-/
+def frobeniusComparison (data : Input Phi)
+    {source target : Carrier Phi data} (arrow : source ⟶ target)
+    (ofFrobeniusType :
+      (preFrobenioid Phi data).IsOfFrobeniusType arrow)
+    {degree : ℕ+}
+    (degree_eq : (preFrobenioid Phi data).frobeniusDegree arrow = degree) :
+    frobeniusCodomain Phi data source degree ⟶ target where
+  frobeniusDegree := 1
+  base := arrow.base
+  divisor := 0
+  rationalFunction := arrow.rationalFunction
+  balance := by
+    rw [isOfFrobeniusType_iff Phi data] at ofFrobeniusType
+    change arrow.frobeniusDegree = degree at degree_eq
+    have isometric := ofFrobeniusType.1
+    change arrow.divisor = 0 at isometric
+    dsimp [frobeniusCodomain]
+    have arrowBalance := arrow.balance
+    rw [degree_eq, isometric] at arrowBalance
+    conv_lhs =>
+      lhs
+      change (1 : ℕ) • (degree.val • source.divisorClass)
+    rw [one_nsmul]
+    exact arrowBalance
+
+theorem frobeniusComparison_isIso
+    {source target : Carrier Phi data} (arrow : source ⟶ target)
+    (ofFrobeniusType :
+      (preFrobenioid Phi data).IsOfFrobeniusType arrow)
+    {degree : ℕ+}
+    (degree_eq : (preFrobenioid Phi data).frobeniusDegree arrow = degree) :
+    IsIso (frobeniusComparison Phi data arrow ofFrobeniusType degree_eq) := by
+  apply isIso_of_preStep_isometric Phi data
+  · constructor
+    · rfl
+    · rw [isOfFrobeniusType_iff Phi data] at ofFrobeniusType
+      exact ofFrobeniusType.2
+  · rfl
+
+theorem frobeniusArrow_comp_comparison
+    {source target : Carrier Phi data} (arrow : source ⟶ target)
+    (ofFrobeniusType :
+      (preFrobenioid Phi data).IsOfFrobeniusType arrow)
+    {degree : ℕ+}
+    (degree_eq : (preFrobenioid Phi data).frobeniusDegree arrow = degree) :
+    frobeniusArrow Phi data source degree ≫
+        frobeniusComparison Phi data arrow ofFrobeniusType degree_eq =
+      arrow := by
+  apply Hom.ext
+  · change degree * 1 = arrow.frobeniusDegree
+    change arrow.frobeniusDegree = degree at degree_eq
+    rw [degree_eq]
+    exact mul_one degree
+  · change 𝟙 (Object.base source) ≫ arrow.base = arrow.base
+    simp
+  · change
+      Phi.pullback (𝟙 (Object.base source)) 0 + 1 • 0 =
+        arrow.divisor
+    rw [isOfFrobeniusType_iff Phi data] at ofFrobeniusType
+    have isometric := ofFrobeniusType.1
+    change arrow.divisor = 0 at isometric
+    rw [isometric]
+    simp
+  · change
+      data.rationalFunctions.pullback (𝟙 (Object.base source))
+          arrow.rationalFunction + 1 • 0 = arrow.rationalFunction
+    rw [data.rationalFunctions.pullback_id]
+    simp
+
+/-- Definition 1.3(ii), including essential uniqueness, for the model category. -/
+def frobeniusDegreeWitness
+    (baseTotallyEpimorphic : ∀ {X Y : D} (f : X ⟶ Y), Epi f)
+    (object : Carrier Phi data) (degree : ℕ+) :
+    (preFrobenioid Phi data).FrobeniusDegreeWitness object degree where
+  codomain := frobeniusCodomain Phi data object degree
+  hom := frobeniusArrow Phi data object degree
+  ofFrobeniusType :=
+    frobeniusArrow_ofFrobeniusType Phi data object degree
+  degree := rfl
+  essentiallyUnique := by
+    intro target arrow ofFrobeniusType degree_eq
+    let comparison :=
+      frobeniusComparison Phi data arrow ofFrobeniusType degree_eq
+    letI : IsIso comparison :=
+      frobeniusComparison_isIso Phi data arrow ofFrobeniusType degree_eq
+    refine ⟨asIso comparison, ?_, ?_⟩
+    · exact frobeniusArrow_comp_comparison Phi data arrow
+        ofFrobeniusType degree_eq
+    · intro candidate candidate_comp
+      apply Iso.ext
+      letI : Epi (frobeniusArrow Phi data object degree) :=
+        epi Phi data baseTotallyEpimorphic
+          (frobeniusArrow Phi data object degree)
+      apply (cancel_epi (frobeniusArrow Phi data object degree)).mp
+      exact candidate_comp.trans
+        (frobeniusArrow_comp_comparison Phi data arrow
+          ofFrobeniusType degree_eq).symm
+
+/--
+Since every model object is isotropic, its identity is its isotropic hull.
+This proves Definition 1.3(vii)(a) with the full universal property.
+-/
+def isotropicHull (object : Carrier Phi data) :
+    (preFrobenioid Phi data).IsotropicHull object where
+  hull := object
+  hom := 𝟙 object
+  preStep := by
+    constructor
+    · exact (preFrobenioid Phi data).frobeniusDegree_id object
+    · change IsIso (𝟙 (Object.base object))
+      infer_instance
+  isometric := (preFrobenioid Phi data).divisor_id object
+  isotropic := isIsotropic Phi data object
+  lift := by
+    intro target arrow _
+    refine ⟨arrow, by simp, ?_⟩
+    intro candidate candidate_comp
+    simpa using candidate_comp
+
+/-- Definition 1.3(vii)(b) for model objects. -/
+theorem isotropic_closedUnderTargets
+    {source target : Carrier Phi data} (_arrow : source ⟶ target)
+    (_sourceIsotropic : (preFrobenioid Phi data).IsIsotropic source) :
+    (preFrobenioid Phi data).IsIsotropic target :=
+  isIsotropic Phi data target
+
+/-- Definition 1.3(iii)(a) for model arrows. -/
+theorem coAngular_comp
+    {source middle target : Carrier Phi data}
+    (first : source ⟶ middle) (second : middle ⟶ target)
+    (_firstCoAngular : (preFrobenioid Phi data).IsCoAngular first)
+    (_secondCoAngular : (preFrobenioid Phi data).IsCoAngular second) :
+    (preFrobenioid Phi data).IsCoAngular (first ≫ second) :=
+  isCoAngular Phi data (first ≫ second)
+
+/-- Definition 1.3(iii)(b) for model arrows. -/
+theorem parallelToCoAngularPreStep
+    {source target : Carrier Phi data} (first second : source ⟶ target)
+    (_firstPreStep : (preFrobenioid Phi data).IsPreStep first)
+    (_firstCoAngular : (preFrobenioid Phi data).IsCoAngular first) :
+    (preFrobenioid Phi data).IsCoAngular second :=
+  isCoAngular Phi data second
+
 /--
 The model category packaged with the connectedness and total-epimorphicity
 hypotheses of Definition 1.1(iv). This does not yet assert the seven axiom
