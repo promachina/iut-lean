@@ -65,6 +65,10 @@
   \lean{Iut.SourceTopologicalGroupPseudoMonoidActionPair}
   \lean{Iut.SourceTopologicalGroupPseudoMonoidActionPair.action_maps_domain_iff}
   \lean{Iut.SourceTopologicalGroupPseudoMonoidActionPair.action_partialMul}
+  \lean{Iut.SourceTopologicalGroupPseudoMonoidActionPair.fixedPseudoMonoid.mul_mem_iff}
+  \lean{Iut.SourceProfinitePseudoMonoidActionPair.quotientAction_comp}
+  \lean{Iut.SourceProfinitePseudoMonoidActionPair.descend}
+  \lean{Iut.SourceProfinitePseudoMonoidActionPair.comap_descend}
   \leanok
   Following IUT~I, Section~0, a topological pseudo-monoid is the embedded
   image of a topological space in a topological abelian group.  Its product is
@@ -76,7 +80,17 @@
   cyclotomicity retains the torsion identification with \(\mathbb Q/\mathbb Z\)
   and stability under torsion.  Continuous morphisms preserve defined
   products, isomorphisms reflect their domain, and continuous group actions
-  are by these pseudo-monoid automorphisms.
+  are by these pseudo-monoid automorphisms.  For Definition~5.2(v), the
+  invariant carrier is constructed as a sub-pseudo-monoid and is proved to
+  inherit every product defined in the original carrier.  A profinite action
+  whose kernel acts trivially descends through a surjective profinite
+  quotient; continuity follows from the compact-to-Hausdorff quotient
+  topology, and pullback of the descended action recovers the original one.
+  These results implement the fixed-point and
+  $\pi_1^{\kappa\text{-sol}}$ factorization mechanisms.  They do not construct
+  the ambient overgroup, rational fundamental group, or the coric
+  rational-function carriers supplied by the cited absolute-anabelian
+  reconstruction algorithms.
 \end{definition}
 
 \begin{definition}[Source Frobenioid prime strips]
@@ -122,8 +136,9 @@
   \(D\)-theta bridge, with the Corollary~5.3 uniqueness of selected lifts
   exposed as a separate theorem.  Proposition~2.2's construction of the
   rational-monoid transport, the Examples~3.2--3.5 model constructions,
-  mono-analyticization, global realification, and the coric reconstruction
-  clauses of Definition~5.2(v)--(viii) remain explicit source obligations.
+  mono-analyticization, global realification, the remaining reconstruction
+  content of Definition~5.2(v), and clauses~(vi)--(viii) remain explicit
+  source obligations.
 \end{definition}
 
 \begin{definition}[Capsules and processions]

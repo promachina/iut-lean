@@ -7,7 +7,11 @@ import Iut.Foundations.SourceMonoThetaEnvironment
 import Mathlib.CategoryTheory.Endomorphism
 import Mathlib.GroupTheory.Divisible
 import Mathlib.GroupTheory.Torsion
+import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Basic
+import Mathlib.Topology.Algebra.Group.Basic
 import Mathlib.Topology.Instances.AddCircle.Defs
+import Mathlib.Topology.Maps.OpenQuotient
+import Mathlib.Topology.Separation.Hausdorff
 
 /-!
 # Topological pseudo-monoids and continuous group actions
@@ -335,6 +339,157 @@ theorem action_partialMul
           (pair.action groupElement).hom.maps_domain input⟩ :=
   (pair.action groupElement).hom.map_partialMul input
 
+/-- A carrier element fixed by every element of the acting group. -/
+def IsFixed
+    (pair : SourceTopologicalGroupPseudoMonoidActionPair.{u})
+    (value : pair.pseudoMonoid.Carrier) : Prop :=
+  ∀ groupElement,
+    (pair.action groupElement).hom.toFun value = value
+
+/--
+The fixedness predicate on the ambient group.  Quantifying over the proof of
+carrier membership makes the definition independent of subtype proof terms.
+-/
+def IsFixedAmbient
+    (pair : SourceTopologicalGroupPseudoMonoidActionPair.{u})
+    (value : pair.pseudoMonoid.ambient) : Prop :=
+  ∀ (membership : value ∈ pair.pseudoMonoid.carrierSet) groupElement,
+    (pair.action groupElement).hom.toFun ⟨value, membership⟩ =
+      ⟨value, membership⟩
+
+/-- The invariant sub-pseudo-monoid of a continuous action. -/
+def fixedPseudoMonoid
+    (pair : SourceTopologicalGroupPseudoMonoidActionPair.{u}) :
+    SourceTopologicalPseudoMonoid.{u} where
+  ambient := pair.pseudoMonoid.ambient
+  carrierSet :=
+    { value |
+      value ∈ pair.pseudoMonoid.carrierSet ∧
+        pair.IsFixedAmbient value }
+
+namespace fixedPseudoMonoid
+
+variable (pair : SourceTopologicalGroupPseudoMonoidActionPair.{u})
+
+/-- A fixed carrier element, regarded as an element of the original carrier. -/
+def toOriginal : pair.fixedPseudoMonoid.Carrier →
+    pair.pseudoMonoid.Carrier :=
+  fun value => ⟨value.1, value.2.1⟩
+
+/-- The invariant carrier is exactly the subtype of fixed original elements. -/
+def carrierEquiv :
+    pair.fixedPseudoMonoid.Carrier ≃
+      { value : pair.pseudoMonoid.Carrier // pair.IsFixed value } where
+  toFun value :=
+    ⟨⟨value.1, value.2.1⟩, fun groupElement =>
+      value.2.2 value.2.1 groupElement⟩
+  invFun value :=
+    ⟨value.1.1,
+      ⟨value.1.2, fun membership groupElement => by
+        have fixed := value.2 groupElement
+        simpa only [Subsingleton.elim membership value.1.2] using fixed⟩⟩
+  left_inv value := by
+    apply Subtype.ext
+    rfl
+  right_inv value := by
+    apply Subtype.ext
+    apply Subtype.ext
+    rfl
+
+/-- Inclusion of the invariant sub-pseudo-monoid into the original one. -/
+def inclusion : pair.fixedPseudoMonoid ⟶ pair.pseudoMonoid where
+  toFun := fixedPseudoMonoid.toOriginal pair
+  continuous_toFun := by
+    apply Continuous.subtype_mk
+    exact continuous_subtype_val
+  maps_domain input := input.2.1
+  map_partialMul _ := rfl
+
+/-- The fixed-carrier inclusion is a topological embedding. -/
+theorem inclusion_isEmbedding :
+    Topology.IsEmbedding (fixedPseudoMonoid.inclusion pair).toFun := by
+  let carrierSubset :
+      pair.fixedPseudoMonoid.carrierSet ⊆
+        pair.pseudoMonoid.carrierSet :=
+    fun _ membership => membership.1
+  simpa only [inclusion, toOriginal, Set.inclusion] using
+    Topology.IsEmbedding.inclusion carrierSubset
+
+/-- The fixed-carrier inclusion is injective. -/
+theorem inclusion_injective :
+    Function.Injective (fixedPseudoMonoid.inclusion pair).toFun :=
+  (fixedPseudoMonoid.inclusion_isEmbedding pair).injective
+
+/--
+Products of fixed elements are fixed whenever the corresponding product is
+defined in the original pseudo-monoid.  Thus passage to invariants introduces
+no additional partial-multiplication obstruction.
+-/
+theorem mul_mem_iff
+    (first second : (pair.fixedPseudoMonoid).Carrier) :
+    first.1 * second.1 ∈ pair.fixedPseudoMonoid.carrierSet ↔
+      first.1 * second.1 ∈ pair.pseudoMonoid.carrierSet := by
+  constructor
+  · exact fun membership => membership.1
+  · intro productMembership
+    refine ⟨productMembership, ?_⟩
+    intro membership groupElement
+    let firstOriginal : pair.pseudoMonoid.Carrier :=
+      ⟨first.1, first.2.1⟩
+    let secondOriginal : pair.pseudoMonoid.Carrier :=
+      ⟨second.1, second.2.1⟩
+    let input : pair.pseudoMonoid.MultiplicationDomain :=
+      ⟨(firstOriginal, secondOriginal), productMembership⟩
+    have firstFixed :
+        (pair.action groupElement).hom.toFun firstOriginal =
+          firstOriginal :=
+      first.2.2 first.2.1 groupElement
+    have secondFixed :
+        (pair.action groupElement).hom.toFun secondOriginal =
+          secondOriginal :=
+      second.2.2 second.2.1 groupElement
+    let actedInput : pair.pseudoMonoid.MultiplicationDomain :=
+      ⟨((pair.action groupElement).hom.toFun firstOriginal,
+          (pair.action groupElement).hom.toFun secondOriginal),
+        (pair.action groupElement).hom.maps_domain input⟩
+    have productFixed := pair.action_partialMul groupElement input
+    have inputProduct :
+        pair.pseudoMonoid.partialMul input =
+          ⟨first.1 * second.1, membership⟩ := by
+      apply Subtype.ext
+      rfl
+    have actedProduct :
+        pair.pseudoMonoid.partialMul actedInput =
+          ⟨first.1 * second.1, membership⟩ := by
+      apply Subtype.ext
+      change
+        ((pair.action groupElement).hom.toFun firstOriginal).1 *
+            ((pair.action groupElement).hom.toFun secondOriginal).1 =
+          first.1 * second.1
+      rw [firstFixed, secondFixed]
+      rfl
+    calc
+      (pair.action groupElement).hom.toFun
+          ⟨first.1 * second.1, membership⟩ =
+        (pair.action groupElement).hom.toFun
+          (pair.pseudoMonoid.partialMul input) :=
+            congrArg (pair.action groupElement).hom.toFun
+              inputProduct.symm
+      _ = pair.pseudoMonoid.partialMul actedInput := productFixed
+      _ = ⟨first.1 * second.1, membership⟩ := actedProduct
+
+/-- The original product gives a product in the invariant pseudo-monoid. -/
+def multiplicationDomainOfOriginal
+    (first second : (pair.fixedPseudoMonoid).Carrier)
+    (productMembership :
+      first.1 * second.1 ∈ pair.pseudoMonoid.carrierSet) :
+    pair.fixedPseudoMonoid.MultiplicationDomain :=
+  ⟨(first, second),
+    (fixedPseudoMonoid.mul_mem_iff pair first second).2
+      productMembership⟩
+
+end fixedPseudoMonoid
+
 /-- An equivariant continuous morphism of topological action pairs. -/
 structure Hom
     (source target : SourceTopologicalGroupPseudoMonoidActionPair.{u}) where
@@ -564,5 +719,177 @@ def toCategoryIso (pairIso : Iso first second) : first ≅ second where
 end Iso
 
 end SourceTopologicalGroupPseudoMonoidActionPair
+
+/-! ## Profinite quotient descent -/
+
+/--
+A continuous profinite-group action on a topological pseudo-monoid.  This is
+the specialized action pair used by the nonarchimedean clauses of IUT I,
+Definition 5.2(v)-(vi).
+-/
+structure SourceProfinitePseudoMonoidActionPair
+    (group : ProfiniteGrp.{u}) where
+  pseudoMonoid : SourceTopologicalPseudoMonoid.{u}
+  action : group →* CategoryTheory.Aut pseudoMonoid
+  continuous_action :
+    Continuous fun input : group × pseudoMonoid.Carrier =>
+      (action input.1).hom.toFun input.2
+
+namespace SourceProfinitePseudoMonoidActionPair
+
+variable {source quotient : ProfiniteGrp.{u}}
+
+@[ext]
+theorem ext
+    (first second : SourceProfinitePseudoMonoidActionPair source)
+    (pseudoMonoid_eq : first.pseudoMonoid = second.pseudoMonoid)
+    (action_eq : HEq first.action second.action) :
+    first = second := by
+  cases first with
+  | mk firstPseudoMonoid firstAction firstContinuous =>
+      cases second with
+      | mk secondPseudoMonoid secondAction secondContinuous =>
+          cases pseudoMonoid_eq
+          have actionEquality : firstAction = secondAction :=
+            eq_of_heq action_eq
+          cases actionEquality
+          rfl
+
+/-- Regard a profinite action as a general topological-group action pair. -/
+def toTopologicalActionPair
+    (pair : SourceProfinitePseudoMonoidActionPair source) :
+    SourceTopologicalGroupPseudoMonoidActionPair.{u} where
+  actingGroup := TopologicalGroupCat.ofProfinite source
+  pseudoMonoid := pair.pseudoMonoid
+  action := pair.action
+  continuous_action := pair.continuous_action
+
+/-- Pull a profinite action back along a continuous group homomorphism. -/
+def comap
+    (pair : SourceProfinitePseudoMonoidActionPair quotient)
+    (map : source ⟶ quotient) :
+    SourceProfinitePseudoMonoidActionPair source where
+  pseudoMonoid := pair.pseudoMonoid
+  action := pair.action.comp map.hom.toMonoidHom
+  continuous_action :=
+    pair.continuous_action.comp
+      ((map.hom.continuous_toFun.comp continuous_fst).prodMk
+        continuous_snd)
+
+@[simp]
+theorem comap_action
+    (pair : SourceProfinitePseudoMonoidActionPair quotient)
+    (map : source ⟶ quotient)
+    (groupElement : source) :
+    (pair.comap map).action groupElement = pair.action (map groupElement) :=
+  rfl
+
+/-- The exact algebraic condition for an action to descend through a quotient. -/
+def KernelActsTrivially
+    (pair : SourceProfinitePseudoMonoidActionPair source)
+    (map : source ⟶ quotient) : Prop :=
+  map.hom.toMonoidHom.ker ≤ pair.action.ker
+
+/-- Construct the quotient action algebraically from kernel triviality. -/
+noncomputable def quotientAction
+    (pair : SourceProfinitePseudoMonoidActionPair source)
+    (map : source ⟶ quotient)
+    (map_surjective : Function.Surjective map)
+    (kernel_trivial : pair.KernelActsTrivially map) :
+    quotient →* CategoryTheory.Aut pair.pseudoMonoid :=
+  map.hom.toMonoidHom.liftOfSurjective map_surjective
+    ⟨pair.action, kernel_trivial⟩
+
+/-- The descended action pulls back to the original action. -/
+theorem quotientAction_comp
+    (pair : SourceProfinitePseudoMonoidActionPair source)
+    (map : source ⟶ quotient)
+    (map_surjective : Function.Surjective map)
+    (kernel_trivial : pair.KernelActsTrivially map) :
+    (pair.quotientAction map map_surjective kernel_trivial).comp
+        map.hom.toMonoidHom = pair.action := by
+  simpa only [quotientAction] using
+    map.hom.toMonoidHom.liftOfRightInverse_comp
+      (Function.surjInv map_surjective)
+      (Function.rightInverse_surjInv map_surjective)
+      ⟨pair.action, kernel_trivial⟩
+
+@[simp]
+theorem quotientAction_map
+    (pair : SourceProfinitePseudoMonoidActionPair source)
+    (map : source ⟶ quotient)
+    (map_surjective : Function.Surjective map)
+    (kernel_trivial : pair.KernelActsTrivially map)
+    (groupElement : source) :
+    pair.quotientAction map map_surjective kernel_trivial
+        (map groupElement) =
+      pair.action groupElement := by
+  have equality := congrArg
+    (fun action : source →* CategoryTheory.Aut pair.pseudoMonoid =>
+      action groupElement)
+    (pair.quotientAction_comp map map_surjective kernel_trivial)
+  exact equality
+
+/--
+Descent through a surjective morphism of profinite groups preserves continuity.
+The proof uses compact-to-Hausdorff quotient topology and openness of quotient
+homomorphisms, rather than assuming continuity of the descended action.
+-/
+noncomputable def descend
+    (pair : SourceProfinitePseudoMonoidActionPair source)
+    (map : source ⟶ quotient)
+    (map_surjective : Function.Surjective map)
+    (kernel_trivial : pair.KernelActsTrivially map) :
+    SourceProfinitePseudoMonoidActionPair quotient where
+  pseudoMonoid := pair.pseudoMonoid
+  action := pair.quotientAction map map_surjective kernel_trivial
+  continuous_action := by
+    have quotientMap : Topology.IsQuotientMap map :=
+      IsQuotientMap.of_surjective_continuous
+        map_surjective map.hom.continuous_toFun
+    have openQuotientMap : IsOpenQuotientMap map :=
+      MonoidHom.isOpenQuotientMap_of_isQuotientMap quotientMap
+    have productQuotientMap :
+        IsOpenQuotientMap
+          (Prod.map map
+            (id : pair.pseudoMonoid.Carrier →
+              pair.pseudoMonoid.Carrier)) :=
+      openQuotientMap.prodMap IsOpenQuotientMap.id
+    rw [productQuotientMap.isQuotientMap.continuous_iff]
+    convert pair.continuous_action using 1
+    ext input
+    change
+      ((pair.quotientAction map map_surjective kernel_trivial
+          (map input.1)).hom.toFun input.2).1 =
+        ((pair.action input.1).hom.toFun input.2).1
+    rw [pair.quotientAction_map map map_surjective
+      kernel_trivial input.1]
+
+/-- Descending and then pulling back recovers the original action pair. -/
+theorem comap_descend
+    (pair : SourceProfinitePseudoMonoidActionPair source)
+    (map : source ⟶ quotient)
+    (map_surjective : Function.Surjective map)
+    (kernel_trivial : pair.KernelActsTrivially map) :
+    (pair.descend map map_surjective kernel_trivial).comap map = pair := by
+  apply ext
+  · rfl
+  · exact heq_of_eq
+      (pair.quotientAction_comp map map_surjective kernel_trivial)
+
+/-- Any action pulled back from a quotient is trivial on the quotient kernel. -/
+theorem comap_kernelActsTrivially
+    (pair : SourceProfinitePseudoMonoidActionPair quotient)
+    (map : source ⟶ quotient) :
+    (pair.comap map).KernelActsTrivially map := by
+  intro groupElement membership
+  change pair.action (map groupElement) = 1
+  change map groupElement = 1 at membership
+  calc
+    pair.action (map groupElement) = pair.action 1 :=
+      congrArg pair.action membership
+    _ = 1 := pair.action.map_one
+
+end SourceProfinitePseudoMonoidActionPair
 
 end Iut

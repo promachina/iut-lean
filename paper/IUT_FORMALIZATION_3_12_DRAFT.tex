@@ -1229,6 +1229,17 @@ embedded in a topological abelian group, and multiplication is defined only
 when the ambient product remains in the carrier.  The restricted operation is
 proved continuous and associative wherever both composites are defined;
 diagram morphisms preserve its domain, and diagram isomorphisms reflect it.
+For the nonarchimedean mechanism of IUT~I, Definition~5.2(v), Lean now
+constructs the fixed carrier as an actual sub-pseudo-monoid and proves that
+every product defined in the original carrier remains defined after passage
+to invariants.  It also constructs the descended action through a surjective
+profinite quotient from kernel triviality, derives continuity from the
+compact-to-Hausdorff quotient topology, and proves that pullback recovers the
+original action.  This formalizes the invariant and
+$\pi_1^{\kappa\text{-sol}}$ factorization steps only.  The Absolute Anabelian
+Topics II/III algorithms that construct the overgroup, rational fundamental
+group, ind-topological integral monoid, and coric rational-function carriers
+remain source obligations.
 Horizontal and vertical Kummer isomorphisms preserve both arrows; their
 site/common compatibility is equality of complete diagram transports.  Each
 naturality square is an isomorphism in an arrow category, so equivariance under

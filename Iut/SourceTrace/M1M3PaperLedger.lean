@@ -653,8 +653,16 @@ def m1m3PaperLedger : List PaperClause :=
       "The source object has a packaged global Frobenioid, a prime-to-place equivalence, an actual mono-analytic F-prime-strip, local characteristic and realified topological monoids, rho isomorphisms, and componentwise compatibility with the Example 3.5 model. Its isomorphism category and capsules, derivation of local realifications from divisor monoids, and the construction algorithm remain open.",
     clause "I.5.2(v)" .iutI "IUT I, Definition 5.2(v)"
       ["SourceTopologicalPseudoMonoid",
-        "SourceTopologicalGroupPseudoMonoidActionPair"] .unformalized
-      "The exact Section 0 pseudo-monoid and continuous action-pair targets are available, but the group-theoretic reconstruction of the ambient profinite group, rational fundamental group, ind-topological monoid, and kappa/infinity-kappa/infinity-kappa-times coric pseudo-monoids is absent.",
+        "SourceTopologicalGroupPseudoMonoidActionPair",
+        "SourceTopologicalGroupPseudoMonoidActionPair.fixedPseudoMonoid",
+        "SourceTopologicalGroupPseudoMonoidActionPair.fixedPseudoMonoid.mul_mem_iff",
+        "SourceProfinitePseudoMonoidActionPair",
+        "SourceProfinitePseudoMonoidActionPair.quotientAction_comp",
+        "SourceProfinitePseudoMonoidActionPair.descend",
+        "SourceProfinitePseudoMonoidActionPair.comap_descend",
+        "SourceProfinitePseudoMonoidActionPair.comap_kernelActsTrivially"]
+      .partialImplementation
+      "The exact Section 0 pseudo-monoid and continuous action-pair targets are available. The invariant sub-pseudo-monoid is constructed and proved to inherit every originally defined product. A continuous profinite action descends through a surjective quotient from kernel triviality; continuity is derived from the compact-to-Hausdorff quotient topology, and descent/pullback are proved inverse. Thus the fixed-point and kappa-sol action-factorization mechanisms are formalized. The cited Absolute Anabelian Topics II/III algorithms constructing the ambient profinite overgroup, rational fundamental group, ind-topological integral monoid, and the infinity-kappa/infinity-kappa-times rational-function carriers remain absent.",
     clause "I.5.2(vi)" .iutI "IUT I, Definition 5.2(vi)"
       ["SourceTopologicalPseudoMonoid.IsCyclotomic"] .unformalized
       "The exact cyclotomic pseudo-monoid predicate is available, but the nonarchimedean infinity-kappa coric structures, cyclotomic comparison, uniqueness, critical-point restriction criterion, and field reconstruction algorithms are absent.",
@@ -1969,9 +1977,9 @@ theorem m1m3PaperLedger_ids_nodup :
     (m1m3PaperLedger.map PaperClause.id).Nodup := by
   decide
 
-/-- Eighty-eight clauses currently have a genuine but incomplete implementation. -/
+/-- Eighty-nine clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 88 :=
+    (clauseIdsWithStatus .partialImplementation).length = 89 :=
   rfl
 
 /-- Four clauses currently point only to explicitly classified toy models. -/
@@ -1979,9 +1987,9 @@ theorem toyModel_count :
     (clauseIdsWithStatus .toyModel).length = 4 :=
   rfl
 
-/-- Sixteen source-closure clauses remain wholly unformalized. -/
+/-- Fifteen source-closure clauses remain wholly unformalized. -/
 theorem unformalized_count :
-    (clauseIdsWithStatus .unformalized).length = 16 :=
+    (clauseIdsWithStatus .unformalized).length = 15 :=
   rfl
 
 /-- Six clauses currently pass the clause-level source audit. -/

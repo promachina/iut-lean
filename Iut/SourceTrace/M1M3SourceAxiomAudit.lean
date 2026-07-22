@@ -35,6 +35,12 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceTopologicalPseudoMonoid.Iso.maps_domain_iff
 #print axioms Iut.SourceTopologicalGroupPseudoMonoidActionPair.action_maps_domain_iff
 #print axioms Iut.SourceTopologicalGroupPseudoMonoidActionPair.action_partialMul
+#print axioms Iut.SourceTopologicalGroupPseudoMonoidActionPair.fixedPseudoMonoid.mul_mem_iff
+#print axioms Iut.SourceTopologicalGroupPseudoMonoidActionPair.fixedPseudoMonoid.inclusion_isEmbedding
+#print axioms Iut.SourceProfinitePseudoMonoidActionPair.quotientAction_comp
+#print axioms Iut.SourceProfinitePseudoMonoidActionPair.descend
+#print axioms Iut.SourceProfinitePseudoMonoidActionPair.comap_descend
+#print axioms Iut.SourceProfinitePseudoMonoidActionPair.comap_kernelActsTrivially
 #print axioms Iut.SourceTopologicalGroupPseudoMonoidActionPair.Iso.trans_hom
 #print axioms Iut.SourceKappaLocalizationDiagram.inclusion_injective
 #print axioms Iut.PuncturedEllipticCurveScalarExtension.curve_eq_baseChange
