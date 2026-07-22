@@ -195,6 +195,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.localizationFunctor_map_isIso_of_preStep",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.preFrobenioid",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.isGroupLikeType",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.groupifiedDivisorClass",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.comparisonEquivalence"]
       .partialImplementation
       "For the Theorem 5.2 model, the filtered Hom colimit, Proposition 1.11(vii) composition square, source roof formula, faithful canonical functor, pre-step inversion, and zero-monoid group-like pre-Frobenioid structure are proved. The connected totally epimorphic Frobenioid presentation, divisor functor square, rational-function exact sequence, and complete Proposition 4.4(iv) dictionary remain open.",
@@ -318,10 +319,13 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.localizationFunctor_map_isIso_of_preStep",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.preFrobenioid",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.isGroupLikeType",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalFunctionEquiv",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.linearBaseIdentityEndomorphism_isIso",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalFunctionEndomorphism_groupifiedDivisorClass",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.isModelTypeForColimitBirationalization",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.comparisonEquivalence"]
       .partialImplementation
-      "The model category is a Frobenioid presentation and its zero-divisor base-Frobenius pair proves pre-model type. Its canonical Hom-colimit target is a group-like, Frobenius-normalized pre-Frobenioid; source roof composition, faithful inclusion, pre-step inversion, comparison equivalence, and canonical model type are proved. The colimit Frobenioid axioms, natural O-times isomorphism on D, and full DivB compatibility remain open.",
+      "The model category is a Frobenioid presentation and its zero-divisor base-Frobenius pair proves pre-model type. Its canonical Hom-colimit target is a group-like, Frobenius-normalized pre-Frobenioid; source roof composition, faithful inclusion, pre-step inversion, canonical model type, objectwise rational-function equivalence, invertibility, and groupified DivB compatibility are proved. The colimit Frobenioid axioms and naturality of the O-times isomorphism over D remain open.",
     clause "FrdII.5.1" .frobenioidsII
       "Frobenioids II, Definition 5.1"
       [] .unformalized

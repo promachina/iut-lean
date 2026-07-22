@@ -140,6 +140,11 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.comparisonEquivalence
 #print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.isFrobeniusNormalizedType
 #print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.isGroupLikeType
+#print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalFunctionEquiv
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.linearBaseIdentityEndomorphism_isIso
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalFunctionEndomorphism_groupifiedDivisorClass
 #print axioms
   Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.isModelTypeForColimitBirationalization
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.ofModel

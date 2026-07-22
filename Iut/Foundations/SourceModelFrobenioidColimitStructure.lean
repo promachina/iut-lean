@@ -83,6 +83,132 @@ def linearBaseIdentityEndomorphismMap
     exact (comparisonFunctor (Phi := Phi) (data := data)).map_comp
       first.hom second.hom
 
+/-- The comparison is bijective on linear base-identity endomorphisms. -/
+theorem linearBaseIdentityEndomorphismMap_bijective
+    (object : ColimitBirationalObject (Phi := Phi) (data := data)) :
+    Function.Bijective
+      (linearBaseIdentityEndomorphismMap (Phi := Phi) (data := data)
+        object) := by
+  constructor
+  · intro first second equality
+    apply PreFrobenioid.LinearBaseIdentityEndomorphism.ext
+    apply (comparisonFunctor (Phi := Phi) (data := data)).map_injective
+    exact congrArg PreFrobenioid.LinearBaseIdentityEndomorphism.hom equality
+  · intro target
+    let comparison := comparisonFunctor (Phi := Phi) (data := data)
+    let fullyFaithful :=
+      comparisonFunctor_fullyFaithful (Phi := Phi) (data := data)
+    let sourceHom := fullyFaithful.preimage target.hom
+    have mappedSource : comparison.map sourceHom = target.hom :=
+      fullyFaithful.map_preimage target.hom
+    let source :
+        (preFrobenioid (Phi := Phi) (data := data)).LinearBaseIdentityEndomorphism
+          object :=
+      { hom := sourceHom
+        linear := by
+          change (comparison.map sourceHom).frobeniusDegree = 1
+          rw [mappedSource]
+          exact target.linear
+        baseIdentity := by
+          change (comparison.map sourceHom).base = 𝟙 _
+          rw [mappedSource]
+          exact target.baseIdentity }
+    refine ⟨source, ?_⟩
+    apply PreFrobenioid.LinearBaseIdentityEndomorphism.ext
+    exact mappedSource
+
+/-- Comparison equivalence on the endomorphism monoids `O^bullet`. -/
+def linearBaseIdentityEndomorphismEquiv
+    (object : ColimitBirationalObject (Phi := Phi) (data := data)) :
+    (preFrobenioid (Phi := Phi) (data := data)).LinearBaseIdentityEndomorphism
+        object ≃*
+      (BirationalObject.preFrobenioid (Phi := Phi) (data := data)).LinearBaseIdentityEndomorphism
+        ((comparisonFunctor (Phi := Phi) (data := data)).obj object) :=
+  MulEquiv.ofBijective
+    (linearBaseIdentityEndomorphismMap (Phi := Phi) (data := data) object)
+    (linearBaseIdentityEndomorphismMap_bijective
+      (Phi := Phi) (data := data) object)
+
+/-- Theorem 5.2(ii)'s objectwise rational-function equivalence on the colimit. -/
+def rationalFunctionEquiv
+    (object : ColimitBirationalObject (Phi := Phi) (data := data)) :
+    (preFrobenioid (Phi := Phi) (data := data)).LinearBaseIdentityEndomorphism
+        object ≃*
+      Multiplicative
+        (data.rationalFunctions.obj (Object.base object.underlying)) :=
+  (linearBaseIdentityEndomorphismEquiv (Phi := Phi) (data := data) object).trans
+    (BirationalObject.rationalFunctionEquiv
+      ((comparisonFunctor (Phi := Phi) (data := data)).obj object))
+
+/-- The colimit endomorphism corresponding to a rational function. -/
+def rationalFunctionEndomorphism
+    (object : ColimitBirationalObject (Phi := Phi) (data := data))
+    (value : Multiplicative
+      (data.rationalFunctions.obj (Object.base object.underlying))) :
+    (preFrobenioid (Phi := Phi) (data := data)).LinearBaseIdentityEndomorphism
+      object :=
+  (rationalFunctionEquiv (Phi := Phi) (data := data) object).symm value
+
+/-- In the group-like target every linear base-identity endomorphism is a unit. -/
+theorem linearBaseIdentityEndomorphism_isIso
+    (object : ColimitBirationalObject (Phi := Phi) (data := data))
+    (endomorphism :
+      (preFrobenioid (Phi := Phi) (data := data)).LinearBaseIdentityEndomorphism
+        object) :
+    IsIso endomorphism.hom := by
+  let comparison := comparisonFunctor (Phi := Phi) (data := data)
+  have linear : (comparison.map endomorphism.hom).frobeniusDegree = 1 :=
+    endomorphism.linear
+  have baseIdentity : (comparison.map endomorphism.hom).base = 𝟙 _ :=
+    endomorphism.baseIdentity
+  have baseIsIso : IsIso (comparison.map endomorphism.hom).base := by
+    rw [baseIdentity]
+    infer_instance
+  haveI : IsIso (comparison.map endomorphism.hom) :=
+    (BirationalObject.isoOfLinearBaseIso
+      (comparison.map endomorphism.hom) linear baseIsIso).isIso_hom
+  exact isIso_of_reflects_iso endomorphism.hom comparison
+
+/-- Proposition 4.4(i)'s groupified divisor on a colimit arrow. -/
+def groupifiedDivisorClass
+    {source target : ColimitBirationalObject (Phi := Phi) (data := data)}
+    (arrow : source ⟶ target) :
+    Algebra.GrothendieckAddGroup
+      (Phi.obj (Object.base source.underlying)).carrier :=
+  ((comparisonFunctor (Phi := Phi) (data := data)).map arrow).divisorClass
+
+/-- Under the colimit rational-function equivalence, the divisor is `DivB`. -/
+theorem rationalFunctionEndomorphism_groupifiedDivisorClass
+    (object : ColimitBirationalObject (Phi := Phi) (data := data))
+    (value : Multiplicative
+      (data.rationalFunctions.obj (Object.base object.underlying))) :
+    groupifiedDivisorClass
+        (rationalFunctionEndomorphism (Phi := Phi) (data := data)
+          object value).hom =
+      data.divisor (Object.base object.underlying) value.toAdd := by
+  let comparison := comparisonFunctor (Phi := Phi) (data := data)
+  let concreteObject := comparison.obj object
+  let sourceEquiv :=
+    linearBaseIdentityEndomorphismEquiv (Phi := Phi) (data := data) object
+  let targetEquiv := BirationalObject.rationalFunctionEquiv concreteObject
+  let sourceEndomorphism :=
+    rationalFunctionEndomorphism (Phi := Phi) (data := data) object value
+  have mappedEndomorphism : sourceEquiv sourceEndomorphism =
+      BirationalObject.rationalFunctionEndomorphism concreteObject value := by
+    apply targetEquiv.injective
+    change rationalFunctionEquiv (Phi := Phi) (data := data) object
+        sourceEndomorphism = value
+    exact Equiv.apply_symm_apply _ _
+  have mappedHom := congrArg (fun endomorphism ↦ endomorphism.hom)
+    mappedEndomorphism
+  change comparison.map sourceEndomorphism.hom =
+      (BirationalObject.rationalFunctionEndomorphism concreteObject value).hom
+    at mappedHom
+  dsimp [groupifiedDivisorClass]
+  rw [mappedHom]
+  exact BirationalObject.rationalFunctionEndomorphism_divisorClass
+    concreteObject value
+
 /-- Frobenius normalization transfers from the concrete equivalent target. -/
 theorem isFrobeniusNormalized
     (object : ColimitBirationalObject (Phi := Phi) (data := data)) :
