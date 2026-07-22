@@ -31,6 +31,22 @@ variable {Phi : DivisorialMonoidOn D IsFSM} {data : Input Phi}
 
 namespace BirationalObject
 
+/-- Two concrete pullback-comparison targets agree on their two data fields. -/
+theorem pullbackComparisonTarget_ext
+    {source target test : BirationalObject (Phi := Phi) (data := data)}
+    {arrow : source ⟶ target}
+    {left right :
+      (preFrobenioid (Phi := Phi) (data := data)).PullbackComparisonTarget
+        arrow test}
+    (toCodomain : left.toCodomain = right.toCodomain)
+    (toBaseDomain : left.toBaseDomain = right.toBaseDomain) :
+    left = right := by
+  cases left
+  cases right
+  cases toCodomain
+  cases toBaseDomain
+  rfl
+
 /-- Every arrow in the zero-divisor target is an isometry. -/
 theorem isIsometric
     {source target : BirationalObject (Phi := Phi) (data := data)}
@@ -38,6 +54,107 @@ theorem isIsometric
     (preFrobenioid (Phi := Phi) (data := data)).IsIsometric arrow := by
   change (default : PUnit) = 0
   rfl
+
+/-- A linear concrete target arrow realizes the representable pullback square. -/
+theorem isPullback_of_isLinear
+    {source target : BirationalObject (Phi := Phi) (data := data)}
+    (arrow : source ⟶ target)
+    (linear : (preFrobenioid (Phi := Phi) (data := data)).IsLinear arrow) :
+    (preFrobenioid (Phi := Phi) (data := data)).IsPullback arrow := by
+  change arrow.frobeniusDegree = 1 at linear
+  intro test
+  constructor
+  · intro left right equality
+    have compositeEquality : left ≫ arrow = right ≫ arrow :=
+      congrArg PreFrobenioid.PullbackComparisonTarget.toCodomain equality
+    have baseEquality : left.base = right.base :=
+      congrArg PreFrobenioid.PullbackComparisonTarget.toBaseDomain equality
+    apply BirationalHom.ext
+    · have projected := congrArg BirationalHom.frobeniusDegree compositeEquality
+      change left.frobeniusDegree * arrow.frobeniusDegree =
+        right.frobeniusDegree * arrow.frobeniusDegree at projected
+      rw [linear] at projected
+      simpa using projected
+    · exact baseEquality
+    · have projected := congrArg BirationalHom.rationalFunction compositeEquality
+      change data.rationalFunctions.pullback left.base arrow.rationalFunction +
+          arrow.frobeniusDegree.val • left.rationalFunction =
+        data.rationalFunctions.pullback right.base arrow.rationalFunction +
+          arrow.frobeniusDegree.val • right.rationalFunction at projected
+      rw [linear, baseEquality] at projected
+      simp only [PNat.val_ofNat, one_nsmul] at projected
+      exact add_left_cancel projected
+  · intro comparison
+    let lift : test ⟶ source :=
+      { frobeniusDegree := comparison.toCodomain.frobeniusDegree
+        base := comparison.toBaseDomain
+        rationalFunction := comparison.toCodomain.rationalFunction -
+          data.rationalFunctions.pullback
+            (show Object.base test.underlying ⟶
+              Object.base source.underlying from comparison.toBaseDomain)
+            arrow.rationalFunction }
+    refine ⟨lift, ?_⟩
+    cases comparison with
+    | mk toCodomain toBaseDomain commutes =>
+      dsimp only [PreFrobenioid.pullbackComparison]
+      congr 1
+      apply BirationalHom.ext
+      · change toCodomain.frobeniusDegree * arrow.frobeniusDegree =
+          toCodomain.frobeniusDegree
+        rw [linear]
+        simp
+      · exact commutes.symm
+      · change data.rationalFunctions.pullback
+              (show Object.base test.underlying ⟶
+                Object.base source.underlying from toBaseDomain)
+              arrow.rationalFunction +
+            arrow.frobeniusDegree.val •
+              (toCodomain.rationalFunction -
+                data.rationalFunctions.pullback
+                  (show Object.base test.underlying ⟶
+                    Object.base source.underlying from toBaseDomain)
+                  arrow.rationalFunction) =
+          toCodomain.rationalFunction
+        rw [linear]
+        simp only [PNat.val_ofNat, one_nsmul]
+        abel
+
+/-- The representable pullback property forces concrete Frobenius degree one. -/
+theorem isLinear_of_isPullback
+    {source target : BirationalObject (Phi := Phi) (data := data)}
+    (arrow : source ⟶ target)
+    (pullback : (preFrobenioid (Phi := Phi) (data := data)).IsPullback arrow) :
+    (preFrobenioid (Phi := Phi) (data := data)).IsLinear arrow := by
+  let degreeOneArrow : source ⟶ target :=
+    { frobeniusDegree := 1
+      base := arrow.base
+      rationalFunction := 0 }
+  let comparison :
+      (preFrobenioid (Phi := Phi) (data := data)).PullbackComparisonTarget
+        arrow source :=
+    { toCodomain := degreeOneArrow
+      toBaseDomain := 𝟙 _
+      commutes := by
+        change arrow.base = 𝟙 _ ≫ arrow.base
+        simp }
+  obtain ⟨lift, equality⟩ := (pullback source).2 comparison
+  have compositeEquality :=
+    congrArg PreFrobenioid.PullbackComparisonTarget.toCodomain equality
+  have projected := congrArg BirationalHom.frobeniusDegree compositeEquality
+  change lift.frobeniusDegree * arrow.frobeniusDegree = 1 at projected
+  change arrow.frobeniusDegree = 1
+  apply PNat.eq
+  have projectedVal := congrArg PNat.val projected
+  change lift.frobeniusDegree.val * arrow.frobeniusDegree.val = 1 at projectedVal
+  exact Nat.eq_one_of_mul_eq_one_left projectedVal
+
+/-- Proposition 4.4(iv): concrete pullback arrows are exactly linear arrows. -/
+theorem isPullback_iff_isLinear
+    {source target : BirationalObject (Phi := Phi) (data := data)}
+    (arrow : source ⟶ target) :
+    (preFrobenioid (Phi := Phi) (data := data)).IsPullback arrow ↔
+      (preFrobenioid (Phi := Phi) (data := data)).IsLinear arrow :=
+  ⟨isLinear_of_isPullback arrow, isPullback_of_isLinear arrow⟩
 
 /-- A pre-step in the concrete target is an isomorphism. -/
 theorem isIso_of_isPreStep
@@ -103,6 +220,22 @@ end BirationalObject
 
 namespace Carrier.ColimitBirationalObject
 
+/-- Two colimit pullback-comparison targets agree on their two data fields. -/
+theorem pullbackComparisonTarget_ext
+    {source target test : ColimitBirationalObject (Phi := Phi) (data := data)}
+    {arrow : source ⟶ target}
+    {left right :
+      (preFrobenioid (Phi := Phi) (data := data)).PullbackComparisonTarget
+        arrow test}
+    (toCodomain : left.toCodomain = right.toCodomain)
+    (toBaseDomain : left.toBaseDomain = right.toBaseDomain) :
+    left = right := by
+  cases left
+  cases right
+  cases toCodomain
+  cases toBaseDomain
+  rfl
+
 /-- Every arrow in the Hom-colimit target is an isometry. -/
 theorem isIsometric
     {source target : ColimitBirationalObject (Phi := Phi) (data := data)}
@@ -110,6 +243,120 @@ theorem isIsometric
     (preFrobenioid (Phi := Phi) (data := data)).IsIsometric arrow := by
   change (default : PUnit) = 0
   rfl
+
+/-- Fully faithful comparison transports concrete pullback bijectivity. -/
+theorem isPullback_of_isLinear
+    {source target : ColimitBirationalObject (Phi := Phi) (data := data)}
+    (arrow : source ⟶ target)
+    (linear : (preFrobenioid (Phi := Phi) (data := data)).IsLinear arrow) :
+    (preFrobenioid (Phi := Phi) (data := data)).IsPullback arrow := by
+  let comparison := comparisonFunctor (Phi := Phi) (data := data)
+  let fullyFaithful :=
+    comparisonFunctor_fullyFaithful (Phi := Phi) (data := data)
+  have concreteLinear :
+      (BirationalObject.preFrobenioid (Phi := Phi) (data := data)).IsLinear
+        (comparison.map arrow) := linear
+  have concretePullback := BirationalObject.isPullback_of_isLinear
+    (comparison.map arrow) concreteLinear
+  intro test
+  constructor
+  · intro left right equality
+    apply comparison.map_injective
+    apply (concretePullback (comparison.obj test)).1
+    apply BirationalObject.pullbackComparisonTarget_ext
+    · have compositeEquality : left ≫ arrow = right ≫ arrow :=
+        congrArg PreFrobenioid.PullbackComparisonTarget.toCodomain equality
+      dsimp only [PreFrobenioid.pullbackComparison]
+      rw [← comparison.map_comp, ← comparison.map_comp]
+      exact congrArg (fun value ↦ comparison.map value) compositeEquality
+    · dsimp only [PreFrobenioid.pullbackComparison]
+      exact congrArg
+        PreFrobenioid.PullbackComparisonTarget.toBaseDomain equality
+  · intro value
+    let concreteValue :
+        (BirationalObject.preFrobenioid (Phi := Phi) (data := data)).PullbackComparisonTarget
+          (comparison.map arrow) (comparison.obj test) :=
+      { toCodomain := comparison.map value.toCodomain
+        toBaseDomain := value.toBaseDomain
+        commutes := by
+          change (comparison.map value.toCodomain).base =
+            value.toBaseDomain ≫ (comparison.map arrow).base
+          exact value.commutes }
+    obtain ⟨concreteLift, concreteEquality⟩ :=
+      (concretePullback (comparison.obj test)).2 concreteValue
+    let lift : test ⟶ source := fullyFaithful.preimage concreteLift
+    have mappedLift : comparison.map lift = concreteLift :=
+      fullyFaithful.map_preimage concreteLift
+    refine ⟨lift, ?_⟩
+    apply pullbackComparisonTarget_ext
+    · apply comparison.map_injective
+      dsimp only [PreFrobenioid.pullbackComparison]
+      rw [comparison.map_comp, mappedLift]
+      exact congrArg PreFrobenioid.PullbackComparisonTarget.toCodomain
+        concreteEquality
+    · dsimp only [PreFrobenioid.pullbackComparison]
+      change (comparison.map lift).base = value.toBaseDomain
+      rw [mappedLift]
+      exact congrArg PreFrobenioid.PullbackComparisonTarget.toBaseDomain
+        concreteEquality
+
+/-- Pullback surjectivity forces degree one in the Hom-colimit target. -/
+theorem isLinear_of_isPullback
+    {source target : ColimitBirationalObject (Phi := Phi) (data := data)}
+    (arrow : source ⟶ target)
+    (pullback : (preFrobenioid (Phi := Phi) (data := data)).IsPullback arrow) :
+    (preFrobenioid (Phi := Phi) (data := data)).IsLinear arrow := by
+  let comparisonFunctor := comparisonFunctor (Phi := Phi) (data := data)
+  let fullyFaithful :=
+    comparisonFunctor_fullyFaithful (Phi := Phi) (data := data)
+  let concreteDegreeOne :
+      comparisonFunctor.obj source ⟶ comparisonFunctor.obj target :=
+    { frobeniusDegree := 1
+      base := (comparisonFunctor.map arrow).base
+      rationalFunction := 0 }
+  let degreeOneArrow : source ⟶ target :=
+    fullyFaithful.preimage concreteDegreeOne
+  have mappedDegreeOne :
+      comparisonFunctor.map degreeOneArrow = concreteDegreeOne :=
+    fullyFaithful.map_preimage concreteDegreeOne
+  have degreeOneBase :
+      (preFrobenioid (Phi := Phi) (data := data)).base.map degreeOneArrow =
+        (preFrobenioid (Phi := Phi) (data := data)).base.map arrow := by
+    change (comparisonFunctor.map degreeOneArrow).base =
+      (comparisonFunctor.map arrow).base
+    rw [mappedDegreeOne]
+  let value :
+      (preFrobenioid (Phi := Phi) (data := data)).PullbackComparisonTarget
+        arrow source :=
+    { toCodomain := degreeOneArrow
+      toBaseDomain := 𝟙 _
+      commutes := by
+        rw [degreeOneBase]
+        simp }
+  obtain ⟨lift, equality⟩ := (pullback source).2 value
+  have compositeEquality : lift ≫ arrow = degreeOneArrow :=
+    congrArg PreFrobenioid.PullbackComparisonTarget.toCodomain equality
+  have mappedComposite :
+      comparisonFunctor.map lift ≫ comparisonFunctor.map arrow =
+        concreteDegreeOne := by
+    rw [← comparisonFunctor.map_comp, compositeEquality, mappedDegreeOne]
+  have projected := congrArg BirationalHom.frobeniusDegree mappedComposite
+  change (comparisonFunctor.map lift).frobeniusDegree *
+      (comparisonFunctor.map arrow).frobeniusDegree = 1 at projected
+  change (comparisonFunctor.map arrow).frobeniusDegree = 1
+  apply PNat.eq
+  have projectedVal := congrArg PNat.val projected
+  change (comparisonFunctor.map lift).frobeniusDegree.val *
+      (comparisonFunctor.map arrow).frobeniusDegree.val = 1 at projectedVal
+  exact Nat.eq_one_of_mul_eq_one_left projectedVal
+
+/-- Proposition 4.4(iv): colimit pullback arrows are exactly linear arrows. -/
+theorem isPullback_iff_isLinear
+    {source target : ColimitBirationalObject (Phi := Phi) (data := data)}
+    (arrow : source ⟶ target) :
+    (preFrobenioid (Phi := Phi) (data := data)).IsPullback arrow ↔
+      (preFrobenioid (Phi := Phi) (data := data)).IsLinear arrow :=
+  ⟨isLinear_of_isPullback arrow, isPullback_of_isLinear arrow⟩
 
 /-- The comparison preserves and reflects the pre-step predicate definitionally. -/
 theorem isPreStep_iff_comparisonMap
@@ -230,6 +477,24 @@ theorem localization_map_frobeniusDegree_eq_iff
       arrow.frobeniusDegree = degree
   rw [degreeEquality]
   rfl
+
+/-- Proposition 4.4(iv)'s exact source characterization of pullback arrows. -/
+theorem localization_map_isPullback_iff
+    {source target : Carrier Phi data} (arrow : source ⟶ target) :
+    (preFrobenioid (Phi := Phi) (data := data)).IsPullback
+        ((localizationFunctor (Phi := Phi) (data := data)).map arrow) ↔
+      (Carrier.preFrobenioid Phi data).IsCoAngular arrow ∧
+        (Carrier.preFrobenioid Phi data).IsLinear arrow := by
+  rw [isPullback_iff_isLinear]
+  change
+    (preFrobenioid (Phi := Phi) (data := data)).frobeniusDegree
+        ((localizationFunctor (Phi := Phi) (data := data)).map arrow) = 1 ↔
+      (Carrier.preFrobenioid Phi data).IsCoAngular arrow ∧
+        (Carrier.preFrobenioid Phi data).IsLinear arrow
+  rw [localization_map_frobeniusDegree_eq_iff arrow 1]
+  constructor
+  · exact fun linear ↦ ⟨Carrier.isCoAngular Phi data arrow, linear⟩
+  · exact fun hypothesis ↦ hypothesis.2
 
 /-- The source Frobenius-type clause becomes co-angular base-isomorphism. -/
 theorem localization_map_isOfFrobeniusType_iff

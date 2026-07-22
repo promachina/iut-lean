@@ -199,8 +199,11 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.groupifiedDivisorClass",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.comparisonEquivalence",
         "SourceModelFrobenioid.BirationalObject.isIso_iff_isPreStep",
+        "SourceModelFrobenioid.BirationalObject.isPullback_iff_isLinear",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.isIso_iff_isPreStep",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.isPullback_iff_isLinear",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_isIso_iff_coAngularPreStep",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_isPullback_iff",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_isPreStep_iff_isPreStep",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_isCoAngular_iff_isCoAngular",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_isBaseIso_iff_isBaseIso",
@@ -208,7 +211,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_isOfFrobeniusType_iff",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_isIsometric"]
       .partialImplementation
-      "For the Theorem 5.2 model, the filtered Hom colimit, Proposition 1.11(vii) composition square, source roof formula, faithful canonical functor, pre-step inversion, and zero-monoid group-like pre-Frobenioid structure are proved. The target is connected and totally epimorphic. Proposition 4.4(iv)'s co-angular, isomorphism, Frobenius-type, fixed-degree, isometry, pre-step, and base-isomorphism clauses are proved. Its pullback clause, base-identity roof classification, isotropic-object clause, seven Frobenioid axiom groups, divisor functor square, and rational-function exact sequence remain open.",
+      "For the Theorem 5.2 model, the filtered Hom colimit, Proposition 1.11(vii) composition square, source roof formula, faithful canonical functor, pre-step inversion, and zero-monoid group-like pre-Frobenioid structure are proved. The target is connected and totally epimorphic. Proposition 4.4(iv)'s co-angular, isomorphism, Frobenius-type, pullback, fixed-degree, isometry, pre-step, and base-isomorphism clauses are proved. Its base-identity roof classification, isotropic-object clause, seven Frobenioid axiom groups, divisor functor square, and rational-function exact sequence remain open.",
     clause "FrdI.4.5(i)" .frobenioidsI
       "Frobenioids I, Definition 4.5(i)"
       ["PreFrobenioid.IsBirationallyFrobeniusNormalized",

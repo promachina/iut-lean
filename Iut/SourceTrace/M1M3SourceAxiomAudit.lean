@@ -154,10 +154,15 @@ visible to Lean's axiom reporter.
 #print axioms
   Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.isModelTypeForColimitBirationalization
 #print axioms Iut.SourceModelFrobenioid.BirationalObject.isIso_iff_isPreStep
+#print axioms Iut.SourceModelFrobenioid.BirationalObject.isPullback_iff_isLinear
 #print axioms
   Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.isIso_iff_isPreStep
 #print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.isPullback_iff_isLinear
+#print axioms
   Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_isIso_iff_coAngularPreStep
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_isPullback_iff
 #print axioms
   Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_isPreStep_iff_isPreStep
 #print axioms
