@@ -366,7 +366,7 @@ end Iut.SourceInfiniteLocalFieldStages
 #print axioms Iut.SourceMonoAnalyticLogShell.fieldPresentation
 #print axioms Iut.SourceMonoAnalyticIntegralStructure.isClosed_logShellCarrier
 #print axioms Iut.SourceMonoAnalyticIntegralStructure.logShellCarrier_eq_lattice
-#print axioms Iut.SourceMonoAnalyticIntegralStructure.logShellCarrier_eq_piBall
+#print axioms Iut.SourceMonoAnalyticIntegralStructure.logShellCarrier_eq_unitBall
 #print axioms Iut.sourcePStar_pos
 #print axioms Iut.sourcePStar_ne_zero
 #print axioms Iut.SourceRationalPlace.residuePrime_prime
@@ -393,7 +393,9 @@ end Iut.SourceInfiniteLocalFieldStages
 #print axioms Iut.SourceArchimedeanLogShellDefinition.image_quotientFundamentalSegment
 #print axioms Iut.SourceArchimedeanLogShellDefinition.exponential_isCoveringMap
 #print axioms Iut.SourceArchimedeanLogShellDefinition.exponential_eq_one_iff
-#print axioms Iut.SourceArchimedeanLogShellDefinition.image_piBall_eq_rotationOrbit
+#print axioms Iut.SourceArchimedeanLogShellDefinition.exponential_principalLog
+#print axioms Iut.SourceArchimedeanLogShellDefinition.principalLog_mem_unitBall
+#print axioms Iut.SourceArchimedeanLogShellDefinition.image_unitBall_eq_rotationOrbit
 #print axioms Iut.SourceMonoAnalyticLogShellAlgorithm.sourceDefinition_residuePrime
 #print axioms Iut.SourceMonoAnalyticLogShellAlgorithm.transport_preLogShell
 #print axioms Iut.SourceMonoAnalyticLogShellAlgorithm.sourceLocalUnitsEquiv_id
@@ -620,7 +622,7 @@ end Iut.SourcePacketFiniteStageLogVolume
 
 #print axioms Iut.SourcePacketFiniteStageVolume.normalizedLogVolume_value_eq_zero
 #print axioms Iut.SourcePacketIntegralConstruction.logShellRegion_eq_packetLattice
-#print axioms Iut.SourcePacketIntegralConstruction.logShellRegion_eq_piBall
+#print axioms Iut.SourcePacketIntegralConstruction.logShellRegion_eq_unitBall
 
 -- Legacy block-indexed volume lemmas remain visible but are not source endpoints.
 #print axioms Iut.SourcePacketLogVolumeDecomposition.algebraicDecomposition
@@ -649,9 +651,17 @@ end Iut.SourcePacketFiniteStageLogVolume
 #print axioms Iut.SourceNonarchimedeanPacketUnitLogData.pureLogTensorOfUnitTuple_mem
 #print axioms Iut.SourceNonarchimedeanPacketLogLinkStep.graph_le_packetUnitLogSubgroup_prod
 #print axioms Iut.SourceNonarchimedeanPacketLogLinkStep.related_of_unitTuplesRelated
+#print axioms Iut.SourceArchimedeanPacketUnitData.factorMetric_factorValue
+#print axioms Iut.SourceArchimedeanPacketUnitData.pureBallTensor_mem_unitBall
+#print axioms Iut.SourceArchimedeanPacketUnitData.principalLogTensor_mem_unitBall
 #print axioms Iut.sourceForwardIndex_sub_eq
 #print axioms Iut.SourceTheorem311Ind3System.nonarch_logKummer_contained
 #print axioms Iut.SourceTheorem311Ind3System.nonarch_logKummer_contained_of_mem_range
+#print axioms Iut.SourceTheorem311Ind3System.archLogBallPreimage_subset_logShellRegion
+#print axioms Iut.SourceTheorem311Ind3System.archLogBall_relationally_surjective
+#print axioms Iut.SourceTheorem311Ind3System.arch_direct_ball_contained
+#print axioms Iut.SourceTheorem311Ind3System.arch_direct_units_contained
+#print axioms Iut.SourceTheorem311Ind3System.arch_direct_localBalls_contained
 #print axioms Iut.SourceAbsoluteLGPGaussianLogThetaLattice.verticalFactorUnitLogSubgroup_image
 #print axioms Iut.SourceAbsoluteLGPGaussianLogThetaLattice.verticalPureUnitLogTensors_image
 #print axioms Iut.SourceAbsoluteLGPGaussianLogThetaLattice.verticalPacketUnitLogSubgroup_image
@@ -684,10 +694,9 @@ end Iut.SourcePacketFiniteStageLogVolume
 #print axioms Iut.IUTIIAbsoluteThetaLabel.tensorIndex_nonzero_pos
 #print axioms Iut.IUTIIAbsoluteThetaLabel.tensorIndex_lt_l
 #print axioms Iut.SourceArchimedeanIntegralStructure.isClosed_unitBall
-#print axioms Iut.SourceArchimedeanIntegralStructure.isClosed_piBall
 #print axioms Iut.SourceTheorem311Ind3System.logVolume_eq_common
 #print axioms Iut.SourceTheorem311Ind3System.logVolume_eq_logVolume
-#print axioms Iut.SourceTheorem311Ind3System.logShellRegion_eq_piBall
+#print axioms Iut.SourceTheorem311Ind3System.logShellRegion_eq_unitBall
 #print axioms Iut.SourceTheorem311VerticalLogLink.rootsOfUnity_logarithm_eq_zero
 #print axioms Iut.SourceTheorem311VerticalLogLink.logarithm_eq_of_differsByRootOfUnity
 #print axioms Iut.SourceTheorem311VerticalLogLinkFamily.adjacent_logarithm_eq_on_overlap

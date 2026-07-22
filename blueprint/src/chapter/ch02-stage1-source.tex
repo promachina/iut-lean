@@ -569,7 +569,11 @@
   \lean{Iut.SourceTheorem311Ind2SummandAction.packetAction_on_tensor}
   \lean{Iut.SourceTensorPacketKummerIso}
   \lean{Iut.SourcePacketIntegralConstruction.logShellRegion}
-  \lean{Iut.SourcePacketIntegralConstruction.logShellRegion_eq_piBall}
+  \lean{Iut.SourcePacketIntegralConstruction.logShellRegion_eq_unitBall}
+  \lean{Iut.SourceArchimedeanLogShellDefinition.exponential_principalLog}
+  \lean{Iut.SourceArchimedeanLogShellDefinition.principalLog_mem_unitBall}
+  \lean{Iut.SourceArchimedeanPacketUnitData.principalLogTensor_mem_unitBall}
+  \lean{Iut.SourceArchimedeanPacketLogLinkStep}
   \lean{Iut.SourceGaloisLocalUnitData}
   \lean{Iut.SourceNonarchimedeanLogShellDefinition.invariantLocalUnits_fixed}
   \lean{Iut.SourceNonarchimedeanPacketUnitLogData.packetUnitLogSubgroup}
@@ -592,7 +596,14 @@
   \lean{Iut.SourceTheorem311Ind3System.nonarchLogIterateRange}
   \lean{Iut.SourceTheorem311Ind3System.nonarch_logKummer_contained}
   \lean{Iut.SourceTheorem311Ind3System.nonarch_logKummer_contained_of_mem_range}
-  \lean{Iut.SourceTheorem311Ind3System.logShellRegion_eq_piBall}
+  \lean{Iut.SourceTheorem311Ind3System.logShellRegion_eq_unitBall}
+  \lean{Iut.SourceTheorem311Ind3System.archLogIterateRelation}
+  \lean{Iut.SourceTheorem311Ind3System.archLogIterateDomain}
+  \lean{Iut.SourceTheorem311Ind3System.archLogIterateRange}
+  \lean{Iut.SourceTheorem311Ind3System.archLogBallPreimage_subset_logShellRegion}
+  \lean{Iut.SourceTheorem311Ind3System.archLogBall_relationally_surjective}
+  \lean{Iut.SourceTheorem311Ind3System.arch_direct_units_contained}
+  \lean{Iut.SourceTheorem311Ind3System.arch_direct_localBalls_contained}
   \lean{Iut.SourceLGPSplittingMonoidAction}
   \lean{Iut.SourceTheorem311BadPrimeUpperSemiCompatibility.logarithm_eq_of_relatedAcrossLog}
   \lean{Iut.SourceTheorem311LabeledData}
@@ -644,12 +655,23 @@
   (m-r) ends at (m), and derives containment of the endpoint's Kummer image
   from its unit-log subgroup membership.  Thus neither a direct multi-step map
   nor a final iterated-containment proof is accepted by the concrete Ind3
-  constructor.  At archimedean places Ind3 contains
-  direct unit and radius-\(\pi\) images, while a subset of each radius-\(\pi\)
-  ball surjects onto the relevant iterated-log domain.  This source ball is
-  derived from the same packet integral construction and is proved equal to
-  the radius-\(\pi\) ball of its actual Hermitian tensor metric; the Ind3
-  interface accepts neither an arbitrary set nor an unrelated metric witness.
+  constructor.  At an archimedean summand the Hermitian seminorm is normalized
+  by \(\pi\), so its unit ball is exactly Definition~1.1(ii)'s raw complex
+  radius-\(\pi\) disk; there is no second radius-\(\pi\) ball of the normalized
+  metric.  Lean uses \(\arg(z)i\) to construct a principal logarithm in this
+  ball for every genuine \(S^1\)-unit and proves that exponentiating recovers
+  the unit.  Choosing one place per tensor factor, the direct-sum and tensor
+  metric equations put the resulting pure unit tensor, and every selected
+  local radius-\(\pi\) tensor, in the packet unit ball.  An infinite-place
+  log-link step is only a partial correspondence on these circle-unit tuples.
+  Recursive composition derives every positive iterate, its domain and range,
+  the participating endpoint-ball subset, and relational surjectivity onto the
+  source domain.  Direct Kummer containment follows from the full vertical
+  unit-ball image.  Thus the concrete Ind3 constructor accepts no arbitrary
+  archimedean subgroup, multi-step domain, preimage set, iterate map,
+  surjectivity proof, or direct containment.  This construction is the
+  pointwise circle-unit core; the surrounding Aut-holomorphic semi-germ
+  neighborhood projective systems of Remark~1.1.1(ii) are not yet constructed.
   Equality to the common
   measure-derived log-volume implies independence of \(m\).  A multiplicative log-link into
   a rational module provably kills roots of unity, so root-equivalent inputs
@@ -667,8 +689,9 @@
   direct unit-log containment are constructed from the typed lattice data.
   Constructing that lattice data, its summand unit/log inputs, splitting
   monoids, fields, and Frobenioids from the preceding source theorems remains
-  open, as do the iterated log correspondences, archimedean containment proofs,
-  and four horizontal compatibility constructors.
+  open, as do construction of the archimedean semi-germ systems, the adjacent
+  finite and infinite unit correspondences, and the four horizontal
+  compatibility constructors.
 \end{definition}
 
 \begin{definition}[Indeterminacy generator interface]

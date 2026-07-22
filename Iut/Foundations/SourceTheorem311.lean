@@ -2956,10 +2956,6 @@ variable {M : SourceTopologicalQModule.{u}}
 def unitBall (integral : SourceArchimedeanIntegralStructure M) : Set M :=
   integral.seminorm.closedBall 0 1
 
-/-- The closed radius-`pi` ball used in Proposition 3.5(ii)(b). -/
-def piBall (integral : SourceArchimedeanIntegralStructure M) : Set M :=
-  integral.seminorm.closedBall 0 Real.pi
-
 theorem zero_mem_unitBall
     (integral : SourceArchimedeanIntegralStructure M) :
     (0 : M) ∈ integral.unitBall := by
@@ -2969,17 +2965,6 @@ theorem isClosed_unitBall
     (integral : SourceArchimedeanIntegralStructure M) :
     IsClosed integral.unitBall := by
   rw [unitBall, Seminorm.closedBall_zero_eq]
-  exact isClosed_Iic.preimage integral.continuous_seminorm
-
-theorem zero_mem_piBall
-    (integral : SourceArchimedeanIntegralStructure M) :
-    (0 : M) ∈ integral.piBall := by
-  simp [piBall, Real.pi_pos.le]
-
-theorem isClosed_piBall
-    (integral : SourceArchimedeanIntegralStructure M) :
-    IsClosed integral.piBall := by
-  rw [piBall, Seminorm.closedBall_zero_eq]
   exact isClosed_Iic.preimage integral.continuous_seminorm
 
 /-- Restrict an archimedean integral metric to a rational submodule. -/
@@ -3395,14 +3380,16 @@ def asArchimedean
 
 /--
 The actual mono-analytic log-shell region carried by a packet construction.
-At a finite place this is the closed tensor lattice; at an infinite place it is
-the radius-`pi` ball of the packet Hermitian metric, as in Proposition 3.5(ii).
+At a finite place this is the closed tensor lattice.  At an infinite place it
+is the unit ball of the normalized Hermitian tensor metric of Proposition
+3.2(ii); on every local complex summand that unit ball is the raw radius-`pi`
+disk of Definition 1.1(ii) and Remark 1.2.2(ii).
 -/
 noncomputable def logShellRegion
     (construction : SourcePacketIntegralConstruction packet) :
     Set packet.carrier := by
   if hkind : packet.rationalPlace.kind = .archimedean then
-    exact (construction.asArchimedean hkind).packetMetric.piBall
+    exact (construction.asArchimedean hkind).packetMetric.unitBall
   else
     have hnonarch : packet.rationalPlace.kind = .nonarchimedean := by
       cases hplace : packet.rationalPlace.kind with
@@ -3421,12 +3408,12 @@ theorem logShellRegion_eq_packetLattice
         Set packet.carrier) := by
   simp [logShellRegion, hkind]
 
-/-- At an infinite place, the packet log-shell is its actual radius-`pi` ball. -/
-theorem logShellRegion_eq_piBall
+/-- At an infinite place, the packet log-shell is its normalized unit ball. -/
+theorem logShellRegion_eq_unitBall
     (construction : SourcePacketIntegralConstruction packet)
     (hkind : packet.rationalPlace.kind = .archimedean) :
     construction.logShellRegion =
-      (construction.asArchimedean hkind).packetMetric.piBall := by
+      (construction.asArchimedean hkind).packetMetric.unitBall := by
   simp [logShellRegion, hkind]
 
 /-- The full packet region is derived by the rational-place case split. -/
@@ -3528,14 +3515,15 @@ def carrier
 
 /--
 The actual mono-analytic log-shell of IUT III, Proposition 1.2(vi)-(vii).
-At a finite place this is the additive lattice; at an infinite place it is the
-radius-`pi` ball of Remark 1.2.2(ii), not the radius-one packet integral ball.
+At a finite place this is the additive lattice.  At an infinite place it is
+the unit ball for the normalized Hermitian metric of Proposition 3.2(ii), hence
+the raw complex radius-`pi` disk of Remark 1.2.2(ii).
 -/
 def logShellCarrier
     (integral : SourceMonoAnalyticIntegralStructure kind M) : Set M :=
   match kind, integral with
   | .nonarchimedean, integral => (integral.lattice : Set M)
-  | .archimedean, integral => integral.piBall
+  | .archimedean, integral => integral.unitBall
 
 theorem zero_mem
     (integral : SourceMonoAnalyticIntegralStructure kind M) :
@@ -3557,7 +3545,7 @@ theorem isClosed_logShellCarrier
     IsClosed integral.logShellCarrier := by
   cases kind with
   | nonarchimedean => exact integral.isClosed_lattice
-  | archimedean => exact integral.isClosed_piBall
+  | archimedean => exact integral.isClosed_unitBall
 
 /-- Extract the finite-place lattice after identifying the place kind. -/
 def asNonarchimedean
@@ -3599,11 +3587,11 @@ theorem logShellCarrier_eq_lattice
   subst kind
   rfl
 
-theorem logShellCarrier_eq_piBall
+theorem logShellCarrier_eq_unitBall
     (integral : SourceMonoAnalyticIntegralStructure kind M)
     (hkind : kind = .archimedean) :
     integral.logShellCarrier =
-      (integral.asArchimedean hkind).piBall := by
+      (integral.asArchimedean hkind).unitBall := by
   subst kind
   rfl
 
@@ -4090,8 +4078,8 @@ structure SourceArchimedeanLogShellDefinition
     (M : SourceTopologicalQModule.{u})
     (integral : SourceArchimedeanIntegralStructure M) where
   complexEquiv : M ≃L[ℚ] ℂ
-  seminorm_eq_complexNorm :
-    ∀ value, integral.seminorm value = ‖complexEquiv value‖
+  seminorm_eq_complexNorm_div_pi :
+    ∀ value, integral.seminorm value = ‖complexEquiv value‖ / Real.pi
 
 namespace SourceArchimedeanLogShellDefinition
 
@@ -4139,28 +4127,87 @@ theorem exponential_eq_one_iff
     refine ⟨integer, ?_⟩
     simp [periodGenerator]
 
-/-- The abstract log-shell maps to the source's rotation-orbit construction. -/
-theorem image_piBall_eq_rotationOrbit
+/-- A circle unit regarded as a nonzero complex value. -/
+def circleUnitPoint (unit : Circle) : {value : ℂ // value ≠ 0} :=
+  ⟨unit, unit.coe_ne_zero⟩
+
+/--
+The source-prescribed principal logarithm of a circle unit, with argument in
+`(-pi, pi]`.
+-/
+noncomputable def principalLog
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (definition : SourceArchimedeanLogShellDefinition M integral)
+    (unit : Circle) : M :=
+  definition.complexEquiv.symm (((unit : ℂ).arg : ℂ) * Complex.I)
+
+@[simp]
+theorem complexEquiv_principalLog
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (definition : SourceArchimedeanLogShellDefinition M integral)
+    (unit : Circle) :
+    definition.complexEquiv (definition.principalLog unit) =
+      ((unit : ℂ).arg : ℂ) * Complex.I :=
+  definition.complexEquiv.apply_symm_apply _
+
+/-- The principal logarithm exponentiates to the original circle unit. -/
+theorem exponential_principalLog
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (definition : SourceArchimedeanLogShellDefinition M integral)
+    (unit : Circle) :
+    definition.exponential (definition.principalLog unit) =
+      circleUnitPoint unit := by
+  apply Subtype.ext
+  simp only [exponential, principalLog, circleUnitPoint,
+    definition.complexEquiv.apply_symm_apply]
+  simpa only [Circle.coe_exp] using congrArg Subtype.val (Circle.exp_arg unit)
+
+/-- Every circle unit has its principal logarithm in the normalized unit ball. -/
+theorem principalLog_mem_unitBall
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (definition : SourceArchimedeanLogShellDefinition M integral)
+    (unit : Circle) :
+    definition.principalLog unit ∈ integral.unitBall := by
+  rw [SourceArchimedeanIntegralStructure.unitBall,
+    Seminorm.closedBall_zero_eq]
+  change integral.seminorm (definition.principalLog unit) ≤ 1
+  rw [definition.seminorm_eq_complexNorm_div_pi,
+    definition.complexEquiv_principalLog]
+  apply (div_le_one Real.pi_pos).mpr
+  simpa only [Complex.norm_mul, Complex.norm_real, Real.norm_eq_abs,
+    Complex.norm_I, mul_one] using Complex.abs_arg_le_pi (unit : ℂ)
+
+/--
+The normalized Hermitian unit ball maps to the source's raw radius-`pi`
+rotation-orbit construction.
+-/
+theorem image_unitBall_eq_rotationOrbit
     {M : SourceTopologicalQModule.{u}}
     {integral : SourceArchimedeanIntegralStructure M}
     (definition : SourceArchimedeanLogShellDefinition M integral) :
-    definition.complexEquiv '' integral.piBall = rotationOrbit := by
+    definition.complexEquiv '' integral.unitBall = rotationOrbit := by
   rw [rotationOrbit_eq_closedBall]
   ext value
   constructor
   · rintro ⟨source, hsource, rfl⟩
-    rw [Metric.mem_closedBall, dist_zero_right,
-      ← definition.seminorm_eq_complexNorm]
-    rw [SourceArchimedeanIntegralStructure.piBall,
+    rw [Metric.mem_closedBall, dist_zero_right]
+    rw [SourceArchimedeanIntegralStructure.unitBall,
       Seminorm.closedBall_zero_eq] at hsource
-    exact hsource
+    change integral.seminorm source ≤ 1 at hsource
+    rw [definition.seminorm_eq_complexNorm_div_pi] at hsource
+    exact (div_le_one Real.pi_pos).mp hsource
   · intro hvalue
     let source := definition.complexEquiv.symm value
     refine ⟨source, ?_, definition.complexEquiv.apply_symm_apply value⟩
-    rw [SourceArchimedeanIntegralStructure.piBall,
+    rw [SourceArchimedeanIntegralStructure.unitBall,
       Seminorm.closedBall_zero_eq]
-    change integral.seminorm source ≤ Real.pi
-    rw [definition.seminorm_eq_complexNorm]
+    change integral.seminorm source ≤ 1
+    rw [definition.seminorm_eq_complexNorm_div_pi]
+    apply (div_le_one Real.pi_pos).mpr
     simpa only [source, definition.complexEquiv.apply_symm_apply,
       Metric.mem_closedBall, dist_zero_right] using hvalue
 
@@ -4207,6 +4254,190 @@ def asArchimedean
   | archimedean _ definition => exact definition
 
 end SourceMonoAnalyticLogShellDefinition
+
+/--
+The actual archimedean unit and local radius-`pi` data in every summand of a
+tensor packet.  The source definitions identify circle units through their
+pointed exponential coverings; the packet construction supplies the normalized
+Hermitian direct-sum and tensor metrics of Proposition 3.2(ii).
+-/
+structure SourceArchimedeanPacketUnitData
+    {j : ℕ} (packet : SourceMonoAnalyticTensorPacket.{u} j)
+    (construction : SourceArchimedeanPacketIntegralConstruction packet) where
+  summandDefinition :
+    ∀ (factor : Fin (j + 1)) (place : packet.place),
+      SourceArchimedeanLogShellDefinition
+        ((packet.factor factor).summand place)
+        (construction.summandMetric factor place)
+
+namespace SourceArchimedeanPacketUnitData
+
+variable {j : ℕ} {packet : SourceMonoAnalyticTensorPacket.{u} j}
+variable {construction : SourceArchimedeanPacketIntegralConstruction packet}
+
+/-- One selected local radius-`pi` value in every tensor factor. -/
+structure BallTuple
+    (data : SourceArchimedeanPacketUnitData packet construction) where
+  place : ∀ _factor : Fin (j + 1), packet.place
+  value :
+    ∀ factor : Fin (j + 1),
+      (packet.factor factor).summand (place factor)
+  value_mem :
+    ∀ factor,
+      value factor ∈
+        (construction.summandMetric factor (place factor)).unitBall
+
+/-- One actual circle unit, at one selected place, in every tensor factor. -/
+structure UnitTuple
+    (_data : SourceArchimedeanPacketUnitData packet construction) where
+  place : ∀ _factor : Fin (j + 1), packet.place
+  unit : ∀ _factor : Fin (j + 1), Circle
+
+/-- Embed one selected local value into its place-indexed direct-sum factor. -/
+noncomputable def factorValue
+    (data : SourceArchimedeanPacketUnitData packet construction)
+    (tuple : data.BallTuple)
+    (factor : Fin (j + 1)) :
+    (packet.factor factor).carrier :=
+  (packet.factor factor).directSumIso.inv
+    (DirectSum.of
+      (fun place => (packet.factor factor).summand place)
+      (tuple.place factor) (tuple.value factor))
+
+/-- Form the genuine dependent pure tensor of selected local values. -/
+noncomputable def pureBallTensor
+    (data : SourceArchimedeanPacketUnitData packet construction)
+    (tuple : data.BallTuple) : packet.carrier :=
+  packet.tensorIso.inv
+    (PiTensorProduct.tprod ℚ (fun factor => data.factorValue tuple factor))
+
+@[simp]
+theorem factorValue_coordinate_same
+    (data : SourceArchimedeanPacketUnitData packet construction)
+    (tuple : data.BallTuple)
+    (factor : Fin (j + 1)) :
+    (packet.factor factor).directSumIso.hom
+        (data.factorValue tuple factor) (tuple.place factor) =
+      tuple.value factor := by
+  unfold factorValue
+  rw [(packet.factor factor).directSumIso.inv_hom_id_apply]
+  exact DirectSum.of_eq_same _ _
+
+theorem factorValue_coordinate_ne
+    (data : SourceArchimedeanPacketUnitData packet construction)
+    (tuple : data.BallTuple)
+    (factor : Fin (j + 1)) (place : packet.place)
+    (hne : place ≠ tuple.place factor) :
+    (packet.factor factor).directSumIso.hom
+        (data.factorValue tuple factor) place = 0 := by
+  unfold factorValue
+  rw [(packet.factor factor).directSumIso.inv_hom_id_apply]
+  exact DirectSum.of_eq_of_ne _ _ _ hne
+
+/-- A one-summand direct-sum vector retains exactly its local seminorm. -/
+theorem factorMetric_factorValue
+    (data : SourceArchimedeanPacketUnitData packet construction)
+    (tuple : data.BallTuple)
+    (factor : Fin (j + 1)) :
+    (construction.factorMetric factor).seminorm
+        (data.factorValue tuple factor) =
+      (construction.summandMetric factor (tuple.place factor)).seminorm
+        (tuple.value factor) := by
+  have hsquare := construction.factorMetric_sq factor
+    (data.factorValue tuple factor)
+  have hsum :
+      (∑ place,
+          (construction.summandMetric factor place).seminorm
+              ((packet.factor factor).directSumIso.hom
+                (data.factorValue tuple factor) place) ^ 2) =
+        (construction.summandMetric factor (tuple.place factor)).seminorm
+            (tuple.value factor) ^ 2 := by
+    calc
+      _ =
+          (construction.summandMetric factor (tuple.place factor)).seminorm
+              ((packet.factor factor).directSumIso.hom
+                (data.factorValue tuple factor) (tuple.place factor)) ^ 2 := by
+        refine Finset.sum_eq_single (s := Finset.univ)
+          (tuple.place factor) ?_ ?_
+        · intro place _ hne
+          rw [data.factorValue_coordinate_ne tuple factor place hne]
+          calc
+            (construction.summandMetric factor place).seminorm 0 ^ 2 =
+                (0 : ℝ) ^ 2 :=
+              congrArg (fun value : ℝ => value ^ 2) (map_zero _)
+            _ = 0 := by norm_num
+        · simp
+      _ = _ := by rw [data.factorValue_coordinate_same tuple factor]
+  rw [hsum] at hsquare
+  nlinarith [
+    apply_nonneg (construction.factorMetric factor).seminorm
+      (data.factorValue tuple factor),
+    apply_nonneg
+      (construction.summandMetric factor (tuple.place factor)).seminorm
+      (tuple.value factor)]
+
+/-- Every selected local radius-`pi` value gives a factor unit-ball value. -/
+theorem factorValue_mem_unitBall
+    (data : SourceArchimedeanPacketUnitData packet construction)
+    (tuple : data.BallTuple)
+    (factor : Fin (j + 1)) :
+    data.factorValue tuple factor ∈
+      (construction.factorMetric factor).unitBall := by
+  rw [SourceArchimedeanIntegralStructure.unitBall,
+    Seminorm.closedBall_zero_eq]
+  change
+    (construction.factorMetric factor).seminorm
+        (data.factorValue tuple factor) ≤ 1
+  rw [data.factorMetric_factorValue tuple factor]
+  simpa only [SourceArchimedeanIntegralStructure.unitBall,
+    Seminorm.closedBall_zero_eq] using tuple.value_mem factor
+
+/--
+The tensor product of selected local radius-`pi` values lies in the packet's
+normalized Hermitian unit ball.
+-/
+theorem pureBallTensor_mem_unitBall
+    (data : SourceArchimedeanPacketUnitData packet construction)
+    (tuple : data.BallTuple) :
+    data.pureBallTensor tuple ∈ construction.packetMetric.unitBall := by
+  rw [SourceArchimedeanIntegralStructure.unitBall,
+    Seminorm.closedBall_zero_eq]
+  change construction.packetMetric.seminorm (data.pureBallTensor tuple) ≤ 1
+  rw [pureBallTensor, construction.packetMetric_tprod]
+  apply Finset.prod_le_one
+  · intro factor _
+    exact apply_nonneg (construction.factorMetric factor).seminorm _
+  · intro factor _
+    simpa only [SourceArchimedeanIntegralStructure.unitBall,
+      Seminorm.closedBall_zero_eq] using
+        data.factorValue_mem_unitBall tuple factor
+
+/-- Choose the source principal logarithm of each actual circle unit. -/
+noncomputable def UnitTuple.toBallTuple
+    (data : SourceArchimedeanPacketUnitData packet construction)
+    (units : data.UnitTuple) : data.BallTuple where
+  place := units.place
+  value factor :=
+    (data.summandDefinition factor (units.place factor)).principalLog
+      (units.unit factor)
+  value_mem factor :=
+    (data.summandDefinition factor
+      (units.place factor)).principalLog_mem_unitBall (units.unit factor)
+
+/-- The pure tensor of source principal logarithms of actual circle units. -/
+noncomputable def principalLogTensor
+    (data : SourceArchimedeanPacketUnitData packet construction)
+    (units : data.UnitTuple) : packet.carrier :=
+  data.pureBallTensor (units.toBallTuple data)
+
+/-- Every explicit circle-unit tensor has its principal lift in the packet ball. -/
+theorem principalLogTensor_mem_unitBall
+    (data : SourceArchimedeanPacketUnitData packet construction)
+    (units : data.UnitTuple) :
+    data.principalLogTensor units ∈ construction.packetMetric.unitBall :=
+  data.pureBallTensor_mem_unitBall (units.toBallTuple data)
+
+end SourceArchimedeanPacketUnitData
 
 /--
 The actual invariant local-unit logarithms in every summand of a finite-place
@@ -4515,6 +4746,52 @@ theorem related_of_unitTuplesRelated
   exact ⟨sourceUnits, targetUnits, related, rfl⟩
 
 end SourceNonarchimedeanPacketLogLinkStep
+
+/--
+One archimedean log-link as a partial correspondence between genuine circle
+units.  Its place equivalence records the selected summand in each tensor
+factor; no total map, iterate, or ball preimage is supplied.
+-/
+structure SourceArchimedeanPacketLogLinkStep
+    {j : ℕ}
+    {source target : SourceMonoAnalyticTensorPacket.{u} j}
+    {sourceConstruction :
+      SourceArchimedeanPacketIntegralConstruction source}
+    {targetConstruction :
+      SourceArchimedeanPacketIntegralConstruction target}
+    (_sourceData :
+      SourceArchimedeanPacketUnitData source sourceConstruction)
+    (_targetData :
+      SourceArchimedeanPacketUnitData target targetConstruction) where
+  placeEquiv : source.place ≃ target.place
+  related :
+    ∀ (factor : Fin (j + 1)) (place : source.place),
+      Circle -> Circle -> Prop
+
+namespace SourceArchimedeanPacketLogLinkStep
+
+variable {j : ℕ}
+variable {source target : SourceMonoAnalyticTensorPacket.{u} j}
+variable {sourceConstruction :
+  SourceArchimedeanPacketIntegralConstruction source}
+variable {targetConstruction :
+  SourceArchimedeanPacketIntegralConstruction target}
+variable {sourceData :
+  SourceArchimedeanPacketUnitData source sourceConstruction}
+variable {targetData :
+  SourceArchimedeanPacketUnitData target targetConstruction}
+
+/-- The componentwise tensor-product relation on selected circle-unit tuples. -/
+def UnitTuplesRelated
+    (step : SourceArchimedeanPacketLogLinkStep sourceData targetData)
+    (sourceUnits : sourceData.UnitTuple)
+    (targetUnits : targetData.UnitTuple) : Prop :=
+  ∀ factor,
+    targetUnits.place factor = step.placeEquiv (sourceUnits.place factor) ∧
+      step.related factor (sourceUnits.place factor)
+        (sourceUnits.unit factor) (targetUnits.unit factor)
+
+end SourceArchimedeanPacketLogLinkStep
 
 /-- An open subgroup of a topological group. -/
 def SourceOpenSubgroup (G : Type u) [Group G] [TopologicalSpace G] :=
@@ -12082,11 +12359,7 @@ variable
     {theta : SourceInitialThetaCore Fmod F K}
     {models : IUTIThetaHodgeTheaterModels theta}
 
-/--
-Functorial transport preserves the source log-shell.  At finite places this is
-the integral lattice; at infinite places it follows from preservation of the
-seminorm and the source-prescribed radius `pi`.
--/
+/-- Functorial transport preserves the source log-shell. -/
 theorem transport_logShell
     (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
     {source target : SourceDMonoAnalyticPrimeStrip models}
@@ -12094,44 +12367,9 @@ theorem transport_logShell
     algorithm.transport map place ''
       (algorithm.shell source place).integral.logShellCarrier =
       (algorithm.shell target place).integral.logShellCarrier := by
-  by_cases hnonarch :
-      place.1.toRational.kind = .nonarchimedean
-  · rw [(algorithm.shell source place).integral.logShellCarrier_eq_lattice
-        hnonarch,
-      (algorithm.shell target place).integral.logShellCarrier_eq_lattice
-        hnonarch]
-    simpa only [SourceMonoAnalyticIntegralStructure.asNonarchimedean_lattice] using
+  simpa only [SourceMonoAnalyticIntegralStructure.logShellCarrier,
+    SourceMonoAnalyticIntegralStructure.carrier] using
       algorithm.transport_integral map place
-  · have harch : place.1.toRational.kind = .archimedean := by
-      cases hkind : place.1.toRational.kind with
-      | nonarchimedean => contradiction
-      | archimedean => rfl
-    rw [(algorithm.shell source place).integral.logShellCarrier_eq_piBall harch,
-      (algorithm.shell target place).integral.logShellCarrier_eq_piBall harch]
-    ext targetValue
-    constructor
-    · rintro ⟨sourceValue, hsourceValue, rfl⟩
-      rw [SourceArchimedeanIntegralStructure.piBall,
-        Seminorm.closedBall_zero_eq] at hsourceValue ⊢
-      change
-        ((algorithm.shell target place).integral.asArchimedean harch).seminorm
-            (algorithm.transport map place sourceValue) ≤ Real.pi
-      rw [algorithm.transport_archimedean_seminorm
-        map place harch sourceValue]
-      exact hsourceValue
-    · intro htargetValue
-      let sourceValue := (algorithm.transport map place).symm targetValue
-      refine ⟨sourceValue, ?_, ?_⟩
-      · rw [SourceArchimedeanIntegralStructure.piBall,
-          Seminorm.closedBall_zero_eq] at htargetValue ⊢
-        change
-          ((algorithm.shell source place).integral.asArchimedean harch).seminorm
-              sourceValue ≤ Real.pi
-        rw [← algorithm.transport_archimedean_seminorm
-          map place harch sourceValue]
-        simpa only [sourceValue,
-          (algorithm.transport map place).apply_symm_apply] using htargetValue
-      · exact (algorithm.transport map place).apply_symm_apply targetValue
 
 /-- The rational residue prime in every finite shell is the prime below the place. -/
 theorem sourceDefinition_residuePrime
@@ -14601,6 +14839,38 @@ structure PacketIntegralConstruction
         SourceSelectedPlace.moduliRationalLocalDegree place.1
 
 /--
+The common coric packet's genuine circle units and pointed archimedean
+logarithms, tied to the same summand metrics as its integral construction.
+-/
+noncomputable def archimedeanUnitData
+    [SourceSelectedPlaceFiberFiniteness theta]
+    (lattice : SourceAbsoluteLGPGaussianLogThetaLattice models)
+    (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
+    (n : ℤ) (rationalPlace : SourceRationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} theta.l)
+    (topology :
+      SourceMonoAnalyticLogShellAlgorithm.TensorTopology
+        (fun index =>
+          algorithm.factor
+            ((lattice.capsuleAtLabel n label).object
+              (lattice.packetIndexEquiv n label index))
+            rationalPlace))
+    (integral : PacketIntegralConstruction lattice algorithm n
+      rationalPlace label topology)
+    (hkind : rationalPlace.kind = .archimedean) :
+    SourceArchimedeanPacketUnitData
+      (lattice.localPacket algorithm n rationalPlace label topology)
+      (integral.construction.asArchimedean hkind) where
+  summandDefinition factor place := by
+    rw [integral.archimedean_summandMetric hkind]
+    let strip :=
+      (lattice.capsuleAtLabel n label).object
+        (lattice.packetIndexEquiv n label factor)
+    exact
+      (algorithm.sourceDefinitionAbove strip rationalPlace place
+        ).asArchimedean hkind
+
+/--
 All local analytic data for one fixed vertical circle of the absolute LGP
 lattice.  Packets, integral regions, and measures are tied to one construction.
 -/
@@ -15958,9 +16228,11 @@ packets indexed by `m` are the non-coric `n,m` realizations.  `directKummer`
 maps every realization to the common container.  At nonarchimedean places,
 forward iterates of the log-link start in their actual domain at `m-r` and land
 at `m`; their Kummer images are contained in the common integral module.  At
-archimedean places, a subset of the radius-`pi` ball at `m` surjects onto the
-domain of the backwards log correspondence at `m-r`.  These are intentionally
-one-sided statements, not equalities or adjacent-packet linear maps.
+archimedean places, the actual circle units have principal logarithms in the
+normalized packet ball.  Adjacent unit correspondences recursively determine
+every positive iterate and the subset of the endpoint ball that relationally
+surjects onto its source domain.  These are intentionally one-sided statements,
+not equalities or adjacent-packet linear maps.
 -/
 structure SourceTheorem311Ind3System (l : PrimeGeFive) where
   common : SourceTheorem311CoricContainer.{u} l
@@ -15984,15 +16256,26 @@ structure SourceTheorem311Ind3System (l : PrimeGeFive) where
   nonarchUnitLogInvariants :
     ∀ m vQ label (_hkind : common.placeKind vQ = .nonarchimedean),
       AddSubgroup (packet m vQ label).carrier
-  archUnitInvariants :
-    ∀ m vQ label (_hkind : common.placeKind vQ = .archimedean),
-      AddSubgroup (packet m vQ label).carrier
+  archUnitData :
+    ∀ m vQ label (hkind : common.placeKind vQ = .archimedean),
+      SourceArchimedeanPacketUnitData
+        (packet m vQ label)
+        ((integralConstruction m vQ label).asArchimedean <| by
+          simpa [SourceTheorem311CoricContainer.placeKind,
+            packet_rationalPlace m vQ label] using hkind)
   nonarchLogLinkStep :
     ∀ (m : ℤ) (vQ : common.rationalPlace)
       (label : IUTIIAbsoluteThetaLabel.{u} l)
       (hkind : common.placeKind vQ = .nonarchimedean),
       nonarchUnitLogInvariants m vQ label hkind ->
       nonarchUnitLogInvariants (m + 1) vQ label hkind -> Prop
+  archLogLinkStep :
+    ∀ (m : ℤ) (vQ : common.rationalPlace)
+      (label : IUTIIAbsoluteThetaLabel.{u} l)
+      (hkind : common.placeKind vQ = .archimedean),
+      SourceArchimedeanPacketLogLinkStep
+        (archUnitData m vQ label hkind)
+        (archUnitData (m + 1) vQ label hkind)
   nonarch_direct_contained :
     ∀ m vQ label
       (hkind : common.placeKind vQ = .nonarchimedean),
@@ -16000,47 +16283,6 @@ structure SourceTheorem311Ind3System (l : PrimeGeFive) where
           (directKummer m vQ label).packetKummer
           (nonarchUnitLogInvariants m vQ label hkind : Set _)
           (common.integral vQ label).carrier
-  arch_direct_units_contained :
-    ∀ m vQ label
-      (hkind : common.placeKind vQ = .archimedean),
-        Set.MapsTo
-          (directKummer m vQ label).packetKummer
-          (archUnitInvariants m vQ label hkind : Set _)
-          (common.integral vQ label).carrier
-  arch_direct_piBall_contained :
-    ∀ m vQ label,
-      common.placeKind vQ = .archimedean ->
-        Set.MapsTo
-          (directKummer m vQ label).packetKummer
-          (integralConstruction m vQ label).logShellRegion
-          (common.integral vQ label).carrier
-  archLogDomain :
-    ∀ (m : ℤ) (steps : ℕ+) (vQ : common.rationalPlace)
-      (label : IUTIIAbsoluteThetaLabel.{u} l),
-      Set (packet (m - (steps.1 : ℤ)) vQ label).carrier
-  archLogDomain_mem_units :
-    ∀ m steps vQ label
-      (hkind : common.placeKind vQ = .archimedean) x,
-      x ∈ archLogDomain m steps vQ label ->
-        x ∈ archUnitInvariants
-          (m - (steps.1 : ℤ)) vQ label hkind
-  archLogPreimage :
-    ∀ (m : ℤ) (_steps : ℕ+) (vQ : common.rationalPlace)
-      (label : IUTIIAbsoluteThetaLabel.{u} l),
-      Set (packet m vQ label).carrier
-  archLogPreimage_mem_piBall :
-    ∀ m steps vQ label,
-      common.placeKind vQ = .archimedean ->
-        archLogPreimage m steps vQ label ⊆
-          (integralConstruction m vQ label).logShellRegion
-  archLogIterate :
-    ∀ m steps vQ label,
-      {x // x ∈ archLogPreimage m steps vQ label} ->
-        {y // y ∈ archLogDomain m steps vQ label}
-  archLogIterate_surjective :
-    ∀ m steps vQ label,
-      common.placeKind vQ = .archimedean ->
-        Function.Surjective (archLogIterate m steps vQ label)
   sourceFiniteStageVolume :
     ∀ m vQ label, SourcePacketFiniteStageVolume (packet m vQ label)
   finiteStageCompatible :
@@ -16057,6 +16299,14 @@ structure SourceTheorem311Ind3System (l : PrimeGeFive) where
 namespace SourceTheorem311Ind3System
 
 variable {l : PrimeGeFive}
+
+/-- The actual selected circle-unit tuples at one archimedean lattice site. -/
+abbrev ArchUnitTuple
+    (system : SourceTheorem311Ind3System.{u} l)
+    (index : ℤ) (vQ : system.common.rationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} l)
+    (hkind : system.common.placeKind vQ = .archimedean) :=
+  (system.archUnitData index vQ label hkind).UnitTuple
 
 /--
 The positive finite-place iterate obtained by recursive composition of the
@@ -16141,7 +16391,7 @@ theorem nonarch_logKummer_contained_of_mem_range
     sourceValue targetValue related
 
 /-- The Ind3 infinite-place source region is the packet's constructed `pi`-ball. -/
-theorem logShellRegion_eq_piBall
+theorem logShellRegion_eq_unitBall
     (system : SourceTheorem311Ind3System.{u} l)
     (m : ℤ) (vQ : system.common.rationalPlace)
     (label : IUTIIAbsoluteThetaLabel.{u} l)
@@ -16149,8 +16399,197 @@ theorem logShellRegion_eq_piBall
     (system.integralConstruction m vQ label).logShellRegion =
       ((system.integralConstruction m vQ label).asArchimedean <| by
         simpa [SourceTheorem311CoricContainer.placeKind,
-          system.packet_rationalPlace m vQ label] using hkind).packetMetric.piBall :=
-  SourcePacketIntegralConstruction.logShellRegion_eq_piBall _ _
+          system.packet_rationalPlace m vQ label] using hkind).packetMetric.unitBall :=
+  SourcePacketIntegralConstruction.logShellRegion_eq_unitBall _ _
+
+/--
+The positive archimedean iterate obtained by recursive composition of the
+actual adjacent circle-unit correspondences.
+-/
+def archLogIterateRelation
+    (system : SourceTheorem311Ind3System.{u} l)
+    (start : ℤ) (steps : ℕ+)
+    (vQ : system.common.rationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} l)
+    (hkind : system.common.placeKind vQ = .archimedean) :
+    system.ArchUnitTuple start vQ label hkind ->
+    system.ArchUnitTuple
+      (SourceForwardIndex steps.1 start) vQ label hkind -> Prop :=
+  SourceForwardRelation
+    (fun index =>
+      (system.archLogLinkStep index vQ label hkind).UnitTuplesRelated)
+    steps.1 start
+
+/-- The actual unit domain of the recursively composed archimedean log-link. -/
+def archLogIterateDomain
+    (system : SourceTheorem311Ind3System.{u} l)
+    (start : ℤ) (steps : ℕ+)
+    (vQ : system.common.rationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} l)
+    (hkind : system.common.placeKind vQ = .archimedean) :
+    Set (system.ArchUnitTuple start vQ label hkind) :=
+  SourceForwardDomain
+    (fun index =>
+      (system.archLogLinkStep index vQ label hkind).UnitTuplesRelated)
+    steps.1 start
+
+/-- The endpoint range of the same recursively composed unit correspondence. -/
+def archLogIterateRange
+    (system : SourceTheorem311Ind3System.{u} l)
+    (start : ℤ) (steps : ℕ+)
+    (vQ : system.common.rationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} l)
+    (hkind : system.common.placeKind vQ = .archimedean) :
+    Set (system.ArchUnitTuple
+      (SourceForwardIndex steps.1 start) vQ label hkind) :=
+  SourceForwardRange
+    (fun index =>
+      (system.archLogLinkStep index vQ label hkind).UnitTuplesRelated)
+    steps.1 start
+
+/--
+An endpoint-ball value lifts a source unit when it is the principal logarithm
+tensor of an endpoint related to that source by the recursively composed
+log-link.
+-/
+noncomputable def archLogBallLiftRelation
+    (system : SourceTheorem311Ind3System.{u} l)
+    (start : ℤ) (steps : ℕ+)
+    (vQ : system.common.rationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} l)
+    (hkind : system.common.placeKind vQ = .archimedean)
+    (ball :
+      (system.packet (SourceForwardIndex steps.1 start) vQ label).carrier)
+    (sourceUnits : system.ArchUnitTuple start vQ label hkind) : Prop :=
+  ∃ targetUnits : system.ArchUnitTuple
+      (SourceForwardIndex steps.1 start) vQ label hkind,
+    system.archLogIterateRelation start steps vQ label hkind
+      sourceUnits targetUnits ∧
+    ball =
+      (system.archUnitData (SourceForwardIndex steps.1 start) vQ label hkind
+        ).principalLogTensor targetUnits
+
+/-- The derived subset of the endpoint ball participating in the iterate. -/
+noncomputable def archLogBallPreimage
+    (system : SourceTheorem311Ind3System.{u} l)
+    (start : ℤ) (steps : ℕ+)
+    (vQ : system.common.rationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} l)
+    (hkind : system.common.placeKind vQ = .archimedean) :
+    Set ((system.packet
+      (SourceForwardIndex steps.1 start) vQ label).carrier) :=
+  { ball |
+    ∃ sourceUnits : system.ArchUnitTuple start vQ label hkind,
+      system.archLogBallLiftRelation start steps vQ label hkind
+        ball sourceUnits }
+
+/-- Every derived endpoint representative lies in the actual packet log shell. -/
+theorem archLogBallPreimage_subset_logShellRegion
+    (system : SourceTheorem311Ind3System.{u} l)
+    (start : ℤ) (steps : ℕ+)
+    (vQ : system.common.rationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} l)
+    (hkind : system.common.placeKind vQ = .archimedean) :
+    system.archLogBallPreimage start steps vQ label hkind ⊆
+      (system.integralConstruction
+        (SourceForwardIndex steps.1 start) vQ label).logShellRegion := by
+  rintro ball ⟨sourceUnits, targetUnits, _related, rfl⟩
+  rw [system.logShellRegion_eq_unitBall
+    (SourceForwardIndex steps.1 start) vQ label hkind]
+  exact
+    (system.archUnitData (SourceForwardIndex steps.1 start) vQ label hkind
+      ).principalLogTensor_mem_unitBall targetUnits
+
+/--
+Relational surjectivity in Proposition 3.5(ii)(b): every unit in the actual
+iterate domain has a related representative in the derived endpoint-ball
+subset.  No arbitrary preimage set or choice-dependent multi-step map occurs.
+-/
+theorem archLogBall_relationally_surjective
+    (system : SourceTheorem311Ind3System.{u} l)
+    (start : ℤ) (steps : ℕ+)
+    (vQ : system.common.rationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} l)
+    (hkind : system.common.placeKind vQ = .archimedean)
+    (sourceUnits : system.ArchUnitTuple start vQ label hkind)
+    (hsource : sourceUnits ∈
+      system.archLogIterateDomain start steps vQ label hkind) :
+    ∃ ball :
+        (system.packet (SourceForwardIndex steps.1 start) vQ label).carrier,
+      ball ∈ system.archLogBallPreimage start steps vQ label hkind ∧
+      system.archLogBallLiftRelation start steps vQ label hkind
+        ball sourceUnits := by
+  obtain ⟨targetUnits, related⟩ := hsource
+  let ball :=
+    (system.archUnitData (SourceForwardIndex steps.1 start) vQ label hkind
+      ).principalLogTensor targetUnits
+  have hlift :
+      system.archLogBallLiftRelation start steps vQ label hkind
+        ball sourceUnits :=
+    ⟨targetUnits, related, rfl⟩
+  exact ⟨ball, ⟨sourceUnits, hlift⟩, hlift⟩
+
+/--
+The direct Kummer image of the normalized endpoint ball lies in the common
+coric integral packet; this is derived from the full vertical region image.
+-/
+theorem arch_direct_ball_contained
+    (system : SourceTheorem311Ind3System.{u} l)
+    (m : ℤ) (vQ : system.common.rationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} l)
+    (hkind : system.common.placeKind vQ = .archimedean) :
+    Set.MapsTo
+      (system.directKummer m vQ label).packetKummer
+      (system.integralConstruction m vQ label).logShellRegion
+      (system.common.integral vQ label).carrier := by
+  intro value hvalue
+  have hpacketKind :
+      (system.packet m vQ label).rationalPlace.kind = .archimedean := by
+    simpa [SourceTheorem311CoricContainer.placeKind,
+      system.packet_rationalPlace m vQ label] using hkind
+  have hfull :
+      value ∈
+        (system.integralConstruction m vQ label).fullRegion.carrier := by
+    rw [system.logShellRegion_eq_unitBall m vQ label hkind] at hvalue
+    simpa only [SourcePacketIntegralConstruction.fullRegion, hpacketKind,
+      SourceArchimedeanPacketIntegralConstruction.fullRegion,
+      SourceIntegralRegionOn.rekind_carrier] using hvalue
+  have himage :
+      (system.directKummer m vQ label).packetKummer value ∈
+        (system.directKummer m vQ label).packetKummer ''
+          (system.integralConstruction m vQ label).fullRegion.carrier :=
+    ⟨value, hfull, rfl⟩
+  simpa only [system.directKummerIntegral_image m vQ label] using himage
+
+/-- Direct images of genuine circle-unit tensors satisfy Proposition 3.5(ii)(b)(1). -/
+theorem arch_direct_units_contained
+    (system : SourceTheorem311Ind3System.{u} l)
+    (m : ℤ) (vQ : system.common.rationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} l)
+    (hkind : system.common.placeKind vQ = .archimedean)
+    (units : system.ArchUnitTuple m vQ label hkind) :
+    (system.directKummer m vQ label).packetKummer
+        ((system.archUnitData m vQ label hkind).principalLogTensor units) ∈
+      (system.common.integral vQ label).carrier := by
+  apply system.arch_direct_ball_contained m vQ label hkind
+  rw [system.logShellRegion_eq_unitBall m vQ label hkind]
+  exact (system.archUnitData m vQ label hkind
+    ).principalLogTensor_mem_unitBall units
+
+/-- Direct images of all selected local radius-`pi` tensors satisfy clause (b)(2). -/
+theorem arch_direct_localBalls_contained
+    (system : SourceTheorem311Ind3System.{u} l)
+    (m : ℤ) (vQ : system.common.rationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} l)
+    (hkind : system.common.placeKind vQ = .archimedean)
+    (tuple : (system.archUnitData m vQ label hkind).BallTuple) :
+    (system.directKummer m vQ label).packetKummer
+        ((system.archUnitData m vQ label hkind).pureBallTensor tuple) ∈
+      (system.common.integral vQ label).carrier := by
+  apply system.arch_direct_ball_contained m vQ label hkind
+  rw [system.logShellRegion_eq_unitBall m vQ label hkind]
+  exact (system.archUnitData m vQ label hkind
+    ).pureBallTensor_mem_unitBall tuple
 
 /-- The actual integral packet at the non-coric vertical coordinate `m`. -/
 noncomputable def sourceIntegral
@@ -16813,6 +17252,38 @@ structure SitePacketIntegralConstruction
     ∀ place,
       finiteStageVolume.logVolume.placeNormalizationDegree place =
         SourceSelectedPlace.moduliRationalLocalDegree place.1
+
+/--
+The non-coric `(n,m)` packet's genuine circle units and pointed logarithms,
+tied to its actual site integral construction.
+-/
+noncomputable def siteArchimedeanUnitData
+    [SourceSelectedPlaceFiberFiniteness theta]
+    (lattice : SourceAbsoluteLGPGaussianLogThetaLattice models)
+    (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
+    (n m : ℤ) (rationalPlace : SourceRationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} theta.l)
+    (topology :
+      SourceMonoAnalyticLogShellAlgorithm.TensorTopology
+        (fun index =>
+          algorithm.factor
+            ((lattice.siteCapsuleAtLabel n m label).object
+              (lattice.sitePacketIndexEquiv n m label index))
+            rationalPlace))
+    (integral : SitePacketIntegralConstruction lattice algorithm n m
+      rationalPlace label topology)
+    (hkind : rationalPlace.kind = .archimedean) :
+    SourceArchimedeanPacketUnitData
+      (lattice.siteLocalPacket algorithm n m rationalPlace label topology)
+      (integral.construction.asArchimedean hkind) where
+  summandDefinition factor place := by
+    rw [integral.archimedean_summandMetric hkind]
+    let strip :=
+      (lattice.siteCapsuleAtLabel n m label).object
+        (lattice.sitePacketIndexEquiv n m label factor)
+    exact
+      (algorithm.sourceDefinitionAbove strip rationalPlace place
+        ).asArchimedean hkind
 
 /--
 Vertical coricity and log-shell functoriality construct the local tensor Kummer
@@ -18300,11 +18771,10 @@ end VerticalFamilyConstruction
 
 /--
 The still irreducible Proposition 3.5(ii)(a)-(b) input for a concrete vertical
-family.  At finite places only the adjacent partial correspondences on actual
-Galois-fixed summand units remain as source input.  Their tensor-product graphs,
-positive iterates, endpoint unit-log membership, and Kummer containment are
-constructed in Lean.  The archimedean unit and radius-`pi` assertions remain
-separated from the additive packet Kummer maps, integral regions, and measures.
+family consists only of adjacent partial correspondences on actual local units:
+Galois-fixed units at finite places and circle units at infinite places.  Lean
+constructs tensor graphs or tuple relations, every positive iterate, its actual
+domain/range, direct Kummer containment, and the archimedean endpoint-ball lift.
 -/
 structure VerticalUpperSemiData
     [SourceSelectedPlaceFiberFiniteness theta]
@@ -18312,10 +18782,6 @@ structure VerticalUpperSemiData
     {algorithm : SourceMonoAnalyticLogShellAlgorithm models}
     {n : ℤ}
     (family : VerticalFamilyConstruction lattice algorithm n) where
-  archUnitInvariants :
-    ∀ m rationalPlace label
-      (_hkind : rationalPlace.kind = .archimedean),
-      AddSubgroup (family.sourcePacket m rationalPlace label).carrier
   nonarchLogLinkStep :
     ∀ (m : ℤ) (rationalPlace : SourceRationalPlace)
       (label : IUTIIAbsoluteThetaLabel.{u} theta.l)
@@ -18326,57 +18792,25 @@ structure VerticalUpperSemiData
         (lattice.siteNonarchimedeanUnitLogData algorithm n (m + 1)
           rationalPlace label
           ((family.site (m + 1)).topology rationalPlace label) hkind)
-  arch_direct_units_contained :
-    ∀ m rationalPlace label
+  archLogLinkStep :
+    ∀ (m : ℤ) (rationalPlace : SourceRationalPlace)
+      (label : IUTIIAbsoluteThetaLabel.{u} theta.l)
       (hkind : rationalPlace.kind = .archimedean),
-        Set.MapsTo
-          (family.packetKummer m rationalPlace label).packetKummer
-          (archUnitInvariants m rationalPlace label hkind : Set _)
-          ((family.common.integral rationalPlace label).construction
-            |>.fullRegion).carrier
-  arch_direct_piBall_contained :
-    ∀ m rationalPlace label,
-      rationalPlace.kind = .archimedean ->
-        Set.MapsTo
-          (family.packetKummer m rationalPlace label).packetKummer
-          ((family.site m).integral rationalPlace label).construction.logShellRegion
-          ((family.common.integral rationalPlace label).construction
-            |>.fullRegion).carrier
-  archLogDomain :
-    ∀ (m : ℤ) (steps : ℕ+) (rationalPlace : SourceRationalPlace)
-      (label : IUTIIAbsoluteThetaLabel.{u} theta.l),
-      Set (family.sourcePacket (m - (steps.1 : ℤ)) rationalPlace label).carrier
-  archLogDomain_mem_units :
-    ∀ m steps rationalPlace label
-      (hkind : rationalPlace.kind = .archimedean) value,
-      value ∈ archLogDomain m steps rationalPlace label ->
-        value ∈ archUnitInvariants
-          (m - (steps.1 : ℤ)) rationalPlace label hkind
-  archLogPreimage :
-    ∀ (m : ℤ) (steps : ℕ+) (rationalPlace : SourceRationalPlace)
-      (label : IUTIIAbsoluteThetaLabel.{u} theta.l),
-      Set (family.sourcePacket m rationalPlace label).carrier
-  archLogPreimage_mem_piBall :
-    ∀ m steps rationalPlace label,
-      rationalPlace.kind = .archimedean ->
-        archLogPreimage m steps rationalPlace label ⊆
-          ((family.site m).integral rationalPlace label).construction.logShellRegion
-  archLogIterate :
-    ∀ m steps rationalPlace label,
-      {value // value ∈ archLogPreimage m steps rationalPlace label} ->
-        {value // value ∈ archLogDomain m steps rationalPlace label}
-  archLogIterate_surjective :
-    ∀ m steps rationalPlace label,
-      rationalPlace.kind = .archimedean ->
-        Function.Surjective (archLogIterate m steps rationalPlace label)
+      SourceArchimedeanPacketLogLinkStep
+        (lattice.siteArchimedeanUnitData algorithm n m rationalPlace label
+          ((family.site m).topology rationalPlace label)
+          ((family.site m).integral rationalPlace label) hkind)
+        (lattice.siteArchimedeanUnitData algorithm n (m + 1) rationalPlace
+          label ((family.site (m + 1)).topology rationalPlace label)
+          ((family.site (m + 1)).integral rationalPlace label) hkind)
 
 namespace VerticalFamilyConstruction
 
 /--
 Construct the Ind3 system from the lattice family and exactly the remaining
-one-step local-unit correspondences and archimedean obligations.  Recursive
-finite iterates, direct Kummer maps, integral images, and normalized log-volume
-compatibility are not fields of `VerticalUpperSemiData`.
+adjacent local-unit correspondences.  All multi-step iterates, endpoint-ball
+lifts, direct Kummer containments, integral images, and normalized log-volume
+compatibility are derived rather than fields of `VerticalUpperSemiData`.
 -/
 noncomputable def toTheorem311Ind3System
     [SourceSelectedPlaceFiberFiniteness theta]
@@ -18402,9 +18836,13 @@ noncomputable def toTheorem311Ind3System
     (lattice.siteNonarchimedeanUnitLogData algorithm n m rationalPlace label
       ((family.site m).topology rationalPlace label) hkind
       ).packetUnitLogSubgroup
-  archUnitInvariants := upperSemi.archUnitInvariants
+  archUnitData m rationalPlace label hkind :=
+    lattice.siteArchimedeanUnitData algorithm n m rationalPlace label
+      ((family.site m).topology rationalPlace label)
+      ((family.site m).integral rationalPlace label) hkind
   nonarchLogLinkStep m rationalPlace label hkind :=
     (upperSemi.nonarchLogLinkStep m rationalPlace label hkind).Related
+  archLogLinkStep := upperSemi.archLogLinkStep
   nonarch_direct_contained m rationalPlace label hkind value hvalue := by
     let siteData :=
       lattice.siteNonarchimedeanUnitLogData algorithm n m rationalPlace label
@@ -18433,14 +18871,6 @@ noncomputable def toTheorem311Ind3System
       (family.common.integral rationalPlace label).construction hkind
     rw [(family.common.integral rationalPlace label).nonarchimedean_shells hkind]
     exact commonData.packetUnitLogSubgroup_le_packetLattice himage
-  arch_direct_units_contained := upperSemi.arch_direct_units_contained
-  arch_direct_piBall_contained := upperSemi.arch_direct_piBall_contained
-  archLogDomain := upperSemi.archLogDomain
-  archLogDomain_mem_units := upperSemi.archLogDomain_mem_units
-  archLogPreimage := upperSemi.archLogPreimage
-  archLogPreimage_mem_piBall := upperSemi.archLogPreimage_mem_piBall
-  archLogIterate := upperSemi.archLogIterate
-  archLogIterate_surjective := upperSemi.archLogIterate_surjective
   sourceFiniteStageVolume m rationalPlace label :=
     ((family.site m).integral rationalPlace label).finiteStageVolume
   finiteStageCompatible := family.finiteStageCompatible

@@ -1111,10 +1111,10 @@ not instantiate Theorem~3.11. The paper-level procession, \(\IndOne\),
 The separate source-shaped analytic interface for Proposition~3.5 and
 Theorem~3.11(ii) now derives the mono-analytic packet log-shell region from the
 packet integral construction itself.  At finite places this is the constructed
-closed tensor lattice; at infinite places Lean proves that it is the
-radius-\(\pi\) ball of the same packet's Hermitian tensor metric.  Thus neither
-the abstract Ind3 system nor its concrete lattice constructor accepts an
-arbitrary radius-\(\pi\) set or an unrelated metric witness.  At a finite
+closed tensor lattice.  At an infinite summand Proposition~3.2(ii)'s Hermitian
+seminorm is normalized by \(\pi\), so its unit ball is exactly the raw complex
+radius-\(\pi\) disk of Definition~1.1(ii) and Remark~1.2.2(ii); it is not a
+second radius-\(\pi\) ball of an unnormalized metric.  At a finite
 place, each explicit local-unit group carries a continuous profinite Galois
 action, and its invariant-unit type is definitionally the subgroup fixed by
 every Galois element, not an arbitrary compact type with an invariant name.
@@ -1131,10 +1131,25 @@ and recursively composes adjacent steps.  It proves that an (r)-fold iterate
 from (m-r) ends at (m), and derives containment of the endpoint's Kummer
 image from endpoint unit-log membership.  The concrete Ind3 boundary therefore
 accepts neither arbitrary multi-step maps nor final iterated-containment proofs.
-The
-construction of the summand unit/log data from the IUT~II \(\Psi_{\rm cns}\)
-objects, the adjacent unit correspondences from the Gaussian log-theta lattice,
-and containment of the derived archimedean ball remain source obligations.
+At an infinite place, Lean models the source units as genuine elements of
+\(S^1\).  The principal logarithm \(\arg(z)i\) lies in the normalized local
+unit ball and exponentiates back to \(z\).  Selecting one place in each tensor
+factor produces actual direct-sum and pure-tensor representatives; their
+packet-unit-ball membership follows from the local, direct-sum, and tensor
+metric equations.  An adjacent log-link is a partial relation on these circle
+units.  Lean recursively derives every positive iterate, its domain and range,
+the participating endpoint-ball subset, and relational surjectivity onto the
+source domain.  Direct Kummer containment of both principal unit tensors and
+arbitrary selected local radius-\(\pi\) tensors follows from the proved full
+vertical unit-ball image.  Consequently the concrete Ind3 boundary accepts no
+arbitrary archimedean subgroup, multi-step domain, preimage set, iterate map,
+surjectivity proof, or direct containment.  This is the pointwise circle-unit
+core; the Aut-holomorphic semi-germ neighborhood projective systems of
+Remark~1.1.1(ii) have not yet been constructed.  Construction of the finite
+summand unit/log data from the IUT~II \(\Psi_{\rm cns}\) objects, the
+archimedean semi-germ systems, and the adjacent finite and infinite unit
+correspondences from the Gaussian log-theta lattice remains a source
+obligation.
 
 The largest remaining IUT III task is to enrich this finite route with the
 analytic common-container, holomorphic-hull, determinant, local-field, and
