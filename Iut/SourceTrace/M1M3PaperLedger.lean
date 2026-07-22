@@ -1271,15 +1271,19 @@ def m1m3PaperLedger : List PaperClause :=
       .partialImplementation
       "A genuine commutative splitting monoid embeds into and acts multiplicatively on an actual distinguished tensor submodule. Construction of the LGP monoid, its Galois invariants, and this action from the Hodge theater remains open.",
     clause "III.3.5" .iutIII "IUT III, Proposition 3.5"
-      ["SourceLGPSplittingMonoidKummerIso",
+      ["SourcePacketIntegralConstruction.logShellRegion",
+        "SourcePacketIntegralConstruction.logShellRegion_eq_packetLattice",
+        "SourcePacketIntegralConstruction.logShellRegion_eq_piBall",
+        "SourceLGPSplittingMonoidKummerIso",
         "SourceTheorem311CoricContainer",
         "SourceTheorem311Ind3System",
+        "SourceTheorem311Ind3System.logShellRegion_eq_piBall",
         "SourceTheorem311BadPrimeUpperSemiCompatibility",
         "SourceTheorem311BadPrimeUpperSemiCompatibility.logarithm_eq_of_relatedAcrossLog",
         "SourceTheorem311VerticalLogLink.rootsOfUnity_logarithm_eq_zero",
         "SourceTheorem311VerticalLogLinkFamily.adjacent_logarithm_eq_on_overlap"]
       .partialImplementation
-      "The vertically coric n-circle packet is fixed while m varies. Every m-packet has an actual tensor Kummer isomorphism into that common container. Nonarchimedean direct and forward-log images are required to lie in its integral module; at archimedean places, direct unit and radius-pi images lie in the common unit ball and a radius-pi subset surjects onto each iterated-log domain. Bad-prime splitting actions are Kummer transported to one common action, and any adjacent portion related by a log-link is required to differ only by a root of unity; equality after logarithm is derived. Constructing these interfaces from Propositions 3.4 and 3.5 remains open.",
+      "The vertically coric n-circle packet is fixed while m varies. Every m-packet has an actual tensor Kummer isomorphism into that common container. The mono-analytic source region is derived from the packet integral construction: it is the closed tensor lattice at a nonarchimedean place and the radius-pi ball of that packet's actual Hermitian metric at an archimedean place. No arbitrary radius-pi set or unrelated metric witness is accepted. Nonarchimedean direct and forward-log images are required to lie in the common integral module; at archimedean places, direct unit and derived radius-pi images lie in the common unit ball and a subset of that same derived ball surjects onto each iterated-log domain. Bad-prime splitting actions are Kummer transported to one common action, and any adjacent portion related by a log-link is required to differ only by a root of unity; equality after logarithm is derived. Constructing the unit invariants, Kummer containment proofs, iterated log correspondences, and bad-prime inputs from Propositions 3.4 and 3.5 remains open.",
     clause "III.3.7" .iutIII "IUT III, Proposition 3.7"
       ["IUTIIITheorem311ConstructedSource"] .unformalized
       "The cited vertical compatibility input is not formalized.",
@@ -1561,8 +1565,11 @@ def m1m3PaperLedger : List PaperClause :=
       .partialImplementation
       "A multiplicative log-link into an actual rational module kills every root of unity, values differing by such a root have equal additive logarithms, and the adjacent compatibility theorem is derived from the precise roots-only overlap criterion. Proving that criterion from Propositions 3.5 and 3.10 and deriving the MOD comparison remain open.",
     clause "III.3.11(ii).Ind3" .iutIII "IUT III, Theorem 3.11(ii): Ind3 and log-volume"
-      ["SourceTheorem311CoricContainer",
+      ["SourcePacketIntegralConstruction.logShellRegion",
+        "SourcePacketIntegralConstruction.logShellRegion_eq_piBall",
+        "SourceTheorem311CoricContainer",
         "SourceTheorem311Ind3System",
+        "SourceTheorem311Ind3System.logShellRegion_eq_piBall",
         "SourcePacketFiniteStageVolume",
         "SourcePacketFiniteStageLogVolume.Compatible.normalizedLogVolume_value_eq",
         "SourceAbsoluteLGPGaussianLogThetaLattice.VerticalFamilyConstruction",
@@ -1571,7 +1578,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceTheorem311Ind3System.logVolume_eq_common",
         "SourceTheorem311Ind3System.logVolume_eq_logVolume"]
       .partialImplementation
-      "Ind3 is expressed relative to one fixed vertically coric n-circle container, not as maps between adjacent packets. A concrete vertical family fixes one common construction for all m and derives every ind-packet, direct Kummer isomorphism, full integral-region image, finite-stage field volume, replicated weighted content, and normalized functional from the lattice data. Given the remaining unit-group and iterated-log obligations of Proposition 3.5(ii)(a)-(b), it constructs the Ind3 system; equality with the common finite-stage normalized value and independence of m follow. Constructing the Psi_cns unit groups, Galois-invariant tensor actions, radius-pi source subsets, and actual iterated log correspondences remains open.",
+      "Ind3 is expressed relative to one fixed vertically coric n-circle container, not as maps between adjacent packets. A concrete vertical family fixes one common construction for all m and derives every ind-packet, direct Kummer isomorphism, full integral-region image, finite-stage field volume, replicated weighted content, normalized functional, and the source log-shell region. At an infinite place that region is proved to be the radius-pi ball of the same constructed packet Hermitian metric; the abstract and concrete Ind3 records no longer accept an arbitrary set or metric witness. Given the remaining unit-group, containment, and iterated-log obligations of Proposition 3.5(ii)(a)-(b), the family constructs the Ind3 system; equality with the common finite-stage normalized value and independence of m follow. Constructing the Psi_cns unit groups, Galois-invariant tensor actions, direct Kummer containment of the derived pi-ball, and actual iterated log correspondences remains open.",
     clause "III.3.11(iii).horizontal" .iutIII "IUT III, Theorem 3.11(iii): horizontal theta link"
       ["SourceHorizontalKummerCompatibility",
         "SourceHorizontalKummerCompatibility.commutes",

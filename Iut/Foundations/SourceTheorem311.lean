@@ -3393,6 +3393,42 @@ def asArchimedean
   rw [SourcePacketIntegralConstruction, hkind] at construction
   exact construction
 
+/--
+The actual mono-analytic log-shell region carried by a packet construction.
+At a finite place this is the closed tensor lattice; at an infinite place it is
+the radius-`pi` ball of the packet Hermitian metric, as in Proposition 3.5(ii).
+-/
+noncomputable def logShellRegion
+    (construction : SourcePacketIntegralConstruction packet) :
+    Set packet.carrier := by
+  if hkind : packet.rationalPlace.kind = .archimedean then
+    exact (construction.asArchimedean hkind).packetMetric.piBall
+  else
+    have hnonarch : packet.rationalPlace.kind = .nonarchimedean := by
+      cases hplace : packet.rationalPlace.kind with
+      | nonarchimedean => rfl
+      | archimedean => exact (hkind hplace).elim
+    exact
+      ((construction.asNonarchimedean hnonarch).shells.packetLattice :
+        Set packet.carrier)
+
+/-- At a finite place, the packet log-shell is its constructed tensor lattice. -/
+theorem logShellRegion_eq_packetLattice
+    (construction : SourcePacketIntegralConstruction packet)
+    (hkind : packet.rationalPlace.kind = .nonarchimedean) :
+    construction.logShellRegion =
+      ((construction.asNonarchimedean hkind).shells.packetLattice :
+        Set packet.carrier) := by
+  simp [logShellRegion, hkind]
+
+/-- At an infinite place, the packet log-shell is its actual radius-`pi` ball. -/
+theorem logShellRegion_eq_piBall
+    (construction : SourcePacketIntegralConstruction packet)
+    (hkind : packet.rationalPlace.kind = .archimedean) :
+    construction.logShellRegion =
+      (construction.asArchimedean hkind).packetMetric.piBall := by
+  simp [logShellRegion, hkind]
+
 /-- The full packet region is derived by the rational-place case split. -/
 def fullRegion
     (construction : SourcePacketIntegralConstruction packet) :
@@ -15185,14 +15221,6 @@ structure SourceTheorem311Ind3System (l : PrimeGeFive) where
         (common.integral vQ label).carrier
   unitInvariants :
     ∀ m vQ label, AddSubgroup (packet m vQ label).carrier
-  radiusPiRegion :
-    ∀ m vQ label, Set (packet m vQ label).carrier
-  radiusPiRegion_is_piBall :
-    ∀ m vQ label,
-      common.placeKind vQ = .archimedean ->
-        ∃ metric : SourceArchimedeanIntegralStructure
-            (packet m vQ label).carrier,
-          radiusPiRegion m vQ label = metric.piBall
   nonarchLogDomain :
     ∀ (m : ℤ) (steps : ℕ+) (vQ : common.rationalPlace)
       (label : IUTIIAbsoluteThetaLabel.{u} l),
@@ -15231,7 +15259,7 @@ structure SourceTheorem311Ind3System (l : PrimeGeFive) where
       common.placeKind vQ = .archimedean ->
         Set.MapsTo
           (directKummer m vQ label).packetKummer
-          (radiusPiRegion m vQ label)
+          (integralConstruction m vQ label).logShellRegion
           (common.integral vQ label).carrier
   archLogDomain :
     ∀ (m : ℤ) (steps : ℕ+) (vQ : common.rationalPlace)
@@ -15248,7 +15276,8 @@ structure SourceTheorem311Ind3System (l : PrimeGeFive) where
   archLogPreimage_mem_piBall :
     ∀ m steps vQ label,
       common.placeKind vQ = .archimedean ->
-        archLogPreimage m steps vQ label ⊆ radiusPiRegion m vQ label
+        archLogPreimage m steps vQ label ⊆
+          (integralConstruction m vQ label).logShellRegion
   archLogIterate :
     ∀ m steps vQ label,
       {x // x ∈ archLogPreimage m steps vQ label} ->
@@ -15273,6 +15302,18 @@ structure SourceTheorem311Ind3System (l : PrimeGeFive) where
 namespace SourceTheorem311Ind3System
 
 variable {l : PrimeGeFive}
+
+/-- The Ind3 infinite-place source region is the packet's constructed `pi`-ball. -/
+theorem logShellRegion_eq_piBall
+    (system : SourceTheorem311Ind3System.{u} l)
+    (m : ℤ) (vQ : system.common.rationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} l)
+    (hkind : system.common.placeKind vQ = .archimedean) :
+    (system.integralConstruction m vQ label).logShellRegion =
+      ((system.integralConstruction m vQ label).asArchimedean <| by
+        simpa [SourceTheorem311CoricContainer.placeKind,
+          system.packet_rationalPlace m vQ label] using hkind).packetMetric.piBall :=
+  SourcePacketIntegralConstruction.logShellRegion_eq_piBall _ _
 
 /-- The actual integral packet at the non-coric vertical coordinate `m`. -/
 noncomputable def sourceIntegral
@@ -17235,15 +17276,6 @@ structure VerticalUpperSemiData
   unitInvariants :
     ∀ m rationalPlace label,
       AddSubgroup (family.sourcePacket m rationalPlace label).carrier
-  radiusPiRegion :
-    ∀ m rationalPlace label,
-      Set (family.sourcePacket m rationalPlace label).carrier
-  radiusPiRegion_is_piBall :
-    ∀ m rationalPlace label,
-      rationalPlace.kind = .archimedean ->
-        ∃ metric : SourceArchimedeanIntegralStructure
-            (family.sourcePacket m rationalPlace label).carrier,
-          radiusPiRegion m rationalPlace label = metric.piBall
   nonarchLogDomain :
     ∀ (m : ℤ) (steps : ℕ+) (rationalPlace : SourceRationalPlace)
       (label : IUTIIAbsoluteThetaLabel.{u} theta.l),
@@ -17285,7 +17317,7 @@ structure VerticalUpperSemiData
       rationalPlace.kind = .archimedean ->
         Set.MapsTo
           (family.packetKummer m rationalPlace label).packetKummer
-          (radiusPiRegion m rationalPlace label)
+          ((family.site m).integral rationalPlace label).construction.logShellRegion
           ((family.common.integral rationalPlace label).construction
             |>.fullRegion).carrier
   archLogDomain :
@@ -17304,7 +17336,7 @@ structure VerticalUpperSemiData
     ∀ m steps rationalPlace label,
       rationalPlace.kind = .archimedean ->
         archLogPreimage m steps rationalPlace label ⊆
-          radiusPiRegion m rationalPlace label
+          ((family.site m).integral rationalPlace label).construction.logShellRegion
   archLogIterate :
     ∀ m steps rationalPlace label,
       {value // value ∈ archLogPreimage m steps rationalPlace label} ->
@@ -17342,8 +17374,6 @@ noncomputable def toTheorem311Ind3System
       ((family.site m).integral rationalPlace label)
       (family.common.integral rationalPlace label)
   unitInvariants := upperSemi.unitInvariants
-  radiusPiRegion := upperSemi.radiusPiRegion
-  radiusPiRegion_is_piBall := upperSemi.radiusPiRegion_is_piBall
   nonarchLogDomain := upperSemi.nonarchLogDomain
   nonarchLogDomain_mem_units := upperSemi.nonarchLogDomain_mem_units
   nonarchLogIterate := upperSemi.nonarchLogIterate

@@ -618,6 +618,8 @@ end Compatible
 end Iut.SourcePacketFiniteStageLogVolume
 
 #print axioms Iut.SourcePacketFiniteStageVolume.normalizedLogVolume_value_eq_zero
+#print axioms Iut.SourcePacketIntegralConstruction.logShellRegion_eq_packetLattice
+#print axioms Iut.SourcePacketIntegralConstruction.logShellRegion_eq_piBall
 
 -- Legacy block-indexed volume lemmas remain visible but are not source endpoints.
 #print axioms Iut.SourcePacketLogVolumeDecomposition.algebraicDecomposition
@@ -672,6 +674,7 @@ end Iut.SourcePacketFiniteStageLogVolume
 #print axioms Iut.SourceArchimedeanIntegralStructure.isClosed_piBall
 #print axioms Iut.SourceTheorem311Ind3System.logVolume_eq_common
 #print axioms Iut.SourceTheorem311Ind3System.logVolume_eq_logVolume
+#print axioms Iut.SourceTheorem311Ind3System.logShellRegion_eq_piBall
 #print axioms Iut.SourceTheorem311VerticalLogLink.rootsOfUnity_logarithm_eq_zero
 #print axioms Iut.SourceTheorem311VerticalLogLink.logarithm_eq_of_differsByRootOfUnity
 #print axioms Iut.SourceTheorem311VerticalLogLinkFamily.adjacent_logarithm_eq_on_overlap
