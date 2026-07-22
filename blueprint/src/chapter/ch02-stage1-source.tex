@@ -719,6 +719,11 @@
   \lean{Iut.SourceTheorem311BadPrimeLogKummerData}
   \lean{Iut.SourceTheorem311BadPrimeLogKummerData.AdmissibleAcrossLog}
   \lean{Iut.SourceTheorem311BadPrimeLogKummerData.logarithm_eq_of_admissibleAcrossLog}
+  \lean{Iut.SourceTopologicalGroupMonoidActionPair.Hom}
+  \lean{Iut.SourceKappaLocalizationDiagram}
+  \lean{Iut.SourceKappaLocalizationDiagramIso}
+  \lean{Iut.SourceKappaLocalizationDiagramIso.localizationSquare}
+  \lean{Iut.SourceKappaLocalizationDiagramIso.inclusionSquare}
   \lean{Iut.SourceTheorem311LabeledData}
   \lean{Iut.SourceTheorem311LabeledKummerIso}
   \lean{Iut.SourceTheorem311MultiradialPresentation}
@@ -757,6 +762,8 @@
   \lean{Iut.SourceTheorem311EnvironmentTimesMuPrimeStripSquare.ofTriangle}
   \lean{Iut.SourceTheorem311MonoThetaProjectiveSystemFamily}
   \lean{Iut.SourceTheorem311LabeledHorizontalKummerSquare}
+  \lean{Iut.SourceTheorem311LabeledHorizontalKummerSquare.localizationAutomorphismEquiv}
+  \lean{Iut.SourceTheorem311LabeledHorizontalKummerSquare.inclusionAutomorphismEquiv}
   \lean{Iut.SourceTheorem311HorizontalCorridorBoundary}
   \lean{Iut.SourceTheorem311HorizontalCorridorBoundary.primeStripClauseA}
   \lean{Iut.SourceTheorem311HorizontalEvaluationCompatibility.descend}
@@ -781,8 +788,9 @@
   equivalence of these quotients.
 
   The vertical interface uses placewise continuous linear Kummer
-  equivalences, their induced tensor maps, profinite-group isomorphisms,
-  number-field ring equivalences, splitting-monoid equivalences, and
+  equivalences, their induced tensor maps, complete localization diagrams of
+  topological group/monoid action pairs, number-field ring equivalences,
+  splitting-monoid equivalences, and
   structure-preserving equivalences of the realified and non-realified split
   Frobenioids.  \(\Ind{3}\) fixes one vertically coric \(n,\circ\) container
   while \(m\) varies.  At nonarchimedean places it contains both direct Kummer
@@ -887,10 +895,16 @@
   Theorem~1.5 remain open.  The
   mono-theta square ranges over every \(m\) and bad
   place and uses actual projective systems with levelwise environment
-  realizations.  The \(\kappa\)-sol/\(M_\infty^\kappa\) squares range over every
-  \(m\) and absolute label and commute with the common square through the two
-  vertical labeled Kummer maps.  These fixed-corner squares transport the
-  full automorphism groups.
+  realizations.  Clause~(iii)(d) no longer collapses
+  \(\{\pi_1^{\kappa\text{-sol}}\ltimes M_\infty^\kappa\}\) and its localizations
+  to two profinite groups.  For every \(m\), absolute label, and selected place,
+  it retains the global action pair, the local \(M_\infty^\kappa\) and
+  \(M_\infty^{\kappa\times}\) action pairs, the equivariant localization map,
+  and the injective equivariant inclusion.  Horizontal and vertical Kummer
+  isomorphisms preserve both arrows, and site/common coherence is equality of
+  the complete diagram transports.  The resulting arrow-category squares
+  transport the full automorphism groups.  Constructing these diagrams from
+  Corollary~4.8 and the cyclotomic-rigidity algorithm remains open.
   Compatible evaluations descend
   to the equivalence relation generated jointly by \(\Ind{1}\)--\(\Ind{3}\).
 
@@ -946,7 +960,10 @@
   \lean{Iut.SourceTheorem311ColumnBoundary.verticalLocalKummer}
   \lean{Iut.SourceTheorem311ColumnBoundary.badPrime_logarithm_eq}
   \lean{Iut.SourceTheorem311HorizontalCorridorBoundary}
-  \lean{Iut.SourceTheorem311HorizontalCorridorBoundary.siteKappaClauseD_commutes}
+  \lean{Iut.SourceTheorem311HorizontalCorridorBoundary.siteKappaClauseD_localization_commutes}
+  \lean{Iut.SourceTheorem311HorizontalCorridorBoundary.siteKappaClauseD_inclusion_commutes}
+  \lean{Iut.SourceTheorem311HorizontalCorridorBoundary.commonKappaClauseD_localization_commutes}
+  \lean{Iut.SourceTheorem311HorizontalCorridorBoundary.commonKappaClauseD_inclusion_commutes}
   \leanok
   At one fixed horizontal column, the source assembly forces the
   multiradial presentation and the vertical family to use the same common
@@ -960,7 +977,9 @@
   system, vertical log-volume independence, and roots-only bad-prime logarithm
   equality.  A separate corridor joins two such boundaries on the same
   lattice at adjacent columns and carries the universally indexed horizontal
-  squares and their coherence with vertical Kummer.
+  squares and their coherence with vertical Kummer.  Its labeled clause~(d)
+  data preserve the full global/local Corollary~4.8 localization diagram and
+  every local inclusion, rather than a collapsed profinite-group arrow.
 
   This assembly is not an existence proof for its upstream inputs.  Its role
   is to replace the unrelated finite adapters by one coherent source boundary

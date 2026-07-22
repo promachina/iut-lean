@@ -8,6 +8,7 @@ import Iut.Foundations.SourceAutHolomorphicRigidity
 import Iut.Foundations.SourceFThetaBridge
 import Iut.Foundations.SourceProcession
 import Iut.Foundations.SourceThetaEvaluation
+import Iut.Foundations.SourceTopologicalActionPairCategory
 import Mathlib.Algebra.Category.ModuleCat.Topology.Basic
 import Mathlib.Algebra.DirectSum.Module
 import Mathlib.Algebra.Field.ULift
@@ -14231,6 +14232,10 @@ variable {l : PrimeGeFive}
 abbrev rationalPlace (_data : SourceTheorem311LocalData.{u} l) :=
   SourceRationalPlace
 
+/-- The selected-place family `V = ⨆_(v_Q) V_(v_Q)` carried by the packets. -/
+abbrev selectedPlace (data : SourceTheorem311LocalData.{u} l) :=
+  Σ vQ : data.rationalPlace, data.placeAbove vQ
+
 /-- The place kind is determined by the constructor of the rational place. -/
 def placeKind (_data : SourceTheorem311LocalData.{u} l) :=
   SourceRationalPlace.kind
@@ -16968,19 +16973,106 @@ theorem logarithm_eq_of_admissibleAcrossLog
 
 end SourceTheorem311BadPrimeLogKummerData
 
+/-! ## Corollary 4.8 localization diagrams -/
+
+/--
+The labeled localization diagram of IUT II, Corollary 4.8(iii).
+
+`globalKappa` retains the `kappa`-solvable acting group together with the
+global `M_infinity^kappa` pseudo-monoid.  At every selected place, the
+localization map lands in the local `M_infinity^kappa` action pair, which is
+then included injectively in the corresponding `M_infinity^(kappa times)`
+pair.  Thus the displayed inclusion in Corollary 4.8 is represented by an
+actual equivariant continuous monoid map, not by a morphism between unrelated
+profinite groups.
+-/
+structure SourceKappaLocalizationDiagram (place : Type u) where
+  globalKappa : SourceTopologicalGroupMonoidActionPair.{u}
+  localKappa : place → SourceTopologicalGroupMonoidActionPair.{u}
+  localTimesKappa : place → SourceTopologicalGroupMonoidActionPair.{u}
+  localization : ∀ v, globalKappa ⟶ localKappa v
+  inclusion : ∀ v, localKappa v ⟶ localTimesKappa v
+  inclusion_injective :
+    ∀ v, Function.Injective (inclusion v).monoidHom
+
+/--
+An isomorphism of complete Kummer localization diagrams.
+
+The two naturality equations retain both arrows of the Corollary 4.8(iii)
+display at every selected place.  These are the vertical Kummer and
+horizontal permutation-symmetry transports used in Theorem 3.11(ii),(iii)(d).
+-/
+structure SourceKappaLocalizationDiagramIso
+    {place : Type u}
+    (source target : SourceKappaLocalizationDiagram place) where
+  globalKappa :
+    SourceTopologicalGroupMonoidActionPair.Iso
+      source.globalKappa target.globalKappa
+  localKappa :
+    ∀ v,
+      SourceTopologicalGroupMonoidActionPair.Iso
+        (source.localKappa v) (target.localKappa v)
+  localTimesKappa :
+    ∀ v,
+      SourceTopologicalGroupMonoidActionPair.Iso
+        (source.localTimesKappa v) (target.localTimesKappa v)
+  localization_compatible :
+    ∀ v,
+      source.localization v ≫ (localKappa v).hom =
+        globalKappa.hom ≫ target.localization v
+  inclusion_compatible :
+    ∀ v,
+      source.inclusion v ≫ (localTimesKappa v).hom =
+        (localKappa v).hom ≫ target.inclusion v
+
+namespace SourceKappaLocalizationDiagramIso
+
+variable
+    {place : Type u}
+    {first second third : SourceKappaLocalizationDiagram place}
+
+/-- Identity isomorphism of localization diagrams. -/
+def refl (diagram : SourceKappaLocalizationDiagram place) :
+    SourceKappaLocalizationDiagramIso diagram diagram where
+  globalKappa := SourceTopologicalGroupMonoidActionPair.Iso.refl _
+  localKappa v := SourceTopologicalGroupMonoidActionPair.Iso.refl _
+  localTimesKappa v := SourceTopologicalGroupMonoidActionPair.Iso.refl _
+  localization_compatible v := by simp
+  inclusion_compatible v := by simp
+
+/-- Composition retains every global and local localization square. -/
+def trans
+    (firstIso : SourceKappaLocalizationDiagramIso first second)
+    (secondIso : SourceKappaLocalizationDiagramIso second third) :
+    SourceKappaLocalizationDiagramIso first third where
+  globalKappa := firstIso.globalKappa.trans secondIso.globalKappa
+  localKappa v := (firstIso.localKappa v).trans (secondIso.localKappa v)
+  localTimesKappa v :=
+    (firstIso.localTimesKappa v).trans (secondIso.localTimesKappa v)
+  localization_compatible v := by
+    simp only [SourceTopologicalGroupMonoidActionPair.Iso.trans_hom]
+    rw [← Category.assoc, firstIso.localization_compatible]
+    rw [Category.assoc, secondIso.localization_compatible]
+    simp only [Category.assoc]
+  inclusion_compatible v := by
+    simp only [SourceTopologicalGroupMonoidActionPair.Iso.trans_hom]
+    rw [← Category.assoc, firstIso.inclusion_compatible]
+    rw [Category.assoc, secondIso.inclusion_compatible]
+    simp only [Category.assoc]
+
+end SourceKappaLocalizationDiagramIso
+
 /--
 The labeled constants, `kappa`-solvable fundamental groups, number fields,
 and global Frobenioids occurring in Theorem 3.11(ii).
 -/
-structure SourceTheorem311LabeledData (l : PrimeGeFive) where
+structure SourceTheorem311LabeledData
+    (l : PrimeGeFive) (place : Type u) where
   cuspLabel : Type u
   constantGroup : cuspLabel -> ProfiniteGrp.{u}
-  kappaSol :
-    IUTIIAbsoluteThetaLabel.{u} l -> ProfiniteGrp.{u}
-  mInfinityKappa :
-    IUTIIAbsoluteThetaLabel.{u} l -> ProfiniteGrp.{u}
-  kappaToMInfinity :
-    ∀ label, kappaSol label ⟶ mInfinityKappa label
+  kappaLocalization :
+    IUTIIAbsoluteThetaLabel.{u} l →
+      SourceKappaLocalizationDiagram place
   numberField :
     IUTIIAbsoluteThetaLabel.{u} l -> Type u
   [numberFieldField : ∀ label, Field (numberField label)]
@@ -17017,22 +17109,18 @@ Theorem 3.11(ii), using actual profinite-group, field, and Frobenioid maps.
 -/
 structure SourceTheorem311LabeledKummerIso
     {l : PrimeGeFive}
-    (source target : SourceTheorem311LabeledData.{u} l) where
+    {place : Type u}
+    (source target : SourceTheorem311LabeledData.{u} l place) where
   cuspLabelEquiv : source.cuspLabel ≃ target.cuspLabel
   constantKummer :
     ∀ label,
       source.constantGroup label ≅
         target.constantGroup (cuspLabelEquiv label)
-  kappaSolKummer :
+  localizationKummer :
     ∀ label,
-      source.kappaSol label ≅ target.kappaSol label
-  mInfinityKummer :
-    ∀ label,
-      source.mInfinityKappa label ≅ target.mInfinityKappa label
-  kappaMInfinity_compatible :
-    ∀ label,
-      (kappaSolKummer label).hom ≫ target.kappaToMInfinity label =
-        source.kappaToMInfinity label ≫ (mInfinityKummer label).hom
+      SourceKappaLocalizationDiagramIso
+        (source.kappaLocalization label)
+        (target.kappaLocalization label)
   numberFieldKummer :
     ∀ label,
       source.numberField label ≃+* target.numberField label
@@ -17093,7 +17181,8 @@ structure SourceTheorem311MultiradialPresentation (l : PrimeGeFive) where
           label.distinguishedFactor
           ((localData.packetPlaceEquiv (badRationalPlace place) label).symm
             (badPlaceAbove place)))
-  labeled : SourceTheorem311LabeledData.{u} l
+  labeled :
+    SourceTheorem311LabeledData.{u} l localData.selectedPlace
   numberFieldToLocal :
     ∀ (label : IUTIIAbsoluteThetaLabel.{u} l)
       (vQ : localData.rationalPlace),
@@ -19174,7 +19263,9 @@ structure PresentationConstruction
             (SourceSelectedBadPlace.rationalPlace place) label)).distinguishedSubmodule
             label.distinguishedFactor
               (SourceSelectedBadPlace.toAbove place))
-  labeled : SourceTheorem311LabeledData.{u} theta.l
+  labeled :
+    SourceTheorem311LabeledData.{u} theta.l
+      localConstruction.toTheorem311LocalData.selectedPlace
   numberFieldToLocal :
     ∀ (label : IUTIIAbsoluteThetaLabel.{u} theta.l)
       (rationalPlace : SourceRationalPlace),
@@ -19299,6 +19390,40 @@ def automorphismEquiv
   Aut.autMulEquivOfIso compatibility.verticalKummer
 
 end SourceHorizontalKummerCompatibility
+
+namespace SourceKappaLocalizationDiagramIso
+
+variable
+    {place : Type u}
+    {first second : SourceKappaLocalizationDiagram place}
+
+/-- The global-to-local naturality square at a selected place. -/
+def localizationSquare
+    (diagramIso : SourceKappaLocalizationDiagramIso first second)
+    (v : place) :
+    SourceHorizontalKummerCompatibility
+      SourceTopologicalGroupMonoidActionPair where
+  sourceHorizontal := Arrow.mk (first.localization v)
+  targetHorizontal := Arrow.mk (second.localization v)
+  verticalKummer :=
+    Arrow.isoMk diagramIso.globalKappa.toCategoryIso
+      (diagramIso.localKappa v).toCategoryIso
+      (diagramIso.localization_compatible v).symm
+
+/-- The local `M_infinity^kappa` inclusion naturality square. -/
+def inclusionSquare
+    (diagramIso : SourceKappaLocalizationDiagramIso first second)
+    (v : place) :
+    SourceHorizontalKummerCompatibility
+      SourceTopologicalGroupMonoidActionPair where
+  sourceHorizontal := Arrow.mk (first.inclusion v)
+  targetHorizontal := Arrow.mk (second.inclusion v)
+  verticalKummer :=
+    Arrow.isoMk (diagramIso.localKappa v).toCategoryIso
+      (diagramIso.localTimesKappa v).toCategoryIso
+      (diagramIso.inclusion_compatible v).symm
+
+end SourceKappaLocalizationDiagramIso
 
 /--
 An isomorphism of actual projective systems of mono-theta environments.

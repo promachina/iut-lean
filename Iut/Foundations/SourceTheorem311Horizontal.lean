@@ -1174,39 +1174,63 @@ abbrev SourceTheorem311MonoThetaProjectiveSystemSquare
     (family.common n place) (family.common (n + 1) place)
 
 /--
-The clause (iii)(d) horizontal square for the actual `kappa`-solvable and
-`M_infinity^kappa` objects at one absolute label.
+The clause (iii)(d) horizontal transport for the complete Corollary 4.8(iii)
+localization diagram at one absolute label.
+
+The acting `kappa`-solvable groups, global `M_infinity^kappa` pseudo-monoids,
+all local `M_infinity^kappa` pseudo-monoids, and their inclusions into
+`M_infinity^(kappa times)` are retained.  This is not a square of two collapsed
+profinite-group objects.
 -/
 structure SourceTheorem311LabeledHorizontalKummerSquare
     {l : PrimeGeFive}
-    (source target : SourceTheorem311LabeledData.{u} l)
+    {place : Type u}
+    (source target : SourceTheorem311LabeledData.{u} l place)
     (label : IUTIIAbsoluteThetaLabel.{u} l) where
-  kappaSolHorizontal : source.kappaSol label ≅ target.kappaSol label
-  mInfinityHorizontal :
-    source.mInfinityKappa label ≅ target.mInfinityKappa label
-  kappaMInfinity_compatible :
-    kappaSolHorizontal.hom ≫ target.kappaToMInfinity label =
-      source.kappaToMInfinity label ≫ mInfinityHorizontal.hom
+  localizationHorizontal :
+    SourceKappaLocalizationDiagramIso
+      (source.kappaLocalization label)
+      (target.kappaLocalization label)
 
 namespace SourceTheorem311LabeledHorizontalKummerSquare
 
 variable
     {l : PrimeGeFive}
-    {source target : SourceTheorem311LabeledData.{u} l}
+    {place : Type u}
+    {source target : SourceTheorem311LabeledData.{u} l place}
     {label : IUTIIAbsoluteThetaLabel.{u} l}
 
-/-- The labeled compatibility as a square with its four exact profinite corners. -/
-def toKummerSquare
+/-- The global-to-local clause (d) square at one selected place. -/
+def localizationSquare
     (square :
-      SourceTheorem311LabeledHorizontalKummerSquare source target label) :
-    SourceIndexedHorizontalKummerSquare ProfiniteGrp
-      (source.kappaSol label) (source.mInfinityKappa label)
-      (target.kappaSol label) (target.mInfinityKappa label) where
-  upperHorizontal := source.kappaToMInfinity label
-  lowerHorizontal := target.kappaToMInfinity label
-  leftKummer := square.kappaSolHorizontal
-  rightKummer := square.mInfinityHorizontal
-  commutes := square.kappaMInfinity_compatible
+      SourceTheorem311LabeledHorizontalKummerSquare source target label)
+    (v : place) :
+    SourceHorizontalKummerCompatibility
+      SourceTopologicalGroupMonoidActionPair :=
+  square.localizationHorizontal.localizationSquare v
+
+/-- The local `M_infinity^kappa`-to-`M_infinity^(kappa times)` square. -/
+def inclusionSquare
+    (square :
+      SourceTheorem311LabeledHorizontalKummerSquare source target label)
+    (v : place) :
+    SourceHorizontalKummerCompatibility
+      SourceTopologicalGroupMonoidActionPair :=
+  square.localizationHorizontal.inclusionSquare v
+
+/-- Arbitrary automorphisms of a localization arrow transport horizontally. -/
+def localizationAutomorphismEquiv
+    (square :
+      SourceTheorem311LabeledHorizontalKummerSquare source target label)
+    (v : place) :=
+  (square.localizationSquare v).automorphismEquiv
+
+/-- Arbitrary automorphisms of a local inclusion transport horizontally. -/
+def inclusionAutomorphismEquiv
+    (square :
+      SourceTheorem311LabeledHorizontalKummerSquare source target label)
+    (v : place) :=
+  (square.inclusionSquare v).automorphismEquiv
 
 end SourceTheorem311LabeledHorizontalKummerSquare
 

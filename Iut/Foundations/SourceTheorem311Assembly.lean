@@ -66,7 +66,10 @@ structure SourceTheorem311ColumnBoundary
     SourceTheorem311MultiradialAlgorithm
       (lattice.commonMonoAnalyticProcession column)
       presentationConstruction.toMultiradialPresentation
-  siteLabeled : ℤ -> SourceTheorem311LabeledData.{u} theta.l
+  siteLabeled :
+    ℤ →
+      SourceTheorem311LabeledData.{u} theta.l
+        verticalFamily.common.toTheorem311LocalData.selectedPlace
   labeledKummer :
     ∀ site,
       SourceTheorem311LabeledKummerIso
@@ -298,16 +301,10 @@ structure SourceTheorem311HorizontalCorridorBoundary
         right.presentationConstruction.labeled label
   siteCommonKappa_compatible :
     ∀ (site : ℤ) (label : IUTIIAbsoluteThetaLabel.{u} theta.l),
-      ((left.labeledKummer site).kappaSolKummer label).hom ≫
-          (commonKappaClauseD label).kappaSolHorizontal.hom =
-        (siteKappaClauseD site label).kappaSolHorizontal.hom ≫
-          ((right.labeledKummer site).kappaSolKummer label).hom
-  siteCommonMInfinity_compatible :
-    ∀ (site : ℤ) (label : IUTIIAbsoluteThetaLabel.{u} theta.l),
-      ((left.labeledKummer site).mInfinityKummer label).hom ≫
-          (commonKappaClauseD label).mInfinityHorizontal.hom =
-        (siteKappaClauseD site label).mInfinityHorizontal.hom ≫
-          ((right.labeledKummer site).mInfinityKummer label).hom
+      ((left.labeledKummer site).localizationKummer label).trans
+          (commonKappaClauseD label).localizationHorizontal =
+        ((siteKappaClauseD site label).localizationHorizontal).trans
+          ((right.labeledKummer site).localizationKummer label)
 
 namespace SourceTheorem311HorizontalCorridorBoundary
 
@@ -410,25 +407,63 @@ theorem monoThetaClauseC_commutes
         (boundary.monoThetaClauseC site place).rightKummer.groupDiagramIso.hom :=
   (boundary.monoThetaClauseC site place).commutes
 
-/-- The site-level clause (iii)(d) square commutes for every absolute label. -/
-theorem siteKappaClauseD_commutes
+/-- The site-level clause (iii)(d) localization square commutes at every place. -/
+theorem siteKappaClauseD_localization_commutes
     (boundary : SourceTheorem311HorizontalCorridorBoundary models)
-    (site : ℤ) (label : IUTIIAbsoluteThetaLabel.{u} theta.l) :
-    (boundary.siteKappaClauseD site label).kappaSolHorizontal.hom ≫
-        (boundary.right.siteLabeled site).kappaToMInfinity label =
-      (boundary.left.siteLabeled site).kappaToMInfinity label ≫
-        (boundary.siteKappaClauseD site label).mInfinityHorizontal.hom :=
-  (boundary.siteKappaClauseD site label).kappaMInfinity_compatible
+    (site : ℤ) (label : IUTIIAbsoluteThetaLabel.{u} theta.l)
+    (place : boundary.left.localData.selectedPlace) :
+    ((boundary.left.siteLabeled site).kappaLocalization label).localization place ≫
+        ((boundary.siteKappaClauseD site label).localizationHorizontal.localKappa
+          place).hom =
+      (boundary.siteKappaClauseD site label).localizationHorizontal.globalKappa.hom ≫
+        ((boundary.right.siteLabeled site).kappaLocalization label).localization place :=
+  (boundary.siteKappaClauseD site label).localizationHorizontal.localization_compatible
+    place
 
-/-- The common-column clause (iii)(d) square commutes for every label. -/
-theorem commonKappaClauseD_commutes
+/-- The site-level local inclusion square commutes at every selected place. -/
+theorem siteKappaClauseD_inclusion_commutes
     (boundary : SourceTheorem311HorizontalCorridorBoundary models)
-    (label : IUTIIAbsoluteThetaLabel.{u} theta.l) :
-    (boundary.commonKappaClauseD label).kappaSolHorizontal.hom ≫
-        boundary.right.presentationConstruction.labeled.kappaToMInfinity label =
-      boundary.left.presentationConstruction.labeled.kappaToMInfinity label ≫
-        (boundary.commonKappaClauseD label).mInfinityHorizontal.hom :=
-  (boundary.commonKappaClauseD label).kappaMInfinity_compatible
+    (site : ℤ) (label : IUTIIAbsoluteThetaLabel.{u} theta.l)
+    (place : boundary.left.localData.selectedPlace) :
+    ((boundary.left.siteLabeled site).kappaLocalization label).inclusion place ≫
+        ((boundary.siteKappaClauseD site label).localizationHorizontal.localTimesKappa
+          place).hom =
+      ((boundary.siteKappaClauseD site label).localizationHorizontal.localKappa
+          place).hom ≫
+        ((boundary.right.siteLabeled site).kappaLocalization label).inclusion place :=
+  (boundary.siteKappaClauseD site label).localizationHorizontal.inclusion_compatible
+    place
+
+/-- The common-column localization square commutes at every selected place. -/
+theorem commonKappaClauseD_localization_commutes
+    (boundary : SourceTheorem311HorizontalCorridorBoundary models)
+    (label : IUTIIAbsoluteThetaLabel.{u} theta.l)
+    (place : boundary.left.localData.selectedPlace) :
+    (boundary.left.presentationConstruction.labeled.kappaLocalization label
+        ).localization place ≫
+        ((boundary.commonKappaClauseD label).localizationHorizontal.localKappa
+          place).hom =
+      (boundary.commonKappaClauseD label).localizationHorizontal.globalKappa.hom ≫
+        (boundary.right.presentationConstruction.labeled.kappaLocalization label
+          ).localization place :=
+  (boundary.commonKappaClauseD label).localizationHorizontal.localization_compatible
+    place
+
+/-- The common-column local inclusion square commutes at every selected place. -/
+theorem commonKappaClauseD_inclusion_commutes
+    (boundary : SourceTheorem311HorizontalCorridorBoundary models)
+    (label : IUTIIAbsoluteThetaLabel.{u} theta.l)
+    (place : boundary.left.localData.selectedPlace) :
+    (boundary.left.presentationConstruction.labeled.kappaLocalization label
+        ).inclusion place ≫
+        ((boundary.commonKappaClauseD label).localizationHorizontal.localTimesKappa
+          place).hom =
+      ((boundary.commonKappaClauseD label).localizationHorizontal.localKappa
+          place).hom ≫
+        (boundary.right.presentationConstruction.labeled.kappaLocalization label
+          ).inclusion place :=
+  (boundary.commonKappaClauseD label).localizationHorizontal.inclusion_compatible
+    place
 
 end SourceTheorem311HorizontalCorridorBoundary
 
