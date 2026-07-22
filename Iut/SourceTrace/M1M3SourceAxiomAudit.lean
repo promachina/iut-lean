@@ -154,9 +154,14 @@ visible to Lean's axiom reporter.
 #print axioms
   Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.isModelTypeForColimitBirationalization
 #print axioms Iut.SourceModelFrobenioid.BirationalObject.isIso_iff_isPreStep
+#print axioms Iut.SourceModelFrobenioid.BirationalObject.isIsotropic
 #print axioms Iut.SourceModelFrobenioid.BirationalObject.isPullback_iff_isLinear
 #print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.isBaseIdentity_iff_nonempty_baseIdentityRoof
+#print axioms
   Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.isIso_iff_isPreStep
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.isIsotropic
 #print axioms
   Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.isPullback_iff_isLinear
 #print axioms
@@ -175,6 +180,8 @@ visible to Lean's axiom reporter.
   Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_isOfFrobeniusType_iff
 #print axioms
   Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_isIsometric
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_obj_isIsotropic_iff
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.quotientUnit_exists
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootRealization.ofRootSystem

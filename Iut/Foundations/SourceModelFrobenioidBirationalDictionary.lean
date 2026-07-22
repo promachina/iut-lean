@@ -13,11 +13,11 @@ after birationalization.  This file proves the core zero-divisor clauses for
 the concrete model target, transports them to the actual Hom-colimit category,
 and proves the corresponding iff statements for the canonical localization.
 
-The pullback clause and the base-identity roof classification remain separate
-obligations.
+All morphism and object clauses of Proposition 4.4(iv), including the exact
+base-identity roof classification, are proved for the model target.
 -/
 
-open CategoryTheory
+open CategoryTheory CategoryTheory.Limits
 
 namespace Iut.SourceModelFrobenioid
 
@@ -191,6 +191,13 @@ theorem isIso_iff_isPreStep
       (preFrobenioid (Phi := Phi) (data := data)).IsPreStep arrow :=
   ⟨isPreStep_of_isIso arrow, isIso_of_isPreStep arrow⟩
 
+/-- Every object of the concrete group-like target is isotropic. -/
+theorem isIsotropic
+    (object : BirationalObject (Phi := Phi) (data := data)) :
+    (preFrobenioid (Phi := Phi) (data := data)).IsIsotropic object := by
+  intro target arrow preStep _
+  exact isIso_of_isPreStep arrow preStep
+
 /-- Every arrow in the group-like target is co-angular. -/
 theorem isCoAngular
     {source target : BirationalObject (Phi := Phi) (data := data)}
@@ -358,6 +365,97 @@ theorem isPullback_iff_isLinear
       (preFrobenioid (Phi := Phi) (data := data)).IsLinear arrow :=
   ⟨isLinear_of_isPullback arrow, isPullback_of_isLinear arrow⟩
 
+/-- Cancelling a roof denominator on the base recovers the numerator base. -/
+theorem denominator_base_comp_roofValue_base
+    {source target : Carrier Phi data}
+    (denominator : Carrier.CoAngularPreStepOver source)
+    (numerator : denominator.source ⟶ target) :
+    denominator.hom.base ≫
+        (Carrier.CoAngularPreStepOver.roofValue denominator numerator).base =
+      numerator.base := by
+  have cancellation :=
+    Carrier.CoAngularPreStepOver.map_denominator_comp_roofValue
+      denominator numerator
+  exact congrArg BirationalHom.base cancellation
+
+/-- The exact source roof data classifying a base-identity endomorphism. -/
+structure BaseIdentityRoof
+    (object : ColimitBirationalObject (Phi := Phi) (data := data))
+    (arrow : object ⟶ object) where
+  denominator : Carrier.CoAngularPreStepOver object.underlying
+  numerator : denominator.source ⟶ object.underlying
+  baseEquivalent : numerator.base = denominator.hom.base
+  represents :
+    colimit.ι
+        (Carrier.CoAngularPreStepOver.homDiagram
+          object.underlying object.underlying)
+        (Opposite.op denominator) numerator = arrow
+
+/-- A base-identity colimit endomorphism has a base-equivalent source roof. -/
+theorem baseIdentityRoof_of_isBaseIdentity
+    {object : ColimitBirationalObject (Phi := Phi) (data := data)}
+    (arrow : object ⟶ object)
+    (baseIdentity :
+      (preFrobenioid (Phi := Phi) (data := data)).IsBaseIdentity arrow) :
+    Nonempty (BaseIdentityRoof object arrow) := by
+  rcases Limits.Types.jointly_surjective' arrow with
+    ⟨index, numerator, represents⟩
+  let denominator := index.unop
+  have roofBaseIdentity :
+      (Carrier.CoAngularPreStepOver.roofValue denominator numerator).base =
+        𝟙 (Object.base object.underlying) := by
+    change
+      (Carrier.CoAngularPreStepOver.colimitComparisonEquiv
+        object.underlying object.underlying arrow).base = 𝟙 _ at baseIdentity
+    rw [← represents,
+      Carrier.CoAngularPreStepOver.colimitComparisonEquiv_iota] at baseIdentity
+    exact baseIdentity
+  have baseEquivalent : numerator.base = denominator.hom.base := by
+    have cancellation :=
+      denominator_base_comp_roofValue_base denominator numerator
+    rw [roofBaseIdentity] at cancellation
+    have denominatorEqNumerator : denominator.hom.base = numerator.base :=
+      Eq.trans (Category.comp_id denominator.hom.base).symm cancellation
+    exact denominatorEqNumerator.symm
+  exact ⟨
+    { denominator := denominator
+      numerator := numerator
+      baseEquivalent := baseEquivalent
+      represents := represents }⟩
+
+/-- A roof with base-equivalent numerator and denominator is base-identity. -/
+theorem isBaseIdentity_of_baseIdentityRoof
+    {object : ColimitBirationalObject (Phi := Phi) (data := data)}
+    {arrow : object ⟶ object} (roof : BaseIdentityRoof object arrow) :
+    (preFrobenioid (Phi := Phi) (data := data)).IsBaseIdentity arrow := by
+  have denominatorBaseIsIso := roof.denominator.preStep.2
+  change IsIso roof.denominator.hom.base at denominatorBaseIsIso
+  letI : IsIso roof.denominator.hom.base := denominatorBaseIsIso
+  change
+    (Carrier.CoAngularPreStepOver.colimitComparisonEquiv
+      object.underlying object.underlying arrow).base = 𝟙 _
+  rw [← roof.represents,
+    Carrier.CoAngularPreStepOver.colimitComparisonEquiv_iota]
+  apply (cancel_epi roof.denominator.hom.base).1
+  calc
+    roof.denominator.hom.base ≫
+        (Carrier.CoAngularPreStepOver.roofValue
+          roof.denominator roof.numerator).base =
+      roof.numerator.base :=
+        denominator_base_comp_roofValue_base
+          roof.denominator roof.numerator
+    _ = roof.denominator.hom.base := roof.baseEquivalent
+    _ = roof.denominator.hom.base ≫ 𝟙 _ := (Category.comp_id _).symm
+
+/-- Proposition 4.4(iv)'s base-identity endomorphism roof classification. -/
+theorem isBaseIdentity_iff_nonempty_baseIdentityRoof
+    {object : ColimitBirationalObject (Phi := Phi) (data := data)}
+    (arrow : object ⟶ object) :
+    (preFrobenioid (Phi := Phi) (data := data)).IsBaseIdentity arrow ↔
+      Nonempty (BaseIdentityRoof object arrow) :=
+  ⟨baseIdentityRoof_of_isBaseIdentity arrow,
+    fun ⟨roof⟩ ↦ isBaseIdentity_of_baseIdentityRoof roof⟩
+
 /-- The comparison preserves and reflects the pre-step predicate definitionally. -/
 theorem isPreStep_iff_comparisonMap
     {source target : ColimitBirationalObject (Phi := Phi) (data := data)}
@@ -385,6 +483,13 @@ theorem isIso_iff_isPreStep
       BirationalObject.isIso_of_isPreStep (comparison.map arrow)
         ((isPreStep_iff_comparisonMap arrow).1 preStep)
     exact isIso_of_reflects_iso arrow comparison
+
+/-- Every object of the Hom-colimit group-like target is isotropic. -/
+theorem isIsotropic
+    (object : ColimitBirationalObject (Phi := Phi) (data := data)) :
+    (preFrobenioid (Phi := Phi) (data := data)).IsIsotropic object := by
+  intro target arrow preStep _
+  exact (isIso_iff_isPreStep arrow).2 preStep
 
 /-- Every arrow in the Hom-colimit group-like target is co-angular. -/
 theorem isCoAngular
@@ -535,6 +640,15 @@ theorem localization_map_isIsometric
     (preFrobenioid (Phi := Phi) (data := data)).IsIsometric
       ((localizationFunctor (Phi := Phi) (data := data)).map arrow) :=
   isIsometric _
+
+/-- Proposition 4.4(iv): localization preserves and reflects isotropic objects. -/
+theorem localization_obj_isIsotropic_iff (object : Carrier Phi data) :
+    (preFrobenioid (Phi := Phi) (data := data)).IsIsotropic
+        ((localizationFunctor (Phi := Phi) (data := data)).obj object) ↔
+      (Carrier.preFrobenioid Phi data).IsIsotropic object :=
+  ⟨fun _ ↦ Carrier.isIsotropic Phi data object,
+    fun _ ↦ isIsotropic
+      ((localizationFunctor (Phi := Phi) (data := data)).obj object)⟩
 
 end Carrier.ColimitBirationalObject
 
