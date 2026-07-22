@@ -180,9 +180,16 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceModelFrobenioid.BirationalObject.inclusionFunctor",
         "SourceModelFrobenioid.BirationalObject.inclusionFunctor_faithful",
         "SourceModelFrobenioid.BirationalObject.inclusionFunctor_map_divisorClass",
-        "SourceModelFrobenioid.BirationalObject.inclusion_map_isIso_of_preStep"]
+        "SourceModelFrobenioid.BirationalObject.inclusion_map_isIso_of_preStep",
+        "SourceModelFrobenioid.Carrier.CoAngularPreStepOver",
+        "SourceModelFrobenioid.Carrier.CoAngularPreStepOver.homDiagram",
+        "SourceModelFrobenioid.Carrier.CoAngularPreStepOver.BirationalHomColimit",
+        "SourceModelFrobenioid.Carrier.CoAngularPreStepOver.isFilteredIndexOp",
+        "SourceModelFrobenioid.Carrier.CoAngularPreStepOver.colimitComparisonEquiv",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.comparisonEquivalence"]
       .partialImplementation
-      "For the Theorem 5.2 model, the concrete category of degree/base/rational-function triples, its projection to F_0D, faithful inclusion, groupified divisor, and explicit inverses of pre-steps are constructed. The source category is the filtered colimit of Hom(A',B) over co-angular pre-steps A' -> A. Its construction, universal property, equivalence with this concrete category, group-like Frobenioid presentation, and the complete morphism dictionary of Proposition 4.4(iv) remain open.",
+      "For the Theorem 5.2 model, the category of co-angular pre-steps over A is constructed and its opposite is proved filtered. The actual Type-valued colimit of Hom(A',B), roof cocone, balanced lift of every concrete arrow, common-refinement injectivity proof, colimit-Hom category, and equivalence with the concrete degree/base/rational-function target are formalized. Relating transported composition to the source roof-square formula, constructing the group-like Frobenioid presentation, and proving the complete morphism dictionary of Proposition 4.4(iv) remain open.",
     clause "FrdI.4.5(i)" .frobenioidsI
       "Frobenioids I, Definition 4.5(i)"
       ["PreFrobenioid.IsBirationallyFrobeniusNormalized",
@@ -293,9 +300,11 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceModelFrobenioid.BirationalObject.inclusion_map_isIso_of_preStep",
         "SourceModelFrobenioid.BirationalObject.rationalFunctionEquiv",
         "SourceModelFrobenioid.BirationalObject.rationalFunctionEndomorphism_divisorClass",
-        "SourceModelFrobenioid.BirationalObject.isModelTypeForConcreteBirationalization"]
+        "SourceModelFrobenioid.BirationalObject.isModelTypeForConcreteBirationalization",
+        "SourceModelFrobenioid.Carrier.CoAngularPreStepOver.colimitComparisonEquiv",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.comparisonEquivalence"]
       .partialImplementation
-      "The model category is connected, totally epimorphic, isotropic, and satisfies all seven Definition 1.3 axiom groups, packaged as a Frobenioid presentation. The zero-divisor base-section and canonical degree-n endomorphisms prove pre-model type. A concrete birational target has faithful inclusion, makes pre-steps invertible, is Frobenius-normalized, and has an objectwise rational-function group equivalence whose divisor is DivB. It remains to construct Proposition 4.4's filtered colimit, identify it with the concrete target, promote the objectwise equivalences to the asserted natural isomorphism on D, and transfer the model-type proof across that identification.",
+      "The model category is a Frobenioid presentation and its zero-divisor base-Frobenius pair proves pre-model type. Its Proposition 4.4 Hom colimits are constructed over proved filtered indexing categories and are equivalent to the concrete birational target, which is Frobenius-normalized and has the objectwise rational-function group equivalence compatible with DivB. It remains to identify transported composition with the paper's roof-square construction, construct the group-like Frobenioid structure on the colimit category, promote the rational-function equivalences to the asserted natural isomorphism on D, and state model type for the canonical colimit inclusion.",
     clause "FrdII.5.1" .frobenioidsII
       "Frobenioids II, Definition 5.1"
       [] .unformalized
