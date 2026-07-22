@@ -131,6 +131,12 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceModelFrobenioid.Carrier.CoAngularPreStepOver.colimitComparison_surjective
 #print axioms Iut.SourceModelFrobenioid.Carrier.CoAngularPreStepOver.colimitComparison_injective
 #print axioms Iut.SourceModelFrobenioid.Carrier.CoAngularPreStepOver.colimitComparisonEquiv
+#print axioms Iut.SourceModelFrobenioid.Carrier.CoAngularPreStepOver.compositionSquare
+#print axioms Iut.SourceModelFrobenioid.Carrier.CoAngularPreStepOver.roofValue_compositeRoof
+#print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.composition_on_roof_iota
+#print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.localizationFunctor_faithful
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.localizationFunctor_map_isIso_of_preStep
 #print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.comparisonEquivalence
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.quotientUnit_exists

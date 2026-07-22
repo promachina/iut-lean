@@ -18,9 +18,10 @@ This file constructs that indexing category for the model Frobenioid, proves
 that its opposite is filtered, forms the actual `Type`-valued colimit, and
 proves that the roof map `(α,φ) ↦ α⁻¹φ` is bijective onto the concrete
 birational category.  It consequently constructs the colimit-Hom category and
-an equivalence with the concrete target.  The source-level roof composition
-formula and the complete Proposition 4.4(iv) dictionary remain separate
-obligations.
+an equivalence with the concrete target.  The Proposition 1.11(vii) refinement
+square and Proposition 4.4(i) roof-composition formula are explicit.  The
+group-like Frobenioid presentation and complete Proposition 4.4(iv) dictionary
+remain separate obligations.
 -/
 
 open CategoryTheory CategoryTheory.Limits
@@ -185,6 +186,42 @@ theorem roofValue_transition
       inclusion.map (transition.hom ≫ numerator) =
     (denominatorIso second).inv ≫ inclusion.map numerator
   rw [inclusion.map_comp, ← Category.assoc, inverseTransition]
+
+/-- Cancelling a roof denominator recovers its numerator. -/
+@[reassoc]
+theorem map_denominator_comp_roofValue
+    {source target : Carrier Phi data}
+    (denominator : CoAngularPreStepOver source)
+    (numerator : denominator.source ⟶ target) :
+    (BirationalObject.inclusionFunctor (Phi := Phi) (data := data)).map
+          denominator.hom ≫
+        roofValue denominator numerator =
+      (BirationalObject.inclusionFunctor (Phi := Phi) (data := data)).map
+        numerator := by
+  change (denominatorIso denominator).hom ≫
+      ((denominatorIso denominator).inv ≫
+        (BirationalObject.inclusionFunctor (Phi := Phi) (data := data)).map
+          numerator) = _
+  simp
+
+/-- A roof with identity denominator evaluates to the included numerator. -/
+@[simp]
+theorem roofValue_identity_denominator
+    {source target : Carrier Phi data} (numerator : source ⟶ target) :
+    roofValue (identity source) numerator =
+      (BirationalObject.inclusionFunctor (Phi := Phi) (data := data)).map
+        numerator := by
+  have cancellation := map_denominator_comp_roofValue
+    (identity source) numerator
+  change (BirationalObject.inclusionFunctor (Phi := Phi) (data := data)).map
+        (𝟙 source) ≫ roofValue (identity source) numerator = _ at cancellation
+  have mappedIdentity :
+      (BirationalObject.inclusionFunctor (Phi := Phi) (data := data)).map
+          (𝟙 source) = 𝟙 _ :=
+    (BirationalObject.inclusionFunctor (Phi := Phi) (data := data)).map_id
+      source
+  rw [mappedIdentity, Category.id_comp] at cancellation
+  exact cancellation
 
 /-- Roof evaluation as a cocone over the Hom-set diagram. -/
 def homCocone (source target : Carrier Phi data) :
@@ -439,7 +476,7 @@ def commonRefinement {target : Carrier Phi data}
       BirationalObject.inclusionFunctor_faithful
         (Phi := Phi) (data := data)
     apply inclusion.map_injective
-    rw [inclusion.map_comp, inclusion.map_comp]
+    simp only [inclusion.map_comp]
     have lifted := roofValue_lift comparison
     change (denominatorIso (liftDenominator comparison)).inv ≫
         inclusion.map toSecondHom = comparison at lifted
@@ -492,6 +529,195 @@ def commonRefinement {target : Carrier Phi data}
           preStep := toSecondPreStep
           coAngular := isCoAngular Phi data toSecondHom
           commutes := square.symm } }
+
+/-- Composition of a denominator with a further co-angular refinement. -/
+def composedDenominator {target : Carrier Phi data}
+    (denominator : CoAngularPreStepOver target)
+    (refinement : CoAngularPreStepOver denominator.source) :
+    CoAngularPreStepOver target where
+  source := refinement.source
+  hom := refinement.hom ≫ denominator.hom
+  preStep := by
+    constructor
+    · have refinementLinear := refinement.preStep.1
+      have denominatorLinear := denominator.preStep.1
+      change refinement.hom.frobeniusDegree = 1 at refinementLinear
+      change denominator.hom.frobeniusDegree = 1 at denominatorLinear
+      change refinement.hom.frobeniusDegree *
+          denominator.hom.frobeniusDegree = 1
+      rw [refinementLinear, denominatorLinear]
+      rfl
+    · have refinementBase := refinement.preStep.2
+      have denominatorBase := denominator.preStep.2
+      change IsIso refinement.hom.base at refinementBase
+      change IsIso denominator.hom.base at denominatorBase
+      change IsIso (refinement.hom.base ≫ denominator.hom.base)
+      letI : IsIso refinement.hom.base := refinementBase
+      letI : IsIso denominator.hom.base := denominatorBase
+      infer_instance
+  coAngular := isCoAngular Phi data (refinement.hom ≫ denominator.hom)
+
+/-- The refinement map from a composite denominator to its outer denominator. -/
+def composedDenominatorTransition {target : Carrier Phi data}
+    (denominator : CoAngularPreStepOver target)
+    (refinement : CoAngularPreStepOver denominator.source) :
+    composedDenominator denominator refinement ⟶ denominator where
+  hom := refinement.hom
+  preStep := refinement.preStep
+  coAngular := refinement.coAngular
+  commutes := rfl
+
+/-- The square used in the source proof of Proposition 4.4(i). -/
+structure CompositionSquare
+    {source middle : Carrier Phi data}
+    (firstDenominator : CoAngularPreStepOver source)
+    (firstNumerator : firstDenominator.source ⟶ middle)
+    (secondDenominator : CoAngularPreStepOver middle) where
+  refinement : CoAngularPreStepOver firstDenominator.source
+  across : refinement.source ⟶ secondDenominator.source
+  commutes : refinement.hom ≫ firstNumerator =
+    across ≫ secondDenominator.hom
+
+/-- The birational quotient lifted to produce the 4.4(i) composition square. -/
+def compositionComparison
+    {source middle : Carrier Phi data}
+    (firstDenominator : CoAngularPreStepOver source)
+    (firstNumerator : firstDenominator.source ⟶ middle)
+    (secondDenominator : CoAngularPreStepOver middle) :
+    BirationalHom ⟨firstDenominator.source⟩ ⟨secondDenominator.source⟩ :=
+  (BirationalObject.inclusionFunctor (Phi := Phi) (data := data)).map
+      firstNumerator ≫
+    (denominatorIso secondDenominator).inv
+
+/-- Proposition 1.11(vii)'s square, constructed in the concrete model. -/
+def compositionSquare
+    {source middle : Carrier Phi data}
+    (firstDenominator : CoAngularPreStepOver source)
+    (firstNumerator : firstDenominator.source ⟶ middle)
+    (secondDenominator : CoAngularPreStepOver middle) :
+    CompositionSquare firstDenominator firstNumerator secondDenominator := by
+  let inclusion := BirationalObject.inclusionFunctor (Phi := Phi) (data := data)
+  let comparison := compositionComparison firstDenominator firstNumerator
+    secondDenominator
+  let refinement := liftDenominator comparison
+  let across := liftNumerator comparison
+  have square : refinement.hom ≫ firstNumerator =
+      across ≫ secondDenominator.hom := by
+    letI : inclusion.Faithful :=
+      BirationalObject.inclusionFunctor_faithful
+        (Phi := Phi) (data := data)
+    apply inclusion.map_injective
+    simp only [inclusion.map_comp]
+    have lifted := roofValue_lift comparison
+    change (denominatorIso refinement).inv ≫ inclusion.map across =
+      comparison at lifted
+    have firstFormula : inclusion.map firstNumerator =
+        ((denominatorIso refinement).inv ≫ inclusion.map across) ≫
+          inclusion.map secondDenominator.hom := by
+      rw [lifted]
+      dsimp [comparison, compositionComparison]
+      change inclusion.map firstNumerator =
+        (inclusion.map firstNumerator ≫
+            (denominatorIso secondDenominator).inv) ≫
+          (denominatorIso secondDenominator).hom
+      simp
+    rw [firstFormula, Category.assoc]
+    change (denominatorIso refinement).hom ≫
+          (denominatorIso refinement).inv ≫
+          inclusion.map across ≫ inclusion.map secondDenominator.hom =
+      inclusion.map across ≫ inclusion.map secondDenominator.hom
+    simp
+    rfl
+  exact
+    { refinement := refinement
+      across := across
+      commutes := square }
+
+/-- The explicit source roof selected for the composite in Proposition 4.4(i). -/
+def compositeRoofDenominator
+    {source middle : Carrier Phi data}
+    (firstDenominator : CoAngularPreStepOver source)
+    (firstNumerator : firstDenominator.source ⟶ middle)
+    (secondDenominator : CoAngularPreStepOver middle) :
+    CoAngularPreStepOver source :=
+  composedDenominator firstDenominator
+    (compositionSquare firstDenominator firstNumerator secondDenominator).refinement
+
+/-- The source formula `ψ' ∘ φ''` for the numerator of a composite roof. -/
+def compositeRoofNumerator
+    {source middle target : Carrier Phi data}
+    (firstDenominator : CoAngularPreStepOver source)
+    (firstNumerator : firstDenominator.source ⟶ middle)
+    (secondDenominator : CoAngularPreStepOver middle)
+    (secondNumerator : secondDenominator.source ⟶ target) :
+    (compositeRoofDenominator firstDenominator firstNumerator
+      secondDenominator).source ⟶ target :=
+  (compositionSquare firstDenominator firstNumerator
+      secondDenominator).across ≫ secondNumerator
+
+/-- Evaluation of the explicit source roof agrees with concrete composition. -/
+theorem roofValue_compositeRoof
+    {source middle target : Carrier Phi data}
+    (firstDenominator : CoAngularPreStepOver source)
+    (firstNumerator : firstDenominator.source ⟶ middle)
+    (secondDenominator : CoAngularPreStepOver middle)
+    (secondNumerator : secondDenominator.source ⟶ target) :
+    roofValue
+        (compositeRoofDenominator firstDenominator firstNumerator
+          secondDenominator)
+        (compositeRoofNumerator firstDenominator firstNumerator
+          secondDenominator secondNumerator) =
+      roofValue firstDenominator firstNumerator ≫
+        roofValue secondDenominator secondNumerator := by
+  let inclusion := BirationalObject.inclusionFunctor (Phi := Phi) (data := data)
+  let square := compositionSquare firstDenominator firstNumerator
+    secondDenominator
+  let composite := compositeRoofDenominator firstDenominator firstNumerator
+    secondDenominator
+  letI : IsIso (inclusion.map composite.hom) :=
+    (denominatorIso composite).isIso_hom
+  apply (cancel_epi (inclusion.map composite.hom)).1
+  have mappedSquare := congrArg inclusion.map square.commutes
+  simp only [inclusion.map_comp] at mappedSquare
+  have compositeMap : inclusion.map composite.hom =
+      inclusion.map square.refinement.hom ≫
+        inclusion.map firstDenominator.hom := by
+    dsimp [composite, compositeRoofDenominator, composedDenominator]
+    rw [inclusion.map_comp]
+  have mappedSquareAssoc : inclusion.map square.refinement.hom ≫
+        inclusion.map firstNumerator ≫
+          roofValue secondDenominator secondNumerator =
+      inclusion.map square.across ≫
+        inclusion.map secondDenominator.hom ≫
+          roofValue secondDenominator secondNumerator := by
+    simpa only [Category.assoc] using congrArg
+      (· ≫ roofValue secondDenominator secondNumerator) mappedSquare
+  have reassociateComposite :
+      (inclusion.map square.refinement.hom ≫
+          inclusion.map firstDenominator.hom) ≫
+          (roofValue firstDenominator firstNumerator ≫
+            roofValue secondDenominator secondNumerator) =
+        inclusion.map square.refinement.hom ≫
+          inclusion.map firstDenominator.hom ≫
+            roofValue firstDenominator firstNumerator ≫
+              roofValue secondDenominator secondNumerator :=
+    Category.assoc _ _ _
+  have cancelSecondDenominator : inclusion.map square.across ≫
+        (inclusion.map secondDenominator.hom ≫
+          roofValue secondDenominator secondNumerator) =
+      inclusion.map square.across ≫ inclusion.map secondNumerator :=
+    congrArg (inclusion.map square.across ≫ ·)
+      (map_denominator_comp_roofValue secondDenominator secondNumerator)
+  rw [map_denominator_comp_roofValue composite]
+  change inclusion.map (square.across ≫ secondNumerator) =
+    inclusion.map composite.hom ≫
+      (roofValue firstDenominator firstNumerator ≫
+        roofValue secondDenominator secondNumerator)
+  rw [inclusion.map_comp, compositeMap]
+  refine Eq.trans ?_ reassociateComposite.symm
+  rw [map_denominator_comp_roofValue_assoc firstDenominator firstNumerator]
+  rw [mappedSquareAssoc]
+  exact cancelSecondDenominator.symm
 
 /-- The direct-limit indexing category is filtered. -/
 instance isFilteredIndexOp (target : Carrier Phi data) :
@@ -560,6 +786,17 @@ def colimitComparisonEquiv (source target : Carrier Phi data) :
   Equiv.ofBijective (colimitComparison source target)
     ⟨colimitComparison_injective source target,
       colimitComparison_surjective source target⟩
+
+@[simp]
+theorem colimitComparisonEquiv_iota
+    {source target : Carrier Phi data}
+    (denominator : CoAngularPreStepOver source)
+    (numerator : denominator.source ⟶ target) :
+    colimitComparisonEquiv source target
+        (colimit.ι (homDiagram source target) (Opposite.op denominator)
+          numerator) =
+      roofValue denominator numerator :=
+  colimitComparison_ι denominator numerator
 
 end CoAngularPreStepOver
 
@@ -645,6 +882,64 @@ instance category :
       BirationalHom.comp f (BirationalHom.comp g h)
     exact (birationalCategory (Phi := Phi) (data := data)).assoc f g h
 
+/-- The category composition is the explicit square-and-roof formula of 4.4(i). -/
+theorem composition_on_roof_iota
+    {source middle target :
+      ColimitBirationalObject (Phi := Phi) (data := data)}
+    (firstDenominator : CoAngularPreStepOver source.underlying)
+    (firstNumerator : firstDenominator.source ⟶ middle.underlying)
+    (secondDenominator : CoAngularPreStepOver middle.underlying)
+    (secondNumerator : secondDenominator.source ⟶ target.underlying) :
+    composition
+        (colimit.ι (homDiagram source.underlying middle.underlying)
+          (Opposite.op firstDenominator) firstNumerator)
+        (colimit.ι (homDiagram middle.underlying target.underlying)
+          (Opposite.op secondDenominator) secondNumerator) =
+      colimit.ι (homDiagram source.underlying target.underlying)
+        (Opposite.op (compositeRoofDenominator firstDenominator
+          firstNumerator secondDenominator))
+        (compositeRoofNumerator firstDenominator firstNumerator
+          secondDenominator secondNumerator) := by
+  apply (colimitComparisonEquiv source.underlying target.underlying).injective
+  rw [colimitComparisonEquiv_composition]
+  simp only [colimitComparisonEquiv_iota]
+  exact (roofValue_compositeRoof firstDenominator firstNumerator
+    secondDenominator secondNumerator).symm
+
+/-- The canonical functor `C → C^birat` represented by identity denominators. -/
+def localizationFunctor :
+    Carrier Phi data ⥤ ColimitBirationalObject (Phi := Phi) (data := data) where
+  obj object := ⟨object⟩
+  map {source target} arrow :=
+    colimit.ι (homDiagram source target) (Opposite.op (CoAngularPreStepOver.identity source))
+      arrow
+  map_id object := by
+    apply (colimitComparisonEquiv object object).injective
+    change colimitComparisonEquiv object object
+        (colimit.ι (homDiagram object object)
+          (Opposite.op (CoAngularPreStepOver.identity object)) (𝟙 object)) =
+      colimitComparisonEquiv object object (identity ⟨object⟩)
+    rw [colimitComparisonEquiv_iota, colimitComparisonEquiv_identity]
+    rw [roofValue_identity_denominator]
+    exact (BirationalObject.inclusionFunctor (Phi := Phi) (data := data)).map_id
+      object
+  map_comp {source middle target} first second := by
+    apply (colimitComparisonEquiv source target).injective
+    change colimitComparisonEquiv source target
+        (colimit.ι (homDiagram source target)
+          (Opposite.op (CoAngularPreStepOver.identity source))
+          (first ≫ second)) =
+      colimitComparisonEquiv source target
+        (composition
+          (colimit.ι (homDiagram source middle)
+            (Opposite.op (CoAngularPreStepOver.identity source)) first)
+          (colimit.ι (homDiagram middle target)
+            (Opposite.op (CoAngularPreStepOver.identity middle)) second))
+    rw [colimitComparisonEquiv_iota, colimitComparisonEquiv_composition]
+    simp only [colimitComparisonEquiv_iota, roofValue_identity_denominator]
+    exact (BirationalObject.inclusionFunctor (Phi := Phi) (data := data)).map_comp
+      first second
+
 /-- The identity-on-objects comparison to the concrete birational category. -/
 def comparisonFunctor :
     ColimitBirationalObject (Phi := Phi) (data := data) ⥤
@@ -655,6 +950,29 @@ def comparisonFunctor :
     exact colimitComparisonEquiv source.underlying target.underlying arrow
   map_id object := Equiv.apply_symm_apply _ _
   map_comp first second := Equiv.apply_symm_apply _ _
+
+/-- Comparison identifies the colimit localization with the concrete inclusion. -/
+@[simp]
+theorem comparisonFunctor_map_localizationFunctor
+    {source target : Carrier Phi data} (arrow : source ⟶ target) :
+    (comparisonFunctor (Phi := Phi) (data := data)).map
+        ((localizationFunctor (Phi := Phi) (data := data)).map arrow) =
+      (BirationalObject.inclusionFunctor (Phi := Phi) (data := data)).map
+        arrow := by
+  change colimitComparisonEquiv source target
+      (colimit.ι (homDiagram source target)
+        (Opposite.op (CoAngularPreStepOver.identity source)) arrow) = _
+  rw [colimitComparisonEquiv_iota, roofValue_identity_denominator]
+
+/-- Proposition 4.4(ii): the canonical localization functor is faithful. -/
+theorem localizationFunctor_faithful :
+    (localizationFunctor (Phi := Phi) (data := data)).Faithful := by
+  constructor
+  intro source target first second equality
+  apply (BirationalObject.inclusionFunctor_faithful
+    (Phi := Phi) (data := data)).map_injective
+  rw [← comparisonFunctor_map_localizationFunctor first,
+    ← comparisonFunctor_map_localizationFunctor second, equality]
 
 /-- The comparison functor is fully faithful on the proved Hom equivalences. -/
 def comparisonFunctor_fullyFaithful :
@@ -681,6 +999,19 @@ instance comparisonFunctor_isEquivalence :
   full :=
     (comparisonFunctor_fullyFaithful (Phi := Phi) (data := data)).full
   essSurj := comparisonFunctor_essSurj
+
+/-- Every pre-step is inverted by the canonical birationalization functor. -/
+theorem localizationFunctor_map_isIso_of_preStep
+    {source target : Carrier Phi data} (arrow : source ⟶ target)
+    (preStep : (Carrier.preFrobenioid Phi data).IsPreStep arrow) :
+    IsIso ((localizationFunctor (Phi := Phi) (data := data)).map arrow) := by
+  let comparison := comparisonFunctor (Phi := Phi) (data := data)
+  haveI : IsIso (comparison.map
+      ((localizationFunctor (Phi := Phi) (data := data)).map arrow)) := by
+    rw [comparisonFunctor_map_localizationFunctor]
+    exact BirationalObject.inclusion_map_isIso_of_preStep arrow preStep
+  exact isIso_of_reflects_iso
+    ((localizationFunctor (Phi := Phi) (data := data)).map arrow) comparison
 
 /-- Equivalence between the filtered-colimit and concrete model targets. -/
 noncomputable def comparisonEquivalence :
