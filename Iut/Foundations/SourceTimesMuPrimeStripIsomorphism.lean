@@ -749,4 +749,466 @@ theorem kummerStructure_compatible
 
 end SourceFiniteTimesMuKummerFrobenioidEquivalence
 
+/-! ## Archimedean torsion-quotient system isomorphisms -/
+
+/--
+A structure-preserving isomorphism between two reconstructed archimedean
+stages.  Besides the split-Frobenioid equivalence, this retains the base,
+divisor monoids, Frobenius degrees, and FSM morphisms.
+-/
+structure SourceArchimedeanTimesMuStageEquivalence
+    {sourceUnderlying targetUnderlying :
+      ArchimedeanSplitFrobenioidPresentation.{u}}
+    {sourceQuotients :
+      SourceArchimedeanTimesMuQuotientSystem sourceUnderlying}
+    {targetQuotients :
+      SourceArchimedeanTimesMuQuotientSystem targetUnderlying}
+    {N : ℕ+}
+    (source : SourceArchimedeanTimesMuStage sourceQuotients N)
+    (target : SourceArchimedeanTimesMuStage targetQuotients N) where
+  reconstructed :
+    ArchimedeanSplitFrobenioidEquivalence
+      source.reconstructed target.reconstructed
+  base :
+    CategoryTheory.Equivalence
+      source.reconstructed.frobenioid.frobenioid.baseCategory
+      target.reconstructed.frobenioid.frobenioid.baseCategory
+  base_compatible :
+    source.reconstructed.frobenioid.frobenioid.preFrobenioid.base ⋙
+        base.functor =
+      reconstructed.frobenioid.carrier.functor ⋙
+        target.reconstructed.frobenioid.frobenioid.preFrobenioid.base
+  divisor :
+    ∀ X : SourceArchimedeanTimesMuStage.Carrier source,
+      SourceArchimedeanTimesMuStage.DivisorAt source X ≃+
+        SourceArchimedeanTimesMuStage.DivisorAt target
+          (reconstructed.frobenioid.carrier.functor.obj X)
+  divisor_compatible :
+    ∀ {X Y : SourceArchimedeanTimesMuStage.Carrier source}
+      (map : X ⟶ Y),
+      divisor X
+          (source.reconstructed.frobenioid.frobenioid.preFrobenioid.divisor
+            map) =
+        target.reconstructed.frobenioid.frobenioid.preFrobenioid.divisor
+          (reconstructed.frobenioid.carrier.functor.map map)
+  frobeniusDegree_compatible :
+    ∀ {X Y : SourceArchimedeanTimesMuStage.Carrier source}
+      (map : X ⟶ Y),
+      target.reconstructed.frobenioid.frobenioid.preFrobenioid.frobeniusDegree
+          (reconstructed.frobenioid.carrier.functor.map map) =
+        source.reconstructed.frobenioid.frobenioid.preFrobenioid.frobeniusDegree
+          map
+  fsm_compatible :
+    ∀ {X Y :
+        source.reconstructed.frobenioid.frobenioid.baseCategory}
+      (map : X ⟶ Y),
+      source.reconstructed.frobenioid.frobenioid.isFSM map ->
+        target.reconstructed.frobenioid.frobenioid.isFSM
+          (base.functor.map map)
+  referenceRationalMonoid :
+    SourceArchimedeanTimesMuStage.ReferenceRationalMonoid source ≃*
+      SourceArchimedeanTimesMuStage.ReferenceRationalMonoid target
+  referenceRationalMonoid_hom :
+    ∀ value,
+      (referenceRationalMonoid value).hom =
+        reconstructed.referenceIso.inv ≫
+          reconstructed.frobenioid.carrier.functor.map value.hom ≫
+            reconstructed.referenceIso.hom
+  referenceTotal_compatible :
+    ∀ value,
+      target.reconstructed.rationalTotalIso
+          (referenceRationalMonoid value) =
+        reconstructed.topologicalSplitting.total.toHom
+          (source.reconstructed.rationalTotalIso value)
+
+namespace SourceArchimedeanTimesMuStageEquivalence
+
+variable
+    {sourceUnderlying middleUnderlying targetUnderlying :
+      ArchimedeanSplitFrobenioidPresentation.{u}}
+    {sourceQuotients :
+      SourceArchimedeanTimesMuQuotientSystem sourceUnderlying}
+    {middleQuotients :
+      SourceArchimedeanTimesMuQuotientSystem middleUnderlying}
+    {targetQuotients :
+      SourceArchimedeanTimesMuQuotientSystem targetUnderlying}
+    {N : ℕ+}
+    {source : SourceArchimedeanTimesMuStage sourceQuotients N}
+    {middle : SourceArchimedeanTimesMuStage middleQuotients N}
+    {target : SourceArchimedeanTimesMuStage targetQuotients N}
+
+/-- Identity isomorphism of a reconstructed archimedean stage. -/
+def refl (source : SourceArchimedeanTimesMuStage sourceQuotients N) :
+    SourceArchimedeanTimesMuStageEquivalence source source where
+  reconstructed := ArchimedeanSplitFrobenioidEquivalence.refl _
+  base := CategoryTheory.Equivalence.refl
+  base_compatible :=
+    (Functor.comp_id
+      source.reconstructed.frobenioid.frobenioid.preFrobenioid.base).trans
+      (Functor.id_comp
+        source.reconstructed.frobenioid.frobenioid.preFrobenioid.base).symm
+  divisor _ := AddEquiv.refl _
+  divisor_compatible _ := rfl
+  frobeniusDegree_compatible _ := rfl
+  fsm_compatible _ hmap := hmap
+  referenceRationalMonoid := MulEquiv.refl _
+  referenceRationalMonoid_hom value := by
+    change value.hom =
+      𝟙 source.reconstructed.referenceObject ≫
+        value.hom ≫ 𝟙 source.reconstructed.referenceObject
+    rw [Category.id_comp]
+    exact (Category.comp_id value.hom).symm
+  referenceTotal_compatible _ := rfl
+
+/-- Composition of reconstructed archimedean stage isomorphisms. -/
+def trans
+    (first : SourceArchimedeanTimesMuStageEquivalence source middle)
+    (second : SourceArchimedeanTimesMuStageEquivalence middle target) :
+    SourceArchimedeanTimesMuStageEquivalence source target where
+  reconstructed := first.reconstructed.trans second.reconstructed
+  base := first.base.trans second.base
+  base_compatible := by
+    change
+      source.reconstructed.frobenioid.frobenioid.preFrobenioid.base ⋙
+          (first.base.functor ⋙ second.base.functor) =
+        (first.reconstructed.frobenioid.carrier.functor ⋙
+            second.reconstructed.frobenioid.carrier.functor) ⋙
+          target.reconstructed.frobenioid.frobenioid.preFrobenioid.base
+    rw [← Functor.assoc]
+    rw [first.base_compatible]
+    rw [Functor.assoc]
+    rw [second.base_compatible]
+    rw [← Functor.assoc]
+  divisor X :=
+    (first.divisor X).trans
+      (second.divisor
+        (first.reconstructed.frobenioid.carrier.functor.obj X))
+  divisor_compatible map := by
+    change
+      second.divisor
+          (first.reconstructed.frobenioid.carrier.functor.obj _)
+          (first.divisor _
+            (source.reconstructed.frobenioid.frobenioid.preFrobenioid.divisor
+              map)) = _
+    rw [first.divisor_compatible]
+    rw [second.divisor_compatible]
+    rfl
+  frobeniusDegree_compatible map := by
+    change
+      target.reconstructed.frobenioid.frobenioid.preFrobenioid.frobeniusDegree
+          (second.reconstructed.frobenioid.carrier.functor.map
+            (first.reconstructed.frobenioid.carrier.functor.map map)) = _
+    rw [second.frobeniusDegree_compatible]
+    rw [first.frobeniusDegree_compatible]
+  fsm_compatible map hmap :=
+    second.fsm_compatible _ (first.fsm_compatible map hmap)
+  referenceRationalMonoid :=
+    first.referenceRationalMonoid.trans
+      second.referenceRationalMonoid
+  referenceRationalMonoid_hom value := by
+    change
+      (second.referenceRationalMonoid
+        (first.referenceRationalMonoid value)).hom =
+        (second.reconstructed.frobenioid.carrier.functor.mapIso
+              first.reconstructed.referenceIso ≪≫
+            second.reconstructed.referenceIso).inv ≫
+          second.reconstructed.frobenioid.carrier.functor.map
+              (first.reconstructed.frobenioid.carrier.functor.map value.hom) ≫
+            (second.reconstructed.frobenioid.carrier.functor.mapIso
+                first.reconstructed.referenceIso ≪≫
+              second.reconstructed.referenceIso).hom
+    rw [second.referenceRationalMonoid_hom]
+    rw [first.referenceRationalMonoid_hom]
+    simp only [Functor.map_comp, Iso.trans_hom, Iso.trans_inv,
+      Functor.mapIso_hom, Functor.mapIso_inv, Category.assoc]
+  referenceTotal_compatible value := by
+    change
+      target.reconstructed.rationalTotalIso
+          (second.referenceRationalMonoid
+            (first.referenceRationalMonoid value)) =
+        second.reconstructed.topologicalSplitting.total.toHom
+          (first.reconstructed.topologicalSplitting.total.toHom
+            (source.reconstructed.rationalTotalIso value))
+    rw [second.referenceTotal_compatible]
+    rw [first.referenceTotal_compatible]
+
+end SourceArchimedeanTimesMuStageEquivalence
+
+/--
+An isomorphism of the complete archimedean inductive systems in Definition
+4.9(v).  The level maps commute with the torsion quotients, the unique
+orientation reversal, the reconstructed split topological monoids, and all
+carrier, base, and reference-rational transition maps.
+-/
+structure SourceArchimedeanTimesMuSystemEquivalence
+    {sourceUnderlying targetUnderlying :
+      ArchimedeanSplitFrobenioidPresentation.{u}}
+    (source : SourceArchimedeanTimesMuSystem sourceUnderlying)
+    (target : SourceArchimedeanTimesMuSystem targetUnderlying) where
+  underlying :
+    ArchimedeanSplitFrobenioidEquivalence
+      sourceUnderlying targetUnderlying
+  unitQuotient :
+    ∀ N, TopologicalMonoidIso
+      (source.quotients.unitQuotient N)
+      (target.quotients.unitQuotient N)
+  quotientMap_compatible :
+    ∀ N value,
+      (unitQuotient N).toHom
+          (source.quotients.quotientMap N value) =
+        target.quotients.quotientMap N
+          (underlying.topologicalSplitting.compactFactor.toHom value)
+  orientationReversal_compatible :
+    ∀ value,
+      underlying.topologicalSplitting.compactFactor.toHom
+          (source.quotients.orientationReversal.toHom value) =
+        target.quotients.orientationReversal.toHom
+          (underlying.topologicalSplitting.compactFactor.toHom value)
+  quotientTransition_compatible :
+    ∀ (N M : ℕ+) (hNM : N ∣ M) value,
+      (unitQuotient M).toHom
+          (source.quotients.transition N M hNM value) =
+        target.quotients.transition N M hNM
+          ((unitQuotient N).toHom value)
+  stage :
+    ∀ N, SourceArchimedeanTimesMuStageEquivalence
+      (source.stage N) (target.stage N)
+  quotientSplitting_compatible :
+    ∀ N value,
+      (target.stage N).quotientSplittingIso.total.toHom
+          ((stage N).reconstructed.topologicalSplitting.total.toHom value) =
+        ((unitQuotient N).toHom
+            ((source.stage N).quotientSplittingIso.total.toHom value).1,
+          underlying.topologicalSplitting.noncompactFactor.toHom
+            ((source.stage N).quotientSplittingIso.total.toHom value).2)
+  carrierTransition_natural :
+    ∀ (N M : ℕ+) (hNM : N ∣ M),
+      (stage N).reconstructed.frobenioid.carrier.functor ⋙
+          target.carrierTransition N M hNM =
+        source.carrierTransition N M hNM ⋙
+          (stage M).reconstructed.frobenioid.carrier.functor
+  baseTransition_natural :
+    ∀ (N M : ℕ+) (hNM : N ∣ M),
+      (stage N).base.functor ⋙ target.baseTransition N M hNM =
+        source.baseTransition N M hNM ⋙ (stage M).base.functor
+  rationalTransition_natural :
+    ∀ (N M : ℕ+) (hNM : N ∣ M)
+      (value :
+        SourceArchimedeanTimesMuStage.ReferenceRationalMonoid
+          (source.stage N)),
+      (stage M).referenceRationalMonoid
+          (source.rationalTransition N M hNM value) =
+        target.rationalTransition N M hNM
+          ((stage N).referenceRationalMonoid value)
+
+namespace SourceArchimedeanTimesMuSystemEquivalence
+
+variable
+    {sourceUnderlying middleUnderlying targetUnderlying :
+      ArchimedeanSplitFrobenioidPresentation.{u}}
+    {source : SourceArchimedeanTimesMuSystem sourceUnderlying}
+    {middle : SourceArchimedeanTimesMuSystem middleUnderlying}
+    {target : SourceArchimedeanTimesMuSystem targetUnderlying}
+
+/-- Identity isomorphism of an archimedean torsion-quotient system. -/
+def refl (source : SourceArchimedeanTimesMuSystem sourceUnderlying) :
+    SourceArchimedeanTimesMuSystemEquivalence source source where
+  underlying := ArchimedeanSplitFrobenioidEquivalence.refl _
+  unitQuotient N :=
+    TopologicalMonoidIso.refl (source.quotients.unitQuotient N)
+  quotientMap_compatible _ _ := rfl
+  orientationReversal_compatible _ := rfl
+  quotientTransition_compatible _ _ _ _ := rfl
+  stage N := SourceArchimedeanTimesMuStageEquivalence.refl (source.stage N)
+  quotientSplitting_compatible _ _ := rfl
+  carrierTransition_natural N M hNM :=
+    (Functor.id_comp (source.carrierTransition N M hNM)).trans
+      (Functor.comp_id (source.carrierTransition N M hNM)).symm
+  baseTransition_natural N M hNM :=
+    (Functor.id_comp (source.baseTransition N M hNM)).trans
+      (Functor.comp_id (source.baseTransition N M hNM)).symm
+  rationalTransition_natural _ _ _ _ := rfl
+
+/-- Composition of archimedean torsion-quotient system isomorphisms. -/
+def trans
+    (first : SourceArchimedeanTimesMuSystemEquivalence source middle)
+    (second : SourceArchimedeanTimesMuSystemEquivalence middle target) :
+    SourceArchimedeanTimesMuSystemEquivalence source target where
+  underlying := first.underlying.trans second.underlying
+  unitQuotient N :=
+    (first.unitQuotient N).trans (second.unitQuotient N)
+  quotientMap_compatible N value := by
+    change
+      (second.unitQuotient N).toHom
+          ((first.unitQuotient N).toHom
+            (source.quotients.quotientMap N value)) = _
+    rw [first.quotientMap_compatible]
+    rw [second.quotientMap_compatible]
+    rfl
+  orientationReversal_compatible value := by
+    change
+      second.underlying.topologicalSplitting.compactFactor.toHom
+          (first.underlying.topologicalSplitting.compactFactor.toHom
+            (source.quotients.orientationReversal.toHom value)) = _
+    rw [first.orientationReversal_compatible]
+    rw [second.orientationReversal_compatible]
+    rfl
+  quotientTransition_compatible N M hNM value := by
+    change
+      (second.unitQuotient M).toHom
+          ((first.unitQuotient M).toHom
+            (source.quotients.transition N M hNM value)) = _
+    rw [first.quotientTransition_compatible]
+    rw [second.quotientTransition_compatible]
+    rfl
+  stage N := (first.stage N).trans (second.stage N)
+  quotientSplitting_compatible N value := by
+    change
+      (target.stage N).quotientSplittingIso.total.toHom
+          ((second.stage N).reconstructed.topologicalSplitting.total.toHom
+            ((first.stage N).reconstructed.topologicalSplitting.total.toHom
+              value)) = _
+    rw [second.quotientSplitting_compatible]
+    rw [first.quotientSplitting_compatible]
+    rfl
+  carrierTransition_natural N M hNM := by
+    change
+      ((first.stage N).reconstructed.frobenioid.carrier.functor ⋙
+          (second.stage N).reconstructed.frobenioid.carrier.functor) ⋙
+            target.carrierTransition N M hNM =
+        source.carrierTransition N M hNM ⋙
+          ((first.stage M).reconstructed.frobenioid.carrier.functor ⋙
+            (second.stage M).reconstructed.frobenioid.carrier.functor)
+    rw [Functor.assoc]
+    rw [second.carrierTransition_natural]
+    rw [← Functor.assoc]
+    rw [first.carrierTransition_natural]
+    rw [Functor.assoc]
+  baseTransition_natural N M hNM := by
+    change
+      ((first.stage N).base.functor ⋙ (second.stage N).base.functor) ⋙
+          target.baseTransition N M hNM =
+        source.baseTransition N M hNM ⋙
+          ((first.stage M).base.functor ⋙ (second.stage M).base.functor)
+    rw [Functor.assoc]
+    rw [second.baseTransition_natural]
+    rw [← Functor.assoc]
+    rw [first.baseTransition_natural]
+    rw [Functor.assoc]
+  rationalTransition_natural N M hNM value := by
+    change
+      (second.stage M).referenceRationalMonoid
+          ((first.stage M).referenceRationalMonoid
+            (source.rationalTransition N M hNM value)) =
+        target.rationalTransition N M hNM
+          ((second.stage N).referenceRationalMonoid
+            ((first.stage N).referenceRationalMonoid value))
+    rw [first.rationalTransition_natural]
+    rw [second.rationalTransition_natural]
+
+end SourceArchimedeanTimesMuSystemEquivalence
+
+namespace SourceArchimedeanTimesMuStageEquivalence
+
+/-- A stage isomorphism restricts to the divisor-zero isometry coarsification. -/
+def isometryFunctor
+    {sourceUnderlying targetUnderlying :
+      ArchimedeanSplitFrobenioidPresentation.{u}}
+    {sourceQuotients :
+      SourceArchimedeanTimesMuQuotientSystem sourceUnderlying}
+    {targetQuotients :
+      SourceArchimedeanTimesMuQuotientSystem targetUnderlying}
+    {N : ℕ+}
+    {source : SourceArchimedeanTimesMuStage sourceQuotients N}
+    {target : SourceArchimedeanTimesMuStage targetQuotients N}
+    (equivalence :
+      SourceArchimedeanTimesMuStageEquivalence source target) :
+    source.reconstructed.frobenioid.frobenioid.preFrobenioid.IsometryCategory ⥤
+      target.reconstructed.frobenioid.frobenioid.preFrobenioid.IsometryCategory where
+  obj object :=
+    ⟨equivalence.reconstructed.frobenioid.carrier.functor.obj object.obj⟩
+  map {first second} map :=
+    { hom :=
+        equivalence.reconstructed.frobenioid.carrier.functor.map map.hom
+      property := by
+        change
+          target.reconstructed.frobenioid.frobenioid.preFrobenioid.divisor
+              (equivalence.reconstructed.frobenioid.carrier.functor.map
+                map.hom) = 0
+        rw [← equivalence.divisor_compatible map.hom]
+        rw [map.property]
+        exact map_zero (equivalence.divisor first.obj) }
+  map_id object := by
+    apply WideSubcategory.hom_ext
+    exact equivalence.reconstructed.frobenioid.carrier.functor.map_id object.obj
+  map_comp first second := by
+    apply WideSubcategory.hom_ext
+    exact equivalence.reconstructed.frobenioid.carrier.functor.map_comp
+      first.hom second.hom
+
+end SourceArchimedeanTimesMuStageEquivalence
+
+namespace SourceArchimedeanTimesMuSystem
+
+/-- The generic transition on the divisor-zero coarsifications of a system. -/
+def isometryTransition
+    {underlying : ArchimedeanSplitFrobenioidPresentation.{u}}
+    (system : SourceArchimedeanTimesMuSystem underlying)
+    (N M : ℕ+) (hNM : N ∣ M) :
+    (system.stage N).reconstructed.frobenioid.frobenioid.preFrobenioid.IsometryCategory ⥤
+      (system.stage M).reconstructed.frobenioid.frobenioid.preFrobenioid.IsometryCategory where
+  obj object := ⟨(system.carrierTransition N M hNM).obj object.obj⟩
+  map {first second} map :=
+    { hom := (system.carrierTransition N M hNM).map map.hom
+      property := by
+        change
+          (system.stage M).reconstructed.frobenioid.frobenioid.preFrobenioid.divisor
+              ((system.carrierTransition N M hNM).map map.hom) = 0
+        rw [← system.divisor_compatible N M hNM map.hom]
+        rw [map.property]
+        exact map_zero _ }
+  map_id object := by
+    apply WideSubcategory.hom_ext
+    exact (system.carrierTransition N M hNM).map_id object.obj
+  map_comp first second := by
+    apply WideSubcategory.hom_ext
+    exact (system.carrierTransition N M hNM).map_comp first.hom second.hom
+
+end SourceArchimedeanTimesMuSystem
+
+namespace SourceArchimedeanTimesMuSystemEquivalence
+
+/-- The levelwise carrier equivalences form a natural map of divisibility diagrams. -/
+def carrierNaturalTransformation
+    {sourceUnderlying targetUnderlying :
+      ArchimedeanSplitFrobenioidPresentation.{u}}
+    {source : SourceArchimedeanTimesMuSystem sourceUnderlying}
+    {target : SourceArchimedeanTimesMuSystem targetUnderlying}
+    (equivalence :
+      SourceArchimedeanTimesMuSystemEquivalence source target) :
+    source.carrierDiagram ⟶ target.carrierDiagram where
+  app index :=
+    (equivalence.stage index.value).reconstructed.frobenioid.carrier.functor.toCatHom
+  naturality {first second} map := by
+    apply Cat.Hom.ext
+    exact (equivalence.carrierTransition_natural
+      first.value second.value map.le).symm
+
+/-- Every component of the carrier-diagram map is an equivalence of categories. -/
+theorem carrierNaturalTransformation_app_isEquivalence
+    {sourceUnderlying targetUnderlying :
+      ArchimedeanSplitFrobenioidPresentation.{u}}
+    {source : SourceArchimedeanTimesMuSystem sourceUnderlying}
+    {target : SourceArchimedeanTimesMuSystem targetUnderlying}
+    (equivalence :
+      SourceArchimedeanTimesMuSystemEquivalence source target)
+    (index : SourceArchimedeanKummerSystem.DivisibilityIndex) :
+    (equivalence.carrierNaturalTransformation.app index).toFunctor.IsEquivalence := by
+  change
+    (equivalence.stage index.value).reconstructed.frobenioid.carrier.functor.IsEquivalence
+  exact
+    (equivalence.stage index.value).reconstructed.frobenioid.carrier.isEquivalence_functor
+
+end SourceArchimedeanTimesMuSystemEquivalence
+
 end Iut

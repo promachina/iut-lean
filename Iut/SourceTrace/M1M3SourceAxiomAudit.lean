@@ -126,6 +126,10 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceMLFGaloisTMPair.TimesMuKummerIsomorphism.transport
 #print axioms Iut.SourceFiniteTimesMuKummerFrobenioidEquivalence.trans
 #print axioms Iut.SourceFiniteTimesMuKummerFrobenioidEquivalence.kummerStructure_compatible
+#print axioms Iut.SourceArchimedeanTimesMuStageEquivalence.isometryFunctor
+#print axioms Iut.SourceArchimedeanTimesMuSystemEquivalence.trans
+#print axioms
+  Iut.SourceArchimedeanTimesMuSystemEquivalence.carrierNaturalTransformation_app_isEquivalence
 #print axioms Iut.SourceModelFrobenioid.gpPullback_id
 #print axioms Iut.SourceModelFrobenioid.gpPullback_comp
 #print axioms Iut.SourceModelFrobenioid.Input.gpPullback_mem_birationalDivisors
