@@ -270,6 +270,45 @@ noncomputable def comap
 
 end ThetaFinitePlace
 
+namespace ThetaPlace
+
+/--
+Restriction of a finite or infinite place along an extension of number fields.
+
+Both constructors use the canonical restriction already supplied by mathlib;
+in particular, restriction preserves the archimedean/nonarchimedean kind.
+-/
+noncomputable def comap
+    {k : Type u} {K : Type v}
+    [Field k] [NumberField k] [Field K] [NumberField K]
+    [Algebra k K] :
+    ThetaPlace K -> ThetaPlace k
+  | finite place => finite (ThetaFinitePlace.comap place)
+  | infinite place => infinite (place.comap (algebraMap k K))
+
+@[simp]
+theorem comap_finite
+    {k : Type u} {K : Type v}
+    [Field k] [NumberField k] [Field K] [NumberField K]
+    [Algebra k K]
+    (place : NumberField.FinitePlace K) :
+    ThetaPlace.comap (k := k) (ThetaPlace.finite place) =
+      ThetaPlace.finite (ThetaFinitePlace.comap place) :=
+  rfl
+
+@[simp]
+theorem comap_infinite
+    {k : Type u} {K : Type v}
+    [Field k] [NumberField k] [Field K] [NumberField K]
+    [Algebra k K]
+    (place : NumberField.InfinitePlace K) :
+    ThetaPlace.comap (k := k) (ThetaPlace.infinite place) =
+      ThetaPlace.infinite
+        (place.comap (algebraMap k K)) :=
+  rfl
+
+end ThetaPlace
+
 namespace PuncturedEllipticCurve
 
 /--
@@ -640,6 +679,20 @@ def toModuliInfinite (_data : ThetaValuationData l Fmod K) :
     NumberField.InfinitePlace K -> NumberField.InfinitePlace Fmod :=
   fun v => v.comap (algebraMap Fmod K)
 
+/-- The canonical restriction on the full set of finite and infinite places. -/
+noncomputable def toModuliPlace
+    (_data : ThetaValuationData l Fmod K) :
+    ThetaPlace K -> ThetaPlace Fmod :=
+  ThetaPlace.comap
+
+/-- The chosen section on the full set of finite and infinite moduli places. -/
+def chosenPlace (data : ThetaValuationData l Fmod K) :
+    ThetaPlace Fmod -> ThetaPlace K
+  | ThetaPlace.finite place =>
+      ThetaPlace.finite (data.chosenLift place)
+  | ThetaPlace.infinite place =>
+      ThetaPlace.infinite (data.chosenInfiniteLift place)
+
 /-- The selected finite subset of `V(K)` supplied by the section. -/
 def selected (data : ThetaValuationData l Fmod K) :
     Set (NumberField.FinitePlace K) :=
@@ -718,6 +771,95 @@ theorem toModuliInfinite_chosenLift_eq
     data.toModuliInfinite (data.chosenInfiniteLift w) = w :=
   data.toModuliInfinite_chosenLift w
 
+@[simp]
+theorem toModuliPlace_chosenPlace
+    (data : ThetaValuationData l Fmod K)
+    (place : ThetaPlace Fmod) :
+    data.toModuliPlace (data.chosenPlace place) = place := by
+  cases place with
+  | finite place =>
+      exact congrArg ThetaPlace.finite
+        (data.toModuli_chosenLift_eq place)
+  | infinite place =>
+      exact congrArg ThetaPlace.infinite
+        (data.toModuliInfinite_chosenLift_eq place)
+
+/-- The chosen full-place section is injective because restriction is its left inverse. -/
+theorem chosenPlace_injective
+    (data : ThetaValuationData l Fmod K) :
+    Function.Injective data.chosenPlace :=
+  Function.LeftInverse.injective data.toModuliPlace_chosenPlace
+
+/-- The selected subset `V` is exactly the range of the unified place section. -/
+theorem selectedPlaces_eq_range_chosenPlace
+    (data : ThetaValuationData l Fmod K) :
+    data.selectedPlaces = Set.range data.chosenPlace := by
+  ext place
+  cases place with
+  | finite place =>
+      change place ∈ data.selected ↔
+        ∃ moduliPlace, data.chosenPlace moduliPlace = ThetaPlace.finite place
+      constructor
+      · rintro ⟨moduliPlace, rfl⟩
+        exact ⟨ThetaPlace.finite moduliPlace, rfl⟩
+      · rintro ⟨moduliPlace, hplace⟩
+        cases moduliPlace with
+        | finite moduliPlace =>
+            injection hplace with hplace
+            exact ⟨moduliPlace, hplace⟩
+        | infinite moduliPlace =>
+            contradiction
+  | infinite place =>
+      change place ∈ data.selectedInfinite ↔
+        ∃ moduliPlace, data.chosenPlace moduliPlace = ThetaPlace.infinite place
+      constructor
+      · rintro ⟨moduliPlace, rfl⟩
+        exact ⟨ThetaPlace.infinite moduliPlace, rfl⟩
+      · rintro ⟨moduliPlace, hplace⟩
+        cases moduliPlace with
+        | finite moduliPlace =>
+            contradiction
+        | infinite moduliPlace =>
+            injection hplace with hplace
+            exact ⟨moduliPlace, hplace⟩
+
+/--
+The actual bijection `V -> Vmod` required by IUT I, Definition 3.1(e), written
+in the source direction `Vmod -> V`. Its inverse is canonical restriction.
+-/
+noncomputable def selectedPlaceEquiv
+    (data : ThetaValuationData l Fmod K) :
+    ThetaPlace Fmod ≃
+      {place : ThetaPlace K // place ∈ data.selectedPlaces} where
+  toFun place :=
+    ⟨data.chosenPlace place, by
+      rw [data.selectedPlaces_eq_range_chosenPlace]
+      exact ⟨place, rfl⟩⟩
+  invFun place := data.toModuliPlace place.1
+  left_inv place := data.toModuliPlace_chosenPlace place
+  right_inv place := by
+    have hplace : place.1 ∈ Set.range data.chosenPlace := by
+      rw [← data.selectedPlaces_eq_range_chosenPlace]
+      exact place.property
+    rcases hplace with ⟨moduliPlace, hplace⟩
+    apply Subtype.ext
+    change data.chosenPlace (data.toModuliPlace place.1) = place.1
+    rw [← hplace, data.toModuliPlace_chosenPlace]
+
+@[simp]
+theorem selectedPlaceEquiv_apply
+    (data : ThetaValuationData l Fmod K)
+    (place : ThetaPlace Fmod) :
+    (data.selectedPlaceEquiv place).1 = data.chosenPlace place :=
+  rfl
+
+@[simp]
+theorem selectedPlaceEquiv_symm_apply
+    (data : ThetaValuationData l Fmod K)
+    (place : {place : ThetaPlace K // place ∈ data.selectedPlaces}) :
+    data.selectedPlaceEquiv.symm place = data.toModuliPlace place.1 :=
+  rfl
+
 theorem mem_bad_iff (data : ThetaValuationData l Fmod K)
     (v : NumberField.FinitePlace K) :
     v ∈ data.bad ↔ v ∈ data.selected ∧ data.toModuli v ∈ data.badMod :=
@@ -782,6 +924,58 @@ theorem finite_mem_vgood_iff (data : ThetaValuationData l Fmod K)
     exact hw
   · intro hv
     exact ⟨v, hv, rfl⟩
+
+/-- The selected places split exactly into nonarchimedean and archimedean parts. -/
+theorem selectedPlaces_eq_vnon_union_varc
+    (data : ThetaValuationData l Fmod K) :
+    data.selectedPlaces = data.vnon ∪ data.varc := by
+  ext place
+  cases place with
+  | finite place =>
+      rw [data.finite_mem_selectedPlaces_iff, Set.mem_union,
+        data.finite_mem_vnon_iff]
+      simp [varc]
+  | infinite place =>
+      rw [data.infinite_mem_selectedPlaces_iff, Set.mem_union,
+        data.infinite_mem_varc_iff]
+      simp [vnon]
+
+/-- The nonarchimedean and archimedean selected parts are disjoint. -/
+theorem vnon_disjoint_varc
+    (data : ThetaValuationData l Fmod K) :
+    Disjoint data.vnon data.varc := by
+  rw [Set.disjoint_left]
+  intro place hnon harc
+  cases place <;> simp [vnon, varc] at hnon harc
+
+/-- The selected nonarchimedean places split exactly into bad and good parts. -/
+theorem vnon_eq_vbad_union_vgood
+    (data : ThetaValuationData l Fmod K) :
+    data.vnon = data.vbad ∪ data.vgood := by
+  ext place
+  cases place with
+  | finite place =>
+      simp only [Set.mem_union, data.finite_mem_vnon_iff,
+        data.finite_mem_vbad_iff, data.finite_mem_vgood_iff,
+        data.mem_bad_iff, data.mem_good_iff]
+      tauto
+  | infinite place =>
+      simp [vnon, vbad, vgood]
+
+/-- The selected bad and good parts are disjoint. -/
+theorem vbad_disjoint_vgood
+    (data : ThetaValuationData l Fmod K) :
+    Disjoint data.vbad data.vgood := by
+  rw [Set.disjoint_left]
+  intro place hbad hgood
+  cases place with
+  | finite place =>
+      have hbad' := (data.finite_mem_vbad_iff place).mp hbad
+      have hgood' := (data.finite_mem_vgood_iff place).mp hgood
+      exact ((data.mem_good_iff place).mp hgood').2
+        ((data.mem_bad_iff place).mp hbad').2
+  | infinite place =>
+      simp [vbad] at hbad
 
 theorem bad_nonempty (data : ThetaValuationData l Fmod K) :
     ∃ v, v ∈ data.bad := by

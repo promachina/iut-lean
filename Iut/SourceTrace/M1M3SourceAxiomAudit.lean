@@ -28,6 +28,11 @@ visible to Lean's axiom reporter.
 #print axioms Iut.PuncturedEllipticCurveScalarExtension.curve_eq_baseChange
 #print axioms Iut.PuncturedEllipticCurveScalarExtension.result_puncture_eq_origin
 #print axioms Iut.SignQuotientOrbicurveData.absoluteGalois_def
+#print axioms Iut.ThetaValuationData.selectedPlaceEquiv
+#print axioms Iut.ThetaValuationData.selectedPlaces_eq_vnon_union_varc
+#print axioms Iut.ThetaValuationData.vnon_disjoint_varc
+#print axioms Iut.ThetaValuationData.vnon_eq_vbad_union_vgood
+#print axioms Iut.ThetaValuationData.vbad_disjoint_vgood
 #print axioms Iut.ProfiniteDecompositionGroupData.embedding_range
 #print axioms
   Iut.SourceThetaFiniteLocalCoreData.xDiagram_galois_range_eq_placeStabilizer

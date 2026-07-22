@@ -177,6 +177,12 @@
   is derived from the equivalence with this closed stabilizer, and Lean proves
   that the Galois maps in both the (X)- and (C)-diagrams have exactly this
   image; no independently chosen subgroup or subgroup-equality field remains.
+  The finite and infinite place sections assemble into a single section on all
+  places whose inverse is canonical restriction.  Lean therefore constructs
+  the source bijection \(V_{\mathrm{mod}}\simeq V\), rather than merely storing
+  its two halves, and proves the disjoint decompositions
+  \(V=V^{\mathrm{non}}\sqcup V^{\mathrm{arc}}\) and
+  \(V^{\mathrm{non}}=V^{\mathrm{bad}}\sqcup V^{\mathrm{good}}\).
   At bad places, the Tate
   parameter is an actual contracting local-field element with a geometric
   Galois-equivariant group-level Tate uniformization, and its positive order

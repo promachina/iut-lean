@@ -1022,7 +1022,12 @@ its maximal solvable extension in that same ambient field is defined as the
 compositum of all finite solvable Galois layers.  The embedded
 \(K\) is required to equal, as an intermediate field, the fixed field of the
 kernel of the mod-\(l\) representation.  Restriction from \(K\)-places to
-\(F_{\mathrm{mod}}\)-places is canonical; only a section is chosen.
+\(F_{\mathrm{mod}}\)-places is canonical; only a section is chosen.  The finite
+and infinite sections assemble into a single section whose inverse is
+restriction, yielding the actual source bijection
+\(V_{\mathrm{mod}}\simeq V\).  Lean also proves the disjoint decompositions
+\(V=V^{\mathrm{non}}\sqcup V^{\mathrm{arc}}\) and
+\(V^{\mathrm{non}}=V^{\mathrm{bad}}\sqcup V^{\mathrm{good}}\).
 The Lagrangian quotient is
 continuous between profinite groups, so its finite-cover kernel is proved
 open rather than stored as an assumption.  The quotient data is attached only
