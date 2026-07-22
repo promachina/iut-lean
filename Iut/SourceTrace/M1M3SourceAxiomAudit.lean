@@ -41,6 +41,9 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceProfinitePseudoMonoidActionPair.descend
 #print axioms Iut.SourceProfinitePseudoMonoidActionPair.comap_descend
 #print axioms Iut.SourceProfinitePseudoMonoidActionPair.comap_kernelActsTrivially
+#print axioms Iut.IUTINonarchimedeanLocalModel.dToCoreOpenEmbedding
+#print axioms Iut.IUTINonarchimedeanLocalModel.dToCore_injective
+#print axioms Iut.IUTINonarchimedeanLocalModel.dToCore_open_range
 #print axioms Iut.SourceTopologicalGroupPseudoMonoidActionPair.Iso.trans_hom
 #print axioms Iut.SourceKappaLocalizationDiagram.inclusion_injective
 #print axioms Iut.PuncturedEllipticCurveScalarExtension.curve_eq_baseChange

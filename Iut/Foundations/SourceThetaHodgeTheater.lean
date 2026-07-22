@@ -438,7 +438,52 @@ structure IUTINonarchimedeanLocalModel
     EtaleFundamentalGroup
   localOrbicurveGroup_eq :
     localOrbicurveGroup =
-      (theta.finiteLocalCores v.1).orbicurves.cFundamentalGroups.arithmetic
+      (theta.finiteLocalCores v.1).orbicurves.xFundamentalGroups.arithmetic
+
+namespace IUTINonarchimedeanLocalModel
+
+variable {Fmod F K : Type u}
+variable [Field Fmod] [NumberField Fmod]
+variable [Field F] [NumberField F]
+variable [Field K] [NumberField K]
+variable [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+variable [IsScalarTower Fmod F K]
+variable [FiniteDimensional Fmod F] [IsGalois Fmod F]
+variable [FiniteDimensional F K] [IsGalois F K]
+variable {theta : SourceInitialThetaCore Fmod F K}
+variable {v : SourceSelectedFinitePlace theta}
+
+/-- The reconstructed `C_v` arithmetic fundamental group of Definition 5.2(v). -/
+noncomputable abbrev coreFundamentalGroup
+    (_model : IUTINonarchimedeanLocalModel theta v) :
+    ProfiniteGrp.{u} :=
+  (theta.finiteLocalCores v.1).orbicurves.cFundamentalGroups.arithmetic.group
+
+/--
+The natural open immersion from the fundamental group represented by `D_v`,
+namely the group of the local `X_v`, into the reconstructed `C_v` group.
+-/
+noncomputable def dToCoreOpenEmbedding
+    (model : IUTINonarchimedeanLocalModel theta v) :
+    ProfiniteOpenEmbedding
+      model.localOrbicurveGroup.group model.coreFundamentalGroup := by
+  rw [model.localOrbicurveGroup_eq]
+  exact
+    ((theta.finiteLocalCores v.1).orbicurves).fundamentalGroupInclusion.arithmetic
+
+/-- The `D_v -> C_v` map is injective on arithmetic fundamental groups. -/
+theorem dToCore_injective
+    (model : IUTINonarchimedeanLocalModel theta v) :
+    Function.Injective model.dToCoreOpenEmbedding.hom :=
+  model.dToCoreOpenEmbedding.injective
+
+/-- The image of the `D_v -> C_v` fundamental-group map is open. -/
+theorem dToCore_open_range
+    (model : IUTINonarchimedeanLocalModel theta v) :
+    IsOpen (Set.range model.dToCoreOpenEmbedding.hom) :=
+  model.dToCoreOpenEmbedding.open_range
+
+end IUTINonarchimedeanLocalModel
 
 /--
 The archimedean local model required by IUT I, Definition 3.6(b).

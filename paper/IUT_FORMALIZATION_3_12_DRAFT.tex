@@ -1230,6 +1230,13 @@ when the ambient product remains in the carrier.  The restricted operation is
 proved continuous and associative wherever both composites are defined;
 diagram morphisms preserve its domain, and diagram isomorphisms reflect it.
 For the nonarchimedean mechanism of IUT~I, Definition~5.2(v), Lean now
+uses the arithmetic fundamental group of \(X_v\) for the group represented by
+\(D_v\), as required by Example~3.2(i), rather than identifying it with the
+\(C_v\) group.  The sign-quotient geometry constructs the open embedding into
+the arithmetic fundamental group of \(C_v\), and Lean proves injectivity and
+openness of its image.  This constructs the geometric target; recovering it
+functorially from the abstract \(D_v\) group by Absolute Anabelian Topics~II
+is still open.  Lean also
 constructs the fixed carrier as an actual sub-pseudo-monoid and proves that
 every product defined in the original carrier remains defined after passage
 to invariants.  It also constructs the descended action through a surjective
