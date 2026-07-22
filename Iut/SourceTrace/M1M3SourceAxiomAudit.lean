@@ -752,3 +752,5 @@ end Iut.SourcePacketFiniteStageLogVolume
 #print axioms Iut.SourceTheorem311ColumnBoundary.environmentPrimeStripClauseB_commutes
 #print axioms Iut.SourceTheorem311ColumnBoundary.monoThetaClauseC_commutes
 #print axioms Iut.SourceTheorem311ColumnBoundary.kappaClauseD_commutes
+#print axioms Iut.SourceSelectedLocalFullLogLink.nonarchimedean_target_unique
+#print axioms Iut.SourceSelectedLocalFullLogLink.archimedean_target_unique

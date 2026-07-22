@@ -3,7 +3,7 @@ Copyright (c) 2026 IUT Lean formalization contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: IUT Lean formalization contributors
 -/
-import Iut.Foundations.SourceTheorem311
+import Iut.Foundations.SourceVerticalLogLink
 
 /-!
 # Source assembly for IUT III, Theorem 3.11
@@ -12,7 +12,7 @@ This module assembles the source-faithful constructions of
 `SourceTheorem311` at one fixed horizontal column.  It deliberately does not
 construct the upstream paper objects by choice: the absolute LGP Gaussian
 log-theta lattice, the mono-analytic log-shell algorithm, the local integral
-and finite-stage data, the adjacent log-link relations, the multiradial
+and finite-stage data, the full local log-links, the multiradial
 functor, the labeled Kummer maps, and the horizontal compatibility squares
 remain explicit inputs.
 
@@ -55,7 +55,8 @@ structure SourceTheorem311ColumnBoundary
   column : ℤ
   verticalFamily :
     lattice.VerticalFamilyConstruction logShellAlgorithm column
-  verticalUpperSemi : lattice.VerticalUpperSemiData verticalFamily
+  verticalLogLinks :
+    SourceAbsoluteLGPVerticalFullLogLinks lattice logShellAlgorithm
   presentationConstruction :
     lattice.PresentationConstruction logShellAlgorithm column
       verticalFamily.common
@@ -147,7 +148,13 @@ noncomputable abbrev Quotient
     (boundary : SourceTheorem311ColumnBoundary models) :=
   boundary.multiradialAlgorithm.Quotient boundary.localInd2Action
 
-/-- Ind3 is constructed from the vertical family and adjacent unit relations. -/
+/-- The adjacent packet relations derived from the full local log-links. -/
+noncomputable def verticalUpperSemi
+    (boundary : SourceTheorem311ColumnBoundary models) :
+    boundary.lattice.VerticalUpperSemiData boundary.verticalFamily :=
+  boundary.verticalLogLinks.toVerticalUpperSemiData boundary.verticalFamily
+
+/-- Ind3 is constructed from the vertical family and its full local log-links. -/
 noncomputable def ind3System
     (boundary : SourceTheorem311ColumnBoundary models) :
     SourceTheorem311Ind3System.{u} theta.l :=

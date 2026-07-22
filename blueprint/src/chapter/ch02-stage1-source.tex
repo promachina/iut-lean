@@ -741,9 +741,38 @@
   constructors.
 \end{definition}
 
+\begin{definition}[Source full vertical log-links]
+  \label{def:source-full-vertical-log-links}
+  \uses{def:source-theorem-311-interfaces}
+  \lean{Iut.SourceSelectedLocalFullLogLink}
+  \lean{Iut.SourceSelectedLocalFullLogLink.NonarchimedeanRelated}
+  \lean{Iut.SourceSelectedLocalFullLogLink.ArchimedeanRelated}
+  \lean{Iut.SourceSelectedLocalFullLogLink.nonarchimedean_target_unique}
+  \lean{Iut.SourceSelectedLocalFullLogLink.archimedean_target_unique}
+  \lean{Iut.SourceAbsoluteLGPVerticalFullLogLinks}
+  \lean{Iut.SourceAbsoluteLGPVerticalFullLogLinks.toVerticalUpperSemiData}
+  \leanok
+  A selected-place full log-link in the sense of IUT~III,
+  Definition~1.1, consists of a continuous rational-linear post-composition
+  between the actual ind-topological logarithmic modules, a compatible ring
+  equivalence of their realized logarithmic fields, and continuous injective
+  realizations of the adjacent target's local units.  At a finite place the
+  adjacent relation asserts that the source \(p\)-adic logarithm equals a
+  realized target invariant unit.  At an infinite place it asserts the same
+  equality for the source principal logarithm and a realized target circle
+  unit.  These are partial relations: existence is not assumed, while
+  injectivity proves uniqueness of any target.
+
+  A family of these links on all adjacent lattice sites derives the finite
+  packet graph and archimedean semi-germ relation componentwise, and hence
+  constructs the complete \(Ind{3}\) upper-semi input.  Constructing the
+  full links from the cited \(Psi_{\mathrm{cns}}\), Frobenioid, and
+  poly-isomorphism data remains a source obligation.
+\end{definition}
+
 \begin{definition}[Assembled source Theorem 3.11 column boundary]
   \label{def:source-theorem-311-column-boundary}
-  \uses{def:source-theorem-311-interfaces}
+  \uses{def:source-theorem-311-interfaces,def:source-full-vertical-log-links}
   \lean{Iut.SourceTheorem311ColumnBoundary}
   \lean{Iut.SourceTheorem311ColumnBoundary.presentation}
   \lean{Iut.SourceTheorem311ColumnBoundary.ind1Action}
@@ -757,8 +786,9 @@
   multiradial presentation and the vertical family to use the same common
   local construction.  Its inputs are the absolute-label Gaussian
   log-theta lattice, mono-analytic log-shell algorithm, finite-stage integral
-  data, adjacent log-link relations, splitting and labeled Kummer data,
+  data, full local log-links, splitting and labeled Kummer data,
   multiradial functor, and four horizontal squares.  From these Lean derives
+  the adjacent finite and archimedean packet relations,
   the actual procession action, independent summand action, generated
   \(\Ind{1}/\Ind{2}\) quotient, vertical packet Kummer maps, \(\Ind{3}\)
   system, vertical log-volume independence, roots-only bad-prime logarithm

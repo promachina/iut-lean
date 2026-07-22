@@ -374,9 +374,9 @@ def canonicalM1M3RemainingAssumptions :
       status := .sourceObligation,
       paperSource :=
         "IUT III, Propositions 3.5, 3.10; Theorem 3.11(ii) and Ind3",
-      consumerDeclaration := "SourceTheorem311ColumnBoundary.verticalUpperSemi",
+      consumerDeclaration := "SourceTheorem311ColumnBoundary.verticalLogLinks",
       note :=
-        "Construct the adjacent finite invariant-unit and archimedean circle-unit correspondences. Lean derives all positive iterates, domains, ranges, containments, and vertical log-volume independence." },
+        "Construct the Definition 1.1 full local log-links: continuous module post-compositions compatible with the logarithmic field structures and actual adjacent target-unit realizations. Lean derives the finite invariant-unit and archimedean circle-unit relations, all positive iterates, domains, ranges, containments, and vertical log-volume independence." },
     { name := "verticalSplittingAndLabeledKummer",
       status := .sourceObligation,
       paperSource := "IUT III, Theorem 3.11(ii)(b-c)",
