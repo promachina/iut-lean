@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: IUT Lean formalization contributors
 -/
 import Iut.Foundations.ContinuousH1
-import Iut.Foundations.KummerFaithfulness
+import Iut.Foundations.SourceMLFKummerFaithfulness
 import Iut.Foundations.SourceProcession
 import Mathlib.Algebra.Category.Grp.Injective
 import Mathlib.Algebra.GroupWithZero.NonZeroDivisors

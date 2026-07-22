@@ -391,6 +391,9 @@
   \lean{Iut.SourceKummerFaithfulness.eq_one_of_roots_of_residuallyFinite}
   \lean{Iut.SourceKummerFaithfulness.residuallyFinite_of_profinite}
   \lean{Iut.SourceKummerFaithfulness.eq_one_of_roots_in_profinite}
+  \lean{Iut.SourceMLFKummerFaithfulness.finite_quotient_map}
+  \lean{Iut.SourceMLFKummerFaithfulness.units_residuallyFinite_of_finite_quotients}
+  \lean{Iut.SourceMLFKummerFaithfulness.integralClosureUnits_residuallyFinite}
   \lean{Iut.SourceMonoidCyclotome.topology}
   \lean{Iut.SourceMonoidCyclotome.boundedCoe_isClosedEmbedding}
   \lean{Iut.SourceMonoidCyclotome.asProfinite}
@@ -572,9 +575,13 @@
   The unit Kummer homomorphism is its restriction, never an independently
   supplied field; injectivity proves that \(M_{\rm TM}^{\mu}\) is exactly the
   image of the torsion units.  Proposition~3.2(ii) constructs the map but does
-  not assert injectivity; the remaining precise source obligation is its
-  separate MLF Kummer-faithfulness proof from Definition~1.5 and
-  Remark~1.5.4(i).
+  not assert injectivity.  Following Definition~1.5 and Remark~1.5.4(i), Lean
+  now proves that the integral-closure unit group in every finite MLF extension
+  is residually finite: Krull intersection separates a nontrivial unit, while
+  reduction modulo a suitable power of the base maximal ideal gives a finite
+  quotient.  The remaining precise source obligation is to extract, from a
+  zero constructed Kummer germ, compatible roots lying in one such finite
+  extension and thereby derive injectivity.
   At a finite place, the Definition~4.9 input now ties the selected splitting
   at an isotropic reference object to an actual MLF-Galois \(TM\)-pair, a
   stable characteristic submonoid, and the genuine \(\operatorname{Ism}\)

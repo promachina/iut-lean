@@ -759,9 +759,12 @@ def m1m3PaperLedger : List PaperClause :=
       "Absolute Anabelian Topics III, Definition 1.5 and Remark 1.5.4(i)"
       ["SourceKummerFaithfulness.eq_one_of_roots_of_residuallyFinite",
         "SourceKummerFaithfulness.residuallyFinite_of_profinite",
-        "SourceKummerFaithfulness.eq_one_of_roots_in_profinite"]
+        "SourceKummerFaithfulness.eq_one_of_roots_in_profinite",
+        "SourceMLFKummerFaithfulness.finite_quotient_map",
+        "SourceMLFKummerFaithfulness.units_residuallyFinite_of_finite_quotients",
+        "SourceMLFKummerFaithfulness.integralClosureUnits_residuallyFinite"]
       .partialImplementation
-      "The finite-quotient argument is proved: a residually finite, hence profinite, multiplicative group has no nontrivial element admitting roots of every positive degree, exactly the condition of Definition 1.5(a). Applying this theorem to the unit groups of every finite MLF extension and identifying the resulting condition with the constructed continuous Kummer classes remain open.",
+      "The finite-quotient argument is proved: a residually finite, hence profinite, multiplicative group has no nontrivial element admitting roots of every positive degree, exactly the condition of Definition 1.5(a). For every finite extension of an MLF, Lean now proves residual finiteness of the integral-closure unit group from Krull intersection and the finite quotients by powers of the base maximal ideal. Identifying a zero constructed continuous Kummer germ with roots in one such finite-extension unit group, and hence deriving injectivity, remains open.",
 
     clause "AbsTopIII.2.1(i-ii),Cor2.3" .absoluteAnabelianIII
       "Absolute Anabelian Topics III, Definition 2.1(i)-(ii) and Corollary 2.3"

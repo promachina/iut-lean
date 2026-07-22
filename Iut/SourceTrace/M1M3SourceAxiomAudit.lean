@@ -27,6 +27,9 @@ visible to Lean's axiom reporter.
 
 #print axioms Iut.SourceMLFIntegralMonoid.galoisAction
 #print axioms Iut.SourceKummerFaithfulness.eq_one_of_roots_in_profinite
+#print axioms Iut.SourceMLFKummerFaithfulness.finite_quotient_map
+#print axioms Iut.SourceMLFKummerFaithfulness.units_residuallyFinite_of_finite_quotients
+#print axioms Iut.SourceMLFKummerFaithfulness.integralClosureUnits_residuallyFinite
 #print axioms Iut.SourceTorsionCyclotomicCommMonoid.rootsOfUnity_finite
 #print axioms Iut.SourceTorsionCyclotomicCommMonoid.rationalCircle_torsion_natCard
 #print axioms Iut.SourceTorsionCyclotomicCommMonoid.rootsOfUnityEquiv
