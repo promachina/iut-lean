@@ -752,6 +752,100 @@ theorem result_puncture_eq_origin
 end PuncturedEllipticCurveScalarExtension
 
 /--
+Scalar extension of a sign-quotient pair `X -> C`.
+
+The two target orbicurves and the target quotient morphism are fixed by the
+three scalar-extension objects. The remaining fields realize the transported
+sign action, its bicategorical quotient property, and the two fundamental-group
+exact sequences. Thus no separately assembled target pair or comparison
+equalities can be used to certify scalar extension.
+-/
+structure SignQuotientOrbicurveScalarExtension
+    (F K : Type u) [Field F] [Field K] [Algebra F K]
+    {curve : PuncturedEllipticCurve F}
+    (global : SignQuotientOrbicurveData F curve) where
+  xExtension :
+    OrbicurveScalarExtension F K global.xF
+  cExtension :
+    OrbicurveScalarExtension F K global.cF
+  quotientMapExtension :
+    OrbicurveMorphismScalarExtension F K
+      xExtension cExtension global.quotientMap
+  signAction : OrbicurveSignAction xExtension.result
+  quotientInvariant :
+    OrbicurveSignInvariantMorphism
+      signAction cExtension.result
+  quotientInvariant_map :
+    quotientInvariant.map = quotientMapExtension.result
+  quotientUniversal :
+    OrbicurveSignQuotientWitness signAction quotientInvariant
+  xFundamentalGroups :
+    OrbicurveFundamentalGroupData
+      xExtension.result (AbsoluteGaloisProfinite K)
+  cFundamentalGroups :
+    OrbicurveFundamentalGroupData
+      cExtension.result (AbsoluteGaloisProfinite K)
+  fundamentalGroupInclusion :
+    ProfiniteFundamentalGroupInclusion
+      xFundamentalGroups.geometric.group
+      xFundamentalGroups.arithmetic.group
+      cFundamentalGroups.geometric.group
+      cFundamentalGroups.arithmetic.group
+      (AbsoluteGaloisProfinite K)
+      xFundamentalGroups.exactSequence
+      cFundamentalGroups.exactSequence
+
+namespace SignQuotientOrbicurveScalarExtension
+
+variable
+    {F K : Type u} [Field F] [Field K] [Algebra F K]
+    {curve : PuncturedEllipticCurve F}
+    {global : SignQuotientOrbicurveData F curve}
+
+/-- The sign-quotient pair whose geometric carriers are literal scalar extensions. -/
+def result
+    (extension : SignQuotientOrbicurveScalarExtension F K global)
+    (localCurve : PuncturedEllipticCurve K) :
+    SignQuotientOrbicurveData K localCurve where
+  xF := extension.xExtension.result
+  xF_signature :=
+    extension.xExtension.signature_preserved.trans
+      global.xF_signature
+  signAction := extension.signAction
+  cF := extension.cExtension.result
+  quotientMap := extension.quotientMapExtension.result
+  quotientInvariant := extension.quotientInvariant
+  quotientInvariant_map := extension.quotientInvariant_map
+  quotientUniversal := extension.quotientUniversal
+  xFundamentalGroups := extension.xFundamentalGroups
+  cFundamentalGroups := extension.cFundamentalGroups
+  fundamentalGroupInclusion := extension.fundamentalGroupInclusion
+
+@[simp]
+theorem result_xF
+    (extension : SignQuotientOrbicurveScalarExtension F K global)
+    (localCurve : PuncturedEllipticCurve K) :
+    (extension.result localCurve).xF = extension.xExtension.result :=
+  rfl
+
+@[simp]
+theorem result_cF
+    (extension : SignQuotientOrbicurveScalarExtension F K global)
+    (localCurve : PuncturedEllipticCurve K) :
+    (extension.result localCurve).cF = extension.cExtension.result :=
+  rfl
+
+@[simp]
+theorem result_quotientMap
+    (extension : SignQuotientOrbicurveScalarExtension F K global)
+    (localCurve : PuncturedEllipticCurve K) :
+    (extension.result localCurve).quotientMap =
+      extension.quotientMapExtension.result :=
+  rfl
+
+end SignQuotientOrbicurveScalarExtension
+
+/--
 The `K`-core `X_K -> C_K` obtained by scalar extension from `X_F -> C_F`.
 -/
 structure SourceThetaKCoreData
@@ -760,25 +854,56 @@ structure SourceThetaKCoreData
     (fOrbicurves : SignQuotientOrbicurveData F curve) where
   curveExtension :
     PuncturedEllipticCurveScalarExtension F K curve
-  xStackExtension :
-    OrbicurveScalarExtension F K fOrbicurves.xF
-  cStackExtension :
-    OrbicurveScalarExtension F K fOrbicurves.cF
-  orbicurves :
-    SignQuotientOrbicurveData K curveExtension.result
-  xK_eq_scalarExtension :
-    orbicurves.xF = xStackExtension.result
-  cK_eq_scalarExtension :
-    orbicurves.cF = cStackExtension.result
-  quotientMapExtension :
+  orbicurveExtension :
+    SignQuotientOrbicurveScalarExtension F K fOrbicurves
+
+namespace SourceThetaKCoreData
+
+variable
+    {F K : Type u} [Field F] [Field K] [CharZero K] [Algebra F K]
+    {curve : PuncturedEllipticCurve F}
+    {fOrbicurves : SignQuotientOrbicurveData F curve}
+    (core : SourceThetaKCoreData F K curve fOrbicurves)
+
+/-- The scalar extension of the source `X`-orbicurve. -/
+def xStackExtension :
+    OrbicurveScalarExtension F K fOrbicurves.xF :=
+  core.orbicurveExtension.xExtension
+
+/-- The scalar extension of the source sign quotient `C`. -/
+def cStackExtension :
+    OrbicurveScalarExtension F K fOrbicurves.cF :=
+  core.orbicurveExtension.cExtension
+
+/-- The scalar extension of the quotient morphism `X -> C`. -/
+def quotientMapExtension :
     OrbicurveMorphismScalarExtension F K
-      xStackExtension cStackExtension
-      fOrbicurves.quotientMap
-  quotientMap_eq_scalarExtension :
-    HyperbolicOrbicurve.Hom.cast
-        xK_eq_scalarExtension cK_eq_scalarExtension
-        orbicurves.quotientMap =
-      quotientMapExtension.result
+      core.xStackExtension core.cStackExtension
+      fOrbicurves.quotientMap :=
+  core.orbicurveExtension.quotientMapExtension
+
+/-- The `K`-core sign quotient, constructed from the scalar-extension objects. -/
+def orbicurves :
+    SignQuotientOrbicurveData K core.curveExtension.result :=
+  core.orbicurveExtension.result core.curveExtension.result
+
+@[simp]
+theorem xK_eq_scalarExtension :
+    core.orbicurves.xF = core.xStackExtension.result :=
+  rfl
+
+@[simp]
+theorem cK_eq_scalarExtension :
+    core.orbicurves.cF = core.cStackExtension.result :=
+  rfl
+
+@[simp]
+theorem quotientMap_eq_scalarExtension :
+    core.orbicurves.quotientMap =
+      core.quotientMapExtension.result :=
+  rfl
+
+end SourceThetaKCoreData
 
 /-- The completed local field attached to a finite place of a number field. -/
 abbrev ThetaFinitePlace.Completion

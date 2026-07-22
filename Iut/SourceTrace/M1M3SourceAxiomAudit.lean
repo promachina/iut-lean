@@ -27,6 +27,12 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceTorsionCyclotomicCommMonoid.rootsOfUnityGroup_natCard
 #print axioms Iut.PuncturedEllipticCurveScalarExtension.curve_eq_baseChange
 #print axioms Iut.PuncturedEllipticCurveScalarExtension.result_puncture_eq_origin
+#print axioms Iut.SignQuotientOrbicurveScalarExtension.result_xF
+#print axioms Iut.SignQuotientOrbicurveScalarExtension.result_cF
+#print axioms Iut.SignQuotientOrbicurveScalarExtension.result_quotientMap
+#print axioms Iut.SourceThetaKCoreData.xK_eq_scalarExtension
+#print axioms Iut.SourceThetaKCoreData.cK_eq_scalarExtension
+#print axioms Iut.SourceThetaKCoreData.quotientMap_eq_scalarExtension
 #print axioms Iut.SignQuotientOrbicurveData.absoluteGalois_def
 #print axioms Iut.ThetaValuationData.selectedPlaceEquiv
 #print axioms Iut.ThetaValuationData.selectedPlaces_eq_vnon_union_varc
