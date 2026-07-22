@@ -8,6 +8,7 @@ import Iut.Foundations.SourceSplitKummerFrobenioid
 import Iut.Foundations.SourceArchimedeanKummerSystem
 import Iut.Foundations.SourceTimesMuPrimeStrip
 import Iut.Foundations.SourceTimesMuPrimeStripIsomorphism
+import Iut.Foundations.SourceTimesMuPrimeStripFullPolyIsomorphism
 import Iut.Foundations.SourceModelFrobenioidRationalNaturality
 import Iut.Foundations.SourceTheorem311
 import Iut.Foundations.SourceTheorem311Assembly
@@ -139,6 +140,22 @@ visible to Lean's axiom reporter.
   Iut.SourceFGloballyRealifiedTimesMuPrimeStripEquivalence.pilotObjectIso
 #print axioms
   Iut.SourceFGloballyRealifiedTimesMuPrimeStripEquivalence.pilotObject_arithmeticDegree_compatible
+#print axioms
+  Iut.SourceMLFGaloisTMPairEquivalence.StructurallyEqual.comp
+#print axioms
+  Iut.SplitFrobenioidEquivalence.NaturallyIsomorphic.comp
+#print axioms
+  Iut.SourceFiniteTimesMuKummerFrobenioidEquivalence.NaturallyIsomorphic.comp
+#print axioms
+  Iut.SourceArchimedeanTimesMuSystemEquivalence.NaturallyIsomorphic.comp
+#print axioms
+  Iut.SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_assoc
+#print axioms
+  Iut.SourceFTimesMuPrimeStripFullPolyIsomorphism.nonempty_iff
+#print axioms
+  Iut.SourceFGloballyRealifiedTimesMuPrimeStripFullPolyIsomorphism.comp_assoc
+#print axioms
+  Iut.SourceFGloballyRealifiedTimesMuPrimeStripFullPolyIsomorphism.nonempty_iff
 #print axioms Iut.SourceModelFrobenioid.gpPullback_id
 #print axioms Iut.SourceModelFrobenioid.gpPullback_comp
 #print axioms Iut.SourceModelFrobenioid.Input.gpPullback_mem_birationalDivisors

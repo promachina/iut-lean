@@ -22,6 +22,7 @@ import Iut.Foundations.SourceSplitKummerFrobenioid
 import Iut.Foundations.SourceArchimedeanKummerSystem
 import Iut.Foundations.SourceTimesMuPrimeStrip
 import Iut.Foundations.SourceTimesMuPrimeStripIsomorphism
+import Iut.Foundations.SourceTimesMuPrimeStripFullPolyIsomorphism
 import Iut.Foundations.SourceThetaSplitting
 import Iut.Foundations.SourceConjugateSynchronization
 import Iut.Foundations.SourceHodgeArakelovEvaluation
