@@ -193,9 +193,11 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.localizationFunctor",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.localizationFunctor_faithful",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.localizationFunctor_map_isIso_of_preStep",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.preFrobenioid",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.isGroupLikeType",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.comparisonEquivalence"]
       .partialImplementation
-      "For the Theorem 5.2 model, the co-angular pre-step index is constructed with filtered opposite, and the actual Type-valued Hom colimit is equivalent to the concrete target. The Proposition 1.11(vii) composition square, composite roof, agreement with colimit-category composition, faithful canonical functor, and inversion of pre-steps are proved. The group-like Frobenioid presentation, divisor functor square, rational-function exact sequence, and complete Proposition 4.4(iv) dictionary remain open.",
+      "For the Theorem 5.2 model, the filtered Hom colimit, Proposition 1.11(vii) composition square, source roof formula, faithful canonical functor, pre-step inversion, and zero-monoid group-like pre-Frobenioid structure are proved. The connected totally epimorphic Frobenioid presentation, divisor functor square, rational-function exact sequence, and complete Proposition 4.4(iv) dictionary remain open.",
     clause "FrdI.4.5(i)" .frobenioidsI
       "Frobenioids I, Definition 4.5(i)"
       ["PreFrobenioid.IsBirationallyFrobeniusNormalized",
@@ -203,9 +205,11 @@ def m1m3PaperLedger : List PaperClause :=
         "PreFrobenioid.IsModelType",
         "SourceModelFrobenioid.BirationalObject.isFrobeniusNormalized",
         "SourceModelFrobenioid.BirationalObject.isFrobeniusNormalizedType",
-        "SourceModelFrobenioid.BirationalObject.isModelTypeForConcreteBirationalization"]
+        "SourceModelFrobenioid.BirationalObject.isModelTypeForConcreteBirationalization",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.isFrobeniusNormalizedType",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.isModelTypeForColimitBirationalization"]
       .partialImplementation
-      "The three source predicates are explicit relative to a typed birationalization functor. The concrete model target is proved Frobenius-normalized and combines with its base-Frobenius pair to satisfy that parameterized model-type predicate. Connecting the chosen target to Proposition 4.4's canonical filtered-colimit birationalization remains open.",
+      "The three source predicates are explicit relative to a typed birationalization functor. The canonical filtered-colimit target is proved Frobenius-normalized and combines with the model's base-Frobenius pair to satisfy model type. Proving the source's general implication from birational Frobenius normalization back to Frobenius normalization remains open.",
     clause "FrdI.5.2(i)" .frobenioidsI
       "Frobenioids I, Theorem 5.2(i)"
       ["SourceModelFrobenioid.GroupLikeAddMonoidOn",
@@ -312,9 +316,12 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.composition_on_roof_iota",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.localizationFunctor_faithful",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.localizationFunctor_map_isIso_of_preStep",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.preFrobenioid",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.isGroupLikeType",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.isModelTypeForColimitBirationalization",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.comparisonEquivalence"]
       .partialImplementation
-      "The model category is a Frobenioid presentation and its zero-divisor base-Frobenius pair proves pre-model type. Its filtered Hom colimits, source composition square and roof formula, faithful canonical inclusion, pre-step inversion, and equivalence to the Frobenius-normalized concrete target are proved. The group-like Frobenioid structure on the colimit category, natural O-times isomorphism on D, full DivB compatibility, and model type for the canonical colimit inclusion remain open.",
+      "The model category is a Frobenioid presentation and its zero-divisor base-Frobenius pair proves pre-model type. Its canonical Hom-colimit target is a group-like, Frobenius-normalized pre-Frobenioid; source roof composition, faithful inclusion, pre-step inversion, comparison equivalence, and canonical model type are proved. The colimit Frobenioid axioms, natural O-times isomorphism on D, and full DivB compatibility remain open.",
     clause "FrdII.5.1" .frobenioidsII
       "Frobenioids II, Definition 5.1"
       [] .unformalized

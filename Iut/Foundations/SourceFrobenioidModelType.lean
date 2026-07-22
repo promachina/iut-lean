@@ -36,6 +36,14 @@ def IsFrobeniusNormalized (X : C) : Prop :=
 def IsFrobeniusNormalizedType : Prop :=
   ∀ X : C, P.IsFrobeniusNormalized X
 
+/-- Frobenioids I, Definition 1.2(iv): the divisor monoid at an object is zero. -/
+def IsGroupLike (X : C) : Prop :=
+  ∀ value : (P.divisorMonoid.obj ((P.base).obj X)).carrier, value = 0
+
+/-- Every object of the pre-Frobenioid is group-like. -/
+def IsGroupLikeType : Prop :=
+  ∀ X : C, P.IsGroupLike X
+
 /--
 Frobenioids I, Definition 2.7(i).  The section category is skeletal, embeds
 faithfully through actual pullback arrows, projects equivalently to the base,

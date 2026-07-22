@@ -6,7 +6,7 @@ Authors: IUT Lean formalization contributors
 import Iut.Foundations.SourceHodgeArakelovEvaluation
 import Iut.Foundations.SourceSplitKummerFrobenioid
 import Iut.Foundations.SourceArchimedeanKummerSystem
-import Iut.Foundations.SourceModelFrobenioidFilteredBirational
+import Iut.Foundations.SourceModelFrobenioidColimitStructure
 import Iut.Foundations.SourceTheorem311
 
 open Iut
@@ -138,6 +138,10 @@ visible to Lean's axiom reporter.
 #print axioms
   Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.localizationFunctor_map_isIso_of_preStep
 #print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.comparisonEquivalence
+#print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.isFrobeniusNormalizedType
+#print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.isGroupLikeType
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.isModelTypeForColimitBirationalization
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.quotientUnit_exists
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootRealization.ofRootSystem
