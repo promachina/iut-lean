@@ -7,6 +7,7 @@ import Iut.Foundations.SourceHodgeArakelovEvaluation
 import Iut.Foundations.SourceSplitKummerFrobenioid
 import Iut.Foundations.SourceArchimedeanKummerSystem
 import Iut.Foundations.SourceTimesMuPrimeStrip
+import Iut.Foundations.SourceTimesMuPrimeStripIsomorphism
 import Iut.Foundations.SourceModelFrobenioidRationalNaturality
 import Iut.Foundations.SourceTheorem311
 import Iut.Foundations.SourceTheorem311Assembly
@@ -122,6 +123,9 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceArchimedeanTimesMuSystem.isColimitEquivRestricted
 #print axioms Iut.SourceFTimesMuPrimeStrip.archimedeanTimesMuIsometryTransition
 #print axioms Iut.SourceFTimesMuPilotReconstruction.pilotObject_negative
+#print axioms Iut.SourceMLFGaloisTMPair.TimesMuKummerIsomorphism.transport
+#print axioms Iut.SourceFiniteTimesMuKummerFrobenioidEquivalence.trans
+#print axioms Iut.SourceFiniteTimesMuKummerFrobenioidEquivalence.kummerStructure_compatible
 #print axioms Iut.SourceModelFrobenioid.gpPullback_id
 #print axioms Iut.SourceModelFrobenioid.gpPullback_comp
 #print axioms Iut.SourceModelFrobenioid.Input.gpPullback_mem_birationalDivisors

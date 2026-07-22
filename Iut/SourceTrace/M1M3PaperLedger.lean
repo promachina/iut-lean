@@ -1118,12 +1118,18 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceFTimesMuPrimeStrip.archimedeanUnderlyingIsometryCategory",
         "SourceFTimesMuPrimeStrip.archimedeanTimesMuIsometryCategory",
         "SourceFTimesMuPrimeStrip.archimedeanTimesMuIsometryTransition",
+        "SourceMLFGaloisTMPairEquivalence",
+        "SourceMLFGaloisTMPair.TimesMuKummerIsomorphism.transport",
+        "SourceFiniteTimesMuKummerInput.characteristicGenerator",
+        "SourceFiniteTimesMuKummerFrobenioidEquivalence",
+        "SourceFiniteTimesMuKummerFrobenioidEquivalence.trans",
+        "SourceFiniteTimesMuKummerFrobenioidEquivalence.kummerStructure_compatible",
         "SourceFTimesMuPilotReconstruction",
         "SourceFTimesMuPilotReconstruction.localPilotCharacter",
         "SourceFTimesMuPilotReconstruction.pilotObject",
         "SourceFTimesMuPilotReconstruction.pilotObject_negative",
         "SourceFGloballyRealifiedTimesMuPrimeStrip"] .partialImplementation
-      "The Definition 4.9(vi)-(vii) local collection now selects the exact bad/good finite reconstruction at every selected finite place and the complete universe-polymorphic torsion-quotient Frobenioid system at every archimedean place. The kind equation prevents exchanging the bad and good constructions. The F-times and F-times-mu coarsifications are the actual wide subcategories cut out by divisor-zero isometries, and archimedean transitions are proved to preserve this condition. The globally realified record inherits the full Definition 5.2(iv) global Frobenioid, prime/place bijection, local strip, and rho maps. Its pilot is derived by transporting typed cyclic bad-place generators through the actual rho maps and applying a global reconstruction function; its arithmetic degree is proved negative. Construction from a theta-Hodge theater, the source reconstruction algorithm furnishing the pilot function and degree, and the full isomorphism/poly-isomorphism category remain open.",
+      "The Definition 4.9(vi)-(vii) local collection now selects the exact bad/good finite reconstruction at every selected finite place and the complete universe-polymorphic torsion-quotient Frobenioid system at every archimedean place. The kind equation prevents exchanging the bad and good constructions. The F-times and F-times-mu coarsifications are the actual wide subcategories cut out by divisor-zero isometries, and archimedean transitions are proved to preserve this condition. At a finite place, a structure-preserving isomorphism now transports the topological Galois group, arithmetic monoid action, unit-mod-torsion quotient, every open-subgroup invariant Kummer image, characteristic and unit product generators, reconstructed split Frobenioid, base, reference object, and rational monoid. Identity and composition are constructed, and preservation of the genuine Ism orbit is derived. The globally realified record inherits the full Definition 5.2(iv) global Frobenioid, prime/place bijection, local strip, and rho maps. Its pilot is derived by transporting typed cyclic bad-place generators through the actual rho maps and applying a global reconstruction function; its arithmetic degree is proved negative. Construction from a theta-Hodge theater, the source reconstruction algorithm furnishing the pilot function and degree, the archimedean natural-system isomorphisms, and the assembled prime-strip full poly-isomorphism category remain open.",
     clause "II.4.10(i)" .iutII "IUT II, Corollary 4.10(i)"
       ["ToyIUTIIQPilot"] .partialImplementation
       "The q-pilot numerical profile is present, but its categorical pilot object is not.",
