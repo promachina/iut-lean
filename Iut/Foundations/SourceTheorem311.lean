@@ -16884,11 +16884,12 @@ The bad-prime clause of Proposition 3.5(ii)(c).
 
 Every `m`-indexed splitting monoid acts on its own distinguished module and is
 transported by an actual Kummer isomorphism to one common vertically coric
-action.  `relatedAcrossLog` records only those portions of adjacent actions that
-the log-link can compare.  The source theorem says exactly that such a pair
-differs by a root of unity; it does not identify the complete actions.
+action.  The source theorem says that the only portions of adjacent actions
+that can meet across a log-link lie in the adjacent domains and differ by a
+root of unity in the latter domain.  The admissible relation is derived from
+these data below; it is not an arbitrary structure field.
 -/
-structure SourceTheorem311BadPrimeUpperSemiCompatibility
+structure SourceTheorem311BadPrimeLogKummerData
     {sourceModule : ℤ -> SourceTopologicalQModule.{u}}
     {sourceSubmodule : ∀ m, Submodule ℚ (sourceModule m)}
     {commonModule : SourceTopologicalQModule.{u}}
@@ -16905,27 +16906,10 @@ structure SourceTheorem311BadPrimeUpperSemiCompatibility
         (sourceAction m) commonAction (moduleKummer m)
   logDomain : SourceTorsionCyclotomicCommMonoid.{u}
   logLinks : SourceTheorem311VerticalLogLinkFamily logDomain
-  scalarToLogUnit :
-    ∀ m, (sourceAction m).monoid -> logDomain.carrierˣ
-  relatedAcrossLog :
-    ∀ m, (sourceAction m).monoid ->
-      (sourceAction (m + 1)).monoid -> Prop
-  related_current_mem_domain :
-    ∀ m first second,
-      relatedAcrossLog m first second ->
-        scalarToLogUnit m first ∈ logLinks.domainAt m
-  related_next_mem_domain :
-    ∀ m first second,
-      relatedAcrossLog m first second ->
-        scalarToLogUnit m first ∈ logLinks.domainAt (m + 1)
-  related_only_by_rootOfUnity :
-    ∀ m first second,
-      relatedAcrossLog m first second ->
-        SourceTheorem311VerticalLogLink.DiffersByRootOfUnity
-          (scalarToLogUnit m first)
-          (scalarToLogUnit (m + 1) second)
+  unitToLogUnit :
+    ∀ m, (sourceAction m).monoidˣ →* logDomain.carrierˣ
 
-namespace SourceTheorem311BadPrimeUpperSemiCompatibility
+namespace SourceTheorem311BadPrimeLogKummerData
 
 variable
     {sourceModule : ℤ -> SourceTopologicalQModule.{u}}
@@ -16939,27 +16923,50 @@ variable
       SourceLGPSplittingMonoidAction commonModule commonSubmodule}
     {moduleKummer : ∀ m, sourceModule m ≃L[ℚ] commonModule}
 
-/-- The only adjacent bad-prime ambiguity becomes addition by zero. -/
-theorem logarithm_eq_of_relatedAcrossLog
-    (compatibility :
-      SourceTheorem311BadPrimeUpperSemiCompatibility
+/--
+The roots-only over-approximation of portions of adjacent splitting actions
+that may meet across a bad-prime log-link.  Both representatives lie in their
+respective domains, the current representative lies in the adjacent overlap,
+and their quotient is represented by a root of unity in the next domain.
+-/
+def AdmissibleAcrossLog
+    (data :
+      SourceTheorem311BadPrimeLogKummerData
         sourceAction commonAction moduleKummer)
-    (m : ℤ) (first : (sourceAction m).monoid)
-    (second : (sourceAction (m + 1)).monoid)
-    (related : compatibility.relatedAcrossLog m first second) :
-    (compatibility.logLinks.logarithm m
-        (compatibility.scalarToLogUnit m first)).toAdd =
-      (compatibility.logLinks.logarithm (m + 1)
-        (compatibility.scalarToLogUnit (m + 1) second)).toAdd :=
-  compatibility.logLinks.adjacent_logarithm_eq_of_differsByRootOfUnity
-    m
-    (compatibility.scalarToLogUnit m first)
-    (compatibility.scalarToLogUnit (m + 1) second)
-    (compatibility.related_current_mem_domain m first second related)
-    (compatibility.related_next_mem_domain m first second related)
-    (compatibility.related_only_by_rootOfUnity m first second related)
+    (m : ℤ) (first : (sourceAction m).monoidˣ)
+    (second : (sourceAction (m + 1)).monoidˣ) : Prop :=
+  let currentUnit := data.unitToLogUnit m first
+  let nextUnit := data.unitToLogUnit (m + 1) second
+  currentUnit ∈ data.logLinks.domainAt m ∧
+    currentUnit ∈ data.logLinks.domainAt (m + 1) ∧
+    nextUnit ∈ data.logLinks.domainAt (m + 1) ∧
+    ∃ (n : ℕ+) (root : data.logDomain.RootsOfUnityGroup n),
+      (root : data.logDomain.carrierˣ) ∈ data.logLinks.domainAt (m + 1) ∧
+      nextUnit = currentUnit * (root : data.logDomain.carrierˣ)
 
-end SourceTheorem311BadPrimeUpperSemiCompatibility
+/-- The only adjacent bad-prime ambiguity becomes addition by zero. -/
+theorem logarithm_eq_of_admissibleAcrossLog
+    (data :
+      SourceTheorem311BadPrimeLogKummerData
+        sourceAction commonAction moduleKummer)
+    (m : ℤ) (first : (sourceAction m).monoidˣ)
+    (second : (sourceAction (m + 1)).monoidˣ)
+    (related : data.AdmissibleAcrossLog m first second) :
+    (data.logLinks.logarithm m
+        (data.unitToLogUnit m first)).toAdd =
+      (data.logLinks.logarithm (m + 1)
+        (data.unitToLogUnit (m + 1) second)).toAdd := by
+  rcases related with
+    ⟨hcurrent, hnext, _hsecond, n, root, _hroot, hrelated⟩
+  exact data.logLinks.adjacent_logarithm_eq_of_differsByRootOfUnity
+    m
+    (data.unitToLogUnit m first)
+    (data.unitToLogUnit (m + 1) second)
+    hcurrent
+    hnext
+    ⟨n, root, hrelated⟩
+
+end SourceTheorem311BadPrimeLogKummerData
 
 /--
 The labeled constants, `kappa`-solvable fundamental groups, number fields,

@@ -79,10 +79,10 @@ structure SourceTheorem311ColumnBoundary
           (SourceSelectedBadPlace.rationalPlace place) label
           ).distinguishedSubmodule label.distinguishedFactor
             (SourceSelectedBadPlace.toAbove place))
-  badPrimeUpperSemi :
+  badPrimeLogKummer :
     ∀ (place : SourceSelectedBadPlace theta)
       (label : IUTIIAbsoluteThetaLabel.{u} theta.l),
-      SourceTheorem311BadPrimeUpperSemiCompatibility
+      SourceTheorem311BadPrimeLogKummerData
         (fun site => siteSplitting site place label)
         (presentationConstruction.splitting place label)
         (fun site =>
@@ -231,18 +231,18 @@ theorem badPrime_logarithm_eq
     (place : SourceSelectedBadPlace theta)
     (label : IUTIIAbsoluteThetaLabel.{u} theta.l)
     (site : ℤ)
-    (first : (boundary.siteSplitting site place label).monoid)
-    (second : (boundary.siteSplitting (site + 1) place label).monoid)
+    (first : (boundary.siteSplitting site place label).monoidˣ)
+    (second : (boundary.siteSplitting (site + 1) place label).monoidˣ)
     (related :
-      (boundary.badPrimeUpperSemi place label).relatedAcrossLog
+      (boundary.badPrimeLogKummer place label).AdmissibleAcrossLog
         site first second) :
-    ((boundary.badPrimeUpperSemi place label).logLinks.logarithm site
-        ((boundary.badPrimeUpperSemi place label).scalarToLogUnit site first)
+    ((boundary.badPrimeLogKummer place label).logLinks.logarithm site
+        ((boundary.badPrimeLogKummer place label).unitToLogUnit site first)
         ).toAdd =
-      ((boundary.badPrimeUpperSemi place label).logLinks.logarithm (site + 1)
-        ((boundary.badPrimeUpperSemi place label).scalarToLogUnit
+      ((boundary.badPrimeLogKummer place label).logLinks.logarithm (site + 1)
+        ((boundary.badPrimeLogKummer place label).unitToLogUnit
           (site + 1) second)).toAdd :=
-  (boundary.badPrimeUpperSemi place label).logarithm_eq_of_relatedAcrossLog
+  (boundary.badPrimeLogKummer place label).logarithm_eq_of_admissibleAcrossLog
     site first second related
 
 /-- The first prime-strip horizontal Kummer square commutes. -/

@@ -631,7 +631,9 @@
   \lean{Iut.SourceTheorem311Ind3System.arch_direct_units_contained}
   \lean{Iut.SourceTheorem311Ind3System.arch_direct_localBalls_contained}
   \lean{Iut.SourceLGPSplittingMonoidAction}
-  \lean{Iut.SourceTheorem311BadPrimeUpperSemiCompatibility.logarithm_eq_of_relatedAcrossLog}
+  \lean{Iut.SourceTheorem311BadPrimeLogKummerData}
+  \lean{Iut.SourceTheorem311BadPrimeLogKummerData.AdmissibleAcrossLog}
+  \lean{Iut.SourceTheorem311BadPrimeLogKummerData.logarithm_eq_of_admissibleAcrossLog}
   \lean{Iut.SourceTheorem311LabeledData}
   \lean{Iut.SourceTheorem311LabeledKummerIso}
   \lean{Iut.SourceTheorem311MultiradialPresentation}
@@ -719,9 +721,12 @@
   group-germ automorphism, and co-holomorphic Kummer reconstruction are not yet
   formalized.  Equality to the common
   measure-derived log-volume implies independence of \(m\).  A multiplicative log-link into
-  a rational module provably kills roots of unity, so root-equivalent inputs
-  have the same additive log image; this also gives the stated bad-prime
-  compatibility for the portions of splitting actions related across a link.
+  a rational module provably kills roots of unity.  At a bad prime, cross-link
+  the actual unit groups of the splitting monoids map multiplicatively into
+  the log-link domain.  Cross-link admissibility is derived from membership in
+  the current and next domains together with an explicit root-of-unity quotient
+  in the next domain; it is not an arbitrary relation field.  Admissible inputs
+  have the same additive log image.
   Horizontal compatibility uses distinct arrow-category squares for the two
   prime-strip clauses and the profinite clause, plus a natural-isomorphism
   square of actual mono-theta projective systems with levelwise environment

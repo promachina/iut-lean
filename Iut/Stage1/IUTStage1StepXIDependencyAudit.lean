@@ -381,9 +381,9 @@ def canonicalM1M3RemainingAssumptions :
       status := .sourceObligation,
       paperSource := "IUT III, Theorem 3.11(ii)(b-c)",
       consumerDeclaration :=
-        "SourceTheorem311ColumnBoundary.badPrimeUpperSemi",
+        "SourceTheorem311ColumnBoundary.badPrimeLogKummer",
       note :=
-        "Construct site splitting actions, their Kummer maps, roots-only log-link overlaps, and the profinite, number-field, and Frobenioid labeled Kummer isomorphisms." },
+        "Construct site splitting actions, their Kummer maps and multiplicative unit-group realizations, the roots-only adjacent log-link overlap theorem, and the profinite, number-field, and Frobenioid labeled Kummer isomorphisms. Lean derives the bad-prime cross-log admissibility relation rather than accepting one." },
     { name := "horizontalLinkCompatibility",
       status := .sourceObligation,
       paperSource := "IUT III, Theorem 3.11(iii)(a-d)",
