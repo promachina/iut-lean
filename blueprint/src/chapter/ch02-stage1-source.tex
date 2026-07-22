@@ -639,6 +639,10 @@
   \lean{Iut.SourceTheorem311MultiradialPresentation}
   \lean{Iut.SourceTheorem311MultiradialAlgorithm.Quotient}
   \lean{Iut.SourceTheorem311PermutationBiCoricCompatibility.quotientEquiv}
+  \lean{Iut.SourceFPrimeStripHom.NaturallyIsomorphic}
+  \lean{Iut.SourceFPrimeStripFullPolyIsomorphism}
+  \lean{Iut.SourceFPrimeStripFullPolyIsomorphism.comp_assoc}
+  \lean{Iut.SourceFPrimeStripPolyIsomorphismSquare}
   \lean{Iut.SourceIndexedHorizontalKummerSquare}
   \lean{Iut.SourceTheorem311TrianglePrimeStripSquare}
   \lean{Iut.SourceTheorem311EnvironmentPrimeStripFamily}
@@ -733,10 +737,21 @@
   Horizontal compatibility is no longer an unindexed field of a single
   column.  Its boundary contains two column assemblies, proves that they use
   the same lattice at indices \(n\) and \(n+1\), and fixes all four corners of
-  every square.  The triangle and environment prime-strip squares range over
-  every \(m\); the environment family carries its natural comparisons with
-  the triangle strips, and its square is derived by conjugating the triangle
-  square with those comparisons.  The mono-theta square ranges over every \(m\) and bad
+  every square.  Following the convention of IUT~I, Section~0, an
+  \(F\)-prime-strip full poly-isomorphism is represented by a componentwise
+  equivalence map modulo natural isomorphism on its categorical components;
+  it is not a strict categorical isomorphism of prime-strip records.  Lean
+  proves that identity and composition descend to these classes, together
+  with associativity and cancellation of selected inverse pairs.  A
+  prime-strip square quantifies in both directions over all horizontal
+  classes; its chosen upper and lower classes only witness nonemptiness.  Thus
+  one convenient commuting representative cannot discharge a full
+  poly-isomorphism compatibility claim.  The triangle
+  and environment prime-strip squares range over every \(m\); the environment
+  family carries two-sided natural comparison classes with the triangle
+  strips, and its square is proved class-by-class in both directions by
+  conjugating the triangle square and cancelling those comparisons.  The
+  mono-theta square ranges over every \(m\) and bad
   place and uses actual projective systems with levelwise environment
   realizations.  The \(\kappa\)-sol/\(M_\infty^\kappa\) squares range over every
   \(m\) and absolute label and commute with the common square through the two

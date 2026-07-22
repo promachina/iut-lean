@@ -736,6 +736,8 @@ end Iut.SourcePacketFiniteStageLogVolume
 #print axioms Iut.SourceTheorem311VerticalLogLink.logarithm_eq_of_differsByRootOfUnity
 #print axioms Iut.SourceTheorem311VerticalLogLinkFamily.adjacent_logarithm_eq_on_overlap
 #print axioms Iut.SourceTheorem311BadPrimeLogKummerData.logarithm_eq_of_admissibleAcrossLog
+#print axioms Iut.SourceFPrimeStripFullPolyIsomorphism.comp_assoc
+#print axioms Iut.SourceFPrimeStripFullPolyIsomorphism.comp_inverse_assoc
 #print axioms Iut.SourceIndexedHorizontalKummerSquare.automorphismEquiv
 #print axioms Iut.SourceTheorem311EnvironmentPrimeStripSquare.ofTriangle
 #print axioms Iut.SourceTheorem311TwoActionEquivalence.quotientEquiv

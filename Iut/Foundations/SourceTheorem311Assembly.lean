@@ -354,20 +354,24 @@ def environmentPrimeStripClauseB
 theorem primeStripClauseA_commutes
     (boundary : SourceTheorem311HorizontalCorridorBoundary models)
     (site : ℤ) :
-    (boundary.primeStripClauseA site).leftKummer.hom ≫
-        (boundary.primeStripClauseA site).lowerHorizontal.hom =
-      (boundary.primeStripClauseA site).upperHorizontal.hom ≫
-        (boundary.primeStripClauseA site).rightKummer.hom :=
+    SourceFPrimeStripFullPolyIsomorphism.comp
+        (boundary.primeStripClauseA site).leftKummer
+        (boundary.primeStripClauseA site).lowerHorizontal =
+      SourceFPrimeStripFullPolyIsomorphism.comp
+        (boundary.primeStripClauseA site).upperHorizontal
+        (boundary.primeStripClauseA site).rightKummer :=
   (boundary.primeStripClauseA site).commutes
 
 /-- Clause (iii)(b) commutes at every vertical lattice site. -/
 theorem environmentPrimeStripClauseB_commutes
     (boundary : SourceTheorem311HorizontalCorridorBoundary models)
     (site : ℤ) :
-    (boundary.environmentPrimeStripClauseB site).leftKummer.hom ≫
-        (boundary.environmentPrimeStripClauseB site).lowerHorizontal.hom =
-      (boundary.environmentPrimeStripClauseB site).upperHorizontal.hom ≫
-        (boundary.environmentPrimeStripClauseB site).rightKummer.hom :=
+    SourceFPrimeStripFullPolyIsomorphism.comp
+        (boundary.environmentPrimeStripClauseB site).leftKummer
+        (boundary.environmentPrimeStripClauseB site).lowerHorizontal =
+      SourceFPrimeStripFullPolyIsomorphism.comp
+        (boundary.environmentPrimeStripClauseB site).upperHorizontal
+        (boundary.environmentPrimeStripClauseB site).rightKummer :=
   (boundary.environmentPrimeStripClauseB site).commutes
 
 /-- Clause (iii)(c) commutes at every site and selected bad place. -/

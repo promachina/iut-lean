@@ -390,7 +390,7 @@ def canonicalM1M3RemainingAssumptions :
       consumerDeclaration :=
         "SourceTheorem311HorizontalCorridorBoundary",
       note :=
-        "For two adjacent column boundaries on the same lattice, construct both prime-strip squares for every vertical site, the mono-theta projective-system square for every site and selected bad place, and the site/common kappa squares for every absolute label. Prove coherence with the vertical labeled Kummer maps and evaluation equivariance from the horizontal theta links." },
+        "For two adjacent column boundaries on the same lattice, construct the clause (a) F-prime-strip full-poly-isomorphism square for every vertical site as equivalence classes in the IUT I Section 0 coarsification, proving class-by-class compatibility in both directions rather than only one selected square, together with the two-sided environment comparisons from which clause (b) is derived. Construct the mono-theta projective-system square for every site and selected bad place and the site/common kappa squares for every absolute label. Prove coherence with the vertical labeled Kummer maps and evaluation equivariance from Theorem 1.5 and Corollary 2.3 horizontal-link data." },
     { name := "permutationBiCoricFunctoriality",
       status := .sourceObligation,
       paperSource := "IUT III, Theorem 3.11(i) final functoriality clause",

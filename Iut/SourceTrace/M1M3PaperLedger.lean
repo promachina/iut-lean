@@ -1716,7 +1716,15 @@ def m1m3PaperLedger : List PaperClause :=
       .partialImplementation
       "Ind3 is expressed relative to one fixed vertically coric n-circle container. A concrete vertical family derives every packet, direct Kummer isomorphism, integral-region image, finite-stage volume, normalized functional, and source log-shell region. At finite places it derives the genuine invariant-unit tensor subgroup, adjacent graph, every positive iterate, the m-r to m equation, and Kummer containment. At infinite places the Definition 1.1 radius-pi disk is the unit ball of the pi-normalized Hermitian metric. Actual circle units, their arg*i principal logarithms, selected-place direct sums, and pure tensors are constructed. The units are canonically promoted to the exact S1 core of an antitone open-annulus projective system whose restricted Aut_hol group assignment, ambient group germs, and selected connected component are constructed. For groupification-induced holomorphic automorphisms, the exponential-cover classification proves the selected-side-preserving semi-germ is the identity. The column boundary no longer accepts VerticalUpperSemiData: it accepts full selected-place log-links and derives the finite and archimedean packet relations, then every iterate, domain/range, endpoint-ball subset, relational surjectivity, containment, and vertical normalized-value independence. Extending rigidity to every purely local group-germ automorphism remains open, as do construction of the full local log-links from Psi_cns and the Gaussian log-theta lattice, the Galois-invariant tensor actions, and the remaining bad-prime data.",
     clause "III.3.11(iii).horizontal" .iutIII "IUT III, Theorem 3.11(iii): horizontal theta link"
-      ["SourceIndexedHorizontalKummerSquare",
+      ["SourceFPrimeStripHom.NaturallyIsomorphic",
+        "sourceFPrimeStripHomSetoid",
+        "SourceFPrimeStripFullPolyIsomorphism",
+        "SourceFPrimeStripFullPolyIsomorphism.comp_assoc",
+        "SourceFPrimeStripFullPolyIsomorphism.comp_inverse_assoc",
+        "SourceFPrimeStripPolyIsomorphismSquare",
+        "SourceFPrimeStripPolyIsomorphismSquare.upperToLower",
+        "SourceFPrimeStripPolyIsomorphismSquare.lowerToUpper",
+        "SourceIndexedHorizontalKummerSquare",
         "SourceIndexedHorizontalKummerSquare.toArrowCompatibility",
         "SourceTheorem311TrianglePrimeStripSquare",
         "SourceTheorem311EnvironmentPrimeStripFamily",
@@ -1735,7 +1743,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceTheorem311HorizontalCorridorBoundary.siteKappaClauseD_commutes",
         "SourceTheorem311HorizontalCorridorBoundary.commonKappaClauseD_commutes"]
       .partialImplementation
-      "The active boundary is an adjacent-column corridor, not a field of one column. It proves that the columns use the same lattice and have indices n and n+1. Clause (a) is a fixed-corner F-prime-strip isomorphism square for every m at the exact site/common lattice endpoints. Clause (b) is derived by conjugating clause (a) with the explicit environment-to-triangle comparisons, rather than accepted independently. Clause (c) is a square of actual mono-theta projective systems for every m and selected bad place. Clause (d) is a kappa-sol/M-infinity-kappa square for every m and absolute label, plus the common square and coherence with both vertical labeled Kummer maps. Constructing these indexed isomorphisms and their evaluation equivariance from the horizontal theta links remains open.",
+      "The active boundary is an adjacent-column corridor, not a field of one column. It proves that the columns use the same lattice and have indices n and n+1. Following IUT I Section 0, an F-prime-strip full poly-isomorphism is the quotient of componentwise equivalence maps by natural isomorphism on categorical components, not a strict categorical Iso of prime-strip records. Quotient identity, composition, associativity, and inverse-pair cancellation are proved. Clause (a) is a fixed-corner square in this coarsification for every m at the exact site/common lattice endpoints. Its selected arrows witness nonemptiness, while two universal fields prove that every upper horizontal class has a commuting lower class and conversely; one chosen commuting square cannot discharge the full-poly claim. Clause (b) is derived class-by-class in both directions by conjugating clause (a) with explicit two-sided environment-to-triangle classes and their inverse laws, rather than accepted independently. Clause (c) is a square of actual mono-theta projective systems for every m and selected bad place. Clause (d) is a kappa-sol/M-infinity-kappa square for every m and absolute label, plus the common square and coherence with both vertical labeled Kummer maps. Constructing the clause (a) representatives, comparison representatives, and their evaluation equivariance from Theorem 1.5 and Corollary 2.3 remains open.",
     clause "III.3.11(iii).equivariance" .iutIII "IUT III, Theorem 3.11(iii): automorphism equivariance"
       ["SourceIndexedHorizontalKummerSquare.automorphismEquiv",
         "SourceTheorem311HorizontalEvaluationCompatibility",

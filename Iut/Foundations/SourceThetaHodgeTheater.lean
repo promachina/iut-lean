@@ -1241,6 +1241,304 @@ instance
           (h.archimedean v)
 
 /--
+Two representatives of an isomorphism of `F`-prime-strips determine the same
+map in the coarsification of IUT I, Section 0, when their categorical
+components are naturally isomorphic and their noncategorical components
+agree.  Proof fields and the chosen equivalence witnesses are deliberately
+not part of this relation.
+-/
+structure SourceFPrimeStripHom.NaturallyIsomorphic
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    {source target : SourceFPrimeStrip models}
+    (first second : SourceFPrimeStripHom source target) : Prop where
+  nonarchimedean :
+    ∀ v, Nonempty (first.nonarchimedean v ≅ second.nonarchimedean v)
+  nonarchimedeanBase :
+    ∀ v, Nonempty
+      (first.nonarchimedeanBase v ≅ second.nonarchimedeanBase v)
+  archimedeanCategory :
+    ∀ v, Nonempty ((first.archimedean v).category ≅
+      (second.archimedean v).category)
+  archimedeanOrbispace :
+    ∀ v, (first.archimedean v).orbispace =
+      (second.archimedean v).orbispace
+  archimedeanUnits :
+    ∀ v, (first.archimedean v).units =
+      (second.archimedean v).units
+
+namespace SourceFPrimeStripHom.NaturallyIsomorphic
+
+variable
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    {source middle target : SourceFPrimeStrip models}
+
+/-- Reflexivity of the coarsified prime-strip map relation. -/
+protected def refl (map : SourceFPrimeStripHom source target) :
+    map.NaturallyIsomorphic map where
+  nonarchimedean _ := ⟨Iso.refl _⟩
+  nonarchimedeanBase _ := ⟨Iso.refl _⟩
+  archimedeanCategory _ := ⟨Iso.refl _⟩
+  archimedeanOrbispace _ := rfl
+  archimedeanUnits _ := rfl
+
+/-- Symmetry of the coarsified prime-strip map relation. -/
+protected def symm
+    {first second : SourceFPrimeStripHom source target}
+    (relation : first.NaturallyIsomorphic second) :
+    second.NaturallyIsomorphic first where
+  nonarchimedean v :=
+    (relation.nonarchimedean v).map Iso.symm
+  nonarchimedeanBase v :=
+    (relation.nonarchimedeanBase v).map Iso.symm
+  archimedeanCategory v :=
+    (relation.archimedeanCategory v).map Iso.symm
+  archimedeanOrbispace v := (relation.archimedeanOrbispace v).symm
+  archimedeanUnits v := (relation.archimedeanUnits v).symm
+
+/-- Transitivity of the coarsified prime-strip map relation. -/
+protected def trans
+    {first second third : SourceFPrimeStripHom source target}
+    (firstSecond : first.NaturallyIsomorphic second)
+    (secondThird : second.NaturallyIsomorphic third) :
+    first.NaturallyIsomorphic third where
+  nonarchimedean v := by
+    rcases firstSecond.nonarchimedean v with ⟨firstIso⟩
+    rcases secondThird.nonarchimedean v with ⟨secondIso⟩
+    exact ⟨firstIso.trans secondIso⟩
+  nonarchimedeanBase v := by
+    rcases firstSecond.nonarchimedeanBase v with ⟨firstIso⟩
+    rcases secondThird.nonarchimedeanBase v with ⟨secondIso⟩
+    exact ⟨firstIso.trans secondIso⟩
+  archimedeanCategory v := by
+    rcases firstSecond.archimedeanCategory v with ⟨firstIso⟩
+    rcases secondThird.archimedeanCategory v with ⟨secondIso⟩
+    exact ⟨firstIso.trans secondIso⟩
+  archimedeanOrbispace v :=
+    (firstSecond.archimedeanOrbispace v).trans
+      (secondThird.archimedeanOrbispace v)
+  archimedeanUnits v :=
+    (firstSecond.archimedeanUnits v).trans
+      (secondThird.archimedeanUnits v)
+
+/-- Composition respects natural-isomorphism classes in both variables. -/
+protected def comp
+    {first first' : SourceFPrimeStripHom source middle}
+    {second second' : SourceFPrimeStripHom middle target}
+    (hFirst : first.NaturallyIsomorphic first')
+    (hSecond : second.NaturallyIsomorphic second') :
+    (first.comp second).NaturallyIsomorphic
+      (first'.comp second') where
+  nonarchimedean v := by
+    rcases hFirst.nonarchimedean v with ⟨firstIso⟩
+    rcases hSecond.nonarchimedean v with ⟨secondIso⟩
+    exact ⟨NatIso.hcomp firstIso secondIso⟩
+  nonarchimedeanBase v := by
+    rcases hFirst.nonarchimedeanBase v with ⟨firstIso⟩
+    rcases hSecond.nonarchimedeanBase v with ⟨secondIso⟩
+    exact ⟨NatIso.hcomp firstIso secondIso⟩
+  archimedeanCategory v := by
+    rcases hFirst.archimedeanCategory v with ⟨firstIso⟩
+    rcases hSecond.archimedeanCategory v with ⟨secondIso⟩
+    exact ⟨NatIso.hcomp firstIso secondIso⟩
+  archimedeanOrbispace v := by
+    change
+      (first.archimedean v).orbispace ≫
+          (second.archimedean v).orbispace =
+        (first'.archimedean v).orbispace ≫
+          (second'.archimedean v).orbispace
+    rw [hFirst.archimedeanOrbispace v,
+      hSecond.archimedeanOrbispace v]
+  archimedeanUnits v := by
+    change
+      (first.archimedean v).units.comp
+          (second.archimedean v).units =
+        (first'.archimedean v).units.comp
+          (second'.archimedean v).units
+    rw [hFirst.archimedeanUnits v,
+      hSecond.archimedeanUnits v]
+
+/-- Associativity holds in the coarsified prime-strip map relation. -/
+protected def assoc
+    (first : SourceFPrimeStripHom source middle)
+    (second : SourceFPrimeStripHom middle target)
+    {final : SourceFPrimeStrip models}
+    (third : SourceFPrimeStripHom target final) :
+    ((first.comp second).comp third).NaturallyIsomorphic
+      (first.comp (second.comp third)) where
+  nonarchimedean v :=
+    ⟨eqToIso (Functor.assoc
+      (first.nonarchimedean v)
+      (second.nonarchimedean v)
+      (third.nonarchimedean v))⟩
+  nonarchimedeanBase v :=
+    ⟨eqToIso (Functor.assoc
+      (first.nonarchimedeanBase v)
+      (second.nonarchimedeanBase v)
+      (third.nonarchimedeanBase v))⟩
+  archimedeanCategory v :=
+    ⟨eqToIso (Functor.assoc
+      (first.archimedean v).category
+      (second.archimedean v).category
+      (third.archimedean v).category)⟩
+  archimedeanOrbispace v :=
+    congrArg SourceFPrimeStripArchHom.orbispace
+      (Category.assoc (first.archimedean v)
+        (second.archimedean v) (third.archimedean v))
+  archimedeanUnits v :=
+    congrArg SourceFPrimeStripArchHom.units
+      (Category.assoc (first.archimedean v)
+        (second.archimedean v) (third.archimedean v))
+
+end SourceFPrimeStripHom.NaturallyIsomorphic
+
+/-- The setoid implementing the coarsification convention for `F`-strips. -/
+def sourceFPrimeStripHomSetoid
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    (source target : SourceFPrimeStrip models) :
+    Setoid (SourceFPrimeStripHom source target) where
+  r := SourceFPrimeStripHom.NaturallyIsomorphic
+  iseqv :=
+    ⟨SourceFPrimeStripHom.NaturallyIsomorphic.refl,
+      SourceFPrimeStripHom.NaturallyIsomorphic.symm,
+      SourceFPrimeStripHom.NaturallyIsomorphic.trans⟩
+
+/--
+The full poly-isomorphism of two `F`-prime-strips in the sense of IUT I,
+Section 0: all componentwise equivalence maps, modulo natural isomorphism of
+their categorical components.
+-/
+abbrev SourceFPrimeStripFullPolyIsomorphism
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    (source target : SourceFPrimeStrip models) :=
+  Quotient (sourceFPrimeStripHomSetoid source target)
+
+namespace SourceFPrimeStripFullPolyIsomorphism
+
+variable
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    {source middle target final : SourceFPrimeStrip models}
+
+/-- The class represented by a componentwise equivalence map. -/
+def ofHom (map : SourceFPrimeStripHom source target) :
+    SourceFPrimeStripFullPolyIsomorphism source target :=
+  Quotient.mk _ map
+
+/-- The identity member of the full poly-isomorphism. -/
+def id (source : SourceFPrimeStrip models) :
+    SourceFPrimeStripFullPolyIsomorphism source source :=
+  ofHom (SourceFPrimeStripHom.id source)
+
+/-- Composition in the coarsified category of `F`-prime-strips. -/
+def comp
+    (first : SourceFPrimeStripFullPolyIsomorphism source middle)
+    (second : SourceFPrimeStripFullPolyIsomorphism middle target) :
+    SourceFPrimeStripFullPolyIsomorphism source target :=
+  Quotient.map₂ SourceFPrimeStripHom.comp
+    (by
+      intro first first' hFirst second second' hSecond
+      exact
+        SourceFPrimeStripHom.NaturallyIsomorphic.comp hFirst hSecond)
+    first second
+
+@[simp]
+theorem comp_ofHom
+    (first : SourceFPrimeStripHom source middle)
+    (second : SourceFPrimeStripHom middle target) :
+    comp (ofHom first) (ofHom second) =
+      ofHom (first.comp second) := by
+  change Quotient.mk _ (first.comp second) =
+    Quotient.mk _ (first.comp second)
+  rfl
+
+@[simp]
+theorem id_comp
+    (map : SourceFPrimeStripFullPolyIsomorphism source target) :
+    comp (id source) map = map := by
+  refine Quotient.inductionOn map ?_
+  intro representative
+  change ofHom ((𝟙 source) ≫ representative) =
+    ofHom representative
+  rw [Category.id_comp]
+
+@[simp]
+theorem comp_id
+    (map : SourceFPrimeStripFullPolyIsomorphism source target) :
+    comp map (id target) = map := by
+  refine Quotient.inductionOn map ?_
+  intro representative
+  change ofHom (representative ≫ (𝟙 target)) =
+    ofHom representative
+  rw [Category.comp_id]
+
+theorem comp_assoc
+    (first : SourceFPrimeStripFullPolyIsomorphism source middle)
+    (second : SourceFPrimeStripFullPolyIsomorphism middle target)
+    (third : SourceFPrimeStripFullPolyIsomorphism target final) :
+    comp (comp first second) third =
+      comp first (comp second third) := by
+  refine Quotient.inductionOn₃ first second third ?_
+  intro firstRepresentative secondRepresentative thirdRepresentative
+  apply Quotient.sound
+  exact SourceFPrimeStripHom.NaturallyIsomorphic.assoc
+    firstRepresentative secondRepresentative thirdRepresentative
+
+/-- Cancel a selected inverse pair inside a longer composite. -/
+theorem comp_inverse_assoc
+    (forward : SourceFPrimeStripFullPolyIsomorphism source middle)
+    (back : SourceFPrimeStripFullPolyIsomorphism middle source)
+    (inverse : comp forward back = id source)
+    (next : SourceFPrimeStripFullPolyIsomorphism source target) :
+    comp forward (comp back next) = next := by
+  rw [← comp_assoc, inverse, id_comp]
+
+end SourceFPrimeStripFullPolyIsomorphism
+
+/--
 Remark 5.2.1(i): the D-prime-strip associated to an F-prime-strip.
 
 At a finite place this is the actual base category of the packaged

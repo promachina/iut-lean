@@ -25,6 +25,9 @@ namespace Iut
 
 universe u v
 
+local infixr:81 " ≫ₚ " =>
+  SourceFPrimeStripFullPolyIsomorphism.comp
+
 /--
 A commutative square with fixed corners and isomorphisms on its two vertical
 sides.  Its rows are the horizontal arrows that are compared by Kummer.
@@ -68,42 +71,54 @@ def automorphismEquiv
 
 end SourceIndexedHorizontalKummerSquare
 
-/-- A fixed-corner commutative square all four of whose sides are isomorphisms. -/
-structure SourceIndexedHorizontalIsoSquare
-    (C : Type u) [Category.{v} C]
-    (upperLeft upperRight lowerLeft lowerRight : C) where
-  upperHorizontal : upperLeft ≅ upperRight
-  lowerHorizontal : lowerLeft ≅ lowerRight
-  leftKummer : upperLeft ≅ lowerLeft
-  rightKummer : upperRight ≅ lowerRight
+/--
+A commutative square in the Section 0 coarsification of `F`-prime-strips.
+Every side is an equivalence class of componentwise equivalence maps, not a
+strict categorical `Iso` of the prime-strip records.  The chosen horizontal
+classes witness nonemptiness; `upperToLower` and `lowerToUpper` express
+compatibility of the entire full poly-isomorphisms, not just those witnesses.
+-/
+structure SourceFPrimeStripPolyIsomorphismSquare
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    (upperLeft upperRight lowerLeft lowerRight :
+      SourceFPrimeStrip models) where
+  upperHorizontal :
+    SourceFPrimeStripFullPolyIsomorphism upperLeft upperRight
+  lowerHorizontal :
+    SourceFPrimeStripFullPolyIsomorphism lowerLeft lowerRight
+  leftKummer :
+    SourceFPrimeStripFullPolyIsomorphism upperLeft lowerLeft
+  rightKummer :
+    SourceFPrimeStripFullPolyIsomorphism upperRight lowerRight
   commutes :
-    leftKummer.hom ≫ lowerHorizontal.hom =
-      upperHorizontal.hom ≫ rightKummer.hom
-
-namespace SourceIndexedHorizontalIsoSquare
-
-variable
-    {C : Type u} [Category.{v} C]
-    {upperLeft upperRight lowerLeft lowerRight : C}
-
-/-- Forget only that the two horizontal arrows are isomorphisms. -/
-def toKummerSquare
-    (square :
-      SourceIndexedHorizontalIsoSquare C
-        upperLeft upperRight lowerLeft lowerRight) :
-    SourceIndexedHorizontalKummerSquare C
-      upperLeft upperRight lowerLeft lowerRight where
-  upperHorizontal := square.upperHorizontal.hom
-  lowerHorizontal := square.lowerHorizontal.hom
-  leftKummer := square.leftKummer
-  rightKummer := square.rightKummer
-  commutes := square.commutes
-
-end SourceIndexedHorizontalIsoSquare
+    SourceFPrimeStripFullPolyIsomorphism.comp
+        leftKummer lowerHorizontal =
+      SourceFPrimeStripFullPolyIsomorphism.comp
+        upperHorizontal rightKummer
+  upperToLower :
+    ∀ upper : SourceFPrimeStripFullPolyIsomorphism upperLeft upperRight,
+      ∃ lower : SourceFPrimeStripFullPolyIsomorphism lowerLeft lowerRight,
+        SourceFPrimeStripFullPolyIsomorphism.comp leftKummer lower =
+          SourceFPrimeStripFullPolyIsomorphism.comp upper rightKummer
+  lowerToUpper :
+    ∀ lower : SourceFPrimeStripFullPolyIsomorphism lowerLeft lowerRight,
+      ∃ upper : SourceFPrimeStripFullPolyIsomorphism upperLeft upperRight,
+        SourceFPrimeStripFullPolyIsomorphism.comp leftKummer lower =
+          SourceFPrimeStripFullPolyIsomorphism.comp upper rightKummer
 
 /--
 The exact clause (iii)(a) square at `(n,m)`: the upper row consists of the
 two site theaters and the lower row of the two vertically coric theaters.
+Its arrows are the paper's full poly-isomorphisms modulo natural isomorphism.
 -/
 abbrev SourceTheorem311TrianglePrimeStripSquare
     {Fmod F K : Type u}
@@ -118,8 +133,7 @@ abbrev SourceTheorem311TrianglePrimeStripSquare
     {models : IUTIThetaHodgeTheaterModels theta}
     (lattice : SourceAbsoluteLGPGaussianLogThetaLattice models)
     (n m : ℤ) :=
-  SourceIndexedHorizontalIsoSquare
-    (SourceFPrimeStrip models)
+  SourceFPrimeStripPolyIsomorphismSquare
     (lattice.theater n m).associatedF
     (lattice.theater (n + 1) m).associatedF
     (lattice.commonBridge n).theater.associatedF
@@ -143,10 +157,40 @@ structure SourceTheorem311EnvironmentPrimeStripFamily
     (lattice : SourceAbsoluteLGPGaussianLogThetaLattice models) where
   site : ℤ → ℤ → SourceFPrimeStrip models
   common : ℤ → SourceFPrimeStrip models
-  siteComparison :
-    ∀ n m, (lattice.theater n m).associatedF ≅ site n m
-  commonComparison :
-    ∀ n, (lattice.commonBridge n).theater.associatedF ≅ common n
+  siteToTriangle :
+    ∀ n m, SourceFPrimeStripFullPolyIsomorphism
+      (site n m) (lattice.theater n m).associatedF
+  siteFromTriangle :
+    ∀ n m, SourceFPrimeStripFullPolyIsomorphism
+      (lattice.theater n m).associatedF (site n m)
+  siteToFrom :
+    ∀ n m,
+      SourceFPrimeStripFullPolyIsomorphism.comp
+          (siteToTriangle n m) (siteFromTriangle n m) =
+        SourceFPrimeStripFullPolyIsomorphism.id (site n m)
+  siteFromTo :
+    ∀ n m,
+      SourceFPrimeStripFullPolyIsomorphism.comp
+          (siteFromTriangle n m) (siteToTriangle n m) =
+        SourceFPrimeStripFullPolyIsomorphism.id
+          (lattice.theater n m).associatedF
+  commonToTriangle :
+    ∀ n, SourceFPrimeStripFullPolyIsomorphism
+      (common n) (lattice.commonBridge n).theater.associatedF
+  commonFromTriangle :
+    ∀ n, SourceFPrimeStripFullPolyIsomorphism
+      (lattice.commonBridge n).theater.associatedF (common n)
+  commonToFrom :
+    ∀ n,
+      SourceFPrimeStripFullPolyIsomorphism.comp
+          (commonToTriangle n) (commonFromTriangle n) =
+        SourceFPrimeStripFullPolyIsomorphism.id (common n)
+  commonFromTo :
+    ∀ n,
+      SourceFPrimeStripFullPolyIsomorphism.comp
+          (commonFromTriangle n) (commonToTriangle n) =
+        SourceFPrimeStripFullPolyIsomorphism.id
+          (lattice.commonBridge n).theater.associatedF
 
 /-- The fixed-corner environment-prime-strip square of clause (iii)(b). -/
 abbrev SourceTheorem311EnvironmentPrimeStripSquare
@@ -163,8 +207,7 @@ abbrev SourceTheorem311EnvironmentPrimeStripSquare
     {lattice : SourceAbsoluteLGPGaussianLogThetaLattice models}
     (family : SourceTheorem311EnvironmentPrimeStripFamily lattice)
     (n m : ℤ) :=
-  SourceIndexedHorizontalIsoSquare
-    (SourceFPrimeStrip models)
+  SourceFPrimeStripPolyIsomorphismSquare
     (family.site n m) (family.site (n + 1) m)
     (family.common n) (family.common (n + 1))
 
@@ -193,21 +236,145 @@ def ofTriangle
     (triangle : SourceTheorem311TrianglePrimeStripSquare lattice n m) :
     SourceTheorem311EnvironmentPrimeStripSquare family n m where
   upperHorizontal :=
-    (family.siteComparison n m).symm ≪≫
-      triangle.upperHorizontal ≪≫
-        family.siteComparison (n + 1) m
+    SourceFPrimeStripFullPolyIsomorphism.comp
+      (SourceFPrimeStripFullPolyIsomorphism.comp
+        (family.siteToTriangle n m) triangle.upperHorizontal)
+      (family.siteFromTriangle (n + 1) m)
   lowerHorizontal :=
-    (family.commonComparison n).symm ≪≫
-      triangle.lowerHorizontal ≪≫
-        family.commonComparison (n + 1)
+    SourceFPrimeStripFullPolyIsomorphism.comp
+      (SourceFPrimeStripFullPolyIsomorphism.comp
+        (family.commonToTriangle n) triangle.lowerHorizontal)
+      (family.commonFromTriangle (n + 1))
   leftKummer :=
-    (family.siteComparison n m).symm ≪≫
-      triangle.leftKummer ≪≫ family.commonComparison n
+    SourceFPrimeStripFullPolyIsomorphism.comp
+      (SourceFPrimeStripFullPolyIsomorphism.comp
+        (family.siteToTriangle n m) triangle.leftKummer)
+      (family.commonFromTriangle n)
   rightKummer :=
-    (family.siteComparison (n + 1) m).symm ≪≫
-      triangle.rightKummer ≪≫ family.commonComparison (n + 1)
+    SourceFPrimeStripFullPolyIsomorphism.comp
+      (SourceFPrimeStripFullPolyIsomorphism.comp
+        (family.siteToTriangle (n + 1) m) triangle.rightKummer)
+      (family.commonFromTriangle (n + 1))
   commutes := by
-    simp [triangle.commutes]
+    have commonCancellation :
+        family.commonFromTriangle n ≫ₚ
+            (family.commonToTriangle n ≫ₚ
+              (triangle.lowerHorizontal ≫ₚ
+                family.commonFromTriangle (n + 1))) =
+          triangle.lowerHorizontal ≫ₚ
+            family.commonFromTriangle (n + 1) :=
+      SourceFPrimeStripFullPolyIsomorphism.comp_inverse_assoc
+        (family.commonFromTriangle n)
+        (family.commonToTriangle n)
+        (family.commonFromTo n)
+        (triangle.lowerHorizontal ≫ₚ
+          family.commonFromTriangle (n + 1))
+    have siteCancellation :
+        family.siteFromTriangle (n + 1) m ≫ₚ
+            (family.siteToTriangle (n + 1) m ≫ₚ
+              (triangle.rightKummer ≫ₚ
+                family.commonFromTriangle (n + 1))) =
+          triangle.rightKummer ≫ₚ
+            family.commonFromTriangle (n + 1) :=
+      SourceFPrimeStripFullPolyIsomorphism.comp_inverse_assoc
+        (family.siteFromTriangle (n + 1) m)
+        (family.siteToTriangle (n + 1) m)
+        (family.siteFromTo (n + 1) m)
+        (triangle.rightKummer ≫ₚ
+          family.commonFromTriangle (n + 1))
+    calc
+      ((family.siteToTriangle n m ≫ₚ triangle.leftKummer) ≫ₚ
+          family.commonFromTriangle n) ≫ₚ
+          ((family.commonToTriangle n ≫ₚ
+            triangle.lowerHorizontal) ≫ₚ
+            family.commonFromTriangle (n + 1)) =
+        family.siteToTriangle n m ≫ₚ
+          (triangle.leftKummer ≫ₚ
+            (family.commonFromTriangle n ≫ₚ
+              (family.commonToTriangle n ≫ₚ
+                (triangle.lowerHorizontal ≫ₚ
+                  family.commonFromTriangle (n + 1))))) := by
+            simp only [SourceFPrimeStripFullPolyIsomorphism.comp_assoc]
+      _ = family.siteToTriangle n m ≫ₚ
+          (triangle.leftKummer ≫ₚ
+            (triangle.lowerHorizontal ≫ₚ
+              family.commonFromTriangle (n + 1))) := by
+            rw [commonCancellation]
+      _ = family.siteToTriangle n m ≫ₚ
+          ((triangle.leftKummer ≫ₚ triangle.lowerHorizontal) ≫ₚ
+            family.commonFromTriangle (n + 1)) := by
+            rw [SourceFPrimeStripFullPolyIsomorphism.comp_assoc]
+      _ = family.siteToTriangle n m ≫ₚ
+          ((triangle.upperHorizontal ≫ₚ triangle.rightKummer) ≫ₚ
+            family.commonFromTriangle (n + 1)) := by
+            rw [triangle.commutes]
+      _ = family.siteToTriangle n m ≫ₚ
+          (triangle.upperHorizontal ≫ₚ
+            (triangle.rightKummer ≫ₚ
+              family.commonFromTriangle (n + 1))) := by
+            rw [SourceFPrimeStripFullPolyIsomorphism.comp_assoc]
+      _ = family.siteToTriangle n m ≫ₚ
+          (triangle.upperHorizontal ≫ₚ
+            (family.siteFromTriangle (n + 1) m ≫ₚ
+              (family.siteToTriangle (n + 1) m ≫ₚ
+                (triangle.rightKummer ≫ₚ
+                  family.commonFromTriangle (n + 1))))) := by
+            rw [siteCancellation]
+      _ = ((family.siteToTriangle n m ≫ₚ
+          triangle.upperHorizontal) ≫ₚ
+          family.siteFromTriangle (n + 1) m) ≫ₚ
+          ((family.siteToTriangle (n + 1) m ≫ₚ
+            triangle.rightKummer) ≫ₚ
+            family.commonFromTriangle (n + 1)) := by
+            simp only [SourceFPrimeStripFullPolyIsomorphism.comp_assoc]
+  upperToLower := by
+    intro upper
+    let triangleUpper :=
+      (family.siteFromTriangle n m ≫ₚ upper) ≫ₚ
+        family.siteToTriangle (n + 1) m
+    rcases triangle.upperToLower triangleUpper with
+      ⟨triangleLower, triangleCommutes⟩
+    refine
+      ⟨(family.commonToTriangle n ≫ₚ triangleLower) ≫ₚ
+          family.commonFromTriangle (n + 1), ?_⟩
+    simp only [SourceFPrimeStripFullPolyIsomorphism.comp_assoc]
+    rw [SourceFPrimeStripFullPolyIsomorphism.comp_inverse_assoc
+      (family.commonFromTriangle n)
+      (family.commonToTriangle n)
+      (family.commonFromTo n)]
+    rw [← SourceFPrimeStripFullPolyIsomorphism.comp_assoc
+      triangle.leftKummer triangleLower
+      (family.commonFromTriangle (n + 1))]
+    rw [triangleCommutes]
+    dsimp [triangleUpper]
+    simp only [SourceFPrimeStripFullPolyIsomorphism.comp_assoc]
+    rw [SourceFPrimeStripFullPolyIsomorphism.comp_inverse_assoc
+      (family.siteToTriangle n m)
+      (family.siteFromTriangle n m)
+      (family.siteToFrom n m)]
+  lowerToUpper := by
+    intro lower
+    let triangleLower :=
+      (family.commonFromTriangle n ≫ₚ lower) ≫ₚ
+        family.commonToTriangle (n + 1)
+    rcases triangle.lowerToUpper triangleLower with
+      ⟨triangleUpper, triangleCommutes⟩
+    refine
+      ⟨(family.siteToTriangle n m ≫ₚ triangleUpper) ≫ₚ
+          family.siteFromTriangle (n + 1) m, ?_⟩
+    simp only [SourceFPrimeStripFullPolyIsomorphism.comp_assoc]
+    rw [SourceFPrimeStripFullPolyIsomorphism.comp_inverse_assoc
+      (family.siteFromTriangle (n + 1) m)
+      (family.siteToTriangle (n + 1) m)
+      (family.siteFromTo (n + 1) m)]
+    have extended := congrArg
+      (fun map => map ≫ₚ family.commonFromTriangle (n + 1))
+      triangleCommutes
+    dsimp [triangleLower] at extended
+    simp only [SourceFPrimeStripFullPolyIsomorphism.comp_assoc] at extended
+    rw [family.commonToFrom (n + 1)] at extended
+    simp only [SourceFPrimeStripFullPolyIsomorphism.comp_id] at extended
+    rw [extended]
 
 end SourceTheorem311EnvironmentPrimeStripSquare
 
