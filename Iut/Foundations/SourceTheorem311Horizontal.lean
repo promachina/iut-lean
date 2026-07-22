@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: IUT Lean formalization contributors
 -/
 import Iut.Foundations.SourceTheorem311
+import Iut.Foundations.SourceTimesMuPrimeStripFullPolyIsomorphism
 
 /-!
 # Indexed horizontal compatibility for IUT III, Theorem 3.11(iii)
@@ -13,14 +14,12 @@ every relevant vertical site, bad place, and absolute label.  This module
 records those indices and fixes every corner of the resulting squares to an
 actual lattice, prime-strip, projective-system, or labeled-data object.
 
-The structures here are source obligations: they do not construct the
-horizontal poly-isomorphisms from the theta link.  In particular, the
-prime-strip square below is still formulated for the ordinary `F`-prime-strip
-associated to a theater.  The source theorem uses the Definition 4.9
-`F^(turnstile times-mu)`-prime-strip, so this square is preparatory scaffolding
-until it is retargeted through the actual `times-mu` construction.  The indexed
-corners nevertheless prevent one unrelated arrow-category square from
-standing in for all of clauses (a)--(d).
+The structures here are source obligations: they do not manufacture the
+horizontal poly-isomorphisms from the theta link.  Clauses (a)--(b) use the
+Definition 4.9(vii) `F^(turnstile times-mu)`-prime-strips attached to the
+actual site and vertically coric theaters; the older ordinary-`F` square is
+retained only as preparatory scaffolding.  The indexed corners prevent one
+unrelated arrow-category square from standing in for all of clauses (a)--(d).
 -/
 
 open CategoryTheory
@@ -31,6 +30,9 @@ universe u v
 
 local infixr:81 " ≫ₚ " =>
   SourceFPrimeStripFullPolyIsomorphism.comp
+
+local infixr:81 " ≫ₜ " =>
+  SourceFTimesMuPrimeStripFullPolyIsomorphism.comp
 
 /--
 A commutative square with fixed corners and isomorphisms on its two vertical
@@ -383,6 +385,335 @@ def ofTriangle
     rw [extended]
 
 end SourceTheorem311EnvironmentPrimeStripSquare
+
+/-! ## Exact times-mu squares of clauses (iii)(a)-(b) -/
+
+/--
+A commutative square in the Section 0 coarsification of the place-indexed
+`F^(turnstile times-mu)`-prime-strips of IUT II, Definition 4.9(vii).
+
+The four underlying mono-analytic strips may differ.  This is essential for
+Theorem 3.11(iii): its upper row belongs to two adjacent theta-Hodge theaters,
+whereas its lower row belongs to their vertically coric theaters.
+-/
+structure SourceFTimesMuPrimeStripPolyIsomorphismSquare
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    {upperLeftUnderlying upperRightUnderlying
+      lowerLeftUnderlying lowerRightUnderlying :
+        SourceFMonoAnalyticPrimeStrip models}
+    (upperLeft : SourceFTimesMuPrimeStrip upperLeftUnderlying)
+    (upperRight : SourceFTimesMuPrimeStrip upperRightUnderlying)
+    (lowerLeft : SourceFTimesMuPrimeStrip lowerLeftUnderlying)
+    (lowerRight : SourceFTimesMuPrimeStrip lowerRightUnderlying) where
+  upperHorizontal :
+    SourceFTimesMuPrimeStripFullPolyIsomorphism upperLeft upperRight
+  lowerHorizontal :
+    SourceFTimesMuPrimeStripFullPolyIsomorphism lowerLeft lowerRight
+  leftKummer :
+    SourceFTimesMuPrimeStripFullPolyIsomorphism upperLeft lowerLeft
+  rightKummer :
+    SourceFTimesMuPrimeStripFullPolyIsomorphism upperRight lowerRight
+  commutes :
+    leftKummer ≫ₜ lowerHorizontal = upperHorizontal ≫ₜ rightKummer
+  upperToLower :
+    ∀ upper : SourceFTimesMuPrimeStripFullPolyIsomorphism
+        upperLeft upperRight,
+      ∃ lower : SourceFTimesMuPrimeStripFullPolyIsomorphism
+          lowerLeft lowerRight,
+        leftKummer ≫ₜ lower = upper ≫ₜ rightKummer
+  lowerToUpper :
+    ∀ lower : SourceFTimesMuPrimeStripFullPolyIsomorphism
+        lowerLeft lowerRight,
+      ∃ upper : SourceFTimesMuPrimeStripFullPolyIsomorphism
+          upperLeft upperRight,
+        leftKummer ≫ₜ lower = upper ≫ₜ rightKummer
+
+/--
+The Definition 4.9(vii) prime-strips at all site and vertically coric
+endpoints of the LGP lattice.
+
+Every strip is definitionally based on the mono-analytic `F`-prime-strip
+constructed from its own theater by the Corollaries 4.5/4.6 transport.  Thus
+the family cannot be populated by unrelated times-mu records.  Constructing
+these transports and strips is the Corollary 4.10 source obligation.
+-/
+structure SourceTheorem311TimesMuPrimeStripFamily
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    (lattice : SourceAbsoluteLGPGaussianLogThetaLattice models) where
+  siteTransport :
+    ∀ n m, (lattice.theater n m).MonoAnalyticTransport
+  site :
+    ∀ n m,
+      SourceFTimesMuPrimeStrip
+        ((lattice.theater n m).associatedFMonoAnalytic
+          (siteTransport n m))
+  commonTransport :
+    ∀ n, (lattice.commonBridge n).theater.MonoAnalyticTransport
+  common :
+    ∀ n,
+      SourceFTimesMuPrimeStrip
+        ((lattice.commonBridge n).theater.associatedFMonoAnalytic
+          (commonTransport n))
+
+/-- The exact fixed-corner square asserted in Theorem 3.11(iii)(a). -/
+abbrev SourceTheorem311TimesMuTrianglePrimeStripSquare
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    {lattice : SourceAbsoluteLGPGaussianLogThetaLattice models}
+    (family : SourceTheorem311TimesMuPrimeStripFamily lattice)
+    (n m : ℤ) :=
+  SourceFTimesMuPrimeStripPolyIsomorphismSquare
+    (family.site n m) (family.site (n + 1) m)
+    (family.common n) (family.common (n + 1))
+
+/--
+The environment `F^(turnstile times-mu)`-prime-strips of clause (iii)(b).
+The comparison maps are the natural isomorphisms of Proposition 2.1(vi), and
+both composites are required to be identities in the Section 0 quotient.
+-/
+structure SourceTheorem311EnvironmentTimesMuPrimeStripFamily
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    {lattice : SourceAbsoluteLGPGaussianLogThetaLattice models}
+    (triangle : SourceTheorem311TimesMuPrimeStripFamily lattice) where
+  siteUnderlying : ℤ → ℤ → SourceFMonoAnalyticPrimeStrip models
+  site :
+    ∀ n m, SourceFTimesMuPrimeStrip (siteUnderlying n m)
+  commonUnderlying : ℤ → SourceFMonoAnalyticPrimeStrip models
+  common :
+    ∀ n, SourceFTimesMuPrimeStrip (commonUnderlying n)
+  siteToTriangle :
+    ∀ n m, SourceFTimesMuPrimeStripFullPolyIsomorphism
+      (site n m) (triangle.site n m)
+  siteFromTriangle :
+    ∀ n m, SourceFTimesMuPrimeStripFullPolyIsomorphism
+      (triangle.site n m) (site n m)
+  siteToFrom :
+    ∀ n m, (siteToTriangle n m) ≫ₜ (siteFromTriangle n m) =
+      SourceFTimesMuPrimeStripFullPolyIsomorphism.id (site n m)
+  siteFromTo :
+    ∀ n m, (siteFromTriangle n m) ≫ₜ (siteToTriangle n m) =
+      SourceFTimesMuPrimeStripFullPolyIsomorphism.id (triangle.site n m)
+  commonToTriangle :
+    ∀ n, SourceFTimesMuPrimeStripFullPolyIsomorphism
+      (common n) (triangle.common n)
+  commonFromTriangle :
+    ∀ n, SourceFTimesMuPrimeStripFullPolyIsomorphism
+      (triangle.common n) (common n)
+  commonToFrom :
+    ∀ n, (commonToTriangle n) ≫ₜ (commonFromTriangle n) =
+      SourceFTimesMuPrimeStripFullPolyIsomorphism.id (common n)
+  commonFromTo :
+    ∀ n, (commonFromTriangle n) ≫ₜ (commonToTriangle n) =
+      SourceFTimesMuPrimeStripFullPolyIsomorphism.id (triangle.common n)
+
+/-- The exact fixed-corner square asserted in Theorem 3.11(iii)(b). -/
+abbrev SourceTheorem311EnvironmentTimesMuPrimeStripSquare
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    {lattice : SourceAbsoluteLGPGaussianLogThetaLattice models}
+    {triangle : SourceTheorem311TimesMuPrimeStripFamily lattice}
+    (family : SourceTheorem311EnvironmentTimesMuPrimeStripFamily triangle)
+    (n m : ℤ) :=
+  SourceFTimesMuPrimeStripPolyIsomorphismSquare
+    (family.site n m) (family.site (n + 1) m)
+    (family.common n) (family.common (n + 1))
+
+namespace SourceTheorem311EnvironmentTimesMuPrimeStripSquare
+
+variable
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    {lattice : SourceAbsoluteLGPGaussianLogThetaLattice models}
+    {triangle : SourceTheorem311TimesMuPrimeStripFamily lattice}
+
+/--
+Clause (iii)(b) follows from clause (iii)(a) by conjugating all four sides
+with the natural environment-to-triangle isomorphisms.
+-/
+noncomputable def ofTriangle
+    (family : SourceTheorem311EnvironmentTimesMuPrimeStripFamily triangle)
+    (n m : ℤ)
+    (square : SourceTheorem311TimesMuTrianglePrimeStripSquare triangle n m) :
+    SourceTheorem311EnvironmentTimesMuPrimeStripSquare family n m where
+  upperHorizontal :=
+    ((family.siteToTriangle n m) ≫ₜ square.upperHorizontal) ≫ₜ
+      (family.siteFromTriangle (n + 1) m)
+  lowerHorizontal :=
+    ((family.commonToTriangle n) ≫ₜ square.lowerHorizontal) ≫ₜ
+      (family.commonFromTriangle (n + 1))
+  leftKummer :=
+    ((family.siteToTriangle n m) ≫ₜ square.leftKummer) ≫ₜ
+      (family.commonFromTriangle n)
+  rightKummer :=
+    ((family.siteToTriangle (n + 1) m) ≫ₜ square.rightKummer) ≫ₜ
+      (family.commonFromTriangle (n + 1))
+  commutes := by
+    have commonCancellation :
+        family.commonFromTriangle n ≫ₜ
+            (family.commonToTriangle n ≫ₜ
+              (square.lowerHorizontal ≫ₜ
+                family.commonFromTriangle (n + 1))) =
+          square.lowerHorizontal ≫ₜ
+            family.commonFromTriangle (n + 1) :=
+      SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_inverse_assoc
+        (family.commonFromTriangle n)
+        (family.commonToTriangle n)
+        (family.commonFromTo n)
+        (square.lowerHorizontal ≫ₜ family.commonFromTriangle (n + 1))
+    have siteCancellation :
+        family.siteFromTriangle (n + 1) m ≫ₜ
+            (family.siteToTriangle (n + 1) m ≫ₜ
+              (square.rightKummer ≫ₜ
+                family.commonFromTriangle (n + 1))) =
+          square.rightKummer ≫ₜ family.commonFromTriangle (n + 1) :=
+      SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_inverse_assoc
+        (family.siteFromTriangle (n + 1) m)
+        (family.siteToTriangle (n + 1) m)
+        (family.siteFromTo (n + 1) m)
+        (square.rightKummer ≫ₜ family.commonFromTriangle (n + 1))
+    calc
+      (((family.siteToTriangle n m ≫ₜ square.leftKummer) ≫ₜ
+          family.commonFromTriangle n) ≫ₜ
+          ((family.commonToTriangle n ≫ₜ square.lowerHorizontal) ≫ₜ
+            family.commonFromTriangle (n + 1))) =
+        family.siteToTriangle n m ≫ₜ
+          (square.leftKummer ≫ₜ
+            (family.commonFromTriangle n ≫ₜ
+              (family.commonToTriangle n ≫ₜ
+                (square.lowerHorizontal ≫ₜ
+                  family.commonFromTriangle (n + 1))))) := by
+            simp only [SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_assoc]
+      _ = family.siteToTriangle n m ≫ₜ
+          (square.leftKummer ≫ₜ
+            (square.lowerHorizontal ≫ₜ
+              family.commonFromTriangle (n + 1))) := by
+            rw [commonCancellation]
+      _ = family.siteToTriangle n m ≫ₜ
+          ((square.leftKummer ≫ₜ square.lowerHorizontal) ≫ₜ
+            family.commonFromTriangle (n + 1)) := by
+            rw [SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_assoc]
+      _ = family.siteToTriangle n m ≫ₜ
+          ((square.upperHorizontal ≫ₜ square.rightKummer) ≫ₜ
+            family.commonFromTriangle (n + 1)) := by
+            rw [square.commutes]
+      _ = family.siteToTriangle n m ≫ₜ
+          (square.upperHorizontal ≫ₜ
+            (square.rightKummer ≫ₜ
+              family.commonFromTriangle (n + 1))) := by
+            rw [SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_assoc]
+      _ = family.siteToTriangle n m ≫ₜ
+          (square.upperHorizontal ≫ₜ
+            (family.siteFromTriangle (n + 1) m ≫ₜ
+              (family.siteToTriangle (n + 1) m ≫ₜ
+                (square.rightKummer ≫ₜ
+                  family.commonFromTriangle (n + 1))))) := by
+            rw [siteCancellation]
+      _ = (((family.siteToTriangle n m ≫ₜ square.upperHorizontal) ≫ₜ
+          family.siteFromTriangle (n + 1) m) ≫ₜ
+          ((family.siteToTriangle (n + 1) m ≫ₜ square.rightKummer) ≫ₜ
+            family.commonFromTriangle (n + 1))) := by
+            simp only [SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_assoc]
+  upperToLower := by
+    intro upper
+    let triangleUpper :=
+      (family.siteFromTriangle n m ≫ₜ upper) ≫ₜ
+        family.siteToTriangle (n + 1) m
+    rcases square.upperToLower triangleUpper with
+      ⟨triangleLower, triangleCommutes⟩
+    refine
+      ⟨(family.commonToTriangle n ≫ₜ triangleLower) ≫ₜ
+          family.commonFromTriangle (n + 1), ?_⟩
+    simp only [SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_assoc]
+    rw [SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_inverse_assoc
+      (family.commonFromTriangle n)
+      (family.commonToTriangle n)
+      (family.commonFromTo n)]
+    rw [← SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_assoc
+      square.leftKummer triangleLower
+      (family.commonFromTriangle (n + 1))]
+    rw [triangleCommutes]
+    dsimp [triangleUpper]
+    simp only [SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_assoc]
+    rw [SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_inverse_assoc
+      (family.siteToTriangle n m)
+      (family.siteFromTriangle n m)
+      (family.siteToFrom n m)]
+  lowerToUpper := by
+    intro lower
+    let triangleLower :=
+      (family.commonFromTriangle n ≫ₜ lower) ≫ₜ
+        family.commonToTriangle (n + 1)
+    rcases square.lowerToUpper triangleLower with
+      ⟨triangleUpper, triangleCommutes⟩
+    refine
+      ⟨(family.siteToTriangle n m ≫ₜ triangleUpper) ≫ₜ
+          family.siteFromTriangle (n + 1) m, ?_⟩
+    simp only [SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_assoc]
+    rw [SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_inverse_assoc
+      (family.siteFromTriangle (n + 1) m)
+      (family.siteToTriangle (n + 1) m)
+      (family.siteFromTo (n + 1) m)]
+    have extended := congrArg
+      (fun map => map ≫ₜ family.commonFromTriangle (n + 1))
+      triangleCommutes
+    dsimp [triangleLower] at extended
+    simp only [SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_assoc] at extended
+    rw [family.commonToFrom (n + 1)] at extended
+    simp only [SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_id] at extended
+    rw [extended]
+
+end SourceTheorem311EnvironmentTimesMuPrimeStripSquare
 
 /--
 A fixed-corner square of actual mono-theta projective systems.  Each side is

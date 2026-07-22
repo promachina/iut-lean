@@ -784,8 +784,11 @@ end Iut.SourcePacketFiniteStageLogVolume
 #print axioms Iut.SourceTheorem311BadPrimeLogKummerData.logarithm_eq_of_admissibleAcrossLog
 #print axioms Iut.SourceFPrimeStripFullPolyIsomorphism.comp_assoc
 #print axioms Iut.SourceFPrimeStripFullPolyIsomorphism.comp_inverse_assoc
+#print axioms Iut.SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_assoc
+#print axioms Iut.SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_inverse_assoc
 #print axioms Iut.SourceIndexedHorizontalKummerSquare.automorphismEquiv
 #print axioms Iut.SourceTheorem311EnvironmentPrimeStripSquare.ofTriangle
+#print axioms Iut.SourceTheorem311EnvironmentTimesMuPrimeStripSquare.ofTriangle
 #print axioms Iut.SourceTheorem311TwoActionEquivalence.quotientEquiv
 #print axioms Iut.SourceTheorem311PermutationBiCoricCompatibility.quotientEquiv
 #print axioms Iut.SourceTheorem311HorizontalEvaluationCompatibility.descend_mk

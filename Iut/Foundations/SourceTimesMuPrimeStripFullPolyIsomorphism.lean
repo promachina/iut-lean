@@ -1319,6 +1319,17 @@ theorem nonempty_iff :
   · rintro ⟨representative⟩
     exact ⟨ofEquivalence representative⟩
 
+/-- Cancel a selected inverse pair inside a longer composite. -/
+theorem comp_inverse_assoc
+    {backUnderlying : SourceFMonoAnalyticPrimeStrip models}
+    {back : SourceFTimesMuPrimeStrip backUnderlying}
+    (forward : SourceFTimesMuPrimeStripFullPolyIsomorphism source back)
+    (reverse : SourceFTimesMuPrimeStripFullPolyIsomorphism back source)
+    (inverse : comp forward reverse = id source)
+    (next : SourceFTimesMuPrimeStripFullPolyIsomorphism source target) :
+    comp forward (comp reverse next) = next := by
+  rw [← comp_assoc, inverse, id_comp]
+
 end SourceFTimesMuPrimeStripFullPolyIsomorphism
 
 /-! ## Globally realified full poly-isomorphisms -/

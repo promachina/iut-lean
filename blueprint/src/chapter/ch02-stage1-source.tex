@@ -728,9 +728,16 @@
   \lean{Iut.SourceFPrimeStripFullPolyIsomorphism}
   \lean{Iut.SourceFPrimeStripFullPolyIsomorphism.comp_assoc}
   \lean{Iut.SourceFPrimeStripPolyIsomorphismSquare}
+  \lean{Iut.SourceFTimesMuPrimeStripFullPolyIsomorphism}
+  \lean{Iut.SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_inverse_assoc}
+  \lean{Iut.SourceFTimesMuPrimeStripPolyIsomorphismSquare}
   \lean{Iut.SourceIndexedHorizontalKummerSquare}
   \lean{Iut.SourceTheorem311TrianglePrimeStripSquare}
   \lean{Iut.SourceTheorem311EnvironmentPrimeStripFamily}
+  \lean{Iut.SourceTheorem311TimesMuPrimeStripFamily}
+  \lean{Iut.SourceTheorem311TimesMuTrianglePrimeStripSquare}
+  \lean{Iut.SourceTheorem311EnvironmentTimesMuPrimeStripFamily}
+  \lean{Iut.SourceTheorem311EnvironmentTimesMuPrimeStripSquare.ofTriangle}
   \lean{Iut.SourceTheorem311MonoThetaProjectiveSystemFamily}
   \lean{Iut.SourceTheorem311LabeledHorizontalKummerSquare}
   \lean{Iut.SourceTheorem311HorizontalCorridorBoundary}
@@ -822,10 +829,12 @@
   Horizontal compatibility is no longer an unindexed field of a single
   column.  Its boundary contains two column assemblies, proves that they use
   the same lattice at indices \(n\) and \(n+1\), and fixes all four corners of
-  every square.  The present prime-strip square is an ordinary-\(F\)
-  precursor, not yet clause~(iii)(a), whose corners in the source are the
-  Definition~4.9 \(F^{\vdash\times\mu}\)-prime-strips.  Following the
-  convention of IUT~I, Section~0, an ordinary \(F\)-prime-strip full
+  every square.  The active clauses~(iii)(a)--(b) interface now accepts only
+  the Definition~4.9 \(F^{\vdash\times\mu}\)-prime-strips.  Each triangle
+  corner is definitionally based on the mono-analytic transport of its actual
+  site or vertically coric theater; the ordinary-\(F\) square remains only as
+  precursor scaffolding.  Following the convention of IUT~I, Section~0, a
+  times-\(\mu\) prime-strip full
   poly-isomorphism is represented by a componentwise
   equivalence map modulo natural isomorphism on its categorical components;
   it is not a strict categorical isomorphism of prime-strip records.  Lean
@@ -839,11 +848,10 @@
   family carries two-sided natural comparison classes with the triangle
   strips, and its square is proved class-by-class in both directions by
   conjugating the triangle square and cancelling those comparisons.  These
-  facts validate the coarsification and conjugation mechanism but cannot
-  discharge clauses~(a)--(b) until the new finite/archimedean
-  \(F^{\vdash\times\mu}\)-prime-strip records have been populated from the
-  source reconstruction theorems and their structure-preserving isomorphism
-  category has been constructed.  The
+  facts validate the exact typed coarsification and conjugation mechanism but
+  do not discharge clauses~(a)--(b): the endpoint families must still be
+  populated from Corollary~4.10 and the Theorem~1.5/Corollary~2.3 horizontal
+  maps must still be constructed.  The
   mono-theta square ranges over every \(m\) and bad
   place and uses actual projective systems with levelwise environment
   realizations.  The \(\kappa\)-sol/\(M_\infty^\kappa\) squares range over every

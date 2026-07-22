@@ -1795,6 +1795,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceFTimesMuPrimeStripFullPolyIsomorphism",
         "SourceFGloballyRealifiedTimesMuPrimeStripFullPolyIsomorphism",
         "SourceFGloballyRealifiedTimesMuPrimeStripFullPolyIsomorphism.comp_assoc",
+        "SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_inverse_assoc",
         "SourceFPrimeStripPolyIsomorphismSquare",
         "SourceFPrimeStripPolyIsomorphismSquare.upperToLower",
         "SourceFPrimeStripPolyIsomorphismSquare.lowerToUpper",
@@ -1804,6 +1805,12 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceTheorem311EnvironmentPrimeStripFamily",
         "SourceTheorem311EnvironmentPrimeStripSquare",
         "SourceTheorem311EnvironmentPrimeStripSquare.ofTriangle",
+        "SourceFTimesMuPrimeStripPolyIsomorphismSquare",
+        "SourceTheorem311TimesMuPrimeStripFamily",
+        "SourceTheorem311TimesMuTrianglePrimeStripSquare",
+        "SourceTheorem311EnvironmentTimesMuPrimeStripFamily",
+        "SourceTheorem311EnvironmentTimesMuPrimeStripSquare",
+        "SourceTheorem311EnvironmentTimesMuPrimeStripSquare.ofTriangle",
         "SourceMonoThetaProjectiveSystemIso",
         "SourceTheorem311MonoThetaProjectiveSystemFamily",
         "SourceTheorem311MonoThetaProjectiveSystemSquare",
@@ -1817,7 +1824,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceTheorem311HorizontalCorridorBoundary.siteKappaClauseD_commutes",
         "SourceTheorem311HorizontalCorridorBoundary.commonKappaClauseD_commutes"]
       .partialImplementation
-      "The active boundary is an adjacent-column corridor, not a field of one column. It proves that the columns use the same lattice and have indices n and n+1. Following IUT I Section 0, both the ordinary F and the Definition 4.9 F-turnstile-times-mu full poly-isomorphisms are quotients of all complete componentwise equivalence maps by structured natural isomorphism, not strict categorical Iso records; quotient identity, composition, units, and associativity are proved. The current horizontal square is still the ordinary-F precursor at every site/common endpoint. Thus clauses (a) and (b) still require construction and population of the times-mu records at those endpoints from Frobenioid evaluation/reconstruction, replacement of the precursor corners, Theorem 1.5 horizontal-link compatibility, and Corollary 2.3 environment transport. Clause (c) is a square of actual mono-theta projective systems for every m and selected bad place. Clause (d) is a kappa-sol/M-infinity-kappa square for every m and absolute label, plus the common square and coherence with both vertical labeled Kummer maps. Evaluation equivariance also remains open.",
+      "The active boundary is an adjacent-column corridor, not a field of one column. It proves that the columns use the same lattice and have indices n and n+1. Following IUT I Section 0, both the ordinary F and Definition 4.9 F-turnstile-times-mu full poly-isomorphisms are quotients of all complete componentwise equivalence maps by structured natural isomorphism, not strict categorical Iso records; quotient identity, composition, units, associativity, and inverse-pair cancellation are proved. Clauses (a) and (b) now use only times-mu corners: each triangle strip is definitionally based on the mono-analytic transport of its actual site or vertically coric theater, and the environment square is derived from Proposition 2.1(vi) two-sided comparison classes. Constructing and populating these typed families from Corollary 4.10, and proving the Theorem 1.5/Corollary 2.3 horizontal maps, remain open. Clause (c) is a square of actual mono-theta projective systems for every m and selected bad place. Clause (d) is a kappa-sol/M-infinity-kappa square for every m and absolute label, plus the common square and coherence with both vertical labeled Kummer maps. Evaluation equivariance also remains open.",
     clause "III.3.11(iii).equivariance" .iutIII "IUT III, Theorem 3.11(iii): automorphism equivariance"
       ["SourceIndexedHorizontalKummerSquare.automorphismEquiv",
         "SourceTheorem311HorizontalEvaluationCompatibility",

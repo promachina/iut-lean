@@ -15,7 +15,8 @@ construct the upstream paper objects by choice: the absolute LGP Gaussian
 log-theta lattice, the mono-analytic log-shell algorithm, the local integral
 and finite-stage data, the full local log-links, the multiradial
 functor and the labeled Kummer maps remain explicit inputs.  Horizontal
-compatibility is assembled separately from two adjacent column boundaries.
+compatibility is assembled separately from two adjacent column boundaries and
+uses the exact Definition 4.9(vii) times-mu prime-strip endpoints.
 
 Once those inputs are supplied, the local packets, procession, Ind1 and Ind2
 actions, generated quotient, vertical packet Kummer maps, Ind3 iterates and
@@ -253,7 +254,9 @@ Unlike `SourceTheorem311ColumnBoundary`, this object owns both columns.  The
 same-lattice and successor equalities ensure that its four indexed families
 really compare `(n,m)` with `(n+1,m)`.  The final two equations tie the
 horizontal `kappa` squares to the vertical labeled Kummer maps already used
-by Theorem 3.11(ii).
+by Theorem 3.11(ii).  Its clauses (a)--(b) cannot be populated with ordinary
+`F`-prime-strips: the times-mu family is definitionally attached to the
+mono-analytic transports of the corresponding theaters.
 -/
 structure SourceTheorem311HorizontalCorridorBoundary
     {Fmod F K : Type u}
@@ -272,15 +275,17 @@ structure SourceTheorem311HorizontalCorridorBoundary
   right : SourceTheorem311ColumnBoundary models
   sameLattice : right.lattice = left.lattice
   adjacentColumns : right.column = left.column + 1
+  timesMuPrimeStrips :
+    SourceTheorem311TimesMuPrimeStripFamily left.lattice
   environmentPrimeStrips :
-    SourceTheorem311EnvironmentPrimeStripFamily left.lattice
+    SourceTheorem311EnvironmentTimesMuPrimeStripFamily timesMuPrimeStrips
   monoThetaSystems :
     SourceTheorem311MonoThetaProjectiveSystemFamily
       (SourceSelectedBadPlace theta)
   primeStripClauseA :
     ∀ site,
-      SourceTheorem311TrianglePrimeStripSquare
-        left.lattice left.column site
+      SourceTheorem311TimesMuTrianglePrimeStripSquare
+        timesMuPrimeStrips left.column site
   monoThetaClauseC :
     ∀ (site : ℤ) (place : SourceSelectedBadPlace theta),
       SourceTheorem311MonoThetaProjectiveSystemSquare
@@ -341,12 +346,12 @@ theorem right_theater_eq
   rw [boundary.sameLattice, boundary.adjacentColumns]
 
 /-- Clause (iii)(b), derived from clause (a) and the natural comparisons. -/
-def environmentPrimeStripClauseB
+noncomputable def environmentPrimeStripClauseB
     (boundary : SourceTheorem311HorizontalCorridorBoundary models)
     (site : ℤ) :
-    SourceTheorem311EnvironmentPrimeStripSquare
+    SourceTheorem311EnvironmentTimesMuPrimeStripSquare
       boundary.environmentPrimeStrips boundary.left.column site :=
-  SourceTheorem311EnvironmentPrimeStripSquare.ofTriangle
+  SourceTheorem311EnvironmentTimesMuPrimeStripSquare.ofTriangle
     boundary.environmentPrimeStrips boundary.left.column site
     (boundary.primeStripClauseA site)
 
@@ -354,10 +359,10 @@ def environmentPrimeStripClauseB
 theorem primeStripClauseA_commutes
     (boundary : SourceTheorem311HorizontalCorridorBoundary models)
     (site : ℤ) :
-    SourceFPrimeStripFullPolyIsomorphism.comp
+    SourceFTimesMuPrimeStripFullPolyIsomorphism.comp
         (boundary.primeStripClauseA site).leftKummer
         (boundary.primeStripClauseA site).lowerHorizontal =
-      SourceFPrimeStripFullPolyIsomorphism.comp
+      SourceFTimesMuPrimeStripFullPolyIsomorphism.comp
         (boundary.primeStripClauseA site).upperHorizontal
         (boundary.primeStripClauseA site).rightKummer :=
   (boundary.primeStripClauseA site).commutes
@@ -366,10 +371,10 @@ theorem primeStripClauseA_commutes
 theorem environmentPrimeStripClauseB_commutes
     (boundary : SourceTheorem311HorizontalCorridorBoundary models)
     (site : ℤ) :
-    SourceFPrimeStripFullPolyIsomorphism.comp
+    SourceFTimesMuPrimeStripFullPolyIsomorphism.comp
         (boundary.environmentPrimeStripClauseB site).leftKummer
         (boundary.environmentPrimeStripClauseB site).lowerHorizontal =
-      SourceFPrimeStripFullPolyIsomorphism.comp
+      SourceFTimesMuPrimeStripFullPolyIsomorphism.comp
         (boundary.environmentPrimeStripClauseB site).upperHorizontal
         (boundary.environmentPrimeStripClauseB site).rightKummer :=
   (boundary.environmentPrimeStripClauseB site).commutes
