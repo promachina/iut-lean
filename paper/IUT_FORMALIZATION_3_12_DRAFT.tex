@@ -1144,19 +1144,28 @@ that ambient multiplication and inversion preserve the neighborhood filters,
 and proves that deleting \(S^1\) leaves the two radial connected components.
 The component determined by
 \(\mathcal O^{\triangleright}_{\mathbb C}\setminus S^1\) is selected by a
-connected-component theorem rather than an arbitrary input.  An adjacent
-log-link is a partial relation on these semi-germ core points.  Lean recursively
+connected-component theorem rather than an arbitrary input.  For every
+connected annulus \(U_n\), Lean derives the actual group
+\(\operatorname{Aut}_{\mathrm{hol}}(U_n)\) from biholomorphic self-maps and
+proves its identity, composition, inversion, and restriction laws.  For a
+groupification-induced holomorphic automorphism of \(\mathbb C^\times\),
+pullback along the exponential covering yields an integer exponent;
+bijectivity restricts it to \(1\) or \(-1\), while preservation of the selected
+inner component rules out inversion.  Lean consequently proves that the
+induced filter germ is the identity.  An adjacent log-link is a partial
+relation on these semi-germ core points.  Lean recursively
 derives every positive iterate, its domain and range,
 the participating endpoint-ball subset, and relational surjectivity onto the
 source domain.  Direct Kummer containment of both principal unit tensors and
 arbitrary selected local radius-\(\pi\) tensors follows from the proved full
 vertical unit-ball image.  Consequently the concrete Ind3 boundary accepts no
 arbitrary archimedean subgroup, multi-step domain, preimage set, iterate map,
-surjectivity proof, or direct containment.  The complete
-\(\operatorname{Aut}_{\mathrm{hol}}(U)\) assignment of
-\emph{Absolute Anabelian Topics III}, Definition~2.1, its local-morphism
-category, and the rigidity theorem excluding every nonidentity compatible
-holomorphic semi-germ automorphism are not yet formalized.  Construction of the
+surjectivity proof, or direct containment.  The general Riemann-surface and
+RC-holomorphic local-morphism classification of
+\emph{Absolute Anabelian Topics III}, Definition~2.1 and Corollary~2.3,
+extension of rigidity from groupification-induced maps to every purely local
+group-germ automorphism, and co-holomorphic Kummer reconstruction are not yet
+formalized.  Construction of the
 finite summand unit/log data from the IUT~II \(\Psi_{\rm cns}\) objects and of
 the adjacent finite and infinite unit correspondences from the Gaussian
 log-theta lattice remains a source obligation.

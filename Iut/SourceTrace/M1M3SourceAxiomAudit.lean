@@ -407,12 +407,28 @@ end Iut.SourceInfiniteLocalFieldStages
 #print axioms Iut.SourceAutHolomorphicSemiGerm.puncturedNeighborhood_eq_inner_union_outer
 #print axioms Iut.SourceAutHolomorphicSemiGerm.innerSide_eq_connectedComponentIn
 #print axioms Iut.SourceAutHolomorphicSemiGerm.outerSide_eq_connectedComponentIn
+#print axioms Iut.SourceAutHolomorphic.HasAmbientHolomorphicLift.comp
+#print axioms Iut.SourceAutHolomorphic.AutHolomorphic.restrict_mul
+#print axioms Iut.SourceAutHolomorphic.AutHolomorphic.restrict_inv
+#print axioms Iut.SourceAutHolomorphicSemiGerm.levelInclusion_hasAmbientHolomorphicLift
+#print axioms Iut.SourceAutHolomorphicSemiGerm.restrictToLevel_mul
+#print axioms Iut.SourceAutHolomorphicSemiGerm.restrictToLevel_inv
+#print axioms
+  Iut.SourceAutHolomorphicRigidity.Automorphism.exponentialLift_eq_exp_exponentCoefficient
+#print axioms Iut.SourceAutHolomorphicRigidity.Automorphism.exists_integer_exponent
+#print axioms Iut.SourceAutHolomorphicRigidity.Automorphism.exponent_eq_one_or_neg_one
+#print axioms
+  Iut.SourceAutHolomorphicRigidity.Automorphism.toAutHolomorphic_eq_identity
+#print axioms
+  Iut.SourceAutHolomorphicRigidity.Automorphism.ambientGerm_eq_identity
 #print axioms
   Iut.SourceArchimedeanLogShellDefinition.semiGermSelectedSide_eq_connectedComponentIn
 #print axioms
   Iut.SourceArchimedeanLogShellDefinition.semiGermNeighborhoodSystem_cofinal
 #print axioms Iut.SourceArchimedeanLogShellDefinition.semiGermMultiplication_tendsto
 #print axioms Iut.SourceArchimedeanLogShellDefinition.semiGermInversion_tendsto
+#print axioms
+  Iut.SourceArchimedeanLogShellDefinition.SemiGermGroupAutomorphism.rigid
 #print axioms Iut.SourceMonoAnalyticLogShellAlgorithm.sourceDefinition_residuePrime
 #print axioms Iut.SourceMonoAnalyticLogShellAlgorithm.transport_preLogShell
 #print axioms Iut.SourceMonoAnalyticLogShellAlgorithm.sourceLocalUnitsEquiv_id

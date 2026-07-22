@@ -519,6 +519,13 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceInitialThetaCore.globalEpsilon_canonicalAtBad"]
       .partialImplementation
       "The full Q-indexed X-cusp and sign-orbit C-cusp atlas is represented by rational inertia/decomposition exact sequences, with sheet conjugacy and inversion action. At every selected finite and infinite place, local epsilon is constructed as the cusp at the global Q-label in the localized complete atlas; its X/C decomposition diagrams and sign-label equality are derived, so no separate local cusp, atlas equality, or sheet-representative synchronization is accepted. The Definition 1.1 dependency is explicit: discard all nonselected inertia, form Delta-dagger and its plus/minus splitting, derive 2-epsilon and prove it differs from both selected sheets, construct continuous J_X/J_C exact quotients, pin the section to the doubled-cusp decomposition group, prove its image normal, and define the arrowed stacks by the preimages of Im(sigma) and Im(sigma) x Gal(X/C). Complete atlases localize at all selected places and arrowed covers at good finite places. Finite-etale/compactified construction of these stack and boundary realizations from the source curve remains open; thus this clause is not yet source-faithful.",
+    clause "I.3.4.2" .iutI "IUT I, Remark 3.4.2"
+      ["SourceAutHolomorphicRigidity.Automorphism",
+        "SourceAutHolomorphicRigidity.Automorphism.exists_integer_exponent",
+        "SourceAutHolomorphicRigidity.Automorphism.exponent_eq_one_or_neg_one",
+        "SourceAutHolomorphicRigidity.Automorphism.toAutHolomorphic_eq_identity_of_preservesClosedUnitSubmonoid"]
+      .partialImplementation
+      "A holomorphic automorphism of the actual complex Lie group C-times is represented by a continuous multiplicative equivalence with holomorphic forward and inverse maps. Pullback along exp, a derived differential equation, period-lattice integrality, and the inverse automorphism prove that it is z maps to z or z maps to z inverse; preservation of the norm-at-most-one submonoid rules out inversion. The resulting element of Aut_hol(C-times) is proved equal to the identity. The converse reconstruction of the Kummer structure from the Aut-holomorphic structure and co-holomorphicization remains open.",
     clause "I.3.6(a)" .iutI "IUT I, Definition 3.6(a)"
       ["ToyThetaFrobenioidObject", "ToyIUTIHodgeTheaterRealization",
         "PreFrobenioid", "IUTINonarchimedeanLocalModel",
@@ -689,6 +696,19 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceKummerFaithfulness.eq_one_of_roots_in_profinite"]
       .partialImplementation
       "The finite-quotient argument is proved: a residually finite, hence profinite, multiplicative group has no nontrivial element admitting roots of every positive degree, exactly the condition of Definition 1.5(a). Applying this theorem to the unit groups of every finite MLF extension and identifying the resulting condition with the constructed continuous Kummer classes remain open.",
+
+    clause "AbsTopIII.2.1(i-ii),Cor2.3" .absoluteAnabelianIII
+      "Absolute Anabelian Topics III, Definition 2.1(i)-(ii) and Corollary 2.3"
+      ["SourceAutHolomorphic.ConnectedOpen",
+        "SourceAutHolomorphic.HasAmbientHolomorphicLift",
+        "SourceAutHolomorphic.HasAmbientHolomorphicLift.comp",
+        "SourceAutHolomorphic.autHolomorphicSubgroup",
+        "SourceAutHolomorphic.AutHolomorphic.RestrictionDomain",
+        "SourceAutHolomorphic.AutHolomorphic.restrict",
+        "SourceAutHolomorphic.AutHolomorphic.restrict_mul",
+        "SourceAutHolomorphic.AutHolomorphic.restrict_inv"]
+      .partialImplementation
+      "For every connected open subset U of the complex plane, Lean derives the actual group Aut_hol(U) from homeomorphisms admitting ambient holomorphic lifts in both directions. Identity, composition, inversion, and restriction of automorphisms preserving a connected open subdomain are proved. The general Riemann-surface assignment, local RC-holomorphic morphisms, the two co-holomorphicizations, and Corollary 2.3's classification and unique-extension theorem remain open.",
 
     clause "AbsTopIII.3.1(i-iii,v)" .absoluteAnabelianIII
       "Absolute Anabelian Topics III, Definition 3.1(i)-(iii),(v)"
@@ -1147,15 +1167,27 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceAutHolomorphicSemiGerm.puncturedNeighborhood_eq_inner_union_outer",
         "SourceAutHolomorphicSemiGerm.innerSide_eq_connectedComponentIn",
         "SourceAutHolomorphicSemiGerm.outerSide_eq_connectedComponentIn",
+        "SourceAutHolomorphicSemiGerm.levelConnectedOpen",
+        "SourceAutHolomorphicSemiGerm.levelAutHolomorphic",
+        "SourceAutHolomorphicSemiGerm.levelInclusion_hasAmbientHolomorphicLift",
+        "SourceAutHolomorphicSemiGerm.restrictToLevel_mul",
+        "SourceAutHolomorphicSemiGerm.restrictToLevel_inv",
+        "SourceAutHolomorphicRigidity.Automorphism.exponentialLift_eq_exp_exponentCoefficient",
+        "SourceAutHolomorphicRigidity.Automorphism.exponent_eq_one_or_neg_one",
+        "SourceAutHolomorphicRigidity.Automorphism.toAutHolomorphic_eq_identity",
+        "SourceAutHolomorphicRigidity.Automorphism.ambientGerm_eq_identity",
         "SourceArchimedeanLogShellDefinition.semiGermNeighborhoodSystem",
         "SourceArchimedeanLogShellDefinition.semiGermNeighborhoodSystem_cofinal",
         "SourceArchimedeanLogShellDefinition.semiGermSelectedSide_eq_connectedComponentIn",
+        "SourceArchimedeanLogShellDefinition.semiGermAutHolomorphicAssignment",
+        "SourceArchimedeanLogShellDefinition.restrictSemiGermAutomorphism",
+        "SourceArchimedeanLogShellDefinition.SemiGermGroupAutomorphism.rigid",
         "SourceArchimedeanLogShellDefinition.semiGermMultiplication_tendsto",
         "SourceArchimedeanLogShellDefinition.semiGermInversion_tendsto",
         "SourceArchimedeanPacketUnitData.summandSemiGermNeighborhoodSystem",
         "SourceArchimedeanPacketUnitData.UnitTuple.semiGermUnit"]
       .partialImplementation
-      "Lean constructs an explicit antitone projective system of open annuli around S1 in C-times, proves that their intersection is exactly S1 and that they are cofinal among all neighborhoods of S1, restricts ambient complex differentiability to every level, and proves that ambient multiplication and inversion preserve the corresponding neighborhood filters. Removing S1 splits each level into the two stated radial pieces; both are proved to be the connected components of canonical basepoints, and the O-triangleright_C side is selected by this theorem rather than by an arbitrary field. Each archimedean packet unit is then canonically promoted to this actual semi-germ core. The full Definition 2.1 assignment U maps to Aut_hol(U), the resulting local-morphism category and rigidity theorem excluding every nonidentity compatible holomorphic semi-germ automorphism, and the co-holomorphic/Kummer reconstruction of IUT I Remark 3.4.2 remain open.",
+      "Lean constructs an explicit antitone projective system of open annuli around S1 in C-times, proves that their intersection is exactly S1 and that they are cofinal among all neighborhoods of S1, and assigns the derived group Aut_hol(U_n) to every connected annular level with holomorphic transition inclusions and proved restriction laws. Ambient multiplication and inversion preserve the corresponding neighborhood filters. Removing S1 splits each level into the two stated radial connected components, with the O-triangleright_C side selected by theorem. For groupification-induced holomorphic group automorphisms, Lean derives the integer exponent from the exponential covering, proves it is plus or minus one, rules out inversion by selected-side preservation, and proves equality of the induced filter germ with the identity. Each archimedean packet unit is canonically promoted to the actual semi-germ core. Extending the rigidity classification from groupification-induced automorphisms to every purely local group-germ automorphism, the general RC-holomorphic local-morphism category, and co-holomorphic/Kummer reconstruction remain open.",
     clause "III.1.2(vi-viii)" .iutIII
       "IUT III, Proposition 1.2(vi)-(viii)"
       ["SourceNonarchimedeanLogShellSymmetryCore",
@@ -1730,8 +1762,8 @@ def clauseIdsWithStatus (status : ClauseStatus) : List String :=
   m1m3PaperLedger.filterMap fun entry =>
     if entry.status = status then some entry.id else none
 
-/-- The source-closure ledger contains 111 separately audited clauses. -/
-theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 111 :=
+/-- The source-closure ledger contains 113 separately audited clauses. -/
+theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 113 :=
   rfl
 
 /-- No source clause occurs twice in the direct-citation ledger. -/
@@ -1739,9 +1771,9 @@ theorem m1m3PaperLedger_ids_nodup :
     (m1m3PaperLedger.map PaperClause.id).Nodup := by
   decide
 
-/-- Eighty-two clauses currently have a genuine but incomplete implementation. -/
+/-- Eighty-four clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 82 :=
+    (clauseIdsWithStatus .partialImplementation).length = 84 :=
   rfl
 
 /-- Five clauses currently point only to explicitly classified toy models. -/

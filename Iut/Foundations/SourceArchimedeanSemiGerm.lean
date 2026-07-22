@@ -12,6 +12,7 @@ import Mathlib.Topology.Connected.Clopen
 import Mathlib.Topology.Germ
 import Mathlib.Topology.MetricSpace.Thickening
 import Mathlib.Topology.Order.IntermediateValue
+import Iut.Foundations.SourceAutHolomorphic
 
 /-!
 # Archimedean Aut-holomorphic semi-germs
@@ -541,6 +542,131 @@ theorem outerSide_eq_connectedComponentIn (n : ℕ) :
     have hneighborhood := valueInPunctured.2.1
     rw [neighborhood_eq_radialBand] at hneighborhood
     exact ⟨houter, hneighborhood.2⟩
+
+/-! ## The `Aut_hol` assignment on the projective system -/
+
+/-- Every annular level is a connected complex open in the sense of
+Absolute Anabelian Topics III, Definition 2.1. -/
+def levelConnectedOpen (n : ℕ) :
+    SourceAutHolomorphic.ConnectedOpen where
+  carrier := neighborhood n
+  isOpen_carrier := isOpen_neighborhood n
+  isConnected_carrier := by
+    constructor
+    · refine ⟨1, unitCircle_subset_neighborhood n ?_⟩
+      rw [mem_unitCircle_iff]
+      simp
+    · rw [neighborhood_eq_radialBand]
+      exact radialBand_isPreconnected (one_sub_radius_nonneg n)
+
+/-- The actual group `Aut_hol(U_n)` assigned to the `n`-th annulus. -/
+abbrev levelAutHolomorphic (n : ℕ) :=
+  SourceAutHolomorphic.AutHolomorphic (levelConnectedOpen n)
+
+/-- Inclusion of a smaller annulus into a larger annulus. -/
+def levelInclusion {n m : ℕ} (hnm : n ≤ m) :
+    (levelConnectedOpen m).carrier → (levelConnectedOpen n).carrier :=
+  fun value ↦ ⟨value, neighborhood_antitone hnm value.2⟩
+
+/-- Annular transition inclusions are restrictions of the holomorphic identity
+map on the ambient complex plane. -/
+theorem levelInclusion_hasAmbientHolomorphicLift
+    {n m : ℕ} (hnm : n ≤ m) :
+    SourceAutHolomorphic.HasAmbientHolomorphicLift
+      (levelConnectedOpen m) (levelConnectedOpen n) (levelInclusion hnm) := by
+  refine ⟨id, differentiable_id.differentiableOn, ?_⟩
+  intro value
+  rfl
+
+@[simp]
+theorem levelInclusion_comp
+    {n m k : ℕ} (hnm : n ≤ m) (hmk : m ≤ k)
+    (value : (levelConnectedOpen k).carrier) :
+    levelInclusion hnm (levelInclusion hmk value) =
+      levelInclusion (hnm.trans hmk) value :=
+  rfl
+
+/-- The `m`-th level regarded as a connected open restriction domain in the
+`n`-th level. -/
+def levelRestrictionDomain {n m : ℕ} (hnm : n ≤ m) :
+    SourceAutHolomorphic.AutHolomorphic.RestrictionDomain
+      (levelConnectedOpen n) where
+  openSubset := levelConnectedOpen m
+  inclusion := neighborhood_antitone hnm
+
+/-- A level automorphism can be restricted precisely when it preserves the
+smaller annulus in both directions. -/
+def PreservesSmallerLevel
+    {n m : ℕ} (hnm : n ≤ m)
+    (automorphism : levelAutHolomorphic n) : Prop :=
+  SourceAutHolomorphic.AutHolomorphic.Preserves
+    (levelRestrictionDomain hnm) automorphism
+
+/-- Restriction along the annular projective system. -/
+def restrictToLevel
+    {n m : ℕ} (hnm : n ≤ m)
+    (automorphism : levelAutHolomorphic n)
+    (hpreserves : PreservesSmallerLevel hnm automorphism) :
+    levelAutHolomorphic m :=
+  SourceAutHolomorphic.AutHolomorphic.restrict
+    (levelRestrictionDomain hnm) automorphism hpreserves
+
+theorem levelIdentity_preserves
+    {n m : ℕ} (hnm : n ≤ m) :
+    PreservesSmallerLevel hnm
+      (SourceAutHolomorphic.AutHolomorphic.identity (levelConnectedOpen n)) :=
+  SourceAutHolomorphic.AutHolomorphic.identity_preserves
+    (levelRestrictionDomain hnm)
+
+@[simp]
+theorem restrictToLevel_identity
+    {n m : ℕ} (hnm : n ≤ m) :
+    restrictToLevel hnm
+        (SourceAutHolomorphic.AutHolomorphic.identity (levelConnectedOpen n))
+        (levelIdentity_preserves hnm) =
+      SourceAutHolomorphic.AutHolomorphic.identity (levelConnectedOpen m) :=
+  SourceAutHolomorphic.AutHolomorphic.restrict_identity
+    (levelRestrictionDomain hnm)
+
+theorem preservesSmallerLevel_mul
+    {n m : ℕ} (hnm : n ≤ m)
+    (first second : levelAutHolomorphic n)
+    (hfirst : PreservesSmallerLevel hnm first)
+    (hsecond : PreservesSmallerLevel hnm second) :
+    PreservesSmallerLevel hnm (first * second) :=
+  SourceAutHolomorphic.AutHolomorphic.mul_preserves
+    (levelRestrictionDomain hnm) first second hfirst hsecond
+
+theorem preservesSmallerLevel_inv
+    {n m : ℕ} (hnm : n ≤ m)
+    (automorphism : levelAutHolomorphic n)
+    (hpreserves : PreservesSmallerLevel hnm automorphism) :
+    PreservesSmallerLevel hnm automorphism⁻¹ :=
+  SourceAutHolomorphic.AutHolomorphic.inv_preserves
+    (levelRestrictionDomain hnm) automorphism hpreserves
+
+@[simp]
+theorem restrictToLevel_mul
+    {n m : ℕ} (hnm : n ≤ m)
+    (first second : levelAutHolomorphic n)
+    (hfirst : PreservesSmallerLevel hnm first)
+    (hsecond : PreservesSmallerLevel hnm second) :
+    restrictToLevel hnm (first * second)
+        (preservesSmallerLevel_mul hnm first second hfirst hsecond) =
+      restrictToLevel hnm first hfirst * restrictToLevel hnm second hsecond :=
+  SourceAutHolomorphic.AutHolomorphic.restrict_mul
+    (levelRestrictionDomain hnm) first second hfirst hsecond
+
+@[simp]
+theorem restrictToLevel_inv
+    {n m : ℕ} (hnm : n ≤ m)
+    (automorphism : levelAutHolomorphic n)
+    (hpreserves : PreservesSmallerLevel hnm automorphism) :
+    restrictToLevel hnm automorphism⁻¹
+        (preservesSmallerLevel_inv hnm automorphism hpreserves) =
+      (restrictToLevel hnm automorphism hpreserves)⁻¹ :=
+  SourceAutHolomorphic.AutHolomorphic.restrict_inv
+    (levelRestrictionDomain hnm) automorphism hpreserves
 
 end SourceAutHolomorphicSemiGerm
 

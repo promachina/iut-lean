@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: IUT Lean formalization contributors
 -/
 import Iut.Foundations.Frobenioid
-import Iut.Foundations.SourceArchimedeanSemiGerm
+import Iut.Foundations.SourceAutHolomorphicRigidity
 import Iut.Foundations.SourceFThetaBridge
 import Iut.Foundations.SourceProcession
 import Iut.Foundations.SourceThetaEvaluation
@@ -4258,6 +4258,82 @@ theorem semiGermSelectedSide_eq_connectedComponentIn
         (SourceAutHolomorphicSemiGerm.puncturedNeighborhood level)
         (SourceAutHolomorphicSemiGerm.innerBasepoint level) :=
   SourceAutHolomorphicSemiGerm.innerSide_eq_connectedComponentIn level
+
+/-- The source assignment `U_n ↦ Aut_hol(U_n)` on each annular level. -/
+abbrev semiGermAutHolomorphicAssignment
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (_definition : SourceArchimedeanLogShellDefinition M integral)
+    (level : ℕ) :=
+  SourceAutHolomorphicSemiGerm.levelAutHolomorphic level
+
+/-- Preservation required to restrict an `Aut_hol(U_n)` element to a smaller
+annular level `U_m`. -/
+def SemiGermAutomorphismPreservesLevel
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (_definition : SourceArchimedeanLogShellDefinition M integral)
+    {n m : ℕ} (hnm : n ≤ m)
+    (automorphism : SourceAutHolomorphicSemiGerm.levelAutHolomorphic n) : Prop :=
+  SourceAutHolomorphicSemiGerm.PreservesSmallerLevel hnm automorphism
+
+/-- Restriction in the projective `Aut_hol` assignment. -/
+def restrictSemiGermAutomorphism
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (_definition : SourceArchimedeanLogShellDefinition M integral)
+    {n m : ℕ} (hnm : n ≤ m)
+    (automorphism : SourceAutHolomorphicSemiGerm.levelAutHolomorphic n)
+    (hpreserves :
+      SourceAutHolomorphicSemiGerm.PreservesSmallerLevel hnm automorphism) :
+    SourceAutHolomorphicSemiGerm.levelAutHolomorphic m :=
+  SourceAutHolomorphicSemiGerm.restrictToLevel hnm automorphism hpreserves
+
+/-- A groupification-induced automorphism of the attached semi-germ, together
+with preservation of the source-selected inner component. -/
+structure SemiGermGroupAutomorphism
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (_definition : SourceArchimedeanLogShellDefinition M integral) where
+  groupification : SourceAutHolomorphicRigidity.Automorphism
+  preservesSelectedSide :
+    SourceAutHolomorphicRigidity.Automorphism.PreservesSelectedInnerSide
+      groupification
+
+/-- The actual endomorphism germ induced by a groupification automorphism. -/
+noncomputable def SemiGermGroupAutomorphism.germ
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    {definition : SourceArchimedeanLogShellDefinition M integral}
+    (automorphism : definition.SemiGermGroupAutomorphism) :
+    Filter.Germ SourceAutHolomorphicSemiGerm.unitNeighborhoodFilter ℂ :=
+  automorphism.groupification.ambientGerm
+
+/-- The induced representative is a morphism of the unit-circle neighborhood
+filter. -/
+theorem SemiGermGroupAutomorphism.tendsto
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    {definition : SourceArchimedeanLogShellDefinition M integral}
+    (automorphism : definition.SemiGermGroupAutomorphism) :
+    Filter.Tendsto automorphism.groupification.ambient
+      SourceAutHolomorphicSemiGerm.unitNeighborhoodFilter
+      SourceAutHolomorphicSemiGerm.unitNeighborhoodFilter :=
+  automorphism.groupification.ambient_tendsto_unitNeighborhoodFilter
+    automorphism.preservesSelectedSide
+
+/-- IUT III, Remark 1.1.1(ii): a groupification-induced automorphism compatible
+with the selected component is the identity semi-germ. -/
+theorem SemiGermGroupAutomorphism.rigid
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    {definition : SourceArchimedeanLogShellDefinition M integral}
+    (automorphism : definition.SemiGermGroupAutomorphism) :
+    automorphism.germ =
+      ((id : ℂ → ℂ) : Filter.Germ
+        SourceAutHolomorphicSemiGerm.unitNeighborhoodFilter ℂ) :=
+  automorphism.groupification.ambientGerm_eq_identity
+    automorphism.preservesSelectedSide
 
 /-- Holomorphicity on a semi-germ level is inherited from `ℂ`. -/
 def IsHolomorphicOnSemiGermLevel
