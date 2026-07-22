@@ -6,6 +6,7 @@ Authors: IUT Lean formalization contributors
 import Mathlib.Algebra.Category.MonCat.Basic
 import Mathlib.CategoryTheory.Category.Cat
 import Mathlib.CategoryTheory.IsConnected
+import Mathlib.CategoryTheory.Widesubcategory
 import Mathlib.Data.PNat.Basic
 import Mathlib.GroupTheory.MonoidLocalization.GrothendieckGroup
 
@@ -429,6 +430,26 @@ theorem frobeniusDegree_comp {X Y Z : C} (f : X ⟶ Y) (g : Y ⟶ Z) :
         (P.structureFunctor.map g).frobeniusDegree
   rw [P.structureFunctor.map_comp]
   rfl
+
+/-- The morphism property cutting out the paper's wide subcategory of isometries. -/
+def isometricMorphismProperty : MorphismProperty C :=
+  fun _ _ map => P.IsIsometric map
+
+instance isometricMorphismProperty_isMultiplicative :
+    P.isometricMorphismProperty.IsMultiplicative where
+  id_mem X := P.divisor_id X
+  comp_mem f g hf hg := by
+    change P.divisor (f ≫ g) = 0
+    rw [P.divisor_comp, hf, hg]
+    simp
+
+/-- The wide subcategory with all objects and precisely the isometric arrows. -/
+abbrev IsometryCategory :=
+  WideSubcategory P.isometricMorphismProperty
+
+/-- The faithful inclusion of the isometry subcategory into the Frobenioid carrier. -/
+def isometryCategoryInclusion : P.IsometryCategory ⥤ C :=
+  wideSubcategoryInclusion P.isometricMorphismProperty
 
 /-- An object of the slice of `C` over `A`. -/
 structure PullbackSliceObject (A : C) where

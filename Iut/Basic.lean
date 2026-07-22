@@ -20,6 +20,7 @@ import Iut.Foundations.ContinuousH1
 import Iut.Foundations.SourceThetaEvaluation
 import Iut.Foundations.SourceSplitKummerFrobenioid
 import Iut.Foundations.SourceArchimedeanKummerSystem
+import Iut.Foundations.SourceTimesMuPrimeStrip
 import Iut.Foundations.SourceThetaSplitting
 import Iut.Foundations.SourceConjugateSynchronization
 import Iut.Foundations.SourceHodgeArakelovEvaluation

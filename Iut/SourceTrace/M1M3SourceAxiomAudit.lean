@@ -6,6 +6,7 @@ Authors: IUT Lean formalization contributors
 import Iut.Foundations.SourceHodgeArakelovEvaluation
 import Iut.Foundations.SourceSplitKummerFrobenioid
 import Iut.Foundations.SourceArchimedeanKummerSystem
+import Iut.Foundations.SourceTimesMuPrimeStrip
 import Iut.Foundations.SourceModelFrobenioidRationalNaturality
 import Iut.Foundations.SourceTheorem311
 import Iut.Foundations.SourceTheorem311Assembly
@@ -115,6 +116,12 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceArchimedeanKummerSystem.orientationAutomorphism_ne
 #print axioms Iut.SourceArchimedeanKummerSystem.unitQuotientDiagram
 #print axioms Iut.SourceArchimedeanKummerSystem.restrictedOrientedQuotientNaturalTransformation
+#print axioms Iut.sourceTimesMuNoncompact_eq_one_of_isUnit
+#print axioms Iut.SourceArchimedeanTimesMuQuotientSystem.reversedQuotientMap_kernel
+#print axioms Iut.SourceArchimedeanTimesMuQuotientSystem.transition_reversedQuotientMap
+#print axioms Iut.SourceArchimedeanTimesMuSystem.isColimitEquivRestricted
+#print axioms Iut.SourceFTimesMuPrimeStrip.archimedeanTimesMuIsometryTransition
+#print axioms Iut.SourceFTimesMuPilotReconstruction.pilotObject_negative
 #print axioms Iut.SourceModelFrobenioid.gpPullback_id
 #print axioms Iut.SourceModelFrobenioid.gpPullback_comp
 #print axioms Iut.SourceModelFrobenioid.Input.gpPullback_mem_birationalDivisors

@@ -1100,12 +1100,30 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceArchimedeanKummerSystem.MultiplicativelyCofinalSubset.indexInclusionFinal",
         "SourceArchimedeanKummerSystem.MultiplicativelyCofinalSubset.isColimitEquivRestricted",
         "SourceArchimedeanKummerSystem.restrictedUnitQuotientDiagram",
-        "SourceArchimedeanKummerSystem.restrictedOrientedQuotientNaturalTransformation"]
+        "SourceArchimedeanKummerSystem.restrictedOrientedQuotientNaturalTransformation",
+        "SourceArchimedeanTimesMuQuotientSystem",
+        "SourceArchimedeanTimesMuQuotientSystem.reversedQuotientMap_kernel",
+        "SourceArchimedeanTimesMuStage",
+        "SourceArchimedeanTimesMuSystem",
+        "SourceArchimedeanTimesMuSystem.carrierDiagram",
+        "SourceArchimedeanTimesMuSystem.isColimitEquivRestricted"]
       .partialImplementation
-      "The compact factor is the actual circle, mu_N is the exact closed kernel of the N-th power map, and every quotient carries its quotient topology. The exact split topological stage is the product of Circle/mu_N with the unchanged noncompact factor; the latter is proved to have no nontrivial units. A reconstructed stage must be an actual archimedean split Frobenioid structure-preservingly isomorphic to this product and must retain the original base category. Transition functors preserve the base projection, FSM morphisms, divisors, and Frobenius degrees. Carrier, base, and reference rational-monoid transitions form strict divisibility-indexed diagrams, with the rational transition forced to be the concrete quotient map on the compact factor and the identity on the noncompact factor. Every multiplicatively cofinal subset is proved filtered, its inclusion is final, and the universal colimit cocone is therefore canonically preserved and reflected. The identity/inversion orientations give distinct compatible systems of open quotient maps with the same exact kernels. Deriving the circle identification, reconstructed stages, and transition functors from the original archimedean TM/Frobenioid data, and proving the source classification of the unique nontrivial allowed automorphism, remain open.",
+      "The compact factor is the actual circle, mu_N is the exact closed kernel of the N-th power map, and every quotient carries its quotient topology. The exact split topological stage is the product of Circle/mu_N with the unchanged noncompact factor; the latter is proved to have no nontrivial units. A reconstructed stage must be an actual archimedean split Frobenioid structure-preservingly isomorphic to this product and must retain the original base category. Transition functors preserve the base projection, FSM morphisms, divisors, and Frobenius degrees. Carrier, base, and reference rational-monoid transitions form strict divisibility-indexed diagrams, with the rational transition forced to be the concrete quotient map on the compact factor and the identity on the noncompact factor. Every multiplicatively cofinal subset is proved filtered, its inclusion is final, and the universal colimit cocone is therefore canonically preserved and reflected. The identity/inversion orientations give distinct compatible systems of open quotient maps with the same exact kernels. A universe-polymorphic boundary now retains these same exact kernel, quotient-surjectivity, transition, orientation-classification, split-stage, divisor, and Frobenius conditions for the generic theorem types. Deriving and populating this boundary from the original archimedean TM/Frobenioid data remains open.",
     clause "II.4.9(vi-viii)" .iutII "IUT II, Definition 4.9(vi)-(viii)"
-      ["ToyIUTIIQPilot", "ToyIUTIIThetaPilot"] .toyModel
-      "Numerical q-orders and square weights do not define the realized Frobenioid pilot objects and prime strips.",
+      ["PreFrobenioid.isometricMorphismProperty",
+        "PreFrobenioid.IsometryCategory",
+        "SourceFTimesMuPrimeStrip",
+        "SourceFTimesMuPrimeStrip.finiteUnderlyingIsometryCategory",
+        "SourceFTimesMuPrimeStrip.finiteTimesMuIsometryCategory",
+        "SourceFTimesMuPrimeStrip.archimedeanUnderlyingIsometryCategory",
+        "SourceFTimesMuPrimeStrip.archimedeanTimesMuIsometryCategory",
+        "SourceFTimesMuPrimeStrip.archimedeanTimesMuIsometryTransition",
+        "SourceFTimesMuPilotReconstruction",
+        "SourceFTimesMuPilotReconstruction.localPilotCharacter",
+        "SourceFTimesMuPilotReconstruction.pilotObject",
+        "SourceFTimesMuPilotReconstruction.pilotObject_negative",
+        "SourceFGloballyRealifiedTimesMuPrimeStrip"] .partialImplementation
+      "The Definition 4.9(vi)-(vii) local collection now selects the exact bad/good finite reconstruction at every selected finite place and the complete universe-polymorphic torsion-quotient Frobenioid system at every archimedean place. The kind equation prevents exchanging the bad and good constructions. The F-times and F-times-mu coarsifications are the actual wide subcategories cut out by divisor-zero isometries, and archimedean transitions are proved to preserve this condition. The globally realified record inherits the full Definition 5.2(iv) global Frobenioid, prime/place bijection, local strip, and rho maps. Its pilot is derived by transporting typed cyclic bad-place generators through the actual rho maps and applying a global reconstruction function; its arithmetic degree is proved negative. Construction from a theta-Hodge theater, the source reconstruction algorithm furnishing the pilot function and degree, and the full isomorphism/poly-isomorphism category remain open.",
     clause "II.4.10(i)" .iutII "IUT II, Corollary 4.10(i)"
       ["ToyIUTIIQPilot"] .partialImplementation
       "The q-pilot numerical profile is present, but its categorical pilot object is not.",
@@ -1840,14 +1858,14 @@ theorem m1m3PaperLedger_ids_nodup :
     (m1m3PaperLedger.map PaperClause.id).Nodup := by
   decide
 
-/-- Eighty-four clauses currently have a genuine but incomplete implementation. -/
+/-- Eighty-five clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 84 :=
+    (clauseIdsWithStatus .partialImplementation).length = 85 :=
   rfl
 
-/-- Five clauses currently point only to explicitly classified toy models. -/
+/-- Four clauses currently point only to explicitly classified toy models. -/
 theorem toyModel_count :
-    (clauseIdsWithStatus .toyModel).length = 5 :=
+    (clauseIdsWithStatus .toyModel).length = 4 :=
   rfl
 
 /-- Nineteen source-closure clauses remain wholly unformalized. -/
