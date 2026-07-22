@@ -298,4 +298,417 @@ noncomputable def goodTimesMuUnitsEquiv
 
 end SourceMLFGaloisTMPair
 
+namespace SourceSplitKummerMonoid
+
+variable {M : Type u} [CommMonoid M]
+
+/-- A monoid automorphism preserving the quotienting subgroup descends to the unit quotient. -/
+noncomputable def unitQuotientMapHom
+    (S : Submonoid M) (H : Subgroup Mˣ)
+    (hH : H.ofUnits ≤ S)
+    (automorphism : MulAut S)
+    (subgroupAutomorphism : MulAut H)
+    (compatible : ∀ unit,
+      automorphism (subgroupUnits S H hH unit : S) =
+        (subgroupUnits S H hH (subgroupAutomorphism unit) : S)) :
+    UnitQuotient S H hH →* UnitQuotient S H hH := by
+  let congruence := unitCongruence S H hH
+  apply congruence.lift
+    (congruence.mk'.comp automorphism.toMonoidHom)
+  intro first second hrelation
+  apply congruence.eq.mpr
+  rcases hrelation with ⟨unit, hrelation⟩
+  refine ⟨subgroupAutomorphism unit, ?_⟩
+  rw [← compatible]
+  simpa only [map_mul] using congrArg automorphism hrelation
+
+@[simp]
+theorem unitQuotientMapHom_mk
+    (S : Submonoid M) (H : Subgroup Mˣ)
+    (hH : H.ofUnits ≤ S)
+    (automorphism : MulAut S)
+    (subgroupAutomorphism : MulAut H)
+    (compatible : ∀ unit,
+      automorphism (subgroupUnits S H hH unit : S) =
+        (subgroupUnits S H hH (subgroupAutomorphism unit) : S))
+    (value : S) :
+    unitQuotientMapHom S H hH automorphism subgroupAutomorphism compatible value =
+      (automorphism value : UnitQuotient S H hH) :=
+  by simp [unitQuotientMapHom]
+
+/-- The descended map is an automorphism of the exact unit quotient. -/
+noncomputable def unitQuotientMulAut
+    (S : Submonoid M) (H : Subgroup Mˣ)
+    (hH : H.ofUnits ≤ S)
+    (automorphism : MulAut S)
+    (subgroupAutomorphism : MulAut H)
+    (compatible : ∀ unit,
+      automorphism (subgroupUnits S H hH unit : S) =
+        (subgroupUnits S H hH (subgroupAutomorphism unit) : S)) :
+    MulAut (UnitQuotient S H hH) where
+  toFun := unitQuotientMapHom S H hH automorphism
+    subgroupAutomorphism compatible
+  invFun := unitQuotientMapHom S H hH automorphism.symm
+    subgroupAutomorphism.symm (by
+      intro unit
+      apply automorphism.injective
+      rw [automorphism.apply_symm_apply]
+      rw [compatible]
+      rw [subgroupAutomorphism.apply_symm_apply])
+  left_inv value := by
+    induction value using Con.induction_on with
+    | _ representative =>
+      rw [unitQuotientMapHom_mk, unitQuotientMapHom_mk]
+      rw [automorphism.symm_apply_apply]
+  right_inv value := by
+    induction value using Con.induction_on with
+    | _ representative =>
+      rw [unitQuotientMapHom_mk, unitQuotientMapHom_mk]
+      rw [automorphism.apply_symm_apply]
+  map_mul' := map_mul
+    (unitQuotientMapHom S H hH automorphism
+      subgroupAutomorphism compatible)
+
+@[simp]
+theorem unitQuotientMulAut_mk
+    (S : Submonoid M) (H : Subgroup Mˣ)
+    (hH : H.ofUnits ≤ S)
+    (automorphism : MulAut S)
+    (subgroupAutomorphism : MulAut H)
+    (compatible : ∀ unit,
+      automorphism (subgroupUnits S H hH unit : S) =
+        (subgroupUnits S H hH (subgroupAutomorphism unit) : S))
+    (value : S) :
+    unitQuotientMulAut S H hH automorphism subgroupAutomorphism compatible value =
+      (automorphism value : UnitQuotient S H hH) :=
+  by
+    exact unitQuotientMapHom_mk S H hH automorphism
+      subgroupAutomorphism compatible value
+
+/-- Compatible actions on a monoid and its selected units descend to the quotient. -/
+noncomputable def unitQuotientAction
+    {Acting : Type u} [Group Acting]
+    (S : Submonoid M) (H : Subgroup Mˣ)
+    (hH : H.ofUnits ≤ S)
+    (monoidAction : Acting →* MulAut S)
+    (subgroupAction : Acting →* MulAut H)
+    (compatible : ∀ g unit,
+      monoidAction g (subgroupUnits S H hH unit : S) =
+        (subgroupUnits S H hH (subgroupAction g unit) : S)) :
+    Acting →* MulAut (UnitQuotient S H hH) where
+  toFun g := unitQuotientMulAut S H hH
+    (monoidAction g) (subgroupAction g) (compatible g)
+  map_one' := by
+    apply MulEquiv.ext
+    intro value
+    induction value using Con.induction_on with
+    | _ representative =>
+      rw [unitQuotientMulAut_mk]
+      change ((monoidAction 1 representative : S) :
+        UnitQuotient S H hH) = representative
+      rw [map_one]
+      rfl
+  map_mul' first second := by
+    apply MulEquiv.ext
+    intro value
+    induction value using Con.induction_on with
+    | _ representative =>
+      change
+        unitQuotientMulAut S H hH
+            (monoidAction (first * second))
+            (subgroupAction (first * second))
+            (compatible (first * second)) representative =
+          unitQuotientMulAut S H hH
+            (monoidAction first) (subgroupAction first)
+            (compatible first)
+            (unitQuotientMulAut S H hH
+              (monoidAction second) (subgroupAction second)
+              (compatible second) representative)
+      rw [unitQuotientMulAut_mk, unitQuotientMulAut_mk,
+        unitQuotientMulAut_mk]
+      change ((monoidAction (first * second) representative : S) :
+          UnitQuotient S H hH) =
+        ((monoidAction first (monoidAction second representative) : S) :
+          UnitQuotient S H hH)
+      rw [map_mul]
+      rfl
+
+/-- The componentwise product of two genuine multiplicative actions. -/
+def productAction
+    {Acting Q U : Type u} [Group Acting]
+    [CommMonoid Q] [CommMonoid U]
+    (first : Acting →* MulAut Q)
+    (second : Acting →* MulAut U) :
+    Acting →* MulAut (Q × U) where
+  toFun g := (first g).prodCongr (second g)
+  map_one' := by
+    apply MulEquiv.ext
+    rintro ⟨q, u⟩
+    apply Prod.ext
+    · change first 1 q = q
+      rw [map_one]
+      rfl
+    · change second 1 u = u
+      rw [map_one]
+      rfl
+  map_mul' left right := by
+    apply MulEquiv.ext
+    rintro ⟨q, u⟩
+    apply Prod.ext
+    · change first (left * right) q = first left (first right q)
+      rw [map_mul]
+      rfl
+    · change second (left * right) u = second left (second right u)
+      rw [map_mul]
+      rfl
+
+end SourceSplitKummerMonoid
+
+namespace SourceMLFGaloisTMPair
+
+variable {G : TopologicalGroupCat.{u}}
+
+/-- Restrict one ambient Galois automorphism to a stable submonoid. -/
+def stableSubmonoidActionMulAut
+    (pair : SourceMLFGaloisTMPair G)
+    (S : Submonoid pair.arithmeticMonoid.carrier)
+    (stable : ∀ g value, value ∈ S → pair.action g value ∈ S)
+    (g : G) : MulAut S where
+  toFun value := ⟨pair.action g value.1, stable g value.1 value.2⟩
+  invFun value := ⟨pair.action g⁻¹ value.1, stable g⁻¹ value.1 value.2⟩
+  left_inv value := by
+    apply Subtype.ext
+    change pair.action g⁻¹ (pair.action g value.1) = value.1
+    rw [map_inv]
+    exact (pair.action g).symm_apply_apply value.1
+  right_inv value := by
+    apply Subtype.ext
+    change pair.action g (pair.action g⁻¹ value.1) = value.1
+    rw [map_inv]
+    exact (pair.action g).apply_symm_apply value.1
+  map_mul' first second := by
+    apply Subtype.ext
+    exact map_mul (pair.action g) first.1 second.1
+
+/-- The restricted automorphisms form the Galois action on a stable submonoid. -/
+def stableSubmonoidAction
+    (pair : SourceMLFGaloisTMPair G)
+    (S : Submonoid pair.arithmeticMonoid.carrier)
+    (stable : ∀ g value, value ∈ S → pair.action g value ∈ S) :
+    G →* MulAut S where
+  toFun := pair.stableSubmonoidActionMulAut S stable
+  map_one' := by
+    apply MulEquiv.ext
+    intro value
+    apply Subtype.ext
+    simp [stableSubmonoidActionMulAut]
+  map_mul' first second := by
+    apply MulEquiv.ext
+    intro value
+    apply Subtype.ext
+    simp [stableSubmonoidActionMulAut]
+
+/-- Every Galois automorphism preserves the subgroup of `n`-th roots. -/
+theorem unitAction_mem_rootsOfUnity_iff
+    (pair : SourceMLFGaloisTMPair G) (n : ℕ+)
+    (g : G) (unit : pair.arithmeticMonoid.carrierˣ) :
+    pair.unitActionMulAut g unit ∈
+        pair.arithmeticMonoid.rootsOfUnitySubgroup n ↔
+      unit ∈ pair.arithmeticMonoid.rootsOfUnitySubgroup n := by
+  change (pair.unitActionMulAut g unit) ^ n.val = 1 ↔ unit ^ n.val = 1
+  constructor
+  · intro h
+    apply (pair.unitActionMulAut g).injective
+    rw [map_pow, map_one]
+    exact h
+  · intro h
+    rw [← map_pow, h, map_one]
+
+/-- One Galois automorphism restricted to `mu_n(A)`. -/
+def rootsOfUnityActionMulAut
+    (pair : SourceMLFGaloisTMPair G) (n : ℕ+)
+    (g : G) : MulAut (pair.arithmeticMonoid.RootsOfUnityGroup n) where
+  toFun unit :=
+    ⟨pair.unitActionMulAut g unit.1,
+      (pair.unitAction_mem_rootsOfUnity_iff n g unit.1).mpr unit.2⟩
+  invFun unit :=
+    ⟨pair.unitActionMulAut g⁻¹ unit.1,
+      (pair.unitAction_mem_rootsOfUnity_iff n g⁻¹ unit.1).mpr unit.2⟩
+  left_inv unit := by
+    apply Subtype.ext
+    apply Units.ext
+    simp [unitActionMulAut]
+  right_inv unit := by
+    apply Subtype.ext
+    apply Units.ext
+    simp [unitActionMulAut]
+  map_mul' first second := by
+    apply Subtype.ext
+    exact map_mul (pair.unitActionMulAut g) first.1 second.1
+
+/-- The Galois action on the literal finite group `mu_n(A)`. -/
+def rootsOfUnityAction
+    (pair : SourceMLFGaloisTMPair G) (n : ℕ+) :
+    G →* MulAut (pair.arithmeticMonoid.RootsOfUnityGroup n) where
+  toFun := pair.rootsOfUnityActionMulAut n
+  map_one' := by
+    apply MulEquiv.ext
+    intro unit
+    apply Subtype.ext
+    apply Units.ext
+    simp [rootsOfUnityActionMulAut, unitActionMulAut]
+  map_mul' first second := by
+    apply MulEquiv.ext
+    intro unit
+    apply Subtype.ext
+    apply Units.ext
+    simp [rootsOfUnityActionMulAut, unitActionMulAut]
+
+/-- The bad-place monoid `O^perp(A)` is stable under the ambient Galois action. -/
+theorem badPerpMonoid_stable
+    (pair : SourceMLFGaloisTMPair G) (l : PrimeGeFive)
+    (characteristic : Submonoid pair.arithmeticMonoid.carrier)
+    (characteristic_stable : ∀ g value,
+      value ∈ characteristic → pair.action g value ∈ characteristic)
+    (g : G) (value : pair.arithmeticMonoid.carrier)
+    (hvalue : value ∈ pair.badPerpMonoid l characteristic) :
+    pair.action g value ∈ pair.badPerpMonoid l characteristic := by
+  rcases Submonoid.mem_sup.mp hvalue with
+    ⟨rootValue, hrootValue,
+      characteristicValue, hcharacteristicValue, hfactor⟩
+  refine Submonoid.mem_sup.mpr
+    ⟨pair.action g rootValue, ?_,
+      pair.action g characteristicValue,
+      characteristic_stable g characteristicValue hcharacteristicValue, ?_⟩
+  · rcases hrootValue with ⟨rootUnit, hrootUnit, hrootUnitValue⟩
+    let mappedRoot : pair.arithmeticMonoid.RootsOfUnityGroup (twoEll l) :=
+      pair.rootsOfUnityActionMulAut (twoEll l) g ⟨rootUnit, hrootUnit⟩
+    refine
+      (pair.arithmeticMonoid.rootsOfUnitySubgroup (twoEll l)).mem_ofUnits
+        mappedRoot.2 ?_
+    change (pair.unitActionMulAut g rootUnit :
+      pair.arithmeticMonoid.carrier) = pair.action g rootValue
+    rw [← hrootUnitValue]
+    rfl
+  · rw [← map_mul, hfactor]
+
+/-- The restricted Galois action on `O^perp(A)` at a bad finite place. -/
+def badPerpAction
+    (pair : SourceMLFGaloisTMPair G) (l : PrimeGeFive)
+    (characteristic : Submonoid pair.arithmeticMonoid.carrier)
+    (characteristic_stable : ∀ g value,
+      value ∈ characteristic → pair.action g value ∈ characteristic) :
+    G →* MulAut (pair.badPerpMonoid l characteristic) :=
+  pair.stableSubmonoidAction _
+    (pair.badPerpMonoid_stable l characteristic characteristic_stable)
+
+/-- The action on `O^perp(A)` restricts to the constructed action on `mu_(2 ell)(A)`. -/
+theorem badPerpAction_subgroupUnits
+    (pair : SourceMLFGaloisTMPair G) (l : PrimeGeFive)
+    (characteristic : Submonoid pair.arithmeticMonoid.carrier)
+    (characteristic_stable : ∀ g value,
+      value ∈ characteristic → pair.action g value ∈ characteristic)
+    (g : G) (unit : pair.TwoEllRootsOfUnity l) :
+    pair.badPerpAction l characteristic characteristic_stable g
+        (SourceSplitKummerMonoid.subgroupUnits
+          (pair.badPerpMonoid l characteristic)
+          (pair.arithmeticMonoid.rootsOfUnitySubgroup (twoEll l))
+          le_sup_left unit : pair.badPerpMonoid l characteristic) =
+      (SourceSplitKummerMonoid.subgroupUnits
+        (pair.badPerpMonoid l characteristic)
+        (pair.arithmeticMonoid.rootsOfUnitySubgroup (twoEll l))
+        le_sup_left
+        (pair.rootsOfUnityAction (twoEll l) g unit) :
+          pair.badPerpMonoid l characteristic) := by
+  apply Subtype.ext
+  rfl
+
+/-- The natural Galois action descended to `O^square(A)` at a bad finite place. -/
+noncomputable def badCharacteristicAction
+    (pair : SourceMLFGaloisTMPair G) (l : PrimeGeFive)
+    (characteristic : Submonoid pair.arithmeticMonoid.carrier)
+    (characteristic_stable : ∀ g value,
+      value ∈ characteristic → pair.action g value ∈ characteristic) :
+    G →* MulAut (pair.badCharacteristicQuotient l characteristic) :=
+  SourceSplitKummerMonoid.unitQuotientAction
+    (pair.badPerpMonoid l characteristic)
+    (pair.arithmeticMonoid.rootsOfUnitySubgroup (twoEll l))
+    le_sup_left
+    (pair.badPerpAction l characteristic characteristic_stable)
+    (pair.rootsOfUnityAction (twoEll l))
+    (pair.badPerpAction_subgroupUnits l characteristic characteristic_stable)
+
+@[simp]
+theorem badCharacteristicAction_mk
+    (pair : SourceMLFGaloisTMPair G) (l : PrimeGeFive)
+    (characteristic : Submonoid pair.arithmeticMonoid.carrier)
+    (characteristic_stable : ∀ g value,
+      value ∈ characteristic → pair.action g value ∈ characteristic)
+    (g : G) (value : pair.badPerpMonoid l characteristic) :
+    pair.badCharacteristicAction l characteristic characteristic_stable g value =
+      (pair.badPerpAction l characteristic characteristic_stable g value :
+        pair.badCharacteristicQuotient l characteristic) := by
+  exact SourceSplitKummerMonoid.unitQuotientMulAut_mk
+    _ _ _ _ _ _ value
+
+/-- The componentwise natural Galois action on bad-place `O^(square times-mu)`. -/
+noncomputable def badTimesMuAction
+    (pair : SourceMLFGaloisTMPair G) (l : PrimeGeFive)
+    (characteristic : Submonoid pair.arithmeticMonoid.carrier)
+    (characteristic_stable : ∀ g value,
+      value ∈ characteristic → pair.action g value ∈ characteristic) :
+    G →* MulAut (pair.badTimesMuMonoid l characteristic) :=
+  SourceSplitKummerMonoid.productAction
+    (pair.badCharacteristicAction l characteristic characteristic_stable)
+    pair.unitModuloTorsionAction
+
+/-- The componentwise natural Galois action on good-place `O^(square times-mu)`. -/
+noncomputable def goodTimesMuAction
+    (pair : SourceMLFGaloisTMPair G)
+    (characteristic : Submonoid pair.arithmeticMonoid.carrier)
+    (characteristic_stable : ∀ g value,
+      value ∈ characteristic → pair.action g value ∈ characteristic) :
+    G →* MulAut (pair.goodTimesMuMonoid characteristic) :=
+  SourceSplitKummerMonoid.productAction
+    (pair.stableSubmonoidAction characteristic characteristic_stable)
+    pair.unitModuloTorsionAction
+
+/-- The bad-place identification of units with `O^(times-mu)` is G-equivariant. -/
+theorem badTimesMuUnitsEquiv_equivariant
+    (pair : SourceMLFGaloisTMPair G) (l : PrimeGeFive)
+    (characteristic : Submonoid pair.arithmeticMonoid.carrier)
+    (hinjective : Function.Injective
+      (SourceSplitKummerMonoid.unitCharacteristicMultiplication
+        characteristic))
+    (characteristic_stable : ∀ g value,
+      value ∈ characteristic → pair.action g value ∈ characteristic)
+    (g : G) (unit : (pair.badTimesMuMonoid l characteristic)ˣ) :
+    pair.badTimesMuUnitsEquiv l characteristic hinjective
+        (Units.map
+          (pair.badTimesMuAction l characteristic characteristic_stable g).toMonoidHom
+          unit) =
+      pair.unitModuloTorsionAction g
+        (pair.badTimesMuUnitsEquiv l characteristic hinjective unit) := by
+  rfl
+
+/-- The good-place identification of units with `O^(times-mu)` is G-equivariant. -/
+theorem goodTimesMuUnitsEquiv_equivariant
+    (pair : SourceMLFGaloisTMPair G)
+    (characteristic : Submonoid pair.arithmeticMonoid.carrier)
+    (hinjective : Function.Injective
+      (SourceSplitKummerMonoid.unitCharacteristicMultiplication
+        characteristic))
+    (characteristic_stable : ∀ g value,
+      value ∈ characteristic → pair.action g value ∈ characteristic)
+    (g : G) (unit : (pair.goodTimesMuMonoid characteristic)ˣ) :
+    pair.goodTimesMuUnitsEquiv characteristic hinjective
+        (Units.map
+          (pair.goodTimesMuAction characteristic characteristic_stable g).toMonoidHom
+          unit) =
+      pair.unitModuloTorsionAction g
+        (pair.goodTimesMuUnitsEquiv characteristic hinjective unit) := by
+  rfl
+
+end SourceMLFGaloisTMPair
+
 end Iut

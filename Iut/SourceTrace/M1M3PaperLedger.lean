@@ -778,9 +778,14 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceMLFGaloisTMPair.badTimesMuMonoid",
         "SourceMLFGaloisTMPair.goodTimesMuMonoid",
         "SourceMLFGaloisTMPair.badTimesMuUnitsEquiv",
-        "SourceMLFGaloisTMPair.goodTimesMuUnitsEquiv"]
+        "SourceMLFGaloisTMPair.goodTimesMuUnitsEquiv",
+        "SourceMLFGaloisTMPair.badCharacteristicAction",
+        "SourceMLFGaloisTMPair.badTimesMuAction",
+        "SourceMLFGaloisTMPair.goodTimesMuAction",
+        "SourceMLFGaloisTMPair.badTimesMuUnitsEquiv_equivariant",
+        "SourceMLFGaloisTMPair.goodTimesMuUnitsEquiv_equivariant"]
       .partialImplementation
-      "At a bad finite place, O-perp is the actual join of the splitting image with mu_(2l), O-square is its exact multiplicative-congruence quotient by mu_(2l), and O^(square times-mu) is the literal product with O^(times-mu). At a good finite place the literal product uses the splitting image directly. Injectivity of unit-characteristic factorization proves that no new units survive in the characteristic factor, yielding explicit equivalences between all units of each product and O^(times-mu). The natural G-actions, the model-Frobenioid reconstruction of Frobenioids I Theorem 5.2(ii), and attachment of the Kummer orbit remain open.",
+      "At a bad finite place, O-perp is the actual join of the splitting image with mu_(2l), O-square is its exact multiplicative-congruence quotient by mu_(2l), and O^(square times-mu) is the literal product with O^(times-mu). At a good finite place the literal product uses the splitting image directly. Injectivity of unit-characteristic factorization proves that no new units survive in the characteristic factor, yielding explicit equivalences between all units of each product and O^(times-mu). Galois automorphisms preserve every mu_n; for a stable splitting image their actions are constructed on O-perp, descended through O-square, extended componentwise to both product monoids, and the unit equivalences are proved equivariant. Deriving splitting-image stability from Frobenioid evaluation, the model-Frobenioid reconstruction of Frobenioids I Theorem 5.2(ii), and attachment of the Kummer orbit remain open.",
     clause "II.4.9(vi-viii)" .iutII "IUT II, Definition 4.9(vi)-(viii)"
       ["ToyIUTIIQPilot", "ToyIUTIIThetaPilot"] .toyModel
       "Numerical q-orders and square weights do not define the realized Frobenioid pilot objects and prime strips.",

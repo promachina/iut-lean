@@ -41,6 +41,11 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceSplitKummerMonoid.unitQuotient_isUnit_eq_one
 #print axioms Iut.SourceMLFGaloisTMPair.badTimesMuUnitsEquiv
 #print axioms Iut.SourceMLFGaloisTMPair.goodTimesMuUnitsEquiv
+#print axioms Iut.SourceMLFGaloisTMPair.unitAction_mem_rootsOfUnity_iff
+#print axioms Iut.SourceMLFGaloisTMPair.badPerpMonoid_stable
+#print axioms Iut.SourceMLFGaloisTMPair.badCharacteristicAction_mk
+#print axioms Iut.SourceMLFGaloisTMPair.badTimesMuUnitsEquiv_equivariant
+#print axioms Iut.SourceMLFGaloisTMPair.goodTimesMuUnitsEquiv_equivariant
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.quotientUnit_exists
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootRealization.ofRootSystem
