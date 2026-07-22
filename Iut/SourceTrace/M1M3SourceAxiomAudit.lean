@@ -28,6 +28,15 @@ visible to Lean's axiom reporter.
 #print axioms Iut.PuncturedEllipticCurveScalarExtension.curve_eq_baseChange
 #print axioms Iut.PuncturedEllipticCurveScalarExtension.result_puncture_eq_origin
 #print axioms Iut.SignQuotientOrbicurveData.absoluteGalois_def
+#print axioms Iut.ProfiniteDecompositionGroupData.embedding_range
+#print axioms
+  Iut.SourceThetaFiniteLocalCoreData.xDiagram_galois_range_eq_placeStabilizer
+#print axioms
+  Iut.SourceThetaFiniteLocalCoreData.cDiagram_galois_range_eq_placeStabilizer
+#print axioms
+  Iut.SourceThetaInfiniteLocalCoreData.xDiagram_galois_range_eq_placeStabilizer
+#print axioms
+  Iut.SourceThetaInfiniteLocalCoreData.cDiagram_galois_range_eq_placeStabilizer
 #print axioms Iut.PuncturedEllipticCurve.galoisActionOnPoint_mul
 #print axioms Iut.PuncturedEllipticCurve.galoisActionOnPoint_stabilizer_isOpen
 #print axioms Iut.PuncturedEllipticCurve.galoisActionOnLTorsionLinearEquiv_mul

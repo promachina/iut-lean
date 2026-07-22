@@ -909,16 +909,13 @@ end ThetaTateParameterData
 /--
 The literal stabilizer of a prolongation of a place to a separable closure.
 
-The global profinite group is identified with mathlib's Krull-topological
-absolute Galois group, and the closed subgroup is characterized elementwise as
-the stabilizer of the chosen prolongation.
+The ambient group is definitionally mathlib's Krull-topological absolute Galois
+group, and the closed subgroup is characterized elementwise as the stabilizer
+of the chosen prolongation.
 -/
 structure AbsoluteGaloisPlaceStabilizerData
     (K : Type u) [Field K]
-    (basePlace : AbsoluteValue K ℝ)
-    (globalGroup : ProfiniteGrp.{u}) where
-  globalIdentification :
-    globalGroup ≅ AbsoluteGaloisProfinite K
+    (basePlace : AbsoluteValue K ℝ) where
   prolongation :
     AbsoluteValue (SeparableClosure K) ℝ
   prolongation_restricts :
@@ -926,12 +923,12 @@ structure AbsoluteGaloisPlaceStabilizerData
         (algebraMap K (SeparableClosure K)).injective =
       basePlace
   stabilizer :
-    ClosedSubgroup globalGroup
+    ClosedSubgroup (AbsoluteGaloisProfinite K)
   mem_stabilizer_iff :
-    ∀ g : globalGroup,
+    ∀ g : AbsoluteGaloisProfinite K,
       g ∈ stabilizer ↔
         prolongation.comp
-            ((globalIdentification.hom g :
+            ((g :
                 SeparableClosure K ≃ₐ[K]
                   SeparableClosure K).toRingEquiv.toRingHom.injective) =
           prolongation
@@ -941,16 +938,59 @@ A completed local absolute Galois group identified with a closed decomposition
 subgroup of the global absolute Galois group.
 -/
 structure ProfiniteDecompositionGroupData
-    (localGroup globalGroup : ProfiniteGrp.{u}) where
-  subgroup : ClosedSubgroup globalGroup
+    (localGroup globalGroup : ProfiniteGrp.{u})
+    (subgroup : ClosedSubgroup globalGroup) where
   localEquiv :
     localGroup ≅ closedSubgroupProfiniteGrp subgroup
-  embedding :
-    ProfiniteEmbedding localGroup globalGroup
-  embedding_eq :
-    embedding.hom =
-      localEquiv.hom ≫
-        (closedSubgroupProfiniteInclusion subgroup).hom
+
+namespace ProfiniteDecompositionGroupData
+
+variable
+    {localGroup globalGroup : ProfiniteGrp.{u}}
+    {subgroup : ClosedSubgroup globalGroup}
+
+/-- The local decomposition-group embedding derived from its closed-subgroup equivalence. -/
+noncomputable def embedding
+    (data :
+      ProfiniteDecompositionGroupData
+        localGroup globalGroup subgroup) :
+    ProfiniteEmbedding localGroup globalGroup :=
+  ProfiniteEmbedding.comp
+    { hom := data.localEquiv.hom
+      injective :=
+        (ConcreteCategory.bijective_of_isIso
+          data.localEquiv.hom).injective }
+    (closedSubgroupProfiniteInclusion subgroup)
+
+@[simp]
+theorem embedding_hom
+    (data :
+      ProfiniteDecompositionGroupData
+        localGroup globalGroup subgroup) :
+    data.embedding.hom =
+      data.localEquiv.hom ≫
+        (closedSubgroupProfiniteInclusion subgroup).hom :=
+  rfl
+
+/-- The derived embedding has image exactly the specified closed subgroup. -/
+theorem embedding_range
+    (data :
+      ProfiniteDecompositionGroupData
+        localGroup globalGroup subgroup) :
+    data.embedding.hom.hom.range = subgroup.toSubgroup := by
+  ext g
+  constructor
+  · rintro ⟨element, rfl⟩
+    exact (data.localEquiv.hom element).property
+  · intro hg
+    obtain ⟨element, helement⟩ :=
+      (ConcreteCategory.bijective_of_isIso
+        data.localEquiv.hom).surjective ⟨g, hg⟩
+    refine ⟨element, ?_⟩
+    change (data.localEquiv.hom element).1 = g
+    exact congrArg Subtype.val helement
+
+end ProfiniteDecompositionGroupData
 
 /-- Scalar extension of the `K`-core orbicurves to a selected finite completion. -/
 structure SourceThetaFiniteLocalCoreData
@@ -983,15 +1023,12 @@ structure SourceThetaFiniteLocalCoreData
         x_eq_scalarExtension c_eq_scalarExtension
         orbicurves.quotientMap =
       quotientMapExtension.result
+  placeStabilizer :
+    AbsoluteGaloisPlaceStabilizerData K v.1
   decompositionGroup :
     ProfiniteDecompositionGroupData
       orbicurves.absoluteGalois
       kOrbicurves.absoluteGalois
-  placeStabilizer :
-    AbsoluteGaloisPlaceStabilizerData K v.1
-      kOrbicurves.absoluteGalois
-  decompositionGroup_subgroup_eq :
-    decompositionGroup.subgroup =
       placeStabilizer.stabilizer
   xFundamentalGroupDiagram :
     ProfiniteFundamentalExactSequenceEmbedding
@@ -1069,15 +1106,12 @@ structure SourceThetaInfiniteLocalCoreData
         x_eq_scalarExtension c_eq_scalarExtension
         orbicurves.quotientMap =
       quotientMapExtension.result
+  placeStabilizer :
+    AbsoluteGaloisPlaceStabilizerData K v.1
   decompositionGroup :
     ProfiniteDecompositionGroupData
       orbicurves.absoluteGalois
       kOrbicurves.absoluteGalois
-  placeStabilizer :
-    AbsoluteGaloisPlaceStabilizerData K v.1
-      kOrbicurves.absoluteGalois
-  decompositionGroup_subgroup_eq :
-    decompositionGroup.subgroup =
       placeStabilizer.stabilizer
   xFundamentalGroupDiagram :
     ProfiniteFundamentalExactSequenceEmbedding
@@ -1161,6 +1195,26 @@ def baseChange
   quotientMap_eq_scalarExtension :=
     localData.quotientMap_eq_scalarExtension
 
+/-- The finite local `X`-diagram lands on exactly the selected place stabilizer. -/
+theorem xDiagram_galois_range_eq_placeStabilizer
+    (localData :
+      SourceThetaFiniteLocalCoreData
+        K curve kOrbicurves v) :
+    localData.xFundamentalGroupDiagram.galois.hom.hom.range =
+      localData.placeStabilizer.stabilizer.toSubgroup := by
+  rw [localData.xDiagram_galois_eq]
+  exact localData.decompositionGroup.embedding_range
+
+/-- The finite local `C`-diagram lands on exactly the selected place stabilizer. -/
+theorem cDiagram_galois_range_eq_placeStabilizer
+    (localData :
+      SourceThetaFiniteLocalCoreData
+        K curve kOrbicurves v) :
+    localData.cFundamentalGroupDiagram.galois.hom.hom.range =
+      localData.placeStabilizer.stabilizer.toSubgroup := by
+  rw [localData.cDiagram_galois_eq]
+  exact localData.decompositionGroup.embedding_range
+
 end SourceThetaFiniteLocalCoreData
 
 namespace SourceThetaInfiniteLocalCoreData
@@ -1186,6 +1240,26 @@ def baseChange
   quotientMapExtension := localData.quotientMapExtension
   quotientMap_eq_scalarExtension :=
     localData.quotientMap_eq_scalarExtension
+
+/-- The infinite local `X`-diagram lands on exactly the selected place stabilizer. -/
+theorem xDiagram_galois_range_eq_placeStabilizer
+    (localData :
+      SourceThetaInfiniteLocalCoreData
+        K curve kOrbicurves v) :
+    localData.xFundamentalGroupDiagram.galois.hom.hom.range =
+      localData.placeStabilizer.stabilizer.toSubgroup := by
+  rw [localData.xDiagram_galois_eq]
+  exact localData.decompositionGroup.embedding_range
+
+/-- The infinite local `C`-diagram lands on exactly the selected place stabilizer. -/
+theorem cDiagram_galois_range_eq_placeStabilizer
+    (localData :
+      SourceThetaInfiniteLocalCoreData
+        K curve kOrbicurves v) :
+    localData.cFundamentalGroupDiagram.galois.hom.hom.range =
+      localData.placeStabilizer.stabilizer.toSubgroup := by
+  rw [localData.cDiagram_galois_eq]
+  exact localData.decompositionGroup.embedding_range
 
 end SourceThetaInfiniteLocalCoreData
 
