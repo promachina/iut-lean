@@ -33,8 +33,14 @@ visible to Lean's axiom reporter.
 #print axioms Iut.PuncturedEllipticCurve.galoisLTorsionMatrixRepresentation_acts
 #print axioms Iut.PuncturedEllipticCurve.galoisLTorsionMatrixRepresentation_ker_isOpen
 #print axioms Iut.PuncturedEllipticCurve.galoisLTorsionMatrixRepresentation_continuous
+#print axioms Iut.PuncturedEllipticCurve.galoisLTorsionKernelField_fixingSubgroup
+#print axioms Iut.PuncturedEllipticCurve.galoisLTorsionKernelField_finiteDimensional
+#print axioms Iut.PuncturedEllipticCurve.galoisLTorsionKernelField_isGalois
+#print axioms Iut.PuncturedEllipticCurve.galoisLTorsionKernelField_numberField
 #print axioms Iut.ThetaLTorsionRepresentationData.representation_continuous
 #print axioms Iut.ThetaLTorsionRepresentationData.representation_acts_on_torsion
+#print axioms Iut.ThetaLTorsionRepresentationData.embeddedK_eq_kernelFixedField
+#print axioms Iut.ThetaLTorsionRepresentationData.isKernelField
 #print axioms Iut.SourceMonoidCyclotome.boundedCoe_isClosedEmbedding
 #print axioms Iut.SourceMonoidCyclotome.asProfinite
 #print axioms Iut.SourceMonoidCyclotome.eq_one_of_roots

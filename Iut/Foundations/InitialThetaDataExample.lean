@@ -1392,7 +1392,6 @@ noncomputable def abstractInitialThetaData
         badLocalData epsilon)
     (lTorsionRepresentation :
       ThetaLTorsionRepresentationData primeFive F K curveModuli.xF)
-    (hK : lTorsionRepresentation.IsKernelField)
     (hImage : lTorsionRepresentation.ImageContainsSL2)
     (hBadReduction :
       ∀ v, v ∈ valuations.bad →
@@ -1406,7 +1405,6 @@ noncomputable def abstractInitialThetaData
   curveModuli := curveModuli
   coverData := coverData
   lTorsionRepresentation := lTorsionRepresentation
-  k_is_lTorsionKernelField := hK
   valuations := valuations
   badLiftsHaveMultiplicativeReduction := hBadReduction
   badLocalData := badLocalData

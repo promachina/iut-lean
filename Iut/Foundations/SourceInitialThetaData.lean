@@ -3881,8 +3881,6 @@ structure SourceInitialThetaCore
     ThetaRootStackRealization l globalLTorsionCover
   lTorsionRepresentation :
     ThetaLTorsionRepresentationData l F K curveModuli.xF
-  k_is_lTorsionKernelField :
-    lTorsionRepresentation.IsKernelField
   lTorsionImageContainsSL2 :
     lTorsionRepresentation.ImageContainsSL2
   valuations : ThetaValuationData l Fmod K
@@ -4003,7 +4001,7 @@ theorem xF_torsion23Rational :
 
 theorem k_is_kernel_field :
     theta.lTorsionRepresentation.IsKernelField :=
-  theta.k_is_lTorsionKernelField
+  theta.lTorsionRepresentation.isKernelField
 
 theorem image_contains_SL2 :
     theta.lTorsionRepresentation.ImageContainsSL2 :=

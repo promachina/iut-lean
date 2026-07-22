@@ -4392,6 +4392,91 @@ theorem PuncturedEllipticCurve.galoisLTorsionMatrixRepresentation_continuous
     (X.galoisLTorsionMatrixRepresentation_ker_isOpen l basis).mem_nhds
       (Subgroup.one_mem _)
 
+/-- The kernel subgroup that canonically determines the source field `K`. -/
+noncomputable def PuncturedEllipticCurve.galoisLTorsionKernelSubgroup
+    (l : PrimeGeFive) {F : Type u} [Field F]
+    (X : PuncturedEllipticCurve F)
+    (basis :
+      (Fin 2 → ZMod l.value) ≃ₗ[ZMod l.value] X.LTorsion l) :
+    Subgroup (AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) :=
+  (X.galoisLTorsionMatrixRepresentation l basis).ker
+
+/-- The representation kernel bundled with its proved Krull closedness. -/
+noncomputable def PuncturedEllipticCurve.galoisLTorsionKernelClosedSubgroup
+    (l : PrimeGeFive) {F : Type u} [Field F]
+    (X : PuncturedEllipticCurve F)
+    (basis :
+      (Fin 2 → ZMod l.value) ≃ₗ[ZMod l.value] X.LTorsion l) :
+    ClosedSubgroup (AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) :=
+  ⟨X.galoisLTorsionKernelSubgroup l basis,
+    OpenSubgroup.isClosed
+      ⟨X.galoisLTorsionKernelSubgroup l basis,
+        X.galoisLTorsionMatrixRepresentation_ker_isOpen l basis⟩⟩
+
+/--
+The source field `K` of Definition 3.1(c), literally constructed as the fixed
+field of the kernel of the action on `E[l]`.
+-/
+noncomputable def PuncturedEllipticCurve.galoisLTorsionKernelField
+    (l : PrimeGeFive) {F : Type u} [Field F]
+    (X : PuncturedEllipticCurve F)
+    (basis :
+      (Fin 2 → ZMod l.value) ≃ₗ[ZMod l.value] X.LTorsion l) :
+    IntermediateField F (AlgebraicClosure F) :=
+  IntermediateField.fixedField
+    (X.galoisLTorsionKernelSubgroup l basis)
+
+/-- The subgroup fixing the canonical kernel field is exactly the representation kernel. -/
+theorem PuncturedEllipticCurve.galoisLTorsionKernelField_fixingSubgroup
+    (l : PrimeGeFive) {F : Type u} [Field F] [CharZero F]
+    (X : PuncturedEllipticCurve F)
+    (basis :
+      (Fin 2 → ZMod l.value) ≃ₗ[ZMod l.value] X.LTorsion l) :
+    (X.galoisLTorsionKernelField l basis).fixingSubgroup =
+      X.galoisLTorsionKernelSubgroup l basis := by
+  simpa [galoisLTorsionKernelField,
+    galoisLTorsionKernelClosedSubgroup] using
+    InfiniteGalois.fixingSubgroup_fixedField
+      (X.galoisLTorsionKernelClosedSubgroup l basis)
+
+/-- Krull openness makes the canonical kernel field finite over `F`. -/
+noncomputable instance
+    PuncturedEllipticCurve.galoisLTorsionKernelField_finiteDimensional
+    (l : PrimeGeFive) {F : Type u} [Field F] [CharZero F]
+    (X : PuncturedEllipticCurve F)
+    (basis :
+      (Fin 2 → ZMod l.value) ≃ₗ[ZMod l.value] X.LTorsion l) :
+    FiniteDimensional F (X.galoisLTorsionKernelField l basis) := by
+  apply
+    (InfiniteGalois.isOpen_iff_finite
+      (X.galoisLTorsionKernelField l basis)).mp
+  rw [X.galoisLTorsionKernelField_fixingSubgroup l basis]
+  exact X.galoisLTorsionMatrixRepresentation_ker_isOpen l basis
+
+/-- Normality of the representation kernel makes the canonical field Galois over `F`. -/
+noncomputable instance PuncturedEllipticCurve.galoisLTorsionKernelField_isGalois
+    (l : PrimeGeFive) {F : Type u} [Field F] [CharZero F]
+    (X : PuncturedEllipticCurve F)
+    (basis :
+      (Fin 2 → ZMod l.value) ≃ₗ[ZMod l.value] X.LTorsion l) :
+    IsGalois F (X.galoisLTorsionKernelField l basis) := by
+  apply
+    (InfiniteGalois.normal_iff_isGalois
+      (X.galoisLTorsionKernelField l basis)).mp
+  rw [X.galoisLTorsionKernelField_fixingSubgroup l basis]
+  exact MonoidHom.normal_ker
+    (X.galoisLTorsionMatrixRepresentation l basis)
+
+/-- Over a number field, the canonical finite kernel field is itself a number field. -/
+noncomputable instance PuncturedEllipticCurve.galoisLTorsionKernelField_numberField
+    (l : PrimeGeFive) {F : Type u} [Field F] [NumberField F]
+    (X : PuncturedEllipticCurve F)
+    (basis :
+      (Fin 2 → ZMod l.value) ≃ₗ[ZMod l.value] X.LTorsion l) :
+    NumberField (X.galoisLTorsionKernelField l basis) :=
+  NumberField.of_module_finite F
+    (X.galoisLTorsionKernelField l basis)
+
 /--
 The mod-`l` representation and embedded kernel field in IUT I,
 Definition 3.1(c).
@@ -4404,15 +4489,23 @@ structure ThetaLTorsionRepresentationData
     (l : PrimeGeFive) (F K : Type u)
     [Field F] [Field K] [Algebra F K]
     (X : PuncturedEllipticCurve F) where
-  kEmbedding : K →ₐ[F] AlgebraicClosure F
   torsionBasis :
     (Fin 2 → ZMod l.value) ≃ₗ[ZMod l.value] X.LTorsion l
+  kIdentification :
+    K ≃ₐ[F] X.galoisLTorsionKernelField l torsionBasis
 
 namespace ThetaLTorsionRepresentationData
 
 variable {l : PrimeGeFive} {F K : Type u}
 variable [Field F] [Field K] [Algebra F K]
 variable {X : PuncturedEllipticCurve F}
+
+/-- The embedding `K → Fbar` derived from its identification with the kernel field. -/
+noncomputable def kEmbedding
+    (data : ThetaLTorsionRepresentationData l F K X) :
+    K →ₐ[F] AlgebraicClosure F :=
+  (X.galoisLTorsionKernelField l data.torsionBasis).val.comp
+    data.kIdentification.toAlgHom
 
 /--
 The mod-`l` representation is constructed from the actual Galois action and the
@@ -4447,7 +4540,7 @@ theorem representation_acts_on_torsion
 noncomputable def kernelSubgroup
     (data : ThetaLTorsionRepresentationData l F K X) :
     Subgroup (AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) :=
-  data.representation.ker
+  X.galoisLTorsionKernelSubgroup l data.torsionBasis
 
 /-- The representation kernel is an open subgroup of the absolute Galois group. -/
 theorem kernelSubgroup_isOpen
@@ -4460,7 +4553,7 @@ theorem kernelSubgroup_isOpen
 noncomputable def kernelFixedField
     (data : ThetaLTorsionRepresentationData l F K X) :
     IntermediateField F (AlgebraicClosure F) :=
-  IntermediateField.fixedField data.kernelSubgroup
+  X.galoisLTorsionKernelField l data.torsionBasis
 
 /-- The image of the chosen `F`-embedding `K -> Fbar`. -/
 noncomputable def embeddedK
@@ -4468,12 +4561,35 @@ noncomputable def embeddedK
     IntermediateField F (AlgebraicClosure F) :=
   data.kEmbedding.fieldRange
 
+/-- The derived embedding of `K` has exactly the canonical kernel field as its range. -/
+theorem embeddedK_eq_kernelFixedField
+    (data : ThetaLTorsionRepresentationData l F K X) :
+    data.embeddedK = data.kernelFixedField := by
+  ext x
+  constructor
+  · rintro ⟨y, rfl⟩
+    exact (data.kIdentification y).property
+  · intro hx
+    let y : X.galoisLTorsionKernelField l data.torsionBasis := ⟨x, hx⟩
+    refine ⟨data.kIdentification.symm y, ?_⟩
+    change
+      ((data.kIdentification (data.kIdentification.symm y) :
+          X.galoisLTorsionKernelField l data.torsionBasis) :
+        AlgebraicClosure F) = x
+    rw [data.kIdentification.apply_symm_apply]
+
 /--
 The field `K` is exactly the fixed field of the kernel of the mod-`l`
 representation, as required by IUT I, Definition 3.1(c).
 -/
 def IsKernelField (data : ThetaLTorsionRepresentationData l F K X) : Prop :=
   data.embeddedK = data.kernelFixedField
+
+/-- The kernel-field condition is forced by `kIdentification`; it is not supplied separately. -/
+theorem isKernelField
+    (data : ThetaLTorsionRepresentationData l F K X) :
+    data.IsKernelField :=
+  data.embeddedK_eq_kernelFixedField
 
 /--
 The image of the mod-`l` representation contains `SL₂(ZMod l)`, as required
@@ -4543,7 +4659,6 @@ structure InitialThetaData
   coverData : ThetaOrbicurveCoverData l Fmod F K curveModuli
   lTorsionRepresentation :
     ThetaLTorsionRepresentationData l F K curveModuli.xF
-  k_is_lTorsionKernelField : lTorsionRepresentation.IsKernelField
   valuations : ThetaValuationData l Fmod K
   badLiftsHaveMultiplicativeReduction :
     ∀ v, v ∈ valuations.bad →
@@ -5073,7 +5188,7 @@ theorem profiniteGroupOpenImmersions :
 
 theorem kIsLTorsionKernelField :
     theta.lTorsionRepresentation.IsKernelField :=
-  theta.k_is_lTorsionKernelField
+  theta.lTorsionRepresentation.isKernelField
 
 theorem lTorsionImageContainsSpecialLinear :
     theta.lTorsionRepresentation.ImageContainsSL2 :=
