@@ -36,7 +36,9 @@ variable {D : Type u} [categoryD : Category.{u} D]
 variable {IsFSM : ∀ {X Y : D}, (X ⟶ Y) → Prop}
 
 /-- A group-like monoid on the base category, written additively as in FrdI 5.2. -/
-structure GroupLikeAddMonoidOn (D : Type u) [Category.{u} D] where
+structure GroupLikeAddMonoidOn
+    (D : Type u) [Category.{u} D]
+    (IsFSM : ∀ {X Y : D}, (X ⟶ Y) → Prop) where
   obj : D → Type u
   addCommGroup : ∀ X, AddCommGroup (obj X)
   pullback : ∀ {X Y : D}, (X ⟶ Y) → (obj Y →+ obj X)
@@ -44,6 +46,10 @@ structure GroupLikeAddMonoidOn (D : Type u) [Category.{u} D] where
   pullback_comp :
     ∀ {X Y Z : D} (f : X ⟶ Y) (g : Y ⟶ Z),
       pullback (f ≫ g) = (pullback f).comp (pullback g)
+  pullback_injective :
+    ∀ {X Y : D} (f : X ⟶ Y), Function.Injective (pullback f)
+  fsmPullbackIsIso :
+    ∀ {X Y : D} (f : X ⟶ Y), IsFSM f → Function.Bijective (pullback f)
 
 attribute [instance] GroupLikeAddMonoidOn.addCommGroup
 
@@ -104,7 +110,7 @@ theorem gpPullback_comp
 /-- Input data of the explicit model-Frobenioid construction in FrdI 5.2. -/
 structure Input
     (Phi : DivisorialMonoidOn D IsFSM) where
-  rationalFunctions : GroupLikeAddMonoidOn D
+  rationalFunctions : GroupLikeAddMonoidOn D IsFSM
   divisor :
     ∀ X : D,
       rationalFunctions.obj X →+

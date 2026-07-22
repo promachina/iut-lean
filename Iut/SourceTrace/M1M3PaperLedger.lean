@@ -168,7 +168,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceModelFrobenioid.Carrier.structureFunctor",
         "SourceModelFrobenioid.Carrier.preFrobenioid"]
       .sourceFaithful
-      "The exact object and four-component arrow data, balance equation, identity, composition formulas, category laws, birational-divisor image, and functor to the elementary Frobenioid are constructed. The Frobenioid-axiom conclusion belongs to Theorem 5.2(ii), not this clause.",
+      "The group-like monoid is a genuine Definition 1.1(ii) monoid on D: pullbacks are injective and FSM pullbacks are bijective. The exact object and four-component arrow data, balance equation, identity, composition formulas, category laws, birational-divisor image, and functor to the elementary Frobenioid are constructed. The Frobenioid-axiom conclusion belongs to Theorem 5.2(ii), not this clause.",
     clause "FrdII.5.1" .frobenioidsII
       "Frobenioids II, Definition 5.1"
       [] .unformalized
