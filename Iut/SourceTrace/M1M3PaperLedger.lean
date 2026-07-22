@@ -214,9 +214,21 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_frobeniusDegree_eq_iff",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_isOfFrobeniusType_iff",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_isIsometric",
-        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_obj_isIsotropic_iff"]
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_obj_isIsotropic_iff",
+        "SourceModelFrobenioid.GroupifiedDivisorSubfunctor",
+        "SourceModelFrobenioid.GroupifiedElementaryFrobenioid",
+        "SourceModelFrobenioid.GroupifiedElementaryFrobenioid.inclusion_faithful",
+        "SourceModelFrobenioid.Input.birationalDivisorSubfunctor",
+        "SourceModelFrobenioid.BirationalObject.birationalDivisorFunctor",
+        "SourceModelFrobenioid.BirationalObject.groupifiedDivisorFunctor_factorization",
+        "SourceModelFrobenioid.Carrier.groupifiedStructureComparison",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.birationalDivisorFunctor",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.groupifiedDivisorFunctor_factorization",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.birationalDivisorHom_surjective",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.birationalDivisorHom_eq_one_iff_sourceUnitImage",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.birationalDivisorSubfunctor_unique"]
       .partialImplementation
-      "For the Theorem 5.2 model, the filtered Hom colimit, Proposition 1.11(vii) composition square, source roof formula, faithful canonical functor, pre-step inversion, and zero-monoid group-like pre-Frobenioid structure are proved. The target is connected and totally epimorphic. Every morphism and object clause of Proposition 4.4(iv), including the exact base-identity roof classification, is proved. The seven Frobenioid axiom groups, divisor functor square, and rational-function exact sequence remain open.",
+      "For the Theorem 5.2 model, the filtered Hom colimit, Proposition 1.11(vii) composition square, source roof formula, faithful canonical functor, pre-step inversion, and zero-monoid group-like pre-Frobenioid structure are proved. The target is connected and totally epimorphic. The group-valued elementary categories, faithful inclusion F_(Phi^birat) to F_(Phi^gp), whole-arrow divisor-functor factorization, naturally commutative source square, unique image subfunctor, and exact rational-function divisor sequence are proved. Every morphism and object clause of Proposition 4.4(iv), including the exact base-identity roof classification, is proved. Packaging the target with all seven Frobenioid axiom groups remains open.",
     clause "FrdI.4.5(i)" .frobenioidsI
       "Frobenioids I, Definition 4.5(i)"
       ["PreFrobenioid.IsBirationallyFrobeniusNormalized",

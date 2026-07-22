@@ -6,7 +6,7 @@ Authors: IUT Lean formalization contributors
 import Iut.Foundations.SourceHodgeArakelovEvaluation
 import Iut.Foundations.SourceSplitKummerFrobenioid
 import Iut.Foundations.SourceArchimedeanKummerSystem
-import Iut.Foundations.SourceModelFrobenioidBirationalDictionary
+import Iut.Foundations.SourceModelFrobenioidBirationalDivisor
 import Iut.Foundations.SourceTheorem311
 
 open Iut
@@ -182,6 +182,17 @@ visible to Lean's axiom reporter.
   Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_isIsometric
 #print axioms
   Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_obj_isIsotropic_iff
+#print axioms Iut.SourceModelFrobenioid.GroupifiedElementaryFrobenioid.inclusion_faithful
+#print axioms Iut.SourceModelFrobenioid.BirationalObject.groupifiedDivisorFunctor_factorization
+#print axioms Iut.SourceModelFrobenioid.Carrier.groupifiedStructureComparison
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.groupifiedDivisorFunctor_factorization
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.birationalDivisorHom_surjective
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.birationalDivisorHom_eq_one_iff_sourceUnitImage
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.birationalDivisorSubfunctor_unique
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.quotientUnit_exists
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootRealization.ofRootSystem
