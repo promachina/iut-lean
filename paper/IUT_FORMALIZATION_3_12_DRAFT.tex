@@ -1013,8 +1013,9 @@ from both selected sheets.  Continuous exact quotients
 doubled-cusp decomposition group, and Lean proves its image normal from
 exactness and the trivial kernel action.  The arrowed stack subgroups are
 required to be the preimages of \(\operatorname{Im}(\sigma)\) and
-\(\operatorname{Im}(\sigma)\times\operatorname{Gal}(X/C)\).  The absolute Galois quotients are constrained to
-mathlib's algebraic-closure automorphism groups with their Krull topology.
+\(\operatorname{Im}(\sigma)\times\operatorname{Gal}(X/C)\).  The absolute Galois quotients are definitionally
+mathlib's absolute-separable-closure automorphism groups with their Krull topology;
+no arbitrary profinite replacement or equality certificate is accepted.
 Inside the selected \(\overline F\), the embedded field of moduli is proved
 equal to the fixed field of the geometric-\(j\) automorphism stabilizer, and
 its maximal solvable extension in that same ambient field is defined as the
@@ -1059,7 +1060,7 @@ required to factor continuously through the profinite completion
 absolute Galois groups are identified with closed decomposition subgroups of
 the global group, with compatible embeddings of fundamental exact sequences.
 Each closed subgroup is identified with the literal stabilizer of a chosen
-prolongation of the corresponding place to the algebraic closure.
+prolongation of the corresponding place to the absolute separable closure.
 The localized cusp label is proved to be the canonical sign orbit of
 \(1\bmod l\).  Constructing the algebraic boundary atlas, compactifications,
 and the supplied finite-etale stack realizations remains open; the records
