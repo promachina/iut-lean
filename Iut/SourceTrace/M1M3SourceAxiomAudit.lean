@@ -6,7 +6,7 @@ Authors: IUT Lean formalization contributors
 import Iut.Foundations.SourceHodgeArakelovEvaluation
 import Iut.Foundations.SourceSplitKummerFrobenioid
 import Iut.Foundations.SourceArchimedeanKummerSystem
-import Iut.Foundations.SourceModelFrobenioid
+import Iut.Foundations.SourceModelFrobenioidDivisorOrder
 import Iut.Foundations.SourceTheorem311
 
 open Iut
@@ -91,6 +91,13 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceModelFrobenioid.Carrier.unitTransport
 #print axioms Iut.SourceModelFrobenioid.Carrier.unitTransport_unique
 #print axioms Iut.SourceModelFrobenioid.Carrier.unitTransport_dependsOnlyOnBase
+#print axioms Iut.SourceModelFrobenioid.Carrier.outgoingDivisorRepresentative
+#print axioms Iut.SourceModelFrobenioid.Carrier.outgoingDivisorOrderFullyFaithful
+#print axioms Iut.SourceModelFrobenioid.Carrier.outgoingDivisorRepresentative_unique
+#print axioms Iut.SourceModelFrobenioid.Carrier.incomingDivisor
+#print axioms Iut.SourceModelFrobenioid.Carrier.incomingDivisorRepresentative
+#print axioms Iut.SourceModelFrobenioid.Carrier.incomingDivisorOrderFullyFaithful
+#print axioms Iut.SourceModelFrobenioid.Carrier.incomingDivisorRepresentative_unique
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.quotientUnit_exists
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootRealization.ofRootSystem
