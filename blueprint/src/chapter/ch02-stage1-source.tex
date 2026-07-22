@@ -574,12 +574,24 @@
   \lean{Iut.SourceNonarchimedeanLogShellDefinition.invariantLocalUnits_fixed}
   \lean{Iut.SourceNonarchimedeanPacketUnitLogData.packetUnitLogSubgroup}
   \lean{Iut.SourceNonarchimedeanPacketUnitLogData.packetUnitLogSubgroup_le_packetLattice}
+  \lean{Iut.SourceNonarchimedeanPacketLogLinkStep}
+  \lean{Iut.SourceNonarchimedeanPacketLogLinkStep.graph_le_packetUnitLogSubgroup_prod}
+  \lean{Iut.SourceNonarchimedeanPacketLogLinkStep.related_of_unitTuplesRelated}
+  \lean{Iut.SourceForwardRelation}
+  \lean{Iut.SourceForwardDomain}
+  \lean{Iut.SourceForwardRange}
+  \lean{Iut.sourceForwardIndex_sub_eq}
   \lean{Iut.SourceAbsoluteLGPGaussianLogThetaLattice.verticalPacketUnitLogSubgroup_image}
   \lean{Iut.SourceTheorem311VerticalLocalKummer}
   \lean{Iut.SourceTheorem311VerticalLogLink.logarithm_eq_of_differsByRootOfUnity}
   \lean{Iut.SourceTheorem311VerticalLogLinkFamily.adjacent_logarithm_eq_on_overlap}
   \lean{Iut.SourceTheorem311CoricContainer}
   \lean{Iut.SourceTheorem311Ind3System}
+  \lean{Iut.SourceTheorem311Ind3System.nonarchLogIterateRelation}
+  \lean{Iut.SourceTheorem311Ind3System.nonarchLogIterateDomain}
+  \lean{Iut.SourceTheorem311Ind3System.nonarchLogIterateRange}
+  \lean{Iut.SourceTheorem311Ind3System.nonarch_logKummer_contained}
+  \lean{Iut.SourceTheorem311Ind3System.nonarch_logKummer_contained_of_mem_range}
   \lean{Iut.SourceTheorem311Ind3System.logShellRegion_eq_piBall}
   \lean{Iut.SourceLGPSplittingMonoidAction}
   \lean{Iut.SourceTheorem311BadPrimeUpperSemiCompatibility.logarithm_eq_of_relatedAcrossLog}
@@ -623,10 +635,16 @@
   of the summandwise invariant-unit logarithm images.  Each such invariant-unit
   type is itself the fixed subgroup of an explicit continuous profinite Galois
   action, rather than an unrelated type carrying an invariant name.  The
-  generated packet subgroup lies in the
-  closed tensor lattice and is transported exactly by the vertical Kummer
-  equivalence, so its direct containment in the common integral region is
-  constructed.  At archimedean places Ind3 contains
+  generated packet subgroup lies in the closed tensor lattice and is
+  transported exactly by the vertical Kummer equivalence.  A finite log-link
+  step is represented as a partial correspondence between the actual fixed
+  units in every summand.  Lean applies the summand logarithms, tensors related
+  tuples, takes the additive closure of the resulting graph, and recursively
+  composes adjacent steps.  It proves that an (r)-fold iterate starting at
+  (m-r) ends at (m), and derives containment of the endpoint's Kummer image
+  from its unit-log subgroup membership.  Thus neither a direct multi-step map
+  nor a final iterated-containment proof is accepted by the concrete Ind3
+  constructor.  At archimedean places Ind3 contains
   direct unit and radius-\(\pi\) images, while a subset of each radius-\(\pi\)
   ball surjects onto the relevant iterated-log domain.  This source ball is
   derived from the same packet integral construction and is proved equal to

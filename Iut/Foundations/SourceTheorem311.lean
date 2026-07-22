@@ -4340,6 +4340,182 @@ theorem packetUnitLogSubgroup_image
 
 end SourceNonarchimedeanPacketUnitLogData
 
+namespace SourceNonarchimedeanPacketUnitLogData
+
+variable {j : ℕ} {packet : SourceMonoAnalyticTensorPacket.{u} j}
+variable {shells : SourceNonarchimedeanPacketShells packet}
+
+/-- A simultaneous choice of one actual Galois-fixed unit in every summand. -/
+abbrev UnitTuple
+    (data : SourceNonarchimedeanPacketUnitLogData packet shells) :=
+  ∀ (factor : Fin (j + 1)) (place : packet.place),
+    (data.summandDefinition factor place).invariantLocalUnits
+
+/-- The direct-sum factor obtained by applying every summandwise logarithm. -/
+noncomputable def factorLogOfUnitTuple
+    (data : SourceNonarchimedeanPacketUnitLogData packet shells)
+    (units : data.UnitTuple)
+    (factor : Fin (j + 1)) :
+    (packet.factor factor).carrier :=
+  (packet.factor factor).directSumIso.inv
+    ((DirectSum.linearEquivFunOnFintype ℚ packet.place
+      (fun place => (packet.factor factor).summand place)).symm
+        (fun place =>
+          ((data.summandDefinition factor place).padicLog
+            (units factor place)).toAdd))
+
+/-- The pure tensor of the logarithms of a tuple of actual invariant units. -/
+noncomputable def pureLogTensorOfUnitTuple
+    (data : SourceNonarchimedeanPacketUnitLogData packet shells)
+    (units : data.UnitTuple) : packet.carrier :=
+  packet.tensorIso.inv
+    (PiTensorProduct.tprod ℚ (fun factor =>
+      data.factorLogOfUnitTuple units factor))
+
+/-- A tuple of actual invariant units produces a factor unit-log element. -/
+theorem factorLogOfUnitTuple_mem
+    (data : SourceNonarchimedeanPacketUnitLogData packet shells)
+    (units : data.UnitTuple)
+    (factor : Fin (j + 1)) :
+    data.factorLogOfUnitTuple units factor ∈
+      data.factorUnitLogSubgroup factor := by
+  intro place
+  have hcoordinate :
+      (packet.factor factor).directSumIso.hom
+          (data.factorLogOfUnitTuple units factor) place =
+        ((data.summandDefinition factor place).padicLog
+          (units factor place)).toAdd := by
+    unfold factorLogOfUnitTuple
+    rw [(packet.factor factor).directSumIso.inv_hom_id_apply]
+    exact congrFun
+      ((DirectSum.linearEquivFunOnFintype ℚ packet.place
+        (fun place => (packet.factor factor).summand place)).apply_symm_apply
+          (fun place =>
+            ((data.summandDefinition factor place).padicLog
+              (units factor place)).toAdd)) place
+  rw [hcoordinate]
+  apply (data.summandDefinition factor place).preLogShell_eq_logRange _ |>.2
+  exact ⟨units factor place, by simp⟩
+
+/-- A tuple of actual invariant units produces one of the generating tensors. -/
+theorem pureLogTensorOfUnitTuple_mem
+    (data : SourceNonarchimedeanPacketUnitLogData packet shells)
+    (units : data.UnitTuple) :
+    data.pureLogTensorOfUnitTuple units ∈ data.pureUnitLogTensors := by
+  exact ⟨fun factor => data.factorLogOfUnitTuple units factor,
+    data.factorLogOfUnitTuple_mem units, rfl⟩
+
+/-- Hence every explicit unit tuple lies in the generated packet subgroup. -/
+theorem pureLogTensorOfUnitTuple_mem_packetUnitLogSubgroup
+    (data : SourceNonarchimedeanPacketUnitLogData packet shells)
+    (units : data.UnitTuple) :
+    data.pureLogTensorOfUnitTuple units ∈ data.packetUnitLogSubgroup :=
+  AddSubgroup.subset_closure (data.pureLogTensorOfUnitTuple_mem units)
+
+end SourceNonarchimedeanPacketUnitLogData
+
+/--
+One finite-place log-link as the source describes it: a partial correspondence
+between actual Galois-fixed local units in every tensor summand.  No total map
+or preselected iterate is included.
+-/
+structure SourceNonarchimedeanPacketLogLinkStep
+    {j : ℕ}
+    {source target : SourceMonoAnalyticTensorPacket.{u} j}
+    {sourceShells : SourceNonarchimedeanPacketShells source}
+    {targetShells : SourceNonarchimedeanPacketShells target}
+    (sourceData :
+      SourceNonarchimedeanPacketUnitLogData source sourceShells)
+    (targetData :
+      SourceNonarchimedeanPacketUnitLogData target targetShells) where
+  placeEquiv : source.place ≃ target.place
+  related :
+    ∀ (factor : Fin (j + 1)) (place : source.place),
+      (sourceData.summandDefinition factor place).invariantLocalUnits ->
+      (targetData.summandDefinition factor
+        (placeEquiv place)).invariantLocalUnits -> Prop
+
+namespace SourceNonarchimedeanPacketLogLinkStep
+
+variable {j : ℕ}
+variable {source target : SourceMonoAnalyticTensorPacket.{u} j}
+variable {sourceShells : SourceNonarchimedeanPacketShells source}
+variable {targetShells : SourceNonarchimedeanPacketShells target}
+variable {sourceData :
+  SourceNonarchimedeanPacketUnitLogData source sourceShells}
+variable {targetData :
+  SourceNonarchimedeanPacketUnitLogData target targetShells}
+
+/-- The componentwise tensor-product relation on complete local-unit tuples. -/
+def UnitTuplesRelated
+    (step : SourceNonarchimedeanPacketLogLinkStep sourceData targetData)
+    (sourceUnits : sourceData.UnitTuple)
+    (targetUnits : targetData.UnitTuple) : Prop :=
+  ∀ factor place,
+    step.related factor place (sourceUnits factor place)
+      (targetUnits factor (step.placeEquiv place))
+
+/-- Pure tensor pairs related by the tensor product of the local log-links. -/
+noncomputable def pureRelatedPairs
+    (step : SourceNonarchimedeanPacketLogLinkStep sourceData targetData) :
+    Set (source.carrier × target.carrier) :=
+  { pair |
+    ∃ (sourceUnits : sourceData.UnitTuple)
+      (targetUnits : targetData.UnitTuple),
+      step.UnitTuplesRelated sourceUnits targetUnits ∧
+      pair =
+        (sourceData.pureLogTensorOfUnitTuple sourceUnits,
+          targetData.pureLogTensorOfUnitTuple targetUnits) }
+
+/--
+The additive tensor-product correspondence generated by the related pure
+unit tensors.  This is a relation, represented by its graph subgroup.
+-/
+noncomputable def graph
+    (step : SourceNonarchimedeanPacketLogLinkStep sourceData targetData) :
+    AddSubgroup (source.carrier × target.carrier) :=
+  AddSubgroup.closure step.pureRelatedPairs
+
+/-- Every related graph pair has unit-log endpoints on both sides. -/
+theorem graph_le_packetUnitLogSubgroup_prod
+    (step : SourceNonarchimedeanPacketLogLinkStep sourceData targetData) :
+    step.graph ≤
+      sourceData.packetUnitLogSubgroup.prod
+        targetData.packetUnitLogSubgroup := by
+  change AddSubgroup.closure step.pureRelatedPairs ≤
+    sourceData.packetUnitLogSubgroup.prod
+      targetData.packetUnitLogSubgroup
+  rw [AddSubgroup.closure_le]
+  rintro pair ⟨sourceUnits, targetUnits, _related, rfl⟩
+  exact ⟨
+    sourceData.pureLogTensorOfUnitTuple_mem_packetUnitLogSubgroup sourceUnits,
+    targetData.pureLogTensorOfUnitTuple_mem_packetUnitLogSubgroup targetUnits⟩
+
+/-- The induced one-step relation on the actual packet unit-log subgroups. -/
+noncomputable def Related
+    (step : SourceNonarchimedeanPacketLogLinkStep sourceData targetData)
+    (sourceValue : sourceData.packetUnitLogSubgroup)
+    (targetValue : targetData.packetUnitLogSubgroup) : Prop :=
+  (sourceValue.1, targetValue.1) ∈ step.graph
+
+/-- Every componentwise related unit tuple yields a related pure tensor pair. -/
+theorem related_of_unitTuplesRelated
+    (step : SourceNonarchimedeanPacketLogLinkStep sourceData targetData)
+    (sourceUnits : sourceData.UnitTuple)
+    (targetUnits : targetData.UnitTuple)
+    (related : step.UnitTuplesRelated sourceUnits targetUnits) :
+    step.Related
+      ⟨sourceData.pureLogTensorOfUnitTuple sourceUnits,
+        sourceData.pureLogTensorOfUnitTuple_mem_packetUnitLogSubgroup
+          sourceUnits⟩
+      ⟨targetData.pureLogTensorOfUnitTuple targetUnits,
+        targetData.pureLogTensorOfUnitTuple_mem_packetUnitLogSubgroup
+          targetUnits⟩ := by
+  apply AddSubgroup.subset_closure
+  exact ⟨sourceUnits, targetUnits, related, rfl⟩
+
+end SourceNonarchimedeanPacketLogLinkStep
+
 /-- An open subgroup of a topological group. -/
 def SourceOpenSubgroup (G : Type u) [Group G] [TopologicalSpace G] :=
   {subgroup : Subgroup G | IsOpen (subgroup : Set G)}
@@ -15708,6 +15884,71 @@ noncomputable def ofLocalData
 
 end SourceTheorem311CoricContainer
 
+/-- The vertical coordinate reached after a specified number of forward links. -/
+def SourceForwardIndex : ℕ -> ℤ -> ℤ
+  | 0, start => start
+  | steps + 1, start => SourceForwardIndex steps start + 1
+
+@[simp]
+theorem sourceForwardIndex_zero (start : ℤ) :
+    SourceForwardIndex 0 start = start :=
+  rfl
+
+@[simp]
+theorem sourceForwardIndex_succ (steps : ℕ) (start : ℤ) :
+    SourceForwardIndex (steps + 1) start =
+      SourceForwardIndex steps start + 1 :=
+  rfl
+
+/-- Recursive forward indexing is ordinary addition by the step count. -/
+theorem sourceForwardIndex_eq_add (steps : ℕ) (start : ℤ) :
+    SourceForwardIndex steps start = start + (steps : ℤ) := by
+  induction steps with
+  | zero => simp
+  | succ steps ih =>
+      simp only [sourceForwardIndex_succ, ih, Nat.cast_add, Nat.cast_one]
+      omega
+
+/-- Thus the `r`-fold link beginning at `m-r` ends at exactly `m`. -/
+theorem sourceForwardIndex_sub_eq (steps : ℕ) (target : ℤ) :
+    SourceForwardIndex steps (target - (steps : ℤ)) = target := by
+  rw [sourceForwardIndex_eq_add]
+  omega
+
+/--
+The recursively composed forward relation.  An iterate is derived solely by
+composing adjacent one-step correspondences; no direct multi-step map occurs.
+-/
+def SourceForwardRelation
+    {fiber : ℤ -> Type u}
+    (step : ∀ index, fiber index -> fiber (index + 1) -> Prop) :
+    ∀ (steps : ℕ) (start : ℤ),
+      fiber start -> fiber (SourceForwardIndex steps start) -> Prop
+  | 0, _start, first, last => first = last
+  | steps + 1, start, first, last =>
+      ∃ middle : fiber (SourceForwardIndex steps start),
+        SourceForwardRelation step steps start first middle ∧
+        step (SourceForwardIndex steps start) middle last
+
+/-- The domain of an iterate is derived as the first projection of its graph. -/
+def SourceForwardDomain
+    {fiber : ℤ -> Type u}
+    (step : ∀ index, fiber index -> fiber (index + 1) -> Prop)
+    (steps : ℕ) (start : ℤ) : Set (fiber start) :=
+  { first |
+    ∃ last : fiber (SourceForwardIndex steps start),
+      SourceForwardRelation step steps start first last }
+
+/-- The range of an iterate is derived as the second projection of its graph. -/
+def SourceForwardRange
+    {fiber : ℤ -> Type u}
+    (step : ∀ index, fiber index -> fiber (index + 1) -> Prop)
+    (steps : ℕ) (start : ℤ) :
+    Set (fiber (SourceForwardIndex steps start)) :=
+  { last |
+    ∃ first : fiber start,
+      SourceForwardRelation step steps start first last }
+
 /--
 The source-faithful Ind3 upper-semi system of Proposition 3.5(ii) and Theorem
 3.11(ii).
@@ -15746,20 +15987,12 @@ structure SourceTheorem311Ind3System (l : PrimeGeFive) where
   archUnitInvariants :
     ∀ m vQ label (_hkind : common.placeKind vQ = .archimedean),
       AddSubgroup (packet m vQ label).carrier
-  nonarchLogDomain :
-    ∀ (m : ℤ) (steps : ℕ+) (vQ : common.rationalPlace)
-      (label : IUTIIAbsoluteThetaLabel.{u} l),
-      Set (packet (m - (steps.1 : ℤ)) vQ label).carrier
-  nonarchLogDomain_mem_units :
-    ∀ m steps vQ label
-      (hkind : common.placeKind vQ = .nonarchimedean) x,
-      x ∈ nonarchLogDomain m steps vQ label ->
-        x ∈ nonarchUnitLogInvariants
-          (m - (steps.1 : ℤ)) vQ label hkind
-  nonarchLogIterate :
-    ∀ m steps vQ label,
-      {x // x ∈ nonarchLogDomain m steps vQ label} ->
-        (packet m vQ label).carrier
+  nonarchLogLinkStep :
+    ∀ (m : ℤ) (vQ : common.rationalPlace)
+      (label : IUTIIAbsoluteThetaLabel.{u} l)
+      (hkind : common.placeKind vQ = .nonarchimedean),
+      nonarchUnitLogInvariants m vQ label hkind ->
+      nonarchUnitLogInvariants (m + 1) vQ label hkind -> Prop
   nonarch_direct_contained :
     ∀ m vQ label
       (hkind : common.placeKind vQ = .nonarchimedean),
@@ -15767,13 +16000,6 @@ structure SourceTheorem311Ind3System (l : PrimeGeFive) where
           (directKummer m vQ label).packetKummer
           (nonarchUnitLogInvariants m vQ label hkind : Set _)
           (common.integral vQ label).carrier
-  nonarch_logKummer_contained :
-    ∀ m steps vQ label,
-      common.placeKind vQ = .nonarchimedean ->
-        ∀ x,
-          (directKummer m vQ label).packetKummer
-              (nonarchLogIterate m steps vQ label x) ∈
-            (common.integral vQ label).carrier
   arch_direct_units_contained :
     ∀ m vQ label
       (hkind : common.placeKind vQ = .archimedean),
@@ -15831,6 +16057,88 @@ structure SourceTheorem311Ind3System (l : PrimeGeFive) where
 namespace SourceTheorem311Ind3System
 
 variable {l : PrimeGeFive}
+
+/--
+The positive finite-place iterate obtained by recursive composition of the
+actual adjacent log-link relations.
+-/
+def nonarchLogIterateRelation
+    (system : SourceTheorem311Ind3System.{u} l)
+    (start : ℤ) (steps : ℕ+)
+    (vQ : system.common.rationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} l)
+    (hkind : system.common.placeKind vQ = .nonarchimedean) :
+    system.nonarchUnitLogInvariants start vQ label hkind ->
+    system.nonarchUnitLogInvariants
+      (SourceForwardIndex steps.1 start) vQ label hkind -> Prop :=
+  SourceForwardRelation
+    (fun index => system.nonarchLogLinkStep index vQ label hkind)
+    steps.1 start
+
+/-- The actual partial domain of the recursively composed finite log-link. -/
+def nonarchLogIterateDomain
+    (system : SourceTheorem311Ind3System.{u} l)
+    (start : ℤ) (steps : ℕ+)
+    (vQ : system.common.rationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} l)
+    (hkind : system.common.placeKind vQ = .nonarchimedean) :
+    Set (system.nonarchUnitLogInvariants start vQ label hkind) :=
+  SourceForwardDomain
+    (fun index => system.nonarchLogLinkStep index vQ label hkind)
+    steps.1 start
+
+/-- The actual partial range of the recursively composed finite log-link. -/
+def nonarchLogIterateRange
+    (system : SourceTheorem311Ind3System.{u} l)
+    (start : ℤ) (steps : ℕ+)
+    (vQ : system.common.rationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} l)
+    (hkind : system.common.placeKind vQ = .nonarchimedean) :
+    Set (system.nonarchUnitLogInvariants
+      (SourceForwardIndex steps.1 start) vQ label hkind) :=
+  SourceForwardRange
+    (fun index => system.nonarchLogLinkStep index vQ label hkind)
+    steps.1 start
+
+/--
+Every endpoint of a recursively composed finite-place log-link has Kummer
+image in the common integral packet.  This is derived from endpoint membership,
+not supplied as a multi-step containment field.
+-/
+theorem nonarch_logKummer_contained
+    (system : SourceTheorem311Ind3System.{u} l)
+    (start : ℤ) (steps : ℕ+)
+    (vQ : system.common.rationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} l)
+    (hkind : system.common.placeKind vQ = .nonarchimedean)
+    (sourceValue : system.nonarchUnitLogInvariants start vQ label hkind)
+    (targetValue : system.nonarchUnitLogInvariants
+      (SourceForwardIndex steps.1 start) vQ label hkind)
+    (_related : system.nonarchLogIterateRelation start steps vQ label hkind
+      sourceValue targetValue) :
+    (system.directKummer (SourceForwardIndex steps.1 start) vQ label
+        ).packetKummer targetValue.1 ∈
+      (system.common.integral vQ label).carrier :=
+  system.nonarch_direct_contained
+    (SourceForwardIndex steps.1 start) vQ label hkind targetValue.2
+
+/-- Every element of the derived iterate range satisfies the same containment. -/
+theorem nonarch_logKummer_contained_of_mem_range
+    (system : SourceTheorem311Ind3System.{u} l)
+    (start : ℤ) (steps : ℕ+)
+    (vQ : system.common.rationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} l)
+    (hkind : system.common.placeKind vQ = .nonarchimedean)
+    (targetValue : system.nonarchUnitLogInvariants
+      (SourceForwardIndex steps.1 start) vQ label hkind)
+    (hmem : targetValue ∈
+      system.nonarchLogIterateRange start steps vQ label hkind) :
+    (system.directKummer (SourceForwardIndex steps.1 start) vQ label
+        ).packetKummer targetValue.1 ∈
+      (system.common.integral vQ label).carrier := by
+  obtain ⟨sourceValue, related⟩ := hmem
+  exact system.nonarch_logKummer_contained start steps vQ label hkind
+    sourceValue targetValue related
 
 /-- The Ind3 infinite-place source region is the packet's constructed `pi`-ball. -/
 theorem logShellRegion_eq_piBall
@@ -17992,10 +18300,10 @@ end VerticalFamilyConstruction
 
 /--
 The still irreducible Proposition 3.5(ii)(a)-(b) input for a concrete vertical
-family.  At finite places the packet unit-log subgroup and its direct Kummer
-containment are constructed above from the summandwise compact unit groups and
-`p`-adic logarithms.  The remaining fields concern iterated log-link domains
-and the archimedean unit and radius-`pi` assertions; they are deliberately
+family.  At finite places only the adjacent partial correspondences on actual
+Galois-fixed summand units remain as source input.  Their tensor-product graphs,
+positive iterates, endpoint unit-log membership, and Kummer containment are
+constructed in Lean.  The archimedean unit and radius-`pi` assertions remain
 separated from the additive packet Kummer maps, integral regions, and measures.
 -/
 structure VerticalUpperSemiData
@@ -18008,31 +18316,16 @@ structure VerticalUpperSemiData
     ∀ m rationalPlace label
       (_hkind : rationalPlace.kind = .archimedean),
       AddSubgroup (family.sourcePacket m rationalPlace label).carrier
-  nonarchLogDomain :
-    ∀ (m : ℤ) (steps : ℕ+) (rationalPlace : SourceRationalPlace)
-      (label : IUTIIAbsoluteThetaLabel.{u} theta.l),
-      Set (family.sourcePacket (m - (steps.1 : ℤ)) rationalPlace label).carrier
-  nonarchLogDomain_mem_units :
-    ∀ m steps rationalPlace label
-      (hkind : rationalPlace.kind = .nonarchimedean) value,
-      value ∈ nonarchLogDomain m steps rationalPlace label ->
-        value ∈
-          (lattice.siteNonarchimedeanUnitLogData algorithm n
-            (m - (steps.1 : ℤ)) rationalPlace label
-            ((family.site (m - (steps.1 : ℤ))).topology rationalPlace label)
-            hkind).packetUnitLogSubgroup
-  nonarchLogIterate :
-    ∀ m steps rationalPlace label,
-      {value // value ∈ nonarchLogDomain m steps rationalPlace label} ->
-        (family.sourcePacket m rationalPlace label).carrier
-  nonarch_logKummer_contained :
-    ∀ m steps rationalPlace label,
-      rationalPlace.kind = .nonarchimedean ->
-        ∀ value,
-          (family.packetKummer m rationalPlace label).packetKummer
-              (nonarchLogIterate m steps rationalPlace label value) ∈
-            ((family.common.integral rationalPlace label).construction
-              |>.fullRegion).carrier
+  nonarchLogLinkStep :
+    ∀ (m : ℤ) (rationalPlace : SourceRationalPlace)
+      (label : IUTIIAbsoluteThetaLabel.{u} theta.l)
+      (hkind : rationalPlace.kind = .nonarchimedean),
+      SourceNonarchimedeanPacketLogLinkStep
+        (lattice.siteNonarchimedeanUnitLogData algorithm n m rationalPlace
+          label ((family.site m).topology rationalPlace label) hkind)
+        (lattice.siteNonarchimedeanUnitLogData algorithm n (m + 1)
+          rationalPlace label
+          ((family.site (m + 1)).topology rationalPlace label) hkind)
   arch_direct_units_contained :
     ∀ m rationalPlace label
       (hkind : rationalPlace.kind = .archimedean),
@@ -18081,8 +18374,9 @@ namespace VerticalFamilyConstruction
 
 /--
 Construct the Ind3 system from the lattice family and exactly the remaining
-unit/log-link obligations.  Direct Kummer maps, integral images, and normalized
-log-volume compatibility are not fields of `VerticalUpperSemiData`.
+one-step local-unit correspondences and archimedean obligations.  Recursive
+finite iterates, direct Kummer maps, integral images, and normalized log-volume
+compatibility are not fields of `VerticalUpperSemiData`.
 -/
 noncomputable def toTheorem311Ind3System
     [SourceSelectedPlaceFiberFiniteness theta]
@@ -18109,9 +18403,8 @@ noncomputable def toTheorem311Ind3System
       ((family.site m).topology rationalPlace label) hkind
       ).packetUnitLogSubgroup
   archUnitInvariants := upperSemi.archUnitInvariants
-  nonarchLogDomain := upperSemi.nonarchLogDomain
-  nonarchLogDomain_mem_units := upperSemi.nonarchLogDomain_mem_units
-  nonarchLogIterate := upperSemi.nonarchLogIterate
+  nonarchLogLinkStep m rationalPlace label hkind :=
+    (upperSemi.nonarchLogLinkStep m rationalPlace label hkind).Related
   nonarch_direct_contained m rationalPlace label hkind value hvalue := by
     let siteData :=
       lattice.siteNonarchimedeanUnitLogData algorithm n m rationalPlace label
@@ -18140,7 +18433,6 @@ noncomputable def toTheorem311Ind3System
       (family.common.integral rationalPlace label).construction hkind
     rw [(family.common.integral rationalPlace label).nonarchimedean_shells hkind]
     exact commonData.packetUnitLogSubgroup_le_packetLattice himage
-  nonarch_logKummer_contained := upperSemi.nonarch_logKummer_contained
   arch_direct_units_contained := upperSemi.arch_direct_units_contained
   arch_direct_piBall_contained := upperSemi.arch_direct_piBall_contained
   archLogDomain := upperSemi.archLogDomain
