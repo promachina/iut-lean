@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: IUT Lean formalization contributors
 -/
 import Iut.Foundations.SourceVerticalLogLink
+import Iut.Foundations.SourceTheorem311Horizontal
 
 /-!
 # Source assembly for IUT III, Theorem 3.11
@@ -13,8 +14,8 @@ This module assembles the source-faithful constructions of
 construct the upstream paper objects by choice: the absolute LGP Gaussian
 log-theta lattice, the mono-analytic log-shell algorithm, the local integral
 and finite-stage data, the full local log-links, the multiradial
-functor, the labeled Kummer maps, and the horizontal compatibility squares
-remain explicit inputs.
+functor and the labeled Kummer maps remain explicit inputs.  Horizontal
+compatibility is assembled separately from two adjacent column boundaries.
 
 Once those inputs are supplied, the local packets, procession, Ind1 and Ind2
 actions, generated quotient, vertical packet Kummer maps, Ind3 iterates and
@@ -88,8 +89,6 @@ structure SourceTheorem311ColumnBoundary
         (fun site =>
           (verticalFamily.packetKummer site
             (SourceSelectedBadPlace.rationalPlace place) label).packetKummer)
-  horizontalCompatibility :
-    SourceTheorem311HorizontalCompatibilitySystem models
 
 namespace SourceTheorem311ColumnBoundary
 
@@ -245,42 +244,162 @@ theorem badPrime_logarithm_eq
   (boundary.badPrimeLogKummer place label).logarithm_eq_of_admissibleAcrossLog
     site first second related
 
-/-- The first prime-strip horizontal Kummer square commutes. -/
-theorem primeStripClauseA_commutes
-    (boundary : SourceTheorem311ColumnBoundary models) :
-    boundary.horizontalCompatibility.primeStripClauseA.verticalKummer.hom.left ≫
-        boundary.horizontalCompatibility.primeStripClauseA.targetHorizontal.hom =
-      boundary.horizontalCompatibility.primeStripClauseA.sourceHorizontal.hom ≫
-        boundary.horizontalCompatibility.primeStripClauseA.verticalKummer.hom.right :=
-  boundary.horizontalCompatibility.primeStripClauseA.commutes
-
-/-- The environment/prime-strip horizontal Kummer square commutes. -/
-theorem environmentPrimeStripClauseB_commutes
-    (boundary : SourceTheorem311ColumnBoundary models) :
-    boundary.horizontalCompatibility.environmentPrimeStripClauseB.verticalKummer.hom.left ≫
-        boundary.horizontalCompatibility.environmentPrimeStripClauseB.targetHorizontal.hom =
-      boundary.horizontalCompatibility.environmentPrimeStripClauseB.sourceHorizontal.hom ≫
-        boundary.horizontalCompatibility.environmentPrimeStripClauseB.verticalKummer.hom.right :=
-  boundary.horizontalCompatibility.environmentPrimeStripClauseB.commutes
-
-/-- The mono-theta projective-system square of clause (iii)(c) commutes. -/
-theorem monoThetaClauseC_commutes
-    (boundary : SourceTheorem311ColumnBoundary models) :
-    boundary.horizontalCompatibility.monoThetaClauseC.leftKummer.groupDiagramIso.hom ≫
-        boundary.horizontalCompatibility.monoThetaClauseC.lowerHorizontal.groupDiagramIso.hom =
-      boundary.horizontalCompatibility.monoThetaClauseC.upperHorizontal.groupDiagramIso.hom ≫
-        boundary.horizontalCompatibility.monoThetaClauseC.rightKummer.groupDiagramIso.hom :=
-  boundary.horizontalCompatibility.monoThetaClauseC.commutes
-
-/-- The profinite kappa-solvable horizontal Kummer square commutes. -/
-theorem kappaClauseD_commutes
-    (boundary : SourceTheorem311ColumnBoundary models) :
-    boundary.horizontalCompatibility.kappaClauseD.verticalKummer.hom.left ≫
-        boundary.horizontalCompatibility.kappaClauseD.targetHorizontal.hom =
-      boundary.horizontalCompatibility.kappaClauseD.sourceHorizontal.hom ≫
-        boundary.horizontalCompatibility.kappaClauseD.verticalKummer.hom.right :=
-  boundary.horizontalCompatibility.kappaClauseD.commutes
-
 end SourceTheorem311ColumnBoundary
+
+/--
+The source boundary for Theorem 3.11(iii) across two adjacent columns.
+
+Unlike `SourceTheorem311ColumnBoundary`, this object owns both columns.  The
+same-lattice and successor equalities ensure that its four indexed families
+really compare `(n,m)` with `(n+1,m)`.  The final two equations tie the
+horizontal `kappa` squares to the vertical labeled Kummer maps already used
+by Theorem 3.11(ii).
+-/
+structure SourceTheorem311HorizontalCorridorBoundary
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    (models : IUTIThetaHodgeTheaterModels theta)
+    [SourceSelectedPlaceFiberFiniteness theta]
+    [SourceSelectedBadPlaceFiniteness theta] where
+  left : SourceTheorem311ColumnBoundary models
+  right : SourceTheorem311ColumnBoundary models
+  sameLattice : right.lattice = left.lattice
+  adjacentColumns : right.column = left.column + 1
+  environmentPrimeStrips :
+    SourceTheorem311EnvironmentPrimeStripFamily left.lattice
+  monoThetaSystems :
+    SourceTheorem311MonoThetaProjectiveSystemFamily
+      (SourceSelectedBadPlace theta)
+  primeStripClauseA :
+    ∀ site,
+      SourceTheorem311TrianglePrimeStripSquare
+        left.lattice left.column site
+  monoThetaClauseC :
+    ∀ (site : ℤ) (place : SourceSelectedBadPlace theta),
+      SourceTheorem311MonoThetaProjectiveSystemSquare
+        monoThetaSystems left.column site place
+  siteKappaClauseD :
+    ∀ (site : ℤ) (label : IUTIIAbsoluteThetaLabel.{u} theta.l),
+      SourceTheorem311LabeledHorizontalKummerSquare
+        (left.siteLabeled site) (right.siteLabeled site) label
+  commonKappaClauseD :
+    ∀ label : IUTIIAbsoluteThetaLabel.{u} theta.l,
+      SourceTheorem311LabeledHorizontalKummerSquare
+        left.presentationConstruction.labeled
+        right.presentationConstruction.labeled label
+  siteCommonKappa_compatible :
+    ∀ (site : ℤ) (label : IUTIIAbsoluteThetaLabel.{u} theta.l),
+      ((left.labeledKummer site).kappaSolKummer label).hom ≫
+          (commonKappaClauseD label).kappaSolHorizontal.hom =
+        (siteKappaClauseD site label).kappaSolHorizontal.hom ≫
+          ((right.labeledKummer site).kappaSolKummer label).hom
+  siteCommonMInfinity_compatible :
+    ∀ (site : ℤ) (label : IUTIIAbsoluteThetaLabel.{u} theta.l),
+      ((left.labeledKummer site).mInfinityKummer label).hom ≫
+          (commonKappaClauseD label).mInfinityHorizontal.hom =
+        (siteKappaClauseD site label).mInfinityHorizontal.hom ≫
+          ((right.labeledKummer site).mInfinityKummer label).hom
+
+namespace SourceTheorem311HorizontalCorridorBoundary
+
+variable
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    [SourceSelectedPlaceFiberFiniteness theta]
+    [SourceSelectedBadPlaceFiniteness theta]
+
+/-- The actual horizontal theta link whose realizations occur in the corridor. -/
+def horizontalThetaLink
+    (boundary : SourceTheorem311HorizontalCorridorBoundary models)
+    (site : ℤ) :
+    SourceThetaLinkCore
+      (boundary.left.lattice.theater boundary.left.column site)
+      (boundary.left.lattice.theater (boundary.left.column + 1) site) :=
+  boundary.left.lattice.horizontalThetaLink boundary.left.column site
+
+/-- The right column theater is propositionally the successor endpoint. -/
+theorem right_theater_eq
+    (boundary : SourceTheorem311HorizontalCorridorBoundary models)
+    (site : ℤ) :
+    boundary.right.lattice.theater boundary.right.column site =
+      boundary.left.lattice.theater (boundary.left.column + 1) site := by
+  rw [boundary.sameLattice, boundary.adjacentColumns]
+
+/-- Clause (iii)(b), derived from clause (a) and the natural comparisons. -/
+def environmentPrimeStripClauseB
+    (boundary : SourceTheorem311HorizontalCorridorBoundary models)
+    (site : ℤ) :
+    SourceTheorem311EnvironmentPrimeStripSquare
+      boundary.environmentPrimeStrips boundary.left.column site :=
+  SourceTheorem311EnvironmentPrimeStripSquare.ofTriangle
+    boundary.environmentPrimeStrips boundary.left.column site
+    (boundary.primeStripClauseA site)
+
+/-- Clause (iii)(a) commutes at every vertical lattice site. -/
+theorem primeStripClauseA_commutes
+    (boundary : SourceTheorem311HorizontalCorridorBoundary models)
+    (site : ℤ) :
+    (boundary.primeStripClauseA site).leftKummer.hom ≫
+        (boundary.primeStripClauseA site).lowerHorizontal.hom =
+      (boundary.primeStripClauseA site).upperHorizontal.hom ≫
+        (boundary.primeStripClauseA site).rightKummer.hom :=
+  (boundary.primeStripClauseA site).commutes
+
+/-- Clause (iii)(b) commutes at every vertical lattice site. -/
+theorem environmentPrimeStripClauseB_commutes
+    (boundary : SourceTheorem311HorizontalCorridorBoundary models)
+    (site : ℤ) :
+    (boundary.environmentPrimeStripClauseB site).leftKummer.hom ≫
+        (boundary.environmentPrimeStripClauseB site).lowerHorizontal.hom =
+      (boundary.environmentPrimeStripClauseB site).upperHorizontal.hom ≫
+        (boundary.environmentPrimeStripClauseB site).rightKummer.hom :=
+  (boundary.environmentPrimeStripClauseB site).commutes
+
+/-- Clause (iii)(c) commutes at every site and selected bad place. -/
+theorem monoThetaClauseC_commutes
+    (boundary : SourceTheorem311HorizontalCorridorBoundary models)
+    (site : ℤ) (place : SourceSelectedBadPlace theta) :
+    (boundary.monoThetaClauseC site place).leftKummer.groupDiagramIso.hom ≫
+        (boundary.monoThetaClauseC site place).lowerHorizontal.groupDiagramIso.hom =
+      (boundary.monoThetaClauseC site place).upperHorizontal.groupDiagramIso.hom ≫
+        (boundary.monoThetaClauseC site place).rightKummer.groupDiagramIso.hom :=
+  (boundary.monoThetaClauseC site place).commutes
+
+/-- The site-level clause (iii)(d) square commutes for every absolute label. -/
+theorem siteKappaClauseD_commutes
+    (boundary : SourceTheorem311HorizontalCorridorBoundary models)
+    (site : ℤ) (label : IUTIIAbsoluteThetaLabel.{u} theta.l) :
+    (boundary.siteKappaClauseD site label).kappaSolHorizontal.hom ≫
+        (boundary.right.siteLabeled site).kappaToMInfinity label =
+      (boundary.left.siteLabeled site).kappaToMInfinity label ≫
+        (boundary.siteKappaClauseD site label).mInfinityHorizontal.hom :=
+  (boundary.siteKappaClauseD site label).kappaMInfinity_compatible
+
+/-- The common-column clause (iii)(d) square commutes for every label. -/
+theorem commonKappaClauseD_commutes
+    (boundary : SourceTheorem311HorizontalCorridorBoundary models)
+    (label : IUTIIAbsoluteThetaLabel.{u} theta.l) :
+    (boundary.commonKappaClauseD label).kappaSolHorizontal.hom ≫
+        boundary.right.presentationConstruction.labeled.kappaToMInfinity label =
+      boundary.left.presentationConstruction.labeled.kappaToMInfinity label ≫
+        (boundary.commonKappaClauseD label).mInfinityHorizontal.hom :=
+  (boundary.commonKappaClauseD label).kappaMInfinity_compatible
+
+end SourceTheorem311HorizontalCorridorBoundary
 
 end Iut

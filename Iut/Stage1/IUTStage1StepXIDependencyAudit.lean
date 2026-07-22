@@ -388,9 +388,9 @@ def canonicalM1M3RemainingAssumptions :
       status := .sourceObligation,
       paperSource := "IUT III, Theorem 3.11(iii)(a-d)",
       consumerDeclaration :=
-        "SourceTheorem311ColumnBoundary.horizontalCompatibility",
+        "SourceTheorem311HorizontalCorridorBoundary",
       note :=
-        "Construct the two prime-strip squares, mono-theta projective-system square, kappa square, and their evaluation equivariance from the horizontal theta link." },
+        "For two adjacent column boundaries on the same lattice, construct both prime-strip squares for every vertical site, the mono-theta projective-system square for every site and selected bad place, and the site/common kappa squares for every absolute label. Prove coherence with the vertical labeled Kummer maps and evaluation equivariance from the horizontal theta links." },
     { name := "permutationBiCoricFunctoriality",
       status := .sourceObligation,
       paperSource := "IUT III, Theorem 3.11(i) final functoriality clause",
@@ -400,7 +400,7 @@ def canonicalM1M3RemainingAssumptions :
     { name := "IPL_SHE_APT_algorithms",
       status := .sourceObligation,
       paperSource := "IUT III, Remark 3.11.1(iii-iv)",
-      consumerDeclaration := "SourceTheorem311HorizontalCompatibilitySystem",
+      consumerDeclaration := "SourceTheorem311HorizontalCorridorBoundary",
       note :=
         "Formalize the IPL, simultaneous holomorphic envelope, and alien-prime transport algorithms and prove their compatibility with the assembled source boundary." } ]
 

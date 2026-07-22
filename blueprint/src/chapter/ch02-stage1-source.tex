@@ -639,9 +639,12 @@
   \lean{Iut.SourceTheorem311MultiradialPresentation}
   \lean{Iut.SourceTheorem311MultiradialAlgorithm.Quotient}
   \lean{Iut.SourceTheorem311PermutationBiCoricCompatibility.quotientEquiv}
-  \lean{Iut.SourceHorizontalKummerCompatibility}
-  \lean{Iut.SourceMonoThetaHorizontalKummerCompatibility.toArrowCompatibility}
-  \lean{Iut.SourceTheorem311HorizontalCompatibilitySystem}
+  \lean{Iut.SourceIndexedHorizontalKummerSquare}
+  \lean{Iut.SourceTheorem311TrianglePrimeStripSquare}
+  \lean{Iut.SourceTheorem311EnvironmentPrimeStripFamily}
+  \lean{Iut.SourceTheorem311MonoThetaProjectiveSystemFamily}
+  \lean{Iut.SourceTheorem311LabeledHorizontalKummerSquare}
+  \lean{Iut.SourceTheorem311HorizontalCorridorBoundary}
   \lean{Iut.SourceTheorem311HorizontalEvaluationCompatibility.descend}
   \leanok
   The source layer now represents a local packet by the genuine dependent
@@ -727,10 +730,18 @@
   the current and next domains together with an explicit root-of-unity quotient
   in the next domain; it is not an arbitrary relation field.  Admissible inputs
   have the same additive log image.
-  Horizontal compatibility uses distinct arrow-category squares for the two
-  prime-strip clauses and the profinite clause, plus a natural-isomorphism
-  square of actual mono-theta projective systems with levelwise environment
-  realizations.  These squares transport the full automorphism groups.
+  Horizontal compatibility is no longer an unindexed field of a single
+  column.  Its boundary contains two column assemblies, proves that they use
+  the same lattice at indices \(n\) and \(n+1\), and fixes all four corners of
+  every square.  The triangle and environment prime-strip squares range over
+  every \(m\); the environment family carries its natural comparisons with
+  the triangle strips, and its square is derived by conjugating the triangle
+  square with those comparisons.  The mono-theta square ranges over every \(m\) and bad
+  place and uses actual projective systems with levelwise environment
+  realizations.  The \(\kappa\)-sol/\(M_\infty^\kappa\) squares range over every
+  \(m\) and absolute label and commute with the common square through the two
+  vertical labeled Kummer maps.  These fixed-corner squares transport the
+  full automorphism groups.
   Compatible evaluations descend
   to the equivalence relation generated jointly by \(\Ind{1}\)--\(\Ind{3}\).
 
@@ -742,8 +753,8 @@
   open, as do the general RC-holomorphic local-morphism classification and
   rigidity for arbitrary purely local group-germ automorphisms,
   construction of the adjacent finite and infinite unit correspondences from
-  the Gaussian log-theta lattice, and the four horizontal compatibility
-  constructors.
+  the Gaussian log-theta lattice, and construction of the indexed horizontal
+  isomorphisms and their equivariance from the actual theta links.
 \end{definition}
 
 \begin{definition}[Source full vertical log-links]
@@ -775,7 +786,7 @@
   poly-isomorphism data remains a source obligation.
 \end{definition}
 
-\begin{definition}[Assembled source Theorem 3.11 column boundary]
+\begin{definition}[Assembled source Theorem 3.11 column and corridor boundaries]
   \label{def:source-theorem-311-column-boundary}
   \uses{def:source-theorem-311-interfaces,def:source-full-vertical-log-links}
   \lean{Iut.SourceTheorem311ColumnBoundary}
@@ -785,19 +796,22 @@
   \lean{Iut.SourceTheorem311ColumnBoundary.ind3System}
   \lean{Iut.SourceTheorem311ColumnBoundary.verticalLocalKummer}
   \lean{Iut.SourceTheorem311ColumnBoundary.badPrime_logarithm_eq}
-  \lean{Iut.SourceTheorem311ColumnBoundary.kappaClauseD_commutes}
+  \lean{Iut.SourceTheorem311HorizontalCorridorBoundary}
+  \lean{Iut.SourceTheorem311HorizontalCorridorBoundary.siteKappaClauseD_commutes}
   \leanok
   At one fixed horizontal column, the source assembly forces the
   multiradial presentation and the vertical family to use the same common
   local construction.  Its inputs are the absolute-label Gaussian
   log-theta lattice, mono-analytic log-shell algorithm, finite-stage integral
-  data, full local log-links, splitting and labeled Kummer data,
-  multiradial functor, and four horizontal squares.  From these Lean derives
+  data, full local log-links, splitting and labeled Kummer data, and the
+  multiradial functor.  From these Lean derives
   the adjacent finite and archimedean packet relations,
   the actual procession action, independent summand action, generated
   \(\Ind{1}/\Ind{2}\) quotient, vertical packet Kummer maps, \(\Ind{3}\)
-  system, vertical log-volume independence, roots-only bad-prime logarithm
-  equality, and the four commutative horizontal squares.
+  system, vertical log-volume independence, and roots-only bad-prime logarithm
+  equality.  A separate corridor joins two such boundaries on the same
+  lattice at adjacent columns and carries the universally indexed horizontal
+  squares and their coherence with vertical Kummer.
 
   This assembly is not an existence proof for its upstream inputs.  Its role
   is to replace the unrelated finite adapters by one coherent source boundary
