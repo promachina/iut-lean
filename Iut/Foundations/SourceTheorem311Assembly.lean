@@ -6,6 +6,7 @@ Authors: IUT Lean formalization contributors
 import Iut.Foundations.SourceVerticalLogLink
 import Iut.Foundations.SourceTheorem311Horizontal
 import Iut.Foundations.SourceDefinition52LocalReconstruction
+import Iut.Foundations.SourceDefinition52LocalContinuity
 
 /-!
 # Source assembly for IUT III, Theorem 3.11

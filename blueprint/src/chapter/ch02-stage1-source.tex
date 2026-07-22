@@ -108,6 +108,9 @@
   \lean{Iut.SourceFinitePlaceReconstruction.exists_stage_representation}
   \lean{Iut.SourceFinitePlaceReconstruction.indIntegralMonoidEquivSourceMLF}
   \lean{Iut.SourceFinitePlaceReconstruction.indIntegralMonoidEquivSourceMLF_galois}
+  \lean{Iut.SourceFinitePlaceReconstruction.carrierMulEquiv_galoisContinuousLinearMap}
+  \lean{Iut.SourceFinitePlaceReconstruction.continuous_indGaloisMulAut}
+  \lean{Iut.SourceFinitePlaceReconstruction.indGaloisContinuousMulEquiv_mul}
   \lean{Iut.SourceFMonoAnalyticPrimeStrip}
   \lean{Iut.SourceFGloballyRealifiedMonoAnalyticPrimeStrip}
   \lean{Iut.sourceFPrimeStripToD}
@@ -140,8 +143,14 @@
   this colimit to its nonzero integral elements gives continuous finite-stage
   inclusions that exhaust the carrier, a multiplicative equivalence with
   \(O_{\overline{K_v}}^\triangleright\), and the literal compatible absolute
-  Galois action.  Continuity of this action for the ind-topology and its
-  reconstruction from the abstract \(D_v\) group remain open.
+  Galois action.  Normality of each finite stage now gives a continuous
+  restriction of every Galois automorphism; the colimit universal property
+  produces the corresponding continuous ind-automorphism, and Lean proves
+  that these automorphisms satisfy the identity and composition laws and
+  restrict continuously in both directions to
+  \(O_{\overline{K_v}}^\triangleright\).  Joint continuity of the profinite
+  group action, and reconstruction from the abstract \(D_v\) group, remain
+  open.
   A globally realified strip additionally carries the global Frobenioid,
   its prime/place bijection, all local characteristic and realified monoids,
   and commuting currency-exchange isomorphisms \(\rho_v\), compared

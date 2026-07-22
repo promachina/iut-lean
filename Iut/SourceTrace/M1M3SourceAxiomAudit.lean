@@ -49,6 +49,9 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceFinitePlaceReconstruction.exists_stage_representation
 #print axioms Iut.SourceFinitePlaceReconstruction.indIntegralMonoidEquivSourceMLF
 #print axioms Iut.SourceFinitePlaceReconstruction.indIntegralMonoidEquivSourceMLF_galois
+#print axioms Iut.SourceFinitePlaceReconstruction.carrierMulEquiv_galoisContinuousLinearMap
+#print axioms Iut.SourceFinitePlaceReconstruction.continuous_indGaloisMulAut
+#print axioms Iut.SourceFinitePlaceReconstruction.indGaloisContinuousMulEquiv_mul
 #print axioms Iut.SourceTopologicalGroupPseudoMonoidActionPair.Iso.trans_hom
 #print axioms Iut.SourceKappaLocalizationDiagram.inclusion_injective
 #print axioms Iut.PuncturedEllipticCurveScalarExtension.curve_eq_baseChange
