@@ -5,6 +5,7 @@ Authors: IUT Lean formalization contributors
 -/
 import Iut.Foundations.SourceHodgeArakelovEvaluation
 import Iut.Foundations.SourceSplitKummerFrobenioid
+import Iut.Foundations.SourceArchimedeanKummerSystem
 import Iut.Foundations.SourceTheorem311
 
 open Iut
@@ -46,6 +47,16 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceMLFGaloisTMPair.badCharacteristicAction_mk
 #print axioms Iut.SourceMLFGaloisTMPair.badTimesMuUnitsEquiv_equivariant
 #print axioms Iut.SourceMLFGaloisTMPair.goodTimesMuUnitsEquiv_equivariant
+#print axioms Iut.SourceArchimedeanKummerSystem.rootsOfUnity_isClosed
+#print axioms Iut.SourceArchimedeanKummerSystem.continuousQuotientMap_isOpenQuotientMap
+#print axioms Iut.SourceArchimedeanKummerSystem.rootsOfUnity_le_of_dvd
+#print axioms Iut.SourceArchimedeanKummerSystem.transition_ker
+#print axioms Iut.SourceArchimedeanKummerSystem.continuousTransition_comp
+#print axioms Iut.SourceArchimedeanKummerSystem.orientedQuotientMap_ker
+#print axioms Iut.SourceArchimedeanKummerSystem.continuousOrientedQuotientMap_isOpenQuotientMap
+#print axioms Iut.SourceArchimedeanKummerSystem.orientationAutomorphism_ne
+#print axioms Iut.SourceArchimedeanKummerSystem.unitQuotientDiagram
+#print axioms Iut.SourceArchimedeanKummerSystem.restrictedOrientedQuotientNaturalTransformation
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.quotientUnit_exists
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootRealization.ofRootSystem

@@ -786,6 +786,24 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceMLFGaloisTMPair.goodTimesMuUnitsEquiv_equivariant"]
       .partialImplementation
       "At a bad finite place, O-perp is the actual join of the splitting image with mu_(2l), O-square is its exact multiplicative-congruence quotient by mu_(2l), and O^(square times-mu) is the literal product with O^(times-mu). At a good finite place the literal product uses the splitting image directly. Injectivity of unit-characteristic factorization proves that no new units survive in the characteristic factor, yielding explicit equivalences between all units of each product and O^(times-mu). Galois automorphisms preserve every mu_n; for a stable splitting image their actions are constructed on O-perp, descended through O-square, extended componentwise to both product monoids, and the unit equivalences are proved equivariant. Deriving splitting-image stability from Frobenioid evaluation, the model-Frobenioid reconstruction of Frobenioids I Theorem 5.2(ii), and attachment of the Kummer orbit remain open.",
+    clause "II.4.9(v)" .iutII "IUT II, Definition 4.9(v)"
+      ["SourceArchimedeanKummerSystem.UnitQuotient",
+        "SourceArchimedeanKummerSystem.rootsOfUnity_isClosed",
+        "SourceArchimedeanKummerSystem.continuousQuotientMap",
+        "SourceArchimedeanKummerSystem.continuousQuotientMap_isOpenQuotientMap",
+        "SourceArchimedeanKummerSystem.transition",
+        "SourceArchimedeanKummerSystem.transition_ker",
+        "SourceArchimedeanKummerSystem.continuousTransition",
+        "SourceArchimedeanKummerSystem.continuousTransition_comp",
+        "SourceArchimedeanKummerSystem.Orientation",
+        "SourceArchimedeanKummerSystem.orientationAutomorphism",
+        "SourceArchimedeanKummerSystem.orientedQuotientMap_ker",
+        "SourceArchimedeanKummerSystem.unitQuotientDiagram",
+        "SourceArchimedeanKummerSystem.MultiplicativelyCofinalSubset",
+        "SourceArchimedeanKummerSystem.restrictedUnitQuotientDiagram",
+        "SourceArchimedeanKummerSystem.restrictedOrientedQuotientNaturalTransformation"]
+      .partialImplementation
+      "The compact factor is the actual circle, mu_N is the exact closed kernel of the N-th power map, and every quotient carries its quotient topology. Divisibility induces continuous surjective transitions with explicit kernels and proved identity/composition laws, assembled into a topological-group functor. Every multiplicatively cofinal subset gives a restricted diagram, and the identity/inversion orientations give distinct compatible systems of open quotient maps with the same exact kernels. Constructing these circle identifications from the archimedean TM object, lifting the unit diagram to split Frobenioids, identifying colimits for distinct cofinal subsets, and proving the source classification of the unique nontrivial allowed automorphism remain open.",
     clause "II.4.9(vi-viii)" .iutII "IUT II, Definition 4.9(vi)-(viii)"
       ["ToyIUTIIQPilot", "ToyIUTIIThetaPilot"] .toyModel
       "Numerical q-orders and square weights do not define the realized Frobenioid pilot objects and prime strips.",
@@ -1372,8 +1390,8 @@ def clauseIdsWithStatus (status : ClauseStatus) : List String :=
   m1m3PaperLedger.filterMap fun entry =>
     if entry.status = status then some entry.id else none
 
-/-- The source-closure ledger contains 104 separately audited clauses. -/
-theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 104 :=
+/-- The source-closure ledger contains 105 separately audited clauses. -/
+theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 105 :=
   rfl
 
 /-- No source clause occurs twice in the direct-citation ledger. -/
@@ -1381,9 +1399,9 @@ theorem m1m3PaperLedger_ids_nodup :
     (m1m3PaperLedger.map PaperClause.id).Nodup := by
   decide
 
-/-- Seventy-nine clauses currently have a genuine but incomplete implementation. -/
+/-- Eighty clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 79 :=
+    (clauseIdsWithStatus .partialImplementation).length = 80 :=
   rfl
 
 /-- Five clauses currently point only to explicitly classified toy models. -/
