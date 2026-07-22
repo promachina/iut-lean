@@ -252,6 +252,39 @@ theorem isGroupLikeType :
     (preFrobenioid (Phi := Phi) (data := data)).IsGroupLikeType :=
   isGroupLike
 
+/-- The Hom-colimit birational category is connected over a connected base. -/
+theorem isConnected [IsConnected D] :
+    @IsConnected
+      (ColimitBirationalObject (Phi := Phi) (data := data))
+      (ColimitBirationalObject.category (Phi := Phi) (data := data)) := by
+  letI : IsConnected (BirationalObject (Phi := Phi) (data := data)) :=
+    BirationalObject.isConnected
+  exact isConnected_of_equivalent
+    (comparisonEquivalence (Phi := Phi) (data := data)).symm
+
+/-- Every Hom-colimit birational arrow is epic over a totally epimorphic base. -/
+theorem epi
+    (baseTotallyEpimorphic : ∀ {X Y : D} (f : X ⟶ Y), Epi f)
+    {source target : ColimitBirationalObject (Phi := Phi) (data := data)}
+    (arrow : source ⟶ target) : Epi arrow := by
+  let comparison := comparisonFunctor (Phi := Phi) (data := data)
+  haveI : Epi (comparison.map arrow) :=
+    BirationalObject.epi baseTotallyEpimorphic (comparison.map arrow)
+  exact comparison.epi_of_epi_map inferInstance
+
+/-- Proposition 4.4(ii)'s connected, totally epimorphic presentation data. -/
+def preFrobenioidPresentation [IsConnected D]
+    (baseTotallyEpimorphic : ∀ {X Y : D} (f : X ⟶ Y), Epi f) :
+    PreFrobenioidPresentation where
+  carrier := Cat.of (ColimitBirationalObject (Phi := Phi) (data := data))
+  baseCategory := Cat.of D
+  isFSM := IsFSM
+  preFrobenioid := preFrobenioid (Phi := Phi) (data := data)
+  carrierConnected := isConnected
+  baseConnected := (inferInstance : IsConnected D)
+  carrierTotallyEpimorphic := epi baseTotallyEpimorphic
+  baseTotallyEpimorphic := baseTotallyEpimorphic
+
 /-- Definition 4.5(i) model type for the canonical filtered-colimit target. -/
 theorem isModelTypeForColimitBirationalization :
     (Carrier.preFrobenioid Phi data).IsModelType

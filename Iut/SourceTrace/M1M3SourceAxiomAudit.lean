@@ -123,6 +123,8 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceModelFrobenioid.BirationalObject.inclusionFunctor_faithful
 #print axioms Iut.SourceModelFrobenioid.BirationalObject.inclusionFunctor_map_divisorClass
 #print axioms Iut.SourceModelFrobenioid.BirationalObject.inclusion_map_isIso_of_preStep
+#print axioms Iut.SourceModelFrobenioid.BirationalObject.isConnected
+#print axioms Iut.SourceModelFrobenioid.BirationalObject.epi
 #print axioms Iut.SourceModelFrobenioid.BirationalObject.rationalFunctionEquiv
 #print axioms Iut.SourceModelFrobenioid.BirationalObject.rationalFunctionEndomorphism_divisorClass
 #print axioms Iut.SourceModelFrobenioid.BirationalObject.isFrobeniusNormalizedType
@@ -140,6 +142,10 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.comparisonEquivalence
 #print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.isFrobeniusNormalizedType
 #print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.isGroupLikeType
+#print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.isConnected
+#print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.epi
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.preFrobenioidPresentation
 #print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalFunctionEquiv
 #print axioms
   Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.linearBaseIdentityEndomorphism_isIso

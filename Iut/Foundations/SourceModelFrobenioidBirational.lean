@@ -232,6 +232,51 @@ theorem inclusionFunctor_faithful :
     exact Algebra.GrothendieckAddGroup.of_injective representedEquality
   · exact rationalFunctionEquality
 
+/-- The concrete birational category is connected over a connected base. -/
+theorem isConnected [IsConnected D] :
+    @IsConnected (BirationalObject (Phi := Phi) (data := data))
+      (birationalCategory (Phi := Phi) (data := data)) := by
+  letI : Nonempty (BirationalObject (Phi := Phi) (data := data)) :=
+    ⟨⟨Carrier.zeroObject Phi data (Classical.arbitrary D)⟩⟩
+  apply IsConnected.of_constant_of_preserves_morphisms
+  intro alpha value preserves first second
+  letI : IsConnected (Carrier Phi data) := Carrier.isConnected Phi data
+  exact CategoryTheory.constant_of_preserves_morphisms
+    (fun object : Carrier Phi data ↦ value ⟨object⟩)
+    (fun source target arrow ↦ preserves
+      ((inclusionFunctor (Phi := Phi) (data := data)).map arrow))
+    first.underlying second.underlying
+
+/-- Every concrete birational arrow is epic over a totally epimorphic base. -/
+theorem epi
+    (baseTotallyEpimorphic : ∀ {X Y : D} (f : X ⟶ Y), Epi f)
+    {source target : BirationalObject (Phi := Phi) (data := data)}
+    (arrow : source ⟶ target) : Epi arrow := by
+  constructor
+  intro next first second equality
+  letI : Epi arrow.base := baseTotallyEpimorphic arrow.base
+  have degreeEquality :
+      first.frobeniusDegree = second.frobeniusDegree := by
+    have projected := congrArg BirationalHom.frobeniusDegree equality
+    change arrow.frobeniusDegree * first.frobeniusDegree =
+      arrow.frobeniusDegree * second.frobeniusDegree at projected
+    exact mul_left_cancel projected
+  have baseEquality : first.base = second.base := by
+    have projected := congrArg BirationalHom.base equality
+    change arrow.base ≫ first.base = arrow.base ≫ second.base at projected
+    exact (cancel_epi arrow.base).mp projected
+  have rationalFunctionEquality :
+      first.rationalFunction = second.rationalFunction := by
+    have projected := congrArg BirationalHom.rationalFunction equality
+    change data.rationalFunctions.pullback arrow.base first.rationalFunction +
+          first.frobeniusDegree.val • arrow.rationalFunction =
+        data.rationalFunctions.pullback arrow.base second.rationalFunction +
+          second.frobeniusDegree.val • arrow.rationalFunction at projected
+    rw [degreeEquality] at projected
+    apply data.rationalFunctions.pullback_injective arrow.base
+    exact add_right_cancel projected
+  exact BirationalHom.ext degreeEquality baseEquality rationalFunctionEquality
+
 /--
 Inclusion recovers the original effective divisor after groupification.
 -/
