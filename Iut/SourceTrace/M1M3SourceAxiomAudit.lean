@@ -42,6 +42,14 @@ visible to Lean's axiom reporter.
   Iut.SourceThetaInfiniteLocalCoreData.xDiagram_galois_range_eq_placeStabilizer
 #print axioms
   Iut.SourceThetaInfiniteLocalCoreData.cDiagram_galois_range_eq_placeStabilizer
+#print axioms
+  Iut.TypeOneCuspidalAtlasScalarExtension.toNonzeroCuspScalarExtension
+#print axioms
+  Iut.TypeOneCuspidalAtlasScalarExtension.toNonzeroCuspScalarExtension_origin
+#print axioms Iut.SourceInitialThetaCore.finiteLocalEpsilon_atlas_eq
+#print axioms Iut.SourceInitialThetaCore.infiniteLocalEpsilon_atlas_eq
+#print axioms Iut.SourceInitialThetaCore.finiteLocalEpsilon_signLabel
+#print axioms Iut.SourceInitialThetaCore.infiniteLocalEpsilon_signLabel
 #print axioms Iut.PuncturedEllipticCurve.galoisActionOnPoint_mul
 #print axioms Iut.PuncturedEllipticCurve.galoisActionOnPoint_stabilizer_isOpen
 #print axioms Iut.PuncturedEllipticCurve.galoisActionOnLTorsionLinearEquiv_mul

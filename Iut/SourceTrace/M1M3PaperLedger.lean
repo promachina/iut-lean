@@ -506,10 +506,13 @@ def m1m3PaperLedger : List PaperClause :=
         "ArrowedTypeOneStackRealization",
         "TypeOneNonzeroCuspScalarExtension",
         "TypeOneCuspidalAtlasScalarExtension",
+        "TypeOneCuspidalAtlasScalarExtension.toNonzeroCuspScalarExtension",
         "TypeOneNonzeroCuspScalarExtension.signLabel_eq",
+        "SourceInitialThetaCore.finiteLocalEpsilon",
+        "SourceInitialThetaCore.infiniteLocalEpsilon",
         "SourceInitialThetaCore.globalEpsilon_canonicalAtBad"]
       .partialImplementation
-      "The full Q-indexed X-cusp and sign-orbit C-cusp atlas is represented by rational inertia/decomposition exact sequences, with sheet conjugacy and inversion action. The Definition 1.1 dependency is explicit: discard all nonselected inertia, form Delta-dagger and its plus/minus splitting, derive 2-epsilon and prove it differs from both selected sheets, construct continuous J_X/J_C exact quotients, pin the section to the doubled-cusp decomposition group, prove its image normal, and define the arrowed stacks by the preimages of Im(sigma) and Im(sigma) x Gal(X/C). Complete atlases localize at all selected places and arrowed covers at good finite places. Finite-etale/compactified construction of these stack and boundary realizations from the source curve remains open; thus this clause is not yet source-faithful.",
+      "The full Q-indexed X-cusp and sign-orbit C-cusp atlas is represented by rational inertia/decomposition exact sequences, with sheet conjugacy and inversion action. At every selected finite and infinite place, local epsilon is constructed as the cusp at the global Q-label in the localized complete atlas; its X/C decomposition diagrams and sign-label equality are derived, so no separate local cusp, atlas equality, or sheet-representative synchronization is accepted. The Definition 1.1 dependency is explicit: discard all nonselected inertia, form Delta-dagger and its plus/minus splitting, derive 2-epsilon and prove it differs from both selected sheets, construct continuous J_X/J_C exact quotients, pin the section to the doubled-cusp decomposition group, prove its image normal, and define the arrowed stacks by the preimages of Im(sigma) and Im(sigma) x Gal(X/C). Complete atlases localize at all selected places and arrowed covers at good finite places. Finite-etale/compactified construction of these stack and boundary realizations from the source curve remains open; thus this clause is not yet source-faithful.",
     clause "I.3.6(a)" .iutI "IUT I, Definition 3.6(a)"
       ["ToyThetaFrobenioidObject", "ToyIUTIHodgeTheaterRealization",
         "PreFrobenioid", "IUTINonarchimedeanLocalModel",

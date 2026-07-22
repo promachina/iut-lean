@@ -2863,10 +2863,10 @@ end ArrowedTypeOneStackRealization
 Localization of a nonzero cusp along a scalar extension of type-`(1,l-tors)`
 covers.
 
-The local sheet representative is the image of the global representative in
-the local-to-global elliptic quotient, and both cuspidal decomposition exact
-sequences commute with the corresponding cover diagrams.  Consequently the
-local sign label is derived below to equal the global sign label.
+The selected local cusp has the same `Q`-label as the global cusp, and both
+cuspidal decomposition exact sequences commute with the corresponding cover
+diagrams. A canonical constructor from the complete localized atlas is given
+below; it removes any need to synchronize arbitrary sheet representatives.
 -/
 structure TypeOneNonzeroCuspScalarExtension
     (l : PrimeGeFive)
@@ -2893,10 +2893,8 @@ structure TypeOneNonzeroCuspScalarExtension
     TypeOneNonzeroCusp l
       coverExtension.localGroupData
       coverExtension.localStack
-  sheetRepresentative_compatible :
-    coverExtension.ellipticEmbedding.hom
-        localCusp.sheetRepresentative =
-      globalCusp.sheetRepresentative
+  origin_compatible :
+    localCusp.origin = globalCusp.origin
   xDecompositionDiagram :
     ProfiniteFundamentalExactSequenceEmbedding
       localCusp.xDecomposition.inertia
@@ -2963,27 +2961,8 @@ variable
 
 theorem origin_eq :
     extension.localCusp.origin =
-      globalCusp.origin := by
-  apply Subtype.ext
-  calc
-    (extension.localCusp.origin :
-        EtaleTheta.LTorsionLabel l.value) =
-        coverExtension.localGroupData.lagrangian.quotient.quotient
-          extension.localCusp.sheetRepresentative :=
-      extension.localCusp.sheetRepresentative_label.symm
-    _ =
-        globalGroupData.lagrangian.quotient.quotient
-          (coverExtension.ellipticEmbedding.hom
-            extension.localCusp.sheetRepresentative) :=
-      (coverExtension.lagrangianQuotient_compatible
-        extension.localCusp.sheetRepresentative).symm
-    _ =
-        globalGroupData.lagrangian.quotient.quotient
-          globalCusp.sheetRepresentative := by
-      rw [extension.sheetRepresentative_compatible]
-    _ = (globalCusp.origin :
-        EtaleTheta.LTorsionLabel l.value) :=
-      globalCusp.sheetRepresentative_label
+      globalCusp.origin :=
+  extension.origin_compatible
 
 theorem signLabel_eq :
     extension.localCusp.signLabel =
@@ -3068,11 +3047,6 @@ structure TypeOneCuspidalAtlasScalarExtension
     TypeOneCuspidalAtlas l
       coverExtension.localGroupData
       coverExtension.localStack
-  sheetRepresentative_compatible :
-    ∀ q,
-      coverExtension.ellipticEmbedding.hom
-          (localAtlas.sheetRepresentative q) =
-        globalAtlas.sheetRepresentative q
   zeroX :
     CuspidalDecompositionScalarExtension K L
       coverExtension.localStack.xFundamentalGroups
@@ -3123,6 +3097,80 @@ structure TypeOneCuspidalAtlasScalarExtension
           (xCusps q⁻¹).diagram.arithmetic.hom =
         (xCusps q).diagram.arithmetic.hom ≫
           (globalAtlas.signCuspIsomorphism q).arithmetic.hom
+
+namespace TypeOneCuspidalAtlasScalarExtension
+
+variable
+    {l : PrimeGeFive}
+    {K L : Type u} [Field K] [Field L] [Algebra K L]
+    {globalCurve : PuncturedEllipticCurve K}
+    {localCurve : PuncturedEllipticCurve L}
+    {globalOrbicurves :
+      SignQuotientOrbicurveData K globalCurve}
+    {localOrbicurves :
+      SignQuotientOrbicurveData L localCurve}
+    {baseChange :
+      SignQuotientOrbicurveBaseChange K L
+        globalOrbicurves localOrbicurves}
+    {globalGroupData :
+      GlobalLTorsionCoverInput l globalOrbicurves}
+    {globalStack :
+      TypeOneLTorsionStackRealization l globalGroupData}
+    {coverExtension :
+      TypeOneLTorsionStackScalarExtension l K L
+        baseChange globalGroupData globalStack}
+    {globalCusp :
+      TypeOneNonzeroCusp l globalGroupData globalStack}
+    (extension :
+      TypeOneCuspidalAtlasScalarExtension l K L
+        coverExtension globalCusp.atlas)
+
+/-- The local selected cusp at the same `Q`-label as the global cusp. -/
+def localCusp :
+    TypeOneNonzeroCusp l
+      coverExtension.localGroupData
+      coverExtension.localStack where
+  atlas := extension.localAtlas
+  origin := globalCusp.origin
+
+/--
+Localization of the selected cusp, constructed from localization of the
+complete atlas. All decomposition diagrams are inherited at the selected
+label, so neither a local cusp nor representative compatibility is supplied.
+-/
+def toNonzeroCuspScalarExtension :
+    TypeOneNonzeroCuspScalarExtension l K L
+      coverExtension globalCusp where
+  localCusp := extension.localCusp
+  origin_compatible := rfl
+  xDecompositionDiagram :=
+    (extension.xCusps globalCusp.origin).diagram
+  cDecompositionDiagram :=
+    (extension.cCusps globalCusp.signLabel).diagram
+  xDecomposition_galois_eq :=
+    (extension.xCusps globalCusp.origin).galois_eq.trans
+      coverExtension.xDiagram_galois_eq
+  cDecomposition_galois_eq :=
+    (extension.cCusps globalCusp.signLabel).galois_eq.trans
+      coverExtension.cDiagram_galois_eq
+  xDecomposition_ambient_square :=
+    (extension.xCusps globalCusp.origin).arithmetic_ambient_square
+  cDecomposition_ambient_square :=
+    (extension.cCusps globalCusp.signLabel).arithmetic_ambient_square
+
+@[simp]
+theorem toNonzeroCuspScalarExtension_localCusp_atlas :
+    extension.toNonzeroCuspScalarExtension.localCusp.atlas =
+      extension.localAtlas :=
+  rfl
+
+@[simp]
+theorem toNonzeroCuspScalarExtension_origin :
+    extension.toNonzeroCuspScalarExtension.localCusp.origin =
+      globalCusp.origin :=
+  rfl
+
+end TypeOneCuspidalAtlasScalarExtension
 
 /--
 Scalar extension of the `Delta dagger` eigenspace construction.
@@ -3981,26 +4029,11 @@ structure SourceInitialThetaCore
     ∀ v (hv : v ∈ valuations.selectedInfinite),
       SourceThetaInfiniteCuspidalAtlasScalarExtension l
         (infiniteLocalLTorsionCovers v hv) epsilon.atlas
-  finiteLocalEpsilon :
-    ∀ v (hv : v ∈ valuations.selected),
-      SourceThetaFiniteNonzeroCuspScalarExtension l
-        (finiteLocalLTorsionCovers v hv) epsilon
-  infiniteLocalEpsilon :
-    ∀ v (hv : v ∈ valuations.selectedInfinite),
-      SourceThetaInfiniteNonzeroCuspScalarExtension l
-        (infiniteLocalLTorsionCovers v hv) epsilon
-  finiteLocalEpsilon_atlas_eq :
-    ∀ v (hv : v ∈ valuations.selected),
-      (finiteLocalEpsilon v hv).localCusp.atlas =
-        (finiteLocalCuspidalAtlases v hv).localAtlas
-  infiniteLocalEpsilon_atlas_eq :
-    ∀ v (hv : v ∈ valuations.selectedInfinite),
-      (infiniteLocalEpsilon v hv).localCusp.atlas =
-        (infiniteLocalCuspidalAtlases v hv).localAtlas
   goodLocalArrowedEigenspaces :
     ∀ v (hv : v ∈ valuations.good),
       SourceThetaGoodFiniteArrowedEigenspaceScalarExtension l
-        (finiteLocalEpsilon v hv.1)
+        (TypeOneCuspidalAtlasScalarExtension.toNonzeroCuspScalarExtension
+          (finiteLocalCuspidalAtlases v hv.1))
         arrowedEigenspaces arrowedPositiveTopology
   goodLocalArrowedJQuotients :
     ∀ v (hv : v ∈ valuations.good),
@@ -4017,7 +4050,8 @@ structure SourceInitialThetaCore
       SourceThetaBadLocalStandardData l
         (finiteLocalCores v)
         (finiteLocalLTorsionCovers v hv.1)
-        (finiteLocalEpsilon v hv.1)
+        (TypeOneCuspidalAtlasScalarExtension.toNonzeroCuspScalarExtension
+          (finiteLocalCuspidalAtlases v hv.1))
   badLocalThetaRootStacks :
     ∀ v (hv : v ∈ valuations.bad),
       SourceThetaBadLocalThetaRootStackRealization l
@@ -4061,6 +4095,40 @@ variable [IsScalarTower Fmod F K]
 variable [FiniteDimensional Fmod F] [IsGalois Fmod F]
 variable [FiniteDimensional F K] [IsGalois F K]
 variable (theta : SourceInitialThetaCore Fmod F K)
+
+/-- The selected finite-place cusp, derived from the localized complete atlas. -/
+def finiteLocalEpsilon
+    (v : NumberField.FinitePlace K)
+    (hv : v ∈ theta.valuations.selected) :
+    SourceThetaFiniteNonzeroCuspScalarExtension theta.l
+      (theta.finiteLocalLTorsionCovers v hv) theta.epsilon :=
+  TypeOneCuspidalAtlasScalarExtension.toNonzeroCuspScalarExtension
+    (theta.finiteLocalCuspidalAtlases v hv)
+
+/-- The selected infinite-place cusp, derived from the localized complete atlas. -/
+def infiniteLocalEpsilon
+    (v : NumberField.InfinitePlace K)
+    (hv : v ∈ theta.valuations.selectedInfinite) :
+    SourceThetaInfiniteNonzeroCuspScalarExtension theta.l
+      (theta.infiniteLocalLTorsionCovers v hv) theta.epsilon :=
+  TypeOneCuspidalAtlasScalarExtension.toNonzeroCuspScalarExtension
+    (theta.infiniteLocalCuspidalAtlases v hv)
+
+@[simp]
+theorem finiteLocalEpsilon_atlas_eq
+    (v : NumberField.FinitePlace K)
+    (hv : v ∈ theta.valuations.selected) :
+    (theta.finiteLocalEpsilon v hv).localCusp.atlas =
+      (theta.finiteLocalCuspidalAtlases v hv).localAtlas :=
+  rfl
+
+@[simp]
+theorem infiniteLocalEpsilon_atlas_eq
+    (v : NumberField.InfinitePlace K)
+    (hv : v ∈ theta.valuations.selectedInfinite) :
+    (theta.infiniteLocalEpsilon v hv).localCusp.atlas =
+      (theta.infiniteLocalCuspidalAtlases v hv).localAtlas :=
+  rfl
 
 theorem xF_stableReductionEverywhere :
     theta.curveModuli.xF.HasStableReductionEverywhere :=
