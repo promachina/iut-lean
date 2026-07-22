@@ -6,7 +6,7 @@ Authors: IUT Lean formalization contributors
 import Iut.Foundations.SourceHodgeArakelovEvaluation
 import Iut.Foundations.SourceSplitKummerFrobenioid
 import Iut.Foundations.SourceArchimedeanKummerSystem
-import Iut.Foundations.SourceModelFrobenioidFactorizationUniqueness
+import Iut.Foundations.SourceModelFrobenioidPreStepFactorization
 import Iut.Foundations.SourceTheorem311
 
 open Iut
@@ -105,6 +105,11 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceModelFrobenioid.Carrier.factorizationFrobeniusComparison
 #print axioms Iut.SourceModelFrobenioid.Carrier.factorizationIso
 #print axioms Iut.SourceModelFrobenioid.Carrier.factorizationIso_unique
+#print axioms Iut.SourceModelFrobenioid.Carrier.preStep_mono
+#print axioms Iut.SourceModelFrobenioid.Carrier.preStep_coAngularThenIsometric
+#print axioms Iut.SourceModelFrobenioid.Carrier.preStep_isometricThenCoAngular
+#print axioms Iut.SourceModelFrobenioid.Carrier.preStepFactorizationIso
+#print axioms Iut.SourceModelFrobenioid.Carrier.preStepFactorizationIso_unique
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.quotientUnit_exists
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootRealization.ofRootSystem
