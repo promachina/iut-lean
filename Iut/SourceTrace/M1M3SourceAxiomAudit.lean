@@ -13,6 +13,7 @@ import Iut.Foundations.SourceModelFrobenioidRationalNaturality
 import Iut.Foundations.SourceTheorem311
 import Iut.Foundations.SourceTheorem311Assembly
 import Iut.Foundations.SourceDefinition52LocalJointContinuity
+import Iut.Foundations.SourceDefinition52IndSystem
 
 open Iut
 
@@ -57,6 +58,14 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceFinitePlaceReconstruction.continuous_stageGaloisAction
 #print axioms Iut.SourceFinitePlaceReconstruction.continuous_galoisLinearMap_comp_stageToCarrier
 #print axioms Iut.SourceFinitePlaceReconstruction.continuous_indGaloisAction_comp_stageIntegralToInd
+#print axioms Iut.SourceFinitePlaceReconstruction.stageIntegralTransition_trans
+#print axioms Iut.SourceFinitePlaceReconstruction.continuous_stageGaloisIntegralAction
+#print axioms Iut.SourceFinitePlaceReconstruction.stageIntegralTransition_galois
+#print axioms Iut.SourceFinitePlaceReconstruction.integralIndSystem
+#print axioms Iut.SourceFinitePlaceReconstruction.stageIntegralToIndHom_transition
+#print axioms Iut.SourceFinitePlaceReconstruction.stageIntegralToIndHom_galois
+#print axioms Iut.SourceFinitePlaceReconstruction.integralIndSystemLimit
+#print axioms Iut.SourceFinitePlaceReconstruction.integralIndSequentialPresentation
 #print axioms Iut.SourceTopologicalGroupPseudoMonoidActionPair.Iso.trans_hom
 #print axioms Iut.SourceKappaLocalizationDiagram.inclusion_injective
 #print axioms Iut.PuncturedEllipticCurveScalarExtension.curve_eq_baseChange

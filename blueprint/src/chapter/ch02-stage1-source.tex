@@ -115,6 +115,14 @@
   \lean{Iut.SourceFinitePlaceReconstruction.continuous_stageGaloisAction}
   \lean{Iut.SourceFinitePlaceReconstruction.continuous_galoisLinearMap_comp_stageToCarrier}
   \lean{Iut.SourceFinitePlaceReconstruction.continuous_indGaloisAction_comp_stageIntegralToInd}
+  \lean{Iut.SourceFinitePlaceReconstruction.stageIntegralTransition_trans}
+  \lean{Iut.SourceFinitePlaceReconstruction.continuous_stageGaloisIntegralAction}
+  \lean{Iut.SourceFinitePlaceReconstruction.stageIntegralTransition_galois}
+  \lean{Iut.SourceFinitePlaceReconstruction.integralIndSystem}
+  \lean{Iut.SourceFinitePlaceReconstruction.stageIntegralToIndHom_transition}
+  \lean{Iut.SourceFinitePlaceReconstruction.stageIntegralToIndHom_galois}
+  \lean{Iut.SourceFinitePlaceReconstruction.integralIndSystemLimit}
+  \lean{Iut.SourceFinitePlaceReconstruction.integralIndSequentialPresentation}
   \lean{Iut.SourceFMonoAnalyticPrimeStrip}
   \lean{Iut.SourceFGloballyRealifiedMonoAnalyticPrimeStrip}
   \lean{Iut.sourceFPrimeStripToD}
@@ -152,13 +160,19 @@
   produces the corresponding continuous ind-automorphism, and Lean proves
   that these automorphisms satisfy the identity and composition laws and
   restrict continuously in both directions to
-  \(O_{\overline{K_v}}^\triangleright\).  Continuity of Krull restriction to
-  the finite Galois group, together with its discrete topology, proves joint
-  continuity of evaluation on every finite stage.  This remains true after
-  restricting a stage to its integral monoid and including it into the
-  ind-carrier.  The continuity-with-parameters theorem needed to pass these
-  stagewise results to joint continuity on the full ind-colimit, and
-  reconstruction from the abstract \(D_v\) group, remain open.
+  \(O_{\overline{K_v}}^\triangleright\).  In accordance with the meaning of
+  the prefix ``ind-'' in Absolute Anabelian Topics~III, Section~0, Lean also
+  retains the finite Galois integral stages as an actual filtered system of
+  topological monoids.  Its transitions are continuous and equivariant;
+  continuity of Krull restriction to the finite Galois group, together with
+  its discrete topology, proves joint continuity of evaluation on every
+  stage.  The stage inclusions are injective, exhaust
+  \(O_{\overline{K_v}}^\triangleright\), and commute with the limit action.
+  If the stage type is countable, the countable filtered-category theorem
+  constructs a monotone cofinal natural-number subsystem, hence the strict
+  positive-integer presentation used by the paper.  Proving this countability
+  from the local-field finiteness theorem, and reconstruction from the
+  abstract \(D_v\) group, remain open.
   A globally realified strip additionally carries the global Frobenioid,
   its prime/place bijection, all local characteristic and realified monoids,
   and commuting currency-exchange isomorphisms \(\rho_v\), compared

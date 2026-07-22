@@ -13,10 +13,11 @@ finite Galois stage continuous.  Since the finite-stage Galois group is
 discrete and acts by continuous linear equivalences, the resulting action on
 each finite stage is jointly continuous.
 
-Passing this theorem to the full ind-topological colimit requires a separate
-continuity-with-parameters theorem for this strict filtered system.  It is not
-an automatic consequence of the `TopModuleCat` colimit universal property,
-which only controls linear maps out of the colimit.
+This is the continuity statement needed at each level of the source
+ind-system.  Joint continuity on the single `TopModuleCat` limit carrier would
+require a separate continuity-with-parameters theorem and is not an automatic
+consequence of its colimit universal property, which only controls linear maps
+out of the colimit.
 -/
 
 open CategoryTheory

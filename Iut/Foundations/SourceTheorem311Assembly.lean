@@ -8,6 +8,7 @@ import Iut.Foundations.SourceTheorem311Horizontal
 import Iut.Foundations.SourceDefinition52LocalReconstruction
 import Iut.Foundations.SourceDefinition52LocalContinuity
 import Iut.Foundations.SourceDefinition52LocalJointContinuity
+import Iut.Foundations.SourceDefinition52IndSystem
 
 /-!
 # Source assembly for IUT III, Theorem 3.11

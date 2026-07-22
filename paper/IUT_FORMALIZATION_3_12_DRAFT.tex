@@ -1246,13 +1246,19 @@ each absolute-Galois automorphism acts continuously on every stage.  The
 colimit universal property produces a continuous automorphism of the
 ind-topological carrier, proves that it is the literal algebraic action, and
 restricts it continuously in both directions to the integral monoid; identity
-and composition are proved.  Krull restriction to each finite Galois group is
-continuous, and its discrete topology makes finite-stage evaluation jointly
-continuous; Lean proves the same statement after restricting a stage to its
-integral monoid and including it into the ind-carrier.  A
-continuity-with-parameters theorem for this strict filtered colimit is still
-needed to deduce joint continuity on the full ind-monoid.  Reconstruction of
-the construction from the abstract \(D_v\) group also remains open.  Lean also
+and composition are proved.  Lean now retains the source meaning of the
+prefix ``ind-'' as well: the nonzero integral monoids in all finite Galois
+subfields form a filtered system of topological monoids.  Its transition maps
+are continuous and equivariant, and continuous Krull restriction to each
+finite Galois group, together with its discrete topology, makes evaluation
+jointly continuous at every stage.  The stage inclusions are injective,
+exhaust the algebraic limit \(O_{\overline{K_v}}^\triangleright\), and commute
+with its Galois action.  Under countability of the finite-stage type, Lean's
+countable filtered-category theorem constructs the cofinal natural-number
+subsystem required by the strict positive-integer convention of Absolute
+Anabelian Topics~III, Section~0.  Deriving that countability from the
+local-field finiteness theorem, and reconstruction from the abstract \(D_v\)
+group, remain open.  Lean also
 constructs the fixed carrier as an actual sub-pseudo-monoid and proves that
 every product defined in the original carrier remains defined after passage
 to invariants.  It also constructs the descended action through a surjective
