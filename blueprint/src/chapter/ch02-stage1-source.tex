@@ -741,6 +741,34 @@
   constructors.
 \end{definition}
 
+\begin{definition}[Assembled source Theorem 3.11 column boundary]
+  \label{def:source-theorem-311-column-boundary}
+  \uses{def:source-theorem-311-interfaces}
+  \lean{Iut.SourceTheorem311ColumnBoundary}
+  \lean{Iut.SourceTheorem311ColumnBoundary.presentation}
+  \lean{Iut.SourceTheorem311ColumnBoundary.ind1Action}
+  \lean{Iut.SourceTheorem311ColumnBoundary.ind2Action}
+  \lean{Iut.SourceTheorem311ColumnBoundary.ind3System}
+  \lean{Iut.SourceTheorem311ColumnBoundary.verticalLocalKummer}
+  \lean{Iut.SourceTheorem311ColumnBoundary.badPrime_logarithm_eq}
+  \lean{Iut.SourceTheorem311ColumnBoundary.kappaClauseD_commutes}
+  \leanok
+  At one fixed horizontal column, the source assembly forces the
+  multiradial presentation and the vertical family to use the same common
+  local construction.  Its inputs are the absolute-label Gaussian
+  log-theta lattice, mono-analytic log-shell algorithm, finite-stage integral
+  data, adjacent log-link relations, splitting and labeled Kummer data,
+  multiradial functor, and four horizontal squares.  From these Lean derives
+  the actual procession action, independent summand action, generated
+  \(\Ind{1}/\Ind{2}\) quotient, vertical packet Kummer maps, \(\Ind{3}\)
+  system, vertical log-volume independence, roots-only bad-prime logarithm
+  equality, and the four commutative horizontal squares.
+
+  This assembly is not an existence proof for its upstream inputs.  Its role
+  is to replace the unrelated finite adapters by one coherent source boundary
+  and to identify precisely which constructions from IUT~I--III remain.
+\end{definition}
+
 \begin{definition}[Indeterminacy generator interface]
   \label{def:indeterminacy-generator-interface}
   \lean{Iut.Stage1.IUTStage1Theorem311IndeterminacySourceData}

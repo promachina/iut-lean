@@ -1530,7 +1530,8 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceAbsoluteLGPGaussianLogThetaLattice.capsuleAtLabel",
         "SourceAbsoluteLGPGaussianLogThetaLattice.packetIndexEquiv",
         "SourceAbsoluteLGPGaussianLogThetaLattice.verticalProcessionHomToCommonMember",
-        "SourceAbsoluteLGPGaussianLogThetaLattice.localPacket"]
+        "SourceAbsoluteLGPGaussianLogThetaLattice.localPacket",
+        "SourceTheorem311ColumnBoundary"]
       .partialImplementation
       "The setup uses an actual Z x Z collection of distinct Hodge theaters and full absolute-label F-theta bridges. Every site has a compatible member to a fixed n-circle bridge, giving the correct l-plus-minus mono-analytic procession; the capsule at |j| has j+1 factors and constructs the local packet. The older nonzero l-star lattice is explicitly excluded from source constructions. Constructing the lattice and all coricity members from the preceding IUT II Gaussian data remains open.",
     clause "III.3.11(i).objects" .iutIII "IUT III, Theorem 3.11(i): processions and objects"
@@ -1542,8 +1543,11 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceTheorem311MultiradialPresentation",
         "SourceTheorem311MultiradialPresentation.AuxiliaryRealization",
         "SourceAbsoluteLGPGaussianLogThetaLattice.PresentationConstruction",
-        "SourceAbsoluteLGPGaussianLogThetaLattice.PresentationConstruction.toMultiradialPresentation"] .partialImplementation
-      "The complete unquotiented presentation is assembled on the full absolute-label procession from actual tensor packets, integral structures, measured log-volumes, the literal bad-place fiber, splitting actions on distinguished submodules, jointly embedded number fields, and all four split-Frobenioid families. Constructing its labeled and splitting inputs functorially from the preceding paper propositions remains open.",
+        "SourceAbsoluteLGPGaussianLogThetaLattice.PresentationConstruction.toMultiradialPresentation",
+        "SourceTheorem311ColumnBoundary.procession",
+        "SourceTheorem311ColumnBoundary.localData",
+        "SourceTheorem311ColumnBoundary.presentation"] .partialImplementation
+      "The complete unquotiented presentation is assembled on the full absolute-label procession from actual tensor packets, integral structures, measured log-volumes, the literal bad-place fiber, splitting actions on distinguished submodules, jointly embedded number fields, and all four split-Frobenioid families. The column boundary forces the horizontal presentation and vertical family to share one definitionally identical common local construction. Constructing its labeled and splitting inputs functorially from the preceding paper propositions remains open.",
     clause "III.3.11(i).Ind1" .iutIII "IUT III, Theorem 3.11(i): Ind1"
       ["CategoryCapsule.FullMemberMorphism",
         "CategoryProcession.MemberHom",
@@ -1563,6 +1567,8 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceAbsoluteLGPGaussianLogThetaLattice.PresentationConstruction.toInd1Action",
         "SourceTheorem311MultiradialAlgorithm",
         "SourceTheorem311MultiradialAlgorithm.ind1Action",
+        "SourceTheorem311ColumnBoundary.ind1Action",
+        "SourceTheorem311ColumnBoundary.quotient_sound_ind1",
         "SourceTheorem311MultiradialAlgorithm.Quotient",
         "sourceTheorem311IndeterminacySetoid",
         "SourceTheorem311IndeterminacyQuotient"] .partialImplementation
@@ -1579,7 +1585,10 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceTheorem311LocalInd2Action",
         "SourceTheorem311LocalInd2Action.action",
         "SourceAbsoluteLGPGaussianLogThetaLattice.localInd2Action",
-        "SourceAbsoluteLGPGaussianLogThetaLattice.LocalConstruction.toLocalInd2Action"] .partialImplementation
+        "SourceAbsoluteLGPGaussianLogThetaLattice.LocalConstruction.toLocalInd2Action",
+        "SourceTheorem311ColumnBoundary.localInd2Action",
+        "SourceTheorem311ColumnBoundary.ind2Action",
+        "SourceTheorem311ColumnBoundary.quotient_sound_ind2"] .partialImplementation
       "Every packet summand now receives the source group from its actual log shell: nonarchimedean Ism consists of G-equivariant continuous automorphisms preserving every open-subgroup lattice, while archimedean places use independent order-two sign choices. The direct-sum, genuine PiTensorProduct, and complete local-family actions and their laws are derived. Constructing the log-shell symmetry inputs, including compactness and continuity proofs, from Proposition 1.2 and IUT II Example 1.8 remains open.",
     clause "III.3.11(i).functoriality" .iutIII "IUT III, Theorem 3.11(i): permutation and bi-coric functoriality"
       ["SourceDThetaBridgeCore.IsomorphismMember.monoAnalyticProcessionObjectIso",
@@ -1626,6 +1635,8 @@ def m1m3PaperLedger : List PaperClause :=
         "SourcePacketFiniteStageLogVolume.Compatible.packetKummer_image_embeddedPacketIntegralRegion",
         "SourceAbsoluteLGPGaussianLogThetaLattice.VerticalLocalConstruction.toTheorem311VerticalLocalKummer",
         "SourceTheorem311VerticalLocalKummer",
+        "SourceTheorem311ColumnBoundary.verticalLocalKummer",
+        "SourceTheorem311ColumnBoundary.vertical_logVolume_compatible",
         "SourceTheorem311LabeledKummerIso"] .partialImplementation
       "For every actual `(n,m)` absolute-label capsule, vertical coricity constructs the placewise, direct-sum, and continuous tensor-packet Kummer maps to the fixed `(n,circle)` packet. Finite-place transport passes through shell lattices, tensor generation, closure, distinguished intersections, and the generated tensor subgroup of invariant-unit logarithms; infinite-place transport preserves the rationalized packet seminorm. Full and distinguished ind-packet region images hold for both place kinds. Separately, each packet carries a genuine finite-stage field presentation. The Kummer place map reindexes its field stages, and fieldwise radial measure preservation derives transport of E, W, M_W, weighted lifts, weighted content, the normalized functional, and the embedded finite-stage integral product. The local-data, vertical-container, and Ind3 APIs use this finite-stage path and expose no legacy whole-packet decomposition. Constructing the summand unit/log data and field-stage radial maps from the cited paper objects, and constructing the profinite, number-field, and split-Frobenioid maps from IUT II Corollaries 4.6 and 4.8, remain open.",
     clause "III.3.11(ii).objects" .iutIII "IUT III, Theorem 3.11(ii): tensor and Frobenioid compatibility"
@@ -1638,14 +1649,18 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceTheorem311VerticalLocalKummer.fullIntegral_image",
         "SourceTheorem311VerticalLocalKummer.distinguishedIntegral_image",
         "SourceLGPSplittingMonoidKummerIso",
-        "SourceTheorem311LabeledKummerIso"] .partialImplementation
-      "Distinguished-submodule compatibility is derived from equality of generating pure-tensor sets and `map_span`. Finite-place full and distinguished integral-region compatibility is derived from the actual log-shell lattices, including both closures. Infinite-place full and distinguished integral-region compatibility is derived from transported Hermitian pairings on arbitrary packet tensors. Splitting-monoid embeddings/actions, number fields, the four Frobenioid families, the combined source constructor, and MOD/mod comparison squares remain open.",
+        "SourceTheorem311LabeledKummerIso",
+        "SourceTheorem311ColumnBoundary.siteSplitting",
+        "SourceTheorem311ColumnBoundary.labeledKummer",
+        "SourceTheorem311ColumnBoundary.badPrimeUpperSemi"] .partialImplementation
+      "Distinguished-submodule compatibility is derived from equality of generating pure-tensor sets and `map_span`. Finite-place full and distinguished integral-region compatibility is derived from the actual log-shell lattices, including both closures. Infinite-place full and distinguished integral-region compatibility is derived from transported Hermitian pairings on arbitrary packet tensors. The assembled column boundary requires each site splitting action, its Kummer-compatible roots-only overlap, and the labeled profinite, number-field, and Frobenioid maps against the same common presentation. Constructing these inputs from IUT II Corollaries 4.6 and 4.8, together with the MOD/mod comparison squares, remains open.",
     clause "III.3.11(ii).logLink" .iutIII "IUT III, Theorem 3.11(ii): mutual log-link compatibility"
       ["SourceTheorem311VerticalLogLink",
         "SourceTheorem311VerticalLogLink.DiffersByRootOfUnity",
         "SourceTheorem311VerticalLogLink.logarithm_eq_of_differsByRootOfUnity",
         "SourceTheorem311VerticalLogLinkFamily.adjacent_logarithm_eq_on_overlap",
-        "SourceTheorem311VerticalLogLinkFamily.adjacent_logarithm_eq_of_differsByRootOfUnity"]
+        "SourceTheorem311VerticalLogLinkFamily.adjacent_logarithm_eq_of_differsByRootOfUnity",
+        "SourceTheorem311ColumnBoundary.badPrime_logarithm_eq"]
       .partialImplementation
       "A multiplicative log-link into an actual rational module kills every root of unity, values differing by such a root have equal additive logarithms, and the adjacent compatibility theorem is derived from the precise roots-only overlap criterion. Proving that criterion from Propositions 3.5 and 3.10 and deriving the MOD comparison remain open.",
     clause "III.3.11(ii).Ind3" .iutIII "IUT III, Theorem 3.11(ii): Ind3 and log-volume"
@@ -1681,10 +1696,12 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceAbsoluteLGPGaussianLogThetaLattice.VerticalFamilyConstruction",
         "SourceAbsoluteLGPGaussianLogThetaLattice.VerticalUpperSemiData",
         "SourceAbsoluteLGPGaussianLogThetaLattice.VerticalFamilyConstruction.toTheorem311Ind3System",
+        "SourceTheorem311ColumnBoundary.ind3System",
+        "SourceTheorem311ColumnBoundary.ind3_logVolume_independent",
         "SourceTheorem311Ind3System.logVolume_eq_common",
         "SourceTheorem311Ind3System.logVolume_eq_logVolume"]
       .partialImplementation
-      "Ind3 is expressed relative to one fixed vertically coric n-circle container. A concrete vertical family derives every packet, direct Kummer isomorphism, integral-region image, finite-stage volume, normalized functional, and source log-shell region. At finite places it derives the genuine invariant-unit tensor subgroup, adjacent graph, every positive iterate, the m-r to m equation, and Kummer containment. At infinite places the Definition 1.1 radius-pi disk is the unit ball of the pi-normalized Hermitian metric. Actual circle units, their arg*i principal logarithms, selected-place direct sums, and pure tensors are constructed. The units are canonically promoted to the exact S1 core of an antitone open-annulus projective system whose restricted holomorphic and ambient group germs and selected connected component are constructed. From only adjacent relations on these core points Lean derives all iterates, domains/ranges, the endpoint-ball subset, relational surjectivity, and direct containment of unit and local-ball tensors. VerticalUpperSemiData therefore supplies only adjacent finite and infinite unit correspondences; it has no arbitrary archimedean subgroup, domain, preimage, iterate map, surjectivity, or containment fields. Equality with the common finite-stage normalized value and independence of m follow. Formalizing the full Aut_hol(U) group assignment and proving rigidity of compatible holomorphic semi-germ automorphisms remain open. Constructing the adjacent relations from Psi_cns and the Gaussian log-theta lattice, the Galois-invariant tensor actions, and the remaining bad-prime data also remains open.",
+      "Ind3 is expressed relative to one fixed vertically coric n-circle container. A concrete vertical family derives every packet, direct Kummer isomorphism, integral-region image, finite-stage volume, normalized functional, and source log-shell region. At finite places it derives the genuine invariant-unit tensor subgroup, adjacent graph, every positive iterate, the m-r to m equation, and Kummer containment. At infinite places the Definition 1.1 radius-pi disk is the unit ball of the pi-normalized Hermitian metric. Actual circle units, their arg*i principal logarithms, selected-place direct sums, and pure tensors are constructed. The units are canonically promoted to the exact S1 core of an antitone open-annulus projective system whose restricted Aut_hol group assignment, ambient group germs, and selected connected component are constructed. For groupification-induced holomorphic automorphisms, the exponential-cover classification proves the selected-side-preserving semi-germ is the identity. From only adjacent relations on these core points Lean derives all iterates, domains/ranges, the endpoint-ball subset, relational surjectivity, and direct containment of unit and local-ball tensors. VerticalUpperSemiData therefore supplies only adjacent finite and infinite unit correspondences; it has no arbitrary archimedean subgroup, domain, preimage, iterate map, surjectivity, or containment fields. Equality with the common finite-stage normalized value and independence of m follow. Extending rigidity to every purely local group-germ automorphism remains open, as do construction of the adjacent relations from Psi_cns and the Gaussian log-theta lattice, the Galois-invariant tensor actions, and the remaining bad-prime data.",
     clause "III.3.11(iii).horizontal" .iutIII "IUT III, Theorem 3.11(iii): horizontal theta link"
       ["SourceHorizontalKummerCompatibility",
         "SourceHorizontalKummerCompatibility.commutes",
@@ -1692,7 +1709,11 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceMonoThetaProjectiveSystemIso",
         "SourceMonoThetaHorizontalKummerCompatibility.toArrowCompatibility",
         "SourceTheorem311KappaHorizontalCompatibility",
-        "SourceTheorem311HorizontalCompatibilitySystem"]
+        "SourceTheorem311HorizontalCompatibilitySystem",
+        "SourceTheorem311ColumnBoundary.primeStripClauseA_commutes",
+        "SourceTheorem311ColumnBoundary.environmentPrimeStripClauseB_commutes",
+        "SourceTheorem311ColumnBoundary.monoThetaClauseC_commutes",
+        "SourceTheorem311ColumnBoundary.kappaClauseD_commutes"]
       .partialImplementation
       "The four clauses are separate typed fields: two source F-prime-strip squares, a natural-isomorphism square of actual mono-theta projective systems with levelwise environment realizations, and a profinite kappa square. Each is an isomorphism in the relevant arrow category. Constructing these four squares from the LGP Gaussian log-theta lattice remains open.",
     clause "III.3.11(iii).equivariance" .iutIII "IUT III, Theorem 3.11(iii): automorphism equivariance"

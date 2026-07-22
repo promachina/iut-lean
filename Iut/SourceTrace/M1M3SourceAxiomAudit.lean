@@ -8,6 +8,7 @@ import Iut.Foundations.SourceSplitKummerFrobenioid
 import Iut.Foundations.SourceArchimedeanKummerSystem
 import Iut.Foundations.SourceModelFrobenioidRationalNaturality
 import Iut.Foundations.SourceTheorem311
+import Iut.Foundations.SourceTheorem311Assembly
 
 open Iut
 
@@ -742,3 +743,12 @@ end Iut.SourcePacketFiniteStageLogVolume
 #print axioms Iut.SourceTheorem311HorizontalEvaluationCompatibility.descend_mk
 #print axioms Iut.SourceTheorem311IndeterminacyQuotient.sound_ind1
 #print axioms Iut.SourceTheorem311IndeterminacyQuotient.sound_ind2
+#print axioms Iut.SourceTheorem311ColumnBoundary.quotient_sound_ind1
+#print axioms Iut.SourceTheorem311ColumnBoundary.quotient_sound_ind2
+#print axioms Iut.SourceTheorem311ColumnBoundary.vertical_logVolume_compatible
+#print axioms Iut.SourceTheorem311ColumnBoundary.ind3_logVolume_independent
+#print axioms Iut.SourceTheorem311ColumnBoundary.badPrime_logarithm_eq
+#print axioms Iut.SourceTheorem311ColumnBoundary.primeStripClauseA_commutes
+#print axioms Iut.SourceTheorem311ColumnBoundary.environmentPrimeStripClauseB_commutes
+#print axioms Iut.SourceTheorem311ColumnBoundary.monoThetaClauseC_commutes
+#print axioms Iut.SourceTheorem311ColumnBoundary.kappaClauseD_commutes

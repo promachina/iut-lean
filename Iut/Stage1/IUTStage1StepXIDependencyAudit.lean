@@ -6,6 +6,7 @@ Authors: IUT Lean formalization contributors
 import Iut.Stage1.IUTStage1SourceCore
 import Iut.Stage1.IUTStage1IUTIVAlgebra
 import Iut.Stage1.IUTStage1StepXI.AdditiveHaarBridge
+import Iut.Foundations.SourceTheorem311Assembly
 
 /-!
 CI-facing dependency audit for the Step (xi) localized `C_Theta` boundary.
@@ -144,19 +145,19 @@ structure CanonicalStage1RemainingAssumption where
   note : String
   deriving Repr
 
-/-- Short name for the current canonical public 3.11-to-3.12 Stage 1 route. -/
-def canonicalStage1RouteName : String :=
+/-- Short name for the isolated finite Stage 1 adapter route. -/
+def legacyFiniteStage1RouteName : String :=
   "same-index q-normalized route with compact-open additive-Haar p-adic-defect/main residual lowering and selected p-adic unit-ball processional Haar-defect frontier"
 
 /--
-Current canonical Stage 1 remaining-assumption manifest.
+Remaining-assumption manifest for the isolated finite Stage 1 adapter.
 
-New public endpoints should reduce this list, refine one of its source
-obligations to a constructed/derived item, or be kept private.  Adding a public
-wrapper that leaves this manifest unchanged is not progress toward the active
-paper-level corridor goal.
+This route remains useful for downstream Corollary 3.12 bookkeeping, but its
+finite Hodge-theater, degree, and `ZMod` constructions do not discharge the
+source-faithful M1--M3 goal.  New paper-level work must target the canonical
+source manifest below.
 -/
-def canonicalStage1RemainingAssumptions :
+def legacyFiniteStage1RemainingAssumptions :
     List CanonicalStage1RemainingAssumption :=
   [ { name := "iutIHodgeTheaterRealization",
       status := .sourceObligation,
@@ -258,35 +259,170 @@ def canonicalStage1RemainingAssumptions :
       note :=
         "Source obligation. The residual package is obtained from a chain of assumed local-estimate, formula-matching, and p-adic Haar source records. The full IUT IV construction of those hypotheses remains unformalized." } ]
 
-/-- Number of manifest entries in the canonical Stage 1 remaining boundary. -/
-def canonicalStage1RemainingAssumptions_count : Nat :=
-  canonicalStage1RemainingAssumptions.length
+/-- Number of entries in the isolated finite-adapter manifest. -/
+def legacyFiniteStage1RemainingAssumptions_count : Nat :=
+  legacyFiniteStage1RemainingAssumptions.length
 
-theorem canonicalStage1RemainingAssumptions_count_eq :
-    canonicalStage1RemainingAssumptions_count = 14 :=
+theorem legacyFiniteStage1RemainingAssumptions_count_eq :
+    legacyFiniteStage1RemainingAssumptions_count = 14 :=
   rfl
 
-/-- Source obligations still present in the canonical manifest. -/
-def canonicalStage1SourceObligationNames : List String :=
-  canonicalStage1RemainingAssumptions.filterMap fun entry =>
+/-- Source obligations still present in the isolated finite-adapter manifest. -/
+def legacyFiniteStage1SourceObligationNames : List String :=
+  legacyFiniteStage1RemainingAssumptions.filterMap fun entry =>
     if entry.status = .sourceObligation then some entry.name else none
 
-/-- The canonical route currently exposes thirteen source-obligation entries. -/
-theorem canonicalStage1SourceObligationNames_count_eq :
-    canonicalStage1SourceObligationNames.length = 13 :=
+/-- The finite adapter currently exposes thirteen source-obligation entries. -/
+theorem legacyFiniteStage1SourceObligationNames_count_eq :
+    legacyFiniteStage1SourceObligationNames.length = 13 :=
   rfl
 
-/-- The canonical route has exactly one interface-only entry. -/
-theorem canonicalStage1RemainingAssumptions_interfaceOnly_count_eq :
-    (canonicalStage1RemainingAssumptions.filter
+/-- The finite adapter has exactly one interface-only entry. -/
+theorem legacyFiniteStage1RemainingAssumptions_interfaceOnly_count_eq :
+    (legacyFiniteStage1RemainingAssumptions.filter
       (fun entry => entry.status = .interfaceOnly)).length = 1 :=
   rfl
 
-/-- No top-level paper claim is currently marked derived. -/
-theorem canonicalStage1RemainingAssumptions_derived_count_eq :
-    (canonicalStage1RemainingAssumptions.filter
+/-- No paper claim in the finite adapter is marked derived. -/
+theorem legacyFiniteStage1RemainingAssumptions_derived_count_eq :
+    (legacyFiniteStage1RemainingAssumptions.filter
       (fun entry => entry.status = .derived)).length = 0 :=
   rfl
+
+/-- Short name for the active source-faithful M1--M3 reconstruction route. -/
+def canonicalM1M3SourceRouteName : String :=
+  "source initial theta data through the assembled absolute-label Theorem 3.11 column boundary"
+
+/--
+The actual remaining paper inputs of the canonical source-faithful M1--M3
+route.
+
+Every consumer named here has a typed source-level declaration.  The manifest
+does not treat the finite Stage 1 adapter as evidence for any paper clause.
+-/
+def canonicalM1M3RemainingAssumptions :
+    List CanonicalStage1RemainingAssumption :=
+  [ { name := "sourceInitialThetaGeometry",
+      status := .sourceObligation,
+      paperSource := "IUT I, Definition 3.1 and Initial Theta Data",
+      consumerDeclaration := "SourceInitialThetaCore",
+      note :=
+        "Construct the actual valuation, reduction, torsion, orbicurve, covering, etale-stack, and fundamental-group data from the stated elliptic-curve hypotheses." },
+    { name := "thetaHodgeTheaterModels",
+      status := .sourceObligation,
+      paperSource :=
+        "IUT I, Examples 3.2-3.5; Definition 3.6; Corollary 3.7",
+      consumerDeclaration := "IUTIThetaHodgeTheaterModels",
+      note :=
+        "Construct the local nonarchimedean and archimedean categories, topological monoids, and global Frobenioids; no default or choice-based constructor exists." },
+    { name := "primeStripsBridgesTheatersAndGluing",
+      status := .sourceObligation,
+      paperSource :=
+        "IUT I, Definitions 4.1, 5.2, 6.4, 6.13; Propositions 6.7, 6.9",
+      consumerDeclaration := "SourceAbsoluteLGPGaussianLogThetaLattice",
+      note :=
+        "Construct the actual D-prime strips, F/D-theta bridges, absolute-label Hodge theaters, mono-analyticization, and coricity members from the IUT I gluing results." },
+    { name := "thetaEvaluationOrbitsAndRestrictions",
+      status := .sourceObligation,
+      paperSource :=
+        "IUT II, Definition 2.7; Corollary 2.8; Proposition 3.4; Corollary 3.5",
+      consumerDeclaration := "SourceIUTIIThetaEvaluationOrbits",
+      note :=
+        "Construct the precise continuous-H1 theta and infinite-theta orbits, restriction homomorphisms, torsion actions, and independent-conjugacy equivariance." },
+    { name := "hodgeArakelovThetaPilot",
+      status := .sourceObligation,
+      paperSource :=
+        "IUT II, Proposition 1.4; Corollaries 3.5, 4.6, 4.8",
+      consumerDeclaration := "SourceIUTIIHodgeArakelovThetaPilot",
+      note :=
+        "Construct the q-pilot, all q^(j^2) values, compatible roots, Gaussian objects, splittings, and conjugate synchronization from the paper evaluation maps." },
+    { name := "absoluteLGPGaussianLogThetaLattice",
+      status := .sourceObligation,
+      paperSource :=
+        "IUT II, Corollaries 4.6, 4.8; IUT III, Theorem 3.11 setup",
+      consumerDeclaration := "SourceTheorem311ColumnBoundary.lattice",
+      note :=
+        "Construct the Z x Z absolute-label lattice and every vertical coricity-to-common member from the evaluated Gaussian data." },
+    { name := "monoAnalyticLogShellAlgorithm",
+      status := .sourceObligation,
+      paperSource :=
+        "IUT III, Propositions 1.2, 3.1, 3.2; Theorem 3.11(i)(a)",
+      consumerDeclaration := "SourceTheorem311ColumnBoundary.logShellAlgorithm",
+      note :=
+        "Construct the selected-place log shells, their functorial transports, integral lattices and metrics, and genuine local Ind2 symmetry inputs." },
+    { name := "localIntegralAndVerticalFamily",
+      status := .sourceObligation,
+      paperSource :=
+        "IUT III, Propositions 3.2, 3.5, 3.9; Theorem 3.11(i)(a), (ii)(a)",
+      consumerDeclaration := "SourceTheorem311ColumnBoundary.verticalFamily",
+      note :=
+        "Construct the packet topologies, finite field stages, radial measures, normalized log-volumes, and their vertical compatibility for the common and all site packets." },
+    { name := "splittingFieldsAndGlobalFrobenioids",
+      status := .sourceObligation,
+      paperSource := "IUT III, Theorem 3.11(i)(b-c), (ii)(b-c)",
+      consumerDeclaration :=
+        "SourceTheorem311ColumnBoundary.presentationConstruction",
+      note :=
+        "Construct the LGP splitting actions, jointly embedded number fields, kappa-solvable groups, and four split-Frobenioid families functorially from the preceding propositions." },
+    { name := "multiradialProcessionFunctor",
+      status := .sourceObligation,
+      paperSource := "IUT III, Theorem 3.11(i) and Remark 3.11.1(ii)",
+      consumerDeclaration := "SourceTheorem311ColumnBoundary.multiradialAlgorithm",
+      note :=
+        "Construct the full functor on the member-carrying procession category. Lean then derives the genuine Ind1 action and the joint Ind1/Ind2 quotient." },
+    { name := "verticalAdjacentLogLinkRelations",
+      status := .sourceObligation,
+      paperSource :=
+        "IUT III, Propositions 3.5, 3.10; Theorem 3.11(ii) and Ind3",
+      consumerDeclaration := "SourceTheorem311ColumnBoundary.verticalUpperSemi",
+      note :=
+        "Construct the adjacent finite invariant-unit and archimedean circle-unit correspondences. Lean derives all positive iterates, domains, ranges, containments, and vertical log-volume independence." },
+    { name := "verticalSplittingAndLabeledKummer",
+      status := .sourceObligation,
+      paperSource := "IUT III, Theorem 3.11(ii)(b-c)",
+      consumerDeclaration :=
+        "SourceTheorem311ColumnBoundary.badPrimeUpperSemi",
+      note :=
+        "Construct site splitting actions, their Kummer maps, roots-only log-link overlaps, and the profinite, number-field, and Frobenioid labeled Kummer isomorphisms." },
+    { name := "horizontalLinkCompatibility",
+      status := .sourceObligation,
+      paperSource := "IUT III, Theorem 3.11(iii)(a-d)",
+      consumerDeclaration :=
+        "SourceTheorem311ColumnBoundary.horizontalCompatibility",
+      note :=
+        "Construct the two prime-strip squares, mono-theta projective-system square, kappa square, and their evaluation equivariance from the horizontal theta link." },
+    { name := "permutationBiCoricFunctoriality",
+      status := .sourceObligation,
+      paperSource := "IUT III, Theorem 3.11(i) final functoriality clause",
+      consumerDeclaration := "SourceTheorem311PermutationBiCoricCompatibility",
+      note :=
+        "Construct the bi-coric bridge member and prove simultaneous Ind1/Ind2 equivariance under etale-picture permutations; quotient equivalence is then derived." },
+    { name := "IPL_SHE_APT_algorithms",
+      status := .sourceObligation,
+      paperSource := "IUT III, Remark 3.11.1(iii-iv)",
+      consumerDeclaration := "SourceTheorem311HorizontalCompatibilitySystem",
+      note :=
+        "Formalize the IPL, simultaneous holomorphic envelope, and alien-prime transport algorithms and prove their compatibility with the assembled source boundary." } ]
+
+/-- Every entry in the active M1--M3 manifest is a genuine source obligation. -/
+def canonicalM1M3SourceObligationNames : List String :=
+  canonicalM1M3RemainingAssumptions.filterMap fun entry =>
+    if entry.status = .sourceObligation then some entry.name else none
+
+theorem canonicalM1M3RemainingAssumptions_count_eq :
+    canonicalM1M3RemainingAssumptions.length = 15 :=
+  rfl
+
+theorem canonicalM1M3SourceObligationNames_count_eq :
+    canonicalM1M3SourceObligationNames.length = 15 :=
+  rfl
+
+/-- The active source manifest contains none of the legacy adapter inputs. -/
+theorem canonicalM1M3_excludes_legacy_adapter_names :
+    ∀ name ∈ ["packet", "sourceWithSymmetry",
+        "compactOpenRealizedExactSource", "hodgeEvaluation"],
+      name ∉ canonicalM1M3SourceObligationNames := by
+  decide
 
 /--
 Residual-frontier evidence for the canonical route.
