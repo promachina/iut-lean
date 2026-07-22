@@ -1136,6 +1136,26 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceMonoAnalyticLogShell"]
       .partialImplementation
       "The additive log field is tied to the actual selected-place algebraic closure and its filtered field stages. At finite places the source log-shell is the additive lattice. At an infinite place Proposition 3.2(ii)'s Hermitian seminorm is normalized by pi, so its unit ball is exactly Definition 1.1(ii)'s raw complex radius-pi rotation orbit; there is no second radius-pi ball of the normalized metric. The source segment is sign-stable and its endpoints differ by 2*pi*i. The transported exponential is a covering with the exact period lattice, while arg in (-pi,pi] gives a principal logarithm of every genuine circle unit, proved to lie in the normalized unit ball and exponentiate back to that unit. The quotient coverings by mu_N retain their exact periods and endpoint segments. At finite places the residue prime, fixed local units, compact pre-log-shell, and p-adic logarithm are retained explicitly. Constructing these obligations from the Frobenioid and constructing the tautological/full log-links remains open.",
+    clause "III.1.1.1(ii)" .iutIII "IUT III, Remark 1.1.1(ii)"
+      ["SourceAutHolomorphicSemiGerm.neighborhoodSystem",
+        "SourceAutHolomorphicSemiGerm.iInter_neighborhood_eq_unitCircle",
+        "SourceAutHolomorphicSemiGerm.exists_neighborhood_subset_of_mem",
+        "SourceAutHolomorphicSemiGerm.multiplication_holomorphicOn_levels",
+        "SourceAutHolomorphicSemiGerm.multiplication_tendsto_unitNeighborhoodFilter",
+        "SourceAutHolomorphicSemiGerm.inversion_holomorphicAtLevel",
+        "SourceAutHolomorphicSemiGerm.inversion_tendsto_unitNeighborhoodFilter",
+        "SourceAutHolomorphicSemiGerm.puncturedNeighborhood_eq_inner_union_outer",
+        "SourceAutHolomorphicSemiGerm.innerSide_eq_connectedComponentIn",
+        "SourceAutHolomorphicSemiGerm.outerSide_eq_connectedComponentIn",
+        "SourceArchimedeanLogShellDefinition.semiGermNeighborhoodSystem",
+        "SourceArchimedeanLogShellDefinition.semiGermNeighborhoodSystem_cofinal",
+        "SourceArchimedeanLogShellDefinition.semiGermSelectedSide_eq_connectedComponentIn",
+        "SourceArchimedeanLogShellDefinition.semiGermMultiplication_tendsto",
+        "SourceArchimedeanLogShellDefinition.semiGermInversion_tendsto",
+        "SourceArchimedeanPacketUnitData.summandSemiGermNeighborhoodSystem",
+        "SourceArchimedeanPacketUnitData.UnitTuple.semiGermUnit"]
+      .partialImplementation
+      "Lean constructs an explicit antitone projective system of open annuli around S1 in C-times, proves that their intersection is exactly S1 and that they are cofinal among all neighborhoods of S1, restricts ambient complex differentiability to every level, and proves that ambient multiplication and inversion preserve the corresponding neighborhood filters. Removing S1 splits each level into the two stated radial pieces; both are proved to be the connected components of canonical basepoints, and the O-triangleright_C side is selected by this theorem rather than by an arbitrary field. Each archimedean packet unit is then canonically promoted to this actual semi-germ core. The full Definition 2.1 assignment U maps to Aut_hol(U), the resulting local-morphism category and rigidity theorem excluding every nonidentity compatible holomorphic semi-germ automorphism, and the co-holomorphic/Kummer reconstruction of IUT I Remark 3.4.2 remain open.",
     clause "III.1.2(vi-viii)" .iutIII
       "IUT III, Proposition 1.2(vi)-(viii)"
       ["SourceNonarchimedeanLogShellSymmetryCore",
@@ -1295,6 +1315,8 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceTheorem311CoricContainer",
         "SourceTheorem311Ind3System",
         "SourceArchimedeanPacketUnitData",
+        "SourceArchimedeanPacketUnitData.summandSemiGermNeighborhoodSystem",
+        "SourceArchimedeanPacketUnitData.UnitTuple.semiGermUnit",
         "SourceArchimedeanPacketUnitData.principalLogTensor_mem_unitBall",
         "SourceArchimedeanPacketLogLinkStep",
         "SourceTheorem311Ind3System.logShellRegion_eq_unitBall",
@@ -1310,7 +1332,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceTheorem311VerticalLogLink.rootsOfUnity_logarithm_eq_zero",
         "SourceTheorem311VerticalLogLinkFamily.adjacent_logarithm_eq_on_overlap"]
       .partialImplementation
-      "The vertically coric n-circle packet is fixed while m varies, and every m-packet has an actual tensor Kummer isomorphism into it. At finite places Lean constructs the fixed-unit log direct sums, generated tensor subgroup, adjacent correspondence graph, all positive iterates, and final Kummer containment. At infinite places the local radius-pi disk is correctly the unit ball of the pi-normalized Hermitian metric. Genuine circle units receive principal logarithms via arg*i; selecting one place per tensor factor gives direct-sum and pure-tensor representatives whose packet unit-ball membership is derived from the summand, direct-sum, and tensor metric equations. An adjacent archimedean log-link is only a partial relation on these circle units. Lean recursively derives its domains and ranges, the participating endpoint-ball subset, and relational surjectivity back onto the source domain. Direct Kummer containment for both circle-unit tensors and arbitrary selected local radius-pi tensors follows from vertical transport of the full packet unit ball. Thus VerticalUpperSemiData accepts neither arbitrary archimedean subgroups, multi-step domains, preimage sets, maps, surjectivity proofs, nor direct containments. This is the pointwise circle-unit core; lifting it to the Aut-holomorphic semi-germ neighborhood projective systems of Remark 1.1.1(ii) remains open. Constructing the adjacent finite and infinite relations from IUT II Corollaries 4.5-4.6 and the Gaussian log-theta lattice, together with the bad-prime input, also remains open.",
+      "The vertically coric n-circle packet is fixed while m varies, and every m-packet has an actual tensor Kummer isomorphism into it. At finite places Lean constructs the fixed-unit log direct sums, generated tensor subgroup, adjacent correspondence graph, all positive iterates, and final Kummer containment. At infinite places the local radius-pi disk is correctly the unit ball of the pi-normalized Hermitian metric. Genuine circle units receive principal logarithms via arg*i; selecting one place per tensor factor gives direct-sum and pure-tensor representatives whose packet unit-ball membership is derived from the summand, direct-sum, and tensor metric equations. Each unit is canonically a point of an explicit projective system of open-annulus neighborhoods with restricted ambient holomorphic and group germs and a proved selected connected component. An adjacent archimedean log-link is only a partial relation on these semi-germ core points. Lean recursively derives its domains and ranges, the participating endpoint-ball subset, and relational surjectivity back onto the source domain. Direct Kummer containment for both circle-unit tensors and arbitrary selected local radius-pi tensors follows from vertical transport of the full packet unit ball. Thus VerticalUpperSemiData accepts neither arbitrary archimedean subgroups, multi-step domains, preimage sets, maps, surjectivity proofs, nor direct containments. The full Aut_hol(U) assignment and rigidity theorem for compatible semi-germ automorphisms remain open. Constructing the adjacent finite and infinite relations from IUT II Corollaries 4.5-4.6 and the Gaussian log-theta lattice, together with the bad-prime input, also remains open.",
     clause "III.3.7" .iutIII "IUT III, Proposition 3.7"
       ["IUTIIITheorem311ConstructedSource"] .unformalized
       "The cited vertical compatibility input is not formalized.",
@@ -1610,6 +1632,11 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceTheorem311Ind3System.nonarch_logKummer_contained",
         "SourceTheorem311Ind3System.nonarch_logKummer_contained_of_mem_range",
         "SourceTheorem311Ind3System.logShellRegion_eq_unitBall",
+        "SourceAutHolomorphicSemiGerm.neighborhoodSystem",
+        "SourceAutHolomorphicSemiGerm.iInter_neighborhood_eq_unitCircle",
+        "SourceAutHolomorphicSemiGerm.exists_neighborhood_subset_of_mem",
+        "SourceAutHolomorphicSemiGerm.innerSide_eq_connectedComponentIn",
+        "SourceArchimedeanPacketUnitData.UnitTuple.semiGermUnit",
         "SourceTheorem311Ind3System.archLogIterateRelation",
         "SourceTheorem311Ind3System.archLogIterateDomain",
         "SourceTheorem311Ind3System.archLogIterateRange",
@@ -1625,7 +1652,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceTheorem311Ind3System.logVolume_eq_common",
         "SourceTheorem311Ind3System.logVolume_eq_logVolume"]
       .partialImplementation
-      "Ind3 is expressed relative to one fixed vertically coric n-circle container. A concrete vertical family derives every packet, direct Kummer isomorphism, integral-region image, finite-stage volume, normalized functional, and source log-shell region. At finite places it derives the genuine invariant-unit tensor subgroup, adjacent graph, every positive iterate, the m-r to m equation, and Kummer containment. At infinite places the Definition 1.1 radius-pi disk is the unit ball of the pi-normalized Hermitian metric. Actual circle units, their arg*i principal logarithms, selected-place direct sums, and pure tensors are constructed. From only adjacent circle-unit relations Lean derives all iterates, domains/ranges, the endpoint-ball subset, relational surjectivity, and direct containment of unit and local-ball tensors. VerticalUpperSemiData therefore supplies only adjacent finite and infinite unit correspondences; it has no arbitrary archimedean subgroup, domain, preimage, iterate map, surjectivity, or containment fields. Equality with the common finite-stage normalized value and independence of m follow. The Aut-holomorphic semi-germ projective systems surrounding the pointwise circle-unit core are not yet constructed. Constructing the adjacent relations from Psi_cns and the Gaussian log-theta lattice, the Galois-invariant tensor actions, and the remaining bad-prime data also remains open.",
+      "Ind3 is expressed relative to one fixed vertically coric n-circle container. A concrete vertical family derives every packet, direct Kummer isomorphism, integral-region image, finite-stage volume, normalized functional, and source log-shell region. At finite places it derives the genuine invariant-unit tensor subgroup, adjacent graph, every positive iterate, the m-r to m equation, and Kummer containment. At infinite places the Definition 1.1 radius-pi disk is the unit ball of the pi-normalized Hermitian metric. Actual circle units, their arg*i principal logarithms, selected-place direct sums, and pure tensors are constructed. The units are canonically promoted to the exact S1 core of an antitone open-annulus projective system whose restricted holomorphic and ambient group germs and selected connected component are constructed. From only adjacent relations on these core points Lean derives all iterates, domains/ranges, the endpoint-ball subset, relational surjectivity, and direct containment of unit and local-ball tensors. VerticalUpperSemiData therefore supplies only adjacent finite and infinite unit correspondences; it has no arbitrary archimedean subgroup, domain, preimage, iterate map, surjectivity, or containment fields. Equality with the common finite-stage normalized value and independence of m follow. Formalizing the full Aut_hol(U) group assignment and proving rigidity of compatible holomorphic semi-germ automorphisms remain open. Constructing the adjacent relations from Psi_cns and the Gaussian log-theta lattice, the Galois-invariant tensor actions, and the remaining bad-prime data also remains open.",
     clause "III.3.11(iii).horizontal" .iutIII "IUT III, Theorem 3.11(iii): horizontal theta link"
       ["SourceHorizontalKummerCompatibility",
         "SourceHorizontalKummerCompatibility.commutes",
@@ -1703,8 +1730,8 @@ def clauseIdsWithStatus (status : ClauseStatus) : List String :=
   m1m3PaperLedger.filterMap fun entry =>
     if entry.status = status then some entry.id else none
 
-/-- The source-closure ledger contains 110 separately audited clauses. -/
-theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 110 :=
+/-- The source-closure ledger contains 111 separately audited clauses. -/
+theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 111 :=
   rfl
 
 /-- No source clause occurs twice in the direct-citation ledger. -/
@@ -1712,9 +1739,9 @@ theorem m1m3PaperLedger_ids_nodup :
     (m1m3PaperLedger.map PaperClause.id).Nodup := by
   decide
 
-/-- Eighty-one clauses currently have a genuine but incomplete implementation. -/
+/-- Eighty-two clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 81 :=
+    (clauseIdsWithStatus .partialImplementation).length = 82 :=
   rfl
 
 /-- Five clauses currently point only to explicitly classified toy models. -/

@@ -572,6 +572,22 @@
   \lean{Iut.SourcePacketIntegralConstruction.logShellRegion_eq_unitBall}
   \lean{Iut.SourceArchimedeanLogShellDefinition.exponential_principalLog}
   \lean{Iut.SourceArchimedeanLogShellDefinition.principalLog_mem_unitBall}
+  \lean{Iut.SourceAutHolomorphicSemiGerm.neighborhoodSystem}
+  \lean{Iut.SourceAutHolomorphicSemiGerm.iInter_neighborhood_eq_unitCircle}
+  \lean{Iut.SourceAutHolomorphicSemiGerm.exists_neighborhood_subset_of_mem}
+  \lean{Iut.SourceAutHolomorphicSemiGerm.multiplication_holomorphicOn_levels}
+  \lean{Iut.SourceAutHolomorphicSemiGerm.multiplication_tendsto_unitNeighborhoodFilter}
+  \lean{Iut.SourceAutHolomorphicSemiGerm.inversion_holomorphicAtLevel}
+  \lean{Iut.SourceAutHolomorphicSemiGerm.inversion_tendsto_unitNeighborhoodFilter}
+  \lean{Iut.SourceAutHolomorphicSemiGerm.puncturedNeighborhood_eq_inner_union_outer}
+  \lean{Iut.SourceAutHolomorphicSemiGerm.innerSide_eq_connectedComponentIn}
+  \lean{Iut.SourceAutHolomorphicSemiGerm.outerSide_eq_connectedComponentIn}
+  \lean{Iut.SourceArchimedeanLogShellDefinition.semiGermSelectedSide_eq_connectedComponentIn}
+  \lean{Iut.SourceArchimedeanLogShellDefinition.semiGermNeighborhoodSystem_cofinal}
+  \lean{Iut.SourceArchimedeanLogShellDefinition.semiGermMultiplication_tendsto}
+  \lean{Iut.SourceArchimedeanLogShellDefinition.semiGermInversion_tendsto}
+  \lean{Iut.SourceArchimedeanPacketUnitData.summandSemiGermNeighborhoodSystem}
+  \lean{Iut.SourceArchimedeanPacketUnitData.UnitTuple.semiGermUnit}
   \lean{Iut.SourceArchimedeanPacketUnitData.principalLogTensor_mem_unitBall}
   \lean{Iut.SourceArchimedeanPacketLogLinkStep}
   \lean{Iut.SourceGaloisLocalUnitData}
@@ -662,17 +678,28 @@
   ball for every genuine \(S^1\)-unit and proves that exponentiating recovers
   the unit.  Choosing one place per tensor factor, the direct-sum and tensor
   metric equations put the resulting pure unit tensor, and every selected
-  local radius-\(\pi\) tensor, in the packet unit ball.  An infinite-place
-  log-link step is only a partial correspondence on these circle-unit tuples.
+  local radius-\(\pi\) tensor, in the packet unit ball.  Each unit is also
+  canonically a point of the exact \(S^1\) core of an antitone projective system
+  of open annuli.  Lean identifies their intersection with \(S^1\) and proves
+  that they are cofinal among all neighborhoods of \(S^1\), restricts ambient
+  complex differentiability to every level, proves that ambient multiplication
+  and inversion preserve the neighborhood filters, and proves that deleting
+  \(S^1\) leaves the two radial
+  connected components.  The component determined by
+  \(\mathcal O^{\triangleright}_{\mathbb C}\setminus S^1\) is selected by a
+  connected-component theorem rather than an arbitrary input.  An
+  infinite-place log-link step is only a partial correspondence on these
+  semi-germ core-point tuples.
   Recursive composition derives every positive iterate, its domain and range,
   the participating endpoint-ball subset, and relational surjectivity onto the
   source domain.  Direct Kummer containment follows from the full vertical
   unit-ball image.  Thus the concrete Ind3 constructor accepts no arbitrary
   archimedean subgroup, multi-step domain, preimage set, iterate map,
-  surjectivity proof, or direct containment.  This construction is the
-  pointwise circle-unit core; the surrounding Aut-holomorphic semi-germ
-  neighborhood projective systems of Remark~1.1.1(ii) are not yet constructed.
-  Equality to the common
+  surjectivity proof, or direct containment.  The complete
+  \(\operatorname{Aut}_{\mathrm{hol}}(U)\) assignment of
+  \emph{Absolute Anabelian Topics III}, Definition~2.1, its local-morphism
+  category, and the rigidity theorem excluding every nonidentity compatible
+  holomorphic semi-germ automorphism are not yet formalized.  Equality to the common
   measure-derived log-volume implies independence of \(m\).  A multiplicative log-link into
   a rational module provably kills roots of unity, so root-equivalent inputs
   have the same additive log image; this also gives the stated bad-prime
@@ -689,9 +716,10 @@
   direct unit-log containment are constructed from the typed lattice data.
   Constructing that lattice data, its summand unit/log inputs, splitting
   monoids, fields, and Frobenioids from the preceding source theorems remains
-  open, as do construction of the archimedean semi-germ systems, the adjacent
-  finite and infinite unit correspondences, and the four horizontal
-  compatibility constructors.
+  open, as do the complete Aut-holomorphic assignment and rigidity theorem,
+  construction of the adjacent finite and infinite unit correspondences from
+  the Gaussian log-theta lattice, and the four horizontal compatibility
+  constructors.
 \end{definition}
 
 \begin{definition}[Indeterminacy generator interface]

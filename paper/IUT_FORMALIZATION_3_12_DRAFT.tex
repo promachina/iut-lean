@@ -1136,20 +1136,30 @@ At an infinite place, Lean models the source units as genuine elements of
 unit ball and exponentiates back to \(z\).  Selecting one place in each tensor
 factor produces actual direct-sum and pure-tensor representatives; their
 packet-unit-ball membership follows from the local, direct-sum, and tensor
-metric equations.  An adjacent log-link is a partial relation on these circle
-units.  Lean recursively derives every positive iterate, its domain and range,
+metric equations.  Each unit is also canonically a point of the exact \(S^1\)
+core of an antitone projective system of open annuli.  Lean proves that the
+annuli have intersection \(S^1\) and are cofinal among all neighborhoods of
+\(S^1\), restricts ambient complex differentiability to every level, proves
+that ambient multiplication and inversion preserve the neighborhood filters,
+and proves that deleting \(S^1\) leaves the two radial connected components.
+The component determined by
+\(\mathcal O^{\triangleright}_{\mathbb C}\setminus S^1\) is selected by a
+connected-component theorem rather than an arbitrary input.  An adjacent
+log-link is a partial relation on these semi-germ core points.  Lean recursively
+derives every positive iterate, its domain and range,
 the participating endpoint-ball subset, and relational surjectivity onto the
 source domain.  Direct Kummer containment of both principal unit tensors and
 arbitrary selected local radius-\(\pi\) tensors follows from the proved full
 vertical unit-ball image.  Consequently the concrete Ind3 boundary accepts no
 arbitrary archimedean subgroup, multi-step domain, preimage set, iterate map,
-surjectivity proof, or direct containment.  This is the pointwise circle-unit
-core; the Aut-holomorphic semi-germ neighborhood projective systems of
-Remark~1.1.1(ii) have not yet been constructed.  Construction of the finite
-summand unit/log data from the IUT~II \(\Psi_{\rm cns}\) objects, the
-archimedean semi-germ systems, and the adjacent finite and infinite unit
-correspondences from the Gaussian log-theta lattice remains a source
-obligation.
+surjectivity proof, or direct containment.  The complete
+\(\operatorname{Aut}_{\mathrm{hol}}(U)\) assignment of
+\emph{Absolute Anabelian Topics III}, Definition~2.1, its local-morphism
+category, and the rigidity theorem excluding every nonidentity compatible
+holomorphic semi-germ automorphism are not yet formalized.  Construction of the
+finite summand unit/log data from the IUT~II \(\Psi_{\rm cns}\) objects and of
+the adjacent finite and infinite unit correspondences from the Gaussian
+log-theta lattice remains a source obligation.
 
 The largest remaining IUT III task is to enrich this finite route with the
 analytic common-container, holomorphic-hull, determinant, local-field, and

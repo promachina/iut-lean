@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: IUT Lean formalization contributors
 -/
 import Iut.Foundations.Frobenioid
+import Iut.Foundations.SourceArchimedeanSemiGerm
 import Iut.Foundations.SourceFThetaBridge
 import Iut.Foundations.SourceProcession
 import Iut.Foundations.SourceThetaEvaluation
@@ -4211,6 +4212,102 @@ theorem image_unitBall_eq_rotationOrbit
     simpa only [source, definition.complexEquiv.apply_symm_apply,
       Metric.mem_closedBall, dist_zero_right] using hvalue
 
+/-- The canonical Aut-holomorphic semi-germ system attached to this log shell. -/
+noncomputable def semiGermNeighborhoodSystem
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (_definition : SourceArchimedeanLogShellDefinition M integral) :
+    ℕᵒᵖ ⥤ TopCat :=
+  SourceAutHolomorphicSemiGerm.neighborhoodSystem
+
+/-- The attached annuli are cofinal among neighborhoods of their unit core. -/
+theorem semiGermNeighborhoodSystem_cofinal
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (_definition : SourceArchimedeanLogShellDefinition M integral)
+    {region : Set ℂ}
+    (hregion :
+      region ∈ SourceAutHolomorphicSemiGerm.unitNeighborhoodFilter) :
+    ∃ level : ℕ,
+      SourceAutHolomorphicSemiGerm.neighborhood level ⊆ region :=
+  SourceAutHolomorphicSemiGerm.exists_neighborhood_subset_of_mem hregion
+
+/-- The pointwise unit core of the attached semi-germ. -/
+def semiGermUnitCore
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (_definition : SourceArchimedeanLogShellDefinition M integral) : Set ℂ :=
+  SourceAutHolomorphicSemiGerm.unitCircle
+
+/-- The source-selected component `O^triangleright_C \ S^1` at every level. -/
+def semiGermSelectedSide
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (_definition : SourceArchimedeanLogShellDefinition M integral)
+    (level : ℕ) : Set ℂ :=
+  SourceAutHolomorphicSemiGerm.innerSide level
+
+/-- The selected side is an actual connected component, not a named subset. -/
+theorem semiGermSelectedSide_eq_connectedComponentIn
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (definition : SourceArchimedeanLogShellDefinition M integral)
+    (level : ℕ) :
+    definition.semiGermSelectedSide level =
+      connectedComponentIn
+        (SourceAutHolomorphicSemiGerm.puncturedNeighborhood level)
+        (SourceAutHolomorphicSemiGerm.innerBasepoint level) :=
+  SourceAutHolomorphicSemiGerm.innerSide_eq_connectedComponentIn level
+
+/-- Holomorphicity on a semi-germ level is inherited from `ℂ`. -/
+def IsHolomorphicOnSemiGermLevel
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (_definition : SourceArchimedeanLogShellDefinition M integral)
+    (level : ℕ) (map : ℂ → ℂ) : Prop :=
+  SourceAutHolomorphicSemiGerm.IsHolomorphicAtLevel level map
+
+/-- The multiplication germ attached to this log shell is the ambient one. -/
+noncomputable def semiGermMultiplication
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (_definition : SourceArchimedeanLogShellDefinition M integral) :
+    Filter.Germ
+      (nhdsSet
+        (SourceAutHolomorphicSemiGerm.unitCircle ×ˢ
+          SourceAutHolomorphicSemiGerm.unitCircle)) ℂ :=
+  SourceAutHolomorphicSemiGerm.multiplicationGerm
+
+/-- The inverse germ attached to this log shell is the ambient one. -/
+noncomputable def semiGermInversion
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (_definition : SourceArchimedeanLogShellDefinition M integral) :
+    Filter.Germ SourceAutHolomorphicSemiGerm.unitNeighborhoodFilter ℂ :=
+  SourceAutHolomorphicSemiGerm.inversionGerm
+
+/-- The attached multiplication germ preserves the unit-core neighborhood filter. -/
+theorem semiGermMultiplication_tendsto
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (_definition : SourceArchimedeanLogShellDefinition M integral) :
+    Filter.Tendsto SourceAutHolomorphicSemiGerm.multiplication
+      (nhdsSet
+        (SourceAutHolomorphicSemiGerm.unitCircle ×ˢ
+          SourceAutHolomorphicSemiGerm.unitCircle))
+      SourceAutHolomorphicSemiGerm.unitNeighborhoodFilter :=
+  SourceAutHolomorphicSemiGerm.multiplication_tendsto_unitNeighborhoodFilter
+
+/-- The attached inversion germ preserves the unit-core neighborhood filter. -/
+theorem semiGermInversion_tendsto
+    {M : SourceTopologicalQModule.{u}}
+    {integral : SourceArchimedeanIntegralStructure M}
+    (_definition : SourceArchimedeanLogShellDefinition M integral) :
+    Filter.Tendsto SourceAutHolomorphicSemiGerm.inversion
+      SourceAutHolomorphicSemiGerm.unitNeighborhoodFilter
+      SourceAutHolomorphicSemiGerm.unitNeighborhoodFilter :=
+  SourceAutHolomorphicSemiGerm.inversion_tendsto_unitNeighborhoodFilter
+
 end SourceArchimedeanLogShellDefinition
 
 /-- The place-indexed source construction of a mono-analytic log-shell. -/
@@ -4292,6 +4389,20 @@ structure UnitTuple
     (_data : SourceArchimedeanPacketUnitData packet construction) where
   place : ∀ _factor : Fin (j + 1), packet.place
   unit : ∀ _factor : Fin (j + 1), Circle
+
+/-- The semi-germ system in a summand is derived from its source log shell. -/
+noncomputable def summandSemiGermNeighborhoodSystem
+    (data : SourceArchimedeanPacketUnitData packet construction)
+    (factor : Fin (j + 1)) (place : packet.place) :
+    ℕᵒᵖ ⥤ TopCat :=
+  (data.summandDefinition factor place).semiGermNeighborhoodSystem
+
+/-- A packet unit as a point of the actual semi-germ core. -/
+def UnitTuple.semiGermUnit
+    {data : SourceArchimedeanPacketUnitData packet construction}
+    (units : data.UnitTuple) (factor : Fin (j + 1)) :
+    SourceAutHolomorphicSemiGerm.unitCircle :=
+  SourceAutHolomorphicSemiGerm.circleEquivUnitCore (units.unit factor)
 
 /-- Embed one selected local value into its place-indexed direct-sum factor. -/
 noncomputable def factorValue
@@ -4766,7 +4877,8 @@ structure SourceArchimedeanPacketLogLinkStep
   placeEquiv : source.place ≃ target.place
   related :
     ∀ (factor : Fin (j + 1)) (place : source.place),
-      Circle -> Circle -> Prop
+      SourceAutHolomorphicSemiGerm.unitCircle ->
+        SourceAutHolomorphicSemiGerm.unitCircle -> Prop
 
 namespace SourceArchimedeanPacketLogLinkStep
 
@@ -4789,7 +4901,7 @@ def UnitTuplesRelated
   ∀ factor,
     targetUnits.place factor = step.placeEquiv (sourceUnits.place factor) ∧
       step.related factor (sourceUnits.place factor)
-        (sourceUnits.unit factor) (targetUnits.unit factor)
+        (sourceUnits.semiGermUnit factor) (targetUnits.semiGermUnit factor)
 
 end SourceArchimedeanPacketLogLinkStep
 
