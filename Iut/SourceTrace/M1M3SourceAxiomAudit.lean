@@ -130,6 +130,15 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceArchimedeanTimesMuSystemEquivalence.trans
 #print axioms
   Iut.SourceArchimedeanTimesMuSystemEquivalence.carrierNaturalTransformation_app_isEquivalence
+#print axioms Iut.SourceFTimesMuPrimeStripEquivalence.trans
+#print axioms Iut.SourceFrobenioidEquivalence.trans
+#print axioms Iut.SourceFGloballyRealifiedTimesMuPrimeStripEquivalence.trans
+#print axioms
+  Iut.SourceFGloballyRealifiedTimesMuPrimeStripEquivalence.localPilotCharacter_compatible
+#print axioms
+  Iut.SourceFGloballyRealifiedTimesMuPrimeStripEquivalence.pilotObjectIso
+#print axioms
+  Iut.SourceFGloballyRealifiedTimesMuPrimeStripEquivalence.pilotObject_arithmeticDegree_compatible
 #print axioms Iut.SourceModelFrobenioid.gpPullback_id
 #print axioms Iut.SourceModelFrobenioid.gpPullback_comp
 #print axioms Iut.SourceModelFrobenioid.Input.gpPullback_mem_birationalDivisors

@@ -1211,4 +1211,401 @@ theorem carrierNaturalTransformation_app_isEquivalence
 
 end SourceArchimedeanTimesMuSystemEquivalence
 
+/-! ## Place-indexed and global maps -/
+
+/-- A place-indexed isomorphism of all Definition 4.9(vi)--(vii) constituents. -/
+structure SourceFTimesMuPrimeStripEquivalence
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    {sourceUnderlying targetUnderlying :
+      SourceFMonoAnalyticPrimeStrip models}
+    (source : SourceFTimesMuPrimeStrip sourceUnderlying)
+    (target : SourceFTimesMuPrimeStrip targetUnderlying) where
+  finite :
+    ∀ v, SourceFiniteTimesMuKummerFrobenioidEquivalence
+      (source.finite v) (target.finite v)
+  archimedean :
+    ∀ v, SourceArchimedeanTimesMuSystemEquivalence
+      (source.archimedean v) (target.archimedean v)
+
+namespace SourceFTimesMuPrimeStripEquivalence
+
+variable
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    {sourceUnderlying middleUnderlying targetUnderlying :
+      SourceFMonoAnalyticPrimeStrip models}
+    {source : SourceFTimesMuPrimeStrip sourceUnderlying}
+    {middle : SourceFTimesMuPrimeStrip middleUnderlying}
+    {target : SourceFTimesMuPrimeStrip targetUnderlying}
+
+/-- Identity place-indexed isomorphism. -/
+noncomputable def refl
+    (source : SourceFTimesMuPrimeStrip sourceUnderlying) :
+    SourceFTimesMuPrimeStripEquivalence source source where
+  finite v := SourceFiniteTimesMuKummerFrobenioidEquivalence.refl
+    (source.finite v)
+  archimedean v := SourceArchimedeanTimesMuSystemEquivalence.refl
+    (source.archimedean v)
+
+/-- Composition of place-indexed isomorphisms. -/
+noncomputable def trans
+    (first : SourceFTimesMuPrimeStripEquivalence source middle)
+    (second : SourceFTimesMuPrimeStripEquivalence middle target) :
+    SourceFTimesMuPrimeStripEquivalence source target where
+  finite v := (first.finite v).trans (second.finite v)
+  archimedean v := (first.archimedean v).trans (second.archimedean v)
+
+end SourceFTimesMuPrimeStripEquivalence
+
+/--
+A structure-preserving equivalence of Frobenioid presentations, retaining the
+base, divisor, Frobenius-degree, and FSM structures used by global
+realification.
+-/
+structure SourceFrobenioidEquivalence
+    (source target : FrobenioidPresentation.{u}) where
+  carrier : CategoryTheory.Equivalence source.carrier target.carrier
+  base : CategoryTheory.Equivalence source.baseCategory target.baseCategory
+  base_compatible :
+    source.preFrobenioid.base ⋙ base.functor =
+      carrier.functor ⋙ target.preFrobenioid.base
+  divisor :
+    ∀ X : source.carrier,
+      (source.preFrobenioid.divisorMonoid.obj
+        (source.preFrobenioid.base.obj X)).carrier ≃+
+      (target.preFrobenioid.divisorMonoid.obj
+        (target.preFrobenioid.base.obj (carrier.functor.obj X))).carrier
+  divisor_compatible :
+    ∀ {X Y : source.carrier} (map : X ⟶ Y),
+      divisor X (source.preFrobenioid.divisor map) =
+        target.preFrobenioid.divisor (carrier.functor.map map)
+  frobeniusDegree_compatible :
+    ∀ {X Y : source.carrier} (map : X ⟶ Y),
+      target.preFrobenioid.frobeniusDegree (carrier.functor.map map) =
+        source.preFrobenioid.frobeniusDegree map
+  fsm_compatible :
+    ∀ {X Y : source.baseCategory} (map : X ⟶ Y),
+      source.isFSM map -> target.isFSM (base.functor.map map)
+
+namespace SourceFrobenioidEquivalence
+
+variable {source middle target : FrobenioidPresentation.{u}}
+
+/-- Identity structure-preserving Frobenioid equivalence. -/
+def refl (source : FrobenioidPresentation.{u}) :
+    SourceFrobenioidEquivalence source source where
+  carrier := CategoryTheory.Equivalence.refl
+  base := CategoryTheory.Equivalence.refl
+  base_compatible :=
+    (Functor.comp_id source.preFrobenioid.base).trans
+      (Functor.id_comp source.preFrobenioid.base).symm
+  divisor _ := AddEquiv.refl _
+  divisor_compatible _ := rfl
+  frobeniusDegree_compatible _ := rfl
+  fsm_compatible _ hmap := hmap
+
+/-- Composition of structure-preserving Frobenioid equivalences. -/
+def trans
+    (first : SourceFrobenioidEquivalence source middle)
+    (second : SourceFrobenioidEquivalence middle target) :
+    SourceFrobenioidEquivalence source target where
+  carrier := first.carrier.trans second.carrier
+  base := first.base.trans second.base
+  base_compatible := by
+    change
+      source.preFrobenioid.base ⋙
+          (first.base.functor ⋙ second.base.functor) =
+        (first.carrier.functor ⋙ second.carrier.functor) ⋙
+          target.preFrobenioid.base
+    rw [← Functor.assoc]
+    rw [first.base_compatible]
+    rw [Functor.assoc]
+    rw [second.base_compatible]
+    rw [← Functor.assoc]
+  divisor X :=
+    (first.divisor X).trans (second.divisor (first.carrier.functor.obj X))
+  divisor_compatible map := by
+    change
+      second.divisor (first.carrier.functor.obj _)
+          (first.divisor _ (source.preFrobenioid.divisor map)) = _
+    rw [first.divisor_compatible]
+    rw [second.divisor_compatible]
+    rfl
+  frobeniusDegree_compatible map := by
+    change
+      target.preFrobenioid.frobeniusDegree
+          (second.carrier.functor.map (first.carrier.functor.map map)) = _
+    rw [second.frobeniusDegree_compatible]
+    rw [first.frobeniusDegree_compatible]
+  fsm_compatible map hmap :=
+    second.fsm_compatible _ (first.fsm_compatible map hmap)
+
+end SourceFrobenioidEquivalence
+
+/--
+An isomorphism of globally realified `F^times-mu` prime strips from
+Definition 4.9(viii).  The reconstruction square is required for every tuple,
+so compatibility of the distinguished pilot is derived below.
+-/
+structure SourceFGloballyRealifiedTimesMuPrimeStripEquivalence
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    (source target :
+      SourceFGloballyRealifiedTimesMuPrimeStrip models) where
+  global :
+    SourceFrobenioidEquivalence
+      source.global.globalFrobenioid target.global.globalFrobenioid
+  prime : source.global.Prime ≃ target.global.Prime
+  prime_compatible :
+    ∀ value,
+      target.global.primeEquivSelectedPlace (prime value) =
+        source.global.primeEquivSelectedPlace value
+  localEquivalence :
+    SourceFTimesMuPrimeStripEquivalence
+      source.localStrip target.localStrip
+  characteristicLocal :
+    ∀ v, TopologicalMonoidIso
+      (source.global.characteristicLocal v)
+      (target.global.characteristicLocal v)
+  realifiedLocal :
+    ∀ v, TopologicalMonoidIso
+      (source.global.realifiedLocal v)
+      (target.global.realifiedLocal v)
+  rho_compatible :
+    ∀ v value,
+      (realifiedLocal v).toHom ((source.global.rho v).toHom value) =
+        (target.global.rho v).toHom ((characteristicLocal v).toHom value)
+  badGenerator_compatible :
+    ∀ v : SourceFTimesMuBadPlace theta,
+      (localEquivalence.finite v.1).coverPair.arithmeticMonoid
+          (source.pilot.badGenerator v).1 =
+        (target.pilot.badGenerator v).1
+  characteristicCurrency_compatible :
+    ∀ v : SourceFTimesMuBadPlace theta,
+      (characteristicLocal
+          (sourceTimesMuFiniteToSelectedPlace v.1)).toHom
+          (source.pilot.characteristicCurrencyIso v
+            (source.pilot.badGenerator v)) =
+        target.pilot.characteristicCurrencyIso v
+          ⟨(localEquivalence.finite v.1).coverPair.arithmeticMonoid
+              (source.pilot.badGenerator v).1,
+            ((localEquivalence.finite v.1).characteristic_compatible
+              (source.pilot.badGenerator v).1).mp
+                (source.pilot.badGenerator v).2⟩
+  reconstruct_compatible :
+    ∀ tuple :
+        (∀ v : SourceFTimesMuBadPlace theta,
+          (source.global.realifiedLocal
+            (sourceTimesMuFiniteToSelectedPlace v.1)).carrier),
+      global.carrier.functor.obj (source.pilot.reconstruct tuple) ≅
+        target.pilot.reconstruct
+          (fun v =>
+            (realifiedLocal
+              (sourceTimesMuFiniteToSelectedPlace v.1)).toHom (tuple v))
+  arithmeticDegree_compatible :
+    ∀ value : source.global.globalFrobenioid.carrier,
+      target.pilot.arithmeticDegree (global.carrier.functor.obj value) =
+        source.pilot.arithmeticDegree value
+
+namespace SourceFGloballyRealifiedTimesMuPrimeStripEquivalence
+
+variable
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    {source middle target :
+      SourceFGloballyRealifiedTimesMuPrimeStrip models}
+
+/-- Identity globally realified isomorphism. -/
+noncomputable def refl
+    (source : SourceFGloballyRealifiedTimesMuPrimeStrip models) :
+    SourceFGloballyRealifiedTimesMuPrimeStripEquivalence source source where
+  global := SourceFrobenioidEquivalence.refl _
+  prime := Equiv.refl _
+  prime_compatible _ := rfl
+  localEquivalence :=
+    SourceFTimesMuPrimeStripEquivalence.refl source.localStrip
+  characteristicLocal v :=
+    TopologicalMonoidIso.refl (source.global.characteristicLocal v)
+  realifiedLocal v :=
+    TopologicalMonoidIso.refl (source.global.realifiedLocal v)
+  rho_compatible _ _ := rfl
+  badGenerator_compatible _ := rfl
+  characteristicCurrency_compatible _ := rfl
+  reconstruct_compatible _ := Iso.refl _
+  arithmeticDegree_compatible _ := rfl
+
+/-- Composition of globally realified isomorphisms. -/
+noncomputable def trans
+    (first :
+      SourceFGloballyRealifiedTimesMuPrimeStripEquivalence source middle)
+    (second :
+      SourceFGloballyRealifiedTimesMuPrimeStripEquivalence middle target) :
+    SourceFGloballyRealifiedTimesMuPrimeStripEquivalence source target where
+  global := first.global.trans second.global
+  prime := first.prime.trans second.prime
+  prime_compatible value := by
+    change
+      target.global.primeEquivSelectedPlace
+          (second.prime (first.prime value)) = _
+    rw [second.prime_compatible]
+    rw [first.prime_compatible]
+  localEquivalence :=
+    first.localEquivalence.trans second.localEquivalence
+  characteristicLocal v :=
+    (first.characteristicLocal v).trans (second.characteristicLocal v)
+  realifiedLocal v :=
+    (first.realifiedLocal v).trans (second.realifiedLocal v)
+  rho_compatible v value := by
+    change
+      (second.realifiedLocal v).toHom
+          ((first.realifiedLocal v).toHom
+            ((source.global.rho v).toHom value)) = _
+    rw [first.rho_compatible]
+    rw [second.rho_compatible]
+    rfl
+  badGenerator_compatible v := by
+    change
+      (second.localEquivalence.finite v.1).coverPair.arithmeticMonoid
+          ((first.localEquivalence.finite v.1).coverPair.arithmeticMonoid
+            (source.pilot.badGenerator v).1) = _
+    rw [first.badGenerator_compatible]
+    rw [second.badGenerator_compatible]
+  characteristicCurrency_compatible v := by
+    let firstMappedGenerator :
+        (middle.localStrip.finite v.1).input.characteristic :=
+      ⟨(first.localEquivalence.finite v.1).coverPair.arithmeticMonoid
+          (source.pilot.badGenerator v).1,
+        ((first.localEquivalence.finite v.1).characteristic_compatible
+          (source.pilot.badGenerator v).1).mp
+            (source.pilot.badGenerator v).2⟩
+    have hgenerator :
+        firstMappedGenerator = middle.pilot.badGenerator v := by
+      apply Subtype.ext
+      exact first.badGenerator_compatible v
+    change
+      (second.characteristicLocal _).toHom
+          ((first.characteristicLocal _).toHom
+            (source.pilot.characteristicCurrencyIso v
+              (source.pilot.badGenerator v))) = _
+    rw [first.characteristicCurrency_compatible]
+    change
+      (second.characteristicLocal _).toHom
+          (middle.pilot.characteristicCurrencyIso v firstMappedGenerator) = _
+    rw [hgenerator]
+    rw [second.characteristicCurrency_compatible]
+    apply congrArg (target.pilot.characteristicCurrencyIso v)
+    apply Subtype.ext
+    change
+      (second.localEquivalence.finite v.1).coverPair.arithmeticMonoid
+          (middle.pilot.badGenerator v).1 =
+        (second.localEquivalence.finite v.1).coverPair.arithmeticMonoid
+          ((first.localEquivalence.finite v.1).coverPair.arithmeticMonoid
+            (source.pilot.badGenerator v).1)
+    rw [first.badGenerator_compatible]
+  reconstruct_compatible tuple :=
+    second.global.carrier.functor.mapIso
+        (first.reconstruct_compatible tuple) ≪≫
+      second.reconstruct_compatible
+        (fun v =>
+          (first.realifiedLocal
+            (sourceTimesMuFiniteToSelectedPlace v.1)).toHom (tuple v))
+  arithmeticDegree_compatible value := by
+    change
+      target.pilot.arithmeticDegree
+          (second.global.carrier.functor.obj
+            (first.global.carrier.functor.obj value)) = _
+    rw [second.arithmeticDegree_compatible]
+    rw [first.arithmeticDegree_compatible]
+
+/-- The realified bad-place character tuple commutes with a global isomorphism. -/
+theorem localPilotCharacter_compatible
+    (equivalence :
+      SourceFGloballyRealifiedTimesMuPrimeStripEquivalence source target)
+    (v : SourceFTimesMuBadPlace theta) :
+    (equivalence.realifiedLocal
+        (sourceTimesMuFiniteToSelectedPlace v.1)).toHom
+        (source.pilot.localPilotCharacter v) =
+      target.pilot.localPilotCharacter v := by
+  rw [SourceFTimesMuPilotReconstruction.localPilotCharacter]
+  rw [equivalence.rho_compatible]
+  rw [equivalence.characteristicCurrency_compatible]
+  let mappedGenerator :
+      (target.localStrip.finite v.1).input.characteristic :=
+    ⟨(equivalence.localEquivalence.finite v.1).coverPair.arithmeticMonoid
+        (source.pilot.badGenerator v).1,
+      ((equivalence.localEquivalence.finite v.1).characteristic_compatible
+        (source.pilot.badGenerator v).1).mp
+          (source.pilot.badGenerator v).2⟩
+  have hgenerator : mappedGenerator = target.pilot.badGenerator v := by
+    apply Subtype.ext
+    exact equivalence.badGenerator_compatible v
+  change
+    (target.global.rho _).toHom
+        (target.pilot.characteristicCurrencyIso v mappedGenerator) = _
+  rw [hgenerator]
+  rfl
+
+/-- The distinguished pilot object is preserved up to global Frobenioid isomorphism. -/
+noncomputable def pilotObjectIso
+    (equivalence :
+      SourceFGloballyRealifiedTimesMuPrimeStripEquivalence source target) :
+    equivalence.global.carrier.functor.obj source.pilotObject ≅
+      target.pilotObject := by
+  let comparison :=
+    equivalence.reconstruct_compatible source.pilot.localPilotCharacter
+  have hcharacters :
+      (fun v =>
+        (equivalence.realifiedLocal
+          (sourceTimesMuFiniteToSelectedPlace v.1)).toHom
+            (source.pilot.localPilotCharacter v)) =
+        target.pilot.localPilotCharacter := by
+    funext v
+    exact equivalence.localPilotCharacter_compatible v
+  rw [hcharacters] at comparison
+  exact comparison
+
+/-- Arithmetic degree of the transported pilot equals the source pilot degree. -/
+theorem pilotObject_arithmeticDegree_compatible
+    (equivalence :
+      SourceFGloballyRealifiedTimesMuPrimeStripEquivalence source target) :
+    target.pilot.arithmeticDegree
+        (equivalence.global.carrier.functor.obj source.pilotObject) =
+      source.pilot.arithmeticDegree source.pilotObject :=
+  equivalence.arithmeticDegree_compatible source.pilotObject
+
+end SourceFGloballyRealifiedTimesMuPrimeStripEquivalence
+
 end Iut
