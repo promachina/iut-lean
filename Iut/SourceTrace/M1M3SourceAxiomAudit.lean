@@ -6,7 +6,7 @@ Authors: IUT Lean formalization contributors
 import Iut.Foundations.SourceHodgeArakelovEvaluation
 import Iut.Foundations.SourceSplitKummerFrobenioid
 import Iut.Foundations.SourceArchimedeanKummerSystem
-import Iut.Foundations.SourceModelFrobenioidColimitStructure
+import Iut.Foundations.SourceModelFrobenioidBirationalDictionary
 import Iut.Foundations.SourceTheorem311
 
 open Iut
@@ -153,6 +153,23 @@ visible to Lean's axiom reporter.
   Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalFunctionEndomorphism_groupifiedDivisorClass
 #print axioms
   Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.isModelTypeForColimitBirationalization
+#print axioms Iut.SourceModelFrobenioid.BirationalObject.isIso_iff_isPreStep
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.isIso_iff_isPreStep
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_isIso_iff_coAngularPreStep
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_isPreStep_iff_isPreStep
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_isCoAngular_iff_isCoAngular
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_isBaseIso_iff_isBaseIso
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_frobeniusDegree_eq_iff
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_isOfFrobeniusType_iff
+#print axioms
+  Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.localization_map_isIsometric
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.quotientUnit_exists
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootRealization.ofRootSystem
