@@ -1246,9 +1246,13 @@ each absolute-Galois automorphism acts continuously on every stage.  The
 colimit universal property produces a continuous automorphism of the
 ind-topological carrier, proves that it is the literal algebraic action, and
 restricts it continuously in both directions to the integral monoid; identity
-and composition are proved.  Joint continuity of the profinite-group action,
-and reconstruction of the construction from the abstract \(D_v\) group,
-remain open.  Lean also
+and composition are proved.  Krull restriction to each finite Galois group is
+continuous, and its discrete topology makes finite-stage evaluation jointly
+continuous; Lean proves the same statement after restricting a stage to its
+integral monoid and including it into the ind-carrier.  A
+continuity-with-parameters theorem for this strict filtered colimit is still
+needed to deduce joint continuity on the full ind-monoid.  Reconstruction of
+the construction from the abstract \(D_v\) group also remains open.  Lean also
 constructs the fixed carrier as an actual sub-pseudo-monoid and proves that
 every product defined in the original carrier remains defined after passage
 to invariants.  It also constructs the descended action through a surjective

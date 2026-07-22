@@ -10,8 +10,9 @@ import Iut.Foundations.SourceDefinition52LocalReconstruction
 
 Every finite Galois intermediate field is stable under the absolute Galois
 group. Restriction therefore acts continuously at every finite-dimensional
-stage, and the final topology on the filtered colimit makes the induced action
-continuous on the ind-topological integral monoid.
+stage, and the final topology on the filtered colimit makes every induced
+automorphism continuous on the ind-topological integral monoid.  Joint
+continuity in the group and monoid variables is treated separately.
 -/
 
 open CategoryTheory

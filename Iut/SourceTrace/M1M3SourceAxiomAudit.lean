@@ -12,6 +12,7 @@ import Iut.Foundations.SourceTimesMuPrimeStripFullPolyIsomorphism
 import Iut.Foundations.SourceModelFrobenioidRationalNaturality
 import Iut.Foundations.SourceTheorem311
 import Iut.Foundations.SourceTheorem311Assembly
+import Iut.Foundations.SourceDefinition52LocalJointContinuity
 
 open Iut
 
@@ -52,6 +53,10 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceFinitePlaceReconstruction.carrierMulEquiv_galoisContinuousLinearMap
 #print axioms Iut.SourceFinitePlaceReconstruction.continuous_indGaloisMulAut
 #print axioms Iut.SourceFinitePlaceReconstruction.indGaloisContinuousMulEquiv_mul
+#print axioms Iut.SourceFinitePlaceReconstruction.continuous_finiteStageGaloisEvaluation
+#print axioms Iut.SourceFinitePlaceReconstruction.continuous_stageGaloisAction
+#print axioms Iut.SourceFinitePlaceReconstruction.continuous_galoisLinearMap_comp_stageToCarrier
+#print axioms Iut.SourceFinitePlaceReconstruction.continuous_indGaloisAction_comp_stageIntegralToInd
 #print axioms Iut.SourceTopologicalGroupPseudoMonoidActionPair.Iso.trans_hom
 #print axioms Iut.SourceKappaLocalizationDiagram.inclusion_injective
 #print axioms Iut.PuncturedEllipticCurveScalarExtension.curve_eq_baseChange

@@ -111,6 +111,10 @@
   \lean{Iut.SourceFinitePlaceReconstruction.carrierMulEquiv_galoisContinuousLinearMap}
   \lean{Iut.SourceFinitePlaceReconstruction.continuous_indGaloisMulAut}
   \lean{Iut.SourceFinitePlaceReconstruction.indGaloisContinuousMulEquiv_mul}
+  \lean{Iut.SourceFinitePlaceReconstruction.continuous_finiteStageGaloisEvaluation}
+  \lean{Iut.SourceFinitePlaceReconstruction.continuous_stageGaloisAction}
+  \lean{Iut.SourceFinitePlaceReconstruction.continuous_galoisLinearMap_comp_stageToCarrier}
+  \lean{Iut.SourceFinitePlaceReconstruction.continuous_indGaloisAction_comp_stageIntegralToInd}
   \lean{Iut.SourceFMonoAnalyticPrimeStrip}
   \lean{Iut.SourceFGloballyRealifiedMonoAnalyticPrimeStrip}
   \lean{Iut.sourceFPrimeStripToD}
@@ -148,9 +152,13 @@
   produces the corresponding continuous ind-automorphism, and Lean proves
   that these automorphisms satisfy the identity and composition laws and
   restrict continuously in both directions to
-  \(O_{\overline{K_v}}^\triangleright\).  Joint continuity of the profinite
-  group action, and reconstruction from the abstract \(D_v\) group, remain
-  open.
+  \(O_{\overline{K_v}}^\triangleright\).  Continuity of Krull restriction to
+  the finite Galois group, together with its discrete topology, proves joint
+  continuity of evaluation on every finite stage.  This remains true after
+  restricting a stage to its integral monoid and including it into the
+  ind-carrier.  The continuity-with-parameters theorem needed to pass these
+  stagewise results to joint continuity on the full ind-colimit, and
+  reconstruction from the abstract \(D_v\) group, remain open.
   A globally realified strip additionally carries the global Frobenioid,
   its prime/place bijection, all local characteristic and realified monoids,
   and commuting currency-exchange isomorphisms \(\rho_v\), compared

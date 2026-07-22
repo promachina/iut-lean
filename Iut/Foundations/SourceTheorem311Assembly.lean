@@ -7,6 +7,7 @@ import Iut.Foundations.SourceVerticalLogLink
 import Iut.Foundations.SourceTheorem311Horizontal
 import Iut.Foundations.SourceDefinition52LocalReconstruction
 import Iut.Foundations.SourceDefinition52LocalContinuity
+import Iut.Foundations.SourceDefinition52LocalJointContinuity
 
 /-!
 # Source assembly for IUT III, Theorem 3.11
