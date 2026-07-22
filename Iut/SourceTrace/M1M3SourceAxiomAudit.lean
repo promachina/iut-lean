@@ -6,7 +6,7 @@ Authors: IUT Lean formalization contributors
 import Iut.Foundations.SourceHodgeArakelovEvaluation
 import Iut.Foundations.SourceSplitKummerFrobenioid
 import Iut.Foundations.SourceArchimedeanKummerSystem
-import Iut.Foundations.SourceModelFrobenioidBirationalAxioms
+import Iut.Foundations.SourceModelFrobenioidColimitAxioms
 import Iut.Foundations.SourceTheorem311
 
 open Iut
@@ -136,6 +136,13 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceModelFrobenioid.BirationalObject.faithfulUpToUnits
 #print axioms Iut.SourceModelFrobenioid.BirationalObject.frobenioidAxioms
 #print axioms Iut.SourceModelFrobenioid.BirationalObject.frobenioidPresentation
+#print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.pullbackBaseSlices
+#print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.frobeniusDegreeWitness
+#print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.unitTransport
+#print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.factorizationIso
+#print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.faithfulUpToUnits
+#print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.frobenioidAxioms
+#print axioms Iut.SourceModelFrobenioid.Carrier.ColimitBirationalObject.frobenioidPresentation
 #print axioms Iut.SourceModelFrobenioid.Carrier.CoAngularPreStepOver.commonRefinement
 #print axioms Iut.SourceModelFrobenioid.Carrier.CoAngularPreStepOver.colimitComparison_surjective
 #print axioms Iut.SourceModelFrobenioid.Carrier.CoAngularPreStepOver.colimitComparison_injective

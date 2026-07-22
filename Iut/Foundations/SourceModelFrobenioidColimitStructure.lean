@@ -14,8 +14,8 @@ zero divisor monoid.  This file constructs that structure on the model, proves
 that it is of group-like and Frobenius-normalized type, and proves Definition
 4.5(i) model type for the canonical colimit localization functor.
 
-The seven Definition 1.3 axiom groups needed to package this pre-Frobenioid as
-a full `FrobenioidPresentation` remain separate obligations.
+The seven Definition 1.3 axiom groups and the resulting full presentation are
+constructed in `SourceModelFrobenioidColimitAxioms`.
 -/
 
 open CategoryTheory

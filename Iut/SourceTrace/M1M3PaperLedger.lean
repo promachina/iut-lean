@@ -197,6 +197,8 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.localizationFunctor_map_isIso_of_preStep",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.preFrobenioid",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.preFrobenioidPresentation",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.frobenioidAxioms",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.frobenioidPresentation",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.isGroupLikeType",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.groupifiedDivisorClass",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.comparisonEquivalence",
@@ -229,8 +231,8 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.birationalDivisorHom_surjective",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.birationalDivisorHom_eq_one_iff_sourceUnitImage",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.birationalDivisorSubfunctor_unique"]
-      .partialImplementation
-      "For the Theorem 5.2 model, the filtered Hom colimit, Proposition 1.11(vii) composition square, source roof formula, faithful canonical functor, pre-step inversion, and zero-monoid group-like pre-Frobenioid structure are proved. The equivalent concrete birational target satisfies all seven Definition 1.3 axiom groups. The actual colimit target is connected and totally epimorphic. The group-valued elementary categories, faithful inclusion F_(Phi^birat) to F_(Phi^gp), whole-arrow divisor-functor factorization, naturally commutative source square, unique image subfunctor, and exact rational-function divisor sequence are proved. Every morphism and object clause of Proposition 4.4(iv), including the exact base-identity roof classification, is proved. Transporting the full axiom package to the actual colimit target remains open.",
+      .sourceFaithful
+      "All four assertions are proved for the Theorem 5.2 model: the filtered Hom colimit and source composition square construct the birational category; the actual colimit is a connected, totally epimorphic, group-like Frobenioid satisfying all seven Definition 1.3 axiom groups; the unique divisor image subfunctor and exact unit kernel sequence are constructed; and every morphism and object clause of (iv), including the exact base-identity roof classification, is proved.",
     clause "FrdI.4.5(i)" .frobenioidsI
       "Frobenioids I, Definition 4.5(i)"
       ["PreFrobenioid.IsBirationallyFrobeniusNormalized",
@@ -353,6 +355,8 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.localizationFunctor_map_isIso_of_preStep",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.preFrobenioid",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.preFrobenioidPresentation",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.frobenioidAxioms",
+        "SourceModelFrobenioid.Carrier.ColimitBirationalObject.frobenioidPresentation",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.isGroupLikeType",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.rationalFunctionEquiv",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.linearBaseIdentityEndomorphism_isIso",
@@ -360,7 +364,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.isModelTypeForColimitBirationalization",
         "SourceModelFrobenioid.Carrier.ColimitBirationalObject.comparisonEquivalence"]
       .partialImplementation
-      "The model category and the equivalent concrete birational target are full Frobenioid presentations: all seven Definition 1.3 axiom groups, including slice equivalence and factorization uniqueness, are proved. The canonical Hom-colimit target is a connected, totally epimorphic, group-like, Frobenius-normalized pre-Frobenioid; source roof composition, canonical model type, objectwise rational-function equivalence, invertibility, and groupified DivB compatibility are proved. Transporting the seven axioms to that actual colimit target and naturality of the O-times isomorphism over D remain open.",
+      "The model category, concrete birational target, and actual canonical Hom-colimit target are full Frobenioid presentations. All seven Definition 1.3 axiom groups, source roof composition, canonical model type, group-like and Frobenius-normalized type, objectwise rational-function equivalence, invertibility, and groupified DivB compatibility are proved. Naturality of the O-times isomorphism over D remains open.",
     clause "FrdII.5.1" .frobenioidsII
       "Frobenioids II, Definition 5.1"
       [] .unformalized
@@ -1607,9 +1611,9 @@ theorem m1m3PaperLedger_ids_nodup :
     (m1m3PaperLedger.map PaperClause.id).Nodup := by
   decide
 
-/-- Eighty-three clauses currently have a genuine but incomplete implementation. -/
+/-- Eighty-two clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 83 :=
+    (clauseIdsWithStatus .partialImplementation).length = 82 :=
   rfl
 
 /-- Five clauses currently point only to explicitly classified toy models. -/
@@ -1622,9 +1626,10 @@ theorem unformalized_count :
     (clauseIdsWithStatus .unformalized).length = 19 :=
   rfl
 
-/-- Three clauses currently pass the clause-level source audit. -/
+/-- Four clauses currently pass the clause-level source audit. -/
 theorem sourceFaithfulClauseIds_eq :
-    sourceFaithfulClauseIds = ["FrdI.2.7", "FrdI.5.2(i)", "I.4.10"] :=
+    sourceFaithfulClauseIds =
+      ["FrdI.2.7", "FrdI.4.4", "FrdI.5.2(i)", "I.4.10"] :=
   rfl
 
 end Iut.SourceTrace
