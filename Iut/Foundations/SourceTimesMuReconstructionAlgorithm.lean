@@ -63,12 +63,61 @@ variable
     {models : IUTIThetaHodgeTheaterModels theta}
     {source middle target final : SourceFMonoAnalyticPrimeStrip models}
 
+/-- The common Examples 3.2--3.4 mono-analytic model prime strip. -/
+def model
+    (models : IUTIThetaHodgeTheaterModels theta) :
+    SourceFMonoAnalyticPrimeStrip models where
+  nonarchimedean v := (models.nonarchimedean v).fTildeSplit
+  nonarchimedeanEquivalence v :=
+    SplitFrobenioidEquivalence.refl
+      (models.nonarchimedean v).fTildeSplit
+  nonarchimedeanEquivalenceFromModel v :=
+    SplitFrobenioidEquivalence.refl
+      (models.nonarchimedean v).fTildeSplit
+  nonarchimedeanToFrom v :=
+    SplitFrobenioidEquivalence.NaturallyIsomorphic.id_comp
+      (SplitFrobenioidEquivalence.refl
+        (models.nonarchimedean v).fTildeSplit)
+  nonarchimedeanFromTo v :=
+    SplitFrobenioidEquivalence.NaturallyIsomorphic.id_comp
+      (SplitFrobenioidEquivalence.refl
+        (models.nonarchimedean v).fTildeSplit)
+  archimedean v := (models.archimedean v).fTildeMonoAnalytic
+  archimedeanEquivalence v :=
+    ArchimedeanSplitFrobenioidEquivalence.refl
+      (models.archimedean v).fTildeMonoAnalytic
+  archimedeanEquivalenceFromModel v :=
+    ArchimedeanSplitFrobenioidEquivalence.refl
+      (models.archimedean v).fTildeMonoAnalytic
+  archimedeanToFrom v :=
+    ArchimedeanSplitFrobenioidEquivalence.NaturallyIsomorphic.id_comp
+      (ArchimedeanSplitFrobenioidEquivalence.refl
+        (models.archimedean v).fTildeMonoAnalytic)
+  archimedeanFromTo v :=
+    ArchimedeanSplitFrobenioidEquivalence.NaturallyIsomorphic.id_comp
+      (ArchimedeanSplitFrobenioidEquivalence.refl
+        (models.archimedean v).fTildeMonoAnalytic)
+
 /-- Identity mono-analytic prime-strip equivalence. -/
 def refl (source : SourceFMonoAnalyticPrimeStrip models) :
     SourceFMonoAnalyticPrimeStripEquivalence source source where
   finite v := SplitFrobenioidEquivalence.refl (source.nonarchimedean v)
   archimedean v :=
     ArchimedeanSplitFrobenioidEquivalence.refl (source.archimedean v)
+
+/-- The fixed comparison from a mono-analytic strip to the common model. -/
+def toModel (source : SourceFMonoAnalyticPrimeStrip models) :
+    SourceFMonoAnalyticPrimeStripEquivalence source
+      (model models) where
+  finite v := source.nonarchimedeanEquivalence v
+  archimedean v := source.archimedeanEquivalence v
+
+/-- The fixed inverse comparison from the common model to a strip. -/
+def fromModel (target : SourceFMonoAnalyticPrimeStrip models) :
+    SourceFMonoAnalyticPrimeStripEquivalence
+      (model models) target where
+  finite v := target.nonarchimedeanEquivalenceFromModel v
+  archimedean v := target.archimedeanEquivalenceFromModel v
 
 /-- Composition of mono-analytic prime-strip equivalences. -/
 def trans
@@ -84,13 +133,8 @@ transporting both exact theater strips through their common source model.
 -/
 def canonical
     (source target : SourceFMonoAnalyticPrimeStrip models) :
-    SourceFMonoAnalyticPrimeStripEquivalence source target where
-  finite v :=
-    (source.nonarchimedeanEquivalence v).trans
-      (target.nonarchimedeanEquivalenceFromModel v)
-  archimedean v :=
-    (source.archimedeanEquivalence v).trans
-      (target.archimedeanEquivalenceFromModel v)
+    SourceFMonoAnalyticPrimeStripEquivalence source target :=
+  (toModel source).trans (fromModel target)
 
 /--
 Natural isomorphism of mono-analytic prime-strip equivalences.  Only the
@@ -306,6 +350,64 @@ theorem comp_assoc
     SourceFMonoAnalyticPrimeStripEquivalence.NaturallyIsomorphic.assoc
       firstRepresentative secondRepresentative thirdRepresentative
 
+/-- A strip-to-model comparison followed by its fixed inverse is identity. -/
+theorem toModel_fromModel
+    (source : SourceFMonoAnalyticPrimeStrip models) :
+    comp
+        (ofEquivalence
+          (SourceFMonoAnalyticPrimeStripEquivalence.toModel source))
+        (ofEquivalence
+          (SourceFMonoAnalyticPrimeStripEquivalence.fromModel source)) =
+      id source := by
+  apply Quotient.sound
+  exact
+    { finite := source.nonarchimedeanToFrom
+      archimedean := source.archimedeanToFrom }
+
+/-- A model-to-strip comparison followed by its fixed inverse is identity. -/
+theorem fromModel_toModel
+    (source : SourceFMonoAnalyticPrimeStrip models) :
+    comp
+        (ofEquivalence
+          (SourceFMonoAnalyticPrimeStripEquivalence.fromModel source))
+        (ofEquivalence
+          (SourceFMonoAnalyticPrimeStripEquivalence.toModel source)) =
+      id (SourceFMonoAnalyticPrimeStripEquivalence.model models) := by
+  apply Quotient.sound
+  exact
+    { finite := source.nonarchimedeanFromTo
+      archimedean := source.archimedeanFromTo }
+
+/-- Canonical comparisons through the common model are selected inverses. -/
+theorem canonical_inverse
+    (source target : SourceFMonoAnalyticPrimeStrip models) :
+    comp (canonical source target) (canonical target source) =
+      id source := by
+  change
+    comp
+        (comp
+          (ofEquivalence
+            (SourceFMonoAnalyticPrimeStripEquivalence.toModel source))
+          (ofEquivalence
+            (SourceFMonoAnalyticPrimeStripEquivalence.fromModel target)))
+        (comp
+          (ofEquivalence
+            (SourceFMonoAnalyticPrimeStripEquivalence.toModel target))
+          (ofEquivalence
+            (SourceFMonoAnalyticPrimeStripEquivalence.fromModel source))) =
+      id source
+  simp only [comp_assoc]
+  rw [← comp_assoc
+    (ofEquivalence
+      (SourceFMonoAnalyticPrimeStripEquivalence.fromModel target))
+    (ofEquivalence
+      (SourceFMonoAnalyticPrimeStripEquivalence.toModel target))
+    (ofEquivalence
+      (SourceFMonoAnalyticPrimeStripEquivalence.fromModel source))]
+  rw [fromModel_toModel target]
+  rw [id_comp]
+  exact toModel_fromModel source
+
 end SourceFMonoAnalyticPrimeStripFullPolyIsomorphism
 
 /-! ## Object reconstruction and functorial transport -/
@@ -418,6 +520,37 @@ def map
 
 end SourceFTimesMuReconstructionTransport
 
+namespace SourceFTimesMuPrimeStripEquivalence
+
+variable
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    {source target : SourceFMonoAnalyticPrimeStrip models}
+    {sourceTimesMu : SourceFTimesMuPrimeStrip source}
+    {targetTimesMu : SourceFTimesMuPrimeStrip target}
+
+/--
+Forget the reconstructed Kummer, quotient, and Frobenioid coordinates of a
+times-mu equivalence.  The remaining finite and archimedean maps form the
+underlying mono-analytic prime-strip equivalence.
+-/
+def underlying
+    (map : SourceFTimesMuPrimeStripEquivalence
+      sourceTimesMu targetTimesMu) :
+    SourceFMonoAnalyticPrimeStripEquivalence source target where
+  finite v := (map.finite v).underlying
+  archimedean v := (map.archimedean v).underlying
+
+end SourceFTimesMuPrimeStripEquivalence
+
 /--
 Functorial coherence for the componentwise reconstruction transport.
 The congruence field is what makes the map descend to Section 0 classes.
@@ -451,6 +584,34 @@ structure SourceFTimesMuReconstructionFunctoriality
       (second : SourceFMonoAnalyticPrimeStripEquivalence middle target),
       (transport.map (first.trans second)).NaturallyIsomorphic
         ((transport.map first).trans (transport.map second))
+
+/--
+The Corollary 4.10(iv) fullness property of unit-portion reconstruction.
+
+For every complete equivalence of two reconstructed times-mu objects, lifting
+its underlying mono-analytic equivalence recovers the original map up to the
+Section 0 structured natural-isomorphism relation.  This representative-level
+statement is strictly stronger than functoriality and implies that the induced
+map on full poly-isomorphism classes is surjective.
+-/
+structure SourceFTimesMuReconstructionFullness
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    (objects : SourceFTimesMuReconstructionObjects models)
+    (transport : SourceFTimesMuReconstructionTransport objects)
+    (source target : SourceFMonoAnalyticPrimeStrip models) where
+  map_underlying :
+    ∀ output : SourceFTimesMuPrimeStripEquivalence
+        (objects.obj source) (objects.obj target),
+      (transport.map output.underlying).NaturallyIsomorphic output
 
 /-- The complete functorial algorithm of Definition 4.9(vi). -/
 structure SourceFTimesMuReconstructionAlgorithm
@@ -536,6 +697,26 @@ theorem mapFullPolyIsomorphism_comp
   apply Quotient.sound
   exact algorithm.functoriality.map_trans
     firstRepresentative secondRepresentative
+
+/--
+Corollary 4.10(iv): the map induced by unit-portion reconstruction has the
+entire output full poly-isomorphism as its image.
+-/
+theorem mapFullPolyIsomorphism_surjective
+    {source target : SourceFMonoAnalyticPrimeStrip models}
+    (fullness : SourceFTimesMuReconstructionFullness
+      algorithm.objects algorithm.transport source target) :
+    Function.Surjective
+      (fun sourceMap :
+          SourceFMonoAnalyticPrimeStripFullPolyIsomorphism source target =>
+        algorithm.mapFullPolyIsomorphism sourceMap) := by
+  intro output
+  refine Quotient.inductionOn output ?_
+  intro representative
+  refine ⟨SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.ofEquivalence
+      representative.underlying, ?_⟩
+  apply Quotient.sound
+  exact fullness.map_underlying representative
 
 /-- A selected inverse pair remains an inverse pair after reconstruction. -/
 theorem mapFullPolyIsomorphism_inverse

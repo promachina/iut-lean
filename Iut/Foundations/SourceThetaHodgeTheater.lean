@@ -1929,6 +1929,198 @@ def trans
 
 end ArchimedeanSplitFrobenioidEquivalence
 
+/-! ## Section 0 relations for mono-analytic model comparisons -/
+
+/--
+The Section 0 relation on split-Frobenioid equivalences: carrier equivalences
+are compared by natural isomorphism and the induced permutation of the
+splitting collection is retained pointwise.
+-/
+structure SplitFrobenioidEquivalence.NaturallyIsomorphic
+    {source target : SplitFrobenioidPresentation.{u}}
+    (first second : SplitFrobenioidEquivalence source target) : Prop where
+  carrier : Nonempty (first.carrier.functor ≅ second.carrier.functor)
+  splittingIndex :
+    ∀ index,
+      first.splittingIndexEquiv index =
+        second.splittingIndexEquiv index
+
+namespace SplitFrobenioidEquivalence.NaturallyIsomorphic
+
+variable
+    {source middle target final : SplitFrobenioidPresentation.{u}}
+
+protected def refl
+    (map : SplitFrobenioidEquivalence source target) :
+    map.NaturallyIsomorphic map where
+  carrier := ⟨Iso.refl _⟩
+  splittingIndex _ := rfl
+
+protected def symm
+    {first second : SplitFrobenioidEquivalence source target}
+    (relation : first.NaturallyIsomorphic second) :
+    second.NaturallyIsomorphic first where
+  carrier := relation.carrier.map Iso.symm
+  splittingIndex index := (relation.splittingIndex index).symm
+
+protected def trans
+    {first second third : SplitFrobenioidEquivalence source target}
+    (firstSecond : first.NaturallyIsomorphic second)
+    (secondThird : second.NaturallyIsomorphic third) :
+    first.NaturallyIsomorphic third where
+  carrier := by
+    rcases firstSecond.carrier with ⟨firstIso⟩
+    rcases secondThird.carrier with ⟨secondIso⟩
+    exact ⟨firstIso.trans secondIso⟩
+  splittingIndex index :=
+    (firstSecond.splittingIndex index).trans
+      (secondThird.splittingIndex index)
+
+/-- Horizontal composition of split-Frobenioid natural-isomorphism classes. -/
+protected def comp
+    {first first' : SplitFrobenioidEquivalence source middle}
+    {second second' : SplitFrobenioidEquivalence middle target}
+    (hFirst : first.NaturallyIsomorphic first')
+    (hSecond : second.NaturallyIsomorphic second') :
+    (first.trans second).NaturallyIsomorphic
+      (first'.trans second') where
+  carrier := by
+    rcases hFirst.carrier with ⟨firstIso⟩
+    rcases hSecond.carrier with ⟨secondIso⟩
+    exact ⟨NatIso.hcomp firstIso secondIso⟩
+  splittingIndex index := by
+    change
+      second.splittingIndexEquiv
+          (first.splittingIndexEquiv index) =
+        second'.splittingIndexEquiv
+          (first'.splittingIndexEquiv index)
+    rw [hFirst.splittingIndex, hSecond.splittingIndex]
+
+/-- Associativity is the associator natural isomorphism on carriers. -/
+protected def assoc
+    (first : SplitFrobenioidEquivalence source middle)
+    (second : SplitFrobenioidEquivalence middle target)
+    (third : SplitFrobenioidEquivalence target final) :
+    ((first.trans second).trans third).NaturallyIsomorphic
+      (first.trans (second.trans third)) where
+  carrier :=
+    ⟨eqToIso (Functor.assoc first.carrier.functor
+      second.carrier.functor third.carrier.functor)⟩
+  splittingIndex _ := rfl
+
+end SplitFrobenioidEquivalence.NaturallyIsomorphic
+
+/--
+Natural isomorphism of archimedean split-Frobenioid maps.  The categorical
+part uses the Section 0 relation; the three maps of the split topological
+monoid remain actual pointwise maps.
+-/
+structure ArchimedeanSplitFrobenioidEquivalence.NaturallyIsomorphic
+    {source target : ArchimedeanSplitFrobenioidPresentation.{u}}
+    (first second :
+      ArchimedeanSplitFrobenioidEquivalence source target) : Prop where
+  frobenioid :
+    first.frobenioid.NaturallyIsomorphic second.frobenioid
+  total :
+    ∀ value,
+      first.topologicalSplitting.total.toHom value =
+        second.topologicalSplitting.total.toHom value
+  compactFactor :
+    ∀ value,
+      first.topologicalSplitting.compactFactor.toHom value =
+        second.topologicalSplitting.compactFactor.toHom value
+  noncompactFactor :
+    ∀ value,
+      first.topologicalSplitting.noncompactFactor.toHom value =
+        second.topologicalSplitting.noncompactFactor.toHom value
+
+namespace ArchimedeanSplitFrobenioidEquivalence.NaturallyIsomorphic
+
+variable
+    {source middle target final :
+      ArchimedeanSplitFrobenioidPresentation.{u}}
+
+protected def refl
+    (map : ArchimedeanSplitFrobenioidEquivalence source target) :
+    map.NaturallyIsomorphic map where
+  frobenioid := .refl _
+  total _ := rfl
+  compactFactor _ := rfl
+  noncompactFactor _ := rfl
+
+protected def symm
+    {first second :
+      ArchimedeanSplitFrobenioidEquivalence source target}
+    (relation : first.NaturallyIsomorphic second) :
+    second.NaturallyIsomorphic first where
+  frobenioid := relation.frobenioid.symm
+  total value := (relation.total value).symm
+  compactFactor value := (relation.compactFactor value).symm
+  noncompactFactor value := (relation.noncompactFactor value).symm
+
+protected def trans
+    {first second third :
+      ArchimedeanSplitFrobenioidEquivalence source target}
+    (firstSecond : first.NaturallyIsomorphic second)
+    (secondThird : second.NaturallyIsomorphic third) :
+    first.NaturallyIsomorphic third where
+  frobenioid := firstSecond.frobenioid.trans secondThird.frobenioid
+  total value :=
+    (firstSecond.total value).trans (secondThird.total value)
+  compactFactor value :=
+    (firstSecond.compactFactor value).trans
+      (secondThird.compactFactor value)
+  noncompactFactor value :=
+    (firstSecond.noncompactFactor value).trans
+      (secondThird.noncompactFactor value)
+
+/-- Composition preserves the archimedean structured relation. -/
+protected def comp
+    {first first' :
+      ArchimedeanSplitFrobenioidEquivalence source middle}
+    {second second' :
+      ArchimedeanSplitFrobenioidEquivalence middle target}
+    (hFirst : first.NaturallyIsomorphic first')
+    (hSecond : second.NaturallyIsomorphic second') :
+    (first.trans second).NaturallyIsomorphic
+      (first'.trans second') where
+  frobenioid := hFirst.frobenioid.comp hSecond.frobenioid
+  total value := by
+    change
+      second.topologicalSplitting.total.toHom
+          (first.topologicalSplitting.total.toHom value) =
+        second'.topologicalSplitting.total.toHom
+          (first'.topologicalSplitting.total.toHom value)
+    rw [hFirst.total, hSecond.total]
+  compactFactor value := by
+    change
+      second.topologicalSplitting.compactFactor.toHom
+          (first.topologicalSplitting.compactFactor.toHom value) =
+        second'.topologicalSplitting.compactFactor.toHom
+          (first'.topologicalSplitting.compactFactor.toHom value)
+    rw [hFirst.compactFactor, hSecond.compactFactor]
+  noncompactFactor value := by
+    change
+      second.topologicalSplitting.noncompactFactor.toHom
+          (first.topologicalSplitting.noncompactFactor.toHom value) =
+        second'.topologicalSplitting.noncompactFactor.toHom
+          (first'.topologicalSplitting.noncompactFactor.toHom value)
+    rw [hFirst.noncompactFactor, hSecond.noncompactFactor]
+
+/-- Associativity of archimedean structured maps in the coarsification. -/
+protected def assoc
+    (first : ArchimedeanSplitFrobenioidEquivalence source middle)
+    (second : ArchimedeanSplitFrobenioidEquivalence middle target)
+    (third : ArchimedeanSplitFrobenioidEquivalence target final) :
+    ((first.trans second).trans third).NaturallyIsomorphic
+      (first.trans (second.trans third)) where
+  frobenioid := .assoc _ _ _
+  total _ := rfl
+  compactFactor _ := rfl
+  noncompactFactor _ := rfl
+
+end ArchimedeanSplitFrobenioidEquivalence.NaturallyIsomorphic
+
 /--
 A mono-analytic Frobenioid-prime-strip from IUT I,
 Definition 5.2(ii).
@@ -1961,6 +2153,17 @@ structure SourceFMonoAnalyticPrimeStrip
       SplitFrobenioidEquivalence
         (models.nonarchimedean v).fTildeSplit
         (nonarchimedean v)
+  nonarchimedeanToFrom :
+    ∀ v,
+      ((nonarchimedeanEquivalence v).trans
+        (nonarchimedeanEquivalenceFromModel v)).NaturallyIsomorphic
+          (SplitFrobenioidEquivalence.refl (nonarchimedean v))
+  nonarchimedeanFromTo :
+    ∀ v,
+      ((nonarchimedeanEquivalenceFromModel v).trans
+        (nonarchimedeanEquivalence v)).NaturallyIsomorphic
+          (SplitFrobenioidEquivalence.refl
+            (models.nonarchimedean v).fTildeSplit)
   archimedean :
     SourceSelectedInfinitePlace theta ->
       ArchimedeanSplitFrobenioidPresentation.{u}
@@ -1974,6 +2177,17 @@ structure SourceFMonoAnalyticPrimeStrip
       ArchimedeanSplitFrobenioidEquivalence
         (models.archimedean v).fTildeMonoAnalytic
         (archimedean v)
+  archimedeanToFrom :
+    ∀ v,
+      ((archimedeanEquivalence v).trans
+        (archimedeanEquivalenceFromModel v)).NaturallyIsomorphic
+          (ArchimedeanSplitFrobenioidEquivalence.refl (archimedean v))
+  archimedeanFromTo :
+    ∀ v,
+      ((archimedeanEquivalenceFromModel v).trans
+        (archimedeanEquivalence v)).NaturallyIsomorphic
+          (ArchimedeanSplitFrobenioidEquivalence.refl
+            (models.archimedean v).fTildeMonoAnalytic)
 
 /--
 A globally realified mono-analytic F-prime-strip from IUT I,
@@ -2214,6 +2428,18 @@ structure MonoAnalyticTransport
       SplitFrobenioidEquivalence
         (models.nonarchimedean v).fTildeSplit
         (theater.nonarchimedean v).fTildeSplit
+  nonarchimedeanToFrom :
+    ∀ v,
+      ((nonarchimedean v).trans
+        (nonarchimedeanFromModel v)).NaturallyIsomorphic
+          (SplitFrobenioidEquivalence.refl
+            (theater.nonarchimedean v).fTildeSplit)
+  nonarchimedeanFromTo :
+    ∀ v,
+      ((nonarchimedeanFromModel v).trans
+        (nonarchimedean v)).NaturallyIsomorphic
+          (SplitFrobenioidEquivalence.refl
+            (models.nonarchimedean v).fTildeSplit)
   nonarchimedean_carrier_compatible :
     ∀ v,
       (nonarchimedean v).carrier.functor ⋙
@@ -2230,6 +2456,18 @@ structure MonoAnalyticTransport
       ArchimedeanSplitFrobenioidEquivalence
         (models.archimedean v).fTildeMonoAnalytic
         (theater.archimedean v).fTildeMonoAnalytic
+  archimedeanToFrom :
+    ∀ v,
+      ((archimedean v).trans
+        (archimedeanFromModel v)).NaturallyIsomorphic
+          (ArchimedeanSplitFrobenioidEquivalence.refl
+            (theater.archimedean v).fTildeMonoAnalytic)
+  archimedeanFromTo :
+    ∀ v,
+      ((archimedeanFromModel v).trans
+        (archimedean v)).NaturallyIsomorphic
+          (ArchimedeanSplitFrobenioidEquivalence.refl
+            (models.archimedean v).fTildeMonoAnalytic)
   archimedean_carrier_compatible :
     ∀ v,
       (archimedean v).frobenioid.carrier.functor ⋙
@@ -2261,12 +2499,16 @@ def associatedFMonoAnalytic
     transport.nonarchimedean v
   nonarchimedeanEquivalenceFromModel v :=
     transport.nonarchimedeanFromModel v
+  nonarchimedeanToFrom v := transport.nonarchimedeanToFrom v
+  nonarchimedeanFromTo v := transport.nonarchimedeanFromTo v
   archimedean v :=
     (theater.archimedean v).fTildeMonoAnalytic
   archimedeanEquivalence v :=
     transport.archimedean v
   archimedeanEquivalenceFromModel v :=
     transport.archimedeanFromModel v
+  archimedeanToFrom v := transport.archimedeanToFrom v
+  archimedeanFromTo v := transport.archimedeanFromTo v
 
 end SourceThetaHodgeTheater
 

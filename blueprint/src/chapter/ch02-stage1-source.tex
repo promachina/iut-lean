@@ -733,10 +733,13 @@
   \lean{Iut.SourceFTimesMuPrimeStripPolyIsomorphismSquare}
   \lean{Iut.SourceFMonoAnalyticPrimeStripFullPolyIsomorphism}
   \lean{Iut.SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.canonical}
+  \lean{Iut.SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.canonical_inverse}
   \lean{Iut.SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.comp_assoc}
+  \lean{Iut.SourceFTimesMuReconstructionFullness}
   \lean{Iut.SourceFTimesMuReconstructionAlgorithm}
   \lean{Iut.SourceFTimesMuReconstructionAlgorithm.mapFullPolyIsomorphism}
   \lean{Iut.SourceFTimesMuReconstructionAlgorithm.mapFullPolyIsomorphism_comp}
+  \lean{Iut.SourceFTimesMuReconstructionAlgorithm.mapFullPolyIsomorphism_surjective}
   \lean{Iut.SourceFTimesMuReconstructionAlgorithm.mapFullPolyIsomorphism_inverse}
   \lean{Iut.SourceFTimesMuPrimeStripPolyIsomorphismSquare.ofUpperHorizontal}
   \lean{Iut.SourceIndexedHorizontalKummerSquare}
@@ -744,9 +747,10 @@
   \lean{Iut.SourceTheorem311EnvironmentPrimeStripFamily}
   \lean{Iut.SourceTheorem311TimesMuPrimeStripFamily}
   \lean{Iut.SourceTheorem311TimesMuPrimeStripConstruction.toFamily}
-  \lean{Iut.SourceTheorem15TimesMuHorizontalCoricity}
-  \lean{Iut.SourceTheorem15TimesMuHorizontalCoricity.thetaLink_full}
-  \lean{Iut.SourceTheorem15TimesMuHorizontalCoricity.toTriangleSquare}
+  \lean{Iut.SourceTheorem311TimesMuPrimeStripConstruction.thetaLink_full}
+  \lean{Iut.SourceTheorem311TimesMuPrimeStripConstruction.toCommon}
+  \lean{Iut.SourceTheorem311TimesMuPrimeStripConstruction.fromCommon}
+  \lean{Iut.SourceTheorem311TimesMuPrimeStripConstruction.toTriangleSquare}
   \lean{Iut.SourceTheorem311TimesMuTrianglePrimeStripSquare}
   \lean{Iut.SourceTheorem311EnvironmentMonoAnalyticPrimeStripFamily.toTimesMu}
   \lean{Iut.SourceTheorem311EnvironmentTimesMuPrimeStripFamily}
@@ -860,13 +864,16 @@
   with associativity and cancellation of selected inverse pairs.  A
   prime-strip square quantifies in both directions over all horizontal
   classes; its chosen upper and lower classes only witness nonemptiness.  The
-  Corollary~4.10(iv) source record therefore states the stronger claim
-  separately: every times-\(\mu\) horizontal class has a mono-analytic
-  theta-link preimage under reconstruction.  The corridor no longer accepts a
-  clause~(a) square or a chosen theta-link member.  Every mono-analytic strip
-  carries structure-preserving maps to and from the common model, so Lean
-  derives a canonical member of the full theta link.  From that member and
-  two-sided Theorem~1.5 Kummer sources, Lean reconstructs the upper and vertical maps, defines the
+  Corollary~4.10(iv) is retained as a representative-level rigidity law for
+  every actual adjacent horizontal pair: lifting the underlying mono-analytic map of any output
+  equivalence recovers that output up to structured natural isomorphism.  Lean
+  proves from this law that every times-\(\mu\) horizontal class has a
+  mono-analytic preimage.  The corridor accepts neither a clause~(a) square,
+  a chosen theta-link member, an arbitrary quotient-level fullness witness,
+  nor chosen Kummer maps.  Every mono-analytic strip carries structure-preserving maps to
+  and from the common model with two-sided Section~0 inverse laws.  Lean
+  therefore derives the canonical theta-link and both Theorem~1.5 Kummer
+  directions, proves their cancellation, reconstructs the upper and vertical maps, defines the
   lower map by Kummer conjugation, and proves commutativity and both
   all-class transport directions.  The triangle
   and environment prime-strip squares range over every \(m\); the environment
@@ -875,8 +882,9 @@
   conjugating the triangle square and cancelling those comparisons.  These
   facts validate the exact typed coarsification, reconstruction, fullness
   boundary, and conjugation mechanism.  Constructing the finite/archimedean
-  outputs and proving the stated fullness and Kummer source data from
-  Corollaries~4.5, 4.6, 4.10 and Theorem~1.5 remain open.  The
+  outputs, proving representative-level reconstruction fullness, and deriving
+  the coherent model comparisons from Corollaries~4.5, 4.6, 4.10 and
+  Theorem~1.5 remain open.  The
   mono-theta square ranges over every \(m\) and bad
   place and uses actual projective systems with levelwise environment
   realizations.  The \(\kappa\)-sol/\(M_\infty^\kappa\) squares range over every

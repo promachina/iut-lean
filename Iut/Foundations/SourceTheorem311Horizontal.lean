@@ -567,6 +567,14 @@ structure SourceTheorem311TimesMuPrimeStripConstruction
     ∀ n m, (lattice.theater n m).MonoAnalyticTransport
   commonTransport :
     ∀ n, (lattice.commonBridge n).theater.MonoAnalyticTransport
+  horizontalFullness :
+    ∀ n m,
+      SourceFTimesMuReconstructionFullness
+        reconstruction.objects reconstruction.transport
+        ((lattice.theater n m).associatedFMonoAnalytic
+          (siteTransport n m))
+        ((lattice.theater (n + 1) m).associatedFMonoAnalytic
+          (siteTransport (n + 1) m))
 
 namespace SourceTheorem311TimesMuPrimeStripConstruction
 
@@ -614,66 +622,21 @@ end SourceTheorem311TimesMuPrimeStripConstruction
 ## Corollary 4.10(iv) and Theorem 1.5 horizontal coricity
 -/
 
-/--
-The source data that produce the horizontal `F^(turnstile times-mu)` square.
+/-
+The Corollary 4.10(iv) and Theorem 1.5 data that produce the horizontal
+`F^(turnstile times-mu)` square are consequences of the exact reconstruction
+and mono-analytic model-comparison records.
 
-The `thetaLink_full` field is the literal Section 0 content of the assertion
-in IUT II, Corollary 4.10(iv), that the induced unit-portion
-poly-isomorphism coincides with the full poly-isomorphism: every output
-isomorphism class has a mono-analytic theta-link preimage.  It is intentionally
-stronger than the functoriality proved by the reconstruction algorithm.
+The literal Section 0 content of IUT II, Corollary 4.10(iv), is carried by the
+reconstruction algorithm's representative-level fullness law: every output
+isomorphism class has a mono-analytic theta-link preimage.
 
-The chosen theta-link member is derived canonically through the common source
-model, since the theta link is the full collection of all isomorphisms between
-the two exact endpoints.  The remaining fields are the two-sided
-mono-analytic sources of the Kummer isomorphisms in IUT III, Theorem 1.5(iii).
-The times-mu maps and the complete Theorem 3.11(iii)(a) square are derived
-below.
+The theta-link and Kummer members are both obtained by composing the certified
+two-sided comparisons through the common Examples 3.2--3.4 model.  Their
+inverse laws follow from the model-comparison coherence stored by the exact
+mono-analytic prime strips.  No chosen horizontal or Kummer maps remain.
 -/
-structure SourceTheorem15TimesMuHorizontalCoricity
-    {Fmod F K : Type u}
-    [Field Fmod] [NumberField Fmod]
-    [Field F] [NumberField F]
-    [Field K] [NumberField K]
-    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
-    [IsScalarTower Fmod F K]
-    [FiniteDimensional Fmod F] [IsGalois Fmod F]
-    [FiniteDimensional F K] [IsGalois F K]
-    {theta : SourceInitialThetaCore Fmod F K}
-    {models : IUTIThetaHodgeTheaterModels theta}
-    {lattice : SourceAbsoluteLGPGaussianLogThetaLattice models}
-    (construction : SourceTheorem311TimesMuPrimeStripConstruction lattice) where
-  thetaLink_full :
-    ∀ n m
-      (horizontal : SourceFTimesMuPrimeStripFullPolyIsomorphism
-        (construction.toFamily.site n m)
-        (construction.toFamily.site (n + 1) m)),
-      ∃ link : SourceFMonoAnalyticPrimeStripFullPolyIsomorphism
-          (construction.siteUnderlying n m)
-          (construction.siteUnderlying (n + 1) m),
-        construction.reconstruction.mapFullPolyIsomorphism link = horizontal
-  kummerToCommon :
-    ∀ n m, SourceFMonoAnalyticPrimeStripFullPolyIsomorphism
-      (construction.siteUnderlying n m)
-      (construction.commonUnderlying n)
-  kummerFromCommon :
-    ∀ n m, SourceFMonoAnalyticPrimeStripFullPolyIsomorphism
-      (construction.commonUnderlying n)
-      (construction.siteUnderlying n m)
-  kummerToFrom :
-    ∀ n m,
-      SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.comp
-          (kummerToCommon n m) (kummerFromCommon n m) =
-        SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.id
-          (construction.siteUnderlying n m)
-  kummerFromTo :
-    ∀ n m,
-      SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.comp
-          (kummerFromCommon n m) (kummerToCommon n m) =
-        SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.id
-          (construction.commonUnderlying n)
-
-namespace SourceTheorem15TimesMuHorizontalCoricity
+namespace SourceTheorem311TimesMuPrimeStripConstruction
 
 variable
     {Fmod F K : Type u}
@@ -687,8 +650,23 @@ variable
     {theta : SourceInitialThetaCore Fmod F K}
     {models : IUTIThetaHodgeTheaterModels theta}
     {lattice : SourceAbsoluteLGPGaussianLogThetaLattice models}
-    {construction : SourceTheorem311TimesMuPrimeStripConstruction lattice}
-    (coricity : SourceTheorem15TimesMuHorizontalCoricity construction)
+    (construction : SourceTheorem311TimesMuPrimeStripConstruction lattice)
+
+/--
+The exact Corollary 4.10(iv) fullness assertion, derived from the
+representative-level reconstruction law rather than stored on the corridor.
+-/
+theorem thetaLink_full
+    (n m : ℤ)
+    (horizontal : SourceFTimesMuPrimeStripFullPolyIsomorphism
+      (construction.toFamily.site n m)
+      (construction.toFamily.site (n + 1) m)) :
+    ∃ link : SourceFMonoAnalyticPrimeStripFullPolyIsomorphism
+        (construction.siteUnderlying n m)
+        (construction.siteUnderlying (n + 1) m),
+      construction.reconstruction.mapFullPolyIsomorphism link = horizontal :=
+  construction.reconstruction.mapFullPolyIsomorphism_surjective
+    (construction.horizontalFullness n m) horizontal
 
 /-- The horizontal times-mu member induced by the mono-analytic theta link. -/
 def horizontal
@@ -706,7 +684,9 @@ def toCommon
       (construction.toFamily.site n m)
       (construction.toFamily.common n) :=
   construction.reconstruction.mapFullPolyIsomorphism
-    (coricity.kummerToCommon n m)
+    (SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.canonical
+      (construction.siteUnderlying n m)
+      (construction.commonUnderlying n))
 
 /-- The inverse Kummer comparison induced by reconstruction. -/
 def fromCommon
@@ -714,27 +694,43 @@ def fromCommon
       (construction.toFamily.common n)
       (construction.toFamily.site n m) :=
   construction.reconstruction.mapFullPolyIsomorphism
-    (coricity.kummerFromCommon n m)
+    (SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.canonical
+      (construction.commonUnderlying n)
+      (construction.siteUnderlying n m))
 
 /-- The reconstructed Kummer comparison followed by its inverse is identity. -/
 theorem toFrom
     (n m : ℤ) :
-    (coricity.toCommon n m) ≫ₜ (coricity.fromCommon n m) =
+    (construction.toCommon n m) ≫ₜ (construction.fromCommon n m) =
       SourceFTimesMuPrimeStripFullPolyIsomorphism.id
         (construction.toFamily.site n m) :=
   construction.reconstruction.mapFullPolyIsomorphism_inverse
-    (coricity.kummerToCommon n m) (coricity.kummerFromCommon n m)
-    (coricity.kummerToFrom n m)
+    (SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.canonical
+      (construction.siteUnderlying n m)
+      (construction.commonUnderlying n))
+    (SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.canonical
+      (construction.commonUnderlying n)
+      (construction.siteUnderlying n m))
+    (SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.canonical_inverse
+      (construction.siteUnderlying n m)
+      (construction.commonUnderlying n))
 
 /-- The inverse reconstructed Kummer comparison followed by it is identity. -/
 theorem fromTo
     (n m : ℤ) :
-    (coricity.fromCommon n m) ≫ₜ (coricity.toCommon n m) =
+    (construction.fromCommon n m) ≫ₜ (construction.toCommon n m) =
       SourceFTimesMuPrimeStripFullPolyIsomorphism.id
         (construction.toFamily.common n) :=
   construction.reconstruction.mapFullPolyIsomorphism_inverse
-    (coricity.kummerFromCommon n m) (coricity.kummerToCommon n m)
-    (coricity.kummerFromTo n m)
+    (SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.canonical
+      (construction.commonUnderlying n)
+      (construction.siteUnderlying n m))
+    (SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.canonical
+      (construction.siteUnderlying n m)
+      (construction.commonUnderlying n))
+    (SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.canonical_inverse
+      (construction.commonUnderlying n)
+      (construction.siteUnderlying n m))
 
 /--
 The exact Theorem 3.11(iii)(a) square, with its lower horizontal arrow and
@@ -748,16 +744,15 @@ noncomputable def toTriangleSquare
       (construction.toFamily.common n)
       (construction.toFamily.common (n + 1)) :=
   SourceFTimesMuPrimeStripPolyIsomorphismSquare.ofUpperHorizontal
-    (SourceTheorem15TimesMuHorizontalCoricity.horizontal
-      (construction := construction) n m)
-    (coricity.toCommon n m)
-    (coricity.fromCommon n m)
-    (coricity.toFrom n m)
-    (coricity.toCommon (n + 1) m)
-    (coricity.fromCommon (n + 1) m)
-    (coricity.fromTo (n + 1) m)
+    (construction.horizontal n m)
+    (construction.toCommon n m)
+    (construction.fromCommon n m)
+    (construction.toFrom n m)
+    (construction.toCommon (n + 1) m)
+    (construction.fromCommon (n + 1) m)
+    (construction.fromTo (n + 1) m)
 
-end SourceTheorem15TimesMuHorizontalCoricity
+end SourceTheorem311TimesMuPrimeStripConstruction
 
 /--
 The Proposition 2.1(vi) environment objects and natural comparisons before

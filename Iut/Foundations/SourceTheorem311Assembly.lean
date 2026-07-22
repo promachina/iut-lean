@@ -277,8 +277,6 @@ structure SourceTheorem311HorizontalCorridorBoundary
   adjacentColumns : right.column = left.column + 1
   timesMuConstruction :
     SourceTheorem311TimesMuPrimeStripConstruction left.lattice
-  timesMuHorizontalCoricity :
-    SourceTheorem15TimesMuHorizontalCoricity timesMuConstruction
   environmentMonoAnalyticPrimeStrips :
     SourceTheorem311EnvironmentMonoAnalyticPrimeStripFamily
       timesMuConstruction
@@ -358,8 +356,7 @@ noncomputable def primeStripClauseA
     (site : ℤ) :
     SourceTheorem311TimesMuTrianglePrimeStripSquare
       boundary.timesMuPrimeStrips boundary.left.column site :=
-  boundary.timesMuHorizontalCoricity.toTriangleSquare
-    boundary.left.column site
+  boundary.timesMuConstruction.toTriangleSquare boundary.left.column site
 
 /-- The right column theater is propositionally the successor endpoint. -/
 theorem right_theater_eq
