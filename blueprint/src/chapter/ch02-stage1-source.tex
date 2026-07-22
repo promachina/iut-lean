@@ -461,6 +461,10 @@
   \lean{Iut.SourceMLFGaloisTMPair.LocalKummerRootTheory.canonicalKummerMap_toGerm}
   \lean{Iut.SourceMLFGaloisTMPair.augmentation}
   \lean{Iut.SourceMLFGaloisTMPair.augmentation_surjective}
+  \lean{Iut.SourceMLFGaloisTMPair.augmentation_image_isOpen}
+  \lean{Iut.SourceMLFGaloisTMPair.augmentationOpenImage}
+  \lean{Iut.SourceMLFGaloisTMPair.fixedFieldOfOpenSubgroup}
+  \lean{Iut.SourceMLFGaloisTMPair.fixedFieldOfOpenSubgroup_finiteDimensional}
   \lean{Iut.SourceIUTIIUnitKummerEmbedding}
   \lean{Iut.SourceIUTIIUnitKummerEmbedding.monoidKummer}
   \lean{Iut.SourceIUTIIUnitKummerEmbedding.unitKummer}
@@ -579,9 +583,13 @@
   now proves that the integral-closure unit group in every finite MLF extension
   is residually finite: Krull intersection separates a nontrivial unit, while
   reduction modulo a suitable power of the base maximal ideal gives a finite
-  quotient.  The remaining precise source obligation is to extract, from a
-  zero constructed Kummer germ, compatible roots lying in one such finite
-  extension and thereby derive injectivity.
+  quotient.  For a compact IUT acting group, Lean also proves that the image of
+  each open germ domain under the arithmetic augmentation is open: it has
+  finite index, and compactness makes its image closed.  Infinite Galois
+  correspondence then constructs the associated finite fixed extension.  The
+  remaining precise source obligation is to extract, from a zero constructed
+  Kummer germ, compatible adjusted roots lying in that extension and thereby
+  derive injectivity.
   At a finite place, the Definition~4.9 input now ties the selected splitting
   at an isotropic reference object to an actual MLF-Galois \(TM\)-pair, a
   stable characteristic submonoid, and the genuine \(\operatorname{Ism}\)

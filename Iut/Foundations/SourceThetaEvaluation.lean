@@ -1692,6 +1692,34 @@ noncomputable abbrev SourceMLFAbsoluteGaloisGroup
     (InfiniteGalois.profiniteGalGrp
       K (AlgebraicClosure K))
 
+noncomputable instance sourceMLFAbsoluteGaloisGroupCompactSpace
+    (K : Type u) [Field K] [CharZero K] :
+    CompactSpace (SourceMLFAbsoluteGaloisGroup K) := by
+  change
+    CompactSpace
+      (InfiniteGalois.profiniteGalGrp
+        K (AlgebraicClosure K))
+  infer_instance
+
+noncomputable instance sourceMLFAbsoluteGaloisGroupT2Space
+    (K : Type u) [Field K] [CharZero K] :
+    T2Space (SourceMLFAbsoluteGaloisGroup K) := by
+  change
+    T2Space
+      (InfiniteGalois.profiniteGalGrp
+        K (AlgebraicClosure K))
+  infer_instance
+
+noncomputable instance sourceMLFAbsoluteGaloisGroupTotallyDisconnectedSpace
+    (K : Type u) [Field K] [CharZero K] :
+    TotallyDisconnectedSpace
+      (SourceMLFAbsoluteGaloisGroup K) := by
+  change
+    TotallyDisconnectedSpace
+      (InfiniteGalois.profiniteGalGrp
+        K (AlgebraicClosure K))
+  infer_instance
+
 namespace SourceMLFIntegralMonoid
 
 variable
@@ -5532,6 +5560,97 @@ theorem augmentation_surjective
       arithmeticGaloisElement
   rw [pair.groupIso.symm_apply_apply]
   exact hmodelElement
+
+/--
+The image of an open subgroup under the arithmetic augmentation is open when
+the acting group is compact.  This is the profinite-group step that turns a
+germ representative into one finite extension of the model MLF.
+-/
+theorem augmentation_image_isOpen
+    [CompactSpace G]
+    (pair : SourceMLFGaloisTMPair G)
+    (subgroup : OpenSubgroup G) :
+    IsOpen
+      (↑(subgroup.toSubgroup.map
+          pair.augmentation.toMonoidHom) :
+        Set
+          (SourceMLFAbsoluteGaloisGroup
+            pair.modelField)) := by
+  let imageSubgroup :
+      Subgroup
+        (SourceMLFAbsoluteGaloisGroup
+          pair.modelField) :=
+    subgroup.toSubgroup.map
+      pair.augmentation.toMonoidHom
+  have subgroup_index_ne_zero :
+      subgroup.toSubgroup.index ≠ 0 :=
+    (Subgroup.finiteIndex_iff_finite_quotient.mpr
+      inferInstance).index_ne_zero
+  letI : imageSubgroup.FiniteIndex :=
+    ⟨ne_zero_of_dvd_ne_zero
+      subgroup_index_ne_zero
+      (subgroup.toSubgroup.index_map_dvd
+        pair.augmentation_surjective)⟩
+  have image_isCompact :
+      IsCompact
+        (↑imageSubgroup :
+          Set
+            (SourceMLFAbsoluteGaloisGroup
+              pair.modelField)) := by
+    rw [Subgroup.coe_map]
+    exact
+      subgroup.isClosed.isCompact.image
+        pair.augmentation.continuous_toFun
+  exact
+    Subgroup.isOpen_of_isClosed_of_finiteIndex
+      imageSubgroup image_isCompact.isClosed
+
+/-- The open arithmetic Galois image of an open subgroup of the IUT group. -/
+noncomputable def augmentationOpenImage
+    [CompactSpace G]
+    (pair : SourceMLFGaloisTMPair G)
+    (subgroup : OpenSubgroup G) :
+    OpenSubgroup
+      (SourceMLFAbsoluteGaloisGroup
+        pair.modelField) where
+  toSubgroup :=
+    subgroup.toSubgroup.map
+      pair.augmentation.toMonoidHom
+  isOpen' := pair.augmentation_image_isOpen subgroup
+
+/-- The finite model-field extension cut out by an augmented open subgroup. -/
+noncomputable def fixedFieldOfOpenSubgroup
+    [CompactSpace G]
+    (pair : SourceMLFGaloisTMPair G)
+    (subgroup : OpenSubgroup G) :
+    IntermediateField pair.modelField
+      (AlgebraicClosure pair.modelField) :=
+  IntermediateField.fixedField
+    (pair.augmentationOpenImage subgroup).toSubgroup
+
+/-- The fixed field cut out by an augmented open subgroup is finite over the MLF. -/
+theorem fixedFieldOfOpenSubgroup_finiteDimensional
+    [CompactSpace G]
+    (pair : SourceMLFGaloisTMPair G)
+    (subgroup : OpenSubgroup G) :
+    FiniteDimensional pair.modelField
+      (pair.fixedFieldOfOpenSubgroup subgroup) := by
+  let openImage := pair.augmentationOpenImage subgroup
+  let closedImage :
+      ClosedSubgroup
+        (SourceMLFAbsoluteGaloisGroup
+          pair.modelField) :=
+    { toSubgroup := openImage.toSubgroup
+      isClosed' := openImage.isClosed }
+  apply
+    (InfiniteGalois.isOpen_iff_finite
+      (pair.fixedFieldOfOpenSubgroup subgroup)).mp
+  change
+    IsOpen
+      ((IntermediateField.fixedField
+        closedImage.toSubgroup).fixingSubgroup.carrier)
+  rw [InfiniteGalois.fixingSubgroup_fixedField closedImage]
+  exact openImage.isOpen
 
 end SourceMLFGaloisTMPair
 
