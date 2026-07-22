@@ -5,6 +5,7 @@ Authors: IUT Lean formalization contributors
 -/
 import Iut.Foundations.SourceSplitKummerFrobenioid
 import Mathlib.Analysis.Complex.Circle
+import Mathlib.CategoryTheory.Filtered.Final
 import Mathlib.Topology.Algebra.ContinuousMonoidHom
 import Mathlib.Topology.Algebra.Group.Quotient
 
@@ -20,8 +21,11 @@ given by inversion.
 This file constructs that unit-level system as an actual functor of topological
 groups. It includes its quotient topology, exact kernels, continuous transition
 maps, arbitrary cofinal restrictions, and the two compatible orientations. It
-does not yet construct the corresponding system of split Frobenioids or prove
-the source's identification between the colimits of distinct cofinal subsets.
+also proves that every cofinal restriction is a final functor, constructs the
+exact split topological monoid at each quotient stage, and states the
+structure-preserving boundary for the corresponding reconstructed split
+Frobenioid system. It does not yet derive the stages or their transition
+functors from the model-Frobenioid reconstruction theorem.
 -/
 
 namespace Iut
@@ -196,6 +200,308 @@ def continuousOrientedQuotientMap
   (continuousQuotientMap N).comp
     (orientationAutomorphism orientation : Circle →ₜ* Circle)
 
+/-- The quotient unit group as a packaged topological monoid. -/
+def unitQuotientPresentation (N : ℕ+) :
+    TopologicalMonoidPresentation.{0} where
+  carrier := UnitQuotient N
+
+/-- Every element of the compact quotient group is a unit. -/
+theorem unitQuotient_isUnit (N : ℕ+) (value : UnitQuotient N) :
+    IsUnit value :=
+  isUnit_iff_exists_inv.mpr ⟨value⁻¹, by simp⟩
+
+/-- The compact inclusion into the exact quotient/noncompact product. -/
+def quotientCompactInclusion
+    (source : SplitTopologicalMonoidPresentation.{0}) (N : ℕ+) :
+    ContinuousMonoidHom
+      (unitQuotientPresentation N)
+      (TopologicalMonoidPresentation.prod
+        (unitQuotientPresentation N) source.noncompactFactor) where
+  hom :=
+    { toFun := fun compact => (compact, 1)
+      map_one' := rfl
+      map_mul' := by
+        intro first second
+        apply Prod.ext
+        · rfl
+        · exact (one_mul 1).symm }
+  continuous := continuous_id.prodMk continuous_const
+
+/-- The unchanged noncompact inclusion at a quotient stage. -/
+def quotientNoncompactInclusion
+    (source : SplitTopologicalMonoidPresentation.{0}) (N : ℕ+) :
+    ContinuousMonoidHom
+      source.noncompactFactor
+      (TopologicalMonoidPresentation.prod
+        (unitQuotientPresentation N) source.noncompactFactor) where
+  hom :=
+    { toFun := fun noncompact => (1, noncompact)
+      map_one' := rfl
+      map_mul' := by
+        intro first second
+        apply Prod.ext
+        · exact (one_mul 1).symm
+        · rfl }
+  continuous := continuous_const.prodMk continuous_id
+
+/-- The distinguished noncompact factor of a split topological monoid has no nontrivial units. -/
+theorem noncompact_eq_one_of_isUnit
+    (source : SplitTopologicalMonoidPresentation.{0})
+    (value : source.noncompactFactor.carrier)
+    (hvalue : IsUnit value) :
+    value = 1 := by
+  have hproduct :
+      IsUnit ((1, value) :
+        source.compactFactor.carrier × source.noncompactFactor.carrier) :=
+    Prod.isUnit_iff.mpr ⟨isUnit_one, hvalue⟩
+  have htotal :
+      IsUnit (source.factorization.toHom (1, value)) :=
+    hproduct.map source.factorization.toHom.hom
+  obtain ⟨compact, hcompact⟩ :=
+    source.every_unit_compact
+      (source.factorization.toHom (1, value)) htotal
+  have himage :
+      source.factorization.toHom (1, value) =
+        source.factorization.toHom (compact, 1) := by
+    calc
+      source.factorization.toHom (1, value) =
+          source.compactInclusion compact := hcompact.symm
+      _ = source.factorization.toHom (compact, 1) := by
+        rw [source.factorization_eq]
+        simp
+  have hpairs :
+      (1, value) =
+        (compact, 1) :=
+    source.factorization.left_inv.injective himage
+  exact congrArg Prod.snd hpairs
+
+/--
+The exact split topological monoid obtained by quotienting the compact units by
+`mu_N` and leaving the characteristic noncompact factor unchanged.
+-/
+def quotientSplitTopologicalMonoid
+    (source : SplitTopologicalMonoidPresentation.{0}) (N : ℕ+) :
+    SplitTopologicalMonoidPresentation.{0} where
+  total :=
+    TopologicalMonoidPresentation.prod
+      (unitQuotientPresentation N) source.noncompactFactor
+  compactFactor := unitQuotientPresentation N
+  noncompactFactor := source.noncompactFactor
+  compactInclusion := quotientCompactInclusion source N
+  noncompactInclusion := quotientNoncompactInclusion source N
+  compact_isUnit value := by
+    change IsUnit ((value, 1) : UnitQuotient N ×
+      source.noncompactFactor.carrier)
+    exact Prod.isUnit_iff.mpr
+      ⟨unitQuotient_isUnit N value, isUnit_one⟩
+  every_unit_compact value hvalue := by
+    refine ⟨value.1, ?_⟩
+    apply Prod.ext
+    · rfl
+    · exact (noncompact_eq_one_of_isUnit source value.2
+        (Prod.isUnit_iff.mp hvalue).2).symm
+  factorization :=
+    TopologicalMonoidIso.refl
+      (TopologicalMonoidPresentation.prod
+        (unitQuotientPresentation N) source.noncompactFactor)
+  factorization_eq compact noncompact := by
+    apply Prod.ext
+    · exact (mul_one compact).symm
+    · exact (one_mul noncompact).symm
+
+/-- The product transition induced by `mu_N ⊆ mu_M`, with fixed noncompact factor. -/
+def quotientSplitTransition
+    (source : SplitTopologicalMonoidPresentation.{0})
+    (N M : ℕ+) (hNM : N ∣ M) :
+    ContinuousMonoidHom
+      (quotientSplitTopologicalMonoid source N).total
+      (quotientSplitTopologicalMonoid source M).total where
+  hom :=
+    { toFun := fun value => (transition N M hNM value.1, value.2)
+      map_one' := by
+        apply Prod.ext
+        · exact (transition N M hNM).map_one
+        · rfl
+      map_mul' := by
+        intro first second
+        apply Prod.ext
+        · exact (transition N M hNM).map_mul first.1 second.1
+        · rfl }
+  continuous :=
+    (continuousTransition N M hNM).continuous.prodMap continuous_id
+
+@[simp]
+theorem quotientSplitTransition_apply
+    (source : SplitTopologicalMonoidPresentation.{0})
+    (N M : ℕ+) (hNM : N ∣ M)
+    (value : (quotientSplitTopologicalMonoid source N).total.carrier) :
+    quotientSplitTransition source N M hNM value =
+      (transition N M hNM value.1, value.2) :=
+  rfl
+
+/-- The exact quotient-stage boundary for Definition 4.9(v)'s split Frobenioid. -/
+structure FrobenioidStage
+    (underlying : ArchimedeanSplitFrobenioidPresentation.{0})
+    (N : ℕ+) where
+  reconstructed : ArchimedeanSplitFrobenioidPresentation.{0}
+  quotientSplittingIso :
+    SplitTopologicalMonoidIso
+      reconstructed.topologicalSplitting
+      (quotientSplitTopologicalMonoid underlying.topologicalSplitting N)
+  baseEquivalence :
+    CategoryTheory.Equivalence
+      reconstructed.frobenioid.frobenioid.baseCategory
+      underlying.frobenioid.frobenioid.baseCategory
+
+namespace FrobenioidStage
+
+/-- The complete unit factor of a reconstructed stage is the exact `mu_N` quotient. -/
+def compactUnitsIso
+    {underlying : ArchimedeanSplitFrobenioidPresentation.{0}}
+    {N : ℕ+} (stage : FrobenioidStage underlying N) :
+    TopologicalMonoidIso
+      stage.reconstructed.topologicalSplitting.compactFactor
+      (unitQuotientPresentation N) :=
+  stage.quotientSplittingIso.compactFactor
+
+/-- The carrier category of a reconstructed stage. -/
+abbrev Carrier
+    {underlying : ArchimedeanSplitFrobenioidPresentation.{0}}
+    {N : ℕ+} (stage : FrobenioidStage underlying N) :=
+  stage.reconstructed.frobenioid.frobenioid.carrier
+
+/-- The divisor base category of a reconstructed stage. -/
+abbrev BaseCategory
+    {underlying : ArchimedeanSplitFrobenioidPresentation.{0}}
+    {N : ℕ+} (stage : FrobenioidStage underlying N) :=
+  stage.reconstructed.frobenioid.frobenioid.baseCategory
+
+/-- The divisor monoid at the base of a reconstructed carrier object. -/
+abbrev DivisorAt
+    {underlying : ArchimedeanSplitFrobenioidPresentation.{0}}
+    {N : ℕ+} (stage : FrobenioidStage underlying N)
+    (X : Carrier stage) :=
+  (stage.reconstructed.frobenioid.frobenioid.preFrobenioid.divisorMonoid.obj
+    ((stage.reconstructed.frobenioid.frobenioid.preFrobenioid.base).obj X)).carrier
+
+/-- The rational-function monoid at a reconstructed stage's reference object. -/
+abbrev referenceRationalMonoid
+    {underlying : ArchimedeanSplitFrobenioidPresentation.{0}}
+    {N : ℕ+} (stage : FrobenioidStage underlying N) :=
+  stage.reconstructed.frobenioid.frobenioid.preFrobenioid.LinearBaseIdentityEndomorphism
+    stage.reconstructed.referenceObject
+
+end FrobenioidStage
+
+/--
+The actual divisibility-indexed system of reconstructed split Frobenioids in
+Definition 4.9(v). The carrier and base functors form strict diagrams, their
+reference-object rational monoids form a third strict diagram, and the latter
+is required to realize the concrete quotient transition on the compact factor
+while fixing the noncompact factor.
+-/
+structure FrobenioidSystem
+    (underlying : ArchimedeanSplitFrobenioidPresentation.{0}) where
+  stage : ∀ N : ℕ+, FrobenioidStage underlying N
+  carrierTransition :
+    ∀ (N M : ℕ+) (_hNM : N ∣ M),
+      (stage N).reconstructed.frobenioid.frobenioid.carrier ⥤
+        (stage M).reconstructed.frobenioid.frobenioid.carrier
+  baseTransition :
+    ∀ (N M : ℕ+) (_hNM : N ∣ M),
+      (stage N).reconstructed.frobenioid.frobenioid.baseCategory ⥤
+        (stage M).reconstructed.frobenioid.frobenioid.baseCategory
+  carrier_base_compatible :
+    ∀ (N M : ℕ+) (hNM : N ∣ M),
+      carrierTransition N M hNM ⋙
+          (stage M).reconstructed.frobenioid.frobenioid.preFrobenioid.base =
+        (stage N).reconstructed.frobenioid.frobenioid.preFrobenioid.base ⋙
+          baseTransition N M hNM
+  base_underlying_compatible :
+    ∀ (N M : ℕ+) (hNM : N ∣ M),
+      baseTransition N M hNM ⋙ (stage M).baseEquivalence.functor =
+        (stage N).baseEquivalence.functor
+  fsm_compatible :
+    ∀ (N M : ℕ+) (hNM : N ∣ M)
+      {first second :
+        (stage N).reconstructed.frobenioid.frobenioid.baseCategory}
+      (map : first ⟶ second),
+      (stage N).reconstructed.frobenioid.frobenioid.isFSM map →
+        (stage M).reconstructed.frobenioid.frobenioid.isFSM
+          ((baseTransition N M hNM).map map)
+  divisorTransition :
+    ∀ (N M : ℕ+) (_hNM : N ∣ M)
+      (X : FrobenioidStage.Carrier (stage N)),
+      FrobenioidStage.DivisorAt (stage N) X →+
+        FrobenioidStage.DivisorAt (stage M)
+          ((carrierTransition N M _hNM).obj X)
+  divisor_compatible :
+    ∀ (N M : ℕ+) (hNM : N ∣ M)
+      {X Y : (stage N).reconstructed.frobenioid.frobenioid.carrier}
+      (map : X ⟶ Y),
+      divisorTransition N M hNM X
+          ((stage N).reconstructed.frobenioid.frobenioid.preFrobenioid.divisor map) =
+        (stage M).reconstructed.frobenioid.frobenioid.preFrobenioid.divisor
+          ((carrierTransition N M hNM).map map)
+  frobeniusDegree_compatible :
+    ∀ (N M : ℕ+) (hNM : N ∣ M)
+      {X Y : (stage N).reconstructed.frobenioid.frobenioid.carrier}
+      (map : X ⟶ Y),
+      (stage M).reconstructed.frobenioid.frobenioid.preFrobenioid.frobeniusDegree
+          ((carrierTransition N M hNM).map map) =
+        (stage N).reconstructed.frobenioid.frobenioid.preFrobenioid.frobeniusDegree map
+  referenceIso :
+    ∀ (N M : ℕ+) (hNM : N ∣ M),
+      (carrierTransition N M hNM).obj
+          (stage N).reconstructed.referenceObject ≅
+        (stage M).reconstructed.referenceObject
+  rationalTransition :
+    ∀ (N M : ℕ+) (_hNM : N ∣ M),
+      FrobenioidStage.referenceRationalMonoid (stage N) →*
+        FrobenioidStage.referenceRationalMonoid (stage M)
+  rationalTransition_hom :
+    ∀ (N M : ℕ+) (hNM : N ∣ M)
+      (value : FrobenioidStage.referenceRationalMonoid (stage N)),
+      (rationalTransition N M hNM value).hom =
+        (referenceIso N M hNM).inv ≫
+          (carrierTransition N M hNM).map value.hom ≫
+            (referenceIso N M hNM).hom
+  quotient_transition_compatible :
+    ∀ (N M : ℕ+) (hNM : N ∣ M)
+      (value : FrobenioidStage.referenceRationalMonoid (stage N)),
+      (stage M).quotientSplittingIso.total.toHom
+          ((stage M).reconstructed.rationalTotalIso
+            (rationalTransition N M hNM value)) =
+        quotientSplitTransition underlying.topologicalSplitting N M hNM
+          ((stage N).quotientSplittingIso.total.toHom
+            ((stage N).reconstructed.rationalTotalIso value))
+  carrierTransition_self :
+    ∀ N,
+      carrierTransition N N (dvd_refl N) =
+        Functor.id ((stage N).reconstructed.frobenioid.frobenioid.carrier)
+  carrierTransition_comp :
+    ∀ (N M L : ℕ+) (hNM : N ∣ M) (hML : M ∣ L),
+      carrierTransition N M hNM ⋙ carrierTransition M L hML =
+        carrierTransition N L (dvd_trans hNM hML)
+  baseTransition_self :
+    ∀ N,
+      baseTransition N N (dvd_refl N) =
+        Functor.id ((stage N).reconstructed.frobenioid.frobenioid.baseCategory)
+  baseTransition_comp :
+    ∀ (N M L : ℕ+) (hNM : N ∣ M) (hML : M ∣ L),
+      baseTransition N M hNM ⋙ baseTransition M L hML =
+        baseTransition N L (dvd_trans hNM hML)
+  rationalTransition_self :
+    ∀ N,
+      rationalTransition N N (dvd_refl N) =
+        MonoidHom.id
+          (FrobenioidStage.referenceRationalMonoid (stage N))
+  rationalTransition_comp :
+    ∀ (N M L : ℕ+) (hNM : N ∣ M) (hML : M ∣ L),
+      (rationalTransition M L hML).comp
+          (rationalTransition N M hNM) =
+        rationalTransition N L (dvd_trans hNM hML)
+
 /-- Every oriented map is an open quotient map, hence a topological surjection. -/
 theorem continuousOrientedQuotientMap_isOpenQuotientMap
     (orientation : Orientation) (N : ℕ+) :
@@ -264,6 +570,16 @@ theorem divisibilityIndex_le_iff (first second : DivisibilityIndex) :
     first ≤ second ↔ first.value ∣ second.value :=
   Iff.rfl
 
+/-- Divisibility on positive integers is a filtered indexing category. -/
+instance divisibilityIndexIsFiltered : IsFiltered DivisibilityIndex where
+  cocone_objs first second :=
+    ⟨⟨first.value * second.value⟩,
+      homOfLE ⟨second.value, rfl⟩,
+      homOfLE ⟨first.value, mul_comm _ _⟩, trivial⟩
+  cocone_maps {X Y} _ _ :=
+    ⟨Y, 𝟙 Y, by subsingleton⟩
+  nonempty := ⟨⟨1⟩⟩
+
 /-- A subset cofinal for divisibility in the multiplicative monoid of positive integers. -/
 structure MultiplicativelyCofinalSubset where
   carrier : Set ℕ+
@@ -287,6 +603,129 @@ theorem exists_index_above
     ∃ M : subset.Index, N ≤ M.1 := by
   obtain ⟨M, hM, hNM⟩ := subset.cofinal N.value
   exact ⟨⟨⟨M⟩, hM⟩, hNM⟩
+
+/-- Every multiplicatively cofinal indexing subset is itself filtered. -/
+instance indexIsFiltered
+    (subset : MultiplicativelyCofinalSubset) :
+    IsFiltered subset.Index where
+  cocone_objs first second := by
+    obtain ⟨upper, hupper, hdiv⟩ :=
+      subset.cofinal (first.1.value * second.1.value)
+    refine
+      ⟨⟨⟨upper⟩, hupper⟩,
+        homOfLE (dvd_trans ⟨second.1.value, rfl⟩ hdiv),
+        homOfLE (dvd_trans ⟨first.1.value, mul_comm _ _⟩ hdiv),
+        trivial⟩
+  cocone_maps {X Y} _ _ :=
+    ⟨Y, 𝟙 Y, by subsingleton⟩
+  nonempty := by
+    obtain ⟨upper, hupper, _⟩ := subset.cofinal 1
+    exact ⟨⟨⟨upper⟩, hupper⟩⟩
+
+/-- Inclusion of any multiplicatively cofinal subset is a final functor. -/
+instance indexInclusionFinal
+    (subset : MultiplicativelyCofinalSubset) :
+    subset.indexInclusion.Final :=
+  Functor.final_of_exists_of_isFiltered subset.indexInclusion
+    (fun index => by
+      obtain ⟨upper, hupper⟩ := subset.exists_index_above index
+      exact ⟨upper, ⟨homOfLE hupper⟩⟩)
+    (fun {_index stage} _ _ =>
+      ⟨stage, 𝟙 _, by subsingleton⟩)
+
+/--
+Restriction to a multiplicatively cofinal subset preserves and reflects the
+universal colimit cocone. This is the precise categorical identification of
+the systems indexed by distinct cofinal subsets in Definition 4.9(v).
+-/
+def isColimitEquivRestricted
+    (subset : MultiplicativelyCofinalSubset)
+    {E : Type u} [Category.{u} E]
+    (diagram : DivisibilityIndex ⥤ E)
+    (cocone : Limits.Cocone diagram) :
+    Limits.IsColimit cocone ≃
+      Limits.IsColimit (cocone.whisker subset.indexInclusion) :=
+  (Functor.Final.isColimitWhiskerEquiv
+    subset.indexInclusion cocone).symm
+
+namespace FrobenioidSystem
+
+/-- The carrier categories of the reconstructed split Frobenioids form a functor. -/
+def carrierDiagram
+    {underlying : ArchimedeanSplitFrobenioidPresentation.{0}}
+    (system : FrobenioidSystem underlying) :
+    DivisibilityIndex ⥤ Cat.{0, 0} where
+  obj index :=
+    (system.stage index.value).reconstructed.frobenioid.frobenioid.carrier
+  map {first second} arrow :=
+    (system.carrierTransition first.value second.value arrow.le).toCatHom
+  map_id index := by
+    apply Cat.Hom.ext
+    exact system.carrierTransition_self index.value
+  map_comp first second := by
+    apply Cat.Hom.ext
+    exact (system.carrierTransition_comp _ _ _ first.le second.le).symm
+
+/-- The unchanged divisor-base categories form the accompanying functor. -/
+def baseDiagram
+    {underlying : ArchimedeanSplitFrobenioidPresentation.{0}}
+    (system : FrobenioidSystem underlying) :
+    DivisibilityIndex ⥤ Cat.{0, 0} where
+  obj index :=
+    (system.stage index.value).reconstructed.frobenioid.frobenioid.baseCategory
+  map {first second} arrow :=
+    (system.baseTransition first.value second.value arrow.le).toCatHom
+  map_id index := by
+    apply Cat.Hom.ext
+    exact system.baseTransition_self index.value
+  map_comp first second := by
+    apply Cat.Hom.ext
+    exact (system.baseTransition_comp _ _ _ first.le second.le).symm
+
+/-- The reference rational monoids form the quotient transition diagram. -/
+def rationalMonoidDiagram
+    {underlying : ArchimedeanSplitFrobenioidPresentation.{0}}
+    (system : FrobenioidSystem underlying) :
+    DivisibilityIndex ⥤ MonCat.{0} where
+  obj index :=
+    MonCat.of
+      (FrobenioidStage.referenceRationalMonoid
+        (system.stage index.value))
+  map {first second} arrow :=
+    MonCat.ofHom
+      (system.rationalTransition first.value second.value arrow.le)
+  map_id index := by
+    apply MonCat.hom_ext
+    exact system.rationalTransition_self index.value
+  map_comp first second := by
+    apply MonCat.hom_ext
+    exact (system.rationalTransition_comp _ _ _ first.le second.le).symm
+
+/-- Restriction of the reconstructed carrier-category system to a cofinal subset. -/
+def restrictedCarrierDiagram
+    {underlying : ArchimedeanSplitFrobenioidPresentation.{0}}
+    (system : FrobenioidSystem underlying)
+    (subset : MultiplicativelyCofinalSubset) :
+    subset.Index ⥤ Cat.{0, 0} :=
+  subset.indexInclusion ⋙ carrierDiagram system
+
+/-- Restriction of the reconstructed base-category system to a cofinal subset. -/
+def restrictedBaseDiagram
+    {underlying : ArchimedeanSplitFrobenioidPresentation.{0}}
+    (system : FrobenioidSystem underlying)
+    (subset : MultiplicativelyCofinalSubset) :
+    subset.Index ⥤ Cat.{0, 0} :=
+  subset.indexInclusion ⋙ baseDiagram system
+
+/-- Restriction of the reconstructed rational-monoid system to a cofinal subset. -/
+def restrictedRationalMonoidDiagram
+    {underlying : ArchimedeanSplitFrobenioidPresentation.{0}}
+    (system : FrobenioidSystem underlying)
+    (subset : MultiplicativelyCofinalSubset) :
+    subset.Index ⥤ MonCat.{0} :=
+  subset.indexInclusion ⋙ rationalMonoidDiagram system
+
+end FrobenioidSystem
 
 /-- The full positive-integer indexing set is multiplicatively cofinal. -/
 def all : MultiplicativelyCofinalSubset where

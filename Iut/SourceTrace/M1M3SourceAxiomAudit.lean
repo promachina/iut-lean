@@ -108,6 +108,9 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceArchimedeanKummerSystem.transition_ker
 #print axioms Iut.SourceArchimedeanKummerSystem.continuousTransition_comp
 #print axioms Iut.SourceArchimedeanKummerSystem.orientedQuotientMap_ker
+#print axioms Iut.SourceArchimedeanKummerSystem.noncompact_eq_one_of_isUnit
+#print axioms Iut.SourceArchimedeanKummerSystem.quotientSplitTopologicalMonoid
+#print axioms Iut.SourceArchimedeanKummerSystem.MultiplicativelyCofinalSubset.isColimitEquivRestricted
 #print axioms Iut.SourceArchimedeanKummerSystem.continuousOrientedQuotientMap_isOpenQuotientMap
 #print axioms Iut.SourceArchimedeanKummerSystem.orientationAutomorphism_ne
 #print axioms Iut.SourceArchimedeanKummerSystem.unitQuotientDiagram

@@ -299,6 +299,19 @@
   \lean{Iut.SourceFiniteTimesMuKummerInput.timesMuUnitsEquiv}
   \lean{Iut.SourceFiniteTimesMuKummerFrobenioid}
   \lean{Iut.SourceFiniteTimesMuKummerFrobenioid.rationalUnitsEquiv}
+  \lean{Iut.SourceArchimedeanKummerSystem.unitQuotientPresentation}
+  \lean{Iut.SourceArchimedeanKummerSystem.noncompact_eq_one_of_isUnit}
+  \lean{Iut.SourceArchimedeanKummerSystem.quotientSplitTopologicalMonoid}
+  \lean{Iut.SourceArchimedeanKummerSystem.quotientSplitTransition}
+  \lean{Iut.SourceArchimedeanKummerSystem.FrobenioidStage}
+  \lean{Iut.SourceArchimedeanKummerSystem.FrobenioidSystem}
+  \lean{Iut.SourceArchimedeanKummerSystem.FrobenioidSystem.divisor_compatible}
+  \lean{Iut.SourceArchimedeanKummerSystem.FrobenioidSystem.frobeniusDegree_compatible}
+  \lean{Iut.SourceArchimedeanKummerSystem.FrobenioidSystem.carrierDiagram}
+  \lean{Iut.SourceArchimedeanKummerSystem.FrobenioidSystem.baseDiagram}
+  \lean{Iut.SourceArchimedeanKummerSystem.FrobenioidSystem.rationalMonoidDiagram}
+  \lean{Iut.SourceArchimedeanKummerSystem.MultiplicativelyCofinalSubset.indexInclusionFinal}
+  \lean{Iut.SourceArchimedeanKummerSystem.MultiplicativelyCofinalSubset.isColimitEquivRestricted}
   \lean{Iut.SourceMLFGaloisTMPair.grothendieckAction}
   \lean{Iut.SourceMLFGaloisTMPair.fixedSubmonoid}
   \lean{Iut.SourceMLFIntegralMonoid.absoluteOpenStabilizer}
@@ -466,6 +479,19 @@
   this exact reference rational monoid, so an unrelated Frobenioid cannot
   inhabit the interface.  Derivation of that output from Frobenioids~I,
   Theorem~5.2(ii), remains explicit.
+  At an archimedean place, the exact \(N\)-stage replaces the compact factor by
+  \(S^1/\mu_N\) and retains the original noncompact factor.  Lean proves that
+  this noncompact factor has no nontrivial units and constructs the continuous
+  transition which is the torsion-quotient map on the compact factor and the
+  identity on the noncompact factor.  A reconstructed stage must be an actual
+  split Frobenioid whose split topological monoid is structure-preservingly
+  isomorphic to this exact product and whose base is equivalent to the original
+  base.  Its transition functors preserve the base projection, FSM morphisms,
+  divisors, and Frobenius degrees.  Carrier categories, bases, and reference
+  rational monoids then form strict divisibility-indexed diagrams.  Every
+  multiplicatively cofinal restriction is proved final, so it preserves and reflects the universal
+  colimit cocone.  Construction of these stages and transition functors from
+  the original archimedean \(TM\)/Frobenioid data remains explicit.
   A pointed inversion carries an
   actual decomposition subgroup; restriction along its continuous inclusion
   derives torsion detection from the precise equality
@@ -776,8 +802,9 @@
   strips, and its square is proved class-by-class in both directions by
   conjugating the triangle square and cancelling those comparisons.  These
   facts validate the coarsification and conjugation mechanism but cannot
-  discharge clauses~(a)--(b) until the finite Frobenioid reconstruction,
-  archimedean inductive Frobenioid system, and isomorphism category for
+  discharge clauses~(a)--(b) until the finite and archimedean Frobenioid
+  construction interfaces have been derived and populated, and the
+  isomorphism category for
   \(F^{\vdash\times\mu}\) have been constructed.  The
   mono-theta square ranges over every \(m\) and bad
   place and uses actual projective systems with levelwise environment
