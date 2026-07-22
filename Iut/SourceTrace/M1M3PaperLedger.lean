@@ -119,9 +119,11 @@ def m1m3PaperLedger : List PaperClause :=
         "PreFrobenioid.IsLBInvertible",
         "PreFrobenioid.IsOfFrobeniusType",
         "PreFrobenioid.IsIsotropic",
-        "PreFrobenioid.FrobeniusTrivialization"]
+        "PreFrobenioid.FrobeniusTrivialization",
+        "PreFrobenioid.IsFrobeniusNormalized",
+        "PreFrobenioid.IsFrobeniusNormalizedType"]
       .partialImplementation
-      "The principal source morphism classes are literal predicates on actual categorical arrows; pullback uses the representable fiber-product comparison, and Frobenius triviality is a multiplicative degree section by Frobenius-type endomorphisms. The remaining ample, perfect, compact, normalized, hull, and related object classes remain open.",
+      "The principal source morphism classes are literal predicates on actual categorical arrows; pullback uses the representable fiber-product comparison, Frobenius triviality is a multiplicative degree section by Frobenius-type endomorphisms, and Frobenius normalization is the paper's power-conjugation equation. The remaining ample, perfect, compact, and related object classes remain open.",
     clause "FrdI.1.3" .frobenioidsI
       "Frobenioids I, Definition 1.3"
       ["PreFrobenioid.FrobenioidAxioms",
@@ -155,6 +157,18 @@ def m1m3PaperLedger : List PaperClause :=
         "SplitFrobenioidEquivalence.trans"]
       .partialImplementation
       "A characteristic splitting is an actual subfunctor of O-triangle, multiplication with units is objectwise bijective with commuting factors, and the isotropic-hull image condition is explicit. Split Frobenioids carry a nonempty indexed collection of such splittings with structure-preserving equivalences. Constructing the splittings in Examples 3.2-3.4 remains open.",
+    clause "FrdI.2.7" .frobenioidsI
+      "Frobenioids I, Definition 2.7"
+      ["PreFrobenioid.BaseSection",
+        "PreFrobenioid.FrobeniusSection",
+        "PreFrobenioid.BaseFrobeniusPair",
+        "PreFrobenioid.IsPreModelType",
+        "SourceModelFrobenioid.Carrier.zeroBaseSection",
+        "SourceModelFrobenioid.Carrier.zeroFrobeniusSection",
+        "SourceModelFrobenioid.Carrier.baseFrobeniusPair",
+        "SourceModelFrobenioid.Carrier.isPreModelType"]
+      .sourceFaithful
+      "A base-section is a skeletal faithful subcategory of actual pullback arrows, consists of Frobenius-trivial objects, and projects equivalently to D. A Frobenius-section is a multiplicative family of natural endomorphisms with the exact degree, base-identity, and Frobenius-type clauses. For the model Frobenioid, the zero-divisor objects over a skeleton of D and their canonical degree-n maps construct the base-Frobenius pair specified in the proof of Theorem 5.2(ii).",
     clause "FrdI.5.2(i)" .frobenioidsI
       "Frobenioids I, Theorem 5.2(i)"
       ["SourceModelFrobenioid.GroupLikeAddMonoidOn",
@@ -242,11 +256,17 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceModelFrobenioid.Carrier.faithfulUpToUnits",
         "SourceModelFrobenioid.Carrier.linearEndomorphismPullbackHom",
         "SourceModelFrobenioid.Carrier.rationalMonoidTransport",
+        "SourceModelFrobenioid.Carrier.zeroBaseArrow_isPullback",
+        "SourceModelFrobenioid.Carrier.zeroBaseSection",
+        "SourceModelFrobenioid.Carrier.zeroFrobeniusNaturalTransformation",
+        "SourceModelFrobenioid.Carrier.zeroFrobeniusSection",
+        "SourceModelFrobenioid.Carrier.baseFrobeniusPair",
+        "SourceModelFrobenioid.Carrier.isPreModelType",
         "SourceModelFrobenioid.Carrier.frobenioidAxioms",
         "SourceModelFrobenioid.Carrier.preFrobenioidPresentation",
         "SourceModelFrobenioid.Carrier.frobenioidPresentation"]
       .partialImplementation
-      "Every divisor class is connected by explicit model arrows to the zero-divisor object over its base, base arrows lift between zero-divisor objects, and base connectedness therefore implies carrier connectedness. Cancellation of the four arrow components proves every model arrow epic from total epimorphicity of the base, yielding the complete Definition 1.1(iv) pre-Frobenioid presentation. The inverse to an isometric pre-step is constructed with the paper's negative pulled-back rational-function component, proving every model object isotropic and every model arrow co-angular; Frobenius-type arrows are consequently characterized by zero divisor and base-isomorphic projection. The zero-divisor objects carry explicit Frobenius trivializations. Common pre-steps are constructed from localization representatives `a-b` and `c-d` via the shared midpoint `-(b+d)` and effective corrections `a+d` and `c+b`, inducing the prescribed base isomorphism. Literal pullback objects carry the source-prescribed divisor class, their arrows satisfy the full representable universal property, and projection from their slice is essentially surjective and fully faithful. Every degree-n Frobenius arrow to `(A_D, n alpha)` has the required essentially unique comparison isomorphism. Pullback along the inverse base isomorphism gives the actual monoid equivalence on base-identity linear endomorphisms; it satisfies the conjugation equation, is uniquely determined, and depends only on the base arrow. Adding or subtracting an effective divisor constructs the outgoing and incoming co-angular pre-step representatives; explicit comparison arrows prove that their slices realize the divisor order and its opposite fully faithfully, with unique representatives up to unique isomorphism. Every model arrow is explicitly factored into its Frobenius degree, divisor/rational-function pre-step, and literal base pullback; the pullback universal property proves every model pullback linear and LB-invertible. The pullback universal properties and equal-degree Frobenius witness construct the two comparison isomorphisms between arbitrary factorizations, their middle square, and uniqueness by total epimorphic cancellation. Every pre-step is monic; its two ordered isometric/co-angular factorizations come from the unique outgoing and incoming divisor representatives, and arbitrary such factorizations have a unique comparison isomorphism. The inverse-base pullback of the rational-function difference constructs the unique target unit of clause (vi). Thus all seven axiom groups of Definition 1.3 are assembled in `frobenioidAxioms` and packaged with connectedness and total epimorphicity as `frobenioidPresentation`. Divisor and rational-function pullback also construct the model's Proposition 2.2 contravariant rational-monoid transport and its isotropic-hull injection. Theorem 5.2(ii)'s model type, birational Frobenius normalization, and natural O-times = B identification remain to be proved.",
+      "Every divisor class is connected by explicit model arrows to the zero-divisor object over its base, base arrows lift between zero-divisor objects, and base connectedness therefore implies carrier connectedness. Cancellation of the four arrow components proves every model arrow epic from total epimorphicity of the base, yielding the complete Definition 1.1(iv) pre-Frobenioid presentation. The inverse to an isometric pre-step is constructed with the paper's negative pulled-back rational-function component, proving every model object isotropic and every model arrow co-angular; Frobenius-type arrows are consequently characterized by zero divisor and base-isomorphic projection. The zero-divisor objects carry explicit Frobenius trivializations. Common pre-steps are constructed from localization representatives `a-b` and `c-d` via the shared midpoint `-(b+d)` and effective corrections `a+d` and `c+b`, inducing the prescribed base isomorphism. Literal pullback objects carry the source-prescribed divisor class, their arrows satisfy the full representable universal property, and projection from their slice is essentially surjective and fully faithful. Every degree-n Frobenius arrow to `(A_D, n alpha)` has the required essentially unique comparison isomorphism. Pullback along the inverse base isomorphism gives the actual monoid equivalence on base-identity linear endomorphisms; it satisfies the conjugation equation, is uniquely determined, and depends only on the base arrow. Adding or subtracting an effective divisor constructs the outgoing and incoming co-angular pre-step representatives; explicit comparison arrows prove that their slices realize the divisor order and its opposite fully faithfully, with unique representatives up to unique isomorphism. Every model arrow is explicitly factored into its Frobenius degree, divisor/rational-function pre-step, and literal base pullback; the pullback universal property proves every model pullback linear and LB-invertible. The pullback universal properties and equal-degree Frobenius witness construct the two comparison isomorphisms between arbitrary factorizations, their middle square, and uniqueness by total epimorphic cancellation. Every pre-step is monic; its two ordered isometric/co-angular factorizations come from the unique outgoing and incoming divisor representatives, and arbitrary such factorizations have a unique comparison isomorphism. The inverse-base pullback of the rational-function difference constructs the unique target unit of clause (vi). Thus all seven axiom groups of Definition 1.3 are assembled in `frobenioidAxioms` and packaged with connectedness and total epimorphicity as `frobenioidPresentation`. Divisor and rational-function pullback construct the model's Proposition 2.2 contravariant rational-monoid transport and its isotropic-hull injection. The zero-divisor subcategory over a skeleton of D, together with its natural degree-n endomorphisms, constructs the source-prescribed base-Frobenius pair and proves pre-model type. Theorem 5.2(ii)'s birational Frobenius normalization and natural O-times = B identification remain to be proved.",
     clause "FrdII.5.1" .frobenioidsII
       "Frobenioids II, Definition 5.1"
       [] .unformalized
@@ -1484,8 +1504,8 @@ def clauseIdsWithStatus (status : ClauseStatus) : List String :=
   m1m3PaperLedger.filterMap fun entry =>
     if entry.status = status then some entry.id else none
 
-/-- The source-closure ledger contains 107 separately audited clauses. -/
-theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 107 :=
+/-- The source-closure ledger contains 108 separately audited clauses. -/
+theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 108 :=
   rfl
 
 /-- No source clause occurs twice in the direct-citation ledger. -/
@@ -1508,9 +1528,9 @@ theorem unformalized_count :
     (clauseIdsWithStatus .unformalized).length = 19 :=
   rfl
 
-/-- Two clauses currently pass the clause-level source audit. -/
+/-- Three clauses currently pass the clause-level source audit. -/
 theorem sourceFaithfulClauseIds_eq :
-    sourceFaithfulClauseIds = ["FrdI.5.2(i)", "I.4.10"] :=
+    sourceFaithfulClauseIds = ["FrdI.2.7", "FrdI.5.2(i)", "I.4.10"] :=
   rfl
 
 end Iut.SourceTrace

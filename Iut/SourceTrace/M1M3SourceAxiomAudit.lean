@@ -6,7 +6,7 @@ Authors: IUT Lean formalization contributors
 import Iut.Foundations.SourceHodgeArakelovEvaluation
 import Iut.Foundations.SourceSplitKummerFrobenioid
 import Iut.Foundations.SourceArchimedeanKummerSystem
-import Iut.Foundations.SourceModelRationalMonoidTransport
+import Iut.Foundations.SourceModelFrobenioidPreModel
 import Iut.Foundations.SourceTheorem311
 
 open Iut
@@ -117,6 +117,9 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceModelFrobenioid.Carrier.frobenioidPresentation
 #print axioms Iut.SourceModelFrobenioid.Carrier.linearEndomorphismPullbackHom
 #print axioms Iut.SourceModelFrobenioid.Carrier.rationalMonoidTransport
+#print axioms Iut.SourceModelFrobenioid.Carrier.zeroBaseArrow_isPullback
+#print axioms Iut.SourceModelFrobenioid.Carrier.zeroFrobeniusNaturalTransformation
+#print axioms Iut.SourceModelFrobenioid.Carrier.isPreModelType
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.quotientUnit_exists
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootRealization.ofRootSystem
