@@ -1071,6 +1071,340 @@ theorem isOfFrobeniusType_iff {source target : Carrier Phi data}
         (preFrobenioid Phi data).IsBaseIso arrow := by
   rw [PreFrobenioid.IsOfFrobeniusType, isLBInvertible_iff Phi data]
 
+theorem endomorphism_divisor_eq
+    {object : Carrier Phi data}
+    (alpha : (preFrobenioid Phi data).LinearBaseIdentityEndomorphism
+      object) :
+    Algebra.GrothendieckAddGroup.of alpha.hom.divisor =
+      data.divisor (Object.base object) alpha.hom.rationalFunction := by
+  have balance := alpha.hom.balance
+  have linear := alpha.linear
+  change alpha.hom.frobeniusDegree = 1 at linear
+  have baseIdentity := alpha.baseIdentity
+  change alpha.hom.base = 𝟙 (Object.base object) at baseIdentity
+  rw [linear, baseIdentity, gpPullback_id] at balance
+  simp only [AddMonoidHom.id_apply] at balance
+  have degreeOne : (1 : ℕ+).val = (1 : ℕ) := rfl
+  rw [degreeOne, one_nsmul] at balance
+  exact add_left_cancel balance
+
+/-- Pull a base-identity linear endomorphism through a base isomorphism. -/
+def baseIsoTransport
+    {source target : Carrier Phi data}
+    (baseIso : Object.base source ≅ Object.base target)
+    (alpha : (preFrobenioid Phi data).LinearBaseIdentityEndomorphism
+      source) :
+    (preFrobenioid Phi data).LinearBaseIdentityEndomorphism target where
+  hom :=
+    { frobeniusDegree := 1
+      base := 𝟙 (Object.base target)
+      divisor := Phi.pullback baseIso.inv alpha.hom.divisor
+      rationalFunction :=
+        data.rationalFunctions.pullback baseIso.inv
+          alpha.hom.rationalFunction
+      balance := by
+        change (1 : ℕ) • target.divisorClass +
+              Algebra.GrothendieckAddGroup.of
+                (Phi.pullback baseIso.inv alpha.hom.divisor) =
+            gpPullback Phi (𝟙 (Object.base target))
+                target.divisorClass +
+              data.divisor (Object.base target)
+                (data.rationalFunctions.pullback baseIso.inv
+                  alpha.hom.rationalFunction)
+        rw [one_nsmul, gpPullback_id]
+        simp only [AddMonoidHom.id_apply]
+        have pulled := congrArg (gpPullback Phi baseIso.inv)
+          (endomorphism_divisor_eq Phi data alpha)
+        rw [gpPullback_of, ← data.divisor_natural] at pulled
+        rw [pulled] }
+  linear := rfl
+  baseIdentity := rfl
+
+theorem baseIsoTransport_one
+    {source target : Carrier Phi data}
+    (baseIso : Object.base source ≅ Object.base target) :
+    baseIsoTransport Phi data baseIso
+        (1 : (preFrobenioid Phi data).LinearBaseIdentityEndomorphism
+          source) =
+      (1 : (preFrobenioid Phi data).LinearBaseIdentityEndomorphism
+        target) := by
+  apply PreFrobenioid.LinearBaseIdentityEndomorphism.ext
+  apply Hom.ext
+  · rfl
+  · rfl
+  · change Phi.pullback baseIso.inv 0 = 0
+    exact map_zero _
+  · change data.rationalFunctions.pullback baseIso.inv 0 = 0
+    exact map_zero _
+
+theorem baseIsoTransport_mul
+    {source target : Carrier Phi data}
+    (baseIso : Object.base source ≅ Object.base target)
+    (alpha beta :
+      (preFrobenioid Phi data).LinearBaseIdentityEndomorphism source) :
+    baseIsoTransport Phi data baseIso (alpha * beta) =
+      baseIsoTransport Phi data baseIso alpha *
+        baseIsoTransport Phi data baseIso beta := by
+  apply PreFrobenioid.LinearBaseIdentityEndomorphism.ext
+  apply Hom.ext
+  · change (1 : ℕ+) = 1 * 1
+    rfl
+  · change 𝟙 _ = 𝟙 _ ≫ 𝟙 _
+    simp
+  · change Phi.pullback baseIso.inv
+          (Phi.pullback alpha.hom.base beta.hom.divisor +
+            beta.hom.frobeniusDegree.val • alpha.hom.divisor) =
+        Phi.pullback (𝟙 (Object.base target))
+            (Phi.pullback baseIso.inv beta.hom.divisor) +
+          (1 : ℕ+).val •
+            Phi.pullback baseIso.inv alpha.hom.divisor
+    have alphaBase := alpha.baseIdentity
+    change alpha.hom.base = 𝟙 (Object.base source) at alphaBase
+    have betaLinear := beta.linear
+    change beta.hom.frobeniusDegree = 1 at betaLinear
+    rw [alphaBase, betaLinear, Phi.pullback_id]
+    rw [Phi.pullback_id]
+    simp only [AddMonoidHom.id_apply, map_add]
+    have degreeOne : (1 : ℕ+).val = (1 : ℕ) := rfl
+    rw [degreeOne, one_nsmul]
+    abel
+  · change data.rationalFunctions.pullback baseIso.inv
+          (data.rationalFunctions.pullback alpha.hom.base
+              beta.hom.rationalFunction +
+            beta.hom.frobeniusDegree.val •
+              alpha.hom.rationalFunction) =
+        data.rationalFunctions.pullback (𝟙 (Object.base target))
+            (data.rationalFunctions.pullback baseIso.inv
+              beta.hom.rationalFunction) +
+          (1 : ℕ+).val •
+            data.rationalFunctions.pullback baseIso.inv
+              alpha.hom.rationalFunction
+    have alphaBase := alpha.baseIdentity
+    change alpha.hom.base = 𝟙 (Object.base source) at alphaBase
+    have betaLinear := beta.linear
+    change beta.hom.frobeniusDegree = 1 at betaLinear
+    rw [alphaBase, betaLinear, data.rationalFunctions.pullback_id]
+    rw [data.rationalFunctions.pullback_id]
+    simp only [AddMonoidHom.id_apply, map_add]
+    have degreeOne : (1 : ℕ+).val = (1 : ℕ) := rfl
+    rw [degreeOne, one_nsmul]
+    abel
+
+def baseIsoTransportHom
+    {source target : Carrier Phi data}
+    (baseIso : Object.base source ≅ Object.base target) :
+    (preFrobenioid Phi data).LinearBaseIdentityEndomorphism source →*
+      (preFrobenioid Phi data).LinearBaseIdentityEndomorphism target where
+  toFun := baseIsoTransport Phi data baseIso
+  map_one' := baseIsoTransport_one Phi data baseIso
+  map_mul' := baseIsoTransport_mul Phi data baseIso
+
+theorem baseIsoTransport_symm_apply
+    {source target : Carrier Phi data}
+    (baseIso : Object.base source ≅ Object.base target)
+    (alpha : (preFrobenioid Phi data).LinearBaseIdentityEndomorphism
+      source) :
+    baseIsoTransport Phi data baseIso.symm
+        (baseIsoTransport Phi data baseIso alpha) = alpha := by
+  apply PreFrobenioid.LinearBaseIdentityEndomorphism.ext
+  apply Hom.ext
+  · exact alpha.linear.symm
+  · exact alpha.baseIdentity.symm
+  · change Phi.pullback baseIso.hom
+        (Phi.pullback baseIso.inv alpha.hom.divisor) = alpha.hom.divisor
+    rw [← AddMonoidHom.comp_apply, ← Phi.pullback_comp,
+      baseIso.hom_inv_id, Phi.pullback_id]
+    rfl
+  · change data.rationalFunctions.pullback baseIso.hom
+        (data.rationalFunctions.pullback baseIso.inv
+          alpha.hom.rationalFunction) = alpha.hom.rationalFunction
+    rw [← AddMonoidHom.comp_apply,
+      ← data.rationalFunctions.pullback_comp,
+      baseIso.hom_inv_id, data.rationalFunctions.pullback_id]
+    rfl
+
+/-- The model's literal monoid isomorphism on `O^bullet` induced by a base
+isomorphism. -/
+def baseIsoTransportEquiv
+    {source target : Carrier Phi data}
+    (baseIso : Object.base source ≅ Object.base target) :
+    (preFrobenioid Phi data).LinearBaseIdentityEndomorphism source ≃*
+      (preFrobenioid Phi data).LinearBaseIdentityEndomorphism target where
+  toFun := baseIsoTransport Phi data baseIso
+  invFun := baseIsoTransport Phi data baseIso.symm
+  left_inv := baseIsoTransport_symm_apply Phi data baseIso
+  right_inv := baseIsoTransport_symm_apply Phi data baseIso.symm
+  map_mul' := baseIsoTransport_mul Phi data baseIso
+
+theorem baseIsoTransport_conjugates
+    {source target : Carrier Phi data} (arrow : source ⟶ target)
+    (linear : (preFrobenioid Phi data).IsLinear arrow)
+    (baseIsIso : IsIso arrow.base)
+    (alpha : (preFrobenioid Phi data).LinearBaseIdentityEndomorphism
+      source) :
+    alpha.hom ≫ arrow =
+      arrow ≫ (baseIsoTransport Phi data (asIso arrow.base) alpha).hom := by
+  letI : IsIso arrow.base := baseIsIso
+  have arrowLinear := linear
+  change arrow.frobeniusDegree = 1 at arrowLinear
+  have alphaLinear := alpha.linear
+  change alpha.hom.frobeniusDegree = 1 at alphaLinear
+  have alphaBase := alpha.baseIdentity
+  change alpha.hom.base = 𝟙 (Object.base source) at alphaBase
+  apply Hom.ext
+  · rw [comp_frobeniusDegree, comp_frobeniusDegree,
+      alphaLinear, arrowLinear]
+    rfl
+  · rw [comp_base, comp_base, alphaBase]
+    change 𝟙 _ ≫ arrow.base = arrow.base ≫ 𝟙 _
+    simp
+  · rw [comp_divisor, comp_divisor]
+    change Phi.pullback alpha.hom.base arrow.divisor +
+          arrow.frobeniusDegree.val • alpha.hom.divisor =
+        Phi.pullback arrow.base
+            (Phi.pullback (inv arrow.base) alpha.hom.divisor) +
+          (1 : ℕ+).val • arrow.divisor
+    have pullbackCancel :
+        Phi.pullback arrow.base
+            (Phi.pullback (inv arrow.base) alpha.hom.divisor) =
+          alpha.hom.divisor := by
+      rw [← AddMonoidHom.comp_apply, ← Phi.pullback_comp,
+        IsIso.hom_inv_id, Phi.pullback_id]
+      rfl
+    rw [alphaBase, arrowLinear, Phi.pullback_id, pullbackCancel]
+    simp only [AddMonoidHom.id_apply]
+    have degreeOne : (1 : ℕ+).val = (1 : ℕ) := rfl
+    rw [degreeOne, one_nsmul]
+    abel
+  · rw [comp_rationalFunction, comp_rationalFunction]
+    change data.rationalFunctions.pullback alpha.hom.base
+            arrow.rationalFunction +
+          arrow.frobeniusDegree.val • alpha.hom.rationalFunction =
+        data.rationalFunctions.pullback arrow.base
+            (data.rationalFunctions.pullback (inv arrow.base)
+              alpha.hom.rationalFunction) +
+          (1 : ℕ+).val • arrow.rationalFunction
+    have pullbackCancel :
+        data.rationalFunctions.pullback arrow.base
+            (data.rationalFunctions.pullback (inv arrow.base)
+              alpha.hom.rationalFunction) =
+          alpha.hom.rationalFunction := by
+      rw [← AddMonoidHom.comp_apply,
+        ← data.rationalFunctions.pullback_comp,
+        IsIso.hom_inv_id, data.rationalFunctions.pullback_id]
+      rfl
+    rw [alphaBase, arrowLinear,
+      data.rationalFunctions.pullback_id, pullbackCancel]
+    simp only [AddMonoidHom.id_apply]
+    have degreeOne : (1 : ℕ+).val = (1 : ℕ) := rfl
+    rw [degreeOne, one_nsmul]
+    abel
+
+def preStepBaseIso
+    {source target : Carrier Phi data} (arrow : source ⟶ target)
+    (preStep : (preFrobenioid Phi data).IsPreStep arrow) :
+    Object.base source ≅ Object.base target := by
+  have baseIsIso := preStep.2
+  change IsIso arrow.base at baseIsIso
+  letI : IsIso arrow.base := baseIsIso
+  exact asIso arrow.base
+
+/-- Definition 1.3(iii)(c)'s transport for a model co-angular pre-step. -/
+def unitTransport
+    {source target : Carrier Phi data} (arrow : source ⟶ target)
+    (preStep : (preFrobenioid Phi data).IsPreStep arrow) :
+    (preFrobenioid Phi data).CoAngularUnitTransport arrow where
+  transport := baseIsoTransportEquiv Phi data
+    (preStepBaseIso Phi data arrow preStep)
+  conjugates alpha := by
+    have linear := preStep.1
+    have baseIsIso := preStep.2
+    change IsIso arrow.base at baseIsIso
+    letI : IsIso arrow.base := baseIsIso
+    exact baseIsoTransport_conjugates Phi data arrow linear baseIsIso alpha
+
+theorem endomorphism_eq_of_comp_eq
+    {source target : Carrier Phi data} (arrow : source ⟶ target)
+    (left right :
+      (preFrobenioid Phi data).LinearBaseIdentityEndomorphism target)
+    (equality : arrow ≫ left.hom = arrow ≫ right.hom) :
+    left = right := by
+  apply PreFrobenioid.LinearBaseIdentityEndomorphism.ext
+  apply Hom.ext
+  · exact left.linear.trans right.linear.symm
+  · exact left.baseIdentity.trans right.baseIdentity.symm
+  · have projected := congrArg Hom.divisor equality
+    change Phi.pullback arrow.base left.hom.divisor +
+          left.hom.frobeniusDegree.val • arrow.divisor =
+        Phi.pullback arrow.base right.hom.divisor +
+          right.hom.frobeniusDegree.val • arrow.divisor at projected
+    have leftLinear := left.linear
+    change left.hom.frobeniusDegree = 1 at leftLinear
+    have rightLinear := right.linear
+    change right.hom.frobeniusDegree = 1 at rightLinear
+    rw [leftLinear, rightLinear] at projected
+    apply Phi.characteristicallyInjective arrow.base
+    have cancellable :
+        (1 : ℕ+).val • arrow.divisor +
+            Phi.pullback arrow.base left.hom.divisor =
+          (1 : ℕ+).val • arrow.divisor +
+            Phi.pullback arrow.base right.hom.divisor := by
+      simpa only [add_comm] using projected
+    exact (Phi.obj (Object.base source)).integral
+      ((1 : ℕ+).val • arrow.divisor)
+      (Phi.pullback arrow.base left.hom.divisor)
+      (Phi.pullback arrow.base right.hom.divisor) cancellable
+  · have projected := congrArg Hom.rationalFunction equality
+    change data.rationalFunctions.pullback arrow.base
+            left.hom.rationalFunction +
+          left.hom.frobeniusDegree.val • arrow.rationalFunction =
+        data.rationalFunctions.pullback arrow.base
+            right.hom.rationalFunction +
+          right.hom.frobeniusDegree.val • arrow.rationalFunction at projected
+    have leftLinear := left.linear
+    change left.hom.frobeniusDegree = 1 at leftLinear
+    have rightLinear := right.linear
+    change right.hom.frobeniusDegree = 1 at rightLinear
+    rw [leftLinear, rightLinear] at projected
+    apply data.rationalFunctions.pullback_injective arrow.base
+    exact add_right_cancel projected
+
+theorem coAngularUnitTransport_ext
+    {source target : Carrier Phi data} {arrow : source ⟶ target}
+    {left right : (preFrobenioid Phi data).CoAngularUnitTransport arrow}
+    (transport : left.transport = right.transport) : left = right := by
+  cases left
+  cases right
+  cases transport
+  rfl
+
+/-- The conjugation equation uniquely determines unit transport in the model. -/
+theorem unitTransport_unique
+    {source target : Carrier Phi data} (arrow : source ⟶ target)
+    (left right : (preFrobenioid Phi data).CoAngularUnitTransport arrow) :
+    left = right := by
+  apply coAngularUnitTransport_ext Phi data
+  apply MulEquiv.ext
+  intro alpha
+  apply endomorphism_eq_of_comp_eq Phi data arrow
+  exact (left.conjugates alpha).symm.trans (right.conjugates alpha)
+
+/-- The model transport depends only on the projected base isomorphism. -/
+theorem unitTransport_dependsOnlyOnBase
+    {source target : Carrier Phi data} (left right : source ⟶ target)
+    (leftPreStep : (preFrobenioid Phi data).IsPreStep left)
+    (rightPreStep : (preFrobenioid Phi data).IsPreStep right)
+    (baseEquality : left.base = right.base) :
+    (unitTransport Phi data left leftPreStep).transport =
+      (unitTransport Phi data right rightPreStep).transport := by
+  change baseIsoTransportEquiv Phi data
+      (preStepBaseIso Phi data left leftPreStep) =
+    baseIsoTransportEquiv Phi data
+      (preStepBaseIso Phi data right rightPreStep)
+  congr 1
+  apply Iso.ext
+  exact baseEquality
+
 theorem zeroFrobeniusBalance (data : Input Phi) (X : D) (degree : ℕ+) :
     degree.val •
           (0 : Algebra.GrothendieckAddGroup (Phi.obj X).carrier) +

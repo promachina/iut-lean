@@ -86,6 +86,11 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceModelFrobenioid.Carrier.frobeniusDegreeWitness
 #print axioms Iut.SourceModelFrobenioid.Carrier.isotropicHull
 #print axioms Iut.SourceModelFrobenioid.Carrier.coAngular_comp
+#print axioms Iut.SourceModelFrobenioid.Carrier.baseIsoTransportEquiv
+#print axioms Iut.SourceModelFrobenioid.Carrier.baseIsoTransport_conjugates
+#print axioms Iut.SourceModelFrobenioid.Carrier.unitTransport
+#print axioms Iut.SourceModelFrobenioid.Carrier.unitTransport_unique
+#print axioms Iut.SourceModelFrobenioid.Carrier.unitTransport_dependsOnlyOnBase
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.quotientUnit_exists
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootRealization.ofRootSystem
