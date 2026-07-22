@@ -425,11 +425,15 @@ def m1m3PaperLedger : List PaperClause :=
         "PuncturedEllipticCurve.galoisActionOnLTorsionLinearEquiv",
         "PuncturedEllipticCurve.galoisActionOnLTorsionLinearEquivHom",
         "PuncturedEllipticCurve.galoisLTorsionMatrixRepresentation",
+        "PuncturedEllipticCurve.galoisActionOnPoint_stabilizer_isOpen",
+        "PuncturedEllipticCurve.galoisLTorsionMatrixRepresentation_ker_isOpen",
+        "PuncturedEllipticCurve.galoisLTorsionMatrixRepresentation_continuous",
+        "ThetaLTorsionRepresentationData.representation_continuous",
         "ThetaLTorsionRepresentationData.representation_acts_on_torsion",
         "ThetaLTorsionRepresentationData.kernelFixedField",
         "ThetaLTorsionRepresentationData.embeddedK",
         "ThetaFieldTower"] .partialImplementation
-      "The Galois action on algebraic-closure points is proved multiplicative, restricted to actual elliptic l-torsion, promoted to ZMod-l linear equivalences, and transported through the chosen basis to a derived GL2 representation. Neither the representation nor its action law can be supplied independently. Krull continuity of this derived map, existence of the chosen basis, and identification of embedded K with the kernel fixed field remain source obligations.",
+      "The Galois action on algebraic-closure points is proved multiplicative, restricted to actual elliptic l-torsion, promoted to ZMod-l linear equivalences, and transported through the chosen basis to a derived GL2 representation. Point stabilizers are reduced to Krull-open affine-coordinate stabilizers; the representation kernel is their finite intersection, so continuity is proved rather than supplied. Existence of the chosen basis and identification of embedded K with the kernel fixed field remain source obligations.",
     clause "I.3.1(c).residue" .iutI "IUT I, Definition 3.1(c): residue characteristics and q-orders"
       ["ThetaValuationData", "ThetaTateParameterData",
         "ThetaTateParameterData.order",

@@ -417,6 +417,63 @@ theorem galoisActionOnPoint_mul
     WeierstrassCurve.Affine.Point.map_map]
   congr 1
 
+/--
+The stabilizer of an algebraic-closure point is open in the Krull topology.
+For a finite point this is the intersection of the open stabilizers of its two
+affine coordinates; the point at infinity is fixed by the entire Galois group.
+-/
+theorem galoisActionOnPoint_stabilizer_isOpen
+    {F : Type u} [Field F] (X : PuncturedEllipticCurve F)
+    (P : X.AlgebraicClosurePoint) :
+    IsOpen {sigma : AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F |
+      X.galoisActionOnPoint sigma P = P} := by
+  classical
+  let e :=
+    WeierstrassCurve.Projective.Point.toAffineAddEquiv
+      (X.curve.toProjective.baseChange (AlgebraicClosure F))
+  cases hP : e P with
+  | zero =>
+      have hset :
+          {sigma : AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F |
+              X.galoisActionOnPoint sigma P = P} = Set.univ := by
+        ext sigma
+        simp only [Set.mem_setOf_eq, Set.mem_univ, iff_true]
+        apply e.injective
+        change
+          e (e.symm
+            (WeierstrassCurve.Affine.Point.map
+              (W' := X.curve.toAffine) sigma.toAlgHom (e P))) = e P
+        rw [e.apply_symm_apply, hP]
+        rfl
+      rw [hset]
+      exact isOpen_univ
+  | some x y h =>
+      have hset :
+          {sigma : AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F |
+              X.galoisActionOnPoint sigma P = P} =
+            (MulAction.stabilizer
+                (AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) x :
+                  Set (AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F)) ∩
+              (MulAction.stabilizer
+                (AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) y :
+                  Set (AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F)) := by
+        ext sigma
+        simp only [Set.mem_setOf_eq, Set.mem_inter_iff, SetLike.mem_coe]
+        rw [← e.apply_eq_iff_eq]
+        change
+          e (e.symm
+            (WeierstrassCurve.Affine.Point.map
+              (W' := X.curve.toAffine) sigma.toAlgHom (e P))) = e P ↔ _
+        rw [e.apply_symm_apply, hP]
+        change
+          WeierstrassCurve.Affine.Point.some (sigma x) (sigma y) _ =
+              WeierstrassCurve.Affine.Point.some x y h ↔
+            sigma x = x ∧ sigma y = y
+        simp
+      rw [hset]
+      exact (stabilizer_isOpen_of_isIntegral x).inter
+        (stabilizer_isOpen_of_isIntegral y)
+
 /-- The actual Galois action restricted to the `l`-torsion subgroup. -/
 noncomputable def galoisActionOnLTorsion
     {F : Type u} [Field F] (X : PuncturedEllipticCurve F)
@@ -4269,6 +4326,73 @@ theorem PuncturedEllipticCurve.galoisLTorsionMatrixRepresentation_acts
     galoisActionOnLTorsion_coe]
 
 /--
+The kernel of the matrix representation is Krull-open. It is the finite
+intersection, over the finite coordinate model of `E[l]`, of the open
+stabilizers of the corresponding algebraic points.
+-/
+theorem PuncturedEllipticCurve.galoisLTorsionMatrixRepresentation_ker_isOpen
+    (l : PrimeGeFive) {F : Type u} [Field F]
+    (X : PuncturedEllipticCurve F)
+    (basis :
+      (Fin 2 → ZMod l.value) ≃ₗ[ZMod l.value] X.LTorsion l) :
+    IsOpen
+      ((X.galoisLTorsionMatrixRepresentation l basis).ker :
+        Set (AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F)) := by
+  classical
+  let fixedPoint :
+      (Fin 2 → ZMod l.value) →
+        Set (AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) :=
+    fun coordinates =>
+      {sigma | X.galoisActionOnPoint sigma (basis coordinates) = basis coordinates}
+  have hopen : ∀ coordinates, IsOpen (fixedPoint coordinates) :=
+    fun coordinates => X.galoisActionOnPoint_stabilizer_isOpen (basis coordinates)
+  have hinter : IsOpen (⋂ coordinates, fixedPoint coordinates) :=
+    isOpen_iInter_of_finite hopen
+  have hker :
+      ((X.galoisLTorsionMatrixRepresentation l basis).ker :
+          Set (AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F)) =
+        ⋂ coordinates, fixedPoint coordinates := by
+    ext sigma
+    simp only [Set.mem_iInter]
+    constructor
+    · intro hsigma coordinates
+      have hacts :=
+        X.galoisLTorsionMatrixRepresentation_acts
+          l basis sigma coordinates
+      rw [hsigma] at hacts
+      simpa using hacts.symm
+    · intro hsigma
+      apply Matrix.GeneralLinearGroup.toLin.injective
+      apply Units.ext
+      apply LinearMap.ext
+      intro coordinates
+      apply basis.injective
+      have hacts :=
+        X.galoisLTorsionMatrixRepresentation_acts
+          l basis sigma coordinates
+      simpa using hacts.trans (hsigma coordinates)
+  rw [hker]
+  exact hinter
+
+/-- The Galois representation on `E[l]` is continuous for the Krull topology. -/
+theorem PuncturedEllipticCurve.galoisLTorsionMatrixRepresentation_continuous
+    (l : PrimeGeFive) {F : Type u} [Field F]
+    (X : PuncturedEllipticCurve F)
+    (basis :
+      (Fin 2 → ZMod l.value) ≃ₗ[ZMod l.value] X.LTorsion l) :
+    Continuous (X.galoisLTorsionMatrixRepresentation l basis) := by
+  apply continuous_of_tendsto_nhds_one
+  rw [show
+    nhds (1 : Matrix.GeneralLinearGroup (Fin 2) (ZMod l.value)) = pure 1 from
+      congrFun
+        (nhds_discrete
+          (Matrix.GeneralLinearGroup (Fin 2) (ZMod l.value))) 1]
+  rw [Filter.tendsto_pure]
+  exact
+    (X.galoisLTorsionMatrixRepresentation_ker_isOpen l basis).mem_nhds
+      (Subgroup.one_mem _)
+
+/--
 The mod-`l` representation and embedded kernel field in IUT I,
 Definition 3.1(c).
 
@@ -4283,9 +4407,6 @@ structure ThetaLTorsionRepresentationData
   kEmbedding : K →ₐ[F] AlgebraicClosure F
   torsionBasis :
     (Fin 2 → ZMod l.value) ≃ₗ[ZMod l.value] X.LTorsion l
-  representation_continuous :
-    Continuous
-      (X.galoisLTorsionMatrixRepresentation l torsionBasis)
 
 namespace ThetaLTorsionRepresentationData
 
@@ -4302,6 +4423,12 @@ noncomputable def representation
     (AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) →*
       Matrix.GeneralLinearGroup (Fin 2) (ZMod l.value) :=
   X.galoisLTorsionMatrixRepresentation l data.torsionBasis
+
+/-- Continuity is derived from the Krull-open stabilizers of the torsion points. -/
+theorem representation_continuous
+    (data : ThetaLTorsionRepresentationData l F K X) :
+    Continuous data.representation :=
+  X.galoisLTorsionMatrixRepresentation_continuous l data.torsionBasis
 
 theorem representation_acts_on_torsion
     (data : ThetaLTorsionRepresentationData l F K X)
@@ -4321,6 +4448,13 @@ noncomputable def kernelSubgroup
     (data : ThetaLTorsionRepresentationData l F K X) :
     Subgroup (AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) :=
   data.representation.ker
+
+/-- The representation kernel is an open subgroup of the absolute Galois group. -/
+theorem kernelSubgroup_isOpen
+    (data : ThetaLTorsionRepresentationData l F K X) :
+    IsOpen (data.kernelSubgroup :
+      Set (AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F)) :=
+  X.galoisLTorsionMatrixRepresentation_ker_isOpen l data.torsionBasis
 
 /-- The fixed field in `Fbar` of the mod-`l` representation kernel. -/
 noncomputable def kernelFixedField

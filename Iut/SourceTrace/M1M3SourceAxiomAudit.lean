@@ -28,8 +28,12 @@ visible to Lean's axiom reporter.
 #print axioms Iut.PuncturedEllipticCurveScalarExtension.curve_eq_baseChange
 #print axioms Iut.PuncturedEllipticCurveScalarExtension.result_puncture_eq_origin
 #print axioms Iut.PuncturedEllipticCurve.galoisActionOnPoint_mul
+#print axioms Iut.PuncturedEllipticCurve.galoisActionOnPoint_stabilizer_isOpen
 #print axioms Iut.PuncturedEllipticCurve.galoisActionOnLTorsionLinearEquiv_mul
 #print axioms Iut.PuncturedEllipticCurve.galoisLTorsionMatrixRepresentation_acts
+#print axioms Iut.PuncturedEllipticCurve.galoisLTorsionMatrixRepresentation_ker_isOpen
+#print axioms Iut.PuncturedEllipticCurve.galoisLTorsionMatrixRepresentation_continuous
+#print axioms Iut.ThetaLTorsionRepresentationData.representation_continuous
 #print axioms Iut.ThetaLTorsionRepresentationData.representation_acts_on_torsion
 #print axioms Iut.SourceMonoidCyclotome.boundedCoe_isClosedEmbedding
 #print axioms Iut.SourceMonoidCyclotome.asProfinite
