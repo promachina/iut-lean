@@ -19,7 +19,8 @@ all transitions are equivariant.
 The source convention asks, strictly speaking, for a cofinal subsystem whose
 ordered index is isomorphic to the positive integers.  The filtered system
 constructed here is the canonical presentation by all finite Galois stages;
-constructing the required sequential cofinal subsystem is kept separate.
+the arithmetic proof that it admits the required sequential cofinal subsystem
+is kept in `SourceDefinition52Sequential`.
 -/
 
 open CategoryTheory
@@ -434,9 +435,9 @@ noncomputable def integralIndSystemLimit
   inclusion_equivariant := stageIntegralToIndHom_galois place
 
 /-- A countable canonical stage category admits the positive-integer cofinal
-presentation required by the paper's strict convention for `ind-`.  Thus the
-remaining arithmetic input is exactly countability of the finite extensions,
-not a further topological or equivariance assumption. -/
+presentation required by the paper's strict convention for `ind-`.  The
+downstream source theorem proves this countability for number-field
+completions. -/
 noncomputable def integralIndSequentialPresentation
     (place : NumberField.FinitePlace K)
     [Countable (StageIndex place)] :

@@ -14,6 +14,7 @@ import Iut.Foundations.SourceTheorem311
 import Iut.Foundations.SourceTheorem311Assembly
 import Iut.Foundations.SourceDefinition52LocalJointContinuity
 import Iut.Foundations.SourceDefinition52IndSystem
+import Iut.Foundations.SourceDefinition52Sequential
 
 open Iut
 
@@ -66,6 +67,13 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceFinitePlaceReconstruction.stageIntegralToIndHom_galois
 #print axioms Iut.SourceFinitePlaceReconstruction.integralIndSystemLimit
 #print axioms Iut.SourceFinitePlaceReconstruction.integralIndSequentialPresentation
+#print axioms Iut.SourceFinitePlaceReconstruction.denseRange_algebraMap_base
+#print axioms Iut.SourceFinitePlaceReconstruction.exists_stage_primitive_generator
+#print axioms Iut.SourceFinitePlaceReconstruction.exists_global_polynomial_root_same_adjoin
+#print axioms Iut.SourceFinitePlaceReconstruction.exists_global_polynomial_root_generating_stage
+#print axioms Iut.SourceFinitePlaceReconstruction.globalPolynomialRootStage_surjective
+#print axioms Iut.SourceFinitePlaceReconstruction.stageIndexCountable
+#print axioms Iut.SourceFinitePlaceReconstruction.integralIndSourceSequentialPresentation
 #print axioms Iut.SourceTopologicalGroupPseudoMonoidActionPair.Iso.trans_hom
 #print axioms Iut.SourceKappaLocalizationDiagram.inclusion_injective
 #print axioms Iut.PuncturedEllipticCurveScalarExtension.curve_eq_baseChange

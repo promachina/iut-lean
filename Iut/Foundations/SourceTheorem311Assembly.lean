@@ -9,6 +9,7 @@ import Iut.Foundations.SourceDefinition52LocalReconstruction
 import Iut.Foundations.SourceDefinition52LocalContinuity
 import Iut.Foundations.SourceDefinition52LocalJointContinuity
 import Iut.Foundations.SourceDefinition52IndSystem
+import Iut.Foundations.SourceDefinition52Sequential
 
 /-!
 # Source assembly for IUT III, Theorem 3.11
