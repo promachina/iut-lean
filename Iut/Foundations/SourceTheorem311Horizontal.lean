@@ -1206,7 +1206,7 @@ def localizationSquare
       SourceTheorem311LabeledHorizontalKummerSquare source target label)
     (v : place) :
     SourceHorizontalKummerCompatibility
-      SourceTopologicalGroupMonoidActionPair :=
+      SourceTopologicalGroupPseudoMonoidActionPair :=
   square.localizationHorizontal.localizationSquare v
 
 /-- The local `M_infinity^kappa`-to-`M_infinity^(kappa times)` square. -/
@@ -1215,7 +1215,7 @@ def inclusionSquare
       SourceTheorem311LabeledHorizontalKummerSquare source target label)
     (v : place) :
     SourceHorizontalKummerCompatibility
-      SourceTopologicalGroupMonoidActionPair :=
+      SourceTopologicalGroupPseudoMonoidActionPair :=
   square.localizationHorizontal.inclusionSquare v
 
 /-- Arbitrary automorphisms of a localization arrow transport horizontally. -/

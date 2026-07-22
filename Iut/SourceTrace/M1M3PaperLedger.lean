@@ -385,6 +385,25 @@ def m1m3PaperLedger : List PaperClause :=
       "Frobenioids II, Definition 5.3"
       [] .unformalized
       "GC/LC-admissibility and poly-Frobenioids remain to be formalized.",
+    clause "I.0.pseudo-monoid" .iutI
+      "IUT I, Section 0: topological pseudo-monoids"
+      ["SourceTopologicalPseudoMonoid",
+        "SourceTopologicalPseudoMonoid.Carrier",
+        "SourceTopologicalPseudoMonoid.MultiplicationDomain",
+        "SourceTopologicalPseudoMonoid.partialMul",
+        "SourceTopologicalPseudoMonoid.carrier_isEmbedding",
+        "SourceTopologicalPseudoMonoid.continuous_partialMul",
+        "SourceTopologicalPseudoMonoid.partialMul_comm",
+        "SourceTopologicalPseudoMonoid.partialMul_assoc",
+        "SourceTopologicalPseudoMonoid.IsDivisible",
+        "SourceTopologicalPseudoMonoid.IsCyclotomic",
+        "SourceTopologicalPseudoMonoid.Hom",
+        "SourceTopologicalPseudoMonoid.Iso.maps_domain_iff",
+        "SourceTopologicalGroupPseudoMonoidActionPair",
+        "SourceTopologicalGroupPseudoMonoidActionPair.action_maps_domain_iff",
+        "SourceTopologicalGroupPseudoMonoidActionPair.action_partialMul"]
+      .sourceFaithful
+      "The chosen ambient topological abelian group and embedded image are retained. Multiplication is defined exactly on pairs whose ambient product remains in the image, is continuous, commutative, and associative wherever the relevant composites exist. Divisibility and cyclotomicity are the paper's ambient-root, power-membership, torsion Q/Z, and torsion-stability conditions. Continuous morphisms preserve defined products, categorical isomorphisms reflect their domain, and continuous group actions are by these actual pseudo-monoid automorphisms.",
     clause "I.3.1(a)" .iutI "IUT I, Definition 3.1(a)"
       ["PrimeGeFive", "ThetaFieldTower", "SqrtMinusOneData",
         "AbsoluteGaloisProfinite", "SignQuotientOrbicurveData.absoluteGalois_def",
@@ -633,11 +652,12 @@ def m1m3PaperLedger : List PaperClause :=
       .partialImplementation
       "The source object has a packaged global Frobenioid, a prime-to-place equivalence, an actual mono-analytic F-prime-strip, local characteristic and realified topological monoids, rho isomorphisms, and componentwise compatibility with the Example 3.5 model. Its isomorphism category and capsules, derivation of local realifications from divisor monoids, and the construction algorithm remain open.",
     clause "I.5.2(v)" .iutI "IUT I, Definition 5.2(v)"
-      [] .unformalized
-      "The group-theoretic reconstruction of the ambient profinite group, rational fundamental group, ind-topological monoid, and kappa/infinity-kappa/infinity-kappa-times coric pseudomonoids is absent.",
+      ["SourceTopologicalPseudoMonoid",
+        "SourceTopologicalGroupPseudoMonoidActionPair"] .unformalized
+      "The exact Section 0 pseudo-monoid and continuous action-pair targets are available, but the group-theoretic reconstruction of the ambient profinite group, rational fundamental group, ind-topological monoid, and kappa/infinity-kappa/infinity-kappa-times coric pseudo-monoids is absent.",
     clause "I.5.2(vi)" .iutI "IUT I, Definition 5.2(vi)"
-      [] .unformalized
-      "The nonarchimedean infinity-kappa coric structures, cyclotomic comparison, uniqueness, critical-point restriction criterion, and field reconstruction algorithms are absent.",
+      ["SourceTopologicalPseudoMonoid.IsCyclotomic"] .unformalized
+      "The exact cyclotomic pseudo-monoid predicate is available, but the nonarchimedean infinity-kappa coric structures, cyclotomic comparison, uniqueness, critical-point restriction criterion, and field reconstruction algorithms are absent.",
     clause "I.5.2(vii)" .iutI "IUT I, Definition 5.2(vii)"
       [] .unformalized
       "The archimedean rational covering system and algorithmic meromorphic-function pseudomonoids are absent.",
@@ -1035,12 +1055,15 @@ def m1m3PaperLedger : List PaperClause :=
       ["ToyIUTIIHodgeArakelovEvaluationData"] .unformalized
       "The cited Kummer-theoretic evaluation compatibility is not implemented.",
     clause "II.4.8" .iutII "IUT II, Corollary 4.8"
-      ["SourceKappaLocalizationDiagram",
+      ["SourceTopologicalPseudoMonoid",
+        "SourceTopologicalGroupPseudoMonoidActionPair",
+        "SourceKappaLocalizationDiagram",
+        "SourceKappaLocalizationDiagram.inclusion_injective",
         "SourceKappaLocalizationDiagramIso",
         "SourceKappaLocalizationDiagramIso.localizationSquare",
         "SourceKappaLocalizationDiagramIso.inclusionSquare",
         "SourceTheorem311LabeledKummerIso"] .partialImplementation
-      "The Corollary 4.8(iii) localization display is represented by an actual topological group/monoid action pair for the kappa-solvable/global M-infinity-kappa datum, an action pair for each local M-infinity-kappa and M-infinity-kappa-times datum, an equivariant continuous localization map, and an injective equivariant local inclusion at every selected place. Isomorphisms preserve both arrows and yield arrow-category compatibility squares. The functorial construction from the NF-bridge, the Corollary 4.8(i)-(ii) Kummer restrictions, and the cyclotomic-rigidity reconstruction of IUT I, Example 5.1(v), remain open.",
+      "The Corollary 4.8(iii) localization display is represented by an actual topological group/pseudo-monoid action pair for the kappa-solvable/global M-infinity-kappa datum, an action pair for each local M-infinity-kappa and M-infinity-kappa-times datum, an equivariant continuous pseudo-monoid localization map, and an equivariant topological embedding for the displayed local inclusion at every selected place. Defined partial products are preserved, and isomorphisms reflect their domains. Diagram isomorphisms preserve both arrows and yield arrow-category compatibility squares. The functorial construction from the NF-bridge, the Corollary 4.8(i)-(ii) Kummer restrictions, and the cyclotomic-rigidity reconstruction of IUT I, Example 5.1(v), remain open.",
     clause "II.4.9(i)" .iutII "IUT II, Definition 4.9(i)"
       ["SourceMLFGaloisTMPair.UnitModuloTorsion",
         "SourceMLFGaloisTMPair.unitModuloTorsion_eq_one_iff",
@@ -1634,7 +1657,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceKappaLocalizationDiagramIso",
         "SourceTheorem311LabeledData",
         "SourceTheorem311LabeledKummerIso"] .partialImplementation
-      "The labeled kappa-solvable/global M-infinity-kappa objects are actual topological group/monoid action pairs, not collapsed profinite groups. Their localization diagrams retain every selected-place local M-infinity-kappa object, its injective inclusion into M-infinity-kappa-times, and both naturality squares under vertical Kummer transport. Number fields and all four non-realified/realified MOD/mod split-Frobenioids are also source-shaped objects, and both MOD/mod comparison routes carry natural isomorphisms. Constructing these data from the cited Kummer and localization algorithms and proving the mutual log-link compatibility distinction between MOD and mod remain open.",
+      "The labeled kappa-solvable/global M-infinity-kappa objects are actual topological group/pseudo-monoid action pairs, not total-monoid surrogates or collapsed profinite groups. Their localization diagrams retain every selected-place local M-infinity-kappa object, its topologically embedded inclusion into M-infinity-kappa-times, and both naturality squares under vertical Kummer transport. Number fields and all four non-realified/realified MOD/mod split-Frobenioids are also source-shaped objects, and both MOD/mod comparison routes carry natural isomorphisms. Constructing these data from the cited Kummer and localization algorithms and proving the mutual log-link compatibility distinction between MOD and mod remain open.",
     clause "III.3.11.setup" .iutIII "IUT III, Theorem 3.11: setup"
       ["SourceAbsoluteLGPGaussianLogThetaLattice",
         "SourceAbsoluteLGPGaussianLogThetaLattice.commonMonoAnalyticProcession",
@@ -1869,7 +1892,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceTheorem311HorizontalCorridorBoundary.commonKappaClauseD_localization_commutes",
         "SourceTheorem311HorizontalCorridorBoundary.commonKappaClauseD_inclusion_commutes"]
       .partialImplementation
-      "The active boundary is an adjacent-column corridor, not a field of one column. It proves that the columns use the same lattice and have indices n and n+1. Following IUT I Section 0, the ordinary F, mono-analytic F, and Definition 4.9 F-turnstile-times-mu full poly-isomorphisms are quotients of all complete componentwise equivalence maps by structured natural isomorphism, not strict categorical Iso records. Clauses (a) and (b) use only times-mu corners computed by one reconstruction algorithm. The corridor accepts neither a clause (a) square, a chosen theta-link class, an arbitrary quotient-level fullness witness, nor chosen Kummer maps. Representative-level reconstruction fullness, scoped to every actual adjacent site pair, proves surjectivity onto every horizontal times-mu class. Certified two-sided model comparisons derive the canonical horizontal and Theorem 1.5 Kummer members and both cancellation laws. Lean maps these data through reconstruction, defines the lower horizontal class by Kummer conjugation, and proves commutativity and both directions of full-poly compatibility; clause (b) is then derived by environment conjugation. Constructing the local pairwise reconstruction fullness and coherent model comparisons from the preceding local theorems remains open. Clause (c) is still supplied as a square of actual mono-theta projective systems for every m and selected bad place. Clause (d) no longer uses a collapsed kappa-sol/M-infinity-kappa profinite square: every site/common label carries the complete Corollary 4.8 localization diagram of topological group/monoid action pairs, all selected-place localization and injective inclusion arrows, horizontal naturality, vertical Kummer naturality, and diagram-level site/common coherence. The two arrow-category squares derive equivariance under arbitrary automorphisms. Constructing these horizontal diagrams from the permutation symmetry/cyclotomic-rigidity algorithms and proving evaluation equivariance up to Ind1-Ind3 remain open.",
+      "The active boundary is an adjacent-column corridor, not a field of one column. It proves that the columns use the same lattice and have indices n and n+1. Following IUT I Section 0, the ordinary F, mono-analytic F, and Definition 4.9 F-turnstile-times-mu full poly-isomorphisms are quotients of all complete componentwise equivalence maps by structured natural isomorphism, not strict categorical Iso records. Clauses (a) and (b) use only times-mu corners computed by one reconstruction algorithm. The corridor accepts neither a clause (a) square, a chosen theta-link class, an arbitrary quotient-level fullness witness, nor chosen Kummer maps. Representative-level reconstruction fullness, scoped to every actual adjacent site pair, proves surjectivity onto every horizontal times-mu class. Certified two-sided model comparisons derive the canonical horizontal and Theorem 1.5 Kummer members and both cancellation laws. Lean maps these data through reconstruction, defines the lower horizontal class by Kummer conjugation, and proves commutativity and both directions of full-poly compatibility; clause (b) is then derived by environment conjugation. Constructing the local pairwise reconstruction fullness and coherent model comparisons from the preceding local theorems remains open. Clause (c) is still supplied as a square of actual mono-theta projective systems for every m and selected bad place. Clause (d) no longer uses a collapsed kappa-sol/M-infinity-kappa profinite square: every site/common label carries the complete Corollary 4.8 localization diagram of topological group/pseudo-monoid action pairs, all selected-place localization and topologically embedded inclusion arrows, horizontal naturality, vertical Kummer naturality, and diagram-level site/common coherence. The two arrow-category squares derive equivariance under arbitrary automorphisms. Constructing these horizontal diagrams from the permutation symmetry/cyclotomic-rigidity algorithms and proving evaluation equivariance up to Ind1-Ind3 remain open.",
     clause "III.3.11(iii).equivariance" .iutIII "IUT III, Theorem 3.11(iii): automorphism equivariance"
       ["SourceIndexedHorizontalKummerSquare.automorphismEquiv",
         "SourceTheorem311HorizontalEvaluationCompatibility",
@@ -1937,8 +1960,8 @@ def clauseIdsWithStatus (status : ClauseStatus) : List String :=
   m1m3PaperLedger.filterMap fun entry =>
     if entry.status = status then some entry.id else none
 
-/-- The source-closure ledger contains 113 separately audited clauses. -/
-theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 113 :=
+/-- The source-closure ledger contains 114 separately audited clauses. -/
+theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 114 :=
   rfl
 
 /-- No source clause occurs twice in the direct-citation ledger. -/
@@ -1961,10 +1984,11 @@ theorem unformalized_count :
     (clauseIdsWithStatus .unformalized).length = 16 :=
   rfl
 
-/-- Five clauses currently pass the clause-level source audit. -/
+/-- Six clauses currently pass the clause-level source audit. -/
 theorem sourceFaithfulClauseIds_eq :
     sourceFaithfulClauseIds =
-      ["FrdI.2.7", "FrdI.4.4", "FrdI.5.2(i)", "FrdI.5.2(ii)", "I.4.10"] :=
+      ["FrdI.2.7", "FrdI.4.4", "FrdI.5.2(i)", "FrdI.5.2(ii)",
+        "I.0.pseudo-monoid", "I.4.10"] :=
   rfl
 
 end Iut.SourceTrace

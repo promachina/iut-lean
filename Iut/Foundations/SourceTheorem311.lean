@@ -8,7 +8,7 @@ import Iut.Foundations.SourceAutHolomorphicRigidity
 import Iut.Foundations.SourceFThetaBridge
 import Iut.Foundations.SourceProcession
 import Iut.Foundations.SourceThetaEvaluation
-import Iut.Foundations.SourceTopologicalActionPairCategory
+import Iut.Foundations.SourceTopologicalPseudoMonoid
 import Mathlib.Algebra.Category.ModuleCat.Topology.Basic
 import Mathlib.Algebra.DirectSum.Module
 import Mathlib.Algebra.Field.ULift
@@ -16983,17 +16983,30 @@ global `M_infinity^kappa` pseudo-monoid.  At every selected place, the
 localization map lands in the local `M_infinity^kappa` action pair, which is
 then included injectively in the corresponding `M_infinity^(kappa times)`
 pair.  Thus the displayed inclusion in Corollary 4.8 is represented by an
-actual equivariant continuous monoid map, not by a morphism between unrelated
-profinite groups.
+actual equivariant continuous pseudo-monoid map, not by a total-monoid
+surrogate or a morphism between unrelated profinite groups.
 -/
 structure SourceKappaLocalizationDiagram (place : Type u) where
-  globalKappa : SourceTopologicalGroupMonoidActionPair.{u}
-  localKappa : place → SourceTopologicalGroupMonoidActionPair.{u}
-  localTimesKappa : place → SourceTopologicalGroupMonoidActionPair.{u}
+  globalKappa : SourceTopologicalGroupPseudoMonoidActionPair.{u}
+  localKappa : place → SourceTopologicalGroupPseudoMonoidActionPair.{u}
+  localTimesKappa : place → SourceTopologicalGroupPseudoMonoidActionPair.{u}
   localization : ∀ v, globalKappa ⟶ localKappa v
   inclusion : ∀ v, localKappa v ⟶ localTimesKappa v
-  inclusion_injective :
-    ∀ v, Function.Injective (inclusion v).monoidHom
+  inclusion_isEmbedding :
+    ∀ v,
+      Topology.IsEmbedding (inclusion v).pseudoMonoidHom.toFun
+
+namespace SourceKappaLocalizationDiagram
+
+/-- The local pseudo-monoid inclusion is injective on its carrier. -/
+theorem inclusion_injective
+    {place : Type u}
+    (diagram : SourceKappaLocalizationDiagram place)
+    (v : place) :
+    Function.Injective (diagram.inclusion v).pseudoMonoidHom.toFun :=
+  (diagram.inclusion_isEmbedding v).injective
+
+end SourceKappaLocalizationDiagram
 
 /--
 An isomorphism of complete Kummer localization diagrams.
@@ -17006,15 +17019,15 @@ structure SourceKappaLocalizationDiagramIso
     {place : Type u}
     (source target : SourceKappaLocalizationDiagram place) where
   globalKappa :
-    SourceTopologicalGroupMonoidActionPair.Iso
+    SourceTopologicalGroupPseudoMonoidActionPair.Iso
       source.globalKappa target.globalKappa
   localKappa :
     ∀ v,
-      SourceTopologicalGroupMonoidActionPair.Iso
+      SourceTopologicalGroupPseudoMonoidActionPair.Iso
         (source.localKappa v) (target.localKappa v)
   localTimesKappa :
     ∀ v,
-      SourceTopologicalGroupMonoidActionPair.Iso
+      SourceTopologicalGroupPseudoMonoidActionPair.Iso
         (source.localTimesKappa v) (target.localTimesKappa v)
   localization_compatible :
     ∀ v,
@@ -17034,9 +17047,9 @@ variable
 /-- Identity isomorphism of localization diagrams. -/
 def refl (diagram : SourceKappaLocalizationDiagram place) :
     SourceKappaLocalizationDiagramIso diagram diagram where
-  globalKappa := SourceTopologicalGroupMonoidActionPair.Iso.refl _
-  localKappa v := SourceTopologicalGroupMonoidActionPair.Iso.refl _
-  localTimesKappa v := SourceTopologicalGroupMonoidActionPair.Iso.refl _
+  globalKappa := SourceTopologicalGroupPseudoMonoidActionPair.Iso.refl _
+  localKappa v := SourceTopologicalGroupPseudoMonoidActionPair.Iso.refl _
+  localTimesKappa v := SourceTopologicalGroupPseudoMonoidActionPair.Iso.refl _
   localization_compatible v := by simp
   inclusion_compatible v := by simp
 
@@ -17050,12 +17063,12 @@ def trans
   localTimesKappa v :=
     (firstIso.localTimesKappa v).trans (secondIso.localTimesKappa v)
   localization_compatible v := by
-    simp only [SourceTopologicalGroupMonoidActionPair.Iso.trans_hom]
+    simp only [SourceTopologicalGroupPseudoMonoidActionPair.Iso.trans_hom]
     rw [← Category.assoc, firstIso.localization_compatible]
     rw [Category.assoc, secondIso.localization_compatible]
     simp only [Category.assoc]
   inclusion_compatible v := by
-    simp only [SourceTopologicalGroupMonoidActionPair.Iso.trans_hom]
+    simp only [SourceTopologicalGroupPseudoMonoidActionPair.Iso.trans_hom]
     rw [← Category.assoc, firstIso.inclusion_compatible]
     rw [Category.assoc, secondIso.inclusion_compatible]
     simp only [Category.assoc]
@@ -19402,7 +19415,7 @@ def localizationSquare
     (diagramIso : SourceKappaLocalizationDiagramIso first second)
     (v : place) :
     SourceHorizontalKummerCompatibility
-      SourceTopologicalGroupMonoidActionPair where
+      SourceTopologicalGroupPseudoMonoidActionPair where
   sourceHorizontal := Arrow.mk (first.localization v)
   targetHorizontal := Arrow.mk (second.localization v)
   verticalKummer :=
@@ -19415,7 +19428,7 @@ def inclusionSquare
     (diagramIso : SourceKappaLocalizationDiagramIso first second)
     (v : place) :
     SourceHorizontalKummerCompatibility
-      SourceTopologicalGroupMonoidActionPair where
+      SourceTopologicalGroupPseudoMonoidActionPair where
   sourceHorizontal := Arrow.mk (first.inclusion v)
   targetHorizontal := Arrow.mk (second.inclusion v)
   verticalKummer :=

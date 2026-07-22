@@ -1219,10 +1219,16 @@ mono-theta projective-system squares additionally range over every selected
 bad place.  Clause~(iii)(d) no longer represents the displayed
 \(\{\pi_1^{\kappa\text{-sol}}\ltimes M_\infty^\kappa\}\) localization by a
 single morphism of two profinite groups.  For every site, common column,
-absolute label, and selected place, Lean retains a topological group/monoid
-action pair for the global datum, action pairs for
+absolute label, and selected place, Lean retains a topological
+group/pseudo-monoid action pair for the global datum, action pairs for
 \(M_{\infty\kappa v}\) and \(M_{\infty\kappa\times v}\), an equivariant
-continuous localization map, and an injective equivariant local inclusion.
+continuous localization map, and an equivariant topological embedding for the
+displayed local inclusion.
+Here ``pseudo-monoid'' has its exact IUT~I, Section~0 meaning: the carrier is
+embedded in a topological abelian group, and multiplication is defined only
+when the ambient product remains in the carrier.  The restricted operation is
+proved continuous and associative wherever both composites are defined;
+diagram morphisms preserve its domain, and diagram isomorphisms reflect it.
 Horizontal and vertical Kummer isomorphisms preserve both arrows; their
 site/common compatibility is equality of complete diagram transports.  Each
 naturality square is an isomorphism in an arrow category, so equivariance under

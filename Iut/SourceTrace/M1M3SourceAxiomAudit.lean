@@ -29,6 +29,14 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceTorsionCyclotomicCommMonoid.rootsOfUnityEquiv
 #print axioms Iut.SourceTorsionCyclotomicCommMonoid.rootsOfUnity_natCard
 #print axioms Iut.SourceTorsionCyclotomicCommMonoid.rootsOfUnityGroup_natCard
+#print axioms Iut.SourceTopologicalPseudoMonoid.carrier_isEmbedding
+#print axioms Iut.SourceTopologicalPseudoMonoid.continuous_partialMul
+#print axioms Iut.SourceTopologicalPseudoMonoid.partialMul_assoc
+#print axioms Iut.SourceTopologicalPseudoMonoid.Iso.maps_domain_iff
+#print axioms Iut.SourceTopologicalGroupPseudoMonoidActionPair.action_maps_domain_iff
+#print axioms Iut.SourceTopologicalGroupPseudoMonoidActionPair.action_partialMul
+#print axioms Iut.SourceTopologicalGroupPseudoMonoidActionPair.Iso.trans_hom
+#print axioms Iut.SourceKappaLocalizationDiagram.inclusion_injective
 #print axioms Iut.PuncturedEllipticCurveScalarExtension.curve_eq_baseChange
 #print axioms Iut.PuncturedEllipticCurveScalarExtension.result_puncture_eq_origin
 #print axioms Iut.SignQuotientOrbicurveScalarExtension.result_xF

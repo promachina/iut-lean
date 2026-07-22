@@ -52,6 +52,33 @@
   property remains part of the Theorem 3.11 route.
 \end{definition}
 
+\begin{definition}[Topological pseudo-monoids]
+  \label{def:source-topological-pseudo-monoids}
+  \lean{Iut.SourceTopologicalPseudoMonoid}
+  \lean{Iut.SourceTopologicalPseudoMonoid.MultiplicationDomain}
+  \lean{Iut.SourceTopologicalPseudoMonoid.partialMul}
+  \lean{Iut.SourceTopologicalPseudoMonoid.continuous_partialMul}
+  \lean{Iut.SourceTopologicalPseudoMonoid.partialMul_assoc}
+  \lean{Iut.SourceTopologicalPseudoMonoid.IsDivisible}
+  \lean{Iut.SourceTopologicalPseudoMonoid.IsCyclotomic}
+  \lean{Iut.SourceTopologicalPseudoMonoid.Iso.maps_domain_iff}
+  \lean{Iut.SourceTopologicalGroupPseudoMonoidActionPair}
+  \lean{Iut.SourceTopologicalGroupPseudoMonoidActionPair.action_maps_domain_iff}
+  \lean{Iut.SourceTopologicalGroupPseudoMonoidActionPair.action_partialMul}
+  \leanok
+  Following IUT~I, Section~0, a topological pseudo-monoid is the embedded
+  image of a topological space in a topological abelian group.  Its product is
+  defined exactly for pairs whose ambient product remains in that image; the
+  image need not contain the identity and need not be closed under arbitrary
+  products.  The restricted product is continuous, commutative, and
+  associative whenever both composites are defined.  Divisibility retains
+  both ambient roots and the power-membership equivalence, while
+  cyclotomicity retains the torsion identification with \(\mathbb Q/\mathbb Z\)
+  and stability under torsion.  Continuous morphisms preserve defined
+  products, isomorphisms reflect their domain, and continuous group actions
+  are by these pseudo-monoid automorphisms.
+\end{definition}
+
 \begin{definition}[Source Frobenioid prime strips]
   \label{def:source-frobenioid-prime-strips}
   \lean{Iut.PreFrobenioid.RationalMonoidTransport}
@@ -721,6 +748,8 @@
   \lean{Iut.SourceTheorem311BadPrimeLogKummerData.logarithm_eq_of_admissibleAcrossLog}
   \lean{Iut.SourceTopologicalGroupMonoidActionPair.Hom}
   \lean{Iut.SourceKappaLocalizationDiagram}
+  \lean{Iut.SourceKappaLocalizationDiagram.inclusion_isEmbedding}
+  \lean{Iut.SourceKappaLocalizationDiagram.inclusion_injective}
   \lean{Iut.SourceKappaLocalizationDiagramIso}
   \lean{Iut.SourceKappaLocalizationDiagramIso.localizationSquare}
   \lean{Iut.SourceKappaLocalizationDiagramIso.inclusionSquare}
@@ -789,7 +818,7 @@
 
   The vertical interface uses placewise continuous linear Kummer
   equivalences, their induced tensor maps, complete localization diagrams of
-  topological group/monoid action pairs, number-field ring equivalences,
+  topological group/pseudo-monoid action pairs, number-field ring equivalences,
   splitting-monoid equivalences, and
   structure-preserving equivalences of the realified and non-realified split
   Frobenioids.  \(\Ind{3}\) fixes one vertically coric \(n,\circ\) container
@@ -900,7 +929,9 @@
   to two profinite groups.  For every \(m\), absolute label, and selected place,
   it retains the global action pair, the local \(M_\infty^\kappa\) and
   \(M_\infty^{\kappa\times}\) action pairs, the equivariant localization map,
-  and the injective equivariant inclusion.  Horizontal and vertical Kummer
+  and the equivariant topological embedding that realizes the displayed
+  inclusion.  These are genuine partial-product
+  pseudo-monoids, not total-monoid surrogates.  Horizontal and vertical Kummer
   isomorphisms preserve both arrows, and site/common coherence is equality of
   the complete diagram transports.  The resulting arrow-category squares
   transport the full automorphism groups.  Constructing these diagrams from
