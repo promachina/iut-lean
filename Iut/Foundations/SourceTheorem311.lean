@@ -3433,13 +3433,15 @@ theorem logShellRegion_eq_piBall
 def fullRegion
     (construction : SourcePacketIntegralConstruction packet) :
     SourceIntegralRegionOn packet.rationalPlace.kind packet.carrier ⊤ := by
-  cases hkind : packet.rationalPlace.kind with
-  | nonarchimedean =>
-      rw [SourcePacketIntegralConstruction, hkind] at construction
-      simpa only [hkind] using construction.fullRegion
-  | archimedean =>
-      rw [SourcePacketIntegralConstruction, hkind] at construction
-      simpa only [hkind] using construction.fullRegion
+  if hkind : packet.rationalPlace.kind = .nonarchimedean then
+    exact
+      ((construction.asNonarchimedean hkind).fullRegion).rekind hkind.symm
+  else
+    have harch : packet.rationalPlace.kind = .archimedean := by
+      cases hplace : packet.rationalPlace.kind with
+      | nonarchimedean => exact (hkind hplace).elim
+      | archimedean => rfl
+    exact ((construction.asArchimedean harch).fullRegion).rekind harch.symm
 
 /-- Every distinguished region is derived from the same packet construction. -/
 def distinguishedRegion
@@ -3463,6 +3465,17 @@ def fullNonarchimedeanRegion
     (hkind : packet.rationalPlace.kind = .nonarchimedean) :
     SourceIntegralRegionOn .nonarchimedean packet.carrier ⊤ :=
   (construction.asNonarchimedean hkind).fullRegion
+
+/-- At a finite place, the packet lattice lies in the full dependent region. -/
+theorem packetLattice_subset_fullRegion
+    (construction : SourcePacketIntegralConstruction packet)
+    (hkind : packet.rationalPlace.kind = .nonarchimedean) :
+    ((construction.asNonarchimedean hkind).shells.packetLattice :
+        Set packet.carrier) ⊆ construction.fullRegion.carrier := by
+  intro value hvalue
+  simpa only [fullRegion, hkind,
+    SourceNonarchimedeanPacketIntegralConstruction.fullRegion,
+    SourceIntegralRegionOn.rekind_carrier] using hvalue
 
 /-- A distinguished finite-place region without a dependent recast. -/
 def distinguishedNonarchimedeanRegion
@@ -3666,6 +3679,18 @@ theorem preLogShell_isCompact
     simp only [Set.mem_image, Set.mem_univ, true_and]
     exact definition.preLogShell_eq_logRange value |>.symm
   rwa [hset] at himage
+
+/--
+The logarithms of the actual invariant local units lie in the scaled log-shell
+`I = (p*)^-1 log(O^x)` of Remark 1.2.2(i).
+-/
+theorem preLogShell_le_lattice
+    (definition : SourceNonarchimedeanLogShellDefinition M integralM) :
+    definition.preLogShell ≤ integralM.lattice := by
+  intro value hvalue
+  rw [definition.shell_mem_iff_scaled_preLogShell]
+  rw [Nat.cast_smul_eq_nsmul]
+  exact definition.preLogShell.nsmul_mem hvalue _
 
 /-- A functorial finite-place comparison before passing to the scaled shell. -/
 structure Transport
@@ -4135,6 +4160,138 @@ def asArchimedean
   | archimedean _ definition => exact definition
 
 end SourceMonoAnalyticLogShellDefinition
+
+/--
+The actual invariant local-unit logarithms in every summand of a finite-place
+tensor packet.  The summand definitions retain the compact unit groups and
+their `p`-adic logarithm maps, rather than accepting an arbitrary packet
+subgroup with a suggestive name.
+-/
+structure SourceNonarchimedeanPacketUnitLogData
+    {j : ℕ} (packet : SourceMonoAnalyticTensorPacket.{u} j)
+    (shells : SourceNonarchimedeanPacketShells packet) where
+  summandDefinition :
+    ∀ (factor : Fin (j + 1)) (place : packet.place),
+      SourceNonarchimedeanLogShellDefinition
+        ((packet.factor factor).summand place)
+        (shells.summandIntegral factor place)
+
+namespace SourceNonarchimedeanPacketUnitLogData
+
+variable {j : ℕ} {packet : SourceMonoAnalyticTensorPacket.{u} j}
+variable {shells : SourceNonarchimedeanPacketShells packet}
+
+/-- The direct sum of the images of the actual invariant-unit logarithms. -/
+def factorUnitLogSubgroup
+    (data : SourceNonarchimedeanPacketUnitLogData packet shells)
+    (factor : Fin (j + 1)) :
+    AddSubgroup (packet.factor factor).carrier where
+  carrier :=
+    { value |
+      ∀ place,
+        (packet.factor factor).directSumIso.hom value place ∈
+          (data.summandDefinition factor place).preLogShell }
+  zero_mem' place := by
+    simpa only [map_zero, Pi.zero_apply] using
+      (data.summandDefinition factor place).preLogShell.zero_mem
+  add_mem' {first second} hfirst hsecond place := by
+    simpa using
+      (data.summandDefinition factor place).preLogShell.add_mem
+        (hfirst place) (hsecond place)
+  neg_mem' {value} hvalue place := by
+    simpa only [map_neg, Pi.neg_apply] using
+      (data.summandDefinition factor place).preLogShell.neg_mem
+        (hvalue place)
+
+/-- Pure tensors of logarithms of invariant local units. -/
+def pureUnitLogTensors
+    (data : SourceNonarchimedeanPacketUnitLogData packet shells) :
+    Set packet.carrier :=
+  { tensor |
+    ∃ components : ∀ factor, (packet.factor factor).carrier,
+      (∀ factor, components factor ∈ data.factorUnitLogSubgroup factor) ∧
+      tensor = packet.tensorIso.inv (PiTensorProduct.tprod ℚ components) }
+
+/--
+The packet image of the tensor product of the invariant unit groups: the
+additive subgroup generated by their pure logarithmic tensors.
+-/
+def packetUnitLogSubgroup
+    (data : SourceNonarchimedeanPacketUnitLogData packet shells) :
+    AddSubgroup packet.carrier :=
+  AddSubgroup.closure data.pureUnitLogTensors
+
+/-- Every factorwise invariant-unit logarithm lies in the factor log-shell. -/
+theorem factorUnitLogSubgroup_le_factorLattice
+    (data : SourceNonarchimedeanPacketUnitLogData packet shells)
+    (factor : Fin (j + 1)) :
+    data.factorUnitLogSubgroup factor ≤ shells.factorLattice factor := by
+  intro value hvalue place
+  exact
+    (data.summandDefinition factor place).preLogShell_le_lattice
+      (hvalue place)
+
+/-- Pure unit-log tensors are genuine pure integral tensors. -/
+theorem pureUnitLogTensors_subset_pureIntegralTensors
+    (data : SourceNonarchimedeanPacketUnitLogData packet shells) :
+    data.pureUnitLogTensors ⊆ shells.pureIntegralTensors := by
+  rintro tensor ⟨components, hunits, rfl⟩
+  exact ⟨components,
+    fun factor => data.factorUnitLogSubgroup_le_factorLattice factor
+      (hunits factor),
+    rfl⟩
+
+/--
+The tensor product of invariant-unit logarithms is contained in the closed
+packet lattice, which is the finite-place integral region of Proposition 3.5.
+-/
+theorem packetUnitLogSubgroup_le_packetLattice
+    (data : SourceNonarchimedeanPacketUnitLogData packet shells) :
+    data.packetUnitLogSubgroup ≤ shells.packetLattice := by
+  calc
+    AddSubgroup.closure data.pureUnitLogTensors ≤
+        AddSubgroup.closure shells.pureIntegralTensors :=
+      AddSubgroup.closure_mono
+        data.pureUnitLogTensors_subset_pureIntegralTensors
+    _ ≤ (AddSubgroup.closure shells.pureIntegralTensors).topologicalClosure :=
+      AddSubgroup.le_topologicalClosure _
+
+/--
+An additive equivalence preserving the pure unit-log tensors preserves their
+generated packet subgroup.
+-/
+theorem packetUnitLogSubgroup_image
+    {targetPacket : SourceMonoAnalyticTensorPacket.{u} j}
+    {targetShells : SourceNonarchimedeanPacketShells targetPacket}
+    (sourceData : SourceNonarchimedeanPacketUnitLogData packet shells)
+    (targetData :
+      SourceNonarchimedeanPacketUnitLogData targetPacket targetShells)
+    (equiv : packet.carrier ≃L[ℚ] targetPacket.carrier)
+    (pure_image :
+      equiv '' sourceData.pureUnitLogTensors =
+        targetData.pureUnitLogTensors) :
+    equiv '' (sourceData.packetUnitLogSubgroup : Set packet.carrier) =
+      (targetData.packetUnitLogSubgroup : Set targetPacket.carrier) := by
+  let addMap := equiv.toLinearEquiv.toAddEquiv.toAddMonoidHom
+  change equiv ''
+      (AddSubgroup.closure sourceData.pureUnitLogTensors : Set packet.carrier) =
+    (AddSubgroup.closure targetData.pureUnitLogTensors :
+      Set targetPacket.carrier)
+  calc
+    _ = (AddSubgroup.map addMap
+          (AddSubgroup.closure sourceData.pureUnitLogTensors) :
+            Set targetPacket.carrier) := by
+      exact (AddSubgroup.coe_map addMap _).symm
+    _ = (AddSubgroup.closure
+          (equiv '' sourceData.pureUnitLogTensors) :
+            Set targetPacket.carrier) := by
+      exact congrArg
+        (fun subgroup : AddSubgroup targetPacket.carrier =>
+          (subgroup : Set targetPacket.carrier))
+        (AddMonoidHom.map_closure addMap sourceData.pureUnitLogTensors)
+    _ = _ := by rw [pure_image]
+
+end SourceNonarchimedeanPacketUnitLogData
 
 /-- An open subgroup of a topological group. -/
 def SourceOpenSubgroup (G : Type u) [Group G] [TopologicalSpace G] :=
@@ -11889,6 +12046,20 @@ noncomputable def integralAbove
   subst rationalPlace
   exact (algorithm.shell strip place).integral
 
+/-- The source log-shell definition on a summand above a rational place. -/
+noncomputable def sourceDefinitionAbove
+    (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
+    (strip : SourceDMonoAnalyticPrimeStrip models)
+    (rationalPlace : SourceRationalPlace)
+    (place : SourceSelectedPlaceAbove theta rationalPlace) :
+    SourceMonoAnalyticLogShellDefinition
+      (algorithm.moduleAbove strip rationalPlace place).rationalCarrier
+      rationalPlace.kind
+      (algorithm.integralAbove strip rationalPlace place) := by
+  rcases place with ⟨place, hplace⟩
+  subst rationalPlace
+  exact (algorithm.shell strip place).sourceDefinition
+
 /-- Vertical transport carries the selected-place integral shell exactly. -/
 theorem transportAbove_integral
     (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
@@ -11902,6 +12073,23 @@ theorem transportAbove_integral
   rcases place with ⟨place, hplace⟩
   subst rationalPlace
   exact algorithm.transport_integral map place
+
+/-- Finite transport preserves the image of the actual invariant-unit logarithm. -/
+theorem transportAbove_preLogShell
+    (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
+    {source target : SourceDMonoAnalyticPrimeStrip models}
+    (map : source ⟶ target)
+    (rationalPlace : SourceRationalPlace)
+    (place : SourceSelectedPlaceAbove theta rationalPlace)
+    (hkind : rationalPlace.kind = .nonarchimedean) :
+    algorithm.transportAbove map rationalPlace place ''
+        ((algorithm.sourceDefinitionAbove source rationalPlace place
+          ).asNonarchimedean hkind).preLogShell =
+      ((algorithm.sourceDefinitionAbove target rationalPlace place
+        ).asNonarchimedean hkind).preLogShell := by
+  rcases place with ⟨place, hplace⟩
+  subst rationalPlace
+  exact algorithm.transport_preLogShell map place hkind
 
 /-- At an infinite place, vertical transport is an isometry of shell metrics. -/
 theorem transportAbove_archimedean_seminorm
@@ -12067,6 +12255,48 @@ noncomputable def factorIntegralLattice
     ((algorithm.integralAbove strip rationalPlace place).asNonarchimedean
       hkind).lattice.neg_mem (hvalue place)
 
+/--
+The finite direct sum of the actual invariant local-unit logarithm images.
+-/
+noncomputable def factorUnitLogSubgroup
+    [SourceSelectedPlaceFiberFiniteness theta]
+    (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
+    (strip : SourceDMonoAnalyticPrimeStrip models)
+    (rationalPlace : SourceRationalPlace)
+    (hkind : rationalPlace.kind = .nonarchimedean) :
+    AddSubgroup (algorithm.factor strip rationalPlace).carrier where
+  carrier :=
+    { value |
+      ∀ place,
+        value place ∈
+          ((algorithm.sourceDefinitionAbove strip rationalPlace place
+            ).asNonarchimedean hkind).preLogShell }
+  zero_mem' place :=
+    ((algorithm.sourceDefinitionAbove strip rationalPlace place
+      ).asNonarchimedean hkind).preLogShell.zero_mem
+  add_mem' {first second} hfirst hsecond place :=
+    ((algorithm.sourceDefinitionAbove strip rationalPlace place
+      ).asNonarchimedean hkind).preLogShell.add_mem
+        (hfirst place) (hsecond place)
+  neg_mem' {value} hvalue place :=
+    ((algorithm.sourceDefinitionAbove strip rationalPlace place
+      ).asNonarchimedean hkind).preLogShell.neg_mem (hvalue place)
+
+/-- The invariant-unit logarithm direct sum lies in the factor log-shell. -/
+theorem factorUnitLogSubgroup_le_factorIntegralLattice
+    [SourceSelectedPlaceFiberFiniteness theta]
+    (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
+    (strip : SourceDMonoAnalyticPrimeStrip models)
+    (rationalPlace : SourceRationalPlace)
+    (hkind : rationalPlace.kind = .nonarchimedean) :
+    algorithm.factorUnitLogSubgroup strip rationalPlace hkind ≤
+      algorithm.factorIntegralLattice strip rationalPlace hkind := by
+  intro value hvalue place
+  exact
+    ((algorithm.sourceDefinitionAbove strip rationalPlace place
+      ).asNonarchimedean hkind).preLogShell_le_lattice
+        (hvalue place)
+
 /-- The finite direct-sum transport induced by every placewise shell transport. -/
 noncomputable def factorTransport
     [SourceSelectedPlaceFiberFiniteness theta]
@@ -12163,6 +12393,56 @@ theorem factorTransport_integralLattice_image
             (((algorithm.integralAbove source rationalPlace place).asNonarchimedean
               hkind).lattice : Set _) := by
         rw [hplace]
+        exact htarget place
+      rcases himage with ⟨preimage, hpreimage, heq⟩
+      have hsourceValue : sourceValue place = preimage := by
+        change (algorithm.transportAbove map rationalPlace place).symm
+            (targetValue place) = preimage
+        rw [← heq, ContinuousLinearEquiv.symm_apply_apply]
+      rwa [hsourceValue]
+    · funext place
+      exact (algorithm.transportAbove map rationalPlace place).apply_symm_apply
+        (targetValue place)
+
+/-- The direct-sum Kummer transport preserves actual invariant-unit logs. -/
+theorem factorTransport_unitLogSubgroup_image
+    [SourceSelectedPlaceFiberFiniteness theta]
+    (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
+    {source target : SourceDMonoAnalyticPrimeStrip models}
+    (map : source ⟶ target)
+    (rationalPlace : SourceRationalPlace)
+    (hkind : rationalPlace.kind = .nonarchimedean) :
+    algorithm.factorTransport map rationalPlace ''
+        (algorithm.factorUnitLogSubgroup source rationalPlace hkind : Set _) =
+      (algorithm.factorUnitLogSubgroup target rationalPlace hkind : Set _) := by
+  ext targetValue
+  constructor
+  · rintro ⟨sourceValue, hsource, rfl⟩
+    intro place
+    change algorithm.transportAbove map rationalPlace place
+        (sourceValue place) ∈
+      ((algorithm.sourceDefinitionAbove target rationalPlace place
+        ).asNonarchimedean hkind).preLogShell
+    have himage :
+        algorithm.transportAbove map rationalPlace place (sourceValue place) ∈
+          algorithm.transportAbove map rationalPlace place ''
+            (((algorithm.sourceDefinitionAbove source rationalPlace place
+              ).asNonarchimedean hkind).preLogShell : Set _) :=
+      ⟨sourceValue place, hsource place, rfl⟩
+    simpa only [algorithm.transportAbove_preLogShell
+      map rationalPlace place hkind] using himage
+  · intro htarget
+    let sourceValue : (algorithm.factor source rationalPlace).carrier :=
+      fun place =>
+        (algorithm.transportAbove map rationalPlace place).symm
+          (targetValue place)
+    refine ⟨sourceValue, ?_, ?_⟩
+    · intro place
+      have himage : targetValue place ∈
+          algorithm.transportAbove map rationalPlace place ''
+            (((algorithm.sourceDefinitionAbove source rationalPlace place
+              ).asNonarchimedean hkind).preLogShell : Set _) := by
+        rw [algorithm.transportAbove_preLogShell map rationalPlace place hkind]
         exact htarget place
       rcases himage with ⟨preimage, hpreimage, heq⟩
       have hsourceValue : sourceValue place = preimage := by
@@ -13948,6 +14228,82 @@ theorem nonarchimedeanShells_factorLattice
       using h place
 
 /--
+The common coric packet's summandwise invariant local-unit groups and their
+actual `p`-adic logarithms.
+-/
+noncomputable def nonarchimedeanUnitLogData
+    [SourceSelectedPlaceFiberFiniteness theta]
+    (lattice : SourceAbsoluteLGPGaussianLogThetaLattice models)
+    (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
+    (n : ℤ) (rationalPlace : SourceRationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} theta.l)
+    (topology :
+      SourceMonoAnalyticLogShellAlgorithm.TensorTopology
+        (fun index =>
+          algorithm.factor
+            ((lattice.capsuleAtLabel n label).object
+              (lattice.packetIndexEquiv n label index))
+            rationalPlace))
+    (hkind : rationalPlace.kind = .nonarchimedean) :
+    SourceNonarchimedeanPacketUnitLogData
+      (lattice.localPacket algorithm n rationalPlace label topology)
+      (lattice.nonarchimedeanShells algorithm n rationalPlace label topology
+        hkind) where
+  summandDefinition factor place := by
+    let strip :=
+      (lattice.capsuleAtLabel n label).object
+        (lattice.packetIndexEquiv n label factor)
+    exact
+      (algorithm.sourceDefinitionAbove strip rationalPlace place
+        ).asNonarchimedean hkind
+
+/-- The derived packet factor is exactly the direct sum of invariant-unit logs. -/
+theorem nonarchimedeanUnitLogData_factorUnitLogSubgroup
+    [SourceSelectedPlaceFiberFiniteness theta]
+    (lattice : SourceAbsoluteLGPGaussianLogThetaLattice models)
+    (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
+    (n : ℤ) (rationalPlace : SourceRationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} theta.l)
+    (topology :
+      SourceMonoAnalyticLogShellAlgorithm.TensorTopology
+        (fun index =>
+          algorithm.factor
+            ((lattice.capsuleAtLabel n label).object
+              (lattice.packetIndexEquiv n label index))
+            rationalPlace))
+    (hkind : rationalPlace.kind = .nonarchimedean)
+    (factor : Fin (label.tensorIndex + 1)) :
+    (lattice.nonarchimedeanUnitLogData algorithm n rationalPlace label topology
+        hkind).factorUnitLogSubgroup factor =
+      algorithm.factorUnitLogSubgroup
+        ((lattice.capsuleAtLabel n label).object
+          (lattice.packetIndexEquiv n label factor))
+        rationalPlace hkind := by
+  ext value
+  change
+    (∀ place,
+      (algorithm.factor
+        ((lattice.capsuleAtLabel n label).object
+          (lattice.packetIndexEquiv n label factor))
+        rationalPlace).directSumIso.hom value place ∈
+          ((algorithm.sourceDefinitionAbove
+            ((lattice.capsuleAtLabel n label).object
+              (lattice.packetIndexEquiv n label factor))
+            rationalPlace place).asNonarchimedean hkind).preLogShell) ↔
+      ∀ place, value place ∈
+        ((algorithm.sourceDefinitionAbove
+          ((lattice.capsuleAtLabel n label).object
+            (lattice.packetIndexEquiv n label factor))
+          rationalPlace place).asNonarchimedean hkind).preLogShell
+  constructor <;> intro h place
+  · simpa only [SourceMonoAnalyticLogShellAlgorithm.factor,
+      SourceLocalLogDirectSum.ofLogarithmicShells_directSumIso_hom_apply]
+      using h place
+  · simpa only [SourceMonoAnalyticLogShellAlgorithm.factor,
+      SourceLocalLogDirectSum.ofLogarithmicShells_directSumIso_hom_apply]
+      using h place
+
+/--
 At an archimedean rational place, every packet summand carries precisely the
 Hermitian metric of its selected-place log shell.
 -/
@@ -14855,6 +15211,124 @@ theorem distinguishedUnitBall_image
 
 end SourceTensorPacketKummerIso
 
+namespace SourceNonarchimedeanPacketUnitLogData
+
+variable {j : ℕ}
+variable {source target : SourceMonoAnalyticTensorPacket.{u} j}
+variable {sourceShells : SourceNonarchimedeanPacketShells source}
+variable {targetShells : SourceNonarchimedeanPacketShells target}
+
+/--
+A tensor Kummer isomorphism that preserves every factorwise invariant-unit
+logarithm image preserves the pure unit-log tensors.
+-/
+theorem pureUnitLogTensors_image
+    (sourceData :
+      SourceNonarchimedeanPacketUnitLogData source sourceShells)
+    (targetData :
+      SourceNonarchimedeanPacketUnitLogData target targetShells)
+    (kummer : SourceTensorPacketKummerIso source target)
+    (factor_image : ∀ factor,
+      kummer.factorKummer factor ''
+          (sourceData.factorUnitLogSubgroup factor : Set _) =
+        (targetData.factorUnitLogSubgroup factor : Set _)) :
+    kummer.packetKummer '' sourceData.pureUnitLogTensors =
+      targetData.pureUnitLogTensors := by
+  ext tensor
+  constructor
+  · rintro ⟨sourceTensor, ⟨components, hunits, rfl⟩, rfl⟩
+    refine ⟨fun factor => kummer.factorKummer factor (components factor), ?_, ?_⟩
+    · intro factor
+      have himage : kummer.factorKummer factor (components factor) ∈
+          kummer.factorKummer factor ''
+            (sourceData.factorUnitLogSubgroup factor : Set _) :=
+        ⟨components factor, hunits factor, rfl⟩
+      simpa only [factor_image factor] using himage
+    · apply target.tensorIso.toLinearEquiv.injective
+      have htransport := kummer.packetKummer_on_tensor
+        (source.tensorIso.inv (PiTensorProduct.tprod ℚ components))
+      calc
+        target.tensorIso.toLinearEquiv
+            (kummer.packetKummer
+              (source.tensorIso.inv
+                (PiTensorProduct.tprod ℚ components))) =
+            PiTensorProduct.congr
+              (fun factor => (kummer.factorKummer factor).toLinearEquiv)
+              (source.tensorIso.toLinearEquiv
+                (source.tensorIso.inv
+                  (PiTensorProduct.tprod ℚ components))) := htransport
+        _ = PiTensorProduct.congr
+              (fun factor => (kummer.factorKummer factor).toLinearEquiv)
+              (PiTensorProduct.tprod ℚ components) := by
+          exact congrArg
+            (PiTensorProduct.congr
+              (fun factor => (kummer.factorKummer factor).toLinearEquiv))
+            (source.tensorIso.inv_hom_id_apply _)
+        _ = PiTensorProduct.tprod ℚ
+              (fun factor => kummer.factorKummer factor
+                (components factor)) :=
+          PiTensorProduct.congr_tprod _ components
+        _ = target.tensorIso.toLinearEquiv
+              (target.tensorIso.inv
+                (PiTensorProduct.tprod ℚ
+                  (fun factor => kummer.factorKummer factor
+                    (components factor)))) :=
+          (target.tensorIso.inv_hom_id_apply _).symm
+  · rintro ⟨components, hunits, rfl⟩
+    let sourceComponents : ∀ factor, (source.factor factor).carrier :=
+      fun factor => (kummer.factorKummer factor).symm (components factor)
+    refine ⟨source.tensorIso.inv
+        (PiTensorProduct.tprod ℚ sourceComponents), ?_, ?_⟩
+    · refine ⟨sourceComponents, ?_, rfl⟩
+      intro factor
+      have himage : components factor ∈
+          kummer.factorKummer factor ''
+            (sourceData.factorUnitLogSubgroup factor : Set _) := by
+        rw [factor_image factor]
+        exact hunits factor
+      rcases himage with ⟨preimage, hpreimage, heq⟩
+      have hsource : sourceComponents factor = preimage := by
+        change (kummer.factorKummer factor).symm
+            (components factor) = preimage
+        rw [← heq, ContinuousLinearEquiv.symm_apply_apply]
+      rwa [hsource]
+    · apply target.tensorIso.toLinearEquiv.injective
+      have htransport := kummer.packetKummer_on_tensor
+        (source.tensorIso.inv
+          (PiTensorProduct.tprod ℚ sourceComponents))
+      calc
+        target.tensorIso.toLinearEquiv
+            (kummer.packetKummer
+              (source.tensorIso.inv
+                (PiTensorProduct.tprod ℚ sourceComponents))) =
+            PiTensorProduct.congr
+              (fun factor => (kummer.factorKummer factor).toLinearEquiv)
+              (source.tensorIso.toLinearEquiv
+                (source.tensorIso.inv
+                  (PiTensorProduct.tprod ℚ sourceComponents))) := htransport
+        _ = PiTensorProduct.congr
+              (fun factor => (kummer.factorKummer factor).toLinearEquiv)
+              (PiTensorProduct.tprod ℚ sourceComponents) := by
+          exact congrArg
+            (PiTensorProduct.congr
+              (fun factor => (kummer.factorKummer factor).toLinearEquiv))
+            (source.tensorIso.inv_hom_id_apply _)
+        _ = PiTensorProduct.tprod ℚ
+              (fun factor => kummer.factorKummer factor
+                (sourceComponents factor)) :=
+          PiTensorProduct.congr_tprod _ sourceComponents
+        _ = PiTensorProduct.tprod ℚ components := by
+          congr 1
+          funext factor
+          exact (kummer.factorKummer factor).apply_symm_apply
+            (components factor)
+        _ = target.tensorIso.toLinearEquiv
+              (target.tensorIso.inv
+                (PiTensorProduct.tprod ℚ components)) :=
+          (target.tensorIso.inv_hom_id_apply _).symm
+
+end SourceNonarchimedeanPacketUnitLogData
+
 namespace SourceMonoAnalyticLogShellAlgorithm
 
 variable
@@ -15219,26 +15693,32 @@ structure SourceTheorem311Ind3System (l : PrimeGeFive) where
       (directKummer m vQ label).packetKummer ''
           (integralConstruction m vQ label).fullRegion.carrier =
         (common.integral vQ label).carrier
-  unitInvariants :
-    ∀ m vQ label, AddSubgroup (packet m vQ label).carrier
+  nonarchUnitLogInvariants :
+    ∀ m vQ label (_hkind : common.placeKind vQ = .nonarchimedean),
+      AddSubgroup (packet m vQ label).carrier
+  archUnitInvariants :
+    ∀ m vQ label (_hkind : common.placeKind vQ = .archimedean),
+      AddSubgroup (packet m vQ label).carrier
   nonarchLogDomain :
     ∀ (m : ℤ) (steps : ℕ+) (vQ : common.rationalPlace)
       (label : IUTIIAbsoluteThetaLabel.{u} l),
       Set (packet (m - (steps.1 : ℤ)) vQ label).carrier
   nonarchLogDomain_mem_units :
-    ∀ m steps vQ label x,
+    ∀ m steps vQ label
+      (hkind : common.placeKind vQ = .nonarchimedean) x,
       x ∈ nonarchLogDomain m steps vQ label ->
-        x ∈ unitInvariants (m - (steps.1 : ℤ)) vQ label
+        x ∈ nonarchUnitLogInvariants
+          (m - (steps.1 : ℤ)) vQ label hkind
   nonarchLogIterate :
     ∀ m steps vQ label,
       {x // x ∈ nonarchLogDomain m steps vQ label} ->
         (packet m vQ label).carrier
   nonarch_direct_contained :
-    ∀ m vQ label,
-      common.placeKind vQ = .nonarchimedean ->
+    ∀ m vQ label
+      (hkind : common.placeKind vQ = .nonarchimedean),
         Set.MapsTo
           (directKummer m vQ label).packetKummer
-          (unitInvariants m vQ label : Set _)
+          (nonarchUnitLogInvariants m vQ label hkind : Set _)
           (common.integral vQ label).carrier
   nonarch_logKummer_contained :
     ∀ m steps vQ label,
@@ -15248,11 +15728,11 @@ structure SourceTheorem311Ind3System (l : PrimeGeFive) where
               (nonarchLogIterate m steps vQ label x) ∈
             (common.integral vQ label).carrier
   arch_direct_units_contained :
-    ∀ m vQ label,
-      common.placeKind vQ = .archimedean ->
+    ∀ m vQ label
+      (hkind : common.placeKind vQ = .archimedean),
         Set.MapsTo
           (directKummer m vQ label).packetKummer
-          (unitInvariants m vQ label : Set _)
+          (archUnitInvariants m vQ label hkind : Set _)
           (common.integral vQ label).carrier
   arch_direct_piBall_contained :
     ∀ m vQ label,
@@ -15266,9 +15746,11 @@ structure SourceTheorem311Ind3System (l : PrimeGeFive) where
       (label : IUTIIAbsoluteThetaLabel.{u} l),
       Set (packet (m - (steps.1 : ℤ)) vQ label).carrier
   archLogDomain_mem_units :
-    ∀ m steps vQ label x,
+    ∀ m steps vQ label
+      (hkind : common.placeKind vQ = .archimedean) x,
       x ∈ archLogDomain m steps vQ label ->
-        x ∈ unitInvariants (m - (steps.1 : ℤ)) vQ label
+        x ∈ archUnitInvariants
+          (m - (steps.1 : ℤ)) vQ label hkind
   archLogPreimage :
     ∀ (m : ℤ) (_steps : ℕ+) (vQ : common.rationalPlace)
       (label : IUTIIAbsoluteThetaLabel.{u} l),
@@ -15832,6 +16314,79 @@ theorem siteNonarchimedeanShells_factorLattice
       SourceLocalLogDirectSum.ofLogarithmicShells_directSumIso_hom_apply]
       using h place
 
+/-- The non-coric packet's actual invariant-unit logarithm data. -/
+noncomputable def siteNonarchimedeanUnitLogData
+    [SourceSelectedPlaceFiberFiniteness theta]
+    (lattice : SourceAbsoluteLGPGaussianLogThetaLattice models)
+    (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
+    (n m : ℤ) (rationalPlace : SourceRationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} theta.l)
+    (topology :
+      SourceMonoAnalyticLogShellAlgorithm.TensorTopology
+        (fun index =>
+          algorithm.factor
+            ((lattice.siteCapsuleAtLabel n m label).object
+              (lattice.sitePacketIndexEquiv n m label index))
+            rationalPlace))
+    (hkind : rationalPlace.kind = .nonarchimedean) :
+    SourceNonarchimedeanPacketUnitLogData
+      (lattice.siteLocalPacket algorithm n m rationalPlace label topology)
+      (lattice.siteNonarchimedeanShells algorithm n m rationalPlace label
+        topology hkind) where
+  summandDefinition factor place := by
+    let strip :=
+      (lattice.siteCapsuleAtLabel n m label).object
+        (lattice.sitePacketIndexEquiv n m label factor)
+    exact
+      (algorithm.sourceDefinitionAbove strip rationalPlace place
+        ).asNonarchimedean hkind
+
+/-- The site packet factor is exactly its direct sum of invariant-unit logs. -/
+theorem siteNonarchimedeanUnitLogData_factorUnitLogSubgroup
+    [SourceSelectedPlaceFiberFiniteness theta]
+    (lattice : SourceAbsoluteLGPGaussianLogThetaLattice models)
+    (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
+    (n m : ℤ) (rationalPlace : SourceRationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} theta.l)
+    (topology :
+      SourceMonoAnalyticLogShellAlgorithm.TensorTopology
+        (fun index =>
+          algorithm.factor
+            ((lattice.siteCapsuleAtLabel n m label).object
+              (lattice.sitePacketIndexEquiv n m label index))
+            rationalPlace))
+    (hkind : rationalPlace.kind = .nonarchimedean)
+    (factor : Fin (label.tensorIndex + 1)) :
+    (lattice.siteNonarchimedeanUnitLogData algorithm n m rationalPlace label
+        topology hkind).factorUnitLogSubgroup factor =
+      algorithm.factorUnitLogSubgroup
+        ((lattice.siteCapsuleAtLabel n m label).object
+          (lattice.sitePacketIndexEquiv n m label factor))
+        rationalPlace hkind := by
+  ext value
+  change
+    (∀ place,
+      (algorithm.factor
+        ((lattice.siteCapsuleAtLabel n m label).object
+          (lattice.sitePacketIndexEquiv n m label factor))
+        rationalPlace).directSumIso.hom value place ∈
+          ((algorithm.sourceDefinitionAbove
+            ((lattice.siteCapsuleAtLabel n m label).object
+              (lattice.sitePacketIndexEquiv n m label factor))
+            rationalPlace place).asNonarchimedean hkind).preLogShell) ↔
+      ∀ place, value place ∈
+        ((algorithm.sourceDefinitionAbove
+          ((lattice.siteCapsuleAtLabel n m label).object
+            (lattice.sitePacketIndexEquiv n m label factor))
+          rationalPlace place).asNonarchimedean hkind).preLogShell
+  constructor <;> intro h place
+  · simpa only [SourceMonoAnalyticLogShellAlgorithm.factor,
+      SourceLocalLogDirectSum.ofLogarithmicShells_directSumIso_hom_apply]
+      using h place
+  · simpa only [SourceMonoAnalyticLogShellAlgorithm.factor,
+      SourceLocalLogDirectSum.ofLogarithmicShells_directSumIso_hom_apply]
+      using h place
+
 /-- The infinite-place Hermitian inputs on the actual non-coric packet. -/
 noncomputable def siteArchimedeanSummandMetric
     [SourceSelectedPlaceFiberFiniteness theta]
@@ -16127,6 +16682,133 @@ theorem verticalFactorLattice_image
         rationalPlace hkind : Set _)
   exact algorithm.factorTransport_integralLattice_image
     (lattice.verticalStripIsoToCommon n m label factor).hom rationalPlace hkind
+
+/--
+Vertical Kummer transport preserves the direct sum of the actual invariant
+local-unit logarithm images in every tensor factor.
+-/
+theorem verticalFactorUnitLogSubgroup_image
+    [SourceSelectedPlaceFiberFiniteness theta]
+    (lattice : SourceAbsoluteLGPGaussianLogThetaLattice models)
+    (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
+    (n m : ℤ) (rationalPlace : SourceRationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} theta.l)
+    (siteTopology :
+      SourceMonoAnalyticLogShellAlgorithm.TensorTopology
+        (fun index =>
+          algorithm.factor
+            ((lattice.siteCapsuleAtLabel n m label).object
+              (lattice.sitePacketIndexEquiv n m label index))
+            rationalPlace))
+    (commonTopology :
+      SourceMonoAnalyticLogShellAlgorithm.TensorTopology
+        (fun index =>
+          algorithm.factor
+            ((lattice.capsuleAtLabel n label).object
+              (lattice.packetIndexEquiv n label index))
+            rationalPlace))
+    (hkind : rationalPlace.kind = .nonarchimedean)
+    (factor : Fin (label.tensorIndex + 1)) :
+    (lattice.verticalPacketKummerIso algorithm n m rationalPlace label
+        siteTopology commonTopology).factorKummer factor ''
+        ((lattice.siteNonarchimedeanUnitLogData algorithm n m rationalPlace
+          label siteTopology hkind).factorUnitLogSubgroup factor : Set _) =
+      ((lattice.nonarchimedeanUnitLogData algorithm n rationalPlace label
+        commonTopology hkind).factorUnitLogSubgroup factor : Set _) := by
+  rw [lattice.siteNonarchimedeanUnitLogData_factorUnitLogSubgroup,
+    lattice.nonarchimedeanUnitLogData_factorUnitLogSubgroup]
+  change
+    algorithm.factorTransport
+        (lattice.verticalStripIsoToCommon n m label factor).hom rationalPlace ''
+        (algorithm.factorUnitLogSubgroup
+          ((lattice.siteCapsuleAtLabel n m label).object
+            (lattice.sitePacketIndexEquiv n m label factor))
+          rationalPlace hkind : Set _) =
+      (algorithm.factorUnitLogSubgroup
+        ((lattice.capsuleAtLabel n label).object
+          (lattice.packetIndexEquiv n label factor))
+        rationalPlace hkind : Set _)
+  exact algorithm.factorTransport_unitLogSubgroup_image
+    (lattice.verticalStripIsoToCommon n m label factor).hom rationalPlace hkind
+
+/-- Vertical Kummer transport preserves the pure invariant-unit log tensors. -/
+theorem verticalPureUnitLogTensors_image
+    [SourceSelectedPlaceFiberFiniteness theta]
+    (lattice : SourceAbsoluteLGPGaussianLogThetaLattice models)
+    (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
+    (n m : ℤ) (rationalPlace : SourceRationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} theta.l)
+    (siteTopology :
+      SourceMonoAnalyticLogShellAlgorithm.TensorTopology
+        (fun index =>
+          algorithm.factor
+            ((lattice.siteCapsuleAtLabel n m label).object
+              (lattice.sitePacketIndexEquiv n m label index))
+            rationalPlace))
+    (commonTopology :
+      SourceMonoAnalyticLogShellAlgorithm.TensorTopology
+        (fun index =>
+          algorithm.factor
+            ((lattice.capsuleAtLabel n label).object
+              (lattice.packetIndexEquiv n label index))
+            rationalPlace))
+    (hkind : rationalPlace.kind = .nonarchimedean) :
+    (lattice.verticalPacketKummerIso algorithm n m rationalPlace label
+        siteTopology commonTopology).packetKummer ''
+        (lattice.siteNonarchimedeanUnitLogData algorithm n m rationalPlace
+          label siteTopology hkind).pureUnitLogTensors =
+      (lattice.nonarchimedeanUnitLogData algorithm n rationalPlace label
+        commonTopology hkind).pureUnitLogTensors :=
+  SourceNonarchimedeanPacketUnitLogData.pureUnitLogTensors_image
+    (lattice.siteNonarchimedeanUnitLogData algorithm n m rationalPlace label
+      siteTopology hkind)
+    (lattice.nonarchimedeanUnitLogData algorithm n rationalPlace label
+      commonTopology hkind)
+    (lattice.verticalPacketKummerIso algorithm n m rationalPlace label
+      siteTopology commonTopology)
+    (lattice.verticalFactorUnitLogSubgroup_image algorithm n m rationalPlace
+      label siteTopology commonTopology hkind)
+
+/--
+The additive tensor subgroup generated by invariant-unit logarithms is
+vertically Kummer invariant.
+-/
+theorem verticalPacketUnitLogSubgroup_image
+    [SourceSelectedPlaceFiberFiniteness theta]
+    (lattice : SourceAbsoluteLGPGaussianLogThetaLattice models)
+    (algorithm : SourceMonoAnalyticLogShellAlgorithm models)
+    (n m : ℤ) (rationalPlace : SourceRationalPlace)
+    (label : IUTIIAbsoluteThetaLabel.{u} theta.l)
+    (siteTopology :
+      SourceMonoAnalyticLogShellAlgorithm.TensorTopology
+        (fun index =>
+          algorithm.factor
+            ((lattice.siteCapsuleAtLabel n m label).object
+              (lattice.sitePacketIndexEquiv n m label index))
+            rationalPlace))
+    (commonTopology :
+      SourceMonoAnalyticLogShellAlgorithm.TensorTopology
+        (fun index =>
+          algorithm.factor
+            ((lattice.capsuleAtLabel n label).object
+              (lattice.packetIndexEquiv n label index))
+            rationalPlace))
+    (hkind : rationalPlace.kind = .nonarchimedean) :
+    (lattice.verticalPacketKummerIso algorithm n m rationalPlace label
+        siteTopology commonTopology).packetKummer ''
+        ((lattice.siteNonarchimedeanUnitLogData algorithm n m rationalPlace
+          label siteTopology hkind).packetUnitLogSubgroup : Set _) =
+      ((lattice.nonarchimedeanUnitLogData algorithm n rationalPlace label
+        commonTopology hkind).packetUnitLogSubgroup : Set _) :=
+  SourceNonarchimedeanPacketUnitLogData.packetUnitLogSubgroup_image
+    (lattice.siteNonarchimedeanUnitLogData algorithm n m rationalPlace label
+      siteTopology hkind)
+    (lattice.nonarchimedeanUnitLogData algorithm n rationalPlace label
+      commonTopology hkind)
+    (lattice.verticalPacketKummerIso algorithm n m rationalPlace label
+      siteTopology commonTopology).packetKummer
+    (lattice.verticalPureUnitLogTensors_image algorithm n m rationalPlace label
+      siteTopology commonTopology hkind)
 
 /-- The vertical packet Kummer map preserves all pure integral tensors. -/
 theorem verticalPureIntegralTensors_image
@@ -17263,9 +17945,11 @@ end VerticalFamilyConstruction
 
 /--
 The still irreducible Proposition 3.5(ii)(a)-(b) input for a concrete vertical
-family.  These fields concern unit groups and domains of iterated log-links;
-they are deliberately separated from the additive packet Kummer maps, integral
-regions, and measures already constructed above.
+family.  At finite places the packet unit-log subgroup and its direct Kummer
+containment are constructed above from the summandwise compact unit groups and
+`p`-adic logarithms.  The remaining fields concern iterated log-link domains
+and the archimedean unit and radius-`pi` assertions; they are deliberately
+separated from the additive packet Kummer maps, integral regions, and measures.
 -/
 structure VerticalUpperSemiData
     [SourceSelectedPlaceFiberFiniteness theta]
@@ -17273,29 +17957,27 @@ structure VerticalUpperSemiData
     {algorithm : SourceMonoAnalyticLogShellAlgorithm models}
     {n : ℤ}
     (family : VerticalFamilyConstruction lattice algorithm n) where
-  unitInvariants :
-    ∀ m rationalPlace label,
+  archUnitInvariants :
+    ∀ m rationalPlace label
+      (_hkind : rationalPlace.kind = .archimedean),
       AddSubgroup (family.sourcePacket m rationalPlace label).carrier
   nonarchLogDomain :
     ∀ (m : ℤ) (steps : ℕ+) (rationalPlace : SourceRationalPlace)
       (label : IUTIIAbsoluteThetaLabel.{u} theta.l),
       Set (family.sourcePacket (m - (steps.1 : ℤ)) rationalPlace label).carrier
   nonarchLogDomain_mem_units :
-    ∀ m steps rationalPlace label value,
+    ∀ m steps rationalPlace label
+      (hkind : rationalPlace.kind = .nonarchimedean) value,
       value ∈ nonarchLogDomain m steps rationalPlace label ->
-        value ∈ unitInvariants (m - (steps.1 : ℤ)) rationalPlace label
+        value ∈
+          (lattice.siteNonarchimedeanUnitLogData algorithm n
+            (m - (steps.1 : ℤ)) rationalPlace label
+            ((family.site (m - (steps.1 : ℤ))).topology rationalPlace label)
+            hkind).packetUnitLogSubgroup
   nonarchLogIterate :
     ∀ m steps rationalPlace label,
       {value // value ∈ nonarchLogDomain m steps rationalPlace label} ->
         (family.sourcePacket m rationalPlace label).carrier
-  nonarch_direct_contained :
-    ∀ m rationalPlace label,
-      rationalPlace.kind = .nonarchimedean ->
-        Set.MapsTo
-          (family.packetKummer m rationalPlace label).packetKummer
-          (unitInvariants m rationalPlace label : Set _)
-          (((family.common.integral rationalPlace label).construction
-            |>.fullRegion).carrier)
   nonarch_logKummer_contained :
     ∀ m steps rationalPlace label,
       rationalPlace.kind = .nonarchimedean ->
@@ -17305,11 +17987,11 @@ structure VerticalUpperSemiData
             ((family.common.integral rationalPlace label).construction
               |>.fullRegion).carrier
   arch_direct_units_contained :
-    ∀ m rationalPlace label,
-      rationalPlace.kind = .archimedean ->
+    ∀ m rationalPlace label
+      (hkind : rationalPlace.kind = .archimedean),
         Set.MapsTo
           (family.packetKummer m rationalPlace label).packetKummer
-          (unitInvariants m rationalPlace label : Set _)
+          (archUnitInvariants m rationalPlace label hkind : Set _)
           ((family.common.integral rationalPlace label).construction
             |>.fullRegion).carrier
   arch_direct_piBall_contained :
@@ -17325,9 +18007,11 @@ structure VerticalUpperSemiData
       (label : IUTIIAbsoluteThetaLabel.{u} theta.l),
       Set (family.sourcePacket (m - (steps.1 : ℤ)) rationalPlace label).carrier
   archLogDomain_mem_units :
-    ∀ m steps rationalPlace label value,
+    ∀ m steps rationalPlace label
+      (hkind : rationalPlace.kind = .archimedean) value,
       value ∈ archLogDomain m steps rationalPlace label ->
-        value ∈ unitInvariants (m - (steps.1 : ℤ)) rationalPlace label
+        value ∈ archUnitInvariants
+          (m - (steps.1 : ℤ)) rationalPlace label hkind
   archLogPreimage :
     ∀ (m : ℤ) (steps : ℕ+) (rationalPlace : SourceRationalPlace)
       (label : IUTIIAbsoluteThetaLabel.{u} theta.l),
@@ -17373,11 +18057,42 @@ noncomputable def toTheorem311Ind3System
       (family.common.topology rationalPlace label)
       ((family.site m).integral rationalPlace label)
       (family.common.integral rationalPlace label)
-  unitInvariants := upperSemi.unitInvariants
+  nonarchUnitLogInvariants m rationalPlace label hkind :=
+    (lattice.siteNonarchimedeanUnitLogData algorithm n m rationalPlace label
+      ((family.site m).topology rationalPlace label) hkind
+      ).packetUnitLogSubgroup
+  archUnitInvariants := upperSemi.archUnitInvariants
   nonarchLogDomain := upperSemi.nonarchLogDomain
   nonarchLogDomain_mem_units := upperSemi.nonarchLogDomain_mem_units
   nonarchLogIterate := upperSemi.nonarchLogIterate
-  nonarch_direct_contained := upperSemi.nonarch_direct_contained
+  nonarch_direct_contained m rationalPlace label hkind value hvalue := by
+    let siteData :=
+      lattice.siteNonarchimedeanUnitLogData algorithm n m rationalPlace label
+        ((family.site m).topology rationalPlace label) hkind
+    let commonData :=
+      lattice.nonarchimedeanUnitLogData algorithm n rationalPlace label
+        (family.common.topology rationalPlace label) hkind
+    have himage :
+        (family.packetKummer m rationalPlace label).packetKummer value ∈
+          commonData.packetUnitLogSubgroup := by
+      have hsource :
+          (family.packetKummer m rationalPlace label).packetKummer value ∈
+            (family.packetKummer m rationalPlace label).packetKummer ''
+              (siteData.packetUnitLogSubgroup : Set _) :=
+        ⟨value, hvalue, rfl⟩
+      simpa only [siteData, commonData,
+        lattice.verticalPacketUnitLogSubgroup_image algorithm n m
+          rationalPlace label
+          ((family.site m).topology rationalPlace label)
+          (family.common.topology rationalPlace label) hkind] using hsource
+    change
+      (family.packetKummer m rationalPlace label).packetKummer value ∈
+        ((family.common.integral rationalPlace label).construction
+          |>.fullRegion).carrier
+    apply SourcePacketIntegralConstruction.packetLattice_subset_fullRegion
+      (family.common.integral rationalPlace label).construction hkind
+    rw [(family.common.integral rationalPlace label).nonarchimedean_shells hkind]
+    exact commonData.packetUnitLogSubgroup_le_packetLattice himage
   nonarch_logKummer_contained := upperSemi.nonarch_logKummer_contained
   arch_direct_units_contained := upperSemi.arch_direct_units_contained
   arch_direct_piBall_contained := upperSemi.arch_direct_piBall_contained

@@ -1114,9 +1114,16 @@ packet integral construction itself.  At finite places this is the constructed
 closed tensor lattice; at infinite places Lean proves that it is the
 radius-\(\pi\) ball of the same packet's Hermitian tensor metric.  Thus neither
 the abstract Ind3 system nor its concrete lattice constructor accepts an
-arbitrary radius-\(\pi\) set or an unrelated metric witness.  The unit-group
-inputs, containment of this derived ball under the relevant Kummer map, and
-the actual iterated log correspondences remain source obligations.
+arbitrary radius-\(\pi\) set or an unrelated metric witness.  At a finite
+place, the explicit compact invariant local-unit groups and their \(p\)-adic
+logarithms now construct factorwise unit-log direct sums, pure tensors, and the
+generated packet subgroup.  Lean proves that subgroup lies in the closed
+tensor lattice and that vertical Kummer transport preserves it exactly; the
+concrete Ind3 constructor therefore derives direct finite-place containment
+instead of accepting an arbitrary packet subgroup and containment proof.  The
+construction of the summand unit/log data from the IUT~II \(\Psi_{\rm cns}\)
+objects, containment of the derived archimedean ball, and the actual iterated
+log correspondences remain source obligations.
 
 The largest remaining IUT III task is to enrich this finite route with the
 analytic common-container, holomorphic-hull, determinant, local-field, and

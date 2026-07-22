@@ -1274,6 +1274,11 @@ def m1m3PaperLedger : List PaperClause :=
       ["SourcePacketIntegralConstruction.logShellRegion",
         "SourcePacketIntegralConstruction.logShellRegion_eq_packetLattice",
         "SourcePacketIntegralConstruction.logShellRegion_eq_piBall",
+        "SourceNonarchimedeanLogShellDefinition.preLogShell_le_lattice",
+        "SourceNonarchimedeanPacketUnitLogData",
+        "SourceNonarchimedeanPacketUnitLogData.packetUnitLogSubgroup",
+        "SourceNonarchimedeanPacketUnitLogData.packetUnitLogSubgroup_le_packetLattice",
+        "SourceAbsoluteLGPGaussianLogThetaLattice.verticalPacketUnitLogSubgroup_image",
         "SourceLGPSplittingMonoidKummerIso",
         "SourceTheorem311CoricContainer",
         "SourceTheorem311Ind3System",
@@ -1283,7 +1288,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceTheorem311VerticalLogLink.rootsOfUnity_logarithm_eq_zero",
         "SourceTheorem311VerticalLogLinkFamily.adjacent_logarithm_eq_on_overlap"]
       .partialImplementation
-      "The vertically coric n-circle packet is fixed while m varies. Every m-packet has an actual tensor Kummer isomorphism into that common container. The mono-analytic source region is derived from the packet integral construction: it is the closed tensor lattice at a nonarchimedean place and the radius-pi ball of that packet's actual Hermitian metric at an archimedean place. No arbitrary radius-pi set or unrelated metric witness is accepted. Nonarchimedean direct and forward-log images are required to lie in the common integral module; at archimedean places, direct unit and derived radius-pi images lie in the common unit ball and a subset of that same derived ball surjects onto each iterated-log domain. Bad-prime splitting actions are Kummer transported to one common action, and any adjacent portion related by a log-link is required to differ only by a root of unity; equality after logarithm is derived. Constructing the unit invariants, Kummer containment proofs, iterated log correspondences, and bad-prime inputs from Propositions 3.4 and 3.5 remains open.",
+      "The vertically coric n-circle packet is fixed while m varies. Every m-packet has an actual tensor Kummer isomorphism into that common container. The mono-analytic source region is derived from the packet integral construction: it is the closed tensor lattice at a nonarchimedean place and the radius-pi ball of that packet's actual Hermitian metric at an archimedean place. No arbitrary radius-pi set or unrelated metric witness is accepted. At a finite place, each summand retains its explicit compact invariant local-unit group and p-adic logarithm. Lean constructs their direct sums, pure tensor set, and generated packet subgroup; proves this subgroup lies in the closed tensor lattice; and proves exact vertical Kummer transport. Thus the concrete Ind3 constructor no longer accepts an arbitrary finite packet unit subgroup or its direct-containment proof. Forward iterated-log images remain source obligations. At archimedean places, direct unit and derived radius-pi images lie in the common unit ball and a subset of that same derived ball surjects onto each iterated-log domain. Bad-prime splitting actions are Kummer transported to one common action, and any adjacent portion related by a log-link is required to differ only by a root of unity; equality after logarithm is derived. Constructing the summand unit/log data from IUT II Corollaries 4.5-4.6, the iterated log correspondences, archimedean containments, and bad-prime inputs remains open.",
     clause "III.3.7" .iutIII "IUT III, Proposition 3.7"
       ["IUTIIITheorem311ConstructedSource"] .unformalized
       "The cited vertical compatibility input is not formalized.",
@@ -1518,6 +1523,9 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceAbsoluteLGPGaussianLogThetaLattice.verticalFactorLattice_image",
         "SourceAbsoluteLGPGaussianLogThetaLattice.verticalPureIntegralTensors_image",
         "SourceAbsoluteLGPGaussianLogThetaLattice.verticalPacketLattice_image",
+        "SourceAbsoluteLGPGaussianLogThetaLattice.verticalFactorUnitLogSubgroup_image",
+        "SourceAbsoluteLGPGaussianLogThetaLattice.verticalPureUnitLogTensors_image",
+        "SourceAbsoluteLGPGaussianLogThetaLattice.verticalPacketUnitLogSubgroup_image",
         "SourceAbsoluteLGPGaussianLogThetaLattice.verticalDistinguishedLattice_image",
         "SourceAbsoluteLGPGaussianLogThetaLattice.verticalFullNonarchimedeanIntegral_image",
         "SourceAbsoluteLGPGaussianLogThetaLattice.verticalDistinguishedNonarchimedeanIntegral_image",
@@ -1543,7 +1551,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceAbsoluteLGPGaussianLogThetaLattice.VerticalLocalConstruction.toTheorem311VerticalLocalKummer",
         "SourceTheorem311VerticalLocalKummer",
         "SourceTheorem311LabeledKummerIso"] .partialImplementation
-      "For every actual `(n,m)` absolute-label capsule, vertical coricity constructs the placewise, direct-sum, and continuous tensor-packet Kummer maps to the fixed `(n,circle)` packet. Finite-place transport passes through shell lattices, tensor generation, closure, and distinguished intersections; infinite-place transport preserves the rationalized packet seminorm. Full and distinguished ind-packet region images hold for both place kinds. Separately, each packet carries a genuine finite-stage field presentation. The Kummer place map reindexes its field stages, and fieldwise radial measure preservation derives transport of E, W, M_W, weighted lifts, weighted content, the normalized functional, and the embedded finite-stage integral product. The local-data, vertical-container, and Ind3 APIs use this finite-stage path and expose no legacy whole-packet decomposition. Constructing the field-stage and radial maps from local shell maps, and constructing the profinite, number-field, and split-Frobenioid maps from IUT II Corollaries 4.6 and 4.8, remain open.",
+      "For every actual `(n,m)` absolute-label capsule, vertical coricity constructs the placewise, direct-sum, and continuous tensor-packet Kummer maps to the fixed `(n,circle)` packet. Finite-place transport passes through shell lattices, tensor generation, closure, distinguished intersections, and the generated tensor subgroup of invariant-unit logarithms; infinite-place transport preserves the rationalized packet seminorm. Full and distinguished ind-packet region images hold for both place kinds. Separately, each packet carries a genuine finite-stage field presentation. The Kummer place map reindexes its field stages, and fieldwise radial measure preservation derives transport of E, W, M_W, weighted lifts, weighted content, the normalized functional, and the embedded finite-stage integral product. The local-data, vertical-container, and Ind3 APIs use this finite-stage path and expose no legacy whole-packet decomposition. Constructing the summand unit/log data and field-stage radial maps from the cited paper objects, and constructing the profinite, number-field, and split-Frobenioid maps from IUT II Corollaries 4.6 and 4.8, remain open.",
     clause "III.3.11(ii).objects" .iutIII "IUT III, Theorem 3.11(ii): tensor and Frobenioid compatibility"
       ["SourceTensorPacketKummerIso.distinguishedSubmodule_map",
         "SourceMonoAnalyticLogShellAlgorithm.TensorTopology.congr_distinguishedSubmodule",
@@ -1567,6 +1575,9 @@ def m1m3PaperLedger : List PaperClause :=
     clause "III.3.11(ii).Ind3" .iutIII "IUT III, Theorem 3.11(ii): Ind3 and log-volume"
       ["SourcePacketIntegralConstruction.logShellRegion",
         "SourcePacketIntegralConstruction.logShellRegion_eq_piBall",
+        "SourceNonarchimedeanPacketUnitLogData.packetUnitLogSubgroup_le_packetLattice",
+        "SourceAbsoluteLGPGaussianLogThetaLattice.siteNonarchimedeanUnitLogData",
+        "SourceAbsoluteLGPGaussianLogThetaLattice.verticalPacketUnitLogSubgroup_image",
         "SourceTheorem311CoricContainer",
         "SourceTheorem311Ind3System",
         "SourceTheorem311Ind3System.logShellRegion_eq_piBall",
@@ -1578,7 +1589,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceTheorem311Ind3System.logVolume_eq_common",
         "SourceTheorem311Ind3System.logVolume_eq_logVolume"]
       .partialImplementation
-      "Ind3 is expressed relative to one fixed vertically coric n-circle container, not as maps between adjacent packets. A concrete vertical family fixes one common construction for all m and derives every ind-packet, direct Kummer isomorphism, full integral-region image, finite-stage field volume, replicated weighted content, normalized functional, and the source log-shell region. At an infinite place that region is proved to be the radius-pi ball of the same constructed packet Hermitian metric; the abstract and concrete Ind3 records no longer accept an arbitrary set or metric witness. Given the remaining unit-group, containment, and iterated-log obligations of Proposition 3.5(ii)(a)-(b), the family constructs the Ind3 system; equality with the common finite-stage normalized value and independence of m follow. Constructing the Psi_cns unit groups, Galois-invariant tensor actions, direct Kummer containment of the derived pi-ball, and actual iterated log correspondences remains open.",
+      "Ind3 is expressed relative to one fixed vertically coric n-circle container, not as maps between adjacent packets. A concrete vertical family fixes one common construction for all m and derives every ind-packet, direct Kummer isomorphism, full integral-region image, finite-stage field volume, replicated weighted content, normalized functional, and source log-shell region. At a finite place it also derives the packet subgroup generated by pure tensors of the explicit invariant-unit logarithm images, proves exact vertical transport, and constructs its direct Kummer containment in the common integral lattice. Consequently `VerticalUpperSemiData` accepts neither an arbitrary finite unit subgroup nor a finite direct-containment field. At an infinite place the source region is proved to be the radius-pi ball of the same constructed packet Hermitian metric; no arbitrary set or metric witness is accepted. Given the remaining iterated-log and archimedean unit/ball obligations of Proposition 3.5(ii)(a)-(b), the family constructs the Ind3 system; equality with the common finite-stage normalized value and independence of m follow. Constructing the summand unit/log data from Psi_cns, the actual iterated log correspondences, Galois-invariant tensor actions, and the archimedean containments remains open.",
     clause "III.3.11(iii).horizontal" .iutIII "IUT III, Theorem 3.11(iii): horizontal theta link"
       ["SourceHorizontalKummerCompatibility",
         "SourceHorizontalKummerCompatibility.commutes",
