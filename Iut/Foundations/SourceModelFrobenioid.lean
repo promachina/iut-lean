@@ -411,6 +411,88 @@ theorem grothendieck_add_denominator
   simp only [AddSubmonoid.coe_zero, zero_add]
   simpa using (add_comm numerator denominator.1)
 
+/-- A common negative denominator plus the left effective correction recovers
+the left localization representative. -/
+theorem commonLower_add_left (M : DivisorialAddMonoid)
+    (leftNumerator : M.carrier)
+    (leftDenominator : (⊤ : AddSubmonoid M.carrier))
+    (rightDenominator : (⊤ : AddSubmonoid M.carrier)) :
+    -(Algebra.GrothendieckAddGroup.of leftDenominator.1 +
+        Algebra.GrothendieckAddGroup.of rightDenominator.1) +
+        Algebra.GrothendieckAddGroup.of
+          (leftNumerator + rightDenominator.1) =
+      (AddLocalization.mk leftNumerator leftDenominator :
+        Algebra.GrothendieckAddGroup M.carrier) := by
+  have fraction :=
+    grothendieck_add_denominator M leftNumerator leftDenominator
+  rw [map_add]
+  rw [← fraction]
+  abel
+
+/-- A common negative denominator plus the right effective correction recovers
+the right localization representative. -/
+theorem commonLower_add_right (M : DivisorialAddMonoid)
+    (leftDenominator : (⊤ : AddSubmonoid M.carrier))
+    (rightNumerator : M.carrier)
+    (rightDenominator : (⊤ : AddSubmonoid M.carrier)) :
+    -(Algebra.GrothendieckAddGroup.of leftDenominator.1 +
+        Algebra.GrothendieckAddGroup.of rightDenominator.1) +
+        Algebra.GrothendieckAddGroup.of
+          (rightNumerator + leftDenominator.1) =
+      (AddLocalization.mk rightNumerator rightDenominator :
+        Algebra.GrothendieckAddGroup M.carrier) := by
+  have fraction :=
+    grothendieck_add_denominator M rightNumerator rightDenominator
+  rw [map_add]
+  rw [← fraction]
+  abel
+
+/-- Every groupification class has a numerator-denominator representative. -/
+theorem localizationRepresentative {M : Type u} [AddCommMonoid M]
+    (value : AddLocalization (⊤ : AddSubmonoid M)) :
+    ∃ pair : M × (⊤ : AddSubmonoid M),
+      value = AddLocalization.mk pair.1 pair.2 := by
+  refine AddLocalization.induction_on value ?_
+  intro pair
+  exact ⟨pair, rfl⟩
+
+theorem commonLeftBalance (X : D)
+    (leftClass : Algebra.GrothendieckAddGroup (Phi.obj X).carrier)
+    (leftNumerator : (Phi.obj X).carrier)
+    (leftDenominator rightDenominator :
+      (⊤ : AddSubmonoid (Phi.obj X).carrier))
+    (leftClass_eq : leftClass =
+      AddLocalization.mk leftNumerator leftDenominator) :
+    (1 : ℕ) •
+          -(Algebra.GrothendieckAddGroup.of leftDenominator.1 +
+            Algebra.GrothendieckAddGroup.of rightDenominator.1) +
+        Algebra.GrothendieckAddGroup.of
+          (leftNumerator + rightDenominator.1) =
+      gpPullback Phi (𝟙 X) leftClass + data.divisor X 0 := by
+  rw [gpPullback_id]
+  simp only [AddMonoidHom.id_apply, map_zero, add_zero, one_nsmul]
+  rw [leftClass_eq]
+  exact commonLower_add_left (Phi.obj X) leftNumerator
+    leftDenominator rightDenominator
+
+theorem commonRightBalance {X Y : D} (baseIso : X ≅ Y)
+    (rightClass : Algebra.GrothendieckAddGroup (Phi.obj Y).carrier)
+    (leftDenominator : (⊤ : AddSubmonoid (Phi.obj X).carrier))
+    (rightNumerator : (Phi.obj X).carrier)
+    (rightDenominator : (⊤ : AddSubmonoid (Phi.obj X).carrier))
+    (rightClass_eq : gpPullback Phi baseIso.hom rightClass =
+      AddLocalization.mk rightNumerator rightDenominator) :
+    (1 : ℕ) •
+          -(Algebra.GrothendieckAddGroup.of leftDenominator.1 +
+            Algebra.GrothendieckAddGroup.of rightDenominator.1) +
+        Algebra.GrothendieckAddGroup.of
+          (rightNumerator + leftDenominator.1) =
+      gpPullback Phi baseIso.hom rightClass + data.divisor X 0 := by
+  simp only [map_zero, add_zero, one_nsmul]
+  rw [rightClass_eq]
+  exact commonLower_add_right (Phi.obj X) leftDenominator
+    rightNumerator rightDenominator
+
 /-- A localization representative gives a model arrow to its numerator. -/
 def toEffectiveObject (data : Input Phi) (X : D)
     (numerator : (Phi.obj X).carrier)
@@ -561,6 +643,80 @@ def structureFunctor :
 def preFrobenioid : PreFrobenioid (Carrier Phi data) D IsFSM where
   divisorMonoid := Phi
   structureFunctor := structureFunctor Phi data
+
+/-- Definition 1.3(i)(b): any two objects over isomorphic base objects admit
+a common source through pre-steps inducing the prescribed base isomorphism. -/
+theorem commonPreSteps
+    (left right : Carrier Phi data)
+    (baseIso : (preFrobenioid Phi data).base.obj left ≅
+      (preFrobenioid Phi data).base.obj right) :
+    Nonempty ((preFrobenioid Phi data).CommonPreStepWitness
+      left right baseIso) := by
+  let X := Object.base left
+  let Y := Object.base right
+  change X ≅ Y at baseIso
+  rcases localizationRepresentative left.divisorClass with
+    ⟨⟨leftNumerator, leftDenominator⟩, leftClass_eq⟩
+  rcases localizationRepresentative
+      (gpPullback Phi baseIso.hom right.divisorClass) with
+    ⟨⟨rightNumerator, rightDenominator⟩, rightClass_eq⟩
+  let midpoint : Carrier Phi data :=
+    { base := X
+      divisorClass :=
+        -(Algebra.GrothendieckAddGroup.of leftDenominator.1 +
+          Algebra.GrothendieckAddGroup.of rightDenominator.1) }
+  let toLeft : Hom Phi data midpoint left :=
+    { frobeniusDegree := 1
+      base := 𝟙 X
+      divisor := leftNumerator + rightDenominator.1
+      rationalFunction := 0
+      balance := by
+        change (1 : ℕ) •
+              -(Algebra.GrothendieckAddGroup.of leftDenominator.1 +
+                Algebra.GrothendieckAddGroup.of rightDenominator.1) +
+            Algebra.GrothendieckAddGroup.of
+              (leftNumerator + rightDenominator.1) =
+          gpPullback Phi (𝟙 X) left.divisorClass + data.divisor X 0
+        exact commonLeftBalance Phi data X left.divisorClass leftNumerator
+          leftDenominator rightDenominator leftClass_eq }
+  let toRight : Hom Phi data midpoint right :=
+    { frobeniusDegree := 1
+      base := baseIso.hom
+      divisor := rightNumerator + leftDenominator.1
+      rationalFunction := 0
+      balance := by
+        change (1 : ℕ) •
+              -(Algebra.GrothendieckAddGroup.of leftDenominator.1 +
+                Algebra.GrothendieckAddGroup.of rightDenominator.1) +
+            Algebra.GrothendieckAddGroup.of
+              (rightNumerator + leftDenominator.1) =
+          gpPullback Phi baseIso.hom right.divisorClass + data.divisor X 0
+        exact commonRightBalance Phi data baseIso right.divisorClass
+          leftDenominator rightNumerator rightDenominator rightClass_eq }
+  refine ⟨
+    { midpoint := midpoint
+      toLeft := toLeft
+      toRight := toRight
+      toLeft_preStep := ?_
+      toRight_preStep := ?_
+      leftBaseInverse := 𝟙 X
+      leftBaseInverse_hom := by
+        change 𝟙 X ≫ 𝟙 X = 𝟙 X
+        simp
+      hom_leftBaseInverse := by
+        change 𝟙 X ≫ 𝟙 X = 𝟙 X
+        simp
+      comparison := by
+        change 𝟙 X ≫ baseIso.hom = baseIso.hom
+        simp }⟩
+  · constructor
+    · rfl
+    · change IsIso (𝟙 X)
+      infer_instance
+  · constructor
+    · rfl
+    · change IsIso baseIso.hom
+      infer_instance
 
 /--
 The explicit inverse to a linear, base-isomorphic, isometric model arrow.
