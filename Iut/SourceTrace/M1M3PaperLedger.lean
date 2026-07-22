@@ -1150,13 +1150,23 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceFTimesMuPrimeStripEquivalence.NaturallyIsomorphic",
         "SourceFTimesMuPrimeStripFullPolyIsomorphism",
         "SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_assoc",
+        "SourceFMonoAnalyticPrimeStripEquivalence",
+        "SourceFMonoAnalyticPrimeStripFullPolyIsomorphism",
+        "SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.comp_assoc",
+        "SourceFTimesMuReconstructionObjects",
+        "SourceFTimesMuReconstructionTransport",
+        "SourceFTimesMuReconstructionAlgorithm",
+        "SourceFTimesMuReconstructionAlgorithm.mapFullPolyIsomorphism",
+        "SourceFTimesMuReconstructionAlgorithm.mapFullPolyIsomorphism_id",
+        "SourceFTimesMuReconstructionAlgorithm.mapFullPolyIsomorphism_comp",
+        "SourceFTimesMuReconstructionAlgorithm.mapFullPolyIsomorphism_inverse",
         "SourceFrobenioidEquivalence.NaturallyIsomorphic",
         "SourceFGloballyRealifiedTimesMuPrimeStripEquivalence.NaturallyIsomorphic",
         "SourceFGloballyRealifiedTimesMuPrimeStripFullPolyIsomorphism",
         "SourceFGloballyRealifiedTimesMuPrimeStripFullPolyIsomorphism.comp_assoc",
         "SourceFGloballyRealifiedTimesMuPrimeStripFullPolyIsomorphism.nonempty_iff"]
       .partialImplementation
-      "The Definition 4.9(vi)-(vii) local collection now selects the exact bad/good finite reconstruction at every selected finite place and the complete universe-polymorphic torsion-quotient Frobenioid system at every archimedean place. The kind equation prevents exchanging the bad and good constructions. The F-times and F-times-mu coarsifications are the actual wide subcategories cut out by divisor-zero isometries, and archimedean transitions are proved to preserve this condition. At a finite place, a structure-preserving isomorphism transports the topological Galois group, arithmetic monoid action, unit-mod-torsion quotient, every open-subgroup invariant Kummer image, characteristic and unit product generators, reconstructed split Frobenioid, base, reference object, and rational monoid. At an archimedean place, it transports every torsion quotient, orientation and transition map, reconstructed stage, base, divisor, Frobenius degree, FSM morphism, split product, and rational transition. The global isomorphism assembles these place-indexed maps with a structure-preserving global Frobenioid equivalence, prime/place and rho compatibility, bad-place generator and currency compatibility, reconstruction for every character tuple, and arithmetic-degree compatibility; pilot preservation is derived. Following IUT I Section 0, the place-indexed and globally realified full poly-isomorphisms are now literal quotients of all complete representatives: categorical equivalences are identified by natural isomorphism, while the actual group, monoid, quotient, splitting, prime, and local-currency maps remain pointwise data. Identity, composition, unit laws, associativity, representative existence, and exact nonemptiness criteria are proved. Construction from a theta-Hodge theater and the source evaluation/reconstruction algorithms furnishing the records, pilot function, and degree remain open.",
+      "The Definition 4.9(vi)-(vii) local collection now selects the exact bad/good finite reconstruction at every selected finite place and the complete universe-polymorphic torsion-quotient Frobenioid system at every archimedean place. The kind equation prevents exchanging the bad and good constructions. The F-times and F-times-mu coarsifications are the actual wide subcategories cut out by divisor-zero isometries, and archimedean transitions are proved to preserve this condition. At a finite place, a structure-preserving isomorphism now also retains the exact underlying split-Frobenioid equivalence, in addition to transporting the topological Galois group, arithmetic monoid action, unit-mod-torsion quotient, every open-subgroup invariant Kummer image, characteristic and unit product generators, reconstructed split Frobenioid, base, reference object, and rational monoid. The analogous archimedean map transports every torsion quotient, orientation and transition map, reconstructed stage, base, divisor, Frobenius degree, FSM morphism, split product, and rational transition. A functorial reconstruction boundary assembles its object from all exact finite and archimedean outputs, assembles its map componentwise with proofs that every lift projects to the supplied underlying equivalence, respects natural isomorphism, identity, and composition, and therefore induces a composition- and inverse-preserving map on full poly-isomorphisms. The global isomorphism additionally carries the global Frobenioid, prime/place, rho, reconstruction, and arithmetic-degree data; pilot preservation is derived. Constructing the finite/archimedean outputs, global pilot function, and degree from the cited source theorems remains open.",
     clause "II.4.10(i)" .iutII "IUT II, Corollary 4.10(i)"
       ["ToyIUTIIQPilot"] .partialImplementation
       "The q-pilot numerical profile is present, but its categorical pilot object is not.",
@@ -1165,11 +1175,16 @@ def m1m3PaperLedger : List PaperClause :=
         "ToyIUTIIThetaPilot"] .partialImplementation
       "Every q^(j^2) is now an actual monoid element on the source sign-label representatives and generates an actual Gaussian submonoid. The corresponding theta-pilot Frobenioid objects, evaluation isomorphisms, and global labels remain open; the real-degree projection remains toy.",
     clause "II.4.10(iii)" .iutII "IUT II, Corollary 4.10(iii)"
-      ["ToyIUTIIHodgeArakelovEvaluationData"] .unformalized
-      "The theta evaluation isomorphisms are not constructed.",
+      ["SourceFTimesMuReconstructionAlgorithm.mapFullPolyIsomorphism",
+        "SourceFTimesMuReconstructionAlgorithm.mapFullPolyIsomorphism_comp",
+        "ToyIUTIIHodgeArakelovEvaluationData"] .partialImplementation
+      "The exact componentwise Definition 4.9 functor now induces maps on Section 0 full poly-isomorphisms and preserves composition. Constructing the environment/Gaussian F-prime-strips and their theta evaluation isomorphism from Corollary 4.6 remains open.",
     clause "II.4.10(iv)" .iutII "IUT II, Corollary 4.10(iv)"
-      ["ToyIUTIIHodgeArakelovEvaluationData"] .unformalized
-      "The required theta-link compatibility is not constructed.",
+      ["SourceTheorem311TimesMuPrimeStripConstruction.toFamily",
+        "SourceTheorem311EnvironmentMonoAnalyticPrimeStripFamily.toTimesMu",
+        "SourceFTimesMuReconstructionAlgorithm.mapFullPolyIsomorphism_inverse",
+        "ToyIUTIIHodgeArakelovEvaluationData"] .partialImplementation
+      "One reconstruction algorithm now computes every site, vertically coric, and environment times-mu endpoint and derives the environment comparison maps and inverse laws from mono-analytic Proposition 2.1(vi) data. Constructing the coric unit comparisons and horizontal theta-link maps from Corollary 4.10(iv) remains open.",
     clause "II.4.10(v)" .iutII "IUT II, Corollary 4.10(v)"
       ["ToyIUTIIHodgeArakelovEvaluationData"] .unformalized
       "The coric-unit compatibility is not constructed.",
@@ -1807,6 +1822,10 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceTheorem311EnvironmentPrimeStripSquare.ofTriangle",
         "SourceFTimesMuPrimeStripPolyIsomorphismSquare",
         "SourceTheorem311TimesMuPrimeStripFamily",
+        "SourceTheorem311TimesMuPrimeStripConstruction",
+        "SourceTheorem311TimesMuPrimeStripConstruction.toFamily",
+        "SourceTheorem311EnvironmentMonoAnalyticPrimeStripFamily",
+        "SourceTheorem311EnvironmentMonoAnalyticPrimeStripFamily.toTimesMu",
         "SourceTheorem311TimesMuTrianglePrimeStripSquare",
         "SourceTheorem311EnvironmentTimesMuPrimeStripFamily",
         "SourceTheorem311EnvironmentTimesMuPrimeStripSquare",
@@ -1824,7 +1843,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceTheorem311HorizontalCorridorBoundary.siteKappaClauseD_commutes",
         "SourceTheorem311HorizontalCorridorBoundary.commonKappaClauseD_commutes"]
       .partialImplementation
-      "The active boundary is an adjacent-column corridor, not a field of one column. It proves that the columns use the same lattice and have indices n and n+1. Following IUT I Section 0, both the ordinary F and Definition 4.9 F-turnstile-times-mu full poly-isomorphisms are quotients of all complete componentwise equivalence maps by structured natural isomorphism, not strict categorical Iso records; quotient identity, composition, units, associativity, and inverse-pair cancellation are proved. Clauses (a) and (b) now use only times-mu corners: each triangle strip is definitionally based on the mono-analytic transport of its actual site or vertically coric theater, and the environment square is derived from Proposition 2.1(vi) two-sided comparison classes. Constructing and populating these typed families from Corollary 4.10, and proving the Theorem 1.5/Corollary 2.3 horizontal maps, remain open. Clause (c) is a square of actual mono-theta projective systems for every m and selected bad place. Clause (d) is a kappa-sol/M-infinity-kappa square for every m and absolute label, plus the common square and coherence with both vertical labeled Kummer maps. Evaluation equivariance also remains open.",
+      "The active boundary is an adjacent-column corridor, not a field of one column. It proves that the columns use the same lattice and have indices n and n+1. Following IUT I Section 0, the ordinary F, mono-analytic F, and Definition 4.9 F-turnstile-times-mu full poly-isomorphisms are quotients of all complete componentwise equivalence maps by structured natural isomorphism, not strict categorical Iso records. Clauses (a) and (b) now use only times-mu corners. One functorial reconstruction algorithm computes every site and vertically coric strip from the mono-analytic transport of its actual theater; it also computes every environment strip and comparison from Proposition 2.1(vi) mono-analytic data and derives all inverse laws. The clause (a) square remains an explicit source theorem input, so proving its Theorem 1.5 horizontal maps and vertical Kummer compatibility remains open; clause (b) is then derived by conjugation. Clause (c) is a square of actual mono-theta projective systems for every m and selected bad place. Clause (d) is a kappa-sol/M-infinity-kappa square for every m and absolute label, plus the common square and coherence with both vertical labeled Kummer maps. Evaluation equivariance also remains open.",
     clause "III.3.11(iii).equivariance" .iutIII "IUT III, Theorem 3.11(iii): automorphism equivariance"
       ["SourceIndexedHorizontalKummerSquare.automorphismEquiv",
         "SourceTheorem311HorizontalEvaluationCompatibility",
@@ -1901,9 +1920,9 @@ theorem m1m3PaperLedger_ids_nodup :
     (m1m3PaperLedger.map PaperClause.id).Nodup := by
   decide
 
-/-- Eighty-five clauses currently have a genuine but incomplete implementation. -/
+/-- Eighty-seven clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 85 :=
+    (clauseIdsWithStatus .partialImplementation).length = 87 :=
   rfl
 
 /-- Four clauses currently point only to explicitly classified toy models. -/
@@ -1911,9 +1930,9 @@ theorem toyModel_count :
     (clauseIdsWithStatus .toyModel).length = 4 :=
   rfl
 
-/-- Nineteen source-closure clauses remain wholly unformalized. -/
+/-- Seventeen source-closure clauses remain wholly unformalized. -/
 theorem unformalized_count :
-    (clauseIdsWithStatus .unformalized).length = 19 :=
+    (clauseIdsWithStatus .unformalized).length = 17 :=
   rfl
 
 /-- Five clauses currently pass the clause-level source audit. -/

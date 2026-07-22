@@ -319,6 +319,8 @@ structure SourceFiniteTimesMuKummerFrobenioidEquivalence.NaturallyIsomorphic
       SourceFiniteTimesMuKummerFrobenioid ell targetUnderlying}
     (first second :
       SourceFiniteTimesMuKummerFrobenioidEquivalence source target) : Prop where
+  underlying :
+    first.underlying.NaturallyIsomorphic second.underlying
   groupPair : first.groupPair.StructurallyEqual second.groupPair
   coverPair : first.coverPair.StructurallyEqual second.coverPair
   timesMuMonoid :
@@ -346,6 +348,7 @@ protected def refl
     (map :
       SourceFiniteTimesMuKummerFrobenioidEquivalence source target) :
     map.NaturallyIsomorphic map where
+  underlying := .refl _
   groupPair := .refl _
   coverPair := .refl _
   timesMuMonoid _ := rfl
@@ -357,6 +360,7 @@ protected def symm
       SourceFiniteTimesMuKummerFrobenioidEquivalence source target}
     (relation : first.NaturallyIsomorphic second) :
     second.NaturallyIsomorphic first where
+  underlying := relation.underlying.symm
   groupPair := relation.groupPair.symm
   coverPair := relation.coverPair.symm
   timesMuMonoid value := (relation.timesMuMonoid value).symm
@@ -369,6 +373,7 @@ protected def trans
     (firstSecond : first.NaturallyIsomorphic second)
     (secondThird : second.NaturallyIsomorphic third) :
     first.NaturallyIsomorphic third where
+  underlying := firstSecond.underlying.trans secondThird.underlying
   groupPair := firstSecond.groupPair.trans secondThird.groupPair
   coverPair := firstSecond.coverPair.trans secondThird.coverPair
   timesMuMonoid value :=
@@ -391,6 +396,7 @@ protected def comp
     (hSecond : second.NaturallyIsomorphic second') :
     (first.trans second).NaturallyIsomorphic
       (first'.trans second') where
+  underlying := hFirst.underlying.comp hSecond.underlying
   groupPair := hFirst.groupPair.comp hSecond.groupPair
   coverPair := hFirst.coverPair.comp hSecond.coverPair
   timesMuMonoid value := by
@@ -413,6 +419,7 @@ protected def assoc
       SourceFiniteTimesMuKummerFrobenioidEquivalence target final) :
     ((first.trans second).trans third).NaturallyIsomorphic
       (first.trans (second.trans third)) where
+  underlying := .assoc _ _ _
   groupPair := .assoc _ _ _
   coverPair := .assoc _ _ _
   timesMuMonoid _ := rfl
@@ -998,6 +1005,7 @@ protected def id_comp
       SourceFiniteTimesMuKummerFrobenioidEquivalence source target) :
     ((SourceFiniteTimesMuKummerFrobenioidEquivalence.refl source).trans map)
       |>.NaturallyIsomorphic map where
+  underlying := .id_comp _
   groupPair := .id_comp _
   coverPair := .id_comp _
   timesMuMonoid _ := rfl
@@ -1010,6 +1018,7 @@ protected def comp_id
     (map.trans
       (SourceFiniteTimesMuKummerFrobenioidEquivalence.refl target))
       |>.NaturallyIsomorphic map where
+  underlying := .comp_id _
   groupPair := .comp_id _
   coverPair := .comp_id _
   timesMuMonoid _ := rfl

@@ -275,17 +275,18 @@ structure SourceTheorem311HorizontalCorridorBoundary
   right : SourceTheorem311ColumnBoundary models
   sameLattice : right.lattice = left.lattice
   adjacentColumns : right.column = left.column + 1
-  timesMuPrimeStrips :
-    SourceTheorem311TimesMuPrimeStripFamily left.lattice
-  environmentPrimeStrips :
-    SourceTheorem311EnvironmentTimesMuPrimeStripFamily timesMuPrimeStrips
+  timesMuConstruction :
+    SourceTheorem311TimesMuPrimeStripConstruction left.lattice
+  environmentMonoAnalyticPrimeStrips :
+    SourceTheorem311EnvironmentMonoAnalyticPrimeStripFamily
+      timesMuConstruction
   monoThetaSystems :
     SourceTheorem311MonoThetaProjectiveSystemFamily
       (SourceSelectedBadPlace theta)
   primeStripClauseA :
     ∀ site,
       SourceTheorem311TimesMuTrianglePrimeStripSquare
-        timesMuPrimeStrips left.column site
+        timesMuConstruction.toFamily left.column site
   monoThetaClauseC :
     ∀ (site : ℤ) (place : SourceSelectedBadPlace theta),
       SourceTheorem311MonoThetaProjectiveSystemSquare
@@ -336,6 +337,19 @@ def horizontalThetaLink
       (boundary.left.lattice.theater boundary.left.column site)
       (boundary.left.lattice.theater (boundary.left.column + 1) site) :=
   boundary.left.lattice.horizontalThetaLink boundary.left.column site
+
+/-- All site and coric times-mu strips, computed by one reconstruction algorithm. -/
+def timesMuPrimeStrips
+    (boundary : SourceTheorem311HorizontalCorridorBoundary models) :
+    SourceTheorem311TimesMuPrimeStripFamily boundary.left.lattice :=
+  boundary.timesMuConstruction.toFamily
+
+/-- The environment times-mu strips and comparisons, all induced by reconstruction. -/
+def environmentPrimeStrips
+    (boundary : SourceTheorem311HorizontalCorridorBoundary models) :
+    SourceTheorem311EnvironmentTimesMuPrimeStripFamily
+      boundary.timesMuConstruction.toFamily :=
+  boundary.environmentMonoAnalyticPrimeStrips.toTimesMu
 
 /-- The right column theater is propositionally the successor endpoint. -/
 theorem right_theater_eq

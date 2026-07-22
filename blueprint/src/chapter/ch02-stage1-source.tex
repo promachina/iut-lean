@@ -731,11 +731,19 @@
   \lean{Iut.SourceFTimesMuPrimeStripFullPolyIsomorphism}
   \lean{Iut.SourceFTimesMuPrimeStripFullPolyIsomorphism.comp_inverse_assoc}
   \lean{Iut.SourceFTimesMuPrimeStripPolyIsomorphismSquare}
+  \lean{Iut.SourceFMonoAnalyticPrimeStripFullPolyIsomorphism}
+  \lean{Iut.SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.comp_assoc}
+  \lean{Iut.SourceFTimesMuReconstructionAlgorithm}
+  \lean{Iut.SourceFTimesMuReconstructionAlgorithm.mapFullPolyIsomorphism}
+  \lean{Iut.SourceFTimesMuReconstructionAlgorithm.mapFullPolyIsomorphism_comp}
+  \lean{Iut.SourceFTimesMuReconstructionAlgorithm.mapFullPolyIsomorphism_inverse}
   \lean{Iut.SourceIndexedHorizontalKummerSquare}
   \lean{Iut.SourceTheorem311TrianglePrimeStripSquare}
   \lean{Iut.SourceTheorem311EnvironmentPrimeStripFamily}
   \lean{Iut.SourceTheorem311TimesMuPrimeStripFamily}
+  \lean{Iut.SourceTheorem311TimesMuPrimeStripConstruction.toFamily}
   \lean{Iut.SourceTheorem311TimesMuTrianglePrimeStripSquare}
+  \lean{Iut.SourceTheorem311EnvironmentMonoAnalyticPrimeStripFamily.toTimesMu}
   \lean{Iut.SourceTheorem311EnvironmentTimesMuPrimeStripFamily}
   \lean{Iut.SourceTheorem311EnvironmentTimesMuPrimeStripSquare.ofTriangle}
   \lean{Iut.SourceTheorem311MonoThetaProjectiveSystemFamily}
@@ -831,9 +839,13 @@
   the same lattice at indices \(n\) and \(n+1\), and fixes all four corners of
   every square.  The active clauses~(iii)(a)--(b) interface now accepts only
   the Definition~4.9 \(F^{\vdash\times\mu}\)-prime-strips.  Each triangle
-  corner is definitionally based on the mono-analytic transport of its actual
-  site or vertically coric theater; the ordinary-\(F\) square remains only as
-  precursor scaffolding.  Following the convention of IUT~I, Section~0, a
+  corner is computed by one functorial reconstruction algorithm from the
+  mono-analytic transport of its actual site or vertically coric theater.  The
+  same algorithm computes every environment strip and comparison from the
+  Proposition~2.1(vi) mono-analytic data and derives the inverse laws.  Thus no
+  prebuilt times-\(\mu\) family enters the active corridor.  The ordinary-\(F\)
+  square remains only as precursor scaffolding.  Following the convention of
+  IUT~I, Section~0, a
   times-\(\mu\) prime-strip full
   poly-isomorphism is represented by a componentwise
   equivalence map modulo natural isomorphism on its categorical components;
@@ -848,10 +860,11 @@
   family carries two-sided natural comparison classes with the triangle
   strips, and its square is proved class-by-class in both directions by
   conjugating the triangle square and cancelling those comparisons.  These
-  facts validate the exact typed coarsification and conjugation mechanism but
-  do not discharge clauses~(a)--(b): the endpoint families must still be
-  populated from Corollary~4.10 and the Theorem~1.5/Corollary~2.3 horizontal
-  maps must still be constructed.  The
+  facts validate the exact typed coarsification, reconstruction, and
+  conjugation mechanism but do not discharge clauses~(a)--(b): the component
+  finite/archimedean reconstruction algorithms and the
+  Theorem~1.5/Corollary~2.3 horizontal maps must still be constructed from the
+  cited source theorems.  The
   mono-theta square ranges over every \(m\) and bad
   place and uses actual projective systems with levelwise environment
   realizations.  The \(\kappa\)-sol/\(M_\infty^\kappa\) squares range over every

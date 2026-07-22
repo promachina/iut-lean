@@ -539,6 +539,8 @@ structure SourceFiniteTimesMuKummerFrobenioidEquivalence
       SourceFiniteTimesMuKummerFrobenioid ell sourceUnderlying)
     (target :
       SourceFiniteTimesMuKummerFrobenioid ell targetUnderlying) where
+  underlying :
+    SplitFrobenioidEquivalence sourceUnderlying targetUnderlying
   kind_compatible : source.input.kind = target.input.kind
   groupPair :
     SourceMLFGaloisTMPairEquivalence
@@ -617,6 +619,7 @@ variable
 noncomputable def refl
     (source : SourceFiniteTimesMuKummerFrobenioid ell sourceUnderlying) :
     SourceFiniteTimesMuKummerFrobenioidEquivalence source source where
+  underlying := SplitFrobenioidEquivalence.refl _
   kind_compatible := rfl
   groupPair := SourceMLFGaloisTMPairEquivalence.refl _
   coverPair := SourceMLFGaloisTMPairEquivalence.refl _
@@ -649,6 +652,7 @@ noncomputable def trans
     (second :
       SourceFiniteTimesMuKummerFrobenioidEquivalence middle target) :
     SourceFiniteTimesMuKummerFrobenioidEquivalence source target where
+  underlying := first.underlying.trans second.underlying
   kind_compatible := first.kind_compatible.trans second.kind_compatible
   groupPair := first.groupPair.trans second.groupPair
   coverPair := first.coverPair.trans second.coverPair

@@ -5,6 +5,7 @@ Authors: IUT Lean formalization contributors
 -/
 import Iut.Foundations.SourceTheorem311
 import Iut.Foundations.SourceTimesMuPrimeStripFullPolyIsomorphism
+import Iut.Foundations.SourceTimesMuReconstructionAlgorithm
 
 /-!
 # Indexed horizontal compatibility for IUT III, Theorem 3.11(iii)
@@ -473,6 +474,126 @@ structure SourceTheorem311TimesMuPrimeStripFamily
         ((lattice.commonBridge n).theater.associatedFMonoAnalytic
           (commonTransport n))
 
+/--
+The Corollary 4.10 construction data for every site and vertically coric
+theater of one LGP lattice.  The times-mu strips themselves are computed by
+`toFamily`; they are not fields of this record.
+-/
+structure SourceTheorem311TimesMuPrimeStripConstruction
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    (lattice : SourceAbsoluteLGPGaussianLogThetaLattice models) where
+  reconstruction : SourceFTimesMuReconstructionAlgorithm models
+  siteTransport :
+    ∀ n m, (lattice.theater n m).MonoAnalyticTransport
+  commonTransport :
+    ∀ n, (lattice.commonBridge n).theater.MonoAnalyticTransport
+
+namespace SourceTheorem311TimesMuPrimeStripConstruction
+
+variable
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    {lattice : SourceAbsoluteLGPGaussianLogThetaLattice models}
+
+/-- The mono-analytic source strip at one lattice site. -/
+def siteUnderlying
+    (construction : SourceTheorem311TimesMuPrimeStripConstruction lattice)
+    (n m : ℤ) : SourceFMonoAnalyticPrimeStrip models :=
+  (lattice.theater n m).associatedFMonoAnalytic
+    (construction.siteTransport n m)
+
+/-- The mono-analytic source strip at one vertically coric endpoint. -/
+def commonUnderlying
+    (construction : SourceTheorem311TimesMuPrimeStripConstruction lattice)
+    (n : ℤ) : SourceFMonoAnalyticPrimeStrip models :=
+  (lattice.commonBridge n).theater.associatedFMonoAnalytic
+    (construction.commonTransport n)
+
+/-- Compute all theorem endpoints by the one functorial reconstruction algorithm. -/
+def toFamily
+    (construction : SourceTheorem311TimesMuPrimeStripConstruction lattice) :
+    SourceTheorem311TimesMuPrimeStripFamily lattice where
+  siteTransport := construction.siteTransport
+  site n m :=
+    construction.reconstruction.obj (construction.siteUnderlying n m)
+  commonTransport := construction.commonTransport
+  common n :=
+    construction.reconstruction.obj (construction.commonUnderlying n)
+
+end SourceTheorem311TimesMuPrimeStripConstruction
+
+/--
+The Proposition 2.1(vi) environment objects and natural comparisons before
+times-mu reconstruction.  The comparison maps are full Section 0 classes of
+mono-analytic prime-strip equivalences, with selected two-sided inverses.
+-/
+structure SourceTheorem311EnvironmentMonoAnalyticPrimeStripFamily
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    {lattice : SourceAbsoluteLGPGaussianLogThetaLattice models}
+    (construction : SourceTheorem311TimesMuPrimeStripConstruction lattice) where
+  site : ℤ → ℤ → SourceFMonoAnalyticPrimeStrip models
+  common : ℤ → SourceFMonoAnalyticPrimeStrip models
+  siteToTriangle :
+    ∀ n m, SourceFMonoAnalyticPrimeStripFullPolyIsomorphism
+      (site n m) (construction.siteUnderlying n m)
+  siteFromTriangle :
+    ∀ n m, SourceFMonoAnalyticPrimeStripFullPolyIsomorphism
+      (construction.siteUnderlying n m) (site n m)
+  siteToFrom :
+    ∀ n m,
+      SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.comp
+          (siteToTriangle n m) (siteFromTriangle n m) =
+        SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.id (site n m)
+  siteFromTo :
+    ∀ n m,
+      SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.comp
+          (siteFromTriangle n m) (siteToTriangle n m) =
+        SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.id
+          (construction.siteUnderlying n m)
+  commonToTriangle :
+    ∀ n, SourceFMonoAnalyticPrimeStripFullPolyIsomorphism
+      (common n) (construction.commonUnderlying n)
+  commonFromTriangle :
+    ∀ n, SourceFMonoAnalyticPrimeStripFullPolyIsomorphism
+      (construction.commonUnderlying n) (common n)
+  commonToFrom :
+    ∀ n,
+      SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.comp
+          (commonToTriangle n) (commonFromTriangle n) =
+        SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.id (common n)
+  commonFromTo :
+    ∀ n,
+      SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.comp
+          (commonFromTriangle n) (commonToTriangle n) =
+        SourceFMonoAnalyticPrimeStripFullPolyIsomorphism.id
+          (construction.commonUnderlying n)
+
 /-- The exact fixed-corner square asserted in Theorem 3.11(iii)(a). -/
 abbrev SourceTheorem311TimesMuTrianglePrimeStripSquare
     {Fmod F K : Type u}
@@ -540,6 +661,66 @@ structure SourceTheorem311EnvironmentTimesMuPrimeStripFamily
   commonFromTo :
     ∀ n, (commonFromTriangle n) ≫ₜ (commonToTriangle n) =
       SourceFTimesMuPrimeStripFullPolyIsomorphism.id (triangle.common n)
+
+namespace SourceTheorem311EnvironmentMonoAnalyticPrimeStripFamily
+
+variable
+    {Fmod F K : Type u}
+    [Field Fmod] [NumberField Fmod]
+    [Field F] [NumberField F]
+    [Field K] [NumberField K]
+    [Algebra Fmod F] [Algebra F K] [Algebra Fmod K]
+    [IsScalarTower Fmod F K]
+    [FiniteDimensional Fmod F] [IsGalois Fmod F]
+    [FiniteDimensional F K] [IsGalois F K]
+    {theta : SourceInitialThetaCore Fmod F K}
+    {models : IUTIThetaHodgeTheaterModels theta}
+    {lattice : SourceAbsoluteLGPGaussianLogThetaLattice models}
+    {construction : SourceTheorem311TimesMuPrimeStripConstruction lattice}
+
+/--
+Apply the Definition 4.9(vi) functor to every environment object and every
+Proposition 2.1(vi) comparison.  All inverse laws are derived from functoriality.
+-/
+def toTimesMu
+    (family :
+      SourceTheorem311EnvironmentMonoAnalyticPrimeStripFamily construction) :
+    SourceTheorem311EnvironmentTimesMuPrimeStripFamily
+      construction.toFamily where
+  siteUnderlying := family.site
+  site n m := construction.reconstruction.obj (family.site n m)
+  commonUnderlying := family.common
+  common n := construction.reconstruction.obj (family.common n)
+  siteToTriangle n m :=
+    construction.reconstruction.mapFullPolyIsomorphism
+      (family.siteToTriangle n m)
+  siteFromTriangle n m :=
+    construction.reconstruction.mapFullPolyIsomorphism
+      (family.siteFromTriangle n m)
+  siteToFrom n m :=
+    construction.reconstruction.mapFullPolyIsomorphism_inverse
+      (family.siteToTriangle n m) (family.siteFromTriangle n m)
+      (family.siteToFrom n m)
+  siteFromTo n m :=
+    construction.reconstruction.mapFullPolyIsomorphism_inverse
+      (family.siteFromTriangle n m) (family.siteToTriangle n m)
+      (family.siteFromTo n m)
+  commonToTriangle n :=
+    construction.reconstruction.mapFullPolyIsomorphism
+      (family.commonToTriangle n)
+  commonFromTriangle n :=
+    construction.reconstruction.mapFullPolyIsomorphism
+      (family.commonFromTriangle n)
+  commonToFrom n :=
+    construction.reconstruction.mapFullPolyIsomorphism_inverse
+      (family.commonToTriangle n) (family.commonFromTriangle n)
+      (family.commonToFrom n)
+  commonFromTo n :=
+    construction.reconstruction.mapFullPolyIsomorphism_inverse
+      (family.commonFromTriangle n) (family.commonToTriangle n)
+      (family.commonFromTo n)
+
+end SourceTheorem311EnvironmentMonoAnalyticPrimeStripFamily
 
 /-- The exact fixed-corner square asserted in Theorem 3.11(iii)(b). -/
 abbrev SourceTheorem311EnvironmentTimesMuPrimeStripSquare
