@@ -64,6 +64,11 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceModelFrobenioid.Hom.comp
 #print axioms Iut.SourceModelFrobenioid.Carrier.comp_rationalFunction
 #print axioms Iut.SourceModelFrobenioid.Carrier.structureFunctor
+#print axioms Iut.SourceModelFrobenioid.Carrier.grothendieck_add_denominator
+#print axioms Iut.SourceModelFrobenioid.Carrier.value_eq_zeroObject
+#print axioms Iut.SourceModelFrobenioid.Carrier.isConnected
+#print axioms Iut.SourceModelFrobenioid.Carrier.epi
+#print axioms Iut.SourceModelFrobenioid.Carrier.preFrobenioidPresentation
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.quotientUnit_exists
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootRealization.ofRootSystem

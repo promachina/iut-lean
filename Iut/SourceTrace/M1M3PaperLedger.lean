@@ -169,6 +169,17 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceModelFrobenioid.Carrier.preFrobenioid"]
       .sourceFaithful
       "The group-like monoid is a genuine Definition 1.1(ii) monoid on D: pullbacks are injective and FSM pullbacks are bijective. The exact object and four-component arrow data, balance equation, identity, composition formulas, category laws, birational-divisor image, and functor to the elementary Frobenioid are constructed. The Frobenioid-axiom conclusion belongs to Theorem 5.2(ii), not this clause.",
+    clause "FrdI.5.2(ii)" .frobenioidsI
+      "Frobenioids I, Theorem 5.2(ii)"
+      ["SourceModelFrobenioid.Carrier.zeroObject",
+        "SourceModelFrobenioid.Carrier.effectiveObject",
+        "SourceModelFrobenioid.Carrier.toEffectiveObject",
+        "SourceModelFrobenioid.Carrier.zeroToEffectiveObject",
+        "SourceModelFrobenioid.Carrier.isConnected",
+        "SourceModelFrobenioid.Carrier.epi",
+        "SourceModelFrobenioid.Carrier.preFrobenioidPresentation"]
+      .partialImplementation
+      "Every divisor class is connected by explicit model arrows to the zero-divisor object over its base, base arrows lift between zero-divisor objects, and base connectedness therefore implies carrier connectedness. Cancellation of the four arrow components proves every model arrow epic from total epimorphicity of the base, yielding the complete Definition 1.1(iv) pre-Frobenioid presentation. The seven Definition 1.3 axiom groups, isotropic and model types, birational Frobenius normalization, and the natural O-times = B identification remain to be proved.",
     clause "FrdII.5.1" .frobenioidsII
       "Frobenioids II, Definition 5.1"
       [] .unformalized
@@ -1406,8 +1417,8 @@ def clauseIdsWithStatus (status : ClauseStatus) : List String :=
   m1m3PaperLedger.filterMap fun entry =>
     if entry.status = status then some entry.id else none
 
-/-- The source-closure ledger contains 106 separately audited clauses. -/
-theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 106 :=
+/-- The source-closure ledger contains 107 separately audited clauses. -/
+theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 107 :=
   rfl
 
 /-- No source clause occurs twice in the direct-citation ledger. -/
@@ -1415,9 +1426,9 @@ theorem m1m3PaperLedger_ids_nodup :
     (m1m3PaperLedger.map PaperClause.id).Nodup := by
   decide
 
-/-- Eighty clauses currently have a genuine but incomplete implementation. -/
+/-- Eighty-one clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 80 :=
+    (clauseIdsWithStatus .partialImplementation).length = 81 :=
   rfl
 
 /-- Five clauses currently point only to explicitly classified toy models. -/

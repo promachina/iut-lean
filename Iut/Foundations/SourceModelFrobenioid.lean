@@ -9,7 +9,7 @@ import Mathlib.Tactic.Abel
 import Mathlib.Tactic.NormNum
 
 /-!
-# The model-Frobenioid category of Frobenioids I, Theorem 5.2(i)
+# The model-Frobenioid category of Frobenioids I, Theorem 5.2
 
 For a divisorial monoid `Phi`, a group-like rational-function monoid `B`, and
 the natural divisor map `DivB : B -> Phi^gp`, Theorem 5.2(i) constructs a
@@ -18,8 +18,10 @@ positive Frobenius degree, a base arrow, an effective divisor, and a rational
 function satisfying the source balance equation.
 
 This file implements that category, its exact composition law, and its
-structure functor to the elementary Frobenioid. The proof of Theorem 5.2(ii)
-that this category satisfies every Frobenioid axiom is not asserted here.
+structure functor to the elementary Frobenioid. It also derives the connected
+and totally epimorphic presentation required by Definition 1.1(iv). The
+remaining proof of Theorem 5.2(ii), that this category satisfies every
+Frobenioid axiom and has the stated model properties, is not asserted here.
 -/
 
 open CategoryTheory
@@ -355,6 +357,191 @@ def base : Carrier Phi data ⥤ D where
   map_id _ := rfl
   map_comp _ _ := rfl
 
+/-- The object with zero divisor class over a base object. -/
+def zeroObject (data : Input Phi) (X : D) : Carrier Phi data where
+  base := X
+  divisorClass := 0
+
+/-- The object associated to an effective divisor over a base object. -/
+def effectiveObject (data : Input Phi) (X : D)
+    (divisor : (Phi.obj X).carrier) : Carrier Phi data where
+  base := X
+  divisorClass := Algebra.GrothendieckAddGroup.of divisor
+
+theorem zeroBalance (data : Input Phi) {X Y : D} (f : X ⟶ Y) :
+    (1 : ℕ) • (0 : Algebra.GrothendieckAddGroup (Phi.obj X).carrier) +
+        Algebra.GrothendieckAddGroup.of 0 =
+      gpPullback Phi f
+          (0 : Algebra.GrothendieckAddGroup (Phi.obj Y).carrier) +
+        data.divisor X 0 := by
+  simp
+
+/-- Every base arrow lifts between the zero-divisor objects. -/
+def zeroBaseArrow (data : Input Phi) {X Y : D} (f : X ⟶ Y) :
+    Hom Phi data (zeroObject Phi data X) (zeroObject Phi data Y) where
+  frobeniusDegree := 1
+  base := f
+  divisor := 0
+  rationalFunction := 0
+  balance := by
+    dsimp [zeroObject]
+    exact zeroBalance Phi data f
+
+/-- Adding a localization denominator yields its numerator in the groupification. -/
+theorem grothendieck_add_denominator
+    (M : DivisorialAddMonoid)
+    (numerator : M.carrier)
+    (denominator : (⊤ : AddSubmonoid M.carrier)) :
+    (AddLocalization.mk numerator denominator :
+        Algebra.GrothendieckAddGroup M.carrier) +
+        Algebra.GrothendieckAddGroup.of denominator.1 =
+      Algebra.GrothendieckAddGroup.of numerator := by
+  letI : IsLeftCancelAdd M.carrier :=
+    ⟨fun a b c equality ↦ M.integral a b c equality⟩
+  letI : IsCancelAdd M.carrier :=
+    AddCommMagma.IsLeftCancelAdd.toIsCancelAdd M.carrier
+  change
+    AddLocalization.mk numerator denominator +
+        AddLocalization.mk denominator.1
+          (0 : (⊤ : AddSubmonoid M.carrier)) =
+      AddLocalization.mk numerator
+        (0 : (⊤ : AddSubmonoid M.carrier))
+  rw [AddLocalization.mk_add]
+  apply AddLocalization.mk_eq_mk_iff'.2
+  simp only [AddSubmonoid.coe_zero, zero_add]
+  simpa using (add_comm numerator denominator.1)
+
+/-- A localization representative gives a model arrow to its numerator. -/
+def toEffectiveObject (data : Input Phi) (X : D)
+    (numerator : (Phi.obj X).carrier)
+    (denominator : (⊤ : AddSubmonoid (Phi.obj X).carrier)) :
+    Hom Phi data
+      ({ base := X
+         divisorClass := AddLocalization.mk numerator denominator } :
+        Carrier Phi data)
+      (effectiveObject Phi data X numerator) where
+  frobeniusDegree := 1
+  base := 𝟙 X
+  divisor := denominator.1
+  rationalFunction := 0
+  balance := by
+    dsimp [effectiveObject]
+    simp only [map_zero, add_zero]
+    rw [gpPullback_id]
+    change (1 : ℕ) •
+        (AddLocalization.mk numerator denominator :
+          Algebra.GrothendieckAddGroup (Phi.obj X).carrier) +
+          Algebra.GrothendieckAddGroup.of denominator.1 =
+        Algebra.GrothendieckAddGroup.of numerator
+    rw [one_nsmul]
+    exact grothendieck_add_denominator (Phi.obj X) numerator denominator
+
+/-- The zero object maps to every effective divisor object over the same base. -/
+def zeroToEffectiveObject (data : Input Phi) (X : D)
+    (divisor : (Phi.obj X).carrier) :
+    Hom Phi data (zeroObject Phi data X)
+      (effectiveObject Phi data X divisor) where
+  frobeniusDegree := 1
+  base := 𝟙 X
+  divisor := divisor
+  rationalFunction := 0
+  balance := by
+    dsimp [zeroObject, effectiveObject]
+    change (1 : ℕ) •
+        (0 : Algebra.GrothendieckAddGroup (Phi.obj X).carrier) +
+          Algebra.GrothendieckAddGroup.of divisor =
+        gpPullback Phi (𝟙 X)
+            (Algebra.GrothendieckAddGroup.of divisor) +
+          data.divisor X 0
+    rw [gpPullback_id]
+    norm_num
+
+theorem value_eq_zeroObject
+    {alpha : Type u} (F : Carrier Phi data → alpha)
+    (preserves : ∀ {source target : Carrier Phi data}
+      (_ : Hom Phi data source target), F source = F target)
+    (object : Carrier Phi data) :
+    F object = F (zeroObject Phi data (Object.base object)) := by
+  rcases object with ⟨X, divisorClass⟩
+  refine AddLocalization.induction_on divisorClass ?_
+  rintro ⟨numerator, denominator⟩
+  exact (preserves
+      (toEffectiveObject Phi data X numerator denominator)).trans
+    (preserves (zeroToEffectiveObject Phi data X numerator)).symm
+
+/-- The model carrier is connected whenever the base category is connected. -/
+theorem isConnected [IsConnected D] :
+    @IsConnected (Carrier Phi data) (carrierCategory Phi data) := by
+  letI : Nonempty (Carrier Phi data) :=
+    ⟨zeroObject Phi data (Classical.arbitrary D)⟩
+  apply IsConnected.of_constant_of_preserves_morphisms
+  intro alpha F preserves first second
+  calc
+    F first = F (zeroObject Phi data (Object.base first)) :=
+      value_eq_zeroObject Phi data F preserves first
+    _ = F (zeroObject Phi data (Object.base second)) := by
+      apply CategoryTheory.constant_of_preserves_morphisms
+        (fun X : D ↦ F (zeroObject Phi data X))
+      intro X Y f
+      exact preserves (zeroBaseArrow Phi data f)
+    _ = F second :=
+      (value_eq_zeroObject Phi data F preserves second).symm
+
+/-- Every model arrow is epic when the base category is totally epimorphic. -/
+theorem epi
+    (baseTotallyEpimorphic : ∀ {X Y : D} (f : X ⟶ Y), Epi f)
+    {source target : Carrier Phi data}
+    (arrow : source ⟶ target) : Epi arrow := by
+  constructor
+  intro next first second equality
+  letI : Epi arrow.base := baseTotallyEpimorphic arrow.base
+  have degreeEquality :
+      first.frobeniusDegree = second.frobeniusDegree := by
+    have projected := congrArg Hom.frobeniusDegree equality
+    change
+      arrow.frobeniusDegree * first.frobeniusDegree =
+        arrow.frobeniusDegree * second.frobeniusDegree at projected
+    exact mul_left_cancel projected
+  have baseEquality : first.base = second.base := by
+    have projected := congrArg Hom.base equality
+    change arrow.base ≫ first.base = arrow.base ≫ second.base at projected
+    exact (cancel_epi arrow.base).mp projected
+  have divisorEquality : first.divisor = second.divisor := by
+    have projected := congrArg Hom.divisor equality
+    change
+      Phi.pullback arrow.base first.divisor +
+          first.frobeniusDegree.val • arrow.divisor =
+        Phi.pullback arrow.base second.divisor +
+          second.frobeniusDegree.val • arrow.divisor at projected
+    rw [degreeEquality] at projected
+    apply Phi.characteristicallyInjective arrow.base
+    have cancellable :
+        second.frobeniusDegree.val • arrow.divisor +
+            Phi.pullback arrow.base first.divisor =
+          second.frobeniusDegree.val • arrow.divisor +
+            Phi.pullback arrow.base second.divisor := by
+      rw [add_comm (second.frobeniusDegree.val • arrow.divisor),
+        add_comm (second.frobeniusDegree.val • arrow.divisor)]
+      exact projected
+    exact (Phi.obj (Object.base source)).integral
+      (second.frobeniusDegree.val • arrow.divisor)
+      (Phi.pullback arrow.base first.divisor)
+      (Phi.pullback arrow.base second.divisor)
+      cancellable
+  have rationalFunctionEquality :
+      first.rationalFunction = second.rationalFunction := by
+    have projected := congrArg Hom.rationalFunction equality
+    change
+      data.rationalFunctions.pullback arrow.base first.rationalFunction +
+          first.frobeniusDegree.val • arrow.rationalFunction =
+        data.rationalFunctions.pullback arrow.base second.rationalFunction +
+          second.frobeniusDegree.val • arrow.rationalFunction at projected
+    rw [degreeEquality] at projected
+    apply data.rationalFunctions.pullback_injective arrow.base
+    exact add_right_cancel projected
+  exact Hom.ext degreeEquality baseEquality divisorEquality
+    rationalFunctionEquality
+
 /-- The structure functor to the elementary Frobenioid, forgetting `u_phi`. -/
 def structureFunctor :
     @Functor (Carrier Phi data) (carrierCategory Phi data)
@@ -374,6 +561,23 @@ def structureFunctor :
 def preFrobenioid : PreFrobenioid (Carrier Phi data) D IsFSM where
   divisorMonoid := Phi
   structureFunctor := structureFunctor Phi data
+
+/--
+The model category packaged with the connectedness and total-epimorphicity
+hypotheses of Definition 1.1(iv). This does not yet assert the seven axiom
+groups of Definition 1.3.
+-/
+def preFrobenioidPresentation [IsConnected D]
+    (baseTotallyEpimorphic : ∀ {X Y : D} (f : X ⟶ Y), Epi f) :
+    PreFrobenioidPresentation where
+  carrier := @Cat.of (Carrier Phi data) (carrierCategory Phi data)
+  baseCategory := Cat.of D
+  isFSM := IsFSM
+  preFrobenioid := preFrobenioid Phi data
+  carrierConnected := isConnected Phi data
+  baseConnected := (inferInstance : IsConnected D)
+  carrierTotallyEpimorphic := epi Phi data baseTotallyEpimorphic
+  baseTotallyEpimorphic := baseTotallyEpimorphic
 
 end Carrier
 
