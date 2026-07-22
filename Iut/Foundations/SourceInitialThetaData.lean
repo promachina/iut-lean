@@ -31,6 +31,8 @@ namespace Iut
 
 universe u
 
+noncomputable section
+
 /--
 Chosen geometric and arithmetic fundamental groups of an orbicurve, with the
 source exact sequence `1 -> Delta -> Pi -> G -> 1`.
@@ -119,7 +121,6 @@ The stack and fundamental-group data in IUT I, Definition 3.1(b), for
 structure SignQuotientOrbicurveData
     (F : Type u) [Field F]
     (curve : PuncturedEllipticCurve F) where
-  absoluteGalois : ProfiniteGrp.{u}
   xF : HyperbolicOrbicurve F
   xF_signature :
     xF.signature = OrbicurveSignature.oncePuncturedElliptic
@@ -133,16 +134,16 @@ structure SignQuotientOrbicurveData
   quotientUniversal :
     OrbicurveSignQuotientWitness signAction quotientInvariant
   xFundamentalGroups :
-    OrbicurveFundamentalGroupData xF absoluteGalois
+    OrbicurveFundamentalGroupData xF (AbsoluteGaloisProfinite F)
   cFundamentalGroups :
-    OrbicurveFundamentalGroupData cF absoluteGalois
+    OrbicurveFundamentalGroupData cF (AbsoluteGaloisProfinite F)
   fundamentalGroupInclusion :
     ProfiniteFundamentalGroupInclusion
       xFundamentalGroups.geometric.group
       xFundamentalGroups.arithmetic.group
       cFundamentalGroups.geometric.group
       cFundamentalGroups.arithmetic.group
-      absoluteGalois
+      (AbsoluteGaloisProfinite F)
       xFundamentalGroups.exactSequence
       cFundamentalGroups.exactSequence
 
@@ -151,6 +152,16 @@ namespace SignQuotientOrbicurveData
 variable {F : Type u} [Field F]
 variable {curve : PuncturedEllipticCurve F}
 variable (data : SignQuotientOrbicurveData F curve)
+
+/-- The base quotient's Galois group is definitionally the Krull absolute Galois group. -/
+noncomputable abbrev absoluteGalois
+    (_data : SignQuotientOrbicurveData F curve) : ProfiniteGrp.{u} :=
+  AbsoluteGaloisProfinite F
+
+@[simp]
+theorem absoluteGalois_def :
+    data.absoluteGalois = AbsoluteGaloisProfinite F :=
+  rfl
 
 theorem xF_isHyperbolic :
     data.xF.signature.IsHyperbolic :=
@@ -685,9 +696,6 @@ structure SourceThetaCurveModuliData
                 Opposite.unop U ⟶
                   schemeRealization.puncturedScheme =>
               Discrete.mk (P ≫ schemeInversion.inversion))
-  absoluteGalois_eq :
-    signQuotient.absoluteGalois =
-      AbsoluteGaloisProfinite F
 
 /--
 The canonical scalar extension of a once-punctured elliptic curve whose
@@ -771,9 +779,6 @@ structure SourceThetaKCoreData
         xK_eq_scalarExtension cK_eq_scalarExtension
         orbicurves.quotientMap =
       quotientMapExtension.result
-  absoluteGalois_eq :
-    orbicurves.absoluteGalois =
-      AbsoluteGaloisProfinite K
 
 /-- The completed local field attached to a finite place of a number field. -/
 abbrev ThetaFinitePlace.Completion
@@ -902,23 +907,23 @@ theorem order_pos
 end ThetaTateParameterData
 
 /--
-The literal stabilizer of a prolongation of a place to an algebraic closure.
+The literal stabilizer of a prolongation of a place to a separable closure.
 
 The global profinite group is identified with mathlib's Krull-topological
 absolute Galois group, and the closed subgroup is characterized elementwise as
 the stabilizer of the chosen prolongation.
 -/
 structure AbsoluteGaloisPlaceStabilizerData
-    (K : Type u) [Field K] [CharZero K]
+    (K : Type u) [Field K]
     (basePlace : AbsoluteValue K ℝ)
     (globalGroup : ProfiniteGrp.{u}) where
   globalIdentification :
     globalGroup ≅ AbsoluteGaloisProfinite K
   prolongation :
-    AbsoluteValue (AlgebraicClosure K) ℝ
+    AbsoluteValue (SeparableClosure K) ℝ
   prolongation_restricts :
     prolongation.comp
-        (algebraMap K (AlgebraicClosure K)).injective =
+        (algebraMap K (SeparableClosure K)).injective =
       basePlace
   stabilizer :
     ClosedSubgroup globalGroup
@@ -927,8 +932,8 @@ structure AbsoluteGaloisPlaceStabilizerData
       g ∈ stabilizer ↔
         prolongation.comp
             ((globalIdentification.hom g :
-                AlgebraicClosure K ≃ₐ[K]
-                  AlgebraicClosure K).toRingEquiv.toRingHom.injective) =
+                SeparableClosure K ≃ₐ[K]
+                  SeparableClosure K).toRingEquiv.toRingHom.injective) =
           prolongation
 
 /--
@@ -978,10 +983,6 @@ structure SourceThetaFiniteLocalCoreData
         x_eq_scalarExtension c_eq_scalarExtension
         orbicurves.quotientMap =
       quotientMapExtension.result
-  absoluteGalois_eq :
-    orbicurves.absoluteGalois =
-      AbsoluteGaloisProfinite
-        (ThetaFinitePlace.Completion v)
   decompositionGroup :
     ProfiniteDecompositionGroupData
       orbicurves.absoluteGalois
@@ -1068,10 +1069,6 @@ structure SourceThetaInfiniteLocalCoreData
         x_eq_scalarExtension c_eq_scalarExtension
         orbicurves.quotientMap =
       quotientMapExtension.result
-  absoluteGalois_eq :
-    orbicurves.absoluteGalois =
-      AbsoluteGaloisProfinite
-        (ThetaInfinitePlace.Completion v)
   decompositionGroup :
     ProfiniteDecompositionGroupData
       orbicurves.absoluteGalois
@@ -1376,7 +1373,7 @@ noncomputable def thetaRootInclusion :
     data.thetaRootSubgroup_isOpen.isOpenEmbedding_subtypeVal
 
 /-- The open cover subgroup inside the profinite arithmetic elliptic group. -/
-def globalCoverClosedSubgroup :
+noncomputable def globalCoverClosedSubgroup :
     ClosedSubgroup data.piEll where
   toSubgroup := data.lagrangian.coverSubgroup
   isClosed' :=
@@ -1385,12 +1382,12 @@ def globalCoverClosedSubgroup :
       data.globalCoverSubgroup_isOpen
 
 /-- The profinite arithmetic group of the finite Lagrangian cover. -/
-def globalCoverProfiniteGroup :
+noncomputable def globalCoverProfiniteGroup :
     ProfiniteGrp.{u} :=
   ProfiniteGrp.ofClosedSubgroup data.globalCoverClosedSubgroup
 
 /-- The canonical open inclusion of the Lagrangian cover group. -/
-def globalCoverInclusion :
+noncomputable def globalCoverInclusion :
     ProfiniteOpenEmbedding
       data.globalCoverProfiniteGroup data.piEll := by
   letI : IsTopologicalGroup data.globalCoverClosedSubgroup :=
@@ -4047,5 +4044,7 @@ theorem q_orders_prime_to_l :
   theta.qParameterOrdersPrimeToL
 
 end SourceInitialThetaCore
+
+end
 
 end Iut

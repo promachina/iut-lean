@@ -36,12 +36,12 @@ namespace Iut
 universe u
 
 /--
-The absolute Galois group of `F`, with its Krull topology, as an actual
-profinite group.
+The Galois group of the absolute separable closure of `F`, with its Krull
+topology, as an actual profinite group.
 -/
 noncomputable abbrev AbsoluteGaloisProfinite
-    (F : Type u) [Field F] [CharZero F] : ProfiniteGrp.{u} :=
-  InfiniteGalois.profiniteGalGrp F (AlgebraicClosure F)
+    (F : Type u) [Field F] : ProfiniteGrp.{u} :=
+  InfiniteGalois.profiniteGalGrp F (SeparableClosure F)
 
 /-- The category of schemes over `Spec(F)`. -/
 noncomputable abbrev SchemeOverField (F : Type u) [CommRing F] :=

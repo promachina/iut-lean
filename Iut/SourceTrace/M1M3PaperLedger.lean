@@ -387,8 +387,9 @@ def m1m3PaperLedger : List PaperClause :=
       "GC/LC-admissibility and poly-Frobenioids remain to be formalized.",
     clause "I.3.1(a)" .iutI "IUT I, Definition 3.1(a)"
       ["PrimeGeFive", "ThetaFieldTower", "SqrtMinusOneData",
-        "AbsoluteGaloisProfinite", "SourceThetaCurveModuliData"] .partialImplementation
-      "The prime, number-field tower, degree, square-root data, canonical algebraic closure, and Krull-topological absolute Galois group are typed; construction of the remaining source identifications is incomplete.",
+        "AbsoluteGaloisProfinite", "SignQuotientOrbicurveData.absoluteGalois_def",
+        "SourceThetaCurveModuliData"] .partialImplementation
+      "The prime, number-field tower, degree, square-root data, absolute separable closure, and its Krull-topological Galois group are typed. Every source orbicurve package uses this group definitionally, with no arbitrary profinite replacement or equality certificate; construction of the remaining source identifications is incomplete.",
     clause "I.3.1(b).curve" .iutI "IUT I, Definition 3.1(b): once-punctured elliptic curve"
       ["PuncturedEllipticCurve", "PuncturedEllipticCurve.Torsion23Rational",
         "PuncturedEllipticSchemeRealization",
@@ -409,7 +410,7 @@ def m1m3PaperLedger : List PaperClause :=
         "OrbicurveSignQuotientWitness",
         "HyperbolicOrbicurve.Hom.TwoIso",
         "OrbicurveSquare.TwoPullbackWitness"] .partialImplementation
-      "The source path has etale stacks, a geometric-negation-compatible coherent C2-action, coherent invariant maps, and the full bicategorical quotient property via factorization and full faithfulness on 2-cells, together with exact fundamental groups, compatible open immersions, and a full two-pullback witness; constructing the quotient stack remains open.",
+      "The source path has etale stacks, a geometric-negation-compatible coherent C2-action, coherent invariant maps, and the full bicategorical quotient property via factorization and full faithfulness on 2-cells, together with exact fundamental groups over the canonical absolute Galois group, compatible open immersions, and a full two-pullback witness; constructing the quotient stack remains open.",
     clause "I.3.1(b).moduli" .iutI "IUT I, Definition 3.1(b): field of moduli and bad places"
       ["EllipticFieldOfModuliData",
         "EllipticFieldOfModuliData.jAutomorphismStabilizerInFbar",
@@ -473,7 +474,7 @@ def m1m3PaperLedger : List PaperClause :=
         "ProfiniteFundamentalExactSequenceEmbedding",
         "SourceThetaBadLocalStandardData",
         "SourceThetaBadLocalThetaRootStackRealization"] .partialImplementation
-      "The projections on finite and infinite places are canonical restrictions along Fmod -> K, and only their section is chosen. Every local punctured curve is definitionally the Weierstrass base change to the corresponding completion, not an independently supplied target. Local core diagrams exist at every K-place; each decomposition subgroup is the literal stabilizer of a prolongation to Kbar. Selected places additionally carry the l-torsion cover, complete cusp atlas, and local epsilon. Good and bad specializations have the source-prescribed arrowed and theta-root data. Finite-etale construction remains open.",
+      "The projections on finite and infinite places are canonical restrictions along Fmod -> K, and only their section is chosen. Every local punctured curve is definitionally the Weierstrass base change to the corresponding completion, not an independently supplied target. Local core diagrams exist at every K-place; each decomposition subgroup is the literal stabilizer of a prolongation to the absolute separable closure. Selected places additionally carry the l-torsion cover, complete cusp atlas, and local epsilon. Good and bad specializations have the source-prescribed arrowed and theta-root data. Finite-etale construction remains open.",
     clause "I.3.1(e).groups" .iutI "IUT I, Definition 3.1(e): theta roots and open subgroups"
       ["ProfiniteOpenEmbedding", "EtaleTheta.ThetaRootSplittingData",
         "EtaleTheta.ThetaRootSplittingData.thetaRootSubgroup",
