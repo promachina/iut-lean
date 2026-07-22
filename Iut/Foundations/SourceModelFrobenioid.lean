@@ -563,6 +563,163 @@ def preFrobenioid : PreFrobenioid (Carrier Phi data) D IsFSM where
   structureFunctor := structureFunctor Phi data
 
 /--
+The explicit inverse to a linear, base-isomorphic, isometric model arrow.
+Its rational-function component is the negative pullback of the original one.
+-/
+def inverseOfPreStepIsometric
+    {source target : Carrier Phi data} (arrow : source ⟶ target)
+    (linear : (preFrobenioid Phi data).IsLinear arrow)
+    (baseIso : (preFrobenioid Phi data).IsBaseIso arrow)
+    (isometric : (preFrobenioid Phi data).IsIsometric arrow) :
+    target ⟶ source := by
+  change IsIso arrow.base at baseIso
+  letI : IsIso arrow.base := baseIso
+  refine
+    { frobeniusDegree := 1
+      base := inv arrow.base
+      divisor := 0
+      rationalFunction :=
+        -data.rationalFunctions.pullback (inv arrow.base)
+          arrow.rationalFunction
+      balance := ?_ }
+  change arrow.frobeniusDegree = 1 at linear
+  change arrow.divisor = 0 at isometric
+  have source_eq :
+      source.divisorClass =
+        gpPullback Phi arrow.base target.divisorClass +
+          data.divisor (Object.base source) arrow.rationalFunction := by
+    have sourceBalance := arrow.balance
+    rw [linear, isometric] at sourceBalance
+    rw [map_zero, add_zero] at sourceBalance
+    change (1 : ℕ) • source.divisorClass =
+      gpPullback Phi arrow.base target.divisorClass +
+        data.divisor (Object.base source) arrow.rationalFunction at sourceBalance
+    rw [one_nsmul] at sourceBalance
+    exact sourceBalance
+  have pulled := congrArg (gpPullback Phi (inv arrow.base)) source_eq
+  simp only [map_add] at pulled
+  have gpCancel :
+      gpPullback Phi (inv arrow.base)
+          (gpPullback Phi arrow.base target.divisorClass) =
+        target.divisorClass := by
+    rw [← AddMonoidHom.comp_apply, ← gpPullback_comp,
+      IsIso.inv_hom_id, gpPullback_id]
+    rfl
+  rw [gpCancel] at pulled
+  norm_num
+  change (1 : ℕ) • target.divisorClass =
+    gpPullback Phi (inv arrow.base) source.divisorClass -
+      data.divisor (Object.base target)
+        (data.rationalFunctions.pullback (inv arrow.base)
+          arrow.rationalFunction)
+  rw [one_nsmul, data.divisor_natural, pulled]
+  abel
+
+/-- An isometric pre-step in the model category is an isomorphism. -/
+theorem isIso_of_preStep_isometric
+    {source target : Carrier Phi data} (arrow : source ⟶ target)
+    (preStep : (preFrobenioid Phi data).IsPreStep arrow)
+    (isometric : (preFrobenioid Phi data).IsIsometric arrow) :
+    IsIso arrow := by
+  rcases preStep with ⟨linear, baseIso⟩
+  change arrow.frobeniusDegree = 1 at linear
+  change IsIso arrow.base at baseIso
+  change arrow.divisor = 0 at isometric
+  letI : IsIso arrow.base := baseIso
+  let inverse :=
+    inverseOfPreStepIsometric Phi data arrow linear baseIso isometric
+  have inverse_degree : inverse.frobeniusDegree = 1 := rfl
+  have inverse_base : inverse.base = inv arrow.base := rfl
+  have inverse_divisor : inverse.divisor = 0 := rfl
+  have inverse_rationalFunction : inverse.rationalFunction =
+      -data.rationalFunctions.pullback (inv arrow.base)
+        arrow.rationalFunction := rfl
+  apply IsIso.mk
+  refine ⟨inverse, ?_, ?_⟩
+  · apply Hom.ext
+    · rw [comp_frobeniusDegree, inverse_degree, linear]
+      rfl
+    · rw [comp_base, inverse_base]
+      change arrow.base ≫ inv arrow.base = 𝟙 (Object.base source)
+      exact IsIso.hom_inv_id arrow.base
+    · rw [comp_divisor, inverse_divisor, inverse_degree, isometric]
+      simp only [map_zero, PNat.val_ofNat, nsmul_zero, add_zero]
+      change (0 : (Phi.obj (Object.base source)).carrier) = 0
+      rfl
+    · rw [comp_rationalFunction, inverse_rationalFunction, inverse_degree]
+      change
+        data.rationalFunctions.pullback arrow.base
+              (-data.rationalFunctions.pullback (inv arrow.base)
+                arrow.rationalFunction) +
+            1 • arrow.rationalFunction = 0
+      rw [map_neg]
+      have pullbackCancel :
+          data.rationalFunctions.pullback arrow.base
+              (data.rationalFunctions.pullback (inv arrow.base)
+                arrow.rationalFunction) =
+            arrow.rationalFunction := by
+        rw [← AddMonoidHom.comp_apply,
+          ← data.rationalFunctions.pullback_comp,
+          IsIso.hom_inv_id, data.rationalFunctions.pullback_id]
+        rfl
+      rw [pullbackCancel]
+      simp only [one_nsmul, neg_add_cancel]
+  · apply Hom.ext
+    · rw [comp_frobeniusDegree, inverse_degree, linear]
+      rfl
+    · rw [comp_base, inverse_base]
+      change inv arrow.base ≫ arrow.base = 𝟙 (Object.base target)
+      exact IsIso.inv_hom_id arrow.base
+    · rw [comp_divisor, inverse_divisor, inverse_base, linear,
+        isometric]
+      simp only [map_zero, PNat.val_ofNat, nsmul_zero, add_zero]
+      change (0 : (Phi.obj (Object.base target)).carrier) = 0
+      rfl
+    · rw [comp_rationalFunction, inverse_rationalFunction,
+        inverse_base, linear]
+      change
+        data.rationalFunctions.pullback (inv arrow.base)
+              arrow.rationalFunction +
+            (1 : ℕ) •
+              (-data.rationalFunctions.pullback (inv arrow.base)
+                arrow.rationalFunction) = 0
+      rw [one_nsmul]
+      exact add_neg_cancel _
+
+/-- Every object of the model Frobenioid is isotropic. -/
+theorem isIsotropic (object : Carrier Phi data) :
+    (preFrobenioid Phi data).IsIsotropic object := by
+  intro target arrow preStep isometric
+  exact isIso_of_preStep_isometric Phi data arrow preStep isometric
+
+/-- Every model arrow is co-angular because every model object is isotropic. -/
+theorem isCoAngular {source target : Carrier Phi data}
+    (arrow : source ⟶ target) :
+    (preFrobenioid Phi data).IsCoAngular arrow := by
+  intro U V gamma beta alpha _ _ betaPreStep betaIsometric _
+  exact isIso_of_preStep_isometric Phi data beta betaPreStep betaIsometric
+
+/-- In the model category, LB-invertibility is exactly isometry. -/
+theorem isLBInvertible_iff {source target : Carrier Phi data}
+    (arrow : source ⟶ target) :
+    (preFrobenioid Phi data).IsLBInvertible arrow ↔
+      (preFrobenioid Phi data).IsIsometric arrow := by
+  constructor
+  · exact fun hypothesis ↦ hypothesis.2
+  · exact fun hypothesis ↦ ⟨isCoAngular Phi data arrow, hypothesis⟩
+
+/--
+The paper's explicit description of Frobenius-type arrows in the isotropic
+model category: zero divisor and base-isomorphic projection.
+-/
+theorem isOfFrobeniusType_iff {source target : Carrier Phi data}
+    (arrow : source ⟶ target) :
+    (preFrobenioid Phi data).IsOfFrobeniusType arrow ↔
+      (preFrobenioid Phi data).IsIsometric arrow ∧
+        (preFrobenioid Phi data).IsBaseIso arrow := by
+  rw [PreFrobenioid.IsOfFrobeniusType, isLBInvertible_iff Phi data]
+
+/--
 The model category packaged with the connectedness and total-epimorphicity
 hypotheses of Definition 1.1(iv). This does not yet assert the seven axiom
 groups of Definition 1.3.

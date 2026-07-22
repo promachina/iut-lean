@@ -69,6 +69,11 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceModelFrobenioid.Carrier.isConnected
 #print axioms Iut.SourceModelFrobenioid.Carrier.epi
 #print axioms Iut.SourceModelFrobenioid.Carrier.preFrobenioidPresentation
+#print axioms Iut.SourceModelFrobenioid.Carrier.inverseOfPreStepIsometric
+#print axioms Iut.SourceModelFrobenioid.Carrier.isIso_of_preStep_isometric
+#print axioms Iut.SourceModelFrobenioid.Carrier.isIsotropic
+#print axioms Iut.SourceModelFrobenioid.Carrier.isCoAngular
+#print axioms Iut.SourceModelFrobenioid.Carrier.isOfFrobeniusType_iff
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.quotientUnit_exists
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootRealization.ofRootSystem

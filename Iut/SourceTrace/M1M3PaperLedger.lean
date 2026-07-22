@@ -177,9 +177,14 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceModelFrobenioid.Carrier.zeroToEffectiveObject",
         "SourceModelFrobenioid.Carrier.isConnected",
         "SourceModelFrobenioid.Carrier.epi",
+        "SourceModelFrobenioid.Carrier.inverseOfPreStepIsometric",
+        "SourceModelFrobenioid.Carrier.isIso_of_preStep_isometric",
+        "SourceModelFrobenioid.Carrier.isIsotropic",
+        "SourceModelFrobenioid.Carrier.isCoAngular",
+        "SourceModelFrobenioid.Carrier.isOfFrobeniusType_iff",
         "SourceModelFrobenioid.Carrier.preFrobenioidPresentation"]
       .partialImplementation
-      "Every divisor class is connected by explicit model arrows to the zero-divisor object over its base, base arrows lift between zero-divisor objects, and base connectedness therefore implies carrier connectedness. Cancellation of the four arrow components proves every model arrow epic from total epimorphicity of the base, yielding the complete Definition 1.1(iv) pre-Frobenioid presentation. The seven Definition 1.3 axiom groups, isotropic and model types, birational Frobenius normalization, and the natural O-times = B identification remain to be proved.",
+      "Every divisor class is connected by explicit model arrows to the zero-divisor object over its base, base arrows lift between zero-divisor objects, and base connectedness therefore implies carrier connectedness. Cancellation of the four arrow components proves every model arrow epic from total epimorphicity of the base, yielding the complete Definition 1.1(iv) pre-Frobenioid presentation. The inverse to an isometric pre-step is constructed with the paper's negative pulled-back rational-function component, proving every model object isotropic and every model arrow co-angular; Frobenius-type arrows are consequently characterized by zero divisor and base-isomorphic projection. The seven Definition 1.3 axiom groups, model type, birational Frobenius normalization, and the natural O-times = B identification remain to be proved.",
     clause "FrdII.5.1" .frobenioidsII
       "Frobenioids II, Definition 5.1"
       [] .unformalized
