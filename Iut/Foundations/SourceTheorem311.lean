@@ -3685,6 +3685,8 @@ end SourceNonarchimedeanLogShellDefinition
 
 namespace SourceArchimedeanLogShellDefinition
 
+open Topology
+
 /-- The kernel-generator segment in the pointed complex logarithm. -/
 def fundamentalSegment : Set ℂ :=
   {value | value.re = 0 ∧ |value.im| ≤ Real.pi}
@@ -3777,6 +3779,198 @@ theorem complexExponential_eq_one_iff (value : ℂ) :
   change Complex.exp value = 1 ↔ _
   simpa only [Complex.exp_eq_one_iff, AddSubgroup.mem_zmultiples_iff,
     zsmul_eq_mul, eq_comm]
+
+/-- The complex exponential regarded as a unit of `ℂ`. -/
+noncomputable def complexExponentialUnit (value : ℂ) : ℂˣ :=
+  Units.mk0 (Complex.exp value) (Complex.exp_ne_zero value)
+
+/--
+The target of the covering in IUT III, Definition 1.1(ii), after quotienting
+the multiplicative group by its `N`-th roots of unity.
+-/
+abbrev RootQuotient (N : ℕ) :=
+  ℂˣ ⧸ (powMonoidHom (α := ℂˣ) N).ker
+
+/-- The deck subgroup in the quotient is literally the group `μ_N`. -/
+theorem rootQuotient_deckGroup_eq_rootsOfUnity (N : ℕ) :
+    (powMonoidHom (α := ℂˣ) N).ker = rootsOfUnity N ℂ :=
+  rootsOfUnity_eq_ker.symm
+
+/-- The `N`-th-power map descended through the quotient by `μ_N`. -/
+noncomputable def rootQuotientPowerLift (N : ℕ) :
+    RootQuotient N →* ℂˣ :=
+  QuotientGroup.kerLift (powMonoidHom (α := ℂˣ) N)
+
+/-- The descended `N`-th-power map retains the quotient topology. -/
+theorem rootQuotientPowerLift_isQuotientMap
+    (N : ℕ) [NeZero N] :
+    IsQuotientMap (rootQuotientPowerLift N) := by
+  let quotientMap : ℂˣ → RootQuotient N := QuotientGroup.mk
+  have hpower : IsQuotientMap (fun unit : ℂˣ => unit ^ N) :=
+    (Complex.isQuotientCoveringMap_npow N).toIsQuotientMap
+  have hcomposition :
+      IsQuotientMap (rootQuotientPowerLift N ∘ quotientMap) := by
+    convert hpower using 1
+  exact IsQuotientMap.of_comp_isQuotientMap
+    (QuotientGroup.isQuotientMap_mk _) hcomposition
+
+/-- Raising to the `N`-th power identifies `ℂˣ / μ_N` with `ℂˣ`. -/
+noncomputable def rootQuotientHomeomorphUnits
+    (N : ℕ) [NeZero N] : RootQuotient N ≃ₜ ℂˣ := by
+  let lift := rootQuotientPowerLift N
+  have hhome : IsHomeomorph lift :=
+    isHomeomorph_iff_isQuotientMap_injective.mpr
+      ⟨rootQuotientPowerLift_isQuotientMap N,
+        QuotientGroup.kerLift_injective
+          (powMonoidHom (α := ℂˣ) N)⟩
+  exact hhome.homeomorph lift
+
+/-- The exponential followed by the quotient map `ℂˣ → ℂˣ / μ_N`. -/
+noncomputable def rootQuotientExponential
+    (N : ℕ) (value : ℂ) : RootQuotient N :=
+  QuotientGroup.mk (complexExponentialUnit value)
+
+/-- The quotient exponential is pointed. -/
+theorem rootQuotientExponential_zero (N : ℕ) :
+    rootQuotientExponential N 0 = 1 := by
+  simp [rootQuotientExponential, complexExponentialUnit]
+
+/-- Under the power homeomorphism, the quotient exponential is `exp (N*z)`. -/
+theorem rootQuotientHomeomorphUnits_exponential
+    (N : ℕ) [NeZero N] (value : ℂ) :
+    rootQuotientHomeomorphUnits N (rootQuotientExponential N value) =
+      complexExponentialUnit (N * value) := by
+  apply Units.ext
+  change Complex.exp value ^ N = Complex.exp (N * value)
+  exact (Complex.exp_nat_mul value N).symm
+
+/-- The quotient target identified with the nonzero complex numbers. -/
+noncomputable def rootQuotientHomeomorphNonzero
+    (N : ℕ) [NeZero N] : RootQuotient N ≃ₜ {value : ℂ // value ≠ 0} :=
+  (rootQuotientHomeomorphUnits N).trans unitsHomeomorphNeZero
+
+theorem rootQuotientHomeomorphNonzero_exponential
+    (N : ℕ) [NeZero N] (value : ℂ) :
+    rootQuotientHomeomorphNonzero N (rootQuotientExponential N value) =
+      complexExponential (N * value) := by
+  apply Subtype.ext
+  simpa only [rootQuotientHomeomorphNonzero,
+    Homeomorph.trans_apply, unitsEquivNeZero_apply_coe] using congrArg Units.val
+      (rootQuotientHomeomorphUnits_exponential N value)
+
+/-- Multiplication by a nonzero natural number as a complex homeomorphism. -/
+noncomputable def complexScaleHomeomorph
+    (N : ℕ) [NeZero N] : ℂ ≃ₜ ℂ :=
+  Homeomorph.mulLeft₀ (N : ℂ) (by exact_mod_cast NeZero.ne N)
+
+theorem complexExponential_scaled_isCoveringMap
+    (N : ℕ) [NeZero N] :
+    IsCoveringMap (fun value : ℂ => complexExponential (N * value)) := by
+  have h := complexExponential_isCoveringMap.comp_homeomorph
+    (complexScaleHomeomorph N)
+  convert h using 1
+
+/-- The quotient exponential in Definition 1.1(ii) is an actual covering map. -/
+theorem rootQuotientExponential_isCoveringMap
+    (N : ℕ) [NeZero N] :
+    IsCoveringMap (rootQuotientExponential N) := by
+  rw [← IsCoveringMap.homeomorph_comp_iff (rootQuotientHomeomorphNonzero N)]
+  convert complexExponential_scaled_isCoveringMap N using 1
+  ext value
+  simpa only [Function.comp_apply] using congrArg Subtype.val
+    (rootQuotientHomeomorphNonzero_exponential N value)
+
+theorem rootQuotientExponential_eq_one_iff
+    (N : ℕ) [NeZero N] (value : ℂ) :
+    rootQuotientExponential N value = 1 ↔
+      ∃ integer : ℤ,
+        N * value = integer * (2 * Real.pi * Complex.I) := by
+  rw [rootQuotientExponential, QuotientGroup.eq_one_iff]
+  change (complexExponentialUnit value) ^ N = 1 ↔ _
+  rw [Units.ext_iff]
+  change Complex.exp value ^ N = 1 ↔ _
+  rw [← Complex.exp_nat_mul, Complex.exp_eq_one_iff]
+
+/-- The generator `(2*pi*i)/N` of the quotient exponential's period lattice. -/
+noncomputable def quotientPeriodGenerator (N : ℕ) [NeZero N] : ℂ :=
+  (N : ℂ)⁻¹ * (2 * Real.pi * Complex.I)
+
+/-- The quotient exponential has exactly the lattice generated by `(2*pi*i)/N`. -/
+theorem rootQuotientExponential_eq_one_iff_mem_periodLattice
+    (N : ℕ) [NeZero N] (value : ℂ) :
+    rootQuotientExponential N value = 1 ↔
+      value ∈ AddSubgroup.zmultiples (quotientPeriodGenerator N) := by
+  have hN : (N : ℂ) ≠ 0 := by exact_mod_cast NeZero.ne N
+  have hscale (integer : ℤ) :
+      (N : ℂ) * (integer • quotientPeriodGenerator N) =
+        (integer : ℂ) * (2 * Real.pi * Complex.I) := by
+    rw [quotientPeriodGenerator, zsmul_eq_mul]
+    calc
+      (N : ℂ) * ((integer : ℂ) *
+          ((N : ℂ)⁻¹ * (2 * Real.pi * Complex.I))) =
+          (integer : ℂ) * (((N : ℂ) * (N : ℂ)⁻¹) *
+            (2 * Real.pi * Complex.I)) := by ring
+      _ = (integer : ℂ) * (2 * Real.pi * Complex.I) := by
+        rw [mul_inv_cancel₀ hN, one_mul]
+  rw [rootQuotientExponential_eq_one_iff,
+    AddSubgroup.mem_zmultiples_iff]
+  constructor
+  · rintro ⟨integer, hinteger⟩
+    refine ⟨integer, ?_⟩
+    apply mul_left_cancel₀ (a := (N : ℂ)) hN
+    rw [hscale integer, hinteger]
+  · rintro ⟨integer, rfl⟩
+    exact ⟨integer, hscale integer⟩
+
+/-- The fundamental segment for the quotient covering by `μ_N`. -/
+def quotientFundamentalSegment (N : ℕ) : Set ℂ :=
+  {value | (N : ℂ) * value ∈ fundamentalSegment}
+
+noncomputable def quotientLowerEndpoint (N : ℕ) [NeZero N] : ℂ :=
+  (N : ℂ)⁻¹ * lowerEndpoint
+
+noncomputable def quotientUpperEndpoint (N : ℕ) [NeZero N] : ℂ :=
+  (N : ℂ)⁻¹ * upperEndpoint
+
+theorem quotientLowerEndpoint_mem (N : ℕ) [NeZero N] :
+    quotientLowerEndpoint N ∈ quotientFundamentalSegment N := by
+  change (N : ℂ) * ((N : ℂ)⁻¹ * lowerEndpoint) ∈ fundamentalSegment
+  rw [← mul_assoc, mul_inv_cancel₀ (by exact_mod_cast NeZero.ne N),
+    one_mul]
+  exact lowerEndpoint_mem
+
+theorem quotientUpperEndpoint_mem (N : ℕ) [NeZero N] :
+    quotientUpperEndpoint N ∈ quotientFundamentalSegment N := by
+  change (N : ℂ) * ((N : ℂ)⁻¹ * upperEndpoint) ∈ fundamentalSegment
+  rw [← mul_assoc, mul_inv_cancel₀ (by exact_mod_cast NeZero.ne N),
+    one_mul]
+  exact upperEndpoint_mem
+
+/-- The quotient segment's endpoints differ by its exact period generator. -/
+theorem quotientUpperEndpoint_sub_lowerEndpoint
+    (N : ℕ) [NeZero N] :
+    quotientUpperEndpoint N - quotientLowerEndpoint N =
+      quotientPeriodGenerator N := by
+  rw [quotientUpperEndpoint, quotientLowerEndpoint,
+    quotientPeriodGenerator, ← mul_sub,
+    upperEndpoint_sub_lowerEndpoint]
+
+/-- Multiplication by `N` carries the quotient segment onto the original segment. -/
+theorem image_quotientFundamentalSegment
+    (N : ℕ) [NeZero N] :
+    (fun value : ℂ => (N : ℂ) * value) ''
+        quotientFundamentalSegment N = fundamentalSegment := by
+  have hN : (N : ℂ) ≠ 0 := by exact_mod_cast NeZero.ne N
+  ext value
+  constructor
+  · rintro ⟨source, hsource, rfl⟩
+    exact hsource
+  · intro hvalue
+    refine ⟨(N : ℂ)⁻¹ * value, ?_, ?_⟩
+    · change (N : ℂ) * ((N : ℂ)⁻¹ * value) ∈ fundamentalSegment
+      simpa [mul_assoc, hN] using hvalue
+    · change (N : ℂ) * ((N : ℂ)⁻¹ * value) = value
+      simp [hN]
 
 end SourceArchimedeanLogShellDefinition
 
