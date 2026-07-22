@@ -153,6 +153,22 @@ def m1m3PaperLedger : List PaperClause :=
         "SplitFrobenioidEquivalence.trans"]
       .partialImplementation
       "A characteristic splitting is an actual subfunctor of O-triangle, multiplication with units is objectwise bijective with commuting factors, and the isotropic-hull image condition is explicit. Split Frobenioids carry a nonempty indexed collection of such splittings with structure-preserving equivalences. Constructing the splittings in Examples 3.2-3.4 remains open.",
+    clause "FrdI.5.2(i)" .frobenioidsI
+      "Frobenioids I, Theorem 5.2(i)"
+      ["SourceModelFrobenioid.GroupLikeAddMonoidOn",
+        "SourceModelFrobenioid.gpPullback",
+        "SourceModelFrobenioid.gpPullback_id",
+        "SourceModelFrobenioid.gpPullback_comp",
+        "SourceModelFrobenioid.Input",
+        "SourceModelFrobenioid.Input.birationalDivisors",
+        "SourceModelFrobenioid.Object",
+        "SourceModelFrobenioid.Hom",
+        "SourceModelFrobenioid.Hom.comp",
+        "SourceModelFrobenioid.Carrier",
+        "SourceModelFrobenioid.Carrier.structureFunctor",
+        "SourceModelFrobenioid.Carrier.preFrobenioid"]
+      .sourceFaithful
+      "The exact object and four-component arrow data, balance equation, identity, composition formulas, category laws, birational-divisor image, and functor to the elementary Frobenioid are constructed. The Frobenioid-axiom conclusion belongs to Theorem 5.2(ii), not this clause.",
     clause "FrdII.5.1" .frobenioidsII
       "Frobenioids II, Definition 5.1"
       [] .unformalized
@@ -1390,8 +1406,8 @@ def clauseIdsWithStatus (status : ClauseStatus) : List String :=
   m1m3PaperLedger.filterMap fun entry =>
     if entry.status = status then some entry.id else none
 
-/-- The source-closure ledger contains 105 separately audited clauses. -/
-theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 105 :=
+/-- The source-closure ledger contains 106 separately audited clauses. -/
+theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 106 :=
   rfl
 
 /-- No source clause occurs twice in the direct-citation ledger. -/
@@ -1414,9 +1430,9 @@ theorem unformalized_count :
     (clauseIdsWithStatus .unformalized).length = 19 :=
   rfl
 
-/-- Definition 4.10 is the first clause to pass the clause-level source audit. -/
+/-- Two clauses currently pass the clause-level source audit. -/
 theorem sourceFaithfulClauseIds_eq :
-    sourceFaithfulClauseIds = ["I.4.10"] :=
+    sourceFaithfulClauseIds = ["FrdI.5.2(i)", "I.4.10"] :=
   rfl
 
 end Iut.SourceTrace

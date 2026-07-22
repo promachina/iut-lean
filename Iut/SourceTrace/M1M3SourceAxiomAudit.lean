@@ -6,6 +6,7 @@ Authors: IUT Lean formalization contributors
 import Iut.Foundations.SourceHodgeArakelovEvaluation
 import Iut.Foundations.SourceSplitKummerFrobenioid
 import Iut.Foundations.SourceArchimedeanKummerSystem
+import Iut.Foundations.SourceModelFrobenioid
 import Iut.Foundations.SourceTheorem311
 
 open Iut
@@ -57,6 +58,12 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceArchimedeanKummerSystem.orientationAutomorphism_ne
 #print axioms Iut.SourceArchimedeanKummerSystem.unitQuotientDiagram
 #print axioms Iut.SourceArchimedeanKummerSystem.restrictedOrientedQuotientNaturalTransformation
+#print axioms Iut.SourceModelFrobenioid.gpPullback_id
+#print axioms Iut.SourceModelFrobenioid.gpPullback_comp
+#print axioms Iut.SourceModelFrobenioid.Input.gpPullback_mem_birationalDivisors
+#print axioms Iut.SourceModelFrobenioid.Hom.comp
+#print axioms Iut.SourceModelFrobenioid.Carrier.comp_rationalFunction
+#print axioms Iut.SourceModelFrobenioid.Carrier.structureFunctor
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.quotientUnit_exists
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootRealization.ofRootSystem
