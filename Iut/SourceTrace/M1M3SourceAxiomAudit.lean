@@ -6,7 +6,7 @@ Authors: IUT Lean formalization contributors
 import Iut.Foundations.SourceHodgeArakelovEvaluation
 import Iut.Foundations.SourceSplitKummerFrobenioid
 import Iut.Foundations.SourceArchimedeanKummerSystem
-import Iut.Foundations.SourceModelFrobenioidPreModel
+import Iut.Foundations.SourceModelFrobenioidBirational
 import Iut.Foundations.SourceTheorem311
 
 open Iut
@@ -120,6 +120,13 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceModelFrobenioid.Carrier.zeroBaseArrow_isPullback
 #print axioms Iut.SourceModelFrobenioid.Carrier.zeroFrobeniusNaturalTransformation
 #print axioms Iut.SourceModelFrobenioid.Carrier.isPreModelType
+#print axioms Iut.SourceModelFrobenioid.BirationalObject.inclusionFunctor_faithful
+#print axioms Iut.SourceModelFrobenioid.BirationalObject.inclusionFunctor_map_divisorClass
+#print axioms Iut.SourceModelFrobenioid.BirationalObject.inclusion_map_isIso_of_preStep
+#print axioms Iut.SourceModelFrobenioid.BirationalObject.rationalFunctionEquiv
+#print axioms Iut.SourceModelFrobenioid.BirationalObject.rationalFunctionEndomorphism_divisorClass
+#print axioms Iut.SourceModelFrobenioid.BirationalObject.isFrobeniusNormalizedType
+#print axioms Iut.SourceModelFrobenioid.BirationalObject.isModelTypeForConcreteBirationalization
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.quotientUnit_exists
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootRealization.ofRootSystem

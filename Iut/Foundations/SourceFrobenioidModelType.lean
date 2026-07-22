@@ -76,4 +76,29 @@ structure BaseFrobeniusPair where
 def IsPreModelType : Prop :=
   Nonempty P.BaseFrobeniusPair
 
+/--
+Frobenioids I, Definition 4.5(i): an object whose image in a chosen
+birationalization is Frobenius-normalized.
+-/
+def IsBirationallyFrobeniusNormalized
+    (_P : PreFrobenioid C D IsFSM)
+    {Cbirat : Type u} [Category.{u} Cbirat]
+    (Pbirat : PreFrobenioid Cbirat D IsFSM) (inclusion : C ⥤ Cbirat)
+    (X : C) : Prop :=
+  Pbirat.IsFrobeniusNormalized (inclusion.obj X)
+
+/-- Every object is birationally Frobenius-normalized. -/
+def IsBirationallyFrobeniusNormalizedType
+    (P : PreFrobenioid C D IsFSM)
+    {Cbirat : Type u} [Category.{u} Cbirat]
+    (Pbirat : PreFrobenioid Cbirat D IsFSM) (inclusion : C ⥤ Cbirat) : Prop :=
+  ∀ X : C, P.IsBirationallyFrobeniusNormalized Pbirat inclusion X
+
+/-- Definition 4.5(i): pre-model plus birational Frobenius normalization. -/
+def IsModelType
+    {Cbirat : Type u} [Category.{u} Cbirat]
+    (Pbirat : PreFrobenioid Cbirat D IsFSM) (inclusion : C ⥤ Cbirat) : Prop :=
+  P.IsPreModelType ∧
+    P.IsBirationallyFrobeniusNormalizedType Pbirat inclusion
+
 end Iut.PreFrobenioid
