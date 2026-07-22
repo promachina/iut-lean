@@ -690,22 +690,58 @@ structure SourceThetaCurveModuliData
       AbsoluteGaloisProfinite F
 
 /--
-Scalar extension of a punctured elliptic curve whose puncture is the origin.
+The canonical scalar extension of a once-punctured elliptic curve whose
+puncture is the origin.
 
-The ambient Weierstrass curve is related by mathlib's actual `baseChange`.
-Both puncture equalities express preservation of the identity section without
-introducing a second arbitrary projective point.
+The target is constructed from mathlib's actual Weierstrass base change; it is
+not an independently supplied curve. The distinguished puncture is the base
+changed identity section, hence is again the origin.
+-/
+noncomputable def PuncturedEllipticCurve.baseChangeOrigin
+    (F K : Type u) [Field F] [Field K] [Algebra F K]
+    (X : PuncturedEllipticCurve F) :
+    PuncturedEllipticCurve K where
+  curve := X.curve.baseChange K
+  isElliptic := by
+    unfold WeierstrassCurve.baseChange
+    infer_instance
+  puncture := 0
+
+/--
+A certificate that scalar extension applies to the source once-punctured curve.
+
+Unlike the former interface, this structure contains no arbitrary target curve:
+`result` below is definitionally the canonical Weierstrass base change.
 -/
 structure PuncturedEllipticCurveScalarExtension
     (F K : Type u) [Field F] [Field K] [Algebra F K]
     (X : PuncturedEllipticCurve F) where
-  result : PuncturedEllipticCurve K
-  curve_eq_baseChange :
-    result.curve = X.curve.baseChange K
-  source_puncture_eq_origin :
-    X.puncture = 0
-  result_puncture_eq_origin :
-    result.puncture = 0
+  source_puncture_eq_origin : X.puncture = 0
+
+namespace PuncturedEllipticCurveScalarExtension
+
+variable {F K : Type u} [Field F] [Field K] [Algebra F K]
+variable {X : PuncturedEllipticCurve F}
+
+/-- The scalar-extended curve, constructed rather than supplied. -/
+noncomputable def result
+    (_extension : PuncturedEllipticCurveScalarExtension F K X) :
+    PuncturedEllipticCurve K :=
+  X.baseChangeOrigin F K
+
+@[simp]
+theorem curve_eq_baseChange
+    (extension : PuncturedEllipticCurveScalarExtension F K X) :
+    extension.result.curve = X.curve.baseChange K :=
+  rfl
+
+@[simp]
+theorem result_puncture_eq_origin
+    (extension : PuncturedEllipticCurveScalarExtension F K X) :
+    extension.result.puncture = 0 :=
+  rfl
+
+end PuncturedEllipticCurveScalarExtension
 
 /--
 The `K`-core `X_K -> C_K` obtained by scalar extension from `X_F -> C_F`.
