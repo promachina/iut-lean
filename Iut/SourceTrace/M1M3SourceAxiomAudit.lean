@@ -33,6 +33,12 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceThetaKCoreData.xK_eq_scalarExtension
 #print axioms Iut.SourceThetaKCoreData.cK_eq_scalarExtension
 #print axioms Iut.SourceThetaKCoreData.quotientMap_eq_scalarExtension
+#print axioms Iut.SourceThetaFiniteLocalCoreData.x_eq_scalarExtension
+#print axioms Iut.SourceThetaFiniteLocalCoreData.c_eq_scalarExtension
+#print axioms Iut.SourceThetaFiniteLocalCoreData.quotientMap_eq_scalarExtension
+#print axioms Iut.SourceThetaInfiniteLocalCoreData.x_eq_scalarExtension
+#print axioms Iut.SourceThetaInfiniteLocalCoreData.c_eq_scalarExtension
+#print axioms Iut.SourceThetaInfiniteLocalCoreData.quotientMap_eq_scalarExtension
 #print axioms Iut.SignQuotientOrbicurveData.absoluteGalois_def
 #print axioms Iut.ThetaValuationData.selectedPlaceEquiv
 #print axioms Iut.ThetaValuationData.selectedPlaces_eq_vnon_union_varc

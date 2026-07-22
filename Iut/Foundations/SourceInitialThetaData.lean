@@ -1126,54 +1126,44 @@ structure SourceThetaFiniteLocalCoreData
   curveLocal :
     PuncturedEllipticCurveScalarExtension K
       (ThetaFinitePlace.Completion v) curve
-  xLocal :
-    OrbicurveScalarExtension K
-      (ThetaFinitePlace.Completion v) kOrbicurves.xF
-  cLocal :
-    OrbicurveScalarExtension K
-      (ThetaFinitePlace.Completion v) kOrbicurves.cF
-  orbicurves :
-    SignQuotientOrbicurveData
-      (ThetaFinitePlace.Completion v) curveLocal.result
-  x_eq_scalarExtension :
-    orbicurves.xF = xLocal.result
-  c_eq_scalarExtension :
-    orbicurves.cF = cLocal.result
-  quotientMapExtension :
-    OrbicurveMorphismScalarExtension K
-      (ThetaFinitePlace.Completion v)
-      xLocal cLocal kOrbicurves.quotientMap
-  quotientMap_eq_scalarExtension :
-    HyperbolicOrbicurve.Hom.cast
-        x_eq_scalarExtension c_eq_scalarExtension
-        orbicurves.quotientMap =
-      quotientMapExtension.result
+  orbicurveExtension :
+    SignQuotientOrbicurveScalarExtension K
+      (ThetaFinitePlace.Completion v) kOrbicurves
   placeStabilizer :
     AbsoluteGaloisPlaceStabilizerData K v.1
   decompositionGroup :
     ProfiniteDecompositionGroupData
-      orbicurves.absoluteGalois
+      (orbicurveExtension.result
+        curveLocal.result).absoluteGalois
       kOrbicurves.absoluteGalois
       placeStabilizer.stabilizer
   xFundamentalGroupDiagram :
     ProfiniteFundamentalExactSequenceEmbedding
-      orbicurves.xFundamentalGroups.geometric.group
-      orbicurves.xFundamentalGroups.arithmetic.group
-      orbicurves.absoluteGalois
+      (orbicurveExtension.result
+        curveLocal.result).xFundamentalGroups.geometric.group
+      (orbicurveExtension.result
+        curveLocal.result).xFundamentalGroups.arithmetic.group
+      (orbicurveExtension.result
+        curveLocal.result).absoluteGalois
       kOrbicurves.xFundamentalGroups.geometric.group
       kOrbicurves.xFundamentalGroups.arithmetic.group
       kOrbicurves.absoluteGalois
-      orbicurves.xFundamentalGroups.exactSequence
+      (orbicurveExtension.result
+        curveLocal.result).xFundamentalGroups.exactSequence
       kOrbicurves.xFundamentalGroups.exactSequence
   cFundamentalGroupDiagram :
     ProfiniteFundamentalExactSequenceEmbedding
-      orbicurves.cFundamentalGroups.geometric.group
-      orbicurves.cFundamentalGroups.arithmetic.group
-      orbicurves.absoluteGalois
+      (orbicurveExtension.result
+        curveLocal.result).cFundamentalGroups.geometric.group
+      (orbicurveExtension.result
+        curveLocal.result).cFundamentalGroups.arithmetic.group
+      (orbicurveExtension.result
+        curveLocal.result).absoluteGalois
       kOrbicurves.cFundamentalGroups.geometric.group
       kOrbicurves.cFundamentalGroups.arithmetic.group
       kOrbicurves.absoluteGalois
-      orbicurves.cFundamentalGroups.exactSequence
+      (orbicurveExtension.result
+        curveLocal.result).cFundamentalGroups.exactSequence
       kOrbicurves.cFundamentalGroups.exactSequence
   xDiagram_galois_eq :
     xFundamentalGroupDiagram.galois =
@@ -1181,6 +1171,58 @@ structure SourceThetaFiniteLocalCoreData
   cDiagram_galois_eq :
     cFundamentalGroupDiagram.galois =
       decompositionGroup.embedding
+
+namespace SourceThetaFiniteLocalCoreData
+
+variable
+    {K : Type u} [Field K] [NumberField K]
+    {curve : PuncturedEllipticCurve K}
+    {kOrbicurves : SignQuotientOrbicurveData K curve}
+    {v : NumberField.FinitePlace K}
+    (core : SourceThetaFiniteLocalCoreData K curve kOrbicurves v)
+
+/-- The finite-completion scalar extension of the `X`-orbicurve. -/
+def xLocal :
+    OrbicurveScalarExtension K
+      (ThetaFinitePlace.Completion v) kOrbicurves.xF :=
+  core.orbicurveExtension.xExtension
+
+/-- The finite-completion scalar extension of the sign quotient `C`. -/
+def cLocal :
+    OrbicurveScalarExtension K
+      (ThetaFinitePlace.Completion v) kOrbicurves.cF :=
+  core.orbicurveExtension.cExtension
+
+/-- The finite-completion scalar extension of the quotient morphism. -/
+def quotientMapExtension :
+    OrbicurveMorphismScalarExtension K
+      (ThetaFinitePlace.Completion v)
+      core.xLocal core.cLocal kOrbicurves.quotientMap :=
+  core.orbicurveExtension.quotientMapExtension
+
+/-- The local sign quotient constructed from its scalar-extension objects. -/
+def orbicurves :
+    SignQuotientOrbicurveData
+      (ThetaFinitePlace.Completion v) core.curveLocal.result :=
+  core.orbicurveExtension.result core.curveLocal.result
+
+@[simp]
+theorem x_eq_scalarExtension :
+    core.orbicurves.xF = core.xLocal.result :=
+  rfl
+
+@[simp]
+theorem c_eq_scalarExtension :
+    core.orbicurves.cF = core.cLocal.result :=
+  rfl
+
+@[simp]
+theorem quotientMap_eq_scalarExtension :
+    core.orbicurves.quotientMap =
+      core.quotientMapExtension.result :=
+  rfl
+
+end SourceThetaFiniteLocalCoreData
 
 /-- The completed archimedean field attached to an infinite place. -/
 abbrev ThetaInfinitePlace.Completion
@@ -1209,54 +1251,44 @@ structure SourceThetaInfiniteLocalCoreData
   curveLocal :
     PuncturedEllipticCurveScalarExtension K
       (ThetaInfinitePlace.Completion v) curve
-  xLocal :
-    OrbicurveScalarExtension K
-      (ThetaInfinitePlace.Completion v) kOrbicurves.xF
-  cLocal :
-    OrbicurveScalarExtension K
-      (ThetaInfinitePlace.Completion v) kOrbicurves.cF
-  orbicurves :
-    SignQuotientOrbicurveData
-      (ThetaInfinitePlace.Completion v) curveLocal.result
-  x_eq_scalarExtension :
-    orbicurves.xF = xLocal.result
-  c_eq_scalarExtension :
-    orbicurves.cF = cLocal.result
-  quotientMapExtension :
-    OrbicurveMorphismScalarExtension K
-      (ThetaInfinitePlace.Completion v)
-      xLocal cLocal kOrbicurves.quotientMap
-  quotientMap_eq_scalarExtension :
-    HyperbolicOrbicurve.Hom.cast
-        x_eq_scalarExtension c_eq_scalarExtension
-        orbicurves.quotientMap =
-      quotientMapExtension.result
+  orbicurveExtension :
+    SignQuotientOrbicurveScalarExtension K
+      (ThetaInfinitePlace.Completion v) kOrbicurves
   placeStabilizer :
     AbsoluteGaloisPlaceStabilizerData K v.1
   decompositionGroup :
     ProfiniteDecompositionGroupData
-      orbicurves.absoluteGalois
+      (orbicurveExtension.result
+        curveLocal.result).absoluteGalois
       kOrbicurves.absoluteGalois
       placeStabilizer.stabilizer
   xFundamentalGroupDiagram :
     ProfiniteFundamentalExactSequenceEmbedding
-      orbicurves.xFundamentalGroups.geometric.group
-      orbicurves.xFundamentalGroups.arithmetic.group
-      orbicurves.absoluteGalois
+      (orbicurveExtension.result
+        curveLocal.result).xFundamentalGroups.geometric.group
+      (orbicurveExtension.result
+        curveLocal.result).xFundamentalGroups.arithmetic.group
+      (orbicurveExtension.result
+        curveLocal.result).absoluteGalois
       kOrbicurves.xFundamentalGroups.geometric.group
       kOrbicurves.xFundamentalGroups.arithmetic.group
       kOrbicurves.absoluteGalois
-      orbicurves.xFundamentalGroups.exactSequence
+      (orbicurveExtension.result
+        curveLocal.result).xFundamentalGroups.exactSequence
       kOrbicurves.xFundamentalGroups.exactSequence
   cFundamentalGroupDiagram :
     ProfiniteFundamentalExactSequenceEmbedding
-      orbicurves.cFundamentalGroups.geometric.group
-      orbicurves.cFundamentalGroups.arithmetic.group
-      orbicurves.absoluteGalois
+      (orbicurveExtension.result
+        curveLocal.result).cFundamentalGroups.geometric.group
+      (orbicurveExtension.result
+        curveLocal.result).cFundamentalGroups.arithmetic.group
+      (orbicurveExtension.result
+        curveLocal.result).absoluteGalois
       kOrbicurves.cFundamentalGroups.geometric.group
       kOrbicurves.cFundamentalGroups.arithmetic.group
       kOrbicurves.absoluteGalois
-      orbicurves.cFundamentalGroups.exactSequence
+      (orbicurveExtension.result
+        curveLocal.result).cFundamentalGroups.exactSequence
       kOrbicurves.cFundamentalGroups.exactSequence
   xDiagram_galois_eq :
     xFundamentalGroupDiagram.galois =
@@ -1264,6 +1296,58 @@ structure SourceThetaInfiniteLocalCoreData
   cDiagram_galois_eq :
     cFundamentalGroupDiagram.galois =
       decompositionGroup.embedding
+
+namespace SourceThetaInfiniteLocalCoreData
+
+variable
+    {K : Type u} [Field K] [NumberField K]
+    {curve : PuncturedEllipticCurve K}
+    {kOrbicurves : SignQuotientOrbicurveData K curve}
+    {v : NumberField.InfinitePlace K}
+    (core : SourceThetaInfiniteLocalCoreData K curve kOrbicurves v)
+
+/-- The archimedean scalar extension of the `X`-orbicurve. -/
+def xLocal :
+    OrbicurveScalarExtension K
+      (ThetaInfinitePlace.Completion v) kOrbicurves.xF :=
+  core.orbicurveExtension.xExtension
+
+/-- The archimedean scalar extension of the sign quotient `C`. -/
+def cLocal :
+    OrbicurveScalarExtension K
+      (ThetaInfinitePlace.Completion v) kOrbicurves.cF :=
+  core.orbicurveExtension.cExtension
+
+/-- The archimedean scalar extension of the quotient morphism. -/
+def quotientMapExtension :
+    OrbicurveMorphismScalarExtension K
+      (ThetaInfinitePlace.Completion v)
+      core.xLocal core.cLocal kOrbicurves.quotientMap :=
+  core.orbicurveExtension.quotientMapExtension
+
+/-- The local sign quotient constructed from its scalar-extension objects. -/
+def orbicurves :
+    SignQuotientOrbicurveData
+      (ThetaInfinitePlace.Completion v) core.curveLocal.result :=
+  core.orbicurveExtension.result core.curveLocal.result
+
+@[simp]
+theorem x_eq_scalarExtension :
+    core.orbicurves.xF = core.xLocal.result :=
+  rfl
+
+@[simp]
+theorem c_eq_scalarExtension :
+    core.orbicurves.cF = core.cLocal.result :=
+  rfl
+
+@[simp]
+theorem quotientMap_eq_scalarExtension :
+    core.orbicurves.quotientMap =
+      core.quotientMapExtension.result :=
+  rfl
+
+end SourceThetaInfiniteLocalCoreData
 
 /--
 The common scalar-extension diagram for a sign-quotient pair `X -> C`.

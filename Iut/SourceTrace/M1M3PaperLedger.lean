@@ -470,6 +470,8 @@ def m1m3PaperLedger : List PaperClause :=
         "ThetaValuationData.vbad_disjoint_vgood",
         "SourceThetaFiniteLocalCoreData",
         "SourceThetaInfiniteLocalCoreData",
+        "SourceThetaFiniteLocalCoreData.orbicurves",
+        "SourceThetaInfiniteLocalCoreData.orbicurves",
         "SignQuotientOrbicurveBaseChange",
         "TypeOneLTorsionStackScalarExtension",
         "TypeOneCuspidalAtlasScalarExtension",
@@ -486,7 +488,7 @@ def m1m3PaperLedger : List PaperClause :=
         "ProfiniteFundamentalExactSequenceEmbedding",
         "SourceThetaBadLocalStandardData",
         "SourceThetaBadLocalThetaRootStackRealization"] .partialImplementation
-      "The projections on finite and infinite places are canonical restrictions along Fmod -> K, and only their section is chosen. These typed sections assemble into one section on all places; its inverse is restriction, yielding the actual equivalence Vmod ≃ V. The source partitions V = Vnon ∪ Varc and Vnon = Vbad ∪ Vgood are proved exact and disjoint. Every local punctured curve is definitionally the Weierstrass base change to the corresponding completion, not an independently supplied target. Local core diagrams exist at every K-place; each decomposition subgroup is the literal stabilizer of a prolongation to the absolute separable closure inside the canonical absolute Galois group. Its local embedding is derived from the local-Galois equivalence, and its image is proved equal to that stabilizer for both X and C; no ambient-group isomorphism, arbitrary subgroup, or subgroup-equality certificate remains. Selected places additionally carry the l-torsion cover, complete cusp atlas, and local epsilon. Good and bad specializations have the source-prescribed arrowed and theta-root data. Finite-etale construction remains open.",
+      "The projections on finite and infinite places are canonical restrictions along Fmod -> K, and only their section is chosen. These typed sections assemble into one section on all places; its inverse is restriction, yielding the actual equivalence Vmod ≃ V. The source partitions V = Vnon ∪ Varc and Vnon = Vbad ∪ Vgood are proved exact and disjoint. Every local punctured curve is definitionally the Weierstrass base change to the corresponding completion, not an independently supplied target. At every finite and infinite place, the local X-stack, C-stack, and quotient map are constructed from one sign-quotient scalar-extension package; separate local targets and three comparison certificates have been removed. Local core diagrams exist at every K-place; each decomposition subgroup is the literal stabilizer of a prolongation to the absolute separable closure inside the canonical absolute Galois group. Its local embedding is derived from the local-Galois equivalence, and its image is proved equal to that stabilizer for both X and C; no ambient-group isomorphism, arbitrary subgroup, or subgroup-equality certificate remains. Selected places additionally carry the l-torsion cover, complete cusp atlas, and local epsilon. Good and bad specializations have the source-prescribed arrowed and theta-root data. Finite-etale construction remains open.",
     clause "I.3.1(e).groups" .iutI "IUT I, Definition 3.1(e): theta roots and open subgroups"
       ["ProfiniteOpenEmbedding", "EtaleTheta.ThetaRootSplittingData",
         "EtaleTheta.ThetaRootSplittingData.thetaRootSubgroup",
