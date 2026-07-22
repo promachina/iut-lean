@@ -366,6 +366,177 @@ noncomputable def galoisActionOnPoint
   exact toAffine.symm.toAddMonoidHom.comp
     (affineAction.comp toAffine.toAddMonoidHom)
 
+@[simp]
+theorem galoisActionOnPoint_one
+    {F : Type u} [Field F] (X : PuncturedEllipticCurve F) :
+    X.galoisActionOnPoint
+        (1 : AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) =
+      AddMonoidHom.id X.AlgebraicClosurePoint := by
+  classical
+  apply AddMonoidHom.ext
+  intro P
+  let e :=
+    WeierstrassCurve.Projective.Point.toAffineAddEquiv
+      (X.curve.toProjective.baseChange (AlgebraicClosure F))
+  apply e.injective
+  change
+    e (e.symm
+      (WeierstrassCurve.Affine.Point.map
+        (W' := X.curve.toAffine)
+        (1 : AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F).toAlgHom
+        (e P))) = e P
+  rw [e.apply_symm_apply]
+  cases e P <;> rfl
+
+@[simp]
+theorem galoisActionOnPoint_mul
+    {F : Type u} [Field F] (X : PuncturedEllipticCurve F)
+    (sigma tau : AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) :
+    X.galoisActionOnPoint (sigma * tau) =
+      (X.galoisActionOnPoint sigma).comp
+        (X.galoisActionOnPoint tau) := by
+  classical
+  apply AddMonoidHom.ext
+  intro P
+  let e :=
+    WeierstrassCurve.Projective.Point.toAffineAddEquiv
+      (X.curve.toProjective.baseChange (AlgebraicClosure F))
+  apply e.injective
+  change
+    e (e.symm
+      (WeierstrassCurve.Affine.Point.map
+        (W' := X.curve.toAffine) (sigma * tau).toAlgHom (e P))) =
+      e (e.symm
+        (WeierstrassCurve.Affine.Point.map
+          (W' := X.curve.toAffine) sigma.toAlgHom
+          (e (e.symm
+            (WeierstrassCurve.Affine.Point.map
+              (W' := X.curve.toAffine) tau.toAlgHom (e P))))))
+  rw [e.apply_symm_apply, e.apply_symm_apply,
+    e.apply_symm_apply,
+    WeierstrassCurve.Affine.Point.map_map]
+  congr 1
+
+/-- The actual Galois action restricted to the `l`-torsion subgroup. -/
+noncomputable def galoisActionOnLTorsion
+    {F : Type u} [Field F] (X : PuncturedEllipticCurve F)
+    (l : PrimeGeFive)
+    (sigma : AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) :
+    X.LTorsion l →+ X.LTorsion l :=
+  ((X.galoisActionOnPoint sigma).comp
+      (X.LTorsion l).subtype).codRestrict
+    (X.LTorsion l)
+    (fun P => by
+      rw [AddSubgroup.torsionBy.nsmul_iff]
+      rw [← map_nsmul,
+        AddSubgroup.torsionBy.nsmul P, map_zero])
+
+@[simp]
+theorem galoisActionOnLTorsion_coe
+    {F : Type u} [Field F] (X : PuncturedEllipticCurve F)
+    (l : PrimeGeFive)
+    (sigma : AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F)
+    (P : X.LTorsion l) :
+    ((X.galoisActionOnLTorsion l sigma P : X.LTorsion l) :
+        X.AlgebraicClosurePoint) =
+      X.galoisActionOnPoint sigma P :=
+  rfl
+
+/-- The Galois action on `E[l]` as a `ZMod l`-linear equivalence. -/
+noncomputable def galoisActionOnLTorsionLinearEquiv
+    {F : Type u} [Field F] (X : PuncturedEllipticCurve F)
+    (l : PrimeGeFive)
+    (sigma : AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) :
+    X.LTorsion l ≃ₗ[ZMod l.value] X.LTorsion l :=
+  LinearEquiv.ofLinear
+    (AddMonoidHom.toZModLinearMap l.value
+      (X.galoisActionOnLTorsion l sigma))
+    (AddMonoidHom.toZModLinearMap l.value
+      (X.galoisActionOnLTorsion l sigma⁻¹))
+    (by
+      apply LinearMap.ext
+      intro P
+      apply Subtype.ext
+      simp only [LinearMap.comp_apply,
+        AddMonoidHom.coe_toZModLinearMap,
+        galoisActionOnLTorsion_coe,
+        LinearMap.id_apply]
+      rw [← AddMonoidHom.comp_apply,
+        ← X.galoisActionOnPoint_mul]
+      simp)
+    (by
+      apply LinearMap.ext
+      intro P
+      apply Subtype.ext
+      simp only [LinearMap.comp_apply,
+        AddMonoidHom.coe_toZModLinearMap,
+        galoisActionOnLTorsion_coe,
+        LinearMap.id_apply]
+      rw [← AddMonoidHom.comp_apply,
+        ← X.galoisActionOnPoint_mul]
+      simp)
+
+@[simp]
+theorem galoisActionOnLTorsionLinearEquiv_apply
+    {F : Type u} [Field F] (X : PuncturedEllipticCurve F)
+    (l : PrimeGeFive)
+    (sigma : AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F)
+    (P : X.LTorsion l) :
+    X.galoisActionOnLTorsionLinearEquiv l sigma P =
+      X.galoisActionOnLTorsion l sigma P :=
+  rfl
+
+@[simp]
+theorem galoisActionOnLTorsionLinearEquiv_one
+    {F : Type u} [Field F] (X : PuncturedEllipticCurve F)
+    (l : PrimeGeFive) :
+    X.galoisActionOnLTorsionLinearEquiv l
+        (1 : AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) =
+      LinearEquiv.refl (ZMod l.value) (X.LTorsion l) := by
+  apply LinearEquiv.ext
+  intro P
+  apply Subtype.ext
+  simp [galoisActionOnLTorsionLinearEquiv_apply,
+    galoisActionOnLTorsion_coe]
+
+@[simp]
+theorem galoisActionOnLTorsionLinearEquiv_mul
+    {F : Type u} [Field F] (X : PuncturedEllipticCurve F)
+    (l : PrimeGeFive)
+    (sigma tau : AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) :
+    X.galoisActionOnLTorsionLinearEquiv l (sigma * tau) =
+      X.galoisActionOnLTorsionLinearEquiv l sigma *
+        X.galoisActionOnLTorsionLinearEquiv l tau := by
+  apply LinearEquiv.ext
+  intro P
+  apply Subtype.ext
+  change
+    X.galoisActionOnPoint (sigma * tau) P =
+      X.galoisActionOnPoint sigma
+        (X.galoisActionOnPoint tau P)
+  rw [X.galoisActionOnPoint_mul]
+  rfl
+
+/-- The source-defined Galois representation on the actual module `E[l]`. -/
+noncomputable def galoisActionOnLTorsionLinearEquivHom
+    {F : Type u} [Field F] (X : PuncturedEllipticCurve F)
+    (l : PrimeGeFive) :
+    (AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) →*
+      (X.LTorsion l ≃ₗ[ZMod l.value] X.LTorsion l) where
+  toFun := X.galoisActionOnLTorsionLinearEquiv l
+  map_one' := X.galoisActionOnLTorsionLinearEquiv_one l
+  map_mul' := X.galoisActionOnLTorsionLinearEquiv_mul l
+
+/-- The same representation as an element of the module general linear group. -/
+noncomputable def galoisActionOnLTorsionGeneralLinearRepresentation
+    {F : Type u} [Field F] (X : PuncturedEllipticCurve F)
+    (l : PrimeGeFive) :
+    (AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) →*
+      LinearMap.GeneralLinearGroup (ZMod l.value) (X.LTorsion l) :=
+  (LinearMap.GeneralLinearGroup.generalLinearEquiv
+      (ZMod l.value) (X.LTorsion l)).symm.toMonoidHom.comp
+    (X.galoisActionOnLTorsionLinearEquivHom l)
+
 end PuncturedEllipticCurve
 
 /--
@@ -4060,6 +4231,44 @@ theorem badLocalModelCanonicalGeneratorUpToSign
 end ThetaCuspLocalData
 
 /--
+The matrix representation determined by the actual Galois action on `E[l]`
+and a chosen `ZMod l` basis. The two changes of coordinates are canonical:
+first from `E[l]` to the coordinate module, then from linear automorphisms to
+invertible matrices.
+-/
+noncomputable def PuncturedEllipticCurve.galoisLTorsionMatrixRepresentation
+    (l : PrimeGeFive) {F : Type u} [Field F]
+    (X : PuncturedEllipticCurve F)
+    (basis :
+      (Fin 2 → ZMod l.value) ≃ₗ[ZMod l.value] X.LTorsion l) :
+    (AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) →*
+      Matrix.GeneralLinearGroup (Fin 2) (ZMod l.value) :=
+  Matrix.GeneralLinearGroup.toLin.symm.toMonoidHom.comp
+    ((LinearMap.GeneralLinearGroup.congrLinearEquiv basis).symm.toMonoidHom.comp
+      (X.galoisActionOnLTorsionGeneralLinearRepresentation l))
+
+/-- The basis-transported matrix representation acts by the source Galois action. -/
+theorem PuncturedEllipticCurve.galoisLTorsionMatrixRepresentation_acts
+    (l : PrimeGeFive) {F : Type u} [Field F]
+    (X : PuncturedEllipticCurve F)
+    (basis :
+      (Fin 2 → ZMod l.value) ≃ₗ[ZMod l.value] X.LTorsion l)
+    (sigma : AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F)
+    (coordinates : Fin 2 → ZMod l.value) :
+    ((basis
+        ((Matrix.GeneralLinearGroup.toLin
+          (X.galoisLTorsionMatrixRepresentation l basis sigma)).toLinearEquiv
+            coordinates) : X.LTorsion l) : X.AlgebraicClosurePoint) =
+      X.galoisActionOnPoint sigma (basis coordinates) := by
+  simp [galoisLTorsionMatrixRepresentation,
+    galoisActionOnLTorsionGeneralLinearRepresentation,
+    galoisActionOnLTorsionLinearEquivHom,
+    LinearMap.GeneralLinearGroup.generalLinearEquiv,
+    LinearMap.GeneralLinearGroup.congrLinearEquiv_apply,
+    galoisActionOnLTorsionLinearEquiv_apply,
+    galoisActionOnLTorsion_coe]
+
+/--
 The mod-`l` representation and embedded kernel field in IUT I,
 Definition 3.1(c).
 
@@ -4074,23 +4283,38 @@ structure ThetaLTorsionRepresentationData
   kEmbedding : K →ₐ[F] AlgebraicClosure F
   torsionBasis :
     (Fin 2 → ZMod l.value) ≃ₗ[ZMod l.value] X.LTorsion l
-  representation :
-    (AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) →*
-      Matrix.GeneralLinearGroup (Fin 2) (ZMod l.value)
   representation_continuous :
-    Continuous representation
-  representation_acts_on_torsion :
-    ∀ sigma coordinates,
-      ((torsionBasis
-        ((Matrix.GeneralLinearGroup.toLin (representation sigma)).toLinearEquiv
-          coordinates) : X.LTorsion l) : X.AlgebraicClosurePoint) =
-        X.galoisActionOnPoint sigma (torsionBasis coordinates)
+    Continuous
+      (X.galoisLTorsionMatrixRepresentation l torsionBasis)
 
 namespace ThetaLTorsionRepresentationData
 
 variable {l : PrimeGeFive} {F K : Type u}
 variable [Field F] [Field K] [Algebra F K]
 variable {X : PuncturedEllipticCurve F}
+
+/--
+The mod-`l` representation is constructed from the actual Galois action and the
+chosen torsion basis; it is no longer an independently supplied field.
+-/
+noncomputable def representation
+    (data : ThetaLTorsionRepresentationData l F K X) :
+    (AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F) →*
+      Matrix.GeneralLinearGroup (Fin 2) (ZMod l.value) :=
+  X.galoisLTorsionMatrixRepresentation l data.torsionBasis
+
+theorem representation_acts_on_torsion
+    (data : ThetaLTorsionRepresentationData l F K X)
+    (sigma : AlgebraicClosure F ≃ₐ[F] AlgebraicClosure F)
+    (coordinates : Fin 2 → ZMod l.value) :
+    ((data.torsionBasis
+        ((Matrix.GeneralLinearGroup.toLin
+          (data.representation sigma)).toLinearEquiv coordinates) :
+            X.LTorsion l) : X.AlgebraicClosurePoint) =
+      X.galoisActionOnPoint sigma
+        (data.torsionBasis coordinates) :=
+  X.galoisLTorsionMatrixRepresentation_acts
+    l data.torsionBasis sigma coordinates
 
 /-- The kernel subgroup of the mod-`l` representation. -/
 noncomputable def kernelSubgroup

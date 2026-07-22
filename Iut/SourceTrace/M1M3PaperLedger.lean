@@ -422,10 +422,14 @@ def m1m3PaperLedger : List PaperClause :=
       "Inside the selected Fbar, the embedded j-generated moduli field is proved equal to the fixed field of its geometric-j automorphism stabilizer, fixing j is proved equivalent to an actual Weierstrass change of variables with the conjugate curve, and Fsol is the compositum there of all finite solvable Galois layers over Fmod. Transporting this comparison to the punctured scheme/stack and deriving the bad locus remain open.",
     clause "I.3.1(c).torsion" .iutI "IUT I, Definition 3.1(c): mod-l representation and kernel field"
       ["ThetaLTorsionRepresentationData",
+        "PuncturedEllipticCurve.galoisActionOnLTorsionLinearEquiv",
+        "PuncturedEllipticCurve.galoisActionOnLTorsionLinearEquivHom",
+        "PuncturedEllipticCurve.galoisLTorsionMatrixRepresentation",
+        "ThetaLTorsionRepresentationData.representation_acts_on_torsion",
         "ThetaLTorsionRepresentationData.kernelFixedField",
         "ThetaLTorsionRepresentationData.embeddedK",
         "ThetaFieldTower"] .partialImplementation
-      "The continuous Krull-to-discrete representation is constrained by a basis of the actual elliptic l-torsion and its Galois action, and embedded K is required to equal the kernel's fixed intermediate field; construction of these witnesses for the chosen curve remains open.",
+      "The Galois action on algebraic-closure points is proved multiplicative, restricted to actual elliptic l-torsion, promoted to ZMod-l linear equivalences, and transported through the chosen basis to a derived GL2 representation. Neither the representation nor its action law can be supplied independently. Krull continuity of this derived map, existence of the chosen basis, and identification of embedded K with the kernel fixed field remain source obligations.",
     clause "I.3.1(c).residue" .iutI "IUT I, Definition 3.1(c): residue characteristics and q-orders"
       ["ThetaValuationData", "ThetaTateParameterData",
         "ThetaTateParameterData.order",

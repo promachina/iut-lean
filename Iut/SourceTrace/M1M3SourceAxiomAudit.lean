@@ -27,6 +27,10 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceTorsionCyclotomicCommMonoid.rootsOfUnityGroup_natCard
 #print axioms Iut.PuncturedEllipticCurveScalarExtension.curve_eq_baseChange
 #print axioms Iut.PuncturedEllipticCurveScalarExtension.result_puncture_eq_origin
+#print axioms Iut.PuncturedEllipticCurve.galoisActionOnPoint_mul
+#print axioms Iut.PuncturedEllipticCurve.galoisActionOnLTorsionLinearEquiv_mul
+#print axioms Iut.PuncturedEllipticCurve.galoisLTorsionMatrixRepresentation_acts
+#print axioms Iut.ThetaLTorsionRepresentationData.representation_acts_on_torsion
 #print axioms Iut.SourceMonoidCyclotome.boundedCoe_isClosedEmbedding
 #print axioms Iut.SourceMonoidCyclotome.asProfinite
 #print axioms Iut.SourceMonoidCyclotome.eq_one_of_roots
