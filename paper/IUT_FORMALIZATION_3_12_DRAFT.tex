@@ -1115,9 +1115,12 @@ closed tensor lattice; at infinite places Lean proves that it is the
 radius-\(\pi\) ball of the same packet's Hermitian tensor metric.  Thus neither
 the abstract Ind3 system nor its concrete lattice constructor accepts an
 arbitrary radius-\(\pi\) set or an unrelated metric witness.  At a finite
-place, the explicit compact invariant local-unit groups and their \(p\)-adic
-logarithms now construct factorwise unit-log direct sums, pure tensors, and the
-generated packet subgroup.  Lean proves that subgroup lies in the closed
+place, each explicit local-unit group carries a continuous profinite Galois
+action, and its invariant-unit type is definitionally the subgroup fixed by
+every Galois element, not an arbitrary compact type with an invariant name.
+The resulting compact fixed subgroups and their \(p\)-adic logarithms construct
+factorwise unit-log direct sums, pure tensors, and the generated packet
+subgroup.  Lean proves that subgroup lies in the closed
 tensor lattice and that vertical Kummer transport preserves it exactly; the
 concrete Ind3 constructor therefore derives direct finite-place containment
 instead of accepting an arbitrary packet subgroup and containment proof.  The

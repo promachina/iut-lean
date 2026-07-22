@@ -370,6 +370,7 @@ end Iut.SourceInfiniteLocalFieldStages
 #print axioms Iut.sourcePStar_pos
 #print axioms Iut.sourcePStar_ne_zero
 #print axioms Iut.SourceRationalPlace.residuePrime_prime
+#print axioms Iut.SourceNonarchimedeanLogShellDefinition.invariantLocalUnits_fixed
 #print axioms Iut.SourceNonarchimedeanLogShellDefinition.preLogShell_isCompact
 #print axioms Iut.SourceNonarchimedeanLogShellDefinition.Transport.preLogShell_image
 #print axioms Iut.SourceArchimedeanLogShellDefinition.lowerEndpoint_mem

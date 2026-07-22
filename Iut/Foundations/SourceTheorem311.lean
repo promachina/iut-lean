@@ -3625,23 +3625,63 @@ theorem sourcePStar_ne_zero {residuePrime : ℕ}
     (hprime : residuePrime.Prime) : sourcePStar residuePrime ≠ 0 :=
   (sourcePStar_pos hprime).ne'
 
+/-- The literal subgroup fixed by every element of a Galois action. -/
+def SourceGaloisFixedLocalUnits
+    (G U : Type u) [Group G] [CommGroup U]
+    (action : G →* MulAut U) : Subgroup U where
+  carrier := {unit | ∀ g, action g unit = unit}
+  one_mem' g := map_one (action g)
+  mul_mem' := by
+    intro first second hfirst hsecond g
+    rw [map_mul, hfirst g, hsecond g]
+  inv_mem' := by
+    intro unit hunit g
+    rw [map_inv, hunit g]
+
+/-- A topological local-unit group with its continuous profinite Galois action. -/
+structure SourceGaloisLocalUnitData where
+  galois : ProfiniteGrp.{u}
+  localUnits : Type u
+  [localUnitsCommGroup : CommGroup localUnits]
+  [localUnitsTopology : TopologicalSpace localUnits]
+  [localUnitsTopologicalGroup : IsTopologicalGroup localUnits]
+  galoisAction : galois →* MulAut localUnits
+  galoisAction_continuous :
+    Continuous (fun pair : galois × localUnits => galoisAction pair.1 pair.2)
+  [invariantLocalUnitsCompactSpace :
+    CompactSpace
+      (SourceGaloisFixedLocalUnits galois localUnits galoisAction)]
+
+namespace SourceGaloisLocalUnitData
+
+attribute [instance]
+  SourceGaloisLocalUnitData.localUnitsCommGroup
+  SourceGaloisLocalUnitData.localUnitsTopology
+  SourceGaloisLocalUnitData.localUnitsTopologicalGroup
+
+/-- The fixed subgroup, derived from the action rather than separately supplied. -/
+abbrev invariantLocalUnits (data : SourceGaloisLocalUnitData.{u}) :=
+  SourceGaloisFixedLocalUnits data.galois data.localUnits data.galoisAction
+
+attribute [instance]
+  SourceGaloisLocalUnitData.invariantLocalUnitsCompactSpace
+
+end SourceGaloisLocalUnitData
+
 /--
 The finite-place construction in IUT III, Definition 1.1(i), and Remark
-1.2.2(i).  The local-unit group and its p-adic logarithm are explicit source
-obligations; the final equation says literally `I = (p*)^-1 * I*`.
+1.2.2(i).  The local-unit group carries its actual profinite Galois action;
+the logarithm is defined on the derived fixed subgroup, not on an arbitrarily
+named invariant type.  The final equation says literally
+`I = (p*)^-1 * I*`.
 -/
 structure SourceNonarchimedeanLogShellDefinition
     (M : SourceTopologicalQModule.{u})
     (integral : SourceNonarchimedeanIntegralStructure M) where
   residuePrime : ℕ
   residuePrime_prime : residuePrime.Prime
-  invariantLocalUnits : Type u
-  [invariantLocalUnitsCommGroup : CommGroup invariantLocalUnits]
-  [invariantLocalUnitsTopology : TopologicalSpace invariantLocalUnits]
-  [invariantLocalUnitsTopologicalGroup :
-    IsTopologicalGroup invariantLocalUnits]
-  [invariantLocalUnitsCompactSpace : CompactSpace invariantLocalUnits]
-  padicLog : invariantLocalUnits →* Multiplicative M
+  localUnitData : SourceGaloisLocalUnitData.{u}
+  padicLog : localUnitData.invariantLocalUnits →* Multiplicative M
   padicLog_continuous : Continuous (fun unit => (padicLog unit).toAdd)
   preLogShell : AddSubgroup M
   preLogShell_eq_logRange :
@@ -3653,17 +3693,24 @@ structure SourceNonarchimedeanLogShellDefinition
       value ∈ integral.lattice ↔
         ((sourcePStar residuePrime : ℚ) • value) ∈ preLogShell
 
-attribute [instance]
-  SourceNonarchimedeanLogShellDefinition.invariantLocalUnitsCommGroup
-  SourceNonarchimedeanLogShellDefinition.invariantLocalUnitsTopology
-  SourceNonarchimedeanLogShellDefinition.invariantLocalUnitsTopologicalGroup
-  SourceNonarchimedeanLogShellDefinition.invariantLocalUnitsCompactSpace
-
 namespace SourceNonarchimedeanLogShellDefinition
 
 variable {M N : SourceTopologicalQModule.{u}}
 variable {integralM : SourceNonarchimedeanIntegralStructure M}
 variable {integralN : SourceNonarchimedeanIntegralStructure N}
+
+/-- The local units fixed by the complete profinite Galois action. -/
+abbrev invariantLocalUnits
+    (definition : SourceNonarchimedeanLogShellDefinition M integralM) :=
+  definition.localUnitData.invariantLocalUnits
+
+/-- Every unit in the logarithm domain is genuinely Galois fixed. -/
+theorem invariantLocalUnits_fixed
+    (definition : SourceNonarchimedeanLogShellDefinition M integralM)
+    (unit : definition.invariantLocalUnits)
+    (g : definition.localUnitData.galois) :
+    definition.localUnitData.galoisAction g unit.1 = unit.1 :=
+  unit.2 g
 
 /-- Compactness of the pre-log-shell follows from compact local units and continuity. -/
 theorem preLogShell_isCompact
