@@ -1956,6 +1956,11 @@ structure SourceFMonoAnalyticPrimeStrip
       SplitFrobenioidEquivalence
         (nonarchimedean v)
         (models.nonarchimedean v).fTildeSplit
+  nonarchimedeanEquivalenceFromModel :
+    ∀ v,
+      SplitFrobenioidEquivalence
+        (models.nonarchimedean v).fTildeSplit
+        (nonarchimedean v)
   archimedean :
     SourceSelectedInfinitePlace theta ->
       ArchimedeanSplitFrobenioidPresentation.{u}
@@ -1964,6 +1969,11 @@ structure SourceFMonoAnalyticPrimeStrip
       ArchimedeanSplitFrobenioidEquivalence
         (archimedean v)
         (models.archimedean v).fTildeMonoAnalytic
+  archimedeanEquivalenceFromModel :
+    ∀ v,
+      ArchimedeanSplitFrobenioidEquivalence
+        (models.archimedean v).fTildeMonoAnalytic
+        (archimedean v)
 
 /--
 A globally realified mono-analytic F-prime-strip from IUT I,
@@ -2177,8 +2187,10 @@ The structure-preserving transport needed before the mono-analytic
 
 The bare equivalences between the `F^tilde` carrier categories stored by the
 theater do not determine the rational-monoid transport, the characteristic
-splittings, or the selected archimedean splitting.  IUT II, Corollaries 4.5
-and 4.6, construct precisely this stronger data.
+splittings, or the selected archimedean splitting.  Both directions of the
+structure-preserving comparison are retained so that full theta-link members
+can be composed through the common model.  IUT II, Corollaries 4.5 and 4.6,
+construct precisely this stronger data.
 -/
 structure MonoAnalyticTransport
     {Fmod F K : Type u}
@@ -2197,6 +2209,11 @@ structure MonoAnalyticTransport
       SplitFrobenioidEquivalence
         (theater.nonarchimedean v).fTildeSplit
         (models.nonarchimedean v).fTildeSplit
+  nonarchimedeanFromModel :
+    ∀ v,
+      SplitFrobenioidEquivalence
+        (models.nonarchimedean v).fTildeSplit
+        (theater.nonarchimedean v).fTildeSplit
   nonarchimedean_carrier_compatible :
     ∀ v,
       (nonarchimedean v).carrier.functor ⋙
@@ -2208,6 +2225,11 @@ structure MonoAnalyticTransport
       ArchimedeanSplitFrobenioidEquivalence
         (theater.archimedean v).fTildeMonoAnalytic
         (models.archimedean v).fTildeMonoAnalytic
+  archimedeanFromModel :
+    ∀ v,
+      ArchimedeanSplitFrobenioidEquivalence
+        (models.archimedean v).fTildeMonoAnalytic
+        (theater.archimedean v).fTildeMonoAnalytic
   archimedean_carrier_compatible :
     ∀ v,
       (archimedean v).frobenioid.carrier.functor ⋙
@@ -2237,10 +2259,14 @@ def associatedFMonoAnalytic
     (theater.nonarchimedean v).fTildeSplit
   nonarchimedeanEquivalence v :=
     transport.nonarchimedean v
+  nonarchimedeanEquivalenceFromModel v :=
+    transport.nonarchimedeanFromModel v
   archimedean v :=
     (theater.archimedean v).fTildeMonoAnalytic
   archimedeanEquivalence v :=
     transport.archimedean v
+  archimedeanEquivalenceFromModel v :=
+    transport.archimedeanFromModel v
 
 end SourceThetaHodgeTheater
 

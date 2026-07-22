@@ -277,16 +277,14 @@ structure SourceTheorem311HorizontalCorridorBoundary
   adjacentColumns : right.column = left.column + 1
   timesMuConstruction :
     SourceTheorem311TimesMuPrimeStripConstruction left.lattice
+  timesMuHorizontalCoricity :
+    SourceTheorem15TimesMuHorizontalCoricity timesMuConstruction
   environmentMonoAnalyticPrimeStrips :
     SourceTheorem311EnvironmentMonoAnalyticPrimeStripFamily
       timesMuConstruction
   monoThetaSystems :
     SourceTheorem311MonoThetaProjectiveSystemFamily
       (SourceSelectedBadPlace theta)
-  primeStripClauseA :
-    ∀ site,
-      SourceTheorem311TimesMuTrianglePrimeStripSquare
-        timesMuConstruction.toFamily left.column site
   monoThetaClauseC :
     ∀ (site : ℤ) (place : SourceSelectedBadPlace theta),
       SourceTheorem311MonoThetaProjectiveSystemSquare
@@ -350,6 +348,18 @@ def environmentPrimeStrips
     SourceTheorem311EnvironmentTimesMuPrimeStripFamily
       boundary.timesMuConstruction.toFamily :=
   boundary.environmentMonoAnalyticPrimeStrips.toTimesMu
+
+/--
+Clause (iii)(a), derived from the mono-analytic theta link, Corollary 4.10(iv)
+fullness, and the two-sided Theorem 1.5 Kummer comparisons.
+-/
+noncomputable def primeStripClauseA
+    (boundary : SourceTheorem311HorizontalCorridorBoundary models)
+    (site : ℤ) :
+    SourceTheorem311TimesMuTrianglePrimeStripSquare
+      boundary.timesMuPrimeStrips boundary.left.column site :=
+  boundary.timesMuHorizontalCoricity.toTriangleSquare
+    boundary.left.column site
 
 /-- The right column theater is propositionally the successor endpoint. -/
 theorem right_theater_eq

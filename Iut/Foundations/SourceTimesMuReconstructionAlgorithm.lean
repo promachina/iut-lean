@@ -79,6 +79,20 @@ def trans
   archimedean v := (first.archimedean v).trans (second.archimedean v)
 
 /--
+The canonical member of the full mono-analytic theta link, obtained by
+transporting both exact theater strips through their common source model.
+-/
+def canonical
+    (source target : SourceFMonoAnalyticPrimeStrip models) :
+    SourceFMonoAnalyticPrimeStripEquivalence source target where
+  finite v :=
+    (source.nonarchimedeanEquivalence v).trans
+      (target.nonarchimedeanEquivalenceFromModel v)
+  archimedean v :=
+    (source.archimedeanEquivalence v).trans
+      (target.archimedeanEquivalenceFromModel v)
+
+/--
 Natural isomorphism of mono-analytic prime-strip equivalences.  Only the
 categorical equivalence coordinates are coarsified; the other structural maps
 remain pointwise coordinates of the component relations.
@@ -237,6 +251,13 @@ def ofEquivalence
 def id (source : SourceFMonoAnalyticPrimeStrip models) :
     SourceFMonoAnalyticPrimeStripFullPolyIsomorphism source source :=
   ofEquivalence (SourceFMonoAnalyticPrimeStripEquivalence.refl source)
+
+/-- The canonical member of the full theta-link poly-isomorphism. -/
+def canonical
+    (source target : SourceFMonoAnalyticPrimeStrip models) :
+    SourceFMonoAnalyticPrimeStripFullPolyIsomorphism source target :=
+  ofEquivalence
+    (SourceFMonoAnalyticPrimeStripEquivalence.canonical source target)
 
 /-- Composition of full poly-isomorphisms. -/
 def comp
