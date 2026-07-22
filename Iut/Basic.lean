@@ -18,6 +18,7 @@ import Iut.Foundations.SourceInitialThetaData
 import Iut.Foundations.SourceMonoThetaEnvironment
 import Iut.Foundations.ContinuousH1
 import Iut.Foundations.SourceThetaEvaluation
+import Iut.Foundations.SourceSplitKummerFrobenioid
 import Iut.Foundations.SourceThetaSplitting
 import Iut.Foundations.SourceConjugateSynchronization
 import Iut.Foundations.SourceHodgeArakelovEvaluation

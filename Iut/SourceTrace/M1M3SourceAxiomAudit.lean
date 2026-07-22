@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: IUT Lean formalization contributors
 -/
 import Iut.Foundations.SourceHodgeArakelovEvaluation
+import Iut.Foundations.SourceSplitKummerFrobenioid
 import Iut.Foundations.SourceTheorem311
 
 open Iut
@@ -37,6 +38,9 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceMLFGaloisTMPair.unitModuloTorsionActionMulAut_mk
 #print axioms Iut.SourceMLFGaloisTMPair.TimesMuKummerIsomorphism.sourceDifference_smul_first
 #print axioms Iut.SourceMLFGaloisTMPair.TimesMuKummerIsomorphism.orbitOf_eq
+#print axioms Iut.SourceSplitKummerMonoid.unitQuotient_isUnit_eq_one
+#print axioms Iut.SourceMLFGaloisTMPair.badTimesMuUnitsEquiv
+#print axioms Iut.SourceMLFGaloisTMPair.goodTimesMuUnitsEquiv
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.quotientUnit_exists
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootRealization.ofRootSystem

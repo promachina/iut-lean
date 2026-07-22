@@ -769,6 +769,18 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceMLFGaloisTMPair.TimesMuKummerIsomorphism.orbitOf_eq"]
       .partialImplementation
       "For the literal MLF-Galois model, O-times-mu is the actual quotient of the arithmetic-monoid units by their full torsion subgroup, and the quotient map is proved to kill exactly torsion. The Galois action descends to this quotient. For every Krull-open subgroup H, I_H^kappa is the image of the actual H-fixed unit subgroup. Ism is the subgroup of equivariant quotient automorphisms preserving every such invariant image. A times-mu Kummer structure is the resulting orbit of compatible isomorphisms, and any two compatible representatives are proved to lie in the same orbit. The intrinsic ind-topology and the split Kummer Frobenioids of Definition 4.9(ii)-(v) remain open.",
+    clause "II.4.9(ii-iv)" .iutII "IUT II, Definition 4.9(ii)-(iv)"
+      ["SourceSplitKummerMonoid.unitCongruence",
+        "SourceSplitKummerMonoid.unitQuotient_isUnit_eq_one",
+        "SourceMLFGaloisTMPair.TwoEllRootsOfUnity",
+        "SourceMLFGaloisTMPair.badPerpMonoid",
+        "SourceMLFGaloisTMPair.badCharacteristicQuotient",
+        "SourceMLFGaloisTMPair.badTimesMuMonoid",
+        "SourceMLFGaloisTMPair.goodTimesMuMonoid",
+        "SourceMLFGaloisTMPair.badTimesMuUnitsEquiv",
+        "SourceMLFGaloisTMPair.goodTimesMuUnitsEquiv"]
+      .partialImplementation
+      "At a bad finite place, O-perp is the actual join of the splitting image with mu_(2l), O-square is its exact multiplicative-congruence quotient by mu_(2l), and O^(square times-mu) is the literal product with O^(times-mu). At a good finite place the literal product uses the splitting image directly. Injectivity of unit-characteristic factorization proves that no new units survive in the characteristic factor, yielding explicit equivalences between all units of each product and O^(times-mu). The natural G-actions, the model-Frobenioid reconstruction of Frobenioids I Theorem 5.2(ii), and attachment of the Kummer orbit remain open.",
     clause "II.4.9(vi-viii)" .iutII "IUT II, Definition 4.9(vi)-(viii)"
       ["ToyIUTIIQPilot", "ToyIUTIIThetaPilot"] .toyModel
       "Numerical q-orders and square weights do not define the realized Frobenioid pilot objects and prime strips.",
@@ -1355,8 +1367,8 @@ def clauseIdsWithStatus (status : ClauseStatus) : List String :=
   m1m3PaperLedger.filterMap fun entry =>
     if entry.status = status then some entry.id else none
 
-/-- The source-closure ledger contains 103 separately audited clauses. -/
-theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 103 :=
+/-- The source-closure ledger contains 104 separately audited clauses. -/
+theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 104 :=
   rfl
 
 /-- No source clause occurs twice in the direct-citation ledger. -/
@@ -1364,9 +1376,9 @@ theorem m1m3PaperLedger_ids_nodup :
     (m1m3PaperLedger.map PaperClause.id).Nodup := by
   decide
 
-/-- Seventy-eight clauses currently have a genuine but incomplete implementation. -/
+/-- Seventy-nine clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 78 :=
+    (clauseIdsWithStatus .partialImplementation).length = 79 :=
   rfl
 
 /-- Five clauses currently point only to explicitly classified toy models. -/
