@@ -718,6 +718,202 @@ theorem commonPreSteps
     · change IsIso baseIso.hom
       infer_instance
 
+theorem pullbackComparisonTarget_ext
+    {source target test : Carrier Phi data}
+    {arrow : Hom Phi data source target}
+    {left right : (preFrobenioid Phi data).PullbackComparisonTarget
+      arrow test}
+    (toCodomain : left.toCodomain = right.toCodomain)
+    (toBaseDomain : left.toBaseDomain = right.toBaseDomain) :
+    left = right := by
+  cases left
+  cases right
+  cases toCodomain
+  cases toBaseDomain
+  rfl
+
+/-- The literal pullback of a model object along a base arrow. -/
+def pullbackObject (target : Carrier Phi data) {X : D}
+    (f : X ⟶ Object.base target) : Carrier Phi data where
+  base := X
+  divisorClass := gpPullback Phi f target.divisorClass
+
+/-- The canonical model arrow from a literal pullback object. -/
+def pullbackArrow (target : Carrier Phi data) {X : D}
+    (f : X ⟶ Object.base target) :
+    Hom Phi data (pullbackObject Phi data target f) target where
+  frobeniusDegree := 1
+  base := f
+  divisor := 0
+  rationalFunction := 0
+  balance := by
+    dsimp only [pullbackObject]
+    change (1 : ℕ) • gpPullback Phi f target.divisorClass +
+        Algebra.GrothendieckAddGroup.of
+          (0 : (Phi.obj X).carrier) =
+      gpPullback Phi f target.divisorClass + data.divisor X 0
+    simp only [map_zero, add_zero, one_nsmul]
+
+/-- The canonical model arrow realizes the representable-functor pullback
+over its base arrow, as required by Definition 1.2(ii). -/
+theorem pullbackArrow_isPullback (target : Carrier Phi data) {X : D}
+    (f : X ⟶ Object.base target) :
+    (preFrobenioid Phi data).IsPullback
+      (pullbackArrow Phi data target f) := by
+  intro test
+  constructor
+  · intro left right equality
+    have compositeEquality :
+        left ≫ pullbackArrow Phi data target f =
+          right ≫ pullbackArrow Phi data target f :=
+      congrArg
+        PreFrobenioid.PullbackComparisonTarget.toCodomain equality
+    have baseEquality : left.base = right.base :=
+      congrArg PreFrobenioid.PullbackComparisonTarget.toBaseDomain equality
+    have degreeEquality :
+        left.frobeniusDegree = right.frobeniusDegree := by
+      have projected := congrArg Hom.frobeniusDegree compositeEquality
+      change left.frobeniusDegree * 1 = right.frobeniusDegree * 1 at projected
+      simpa using projected
+    have divisorEquality : left.divisor = right.divisor := by
+      have projected := congrArg Hom.divisor compositeEquality
+      change Phi.pullback left.base 0 + 1 • left.divisor =
+        Phi.pullback right.base 0 + 1 • right.divisor at projected
+      rw [one_nsmul, one_nsmul] at projected
+      simpa using projected
+    have rationalFunctionEquality :
+        left.rationalFunction = right.rationalFunction := by
+      have projected := congrArg Hom.rationalFunction compositeEquality
+      change data.rationalFunctions.pullback left.base 0 +
+          1 • left.rationalFunction =
+        data.rationalFunctions.pullback right.base 0 +
+          1 • right.rationalFunction at projected
+      rw [one_nsmul, one_nsmul] at projected
+      simpa using projected
+    exact Hom.ext degreeEquality baseEquality divisorEquality
+      rationalFunctionEquality
+  · intro comparison
+    let lift : Hom Phi data test (pullbackObject Phi data target f) :=
+      { frobeniusDegree := comparison.toCodomain.frobeniusDegree
+        base := comparison.toBaseDomain
+        divisor := comparison.toCodomain.divisor
+        rationalFunction := comparison.toCodomain.rationalFunction
+        balance := by
+          dsimp only [pullbackObject]
+          change _ =
+            ((gpPullback Phi comparison.toBaseDomain).comp
+                (gpPullback Phi f)) target.divisorClass + _
+          rw [← gpPullback_comp]
+          have baseCommutes := comparison.commutes
+          change comparison.toCodomain.base =
+            comparison.toBaseDomain ≫ f at baseCommutes
+          rw [← baseCommutes]
+          exact comparison.toCodomain.balance }
+    refine ⟨lift, ?_⟩
+    apply pullbackComparisonTarget_ext Phi data
+    · change lift ≫ pullbackArrow Phi data target f =
+        comparison.toCodomain
+      apply Hom.ext
+      · simp [lift, pullbackArrow]
+      · exact comparison.commutes.symm
+      · rw [comp_divisor Phi data lift
+          (pullbackArrow Phi data target f)]
+        simp only [lift, pullbackArrow, map_zero, zero_add]
+        have degreeOne : (1 : ℕ+).val = (1 : ℕ) := rfl
+        rw [degreeOne, one_nsmul]
+      · rw [comp_rationalFunction Phi data lift
+          (pullbackArrow Phi data target f)]
+        simp only [lift, pullbackArrow, map_zero, zero_add]
+        have degreeOne : (1 : ℕ+).val = (1 : ℕ) := rfl
+        rw [degreeOne, one_nsmul]
+    · rfl
+
+theorem pullbackSliceHom_ext {target : Carrier Phi data}
+    {leftObject rightObject :
+      PreFrobenioid.PullbackSliceObject target}
+    {left right : PreFrobenioid.PullbackSliceHom
+      leftObject rightObject}
+    (hom : left.hom = right.hom) : left = right := by
+  cases left
+  cases right
+  cases hom
+  rfl
+
+theorem baseSliceHom_ext {target : Carrier Phi data}
+    {leftObject rightObject :
+      (preFrobenioid Phi data).BaseSliceObject target}
+    {left right : (preFrobenioid Phi data).BaseSliceHom
+      leftObject rightObject}
+    (hom : left.hom = right.hom) : left = right := by
+  cases left
+  cases right
+  cases hom
+  rfl
+
+/-- Projection from pullback slices is fully faithful because the codomain
+pullback arrow has its representable universal property. -/
+theorem pullbackSliceProjection_bijective
+    {target : Carrier Phi data}
+    (leftObject rightObject :
+      PreFrobenioid.PullbackSliceObject target)
+    (rightPullback :
+      (preFrobenioid Phi data).IsPullback rightObject.hom) :
+    Function.Bijective
+      (fun f : PreFrobenioid.PullbackSliceHom
+          leftObject rightObject ↦
+        PreFrobenioid.PullbackSliceHom.toBase
+          (preFrobenioid Phi data) f) := by
+  constructor
+  · intro left right baseEquality
+    apply pullbackSliceHom_ext Phi data
+    apply (rightPullback leftObject.source).1
+    apply pullbackComparisonTarget_ext Phi data
+    · change left.hom ≫ rightObject.hom =
+          right.hom ≫ rightObject.hom
+      rw [left.commutes, right.commutes]
+    · exact congrArg PreFrobenioid.BaseSliceHom.hom baseEquality
+  · intro baseMap
+    let comparison :
+        (preFrobenioid Phi data).PullbackComparisonTarget
+          rightObject.hom leftObject.source :=
+      { toCodomain := leftObject.hom
+        toBaseDomain := baseMap.hom
+        commutes := by
+          exact baseMap.commutes.symm }
+    rcases (rightPullback leftObject.source).2 comparison with
+      ⟨hom, homComparison⟩
+    have commutes := congrArg
+      PreFrobenioid.PullbackComparisonTarget.toCodomain homComparison
+    change hom ≫ rightObject.hom = leftObject.hom at commutes
+    let lift : PreFrobenioid.PullbackSliceHom
+        leftObject rightObject :=
+      { hom := hom
+        commutes := commutes }
+    refine ⟨lift, ?_⟩
+    apply baseSliceHom_ext Phi data
+    exact congrArg
+      PreFrobenioid.PullbackComparisonTarget.toBaseDomain homComparison
+
+/-- Definition 1.3(i)(c): pullback arrows over a model object form a category
+equivalent to the base slice over that object's base. -/
+theorem pullbackBaseSlices (target : Carrier Phi data) :
+    (preFrobenioid Phi data).PullbackBaseSliceEquivalence target where
+  essentiallySurjective baseObject := by
+    let sliceObject :
+        PreFrobenioid.PullbackSliceObject target :=
+      { source := pullbackObject Phi data target baseObject.hom
+        hom := pullbackArrow Phi data target baseObject.hom }
+    refine ⟨sliceObject,
+      pullbackArrow_isPullback Phi data target baseObject.hom, ⟨?_⟩⟩
+    refine
+      { iso := Iso.refl baseObject.source
+        hom_commutes := ?_ }
+    change 𝟙 baseObject.source ≫ baseObject.hom = baseObject.hom
+    simp
+  fullyFaithful leftObject rightObject _ rightPullback :=
+    pullbackSliceProjection_bijective Phi data leftObject rightObject
+      rightPullback
+
 /--
 The explicit inverse to a linear, base-isomorphic, isometric model arrow.
 Its rational-function component is the negative pullback of the original one.

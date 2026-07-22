@@ -69,6 +69,9 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceModelFrobenioid.Carrier.commonLower_add_right
 #print axioms Iut.SourceModelFrobenioid.Carrier.localizationRepresentative
 #print axioms Iut.SourceModelFrobenioid.Carrier.commonPreSteps
+#print axioms Iut.SourceModelFrobenioid.Carrier.pullbackArrow_isPullback
+#print axioms Iut.SourceModelFrobenioid.Carrier.pullbackSliceProjection_bijective
+#print axioms Iut.SourceModelFrobenioid.Carrier.pullbackBaseSlices
 #print axioms Iut.SourceModelFrobenioid.Carrier.value_eq_zeroObject
 #print axioms Iut.SourceModelFrobenioid.Carrier.isConnected
 #print axioms Iut.SourceModelFrobenioid.Carrier.epi

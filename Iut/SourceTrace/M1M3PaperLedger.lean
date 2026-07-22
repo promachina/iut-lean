@@ -188,6 +188,11 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceModelFrobenioid.Carrier.commonLower_add_right",
         "SourceModelFrobenioid.Carrier.localizationRepresentative",
         "SourceModelFrobenioid.Carrier.commonPreSteps",
+        "SourceModelFrobenioid.Carrier.pullbackObject",
+        "SourceModelFrobenioid.Carrier.pullbackArrow",
+        "SourceModelFrobenioid.Carrier.pullbackArrow_isPullback",
+        "SourceModelFrobenioid.Carrier.pullbackSliceProjection_bijective",
+        "SourceModelFrobenioid.Carrier.pullbackBaseSlices",
         "SourceModelFrobenioid.Carrier.frobeniusCodomain",
         "SourceModelFrobenioid.Carrier.frobeniusArrow",
         "SourceModelFrobenioid.Carrier.frobeniusComparison",
@@ -198,7 +203,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceModelFrobenioid.Carrier.parallelToCoAngularPreStep",
         "SourceModelFrobenioid.Carrier.preFrobenioidPresentation"]
       .partialImplementation
-      "Every divisor class is connected by explicit model arrows to the zero-divisor object over its base, base arrows lift between zero-divisor objects, and base connectedness therefore implies carrier connectedness. Cancellation of the four arrow components proves every model arrow epic from total epimorphicity of the base, yielding the complete Definition 1.1(iv) pre-Frobenioid presentation. The inverse to an isometric pre-step is constructed with the paper's negative pulled-back rational-function component, proving every model object isotropic and every model arrow co-angular; Frobenius-type arrows are consequently characterized by zero divisor and base-isomorphic projection. The zero-divisor objects carry explicit Frobenius trivializations. Common pre-steps are constructed from localization representatives `a-b` and `c-d` via the shared midpoint `-(b+d)` and effective corrections `a+d` and `c+b`, inducing the prescribed base isomorphism. Every degree-n Frobenius arrow to `(A_D, n alpha)` has the required essentially unique comparison isomorphism. Thus Definition 1.3(i)(a-b), (ii), (iii)(a-b), and (vii) are proved. Clauses (i)(c), (iii)(c-d), (iv)-(vi), model type, birational Frobenius normalization, and the natural O-times = B identification remain to be proved.",
+      "Every divisor class is connected by explicit model arrows to the zero-divisor object over its base, base arrows lift between zero-divisor objects, and base connectedness therefore implies carrier connectedness. Cancellation of the four arrow components proves every model arrow epic from total epimorphicity of the base, yielding the complete Definition 1.1(iv) pre-Frobenioid presentation. The inverse to an isometric pre-step is constructed with the paper's negative pulled-back rational-function component, proving every model object isotropic and every model arrow co-angular; Frobenius-type arrows are consequently characterized by zero divisor and base-isomorphic projection. The zero-divisor objects carry explicit Frobenius trivializations. Common pre-steps are constructed from localization representatives `a-b` and `c-d` via the shared midpoint `-(b+d)` and effective corrections `a+d` and `c+b`, inducing the prescribed base isomorphism. Literal pullback objects carry the source-prescribed divisor class, their arrows satisfy the full representable universal property, and projection from their slice is essentially surjective and fully faithful. Every degree-n Frobenius arrow to `(A_D, n alpha)` has the required essentially unique comparison isomorphism. Thus Definition 1.3(i)(a-c), (ii), (iii)(a-b), and (vii) are proved. Clauses (iii)(c-d), (iv)-(vi), model type, birational Frobenius normalization, and the natural O-times = B identification remain to be proved.",
     clause "FrdII.5.1" .frobenioidsII
       "Frobenioids II, Definition 5.1"
       [] .unformalized
