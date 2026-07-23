@@ -389,6 +389,17 @@ def m1m3PaperLedger : List PaperClause :=
       "Frobenioids II, Definition 5.3"
       [] .unformalized
       "GC/LC-admissibility and poly-Frobenioids remain to be formalized.",
+    clause "SemiAnbd.1.8(ii)(a)" .semiGraphsAnabelioids
+      "Semi-graphs of Anabelioids, Lemma 1.8(ii)(a)"
+      ["SourceFiniteTree.exists_degree_ne_one",
+        "SourceFiniteTree.induce_degree_ne_one_connected",
+        "SourceGraphAction.FixesVertexOrEdge",
+        "SourceGraphAction.restrict",
+        "SourceGraphAction.exists_invariant_subtree_card_le_two",
+        "SourceGraphAction.finite_fixesVertexOrEdge",
+        "SourceGraphAction.fixesVertexOrEdge"]
+      .partialImplementation
+      "For a finite group acting on an arbitrary simple tree, Lean constructs a finite connected invariant hull of an orbit, prunes invariant leaves to obtain a subtree with at most two vertices, and proves the fixed-vertex or setwise-fixed-edge alternative. This is the complete closed-edge simple-graph case. The source semi-graph type and its open edges remain to be formalized.",
     clause "SemiAnbd.1.8(ii)(b)" .semiGraphsAnabelioids
       "Semi-graphs of Anabelioids, Lemma 1.8(ii)(b)"
       ["SourceGraphAction", "SourceGraphAction.graphIso",
@@ -396,7 +407,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceGraphAction.fixes_path_pointwise",
         "SourceGraphAction.subgroup_fixes_geodesic_pointwise"]
       .partialImplementation
-      "For an action by automorphisms of a simple tree, Lean proves distance invariance and that a subgroup fixing two endpoints fixes every vertex on their unique geodesic. This is the closed-edge vertex shadow of part (ii)(b). The source semi-graph formalism, open edges, part (ii)(a)'s finite-group fixed vertex-or-edge theorem, and part (ii)(c)'s subjoint statement remain open.",
+      "For an action by automorphisms of a simple tree, Lean proves distance invariance and that a subgroup fixing two endpoints fixes every vertex on their unique geodesic. This is the closed-edge vertex shadow of part (ii)(b). The source semi-graph formalism, open edges, and part (ii)(c)'s subjoint statement remain open.",
     clause "I.0.pseudo-monoid" .iutI
       "IUT I, Section 0: topological pseudo-monoids"
       ["SourceTopologicalPseudoMonoid",
@@ -2143,8 +2154,8 @@ def clauseIdsWithStatus (status : ClauseStatus) : List String :=
   m1m3PaperLedger.filterMap fun entry =>
     if entry.status = status then some entry.id else none
 
-/-- The source-closure ledger contains 118 separately audited clauses. -/
-theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 118 :=
+/-- The source-closure ledger contains 119 separately audited clauses. -/
+theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 119 :=
   rfl
 
 /-- No source clause occurs twice in the direct-citation ledger. -/
@@ -2152,9 +2163,9 @@ theorem m1m3PaperLedger_ids_nodup :
     (m1m3PaperLedger.map PaperClause.id).Nodup := by
   decide
 
-/-- Ninety-three clauses currently have a genuine but incomplete implementation. -/
+/-- Ninety-four clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 93 :=
+    (clauseIdsWithStatus .partialImplementation).length = 94 :=
   rfl
 
 /-- Four clauses currently point only to explicitly classified toy models. -/

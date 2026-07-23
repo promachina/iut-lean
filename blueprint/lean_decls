@@ -90,6 +90,10 @@ Iut.Stage1HodgeTheaterSource.hasToyIUTIRealization
 Iut.Stage1.IUTStage1InitialThetaPrimitiveSourcePacket
 Iut.SourceGraphAction
 Iut.SourceGraphAction.dist_image
+Iut.SourceFiniteTree.induce_degree_ne_one_connected
+Iut.SourceGraphAction.exists_invariant_subtree_card_le_two
+Iut.SourceGraphAction.finite_fixesVertexOrEdge
+Iut.SourceGraphAction.fixesVertexOrEdge
 Iut.SourceGraphAction.fixes_path_pointwise
 Iut.SourceGraphAction.subgroup_fixes_geodesic_pointwise
 Iut.SourceIUTIProposition24PartI

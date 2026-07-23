@@ -12,10 +12,10 @@ import Mathlib.Topology.Algebra.Group.Basic
 # Tempered semi-graph source mathematics
 
 This module starts the source-faithful reconstruction of the semi-graph results
-used by IUT I, Proposition 2.4 and Corollary 2.5.  It formalizes the unique
-geodesic rigidity in *Semi-graphs of Anabelioids*, Lemma 1.8(ii)(b), and the
-subgroup-conjugation argument that derives the cuspidal portion of IUT I,
-Corollary 2.5 from Proposition 2.4(i).
+used by IUT I, Proposition 2.4 and Corollary 2.5.  It formalizes the finite-group
+fixed-point alternative and unique-geodesic rigidity in *Semi-graphs of
+Anabelioids*, Lemma 1.8(ii)(a-b), and the subgroup-conjugation argument that
+derives the cuspidal portion of IUT I, Corollary 2.5 from Proposition 2.4(i).
 
 The maximal-compact/verticial classification of *Semi-graphs of Anabelioids*,
 Theorem 3.7, and the inverse-limit passage in IUT I, Proposition 2.4(i), are not
@@ -25,6 +25,70 @@ asserted here.
 namespace Iut
 
 universe u v
+
+namespace SourceFiniteTree
+
+variable {Vertex : Type v} {graph : SimpleGraph Vertex}
+
+/-- A finite tree with at least three vertices has a vertex that is not a
+leaf. -/
+theorem exists_degree_ne_one
+    [Fintype Vertex] [DecidableRel graph.Adj]
+    (tree : graph.IsTree)
+    (three_le : 3 ≤ Fintype.card Vertex) :
+    ∃ vertex, graph.degree vertex ≠ 1 := by
+  by_contra h
+  push Not at h
+  have degreeSum := graph.sum_degrees_eq_twice_card_edges
+  have edgeCount := tree.card_edgeFinset
+  simp only [h, Finset.sum_const, Finset.card_univ,
+    smul_eq_mul, mul_one] at degreeSum
+  omega
+
+/-- Removing every leaf from a finite tree with at least three vertices leaves
+a nonempty connected induced subtree. -/
+theorem induce_degree_ne_one_connected
+    [Fintype Vertex] [DecidableRel graph.Adj]
+    (tree : graph.IsTree)
+    (three_le : 3 ≤ Fintype.card Vertex) :
+    (graph.induce { vertex | graph.degree vertex ≠ 1 }).Connected := by
+  let internal : Set Vertex :=
+    { vertex | graph.degree vertex ≠ 1 }
+  obtain ⟨root, root_internal⟩ :=
+    exists_degree_ne_one tree three_le
+  refine (SimpleGraph.connected_iff _).mpr ⟨?_, ⟨root, root_internal⟩⟩
+  intro first second
+  obtain ⟨path, path_isPath⟩ :=
+    tree.connected.exists_isPath first.1 second.1
+  have support_internal :
+      ∀ vertex ∈ path.support, vertex ∈ internal := by
+    intro vertex vertex_mem
+    by_cases first_eq : vertex = first.1
+    · rw [first_eq]
+      exact first.2
+    by_cases second_eq : vertex = second.1
+    · rw [second_eq]
+      exact second.2
+    change graph.degree vertex ≠ 1
+    intro degree_eq
+    obtain ⟨neighbor, neighbor_adj, neighbor_unique⟩ :=
+      SimpleGraph.degree_eq_one_iff_existsUnique_adj.mp degree_eq
+    have neighborSet_subsingleton :
+        (graph.neighborSet vertex).Subsingleton := by
+      intro left left_mem right right_mem
+      exact
+        (neighbor_unique left
+            ((graph.mem_neighborSet vertex left).mp left_mem)).trans
+          (neighbor_unique right
+            ((graph.mem_neighborSet vertex right).mp right_mem)).symm
+    exact
+      (path_isPath.isTrail.not_mem_support_of_subsingleton_neighborSet
+        first_eq second_eq neighborSet_subsingleton) vertex_mem
+  exact
+    ⟨(path.induce internal support_internal).copy
+      (Subtype.ext rfl) (Subtype.ext rfl)⟩
+
+end SourceFiniteTree
 
 /-- An action on the vertices of a simple graph by graph automorphisms. -/
 structure SourceGraphAction
@@ -63,11 +127,26 @@ theorem graphIso_one_apply (vertex : Vertex) :
   simp [graphIso]
 
 @[simp]
+theorem graphIso_mul_apply (first second : Acting) (vertex : Vertex) :
+    graphIso data (first * second) vertex =
+      graphIso data first (graphIso data second vertex) := by
+  change data.action (first * second) vertex =
+    data.action first (data.action second vertex)
+  rw [map_mul]
+  rfl
+
+@[simp]
 theorem graphIso_inv_apply_apply (g : Acting) (vertex : Vertex) :
     graphIso data g⁻¹ (graphIso data g vertex) = vertex := by
   change data.action g⁻¹ (data.action g vertex) = vertex
   rw [map_inv]
   exact (data.action g).symm_apply_apply vertex
+
+@[simp]
+theorem graphIso_apply_inv_apply (g : Acting) (vertex : Vertex) :
+    graphIso data g (graphIso data g⁻¹ vertex) = vertex := by
+  simpa only [inv_inv] using
+    graphIso_inv_apply_apply data g⁻¹ vertex
 
 /-- A graph automorphism cannot increase graph distance. -/
 theorem dist_image_le (g : Acting) (first second : Vertex) :
@@ -104,6 +183,461 @@ theorem dist_image (g : Acting) (first second : Vertex) :
     dist_image_le data g⁻¹
       (graphIso data g first) (graphIso data g second)
   simpa using inverseBound
+
+/-- On a tree, graph automorphisms preserve extended distance exactly. -/
+theorem edist_image
+    (tree : graph.IsTree)
+    (g : Acting) (first second : Vertex) :
+    graph.edist (graphIso data g first) (graphIso data g second) =
+      graph.edist first second := by
+  rw [← (tree.connected
+    (graphIso data g first) (graphIso data g second)).coe_dist_eq_edist]
+  rw [← (tree.connected first second).coe_dist_eq_edist]
+  exact_mod_cast dist_image data g first second
+
+/-- Applying a graph automorphism cannot increase vertex eccentricity. -/
+theorem eccent_image_le
+    (tree : graph.IsTree)
+    (g : Acting) (vertex : Vertex) :
+    graph.eccent (graphIso data g vertex) ≤ graph.eccent vertex := by
+  rw [graph.eccent_le_iff]
+  intro target
+  calc
+    graph.edist (graphIso data g vertex) target =
+        graph.edist (graphIso data g vertex)
+          (graphIso data g (graphIso data g⁻¹ target)) := by
+      rw [graphIso_apply_inv_apply]
+    _ = graph.edist vertex (graphIso data g⁻¹ target) :=
+      edist_image data tree g vertex (graphIso data g⁻¹ target)
+    _ ≤ graph.eccent vertex := graph.edist_le_eccent
+
+/-- Graph automorphisms preserve eccentricity exactly. -/
+theorem eccent_image
+    (tree : graph.IsTree)
+    (g : Acting) (vertex : Vertex) :
+    graph.eccent (graphIso data g vertex) = graph.eccent vertex := by
+  apply le_antisymm (eccent_image_le data tree g vertex)
+  have inverseBound :=
+    eccent_image_le data tree g⁻¹ (graphIso data g vertex)
+  simpa using inverseBound
+
+/-- The center of a finite tree is invariant under every acting element. -/
+theorem center_stable
+    (tree : graph.IsTree)
+    (g : Acting) (vertex : Vertex) :
+    graphIso data g vertex ∈ graph.center ↔ vertex ∈ graph.center := by
+  simp only [graph.mem_center_iff, eccent_image data tree g vertex]
+
+/-- The fixed-point alternative for an action on a tree.  An edge is fixed
+setwise, so its endpoints may be exchanged. -/
+def FixesVertexOrEdge : Prop :=
+  (∃ vertex, ∀ g : Acting,
+      graphIso data g vertex = vertex) ∨
+    ∃ first second,
+      graph.Adj first second ∧
+        ∀ g : Acting,
+          (graphIso data g first = first ∧
+              graphIso data g second = second) ∨
+            (graphIso data g first = second ∧
+              graphIso data g second = first)
+
+/-- Restriction of a graph automorphism to a stable induced subgraph. -/
+def inducedGraphIso
+    (vertices : Set Vertex)
+    (stable : ∀ g vertex,
+      graphIso data g vertex ∈ vertices ↔ vertex ∈ vertices)
+    (g : Acting) :
+    graph.induce vertices ≃g graph.induce vertices where
+  toEquiv :=
+    { toFun := fun vertex =>
+        ⟨graphIso data g vertex.1,
+          (stable g vertex.1).mpr vertex.2⟩
+      invFun := fun vertex =>
+        ⟨graphIso data g⁻¹ vertex.1,
+          (stable g⁻¹ vertex.1).mpr vertex.2⟩
+      left_inv := fun vertex => by
+        apply Subtype.ext
+        exact graphIso_inv_apply_apply data g vertex.1
+      right_inv := fun vertex => by
+        apply Subtype.ext
+        exact graphIso_apply_inv_apply data g vertex.1 }
+  map_rel_iff' := by
+    intro first second
+    exact data.map_adj_iff g first.1 second.1
+
+@[simp]
+theorem inducedGraphIso_apply
+    (vertices : Set Vertex)
+    (stable : ∀ g vertex,
+      graphIso data g vertex ∈ vertices ↔ vertex ∈ vertices)
+    (g : Acting) (vertex : vertices) :
+    (inducedGraphIso data vertices stable g vertex).1 =
+      graphIso data g vertex.1 :=
+  rfl
+
+/-- Restriction of a graph action to a stable induced subgraph. -/
+def restrict
+    (vertices : Set Vertex)
+    (stable : ∀ g vertex,
+      graphIso data g vertex ∈ vertices ↔ vertex ∈ vertices) :
+    SourceGraphAction Acting vertices (graph.induce vertices) where
+  action :=
+    { toFun := fun g => (inducedGraphIso data vertices stable g).toEquiv
+      map_one' := by
+        ext vertex
+        change graphIso data 1 vertex.1 = vertex.1
+        exact graphIso_one_apply data vertex.1
+      map_mul' := by
+        intro first second
+        ext vertex
+        change graphIso data (first * second) vertex.1 =
+          graphIso data first (graphIso data second vertex.1)
+        exact graphIso_mul_apply data first second vertex.1 }
+  map_adj_iff := by
+    intro g first second
+    exact data.map_adj_iff g first.1 second.1
+
+/-- A finite, nonempty, connected induced subtree that is stable under the
+action. -/
+def IsFiniteInvariantSubtree
+    (vertices : Finset Vertex) : Prop :=
+  vertices.Nonempty ∧
+    (graph.induce (vertices : Set Vertex)).Connected ∧
+      ∀ g vertex,
+        graphIso data g vertex ∈ vertices ↔ vertex ∈ vertices
+
+/-- A finite group acting on a finite tree has a nonempty invariant connected
+subtree with at most two vertices.  The proof chooses a minimal invariant
+subtree and removes all of its leaves if it has at least three vertices. -/
+theorem exists_invariant_subtree_card_le_two
+    [Finite Acting] [Finite Vertex]
+    (tree : graph.IsTree) :
+    ∃ vertices : Finset Vertex,
+      IsFiniteInvariantSubtree data vertices ∧ vertices.card ≤ 2 := by
+  classical
+  letI : Fintype Acting := Fintype.ofFinite Acting
+  letI : Fintype Vertex := Fintype.ofFinite Vertex
+  letI : Nonempty Vertex := tree.connected.nonempty
+  let candidate : Set (Finset Vertex) :=
+    { vertices | IsFiniteInvariantSubtree data vertices }
+  have univ_candidate : (Finset.univ : Finset Vertex) ∈ candidate := by
+    refine ⟨Finset.univ_nonempty, ?_, ?_⟩
+    · rw [show (↑(Finset.univ : Finset Vertex) : Set Vertex) =
+          Set.univ by ext; simp]
+      exact (SimpleGraph.induceUnivIso graph).connected_iff.mpr
+        tree.connected
+    · intro g vertex
+      simp
+  obtain ⟨vertices, minimal⟩ :=
+    candidate.toFinite.exists_minimalFor Finset.card candidate
+      ⟨Finset.univ, univ_candidate⟩
+  refine ⟨vertices, minimal.1, ?_⟩
+  by_contra card_not_le
+  have three_le : 3 ≤ vertices.card := by omega
+  rcases minimal.1 with
+    ⟨vertices_nonempty, vertices_connected, vertices_stable⟩
+  let subtree : SimpleGraph vertices :=
+    graph.induce (vertices : Set Vertex)
+  have subtree_tree : subtree.IsTree :=
+    ⟨vertices_connected,
+      tree.isAcyclic.induce (vertices : Set Vertex)⟩
+  have subtree_three_le : 3 ≤ Fintype.card vertices := by
+    simpa using three_le
+  let nonleaves : Finset vertices :=
+    Finset.univ.filter fun vertex => subtree.degree vertex ≠ 1
+  have nonleaves_nonempty : nonleaves.Nonempty := by
+    obtain ⟨vertex, vertex_nonleaf⟩ :=
+      SourceFiniteTree.exists_degree_ne_one subtree_tree subtree_three_le
+    exact ⟨vertex, by simp [nonleaves, vertex_nonleaf]⟩
+  let inclusion : vertices ↪ Vertex :=
+    Function.Embedding.subtype (· ∈ (vertices : Set Vertex))
+  let pruned : Finset Vertex := nonleaves.map inclusion
+  have pruned_nonempty : pruned.Nonempty := by
+    simpa [pruned] using nonleaves_nonempty.map (f := inclusion)
+  have mem_pruned_iff (vertex : Vertex) :
+      vertex ∈ pruned ↔
+        ∃ vertex_mem : vertex ∈ vertices,
+          subtree.degree ⟨vertex, vertex_mem⟩ ≠ 1 := by
+    simp only [pruned, nonleaves, Finset.mem_map,
+      Finset.mem_filter, Finset.mem_univ, true_and, inclusion]
+    constructor
+    · rintro ⟨source, source_nonleaf, rfl⟩
+      exact ⟨source.2, source_nonleaf⟩
+    · rintro ⟨vertex_mem, vertex_nonleaf⟩
+      exact ⟨⟨vertex, vertex_mem⟩, vertex_nonleaf, rfl⟩
+  have pruned_connected :
+      (graph.induce (pruned : Set Vertex)).Connected := by
+    have internal_connected :=
+      SourceFiniteTree.induce_degree_ne_one_connected
+        subtree_tree subtree_three_le
+    rw [SimpleGraph.connected_iff_exists_forall_reachable]
+    obtain ⟨root⟩ := internal_connected.nonempty
+    let root' : pruned :=
+      ⟨root.1.1,
+        (mem_pruned_iff root.1.1).mpr ⟨root.1.2, root.2⟩⟩
+    refine ⟨root', ?_⟩
+    intro target
+    obtain ⟨target_mem, target_nonleaf⟩ :=
+      (mem_pruned_iff target.1).mp target.2
+    let target' : { vertex : vertices // subtree.degree vertex ≠ 1 } :=
+      ⟨⟨target.1, target_mem⟩, target_nonleaf⟩
+    let prunedHom :
+        subtree.induce { vertex | subtree.degree vertex ≠ 1 } →g
+          graph.induce (pruned : Set Vertex) :=
+      { toFun := fun vertex =>
+          ⟨vertex.1.1,
+            (mem_pruned_iff vertex.1.1).mpr
+              ⟨vertex.1.2, vertex.2⟩⟩
+        map_rel' := by
+          intro first second adjacent
+          exact adjacent }
+    obtain ⟨path⟩ := internal_connected root target'
+    exact
+      ⟨(path.map prunedHom).copy
+        (Subtype.ext rfl) (Subtype.ext rfl)⟩
+  have pruned_forward
+      (g : Acting) (vertex : Vertex)
+      (vertex_mem : vertex ∈ pruned) :
+      graphIso data g vertex ∈ pruned := by
+    obtain ⟨vertex_mem_tree, vertex_nonleaf⟩ :=
+      (mem_pruned_iff vertex).mp vertex_mem
+    let source : vertices := ⟨vertex, vertex_mem_tree⟩
+    let target : vertices :=
+      ⟨graphIso data g vertex,
+        (vertices_stable g vertex).mpr vertex_mem_tree⟩
+    have degree_eq :=
+      (inducedGraphIso data (vertices : Set Vertex)
+        vertices_stable g).degree_eq source
+    apply (mem_pruned_iff (graphIso data g vertex)).mpr
+    refine ⟨target.2, ?_⟩
+    change subtree.degree target ≠ 1
+    have target_eq :
+        target = inducedGraphIso data (vertices : Set Vertex)
+          vertices_stable g source := by
+      apply Subtype.ext
+      rfl
+    rw [target_eq, degree_eq]
+    exact vertex_nonleaf
+  have pruned_stable :
+      ∀ g vertex,
+        graphIso data g vertex ∈ pruned ↔ vertex ∈ pruned := by
+    intro g vertex
+    constructor
+    · intro image_mem
+      have inverse_mem :=
+        pruned_forward g⁻¹ (graphIso data g vertex) image_mem
+      simpa using inverse_mem
+    · exact pruned_forward g vertex
+  have pruned_candidate : pruned ∈ candidate :=
+    ⟨pruned_nonempty, pruned_connected, pruned_stable⟩
+  letI : Nontrivial vertices :=
+    Fintype.one_lt_card_iff_nontrivial.mp (by omega)
+  have exists_leaf :=
+    subtree_tree.exists_vert_degree_one_of_nontrivial
+  obtain ⟨leaf, leaf_degree⟩ := exists_leaf
+  have nonleaves_ssubset :
+      nonleaves ⊂ (Finset.univ : Finset vertices) := by
+    refine Finset.ssubset_iff_subset_ne.mpr ⟨Finset.subset_univ _, ?_⟩
+    intro nonleaves_eq
+    have : leaf ∈ nonleaves := by rw [nonleaves_eq]; simp
+    simp [nonleaves, leaf_degree] at this
+  have pruned_card_lt : pruned.card < vertices.card := by
+    calc
+      pruned.card = nonleaves.card :=
+        by
+          simp [pruned]
+      _ < (Finset.univ : Finset vertices).card :=
+        Finset.card_lt_card nonleaves_ssubset
+      _ = vertices.card := Fintype.card_coe vertices
+  exact (minimal.not_lt pruned_candidate) pruned_card_lt
+
+/-- Finite-vertex form of *Semi-graphs of Anabelioids*, Lemma 1.8(ii)(a):
+a finite group action on a finite tree fixes a vertex or fixes an edge setwise. -/
+theorem finite_fixesVertexOrEdge
+    [Finite Acting] [Finite Vertex]
+    (tree : graph.IsTree) :
+    FixesVertexOrEdge data := by
+  classical
+  letI : Fintype Acting := Fintype.ofFinite Acting
+  letI : Fintype Vertex := Fintype.ofFinite Vertex
+  obtain ⟨vertices, invariant, card_le_two⟩ :=
+    exists_invariant_subtree_card_le_two data tree
+  rcases invariant with
+    ⟨vertices_nonempty, vertices_connected, vertices_stable⟩
+  have card_pos : 0 < vertices.card := Finset.card_pos.mpr vertices_nonempty
+  have card_one_or_two : vertices.card = 1 ∨ vertices.card = 2 := by
+    omega
+  rcases card_one_or_two with card_one | card_two
+  · obtain ⟨vertex, vertices_eq⟩ := Finset.card_eq_one.mp card_one
+    left
+    refine ⟨vertex, ?_⟩
+    intro g
+    have image_mem : graphIso data g vertex ∈ vertices :=
+      (vertices_stable g vertex).mpr (by simp [vertices_eq])
+    simpa [vertices_eq] using image_mem
+  · obtain ⟨first, second, first_ne_second, vertices_eq⟩ :=
+      Finset.card_eq_two.mp card_two
+    have first_mem : first ∈ vertices := by simp [vertices_eq]
+    have second_mem : second ∈ vertices := by simp [vertices_eq]
+    let firstVertex : vertices := ⟨first, first_mem⟩
+    let secondVertex : vertices := ⟨second, second_mem⟩
+    have firstVertex_ne_secondVertex : firstVertex ≠ secondVertex := by
+      intro equality
+      exact first_ne_second (congrArg Subtype.val equality)
+    have first_support :
+        firstVertex ∈
+          (graph.induce (vertices : Set Vertex)).support :=
+      SimpleGraph.mem_support_of_reachable
+        firstVertex_ne_secondVertex
+        (vertices_connected firstVertex secondVertex)
+    obtain ⟨neighbor, first_adj_neighbor⟩ :=
+      (SimpleGraph.mem_support
+        (graph.induce (vertices : Set Vertex))).mp first_support
+    have neighbor_cases : neighbor.1 = first ∨ neighbor.1 = second := by
+      have neighbor_mem_pair :
+          neighbor.1 ∈ ({first, second} : Finset Vertex) := by
+        rw [← vertices_eq]
+        exact neighbor.2
+      simpa using neighbor_mem_pair
+    have first_adj_second : graph.Adj first second := by
+      rcases neighbor_cases with neighbor_eq | neighbor_eq
+      · exfalso
+        apply first_adj_neighbor.ne
+        apply Subtype.ext
+        exact neighbor_eq.symm
+      · simpa [firstVertex, neighbor_eq] using first_adj_neighbor
+    right
+    refine ⟨first, second, first_adj_second, ?_⟩
+    intro g
+    have first_image_mem : graphIso data g first ∈ vertices :=
+      (vertices_stable g first).mpr first_mem
+    have second_image_mem : graphIso data g second ∈ vertices :=
+      (vertices_stable g second).mpr second_mem
+    have first_image_cases :
+        graphIso data g first = first ∨
+          graphIso data g first = second := by
+      rw [vertices_eq] at first_image_mem
+      simpa using first_image_mem
+    have second_image_cases :
+        graphIso data g second = first ∨
+          graphIso data g second = second := by
+      rw [vertices_eq] at second_image_mem
+      simpa using second_image_mem
+    rcases first_image_cases with first_fixed | first_swapped
+    · rcases second_image_cases with second_collapsed | second_fixed
+      · exact False.elim <| first_ne_second <|
+          (graphIso data g).injective
+            (first_fixed.trans second_collapsed.symm)
+      · exact Or.inl ⟨first_fixed, second_fixed⟩
+    · rcases second_image_cases with second_swapped | second_collapsed
+      · exact Or.inr ⟨first_swapped, second_swapped⟩
+      · exact False.elim <| first_ne_second <|
+          (graphIso data g).injective
+            (first_swapped.trans second_collapsed.symm)
+
+/-- *Semi-graphs of Anabelioids*, Lemma 1.8(ii)(a), for the closed-edge
+simple-graph model: a finite group acting on an arbitrary tree fixes a vertex
+or fixes an edge setwise.  The finite subtree needed by the center-pruning
+argument is constructed from a connected hull of one finite orbit. -/
+theorem fixesVertexOrEdge
+    [Finite Acting]
+    (tree : graph.IsTree) :
+    FixesVertexOrEdge data := by
+  classical
+  letI : Fintype Acting := Fintype.ofFinite Acting
+  letI : Nonempty Vertex := tree.connected.nonempty
+  let root : Vertex := Classical.choice inferInstance
+  let orbit : Finset Vertex :=
+    Finset.univ.image fun g : Acting => graphIso data g root
+  have orbit_mem (g : Acting) : graphIso data g root ∈ orbit := by
+    exact Finset.mem_image.mpr ⟨g, Finset.mem_univ g, rfl⟩
+  have orbit_nonempty : orbit.Nonempty :=
+    ⟨root, by simpa [orbit] using orbit_mem (1 : Acting)⟩
+  obtain ⟨seed, orbit_subset_seed, seed_connected⟩ :=
+    SimpleGraph.extend_finset_to_connected
+      tree.connected.preconnected orbit_nonempty
+  let hull : Finset Vertex :=
+    Finset.univ.biUnion fun g : Acting =>
+      seed.image fun vertex => graphIso data g vertex
+  have mem_hull_iff (vertex : Vertex) :
+      vertex ∈ hull ↔
+        ∃ g : Acting, ∃ source ∈ seed,
+          graphIso data g source = vertex := by
+    simp [hull]
+  have root_mem_seed : root ∈ seed :=
+    orbit_subset_seed (by simpa using orbit_mem (1 : Acting))
+  have root_mem_hull : root ∈ hull := by
+    apply (mem_hull_iff root).mpr
+    exact ⟨1, root, root_mem_seed,
+      graphIso_one_apply data root⟩
+  have hull_forward
+      (g : Acting) (vertex : Vertex)
+      (vertex_mem : vertex ∈ hull) :
+      graphIso data g vertex ∈ hull := by
+    obtain ⟨h, source, source_mem, rfl⟩ :=
+      (mem_hull_iff vertex).mp vertex_mem
+    apply (mem_hull_iff _).mpr
+    exact ⟨g * h, source, source_mem,
+      graphIso_mul_apply data g h source⟩
+  have hull_stable :
+      ∀ g vertex,
+        graphIso data g vertex ∈ hull ↔ vertex ∈ hull := by
+    intro g vertex
+    constructor
+    · intro image_mem
+      have inverse_mem :=
+        hull_forward g⁻¹ (graphIso data g vertex) image_mem
+      simpa using inverse_mem
+    · exact hull_forward g vertex
+  have hull_connected :
+      (graph.induce (hull : Set Vertex)).Connected := by
+    rw [SimpleGraph.connected_iff_exists_forall_reachable]
+    let rootVertex : hull := ⟨root, root_mem_hull⟩
+    refine ⟨rootVertex, ?_⟩
+    intro target
+    obtain ⟨g, source, source_mem, source_eq⟩ :=
+      (mem_hull_iff target.1).mp target.2
+    let seedRoot : seed :=
+      ⟨graphIso data g⁻¹ root,
+        orbit_subset_seed (orbit_mem g⁻¹)⟩
+    let seedTarget : seed := ⟨source, source_mem⟩
+    obtain ⟨path⟩ := seed_connected seedRoot seedTarget
+    let mapToHull :
+        graph.induce (seed : Set Vertex) →g
+          graph.induce (hull : Set Vertex) :=
+      { toFun := fun vertex =>
+          ⟨graphIso data g vertex.1,
+            (mem_hull_iff _).mpr ⟨g, vertex.1, vertex.2, rfl⟩⟩
+        map_rel' := by
+          intro first second adjacent
+          exact (data.map_adj_iff g first.1 second.1).mpr adjacent }
+    refine ⟨(path.map mapToHull).copy ?_ ?_⟩
+    · apply Subtype.ext
+      exact graphIso_apply_inv_apply data g root
+    · apply Subtype.ext
+      exact source_eq
+  let restricted := restrict data (hull : Set Vertex) hull_stable
+  have hull_tree :
+      (graph.induce (hull : Set Vertex)).IsTree :=
+    ⟨hull_connected, tree.isAcyclic.induce (hull : Set Vertex)⟩
+  have fixed := finite_fixesVertexOrEdge restricted hull_tree
+  rcases fixed with ⟨vertex, vertex_fixed⟩ |
+      ⟨first, second, adjacent, edge_fixed⟩
+  · left
+    refine ⟨vertex.1, ?_⟩
+    intro g
+    have fixed_subtype := congrArg Subtype.val (vertex_fixed g)
+    exact fixed_subtype
+  · right
+    refine ⟨first.1, second.1, adjacent, ?_⟩
+    intro g
+    rcases edge_fixed g with fixed_pointwise | swapped
+    · left
+      exact ⟨congrArg Subtype.val fixed_pointwise.1,
+        congrArg Subtype.val fixed_pointwise.2⟩
+    · right
+      exact ⟨congrArg Subtype.val swapped.1,
+        congrArg Subtype.val swapped.2⟩
 
 private theorem list_map_eq_self_fixed
     {α : Type*} {f : α → α} {values : List α}

@@ -16,6 +16,7 @@ import Iut.Foundations.SourceTheorem311Assembly
 import Iut.Foundations.SourceDefinition52LocalJointContinuity
 import Iut.Foundations.SourceDefinition52IndSystem
 import Iut.Foundations.SourceDefinition52Sequential
+import Iut.Foundations.SourceTemperedSemigraph
 
 open Iut
 
@@ -410,6 +411,11 @@ visible to Lean's axiom reporter.
 #print axioms
   Iut.GlobalLTorsionCoverInput.standardGeometricToArithmeticLDeltaThetaMulEquiv_projection
 #print axioms Iut.SourceGraphAction.dist_image
+#print axioms Iut.SourceFiniteTree.exists_degree_ne_one
+#print axioms Iut.SourceFiniteTree.induce_degree_ne_one_connected
+#print axioms Iut.SourceGraphAction.exists_invariant_subtree_card_le_two
+#print axioms Iut.SourceGraphAction.finite_fixesVertexOrEdge
+#print axioms Iut.SourceGraphAction.fixesVertexOrEdge
 #print axioms Iut.SourceGraphAction.fixes_path_pointwise
 #print axioms Iut.SourceGraphAction.subgroup_fixes_geodesic_pointwise
 #print axioms

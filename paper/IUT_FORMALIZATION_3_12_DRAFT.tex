@@ -141,16 +141,19 @@ its algebraic and topological isomorphisms, are derived from precisely the two
 cusp-inertia facts cited in IUT~II, Corollary~2.5(i): ambient cusp inertia
 generates the coefficient quotient and subgraph cusp inertia maps onto it.
 The restriction isomorphism is not supplied as a field.  The tree-action
-dependency has been lowered to the original source.  Lean proves
-that graph automorphisms preserve distance and that a subgroup fixing two
-vertices of a tree fixes their unique geodesic pointwise, the closed-edge
-vertex content of \emph{Semi-graphs of Anabelioids}, Lemma~1.8(ii)(b).  The
+dependency has been lowered to the original source.  Lean constructs a finite
+connected invariant hull for a finite group acting on an arbitrary simple
+tree, prunes its invariant leaves, and proves that the group fixes a vertex or
+fixes a closed edge setwise.  It also proves that graph automorphisms preserve
+distance and that a subgroup fixing two vertices fixes their unique geodesic
+pointwise.  This is the closed-edge simple-graph content of \emph{Semi-graphs
+of Anabelioids}, Lemma~1.8(ii)(a--b).  The
 exact subgroup configuration of \IUT{} I, Proposition~2.4(i), is typed; from
 its compact-conjugate rigidity conclusion and a nontrivial compact cusp
 inertia subgroup, Lean derives both cusp-conjugacy assertions of
-Corollary~2.5.  The finite-group fixed vertex-or-edge theorem, the
-maximal-compact/verticial classification, and the inverse-limit proof of
-Proposition~2.4(i) remain open.  Separately, the
+Corollary~2.5.  The semi-graph/open-edge extension, the maximal-compact/verticial
+classification, and the inverse-limit proof of Proposition~2.4(i) remain open.
+Separately, the
 profinite standard-type realization constructs the theta-root cover as the
 proved-open inverse image of the selected Galois section in
 \(\Pi_X^{\mathrm{ell}}\).  The quotient
@@ -1066,11 +1069,11 @@ the local estimates of \IUT{} IV.
 
 \subsection{Source-faithful construction before the Theorem 3.11 boundary}
 
-The machine-checked source-closure ledger now contains 118 clauses from
+The machine-checked source-closure ledger now contains 119 clauses from
 \IUT{} I--III together with transitive dependencies in \emph{Frobenioids},
 \emph{The Etale Theta Function}, \emph{Semi-graphs of Anabelioids}, and
 \emph{Absolute Anabelian Topics III}.
-It classifies 93 clauses as partially implemented, 4 as toy models, 15 as
+It classifies 94 clauses as partially implemented, 4 as toy models, 15 as
 unformalized, and 6 as source-faithful.  None of the complete M1--M3
 milestones or Theorem~3.11 clauses is classified as source-faithful.
 The new partial Definition~3.1 path constructs etale stacks and

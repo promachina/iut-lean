@@ -258,6 +258,10 @@
   \label{def:tempered-semigraph-cusp-rigidity}
   \lean{Iut.SourceGraphAction}
   \lean{Iut.SourceGraphAction.dist_image}
+  \lean{Iut.SourceFiniteTree.induce_degree_ne_one_connected}
+  \lean{Iut.SourceGraphAction.exists_invariant_subtree_card_le_two}
+  \lean{Iut.SourceGraphAction.finite_fixesVertexOrEdge}
+  \lean{Iut.SourceGraphAction.fixesVertexOrEdge}
   \lean{Iut.SourceGraphAction.fixes_path_pointwise}
   \lean{Iut.SourceGraphAction.subgroup_fixes_geodesic_pointwise}
   \lean{Iut.SourceIUTIProposition24PartI}
@@ -266,17 +270,20 @@
   \lean{Iut.SourceIUTIProposition24PartI.CuspidalInertia.conjugate_classification}
   \lean{Iut.SourceIUTIProposition24PartI.CuspidalInertia.inertia_le_conjugate_arithmeticTempered_iff}
   \leanok
-  A group action by automorphisms of a simple tree preserves graph distance.
-  If a subgroup fixes two vertices, it therefore fixes every vertex on their
-  unique geodesic, formalizing the closed-edge vertex content of
-  \emph{Semi-graphs of Anabelioids}, Lemma~1.8(ii)(b).  The exact subgroup
+  A finite group acting on an arbitrary simple tree fixes a vertex or an edge
+  setwise.  Lean proves this by constructing the finite connected invariant
+  hull of one orbit and repeatedly pruning its invariant leaves until at most
+  two vertices remain.  A group action by tree automorphisms also preserves
+  graph distance; if a subgroup fixes two vertices, it fixes every vertex on
+  their unique geodesic.  These results formalize the closed-edge simple-graph
+  content of \emph{Semi-graphs of Anabelioids}, Lemma~1.8(ii)(a--b).  The exact subgroup
   configuration of \IUT{} I, Proposition~2.4(i), is typed separately.  From
   its compact-conjugate rigidity conclusion, normality of the geometric
   subgroup, and a nontrivial compact cusp inertia subgroup, Lean derives the
-  two cusp-conjugacy conclusions of Corollary~2.5.  The finite-action fixed
-  vertex-or-edge theorem, the maximal-compact/verticial classification, the
-  inverse-limit proof of Proposition~2.4(i), and construction of cusp inertia
-  from stable reduction remain open.
+  two cusp-conjugacy conclusions of Corollary~2.5.  The source semi-graph type
+  with open edges, the maximal-compact/verticial classification, the inverse-limit
+  proof of Proposition~2.4(i), and construction of cusp inertia from stable
+  reduction remain open.
 \end{definition}
 
 \begin{definition}[Mono-theta environments and inverse-limit group]
