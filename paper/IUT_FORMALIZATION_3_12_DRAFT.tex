@@ -153,12 +153,16 @@ fixed original vertices yield two fixed incident branches, hence a fixed
 subjoint.  This proves Lemma~1.8(ii)(a--c) in the marked-compactification
 encoding.  The first step of Theorem~3.7(iii) is also formalized: a continuous
 compact-group action through a discrete deck group has finite image and hence
-fixes an original vertex or an edge of the covering semi-graph.  The
+fixes an original vertex or an edge of the covering semi-graph.  The oriented
+branch projection over the base prevents swapping the fixed edge, and
+connectedness plus the existence of an original vertex ensures that the edge
+abuts an original vertex.  Thus the compact group fixes an original vertex.
+The
 exact subgroup configuration of \IUT{} I, Proposition~2.4(i), is typed; from
 its compact-conjugate rigidity conclusion and a nontrivial compact cusp
 inertia subgroup, Lean derives both cusp-conjugacy assertions of
-Corollary~2.5.  The general branch-set/morphism formalism,
-branch-nonswitching over the base, total-estrangement argument,
+Corollary~2.5.  The general branch-set/morphism formalism, cofinal compatible
+fixed-vertex systems, total-estrangement argument,
 maximal-compact/verticial classification, and the inverse-limit proof of
 Proposition~2.4(i) remain open.
 Separately, the

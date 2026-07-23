@@ -421,8 +421,13 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceSemiGraphTree.Action.fixesVertexOrEdge
 #print axioms
   Iut.SourceSemiGraphTree.Action.fixesSubjoint_of_three_fixed_vertices
+#print axioms Iut.SourceSemiGraphTree.edge_abuts_vertex
+#print axioms Iut.SourceSemiGraphTree.Action.OverBase.not_swap_edge
+#print axioms
+  Iut.SourceSemiGraphTree.Action.OverBase.fixedVertex_of_fixesVertexOrEdge
 #print axioms Iut.SourceCompactSemiGraphAction.deckMap_range_finite
 #print axioms Iut.SourceCompactSemiGraphAction.fixesVertexOrEdge
+#print axioms Iut.SourceCompactSemiGraphAction.fixesVertex
 #print axioms Iut.SourceGraphAction.fixes_path_pointwise
 #print axioms Iut.SourceGraphAction.subgroup_fixes_geodesic_pointwise
 #print axioms

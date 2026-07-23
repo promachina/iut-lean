@@ -269,9 +269,14 @@
   \lean{Iut.SourceGraphAction.subgroup_fixes_geodesic_pointwise}
   \lean{Iut.SourceSemiGraphTree.Action.FixesSubjoint}
   \lean{Iut.SourceSemiGraphTree.Action.fixesSubjoint_of_three_fixed_vertices}
+  \lean{Iut.SourceSemiGraphTree.edge_abuts_vertex}
+  \lean{Iut.SourceSemiGraphTree.Action.OverBase}
+  \lean{Iut.SourceSemiGraphTree.Action.OverBase.not_swap_edge}
+  \lean{Iut.SourceSemiGraphTree.Action.OverBase.fixedVertex_of_fixesVertexOrEdge}
   \lean{Iut.SourceCompactSemiGraphAction}
   \lean{Iut.SourceCompactSemiGraphAction.deckMap_range_finite}
   \lean{Iut.SourceCompactSemiGraphAction.fixesVertexOrEdge}
+  \lean{Iut.SourceCompactSemiGraphAction.fixesVertex}
   \lean{Iut.SourceIUTIProposition24PartI}
   \lean{Iut.SourceIUTIProposition24PartI.CuspidalInertia}
   \lean{Iut.SourceIUTIProposition24PartI.CuspidalInertia.conjugate_le_arithmeticTempered_iff}
@@ -291,12 +296,15 @@
   marked-compactification encoding.  For the first step of Theorem~3.7(iii),
   a continuous compact-group action through the discrete deck group has finite
   image, so the preceding fixed-component theorem applies to the compact
-  group.  The exact subgroup
+  group.  Its oriented branch map over the base prevents an edge swap, while
+  connectedness and the existence of an original vertex ensure that every
+  edge abuts an original vertex.  Thus the compact group fixes an original
+  vertex, as in the next sentence of the source proof.  The exact subgroup
   configuration of \IUT{} I, Proposition~2.4(i), is typed separately.  From
   its compact-conjugate rigidity conclusion, normality of the geometric
   subgroup, and a nontrivial compact cusp inertia subgroup, Lean derives the
   two cusp-conjugacy conclusions of Corollary~2.5.  The source branch-set and
-  general morphism formalism, branch-nonswitching over the base,
+  general morphism formalism, cofinal compatible fixed-vertex systems,
   total-estrangement argument, maximal-compact/verticial classification, the
   inverse-limit proof of Proposition~2.4(i), and construction of cusp inertia
   from stable reduction remain open.

@@ -420,12 +420,18 @@ def m1m3PaperLedger : List PaperClause :=
       "In the marked-compactification encoding, Lean proves that three distinct fixed original vertices yield a fixed subjoint. It extracts consecutive edges from a fixed geodesic and uses the unique-neighbor boundary condition to prove their common point is original; truncating those edges gives the two open branches of the joint. The branch-level sub-semi-graph object is not yet constructed as a separate datatype.",
     clause "SemiAnbd.3.7(iii)" .semiGraphsAnabelioids
       "Semi-graphs of Anabelioids, Theorem 3.7(iii)"
-      ["SourceCompactSemiGraphAction",
+      ["SourceSemiGraphTree.edge_abuts_vertex",
+        "SourceSemiGraphTree.Action.OverBase",
+        "SourceSemiGraphTree.Action.OverBase.not_swap_edge",
+        "SourceSemiGraphTree.Action.OverBase.fixedVertex_of_fixesVertexOrEdge",
+        "SourceCompactSemiGraphAction",
         "SourceCompactSemiGraphAction.compactAction",
+        "SourceCompactSemiGraphAction.compactActionOverBase",
         "SourceCompactSemiGraphAction.deckMap_range_finite",
-        "SourceCompactSemiGraphAction.fixesVertexOrEdge"]
+        "SourceCompactSemiGraphAction.fixesVertexOrEdge",
+        "SourceCompactSemiGraphAction.fixesVertex"]
       .partialImplementation
-      "Lean formalizes the first source proof step: a continuous homomorphism from a compact group to the discrete deck group has finite image, and restriction of the covering semi-graph action to this image yields a fixed original vertex or fixed edge by Lemma 1.8(ii)(a). The fact that an action over the base cannot interchange the two branches of an edge, the resulting fixed original vertex, the cofinal compatible fixed-vertex systems, total-estrangement contradiction, and maximal compact/verticial classification remain open.",
+      "Lean formalizes the first two source proof steps: a continuous homomorphism from a compact group to the discrete deck group has finite image, restriction to this image yields a fixed component by Lemma 1.8(ii)(a), the oriented branch projection over the base rules out swapping a fixed edge, and connectedness plus a nonempty original vertex set upgrades the component to a fixed original vertex. The cofinal compatible fixed-vertex systems, total-estrangement contradiction, and maximal compact/verticial classification remain open.",
     clause "I.0.pseudo-monoid" .iutI
       "IUT I, Section 0: topological pseudo-monoids"
       ["SourceTopologicalPseudoMonoid",

@@ -19,10 +19,11 @@ derives the cuspidal portion of IUT I, Corollary 2.5 from Proposition 2.4(i).
 
 For the first step of *Semi-graphs of Anabelioids*, Theorem 3.7(iii), it also
 proves that the continuous image of a compact group in a discrete deck group
-is finite and applies Lemma 1.8 to obtain a fixed component.  The subsequent
-branch-nonswitching, total-estrangement, maximal-compact/verticial
-classification, and the inverse-limit passage in IUT I, Proposition 2.4(i),
-are not asserted here.
+is finite, applies Lemma 1.8 to obtain a fixed component, and uses the
+over-base branch map to upgrade it to a fixed original vertex.  The subsequent
+cofinal-system, total-estrangement, maximal-compact/verticial classification,
+and the inverse-limit passage in IUT I, Proposition 2.4(i), are not asserted
+here.
 -/
 
 namespace Iut
@@ -738,6 +739,53 @@ def IsOpenEdge (first second : Point) : Prop :=
   semiGraph.compactification.Adj first second ∧
     (first ∉ semiGraph.vertexSet ∨ second ∉ semiGraph.vertexSet)
 
+/-- Every compactification edge has an original vertex as an endpoint once the
+semi-graph has a vertex.  If both endpoints were appended boundary points,
+their unique-neighbor properties would make them an isolated two-vertex
+component, contradicting connectedness. -/
+theorem edge_abuts_vertex
+    (vertex_nonempty : semiGraph.vertexSet.Nonempty)
+    {first second : Point}
+    (adjacent : semiGraph.compactification.Adj first second) :
+    first ∈ semiGraph.vertexSet ∨ second ∈ semiGraph.vertexSet := by
+  by_contra neither_vertex
+  rw [not_or] at neither_vertex
+  obtain ⟨_, _, first_unique⟩ :=
+    semiGraph.boundary_unique_neighbor first neither_vertex.1
+  obtain ⟨_, _, second_unique⟩ :=
+    semiGraph.boundary_unique_neighbor second neither_vertex.2
+  have first_neighbor_unique :
+      ∀ point, semiGraph.compactification.Adj first point → point = second := by
+    intro point point_adjacent
+    exact (first_unique point point_adjacent).trans
+      (first_unique second adjacent).symm
+  have second_neighbor_unique :
+      ∀ point, semiGraph.compactification.Adj second point → point = first := by
+    intro point point_adjacent
+    exact (second_unique point point_adjacent).trans
+      (second_unique first adjacent.symm).symm
+  have walk_endpoint :
+      ∀ {start target : Point},
+        semiGraph.compactification.Walk start target →
+          (start = first ∨ start = second) →
+            target = first ∨ target = second := by
+    intro start target walk
+    induction walk with
+    | nil =>
+        exact fun start_endpoint => start_endpoint
+    | @cons start next target head tail ih =>
+        intro start_endpoint
+        apply ih
+        rcases start_endpoint with rfl | rfl
+        · exact Or.inr (first_neighbor_unique next head)
+        · exact Or.inl (second_neighbor_unique next head)
+  obtain ⟨vertex, vertex_mem⟩ := vertex_nonempty
+  obtain ⟨path, _path_isPath⟩ :=
+    semiGraph.compactification_isTree.connected.exists_isPath first vertex
+  rcases walk_endpoint path (Or.inl rfl) with vertex_eq | vertex_eq
+  · exact neither_vertex.1 (vertex_eq ▸ vertex_mem)
+  · exact neither_vertex.2 (vertex_eq ▸ vertex_mem)
+
 /-- A group action on a semi-graph tree, expressed on its compactification and
 required to preserve the subset of original vertices. -/
 structure Action (Acting : Type u) [Group Acting] where
@@ -754,6 +802,48 @@ namespace Action
 variable
   {Acting : Type u} [Group Acting]
   (data : semiGraph.Action Acting)
+
+/-- An action over the base semi-graph.  The projection is recorded on
+oriented branches of compactification edges: this retains the distinction
+between the two branches even when both abut the same base vertex. -/
+structure OverBase (BaseBranch : Type*) where
+  branchProjection :
+    ∀ first second,
+      semiGraph.compactification.Adj first second → BaseBranch
+  branchProjection_action :
+    ∀ g first second
+      (adjacent : semiGraph.compactification.Adj first second),
+      branchProjection
+          (SourceGraphAction.graphIso data.toGraphAction g first)
+          (SourceGraphAction.graphIso data.toGraphAction g second)
+          ((data.toGraphAction.map_adj_iff g first second).mpr adjacent) =
+        branchProjection first second adjacent
+  opposite_branches_ne :
+    ∀ first second
+      (adjacent : semiGraph.compactification.Adj first second),
+      branchProjection first second adjacent ≠
+        branchProjection second first adjacent.symm
+
+namespace OverBase
+
+variable {BaseBranch : Type*}
+
+/-- A deck transformation over the base cannot exchange the two oriented
+branches of an edge. -/
+theorem not_swap_edge
+    (overBase : data.OverBase semiGraph BaseBranch)
+    (g : Acting) {first second : Point}
+    (adjacent : semiGraph.compactification.Adj first second) :
+    ¬(SourceGraphAction.graphIso data.toGraphAction g first = second ∧
+        SourceGraphAction.graphIso data.toGraphAction g second = first) := by
+  intro swapped
+  apply OverBase.opposite_branches_ne (data := data) overBase
+    first second adjacent
+  simpa only [swapped.1, swapped.2] using
+    (OverBase.branchProjection_action (data := data) overBase
+      g first second adjacent).symm
+
+end OverBase
 
 /-- Restrict the acting group to a subgroup without changing its action on the
 semi-graph compactification. -/
@@ -787,6 +877,35 @@ def FixesVertexOrEdge : Prop :=
               SourceGraphAction.graphIso data.toGraphAction g second = second) ∨
             (SourceGraphAction.graphIso data.toGraphAction g first = second ∧
               SourceGraphAction.graphIso data.toGraphAction g second = first)
+
+/-- The fixed-component alternative upgrades to a fixed original vertex for
+an action over the base on a connected semi-graph with a vertex.  This is the
+second step of the proof of Theorem 3.7(iii). -/
+theorem OverBase.fixedVertex_of_fixesVertexOrEdge
+    {BaseBranch : Type*}
+    (overBase : data.OverBase semiGraph BaseBranch)
+    (vertex_nonempty : semiGraph.vertexSet.Nonempty)
+    (fixedComponent : FixesVertexOrEdge semiGraph data) :
+    ∃ vertex ∈ semiGraph.vertexSet,
+      ∀ g : Acting,
+        SourceGraphAction.graphIso data.toGraphAction g vertex = vertex := by
+  rcases fixedComponent with fixedVertex |
+      ⟨first, second, adjacent, edge_fixed⟩
+  · exact fixedVertex
+  rcases semiGraph.edge_abuts_vertex vertex_nonempty adjacent with
+      first_vertex | second_vertex
+  · refine ⟨first, first_vertex, ?_⟩
+    intro g
+    rcases edge_fixed g with fixed | swapped
+    · exact fixed.1
+    · exact
+        (OverBase.not_swap_edge semiGraph data overBase g adjacent swapped).elim
+  · refine ⟨second, second_vertex, ?_⟩
+    intro g
+    rcases edge_fixed g with fixed | swapped
+    · exact fixed.2
+    · exact
+        (OverBase.not_swap_edge semiGraph data overBase g adjacent swapped).elim
 
 /-- A fixed boundary point determines a fixed open edge: its unique neighbor
 is fixed because graph automorphisms preserve adjacency. -/
@@ -1009,6 +1128,23 @@ theorem compactAction_graphIso_apply
         (data.deckMap g) point :=
   rfl
 
+/-- Pull the branch projection over the base back along the compact-to-deck
+homomorphism. -/
+def compactActionOverBase
+    {BaseBranch : Type*}
+    (overBase : data.deckAction.OverBase semiGraph BaseBranch) :
+    data.compactAction.OverBase semiGraph BaseBranch where
+  branchProjection :=
+    SourceSemiGraphTree.Action.OverBase.branchProjection
+      (data := data.deckAction) overBase
+  branchProjection_action := fun g first second adjacent =>
+    SourceSemiGraphTree.Action.OverBase.branchProjection_action
+      (data := data.deckAction) overBase
+      (data.deckMap g) first second adjacent
+  opposite_branches_ne := fun first second adjacent =>
+    SourceSemiGraphTree.Action.OverBase.opposite_branches_ne
+      (data := data.deckAction) overBase first second adjacent
+
 /-- The image of a compact group in a discrete deck group is finite. -/
 theorem deckMap_range_finite :
     (data.deckMap.range : Set DeckGroup).Finite := by
@@ -1040,6 +1176,20 @@ theorem fixesVertexOrEdge :
     let imageElement : image :=
       ⟨data.deckMap g, ⟨g, rfl⟩⟩
     exact edge_fixed imageElement
+
+/-- The compact subgroup fixes an original vertex when the deck action is over
+the base semi-graph and the covering semi-graph has a vertex. -/
+theorem fixesVertex
+    {BaseBranch : Type*}
+    (overBase : data.deckAction.OverBase semiGraph BaseBranch)
+    (vertex_nonempty : semiGraph.vertexSet.Nonempty) :
+    ∃ vertex ∈ semiGraph.vertexSet,
+      ∀ g : CompactGroup,
+        SourceGraphAction.graphIso
+          data.compactAction.toGraphAction g vertex = vertex :=
+  SourceSemiGraphTree.Action.OverBase.fixedVertex_of_fixesVertexOrEdge
+    semiGraph data.compactAction (data.compactActionOverBase overBase)
+      vertex_nonempty data.fixesVertexOrEdge
 
 end SourceCompactSemiGraphAction
 
