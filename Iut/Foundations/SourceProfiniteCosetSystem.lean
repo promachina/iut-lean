@@ -162,6 +162,92 @@ theorem iInf_levelSubgroup_eq (H : Subgroup Ambient)
       levelSubgroup H N) N).trans (sup_le hK.2 hN)
   · exact le_iInf fun N => le_sup_left
 
+/-- The ambient representatives realizing one coordinate of a compatible
+finite-level coset system. -/
+def sectionFiber (H : Subgroup Ambient) (compatible : (carrier H).sections)
+    (N : OpenNormalSubgroup Ambient) : Set Ambient :=
+  {g | QuotientGroup.mk g = compatible.1 N}
+
+omit [IsTopologicalGroup Ambient] [CompactSpace Ambient]
+    [TotallyDisconnectedSpace Ambient] in
+/-- Every coordinate fiber has an ambient representative. -/
+theorem sectionFiber_nonempty (H : Subgroup Ambient)
+    (compatible : (carrier H).sections) (N : OpenNormalSubgroup Ambient) :
+    (sectionFiber H compatible N).Nonempty := by
+  obtain ⟨g, equality⟩ := QuotientGroup.mk_surjective (compatible.1 N)
+  exact ⟨g, equality⟩
+
+omit [CompactSpace Ambient] [TotallyDisconnectedSpace Ambient] in
+/-- A coordinate fiber is closed: `H sup N` is open, hence closed, so its
+coset quotient is a `T1` space. -/
+theorem sectionFiber_isClosed (H : Subgroup Ambient)
+    (compatible : (carrier H).sections) (N : OpenNormalSubgroup Ambient) :
+    IsClosed (sectionFiber H compatible N) := by
+  have levelOpen : IsOpen (levelSubgroup H N : Set Ambient) :=
+    Subgroup.isOpen_mono le_sup_right N.isOpen
+  letI : IsClosed (levelSubgroup H N : Set Ambient) :=
+    Subgroup.isClosed_of_isOpen (levelSubgroup H N) levelOpen
+  change IsClosed
+    ((QuotientGroup.mk : Ambient → Ambient ⧸ levelSubgroup H N) ⁻¹'
+      {compatible.1 N})
+  exact isClosed_singleton.preimage QuotientGroup.continuous_mk
+
+omit [IsTopologicalGroup Ambient] [CompactSpace Ambient]
+    [TotallyDisconnectedSpace Ambient] in
+/-- Compatibility makes the coordinate fibers directed by reverse
+inclusion.  The common refinement of `N` and `M` is `N inf M`. -/
+theorem sectionFiber_directed (H : Subgroup Ambient)
+    (compatible : (carrier H).sections) :
+    Directed (· ⊇ ·) (sectionFiber H compatible) := by
+  intro N M
+  refine ⟨N ⊓ M, ?_, ?_⟩
+  · intro g g_mem
+    let leftMap : N ⊓ M ⟶ N := inf_le_left.hom
+    change QuotientGroup.mk g = compatible.1 N
+    have compatibility := compatible.property leftMap
+    rw [← compatibility]
+    change QuotientGroup.mk g =
+      Subgroup.quotientMapOfLE (levelSubgroup_mono H leftMap)
+        (compatible.1 (N ⊓ M))
+    rw [← g_mem]
+    rfl
+  · intro g g_mem
+    let rightMap : N ⊓ M ⟶ M := inf_le_right.hom
+    change QuotientGroup.mk g = compatible.1 M
+    have compatibility := compatible.property rightMap
+    rw [← compatibility]
+    change QuotientGroup.mk g =
+      Subgroup.quotientMapOfLE (levelSubgroup_mono H rightMap)
+        (compatible.1 (N ⊓ M))
+    rw [← g_mem]
+    rfl
+
+omit [TotallyDisconnectedSpace Ambient] in
+/-- Compactness realizes every compatible finite-level coset system by one
+ambient element.  This is the surjectivity half of the inverse-limit
+identification `G / H = lim_N G / (H sup N)`. -/
+theorem cosetSection_surjective (H : Subgroup Ambient) :
+    Function.Surjective (cosetSection H) := by
+  intro compatible
+  let topNormal : OpenNormalSubgroup Ambient :=
+    { toSubgroup := ⊤
+      isOpen' := isOpen_univ }
+  letI : Nonempty (OpenNormalSubgroup Ambient) := ⟨topNormal⟩
+  have intersectionNonempty :
+      (⋂ N : OpenNormalSubgroup Ambient,
+        sectionFiber H compatible N).Nonempty :=
+    IsCompact.nonempty_iInter_of_directed_nonempty_isCompact_isClosed
+      (sectionFiber H compatible)
+      (sectionFiber_directed H compatible)
+      (sectionFiber_nonempty H compatible)
+      (fun N => (sectionFiber_isClosed H compatible N).isCompact)
+      (sectionFiber_isClosed H compatible)
+  obtain ⟨g, g_mem⟩ := intersectionNonempty
+  refine ⟨QuotientGroup.mk g, ?_⟩
+  apply CategoryTheory.Functor.sections_ext_iff.mpr
+  intro N
+  exact Set.mem_iInter.mp g_mem N
+
 /-- Closedness separates distinct `H`-cosets in a finite constituent level. -/
 theorem cosetSection_injective (H : Subgroup Ambient)
     (closed : IsClosed (H : Set Ambient)) :
@@ -176,6 +262,14 @@ theorem cosetSection_injective (H : Subgroup Ambient)
     congrArg (fun compatible : (carrier H).sections => compatible.1 N)
       equality
   exact QuotientGroup.eq.mp coordinateEquality
+
+/-- For a closed constituent subgroup, cosets are exactly compatible systems
+of their normal-open finite quotients. -/
+noncomputable def cosetSectionEquiv (H : Subgroup Ambient)
+    (closed : IsClosed (H : Set Ambient)) :
+    (Ambient ⧸ H) ≃ (carrier H).sections :=
+  Equiv.ofBijective (cosetSection H)
+    ⟨cosetSection_injective H closed, cosetSection_surjective H⟩
 
 /-- The stabilizer of the identity compatible system is the original closed
 constituent subgroup. -/
@@ -248,6 +342,28 @@ def profiniteEdgeSection (point : diagram.CosetEdge) :
       (diagram.edgeGroup point.1)).sections :=
   SourceProfiniteCosetSystem.cosetSection
     (diagram.edgeGroup point.1) point.2
+
+/-- Closed verticial subgroup cosets are equivalent to all compatible
+normal-open vertex systems over that base vertex. -/
+noncomputable def profiniteVertexSectionEquiv
+    (vertex : diagram.base.Vertex)
+    (closed : IsClosed (diagram.vertexGroup vertex : Set Ambient)) :
+    (Ambient ⧸ diagram.vertexGroup vertex) ≃
+      (SourceProfiniteCosetSystem.carrier
+        (diagram.vertexGroup vertex)).sections :=
+  SourceProfiniteCosetSystem.cosetSectionEquiv
+    (diagram.vertexGroup vertex) closed
+
+/-- Closed edge subgroup cosets are equivalent to all compatible normal-open
+edge systems over that base edge. -/
+noncomputable def profiniteEdgeSectionEquiv
+    (edge : diagram.base.Edge)
+    (closed : IsClosed (diagram.edgeGroup edge : Set Ambient)) :
+    (Ambient ⧸ diagram.edgeGroup edge) ≃
+      (SourceProfiniteCosetSystem.carrier
+        (diagram.edgeGroup edge)).sections :=
+  SourceProfiniteCosetSystem.cosetSectionEquiv
+    (diagram.edgeGroup edge) closed
 
 /-- Closed verticial subgroups separate distinct lifted vertices over a fixed
 base vertex at a finite normal-open level. -/

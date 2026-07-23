@@ -438,7 +438,11 @@ visible to Lean's axiom reporter.
   Iut.SourceSemiGraphSubgroupDiagram.cosetAction_branchStabilizer_eq_edgeStabilizer
 #print axioms Iut.SourceProfiniteCosetSystem.transition_equivariant
 #print axioms Iut.SourceProfiniteCosetSystem.iInf_levelSubgroup_eq
+#print axioms Iut.SourceProfiniteCosetSystem.sectionFiber_isClosed
+#print axioms Iut.SourceProfiniteCosetSystem.sectionFiber_directed
+#print axioms Iut.SourceProfiniteCosetSystem.cosetSection_surjective
 #print axioms Iut.SourceProfiniteCosetSystem.cosetSection_injective
+#print axioms Iut.SourceProfiniteCosetSystem.cosetSectionEquiv
 #print axioms
   Iut.SourceProfiniteCosetSystem.sectionStabilizer_baseSection_eq
 #print axioms
@@ -447,6 +451,8 @@ visible to Lean's axiom reporter.
   Iut.SourceSemiGraphSubgroupDiagram.profiniteVertexSection_stabilizer_eq
 #print axioms
   Iut.SourceSemiGraphSubgroupDiagram.profiniteEdgeSection_stabilizer_eq
+#print axioms Iut.SourceSemiGraphSubgroupDiagram.profiniteVertexSectionEquiv
+#print axioms Iut.SourceSemiGraphSubgroupDiagram.profiniteEdgeSectionEquiv
 #print axioms
   Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevel_vertexCoset_finite
 #print axioms

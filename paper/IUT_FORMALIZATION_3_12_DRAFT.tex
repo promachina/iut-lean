@@ -160,17 +160,19 @@ incidence maps, and proves that lifted vertex and edge stabilizers are exactly
 the corresponding conjugate constituent subgroups.  For every closed
 constituent subgroup $H$ in a profinite ambient group $G$, Lean constructs the
 finite normal-open coset system $G/(H\vee N)$ and its equivariant transition
-maps.  Profinite separation derives $\bigcap_N(H\vee N)=H$, so every $H$-coset
-injects into a compatible finite-level system and its stabilizer agrees with
-the Bass--Serre stabilizer.  Lean further assembles these component systems
+maps.  Profinite separation derives $\bigcap_N(H\vee N)=H$.  Conversely, the
+coordinate representative fibers of any compatible system are nonempty,
+closed, and directed, so compactness supplies a simultaneous representative.
+Thus $G/H$ is equivalent to the full compatible-system type, and its
+stabilizer agrees with the Bass--Serre stabilizer.  Lean further assembles
+these component systems
 into normal-open coset semi-graphs.  Normality extends every branch transport
 from $H_e$ to $H_e\vee N$, and quotient maps give proper semi-graph morphisms
 with finite component fibers.  Their incidence compatibility, surjectivity,
 identity and composition laws, and deck equivariance are proved on vertices,
-edges, and branches.  Proving exhaustion of all compatible systems, enriching
-the raw levels to finite etale coverings of anabelioids, and connecting the
-abstract subgroups to constituent fundamental groups remain open in
-Remark~2.2.1.
+edges, and branches.  Enriching the raw levels to finite etale coverings of
+anabelioids and connecting the abstract subgroups to constituent fundamental
+groups remain open in Remark~2.2.1.
 The tree-action dependency has been lowered to the original source.  Lean constructs a finite
 connected invariant hull for a finite group acting on an arbitrary simple
 tree, prunes its invariant leaves, and proves that the group fixes a vertex or

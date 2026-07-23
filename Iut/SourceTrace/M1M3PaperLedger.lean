@@ -465,11 +465,19 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceProfiniteCosetSystem.system",
         "SourceProfiniteCosetSystem.cosetSection",
         "SourceProfiniteCosetSystem.iInf_levelSubgroup_eq",
+        "SourceProfiniteCosetSystem.sectionFiber",
+        "SourceProfiniteCosetSystem.sectionFiber_nonempty",
+        "SourceProfiniteCosetSystem.sectionFiber_isClosed",
+        "SourceProfiniteCosetSystem.sectionFiber_directed",
+        "SourceProfiniteCosetSystem.cosetSection_surjective",
         "SourceProfiniteCosetSystem.cosetSection_injective",
+        "SourceProfiniteCosetSystem.cosetSectionEquiv",
         "SourceProfiniteCosetSystem.sectionStabilizer_baseSection_eq",
         "SourceProfiniteCosetSystem.sectionStabilizer_cosetSection_eq_conjugate",
         "SourceSemiGraphSubgroupDiagram.profiniteVertexSection",
         "SourceSemiGraphSubgroupDiagram.profiniteEdgeSection",
+        "SourceSemiGraphSubgroupDiagram.profiniteVertexSectionEquiv",
+        "SourceSemiGraphSubgroupDiagram.profiniteEdgeSectionEquiv",
         "SourceSemiGraphSubgroupDiagram.profiniteVertexSection_stabilizer_eq",
         "SourceSemiGraphSubgroupDiagram.profiniteEdgeSection_stabilizer_eq",
         "SourceSemiGraphSubgroupDiagram.normalOpenLevel",
@@ -489,7 +497,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceSemiGraphSubgroupDiagram.normalOpenLevelTransition_totalBranchMap_action",
         "SourceSemiGraphSubgroupDiagram.normalOpenLevelTransition_isProper"]
       .partialImplementation
-      "Lean defines coherent actions on raw vertices, edges, and total branches and constructs the action on compatible sections of a cofiltered finite system. For a semi-graph of subgroups, Lean constructs the Bass-Serre coset semi-graph with general branch transports and proves the exact conjugate stabilizer formulas. For every closed constituent subgroup H of a profinite ambient group G, normal open subgroups index the finite coset systems G/(H sup N); profinite separation derives their intersection to be H, embeds every H-coset into a compatible system, and identifies the compatible stabilizers. These constituent systems are now assembled into actual normal-open coset semi-graphs: normality extends every branch transport, quotient maps give proper semi-graph morphisms, and Lean proves finite component fibers, incidence compatibility, surjectivity, identity and composition laws, and ambient deck equivariance on vertices, edges, and branches. Proving that every compatible component system comes from a G/H coset, enriching the raw levels to finite etale coverings of anabelioids, and connecting the abstract subgroup diagram to the constituent fundamental groups remain open.",
+      "Lean defines coherent actions on raw vertices, edges, and total branches and constructs the action on compatible sections of a cofiltered finite system. For a semi-graph of subgroups, Lean constructs the Bass-Serre coset semi-graph with general branch transports and proves the exact conjugate stabilizer formulas. For every closed constituent subgroup H of a profinite ambient group G, normal open subgroups index the finite coset systems G/(H sup N). Profinite separation proves injectivity into compatible systems. Conversely, the coordinate representative fibers of any compatible system are proved nonempty, closed, and directed; compactness produces a simultaneous representative. Thus G/H is equivalent to the full compatible-system type, and the compatible vertex and edge stabilizers are exactly the Bass-Serre stabilizers. The constituent systems are assembled into actual normal-open coset semi-graphs: normality extends branch transports, quotient maps give proper semi-graph morphisms, and Lean proves finite component fibers, incidence compatibility, surjectivity, identity and composition laws, and ambient deck equivariance on vertices, edges, and branches. Enriching the raw levels to finite etale coverings of anabelioids and connecting the abstract subgroup diagram to the constituent fundamental groups remain open.",
     clause "SemiAnbd.2.4(iv)" .semiGraphsAnabelioids
       "Semi-graphs of Anabelioids, Definition 2.4(iv)"
       ["SourceEstrangedIncidentBranchSystem",

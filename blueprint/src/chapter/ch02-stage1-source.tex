@@ -294,11 +294,19 @@
   \lean{Iut.SourceProfiniteCosetSystem.system}
   \lean{Iut.SourceProfiniteCosetSystem.cosetSection}
   \lean{Iut.SourceProfiniteCosetSystem.iInf_levelSubgroup_eq}
+  \lean{Iut.SourceProfiniteCosetSystem.sectionFiber}
+  \lean{Iut.SourceProfiniteCosetSystem.sectionFiber_nonempty}
+  \lean{Iut.SourceProfiniteCosetSystem.sectionFiber_isClosed}
+  \lean{Iut.SourceProfiniteCosetSystem.sectionFiber_directed}
+  \lean{Iut.SourceProfiniteCosetSystem.cosetSection_surjective}
   \lean{Iut.SourceProfiniteCosetSystem.cosetSection_injective}
+  \lean{Iut.SourceProfiniteCosetSystem.cosetSectionEquiv}
   \lean{Iut.SourceProfiniteCosetSystem.sectionStabilizer_baseSection_eq}
   \lean{Iut.SourceProfiniteCosetSystem.sectionStabilizer_cosetSection_eq_conjugate}
   \lean{Iut.SourceSemiGraphSubgroupDiagram.profiniteVertexSection}
   \lean{Iut.SourceSemiGraphSubgroupDiagram.profiniteEdgeSection}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.profiniteVertexSectionEquiv}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.profiniteEdgeSectionEquiv}
   \lean{Iut.SourceSemiGraphSubgroupDiagram.profiniteVertexSection_stabilizer_eq}
   \lean{Iut.SourceSemiGraphSubgroupDiagram.profiniteEdgeSection_stabilizer_eq}
   \lean{Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevel}
@@ -381,16 +389,18 @@
   conjugate constituent subgroup.  For a closed constituent subgroup $H$ in a
   profinite ambient group $G$, open normal subgroups $N$ index actual finite
   coset levels $G/(H\vee N)$.  Lean constructs their equivariant transition
-  functor, derives $\bigcap_N(H\vee N)=H$ from profinite separation, injects
-  each $H$-coset into a compatible finite-level system, and proves that the
-  compatible vertex and edge stabilizers equal the Bass--Serre stabilizers.
+  functor and derives $\bigcap_N(H\vee N)=H$ from profinite separation.  For
+  an arbitrary compatible system, its coordinate representative fibers are
+  nonempty, closed, and directed; compactness produces one ambient element in
+  their intersection.  Consequently $G/H$ is equivalent to the full type of
+  compatible systems, and the compatible vertex and edge stabilizers equal
+  the Bass--Serre stabilizers.
   The constituent systems are assembled into normal-open coset semi-graphs.
   Normality extends every branch transport from $H_e$ to $H_e\vee N$; quotient
   maps give proper semi-graph morphisms with finite component fibers.  Lean
   proves incidence compatibility, surjectivity, identity and composition, and
-  deck equivariance for their vertex, edge, and branch maps.  Proving that
-  every compatible component system is obtained from a $G/H$ coset, enriching
-  these raw levels to finite etale coverings of anabelioids, and connecting the
+  deck equivariance for their vertex, edge, and branch maps.  Enriching these
+  raw levels to finite etale coverings of anabelioids and connecting the
   abstract subgroups to constituent fundamental groups remain open.
 
   A finite group acting on an arbitrary simple tree fixes a vertex or an edge
