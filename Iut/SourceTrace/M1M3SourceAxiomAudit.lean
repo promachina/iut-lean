@@ -392,6 +392,9 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceMLFGaloisTMPair.LocalKummerRootTheory.canonicalKummerMap_toGerm
 #print axioms Iut.SourceMLFGaloisTMPair.augmentation_image_isOpen
 #print axioms Iut.SourceMLFGaloisTMPair.fixedFieldOfOpenSubgroup_finiteDimensional
+#print axioms Iut.SourceMLFGaloisTMPair.modelGroupificationEquiv_action
+#print axioms Iut.SourceIUTIIUnitKummerEmbedding.fixed_roots_of_unitKummer_eq_one
+#print axioms Iut.SourceIUTIIUnitKummerEmbedding.unit_eq_one_of_unitKummer_eq_one
 #print axioms Iut.SourceIUTIIUnitKummerEmbedding.unitKummer_injective
 #print axioms Iut.SourceIUTIIUnitKummerEmbedding.torsionUnitImage_eq_constant_torsion
 #print axioms Iut.sourceConstantTorsion_unitKummer

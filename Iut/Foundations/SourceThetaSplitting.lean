@@ -36,6 +36,7 @@ For constants obtained from the unit Kummer embedding, the paper's
 -/
 theorem sourceConstantTorsion_unitKummer
     {G : TopologicalGroupCat.{u}}
+    [CompactSpace G]
     {A : Type u}
     [Group A] [TopologicalSpace A] [IsTopologicalGroup A]
     [IsMulCommutative A]

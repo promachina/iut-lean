@@ -465,9 +465,15 @@
   \lean{Iut.SourceMLFGaloisTMPair.augmentationOpenImage}
   \lean{Iut.SourceMLFGaloisTMPair.fixedFieldOfOpenSubgroup}
   \lean{Iut.SourceMLFGaloisTMPair.fixedFieldOfOpenSubgroup_finiteDimensional}
+  \lean{Iut.SourceMLFGaloisTMPair.modelGroupificationEquiv}
+  \lean{Iut.SourceMLFGaloisTMPair.modelGroupificationEquiv_action}
+  \lean{Iut.SourceMLFGaloisTMPair.fixedFieldIntegralUnit}
   \lean{Iut.SourceIUTIIUnitKummerEmbedding}
   \lean{Iut.SourceIUTIIUnitKummerEmbedding.monoidKummer}
   \lean{Iut.SourceIUTIIUnitKummerEmbedding.unitKummer}
+  \lean{Iut.SourceIUTIIUnitKummerEmbedding.fixed_roots_of_unitKummer_eq_one}
+  \lean{Iut.SourceIUTIIUnitKummerEmbedding.unit_eq_one_of_unitKummer_eq_one}
+  \lean{Iut.SourceIUTIIUnitKummerEmbedding.unitKummer_injective}
   \lean{Iut.SourceIUTIIUnitKummerEmbedding.constantSubgroup}
   \lean{Iut.SourceIUTIIUnitKummerEmbedding.torsionUnitImage}
   \lean{Iut.SourceIUTIIUnitKummerEmbedding.torsionUnitImage_eq_constant_torsion}
@@ -586,10 +592,15 @@
   quotient.  For a compact IUT acting group, Lean also proves that the image of
   each open germ domain under the arithmetic augmentation is open: it has
   finite index, and compactness makes its image closed.  Infinite Galois
-  correspondence then constructs the associated finite fixed extension.  The
-  remaining precise source obligation is to extract, from a zero constructed
-  Kummer germ, compatible adjusted roots lying in that extension and thereby
-  derive injectivity.
+  correspondence then constructs the associated finite fixed extension.
+  Equality of a constructed unit Kummer germ with one is now unpacked into a
+  common open subgroup and an explicit coboundary.  Evaluating its cochain at
+  (1/n) adjusts the compatible root; Lean proves that the adjusted root has
+  (n)-th power equal to the original unit and is fixed by the common
+  subgroup.  Transport to the finite fixed extension makes the root and its
+  inverse integral by the power criterion.  Residual finiteness of that
+  integral-unit group forces the original unit to be one, so the constructed
+  unit Kummer homomorphism is injective without a stored faithfulness field.
   At a finite place, the Definition~4.9 input now ties the selected splitting
   at an isotropic reference object to an actual MLF-Galois \(TM\)-pair, a
   stable characteristic submonoid, and the genuine \(\operatorname{Ism}\)

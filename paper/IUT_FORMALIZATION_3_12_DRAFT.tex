@@ -206,9 +206,13 @@ resulting quotient.  Deriving injectivity of the constructed unit Kummer map
 also uses a proved finite-fixed-field bridge: for a compact IUT acting group,
 the augmented image of an open germ domain has finite index and is compact
 closed, hence is open; infinite Galois correspondence makes its fixed field a
-finite MLF extension.  The remaining step is the cocycle calculation placing
-the adjusted compatible roots in this fixed field; injectivity is not yet
-claimed.
+finite MLF extension.  Lean now unpacks equality of a unit Kummer germ with
+one into a common open subgroup and a coboundary, evaluates the cochain at
+\(1/n\), and proves that the resulting adjusted root has \(n\)-th power equal
+to the original unit and is fixed by that subgroup.  The root and its inverse
+are integral in the finite fixed field by the power criterion.  Residual
+finiteness then forces the original unit to be one, proving injectivity of the
+constructed unit Kummer map without a stored faithfulness assumption.
 The canonical
 \(C_\Theta\)-scale equality is derived from the q-normalized theta/log-volume
 identity plus q-pilot positivity.  Conversely, the checked p-adic finite,

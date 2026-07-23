@@ -762,9 +762,15 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceKummerFaithfulness.eq_one_of_roots_in_profinite",
         "SourceMLFKummerFaithfulness.finite_quotient_map",
         "SourceMLFKummerFaithfulness.units_residuallyFinite_of_finite_quotients",
-        "SourceMLFKummerFaithfulness.integralClosureUnits_residuallyFinite"]
+        "SourceMLFKummerFaithfulness.integralClosureUnits_residuallyFinite",
+        "SourceMLFGaloisTMPair.modelGroupificationEquiv",
+        "SourceMLFGaloisTMPair.modelGroupificationEquiv_action",
+        "SourceMLFGaloisTMPair.fixedFieldIntegralUnit",
+        "SourceIUTIIUnitKummerEmbedding.fixed_roots_of_unitKummer_eq_one",
+        "SourceIUTIIUnitKummerEmbedding.unit_eq_one_of_unitKummer_eq_one",
+        "SourceIUTIIUnitKummerEmbedding.unitKummer_injective"]
       .partialImplementation
-      "The finite-quotient argument is proved: a residually finite, hence profinite, multiplicative group has no nontrivial element admitting roots of every positive degree, exactly the condition of Definition 1.5(a). For every finite extension of an MLF, Lean now proves residual finiteness of the integral-closure unit group from Krull intersection and the finite quotients by powers of the base maximal ideal. Identifying a zero constructed continuous Kummer germ with roots in one such finite-extension unit group, and hence deriving injectivity, remains open.",
+      "The multiplicative MLF clause used by IUT is proved without a stored faithfulness field. Equality of a constructed unit Kummer germ with one is unpacked into one common open subgroup and an explicit coboundary. Evaluating that cochain on 1/n adjusts the compatible rational root; Lean proves its n-th power is the original unit and the common subgroup fixes it. For a compact IUT acting group, the augmented subgroup cuts out one finite fixed extension. The transported roots and their inverses are proved integral there by IsIntegral.of_pow. Krull intersection and finite maximal-ideal-power quotients make this finite-extension unit group residually finite, forcing the original unit to be one and proving the constructed Kummer map injective. The general abelian-variety clause of Definition 1.5 remains open.",
 
     clause "AbsTopIII.2.1(i-ii),Cor2.3" .absoluteAnabelianIII
       "Absolute Anabelian Topics III, Definition 2.1(i)-(ii) and Corollary 2.3"
@@ -807,6 +813,9 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceMLFGaloisTMPair.augmentationOpenImage",
         "SourceMLFGaloisTMPair.fixedFieldOfOpenSubgroup",
         "SourceMLFGaloisTMPair.fixedFieldOfOpenSubgroup_finiteDimensional",
+        "SourceMLFGaloisTMPair.modelGroupificationEquiv",
+        "SourceMLFGaloisTMPair.modelGroupificationEquiv_action",
+        "SourceMLFGaloisTMPair.fixedFieldIntegralUnit",
         "SourceIUTIIUnitKummerEmbedding"]
       .partialImplementation
       "The model carrier is literally the nonzero elements of the integral closure of O_k in an algebraic closure, its absolute Galois group has the Krull topology and recovered compact Hausdorff totally disconnected instances, and its algebraic Galois action is constructed. A model pair has an actual continuous surjective augmentation Pi_k -> G_k; every general pair is required to be equivariantly isomorphic to such a model, and its augmentation is transported and proved surjective. For a compact acting group, the image of every open subgroup is proved open by finite index and compact closedness, and infinite Galois correspondence constructs its finite fixed field. The exact TM object uses the topology-free algebraic presentation authorized by Remark 3.1.1, so no arbitrary topology can certify the model. The cyclotome is literally Hom(Q/Z,M). Its pointwise topology is realized as a closed subspace of the product of the finite root-of-unity coordinate groups derived from the Q/Z torsion certificate; hence its compact, Hausdorff, totally disconnected, and bundled Profinite structures are proved. The Q/Z torsion identification remains a precise model certificate; the categories and morphisms of Definition 3.1(iii) remain open.",
@@ -859,15 +868,21 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceMLFGaloisTMPair.augmentationOpenImage",
         "SourceMLFGaloisTMPair.fixedFieldOfOpenSubgroup",
         "SourceMLFGaloisTMPair.fixedFieldOfOpenSubgroup_finiteDimensional",
+        "SourceMLFGaloisTMPair.modelGroupificationEquiv",
+        "SourceMLFGaloisTMPair.modelGroupificationEquiv_action",
+        "SourceMLFGaloisTMPair.fixedFieldIntegralUnit",
         "SourceIUTIIUnitKummerEmbedding",
         "SourceIUTIIUnitKummerEmbedding.monoidKummer",
         "SourceIUTIIUnitKummerEmbedding.unitKummer",
+        "SourceIUTIIUnitKummerEmbedding.fixed_roots_of_unitKummer_eq_one",
+        "SourceIUTIIUnitKummerEmbedding.unit_eq_one_of_unitKummer_eq_one",
+        "SourceIUTIIUnitKummerEmbedding.unitKummer_injective",
         "SourceIUTIIUnitKummerEmbedding.constantSubgroup",
         "SourceIUTIIUnitKummerEmbedding.torsionUnitImage",
         "SourceIUTIIUnitKummerEmbedding.torsionUnitImage_eq_constant_torsion",
         "sourceConstantTorsion_unitKummer"]
       .partialImplementation
-      "The fraction-field theorem identifies the groupification of the literal monoid O_kbar^triangle with kbar^x. Algebraic closedness makes it rootable, and injectivity of divisible abelian groups extends Z -> kbar^x across Z -> Q; transporting through the model isomorphism constructs a coherent compatible rational-root system for every monoid element. Two systems agree on integers, so their quotient at q has order dividing den(q); integrality of a finite-order element and its inverse constructs the actual comparison unit in O_kbar^triangle and transports it to every model pair. Applying Galois to a compatible root system and comparing it with the original constructs every integral Galois root ratio from fixedness. Root, comparison, and ratio existence are therefore no longer supplied assumptions. The Krull stabilizer of each algebraic integer is open and transports to the general pair. Root ratios are locally constant into discrete units, hence continuous in the proved profinite pointwise cyclotome topology; the canonical continuous Galois action is constructed coordinatewise. The ratios are multiplicative, killed on Z, descended through Q/Z, and satisfy the cocycle law. The constructed comparison gives the coboundary between choices. Both canonical Kummer maps are derived monoid homomorphisms and commute with the canonical local-to-germ map. For compact IUT acting groups, every germ domain now yields an open arithmetic Galois image and an actual finite fixed extension. Injectivity is not asserted by Proposition 3.2(ii); extracting adjusted roots in that fixed extension from a zero Kummer germ remains the explicit Definition 1.5/Remark 1.5.4 obligation.",
+      "The fraction-field theorem identifies the groupification of the literal monoid O_kbar^triangle with kbar^x. Algebraic closedness makes it rootable, and injectivity of divisible abelian groups extends Z -> kbar^x across Z -> Q; transporting through the model isomorphism constructs a coherent compatible rational-root system for every monoid element. Two systems agree on integers, so their quotient at q has order dividing den(q); integrality of a finite-order element and its inverse constructs the actual comparison unit in O_kbar^triangle and transports it to every model pair. Applying Galois to a compatible root system and comparing it with the original constructs every integral Galois root ratio from fixedness. Root, comparison, and ratio existence are therefore no longer supplied assumptions. The Krull stabilizer of each algebraic integer is open and transports to the general pair. Root ratios are locally constant into discrete units, hence continuous in the proved profinite pointwise cyclotome topology; the canonical continuous Galois action is constructed coordinatewise. The ratios are multiplicative, killed on Z, descended through Q/Z, and satisfy the cocycle law. The constructed comparison gives the coboundary between choices. Both canonical Kummer maps are derived monoid homomorphisms and commute with the canonical local-to-germ map. For compact IUT acting groups, a zero unit Kummer germ now yields explicit coboundary-adjusted roots fixed by one open subgroup. Its open arithmetic image cuts out one finite extension; the roots become integral units there, and residual finiteness proves injectivity. Proposition 3.2(ii) supplies the map, while this last theorem discharges the separate multiplicative Definition 1.5/Remark 1.5.4(i) obligation.",
     clause "EtTh.2.13(ii)" .etaleTheta
       "Etale Theta, Definition 2.13(ii)"
       ["TopologicalGroupCat", "ContinuousAutomorphism",

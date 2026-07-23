@@ -5652,10 +5652,146 @@ theorem fixedFieldOfOpenSubgroup_finiteDimensional
   rw [InfiniteGalois.fixingSubgroup_fixedField closedImage]
   exact openImage.isOpen
 
+/--
+Transport the groupification of an abstract `M_TM` back to the multiplicative
+group of the algebraic closure in its literal MLF model.
+-/
+noncomputable def modelGroupificationEquiv
+    (pair : SourceMLFGaloisTMPair G) :
+    Algebra.GrothendieckGroup pair.arithmeticMonoid.carrier ≃*
+      (AlgebraicClosure pair.modelField)ˣ :=
+  (Algebra.GrothendieckGroup.congr pair.monoidIso).symm.trans
+    (SourceMLFIntegralMonoid.groupificationEquivAlgebraicClosureUnits
+      pair.modelField)
+
+/-- The transported groupification action is the actual absolute-Galois action. -/
+theorem modelGroupificationEquiv_action
+    (pair : SourceMLFGaloisTMPair G)
+    (g : G)
+    (value : Algebra.GrothendieckGroup pair.arithmeticMonoid.carrier) :
+    pair.modelGroupificationEquiv
+        (pair.grothendieckAction g value) =
+      Units.map
+          (pair.augmentation.toMonoidHom g).toMonoidHom
+        (pair.modelGroupificationEquiv value) := by
+  suffices
+      pair.modelGroupificationEquiv.toMonoidHom.comp
+          (pair.grothendieckActionHom g) =
+        (Units.map
+            (pair.augmentation.toMonoidHom g).toMonoidHom).comp
+          pair.modelGroupificationEquiv.toMonoidHom by
+    exact DFunLike.congr_fun this value
+  apply Algebra.GrothendieckGroup.lift.symm.injective
+  apply MonoidHom.ext
+  intro modelValue
+  simp only [Algebra.GrothendieckGroup.lift_symm_apply,
+    MonoidHom.comp_apply, grothendieckActionHom_of]
+  change
+    pair.modelGroupificationEquiv
+        (Algebra.GrothendieckGroup.of (pair.action g modelValue)) =
+      Units.map
+          (pair.augmentation.toMonoidHom g).toMonoidHom
+        (pair.modelGroupificationEquiv
+          (Algebra.GrothendieckGroup.of modelValue))
+  change
+    SourceMLFIntegralMonoid.groupificationToAlgebraicClosureUnits
+        pair.modelField
+        (Algebra.GrothendieckGroup.mapEquiv pair.monoidIso.symm
+          (Algebra.GrothendieckGroup.of (pair.action g modelValue))) =
+      Units.map
+          (pair.augmentation.toMonoidHom g).toMonoidHom
+        (SourceMLFIntegralMonoid.groupificationToAlgebraicClosureUnits
+          pair.modelField
+          (Algebra.GrothendieckGroup.mapEquiv pair.monoidIso.symm
+            (Algebra.GrothendieckGroup.of modelValue)))
+  rw [Algebra.GrothendieckGroup.mapEquiv_of,
+    Algebra.GrothendieckGroup.mapEquiv_of,
+    SourceMLFIntegralMonoid.groupificationToAlgebraicClosureUnits_of,
+    SourceMLFIntegralMonoid.groupificationToAlgebraicClosureUnits_of]
+  apply Units.ext
+  have heq := pair.equivariant
+      (pair.groupIso.symm g) (pair.monoidIso.symm modelValue)
+  rw [pair.groupIso.apply_symm_apply,
+    pair.monoidIso.apply_symm_apply] at heq
+  rw [← heq]
+  rw [pair.monoidIso.symm_apply_apply]
+  rfl
+
+/--
+A fixed algebraic-closure unit that is integral together with its inverse is
+an actual unit of the integral closure in the finite fixed field.
+-/
+noncomputable def fixedFieldIntegralUnit
+    [CompactSpace G]
+    (pair : SourceMLFGaloisTMPair G)
+    (subgroup : OpenSubgroup G)
+    (fieldUnit : (AlgebraicClosure pair.modelField)ˣ)
+    (fixed : ∀ sigma,
+      sigma ∈ pair.augmentationOpenImage subgroup →
+        Units.map sigma.toMonoidHom fieldUnit = fieldUnit)
+    (integral : IsIntegral
+      (Valuation.integer (ValuativeRel.valuation pair.modelField))
+      (fieldUnit : AlgebraicClosure pair.modelField))
+    (inverseIntegral : IsIntegral
+      (Valuation.integer (ValuativeRel.valuation pair.modelField))
+      (fieldUnit⁻¹ : AlgebraicClosure pair.modelField)) :
+    (integralClosure
+      (Valuation.integer (ValuativeRel.valuation pair.modelField))
+      (pair.fixedFieldOfOpenSubgroup subgroup))ˣ := by
+  let fixedField := pair.fixedFieldOfOpenSubgroup subgroup
+  let baseRing :=
+    Valuation.integer (ValuativeRel.valuation pair.modelField)
+  have fieldUnit_mem :
+      (fieldUnit : AlgebraicClosure pair.modelField) ∈ fixedField := by
+    change
+      (fieldUnit : AlgebraicClosure pair.modelField) ∈
+        IntermediateField.fixedField
+          (pair.augmentationOpenImage subgroup).toSubgroup
+    rw [IntermediateField.mem_fixedField_iff]
+    intro sigma hsigma
+    exact congrArg Units.val (fixed sigma hsigma)
+  have fieldUnit_inv_mem :
+      (fieldUnit⁻¹ : AlgebraicClosure pair.modelField) ∈ fixedField := by
+    change
+      (fieldUnit⁻¹ : AlgebraicClosure pair.modelField) ∈
+        IntermediateField.fixedField
+          (pair.augmentationOpenImage subgroup).toSubgroup
+    rw [IntermediateField.mem_fixedField_iff]
+    intro sigma hsigma
+    have hfixed := congrArg Inv.inv (fixed sigma hsigma)
+    rw [map_inv₀ sigma]
+    simpa only [Units.val_inv_eq_inv_val, Units.coe_map] using
+      congrArg Units.val hfixed
+  let fixedValue : fixedField := ⟨fieldUnit, fieldUnit_mem⟩
+  let fixedInverse : fixedField := ⟨fieldUnit⁻¹, fieldUnit_inv_mem⟩
+  have fixedValue_integral : IsIntegral baseRing fixedValue :=
+    IntermediateField.coe_isIntegral_iff.mp integral
+  have fixedInverse_integral : IsIntegral baseRing fixedInverse :=
+    IntermediateField.coe_isIntegral_iff.mp inverseIntegral
+  let integralValue : integralClosure baseRing fixedField :=
+    ⟨fixedValue, fixedValue_integral⟩
+  let integralInverse : integralClosure baseRing fixedField :=
+    ⟨fixedInverse, fixedInverse_integral⟩
+  exact
+    { val := integralValue
+      inv := integralInverse
+      val_inv := by
+        apply Subtype.ext
+        apply Subtype.ext
+        change (fieldUnit : AlgebraicClosure pair.modelField) *
+            (fieldUnit⁻¹ : AlgebraicClosure pair.modelField) = 1
+        exact mul_inv_cancel₀ fieldUnit.ne_zero
+      inv_val := by
+        apply Subtype.ext
+        apply Subtype.ext
+        change (fieldUnit⁻¹ : AlgebraicClosure pair.modelField) *
+            (fieldUnit : AlgebraicClosure pair.modelField) = 1
+        exact inv_mul_cancel₀ fieldUnit.ne_zero }
+
 end SourceMLFGaloisTMPair
 
 /--
-The unit Kummer embedding attached to the `M_TM` arithmetic monoid in
+The unit Kummer presentation attached to the `M_TM` arithmetic monoid in
 Absolute Anabelian Topics III, Proposition 3.2(ii), and used in IUT II,
 Corollary 1.12(c).  Proposition 3.2(ii) supplies the map; injectivity is the
 separate multiplicative case of Definition 1.5(b), available for an MLF by
@@ -5682,15 +5818,6 @@ structure SourceIUTIIUnitKummerEmbedding
           (coefficientAction.act g coefficient) =
         tmPair.cyclotomeAction g
           (coefficientCyclotomeEquiv coefficient)
-  /-- The multiplicative MLF Kummer-faithfulness theorem of Remark 1.5.4(i). -/
-  unitKummerFaithful :
-    Function.Injective
-      (((SourceMLFGaloisTMPair.KummerRootTheory.ofContinuousEquiv
-            tmPair coefficientAction coefficientCyclotomeEquiv).kummerMap
-          coefficientCyclotomeEquiv_equivariant).comp
-        { toFun := Units.val
-          map_one' := rfl
-          map_mul' := fun _ _ => rfl })
 
 namespace SourceIUTIIUnitKummerEmbedding
 
@@ -5735,15 +5862,328 @@ noncomputable def unitKummer
       map_one' := rfl
       map_mul' := fun _ _ => rfl }
 
-/-- The unit Kummer map is injective by the stored MLF Kummer-faithfulness theorem. -/
+/--
+If a unit has trivial Kummer germ, one common open subgroup fixes compatible
+roots of that unit in every positive degree.  The roots are adjusted by the
+explicit coboundary supplied by equality with the trivial germ.
+-/
+theorem fixed_roots_of_unitKummer_eq_one
+    (embedding :
+      SourceIUTIIUnitKummerEmbedding G coefficientAction)
+    (value : embedding.tmPair.arithmeticMonoid.carrierˣ)
+    (hvalue : embedding.unitKummer value = 1) :
+    ∃ U : OpenSubgroup G,
+      ∀ n : ℕ, 0 < n →
+        ∃ root : Algebra.GrothendieckGroup
+            embedding.tmPair.arithmeticMonoid.carrier,
+          root ^ n = embedding.tmPair.unitGrothendieckHom value ∧
+          ∀ g : U,
+            embedding.tmPair.grothendieckAction (g : G) root = root := by
+  let choice := embedding.rootTheory.chosen
+    (value : embedding.tmPair.arithmeticMonoid.carrier)
+  let realization := choice.2
+  have hgerm :
+      realization.germ
+          embedding.coefficientCyclotomeEquiv_equivariant = 1 := by
+    simpa [unitKummer, monoidKummer, rootTheory] using hvalue
+  have hequivalent :
+      (realization.representative
+          embedding.coefficientCyclotomeEquiv_equivariant).Equivalent
+        (ContinuousH1GermRepresentative.one
+          (action := coefficientAction)) := by
+    exact Quotient.exact hgerm
+  rcases hequivalent with
+    ⟨U, hRealization, hOne, a, hequivalent⟩
+  refine ⟨U, ?_⟩
+  intro n hn
+  let q : ℚ := (n : ℚ)⁻¹
+  let circle : Multiplicative (AddCircle (1 : ℚ)) :=
+    Multiplicative.ofAdd (q : AddCircle (1 : ℚ))
+  let cochain := embedding.coefficientCyclotomeEquiv a
+  let cochainUnit : embedding.tmPair.arithmeticMonoid.carrierˣ :=
+    cochain circle
+  let root : Algebra.GrothendieckGroup
+      embedding.tmPair.arithmeticMonoid.carrier :=
+    (realization.toKummerRootRealization.rootSystem.roots q).toMul *
+      embedding.tmPair.unitGrothendieckHom cochainUnit
+  refine ⟨root, ?_, ?_⟩
+  · have hq : n • q = (1 : ℚ) := by
+      dsimp [q]
+      rw [nsmul_eq_mul]
+      exact mul_inv_cancel₀ (Nat.cast_ne_zero.mpr hn.ne')
+    have hrootPower := congrArg Additive.toMul
+      (realization.toKummerRootRealization.rootSystem.roots.map_nsmul n q)
+    change
+      (realization.toKummerRootRealization.rootSystem.roots (n • q)).toMul =
+        (realization.toKummerRootRealization.rootSystem.roots q).toMul ^ n
+      at hrootPower
+    have hrootPower' :
+        (realization.toKummerRootRealization.rootSystem.roots q).toMul ^ n =
+          Algebra.GrothendieckGroup.of
+            (value : embedding.tmPair.arithmeticMonoid.carrier) := by
+      rw [← hrootPower, hq,
+        realization.toKummerRootRealization.rootSystem.root_one]
+      rfl
+    have hcircle : circle ^ n = 1 := by
+      apply Multiplicative.toAdd.injective
+      change n • (q : AddCircle (1 : ℚ)) = 0
+      change ((n • q : ℚ) : AddCircle (1 : ℚ)) = 0
+      rw [hq]
+      exact AddCircle.coe_period (p := (1 : ℚ))
+    have hcochainPower : cochainUnit ^ n = 1 := by
+      change (cochain circle) ^ n = 1
+      rw [← map_pow, hcircle, map_one]
+    dsimp [root]
+    rw [mul_pow, hrootPower', ← map_pow, hcochainPower, map_one, mul_one]
+    rfl
+  · intro g
+    let realizationG : choice.1 :=
+      ⟨(g : G), hRealization g.property⟩
+    have hcohomology := hequivalent g
+    change
+      (1 : A) =
+        a⁻¹ *
+          embedding.coefficientCyclotomeEquiv.symm
+              (realization.toKummerRootRealization.ratioCyclotome realizationG) *
+          coefficientAction.act (g : G) a
+      at hcohomology
+    have htransport :=
+      congrArg embedding.coefficientCyclotomeEquiv hcohomology
+    rw [map_one, map_mul, map_mul, map_inv,
+      embedding.coefficientCyclotomeEquiv.apply_symm_apply,
+      embedding.coefficientCyclotomeEquiv_equivariant] at htransport
+    have hcoordinate := congrArg (fun cyclotome => cyclotome circle) htransport
+    change
+      1 = cochainUnit⁻¹ *
+          realization.toKummerRootRealization.ratioUnit realizationG q *
+          Units.map (embedding.tmPair.action (g : G)).toMonoidHom cochainUnit
+      at hcoordinate
+    have hratio :
+        realization.toKummerRootRealization.ratioUnit realizationG q =
+          cochainUnit *
+            (Units.map
+              (embedding.tmPair.action (g : G)).toMonoidHom cochainUnit)⁻¹ := by
+      have transformed := congrArg
+        (fun x => cochainUnit * x *
+          (Units.map
+            (embedding.tmPair.action (g : G)).toMonoidHom cochainUnit)⁻¹)
+        hcoordinate
+      simpa [mul_assoc] using transformed.symm
+    dsimp [root]
+    rw [map_mul, embedding.tmPair.unitGrothendieckHom_action]
+    have hratioSpec :=
+      realization.toKummerRootRealization.ratio_spec realizationG q
+    rw [hratio] at hratioSpec
+    have hgaloisRoot :
+        embedding.tmPair.grothendieckAction (g : G)
+            (realization.toKummerRootRealization.rootSystem.roots q).toMul =
+          (embedding.tmPair.unitGrothendieckHom cochainUnit *
+              (embedding.tmPair.unitGrothendieckHom
+                (Units.map
+                  (embedding.tmPair.action (g : G)).toMonoidHom
+                    cochainUnit))⁻¹) *
+            (realization.toKummerRootRealization.rootSystem.roots q).toMul := by
+      rw [map_mul, map_inv] at hratioSpec
+      calc
+        _ =
+            (embedding.tmPair.grothendieckAction (g : G)
+                (realization.toKummerRootRealization.rootSystem.roots q).toMul /
+              (realization.toKummerRootRealization.rootSystem.roots q).toMul) *
+              (realization.toKummerRootRealization.rootSystem.roots q).toMul := by
+                simp
+        _ = _ := by rw [← hratioSpec]
+    calc
+      embedding.tmPair.grothendieckAction (g : G)
+              (realization.toKummerRootRealization.rootSystem.roots q).toMul *
+            embedding.tmPair.unitGrothendieckHom
+              (Units.map
+                (embedding.tmPair.action (g : G)).toMonoidHom cochainUnit) =
+          embedding.tmPair.unitGrothendieckHom cochainUnit *
+            (realization.toKummerRootRealization.rootSystem.roots q).toMul := by
+              rw [hgaloisRoot]
+              let cochainImage :=
+                embedding.tmPair.unitGrothendieckHom cochainUnit
+              let actedCochainImage :=
+                embedding.tmPair.unitGrothendieckHom
+                  (Units.map
+                    (embedding.tmPair.action (g : G)).toMonoidHom cochainUnit)
+              let sourceRoot :=
+                (realization.toKummerRootRealization.rootSystem.roots q).toMul
+              change
+                ((cochainImage * actedCochainImage⁻¹) * sourceRoot) *
+                    actedCochainImage =
+                  cochainImage * sourceRoot
+              calc
+                _ = cochainImage *
+                      (actedCochainImage⁻¹ * actedCochainImage) *
+                      sourceRoot := by ac_rfl
+                _ = _ := by rw [inv_mul_cancel, mul_one]
+      _ = _ := mul_comm _ _
+
+/--
+The multiplicative Kummer-faithfulness theorem for the constructed Kummer
+map: roots fixed by one open subgroup lie in one finite MLF extension, whose
+integral units are residually finite.
+-/
+theorem unit_eq_one_of_unitKummer_eq_one
+    [CompactSpace G]
+    (embedding :
+      SourceIUTIIUnitKummerEmbedding G coefficientAction)
+    (value : embedding.tmPair.arithmeticMonoid.carrierˣ)
+    (hvalue : embedding.unitKummer value = 1) :
+    value = 1 := by
+  let pair := embedding.tmPair
+  obtain ⟨subgroup, fixedRoots⟩ :=
+    embedding.fixed_roots_of_unitKummer_eq_one value hvalue
+  let fixedField := pair.fixedFieldOfOpenSubgroup subgroup
+  let baseRing :=
+    Valuation.integer (ValuativeRel.valuation pair.modelField)
+  let fieldEquiv := pair.modelGroupificationEquiv
+  let fieldValue : (AlgebraicClosure pair.modelField)ˣ :=
+    fieldEquiv (pair.unitGrothendieckHom value)
+  let modelUnit : (SourceMLFIntegralMonoid pair.modelField)ˣ :=
+    Units.mapEquiv pair.monoidIso.symm value
+  have fieldValue_eq :
+      fieldValue =
+        SourceMLFIntegralMonoid.toAlgebraicClosureUnits
+          pair.modelField
+          (modelUnit : SourceMLFIntegralMonoid pair.modelField) := by
+    dsimp [fieldValue, fieldEquiv, SourceMLFGaloisTMPair.modelGroupificationEquiv]
+    change
+      SourceMLFIntegralMonoid.groupificationToAlgebraicClosureUnits
+          pair.modelField
+          (Algebra.GrothendieckGroup.mapEquiv pair.monoidIso.symm
+            (Algebra.GrothendieckGroup.of
+              (value : pair.arithmeticMonoid.carrier))) = _
+    rw [Algebra.GrothendieckGroup.mapEquiv_of,
+      SourceMLFIntegralMonoid.groupificationToAlgebraicClosureUnits_of]
+    rfl
+  have fieldValue_integral :
+      IsIntegral baseRing
+        (fieldValue : AlgebraicClosure pair.modelField) := by
+    rw [fieldValue_eq]
+    exact modelUnit.val.1.property
+  have fieldValue_inverse_integral :
+      IsIntegral baseRing
+        (fieldValue⁻¹ : AlgebraicClosure pair.modelField) := by
+    rw [fieldValue_eq]
+    have modelInverse_eq :
+        ((modelUnit.inv.1.1 : AlgebraicClosure pair.modelField)) =
+          ((modelUnit.val.1.1 : AlgebraicClosure pair.modelField))⁻¹ := by
+      apply eq_inv_of_mul_eq_one_left
+      have inverseProduct := congrArg
+        (fun sourceValue : SourceMLFIntegralMonoid pair.modelField =>
+          (sourceValue.1.1 : AlgebraicClosure pair.modelField))
+        modelUnit.inv_val
+      exact inverseProduct
+    change IsIntegral baseRing
+      (((modelUnit.val.1.1 : AlgebraicClosure pair.modelField))⁻¹)
+    rw [← modelInverse_eq]
+    exact modelUnit.inv.1.property
+  obtain ⟨firstRoot, firstRootPower, firstRootFixed⟩ :=
+    fixedRoots 1 one_pos
+  have fieldValue_fixed :
+      ∀ sigma,
+        sigma ∈ pair.augmentationOpenImage subgroup →
+          Units.map sigma.toMonoidHom fieldValue = fieldValue := by
+    intro sigma hsigma
+    rcases hsigma with ⟨g, hg, rfl⟩
+    have hfieldRoot := pair.modelGroupificationEquiv_action g firstRoot
+    have hfixed := firstRootFixed ⟨g, hg⟩
+    have hfieldRoot_eq : fieldEquiv firstRoot = fieldValue := by
+      dsimp [fieldValue]
+      rw [← firstRootPower, pow_one]
+    rw [← hfieldRoot_eq, ← hfieldRoot, hfixed]
+  let integralValue := pair.fixedFieldIntegralUnit subgroup fieldValue
+    fieldValue_fixed fieldValue_integral fieldValue_inverse_integral
+  have integralValue_image :
+      (((integralValue : integralClosure baseRing fixedField) : fixedField) :
+          AlgebraicClosure pair.modelField) =
+        (fieldValue : AlgebraicClosure pair.modelField) := rfl
+  have integralRoots :
+      ∀ n : ℕ, 0 < n →
+        ∃ root : (integralClosure baseRing fixedField)ˣ,
+          root ^ n = integralValue := by
+    intro n hn
+    obtain ⟨sourceRoot, sourceRootPower, sourceRootFixed⟩ :=
+      fixedRoots n hn
+    let fieldRoot : (AlgebraicClosure pair.modelField)ˣ :=
+      fieldEquiv sourceRoot
+    have fieldRootPower : fieldRoot ^ n = fieldValue := by
+      dsimp [fieldRoot, fieldValue, fieldEquiv]
+      rw [← map_pow, sourceRootPower]
+    have fieldRootFixed :
+        ∀ sigma,
+          sigma ∈ pair.augmentationOpenImage subgroup →
+            Units.map sigma.toMonoidHom fieldRoot = fieldRoot := by
+      intro sigma hsigma
+      rcases hsigma with ⟨g, hg, rfl⟩
+      rw [← pair.modelGroupificationEquiv_action g sourceRoot,
+        sourceRootFixed ⟨g, hg⟩]
+    have fieldRoot_integral :
+        IsIntegral baseRing
+          (fieldRoot : AlgebraicClosure pair.modelField) := by
+      apply IsIntegral.of_pow hn
+      rw [← Units.val_pow_eq_pow_val, fieldRootPower]
+      exact fieldValue_integral
+    have fieldRoot_inverse_integral :
+        IsIntegral baseRing
+          (fieldRoot⁻¹ : AlgebraicClosure pair.modelField) := by
+      apply IsIntegral.of_pow hn
+      have inversePower : fieldRoot⁻¹ ^ n = fieldValue⁻¹ := by
+        rw [inv_pow, fieldRootPower]
+      have underlyingInversePower :
+          ((fieldRoot : AlgebraicClosure pair.modelField)⁻¹) ^ n =
+            (fieldValue : AlgebraicClosure pair.modelField)⁻¹ := by
+        simpa only [Units.val_pow_eq_pow_val,
+          Units.val_inv_eq_inv_val] using congrArg Units.val inversePower
+      rw [underlyingInversePower]
+      exact fieldValue_inverse_integral
+    let integralRoot := pair.fixedFieldIntegralUnit subgroup fieldRoot
+      fieldRootFixed fieldRoot_integral fieldRoot_inverse_integral
+    refine ⟨integralRoot, ?_⟩
+    apply Units.ext
+    apply Subtype.ext
+    apply Subtype.ext
+    exact congrArg Units.val fieldRootPower
+  letI : FiniteDimensional pair.modelField fixedField :=
+    pair.fixedFieldOfOpenSubgroup_finiteDimensional subgroup
+  letI : _root_.Group.ResiduallyFinite
+      (integralClosure baseRing fixedField)ˣ :=
+    SourceMLFKummerFaithfulness.integralClosureUnits_residuallyFinite
+      pair.modelField fixedField
+  have integralValue_eq_one : integralValue = 1 :=
+    SourceKummerFaithfulness.eq_one_of_roots_of_residuallyFinite
+      integralValue integralRoots
+  have fieldValue_eq_one : fieldValue = 1 := by
+    apply Units.ext
+    have underlying := congrArg
+      (fun unit : (integralClosure baseRing fixedField)ˣ =>
+        (((unit : integralClosure baseRing fixedField) : fixedField) :
+          AlgebraicClosure pair.modelField))
+      integralValue_eq_one
+    simpa only [integralValue_image, Units.val_one, map_one] using underlying
+  apply pair.unitGrothendieckHom_injective
+  apply fieldEquiv.injective
+  rw [map_one, map_one]
+  change fieldValue = 1
+  exact fieldValue_eq_one
+
+/-- The constructed unit Kummer map is injective for the profinite IUT group. -/
 theorem unitKummer_injective
+    [CompactSpace G]
     (embedding :
       SourceIUTIIUnitKummerEmbedding
         G coefficientAction) :
-    Function.Injective embedding.unitKummer :=
-  by
-    simpa [unitKummer, monoidKummer, rootTheory] using
-      embedding.unitKummerFaithful
+    Function.Injective embedding.unitKummer := by
+  intro first second hequal
+  have hquotient : embedding.unitKummer (first / second) = 1 := by
+    rw [map_div, hequal]
+    exact div_self' _
+  have quotient_eq_one :=
+    embedding.unit_eq_one_of_unitKummer_eq_one
+      (first / second) hquotient
+  exact div_eq_one.mp quotient_eq_one
 
 /--
 IUT II's `M_TM^x`, as the actual image of the unit Kummer map rather than an
@@ -5771,6 +6211,7 @@ The source definition `M_TM^mu = (M_TM^x)_tors`: injectivity of the Kummer
 embedding identifies it exactly with the image of the torsion units.
 -/
 theorem torsionUnitImage_eq_constant_torsion
+    [CompactSpace G]
     (embedding :
       SourceIUTIIUnitKummerEmbedding
         G coefficientAction) :
