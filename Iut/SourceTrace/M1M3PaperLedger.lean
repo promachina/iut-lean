@@ -418,6 +418,14 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceSemiGraphTree.Action.fixesSubjoint_of_three_fixed_vertices"]
       .partialImplementation
       "In the marked-compactification encoding, Lean proves that three distinct fixed original vertices yield a fixed subjoint. It extracts consecutive edges from a fixed geodesic and uses the unique-neighbor boundary condition to prove their common point is original; truncating those edges gives the two open branches of the joint. The branch-level sub-semi-graph object is not yet constructed as a separate datatype.",
+    clause "SemiAnbd.3.7(iii)" .semiGraphsAnabelioids
+      "Semi-graphs of Anabelioids, Theorem 3.7(iii)"
+      ["SourceCompactSemiGraphAction",
+        "SourceCompactSemiGraphAction.compactAction",
+        "SourceCompactSemiGraphAction.deckMap_range_finite",
+        "SourceCompactSemiGraphAction.fixesVertexOrEdge"]
+      .partialImplementation
+      "Lean formalizes the first source proof step: a continuous homomorphism from a compact group to the discrete deck group has finite image, and restriction of the covering semi-graph action to this image yields a fixed original vertex or fixed edge by Lemma 1.8(ii)(a). The fact that an action over the base cannot interchange the two branches of an edge, the resulting fixed original vertex, the cofinal compatible fixed-vertex systems, total-estrangement contradiction, and maximal compact/verticial classification remain open.",
     clause "I.0.pseudo-monoid" .iutI
       "IUT I, Section 0: topological pseudo-monoids"
       ["SourceTopologicalPseudoMonoid",
@@ -2164,8 +2172,8 @@ def clauseIdsWithStatus (status : ClauseStatus) : List String :=
   m1m3PaperLedger.filterMap fun entry =>
     if entry.status = status then some entry.id else none
 
-/-- The source-closure ledger contains 120 separately audited clauses. -/
-theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 120 :=
+/-- The source-closure ledger contains 121 separately audited clauses. -/
+theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 121 :=
   rfl
 
 /-- No source clause occurs twice in the direct-citation ledger. -/
@@ -2173,9 +2181,9 @@ theorem m1m3PaperLedger_ids_nodup :
     (m1m3PaperLedger.map PaperClause.id).Nodup := by
   decide
 
-/-- Ninety-five clauses currently have a genuine but incomplete implementation. -/
+/-- Ninety-six clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 95 :=
+    (clauseIdsWithStatus .partialImplementation).length = 96 :=
   rfl
 
 /-- Four clauses currently point only to explicitly classified toy models. -/

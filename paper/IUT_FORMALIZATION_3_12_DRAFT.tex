@@ -151,11 +151,14 @@ vertices and requiring each appended boundary point to have a unique neighbor.
 A fixed appended point is converted into its fixed open edge, and three distinct
 fixed original vertices yield two fixed incident branches, hence a fixed
 subjoint.  This proves Lemma~1.8(ii)(a--c) in the marked-compactification
-encoding.  The
+encoding.  The first step of Theorem~3.7(iii) is also formalized: a continuous
+compact-group action through a discrete deck group has finite image and hence
+fixes an original vertex or an edge of the covering semi-graph.  The
 exact subgroup configuration of \IUT{} I, Proposition~2.4(i), is typed; from
 its compact-conjugate rigidity conclusion and a nontrivial compact cusp
 inertia subgroup, Lean derives both cusp-conjugacy assertions of
-Corollary~2.5.  The general branch-set/morphism formalism, the
+Corollary~2.5.  The general branch-set/morphism formalism,
+branch-nonswitching over the base, total-estrangement argument,
 maximal-compact/verticial classification, and the inverse-limit proof of
 Proposition~2.4(i) remain open.
 Separately, the
@@ -1074,11 +1077,11 @@ the local estimates of \IUT{} IV.
 
 \subsection{Source-faithful construction before the Theorem 3.11 boundary}
 
-The machine-checked source-closure ledger now contains 120 clauses from
+The machine-checked source-closure ledger now contains 121 clauses from
 \IUT{} I--III together with transitive dependencies in \emph{Frobenioids},
 \emph{The Etale Theta Function}, \emph{Semi-graphs of Anabelioids}, and
 \emph{Absolute Anabelian Topics III}.
-It classifies 95 clauses as partially implemented, 4 as toy models, 15 as
+It classifies 96 clauses as partially implemented, 4 as toy models, 15 as
 unformalized, and 6 as source-faithful.  None of the complete M1--M3
 milestones or Theorem~3.11 clauses is classified as source-faithful.
 The new partial Definition~3.1 path constructs etale stacks and

@@ -269,6 +269,9 @@
   \lean{Iut.SourceGraphAction.subgroup_fixes_geodesic_pointwise}
   \lean{Iut.SourceSemiGraphTree.Action.FixesSubjoint}
   \lean{Iut.SourceSemiGraphTree.Action.fixesSubjoint_of_three_fixed_vertices}
+  \lean{Iut.SourceCompactSemiGraphAction}
+  \lean{Iut.SourceCompactSemiGraphAction.deckMap_range_finite}
+  \lean{Iut.SourceCompactSemiGraphAction.fixesVertexOrEdge}
   \lean{Iut.SourceIUTIProposition24PartI}
   \lean{Iut.SourceIUTIProposition24PartI.CuspidalInertia}
   \lean{Iut.SourceIUTIProposition24PartI.CuspidalInertia.conjugate_le_arithmeticTempered_iff}
@@ -285,14 +288,18 @@
   unique neighbor.  A fixed appended point therefore determines a fixed open
   edge.  Three distinct fixed original vertices also yield two fixed incident
   branches, hence a fixed subjoint.  This formalizes Lemma~1.8(ii)(a--c) in the
-  marked-compactification encoding.  The exact subgroup
+  marked-compactification encoding.  For the first step of Theorem~3.7(iii),
+  a continuous compact-group action through the discrete deck group has finite
+  image, so the preceding fixed-component theorem applies to the compact
+  group.  The exact subgroup
   configuration of \IUT{} I, Proposition~2.4(i), is typed separately.  From
   its compact-conjugate rigidity conclusion, normality of the geometric
   subgroup, and a nontrivial compact cusp inertia subgroup, Lean derives the
   two cusp-conjugacy conclusions of Corollary~2.5.  The source branch-set and
-  general morphism formalism, the maximal-compact/verticial classification, the inverse-limit
-  proof of Proposition~2.4(i), and construction of cusp inertia from stable
-  reduction remain open.
+  general morphism formalism, branch-nonswitching over the base,
+  total-estrangement argument, maximal-compact/verticial classification, the
+  inverse-limit proof of Proposition~2.4(i), and construction of cusp inertia
+  from stable reduction remain open.
 \end{definition}
 
 \begin{definition}[Mono-theta environments and inverse-limit group]

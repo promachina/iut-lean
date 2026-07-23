@@ -17,9 +17,12 @@ fixed-component, unique-geodesic, and subjoint results in *Semi-graphs of
 Anabelioids*, Lemma 1.8(ii)(a-c), and the subgroup-conjugation argument that
 derives the cuspidal portion of IUT I, Corollary 2.5 from Proposition 2.4(i).
 
-The maximal-compact/verticial classification of *Semi-graphs of Anabelioids*,
-Theorem 3.7, and the inverse-limit passage in IUT I, Proposition 2.4(i), are not
-asserted here.
+For the first step of *Semi-graphs of Anabelioids*, Theorem 3.7(iii), it also
+proves that the continuous image of a compact group in a discrete deck group
+is finite and applies Lemma 1.8 to obtain a fixed component.  The subsequent
+branch-nonswitching, total-estrangement, maximal-compact/verticial
+classification, and the inverse-limit passage in IUT I, Proposition 2.4(i),
+are not asserted here.
 -/
 
 namespace Iut
@@ -752,6 +755,25 @@ variable
   {Acting : Type u} [Group Acting]
   (data : semiGraph.Action Acting)
 
+/-- Restrict the acting group to a subgroup without changing its action on the
+semi-graph compactification. -/
+def restrictActing (subgroup : Subgroup Acting) :
+    semiGraph.Action subgroup where
+  toGraphAction :=
+    { action := data.toGraphAction.action.comp subgroup.subtype
+      map_adj_iff := fun g first second =>
+        data.toGraphAction.map_adj_iff g.1 first second }
+  vertexSet_stable := fun g point => data.vertexSet_stable g.1 point
+
+@[simp]
+theorem restrictActing_graphIso_apply
+    (subgroup : Subgroup Acting)
+    (g : subgroup) (point : Point) :
+    SourceGraphAction.graphIso
+        (data.restrictActing semiGraph subgroup).toGraphAction g point =
+      SourceGraphAction.graphIso data.toGraphAction g.1 point :=
+  rfl
+
 /-- The fixed-component conclusion in the source semi-graph, distinguishing
 genuine vertices from the boundary vertices of its compactification. -/
 def FixesVertexOrEdge : Prop :=
@@ -942,6 +964,84 @@ theorem fixesSubjoint_of_three_fixed_vertices
 end Action
 
 end SourceSemiGraphTree
+
+/-- The compact-to-discrete action that begins the proof of *Semi-graphs of
+Anabelioids*, Theorem 3.7(iii).  The compact group acts through the discrete
+deck group of a covering semi-graph. -/
+structure SourceCompactSemiGraphAction
+    (CompactGroup : Type u) (DeckGroup : Type v) (Point : Type*)
+    [TopologicalSpace CompactGroup] [Group CompactGroup]
+    [CompactSpace CompactGroup]
+    [TopologicalSpace DeckGroup] [Group DeckGroup]
+    [DiscreteTopology DeckGroup]
+    (semiGraph : SourceSemiGraphTree Point) where
+  deckMap : CompactGroup →* DeckGroup
+  continuous_deckMap : Continuous deckMap
+  deckAction : semiGraph.Action DeckGroup
+
+namespace SourceCompactSemiGraphAction
+
+variable
+  {CompactGroup : Type u} {DeckGroup : Type v} {Point : Type*}
+  [TopologicalSpace CompactGroup] [Group CompactGroup]
+  [CompactSpace CompactGroup]
+  [TopologicalSpace DeckGroup] [Group DeckGroup]
+  [DiscreteTopology DeckGroup]
+  {semiGraph : SourceSemiGraphTree Point}
+  (data : SourceCompactSemiGraphAction
+    CompactGroup DeckGroup Point semiGraph)
+
+/-- Pull the deck action back to the compact group. -/
+def compactAction : semiGraph.Action CompactGroup where
+  toGraphAction :=
+    { action := data.deckAction.toGraphAction.action.comp data.deckMap
+      map_adj_iff := fun g first second =>
+        data.deckAction.toGraphAction.map_adj_iff
+          (data.deckMap g) first second }
+  vertexSet_stable := fun g point =>
+    data.deckAction.vertexSet_stable (data.deckMap g) point
+
+@[simp]
+theorem compactAction_graphIso_apply
+    (g : CompactGroup) (point : Point) :
+    SourceGraphAction.graphIso data.compactAction.toGraphAction g point =
+      SourceGraphAction.graphIso data.deckAction.toGraphAction
+        (data.deckMap g) point :=
+  rfl
+
+/-- The image of a compact group in a discrete deck group is finite. -/
+theorem deckMap_range_finite :
+    (data.deckMap.range : Set DeckGroup).Finite := by
+  rw [MonoidHom.coe_range]
+  exact (isCompact_range data.continuous_deckMap).finite_of_discrete
+
+/-- First fixed-vertex step in Theorem 3.7(iii): a compact subgroup acting
+continuously through a discrete deck group fixes an original vertex or an edge
+of the covering semi-graph. -/
+theorem fixesVertexOrEdge :
+    SourceSemiGraphTree.Action.FixesVertexOrEdge
+      semiGraph data.compactAction := by
+  let image : Subgroup DeckGroup := data.deckMap.range
+  letI : Finite image := data.deckMap_range_finite.to_subtype
+  have image_fixed :=
+    SourceSemiGraphTree.Action.fixesVertexOrEdge semiGraph
+      (data.deckAction.restrictActing semiGraph image)
+  rcases image_fixed with ⟨vertex, vertex_mem, vertex_fixed⟩ |
+      ⟨first, second, adjacent, edge_fixed⟩
+  · left
+    refine ⟨vertex, vertex_mem, ?_⟩
+    intro g
+    let imageElement : image :=
+      ⟨data.deckMap g, ⟨g, rfl⟩⟩
+    exact vertex_fixed imageElement
+  · right
+    refine ⟨first, second, adjacent, ?_⟩
+    intro g
+    let imageElement : image :=
+      ⟨data.deckMap g, ⟨g, rfl⟩⟩
+    exact edge_fixed imageElement
+
+end SourceCompactSemiGraphAction
 
 open scoped Pointwise
 
