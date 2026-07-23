@@ -381,6 +381,11 @@
   \lean{Iut.SourceMLFIntegralMonoid.groupificationEquivAlgebraicClosureUnits}
   \lean{Iut.SourceMLFIntegralMonoid.torsionUnit}
   \lean{Iut.SourceMLFIntegralMonoid.torsionUnit_image}
+  \lean{Iut.SourceMLFCyclotome.rationalCircleToComplexTorsion_bijective}
+  \lean{Iut.SourceMLFCyclotome.torsionUnitsMap_bijective}
+  \lean{Iut.SourceMLFCyclotome.rationalCircleMulEquivAlgebraicClosureUnitsTorsion}
+  \lean{Iut.SourceMLFIntegralMonoid.torsionToAlgebraicClosureTorsion_bijective}
+  \lean{Iut.SourceMLFIntegralMonoid.torsionEquivAlgebraicClosureTorsion}
   \lean{Iut.SourceMLFIntegralMonoid.groupificationRootableByNat}
   \lean{Iut.SourceTorsionCyclotomicCommMonoid.rootsOfUnity_finite}
   \lean{Iut.SourceTorsionCyclotomicCommMonoid.rationalCircle_torsion_natCard}
@@ -399,10 +404,15 @@
   \lean{Iut.SourceMonoidCyclotome.asProfinite}
   \lean{Iut.SourceMonoidCyclotome.eq_one_of_roots}
   \lean{Iut.SourceMLFModelTMStructure}
+  \lean{Iut.SourceMLFModelTMStructure.canonical}
   \lean{Iut.SourceMLFModelTMPair}
+  \lean{Iut.SourceMLFModelTMPair.monoAnalytic}
+  \lean{Iut.SourceMLFModelTMPair.monoAnalytic_augmentation_apply}
   \lean{Iut.SourceMLFGaloisTMPairData}
   \lean{Iut.SourceMLFGaloisTMPairData.cyclotomeAction}
   \lean{Iut.SourceMLFGaloisTMPair}
+  \lean{Iut.SourceMLFGaloisTMPair.monoAnalytic}
+  \lean{Iut.SourceMLFGaloisTMPair.monoAnalytic_augmentation_apply}
   \lean{Iut.SourceFiniteTimesMuKummerInput}
   \lean{Iut.SourceFiniteTimesMuKummerInput.timesMuMonoid}
   \lean{Iut.SourceFiniteTimesMuKummerInput.timesMuUnitsEquiv}
@@ -469,11 +479,17 @@
   \lean{Iut.SourceMLFGaloisTMPair.modelGroupificationEquiv_action}
   \lean{Iut.SourceMLFGaloisTMPair.fixedFieldIntegralUnit}
   \lean{Iut.SourceIUTIIUnitKummerEmbedding}
+  \lean{Iut.SourceIUTIIUnitKummerEmbedding.canonical}
+  \lean{Iut.SourceIUTIIUnitKummerEmbedding.monoAnalytic}
+  \lean{Iut.SourceIUTIIUnitKummerEmbedding.canonical_monoidKummer}
+  \lean{Iut.SourceIUTIIUnitKummerEmbedding.canonical_unitKummer}
   \lean{Iut.SourceIUTIIUnitKummerEmbedding.monoidKummer}
   \lean{Iut.SourceIUTIIUnitKummerEmbedding.unitKummer}
   \lean{Iut.SourceIUTIIUnitKummerEmbedding.fixed_roots_of_unitKummer_eq_one}
   \lean{Iut.SourceIUTIIUnitKummerEmbedding.unit_eq_one_of_unitKummer_eq_one}
   \lean{Iut.SourceIUTIIUnitKummerEmbedding.unitKummer_injective}
+  \lean{Iut.SourceIUTIIUnitKummerEmbedding.canonical_unitKummer_injective}
+  \lean{Iut.SourceIUTIIUnitKummerEmbedding.monoAnalytic_unitKummer_injective}
   \lean{Iut.SourceIUTIIUnitKummerEmbedding.constantSubgroup}
   \lean{Iut.SourceIUTIIUnitKummerEmbedding.torsionUnitImage}
   \lean{Iut.SourceIUTIIUnitKummerEmbedding.torsionUnitImage_eq_constant_torsion}
@@ -555,6 +571,15 @@
   a model.  Following Absolute Anabelian Topics~III, Remark~3.1.1, the exact
   \(T_{\rm M}\) certificate uses the equivalent topology-free monoid
   presentation; an arbitrary topology therefore cannot certify a model.
+  The torsion-cyclotomic structure is no longer supplied as a certificate.
+  Lean identifies the rational circle with all finite-order complex units,
+  proves that embeddings between algebraically closed characteristic-zero
+  fields are bijective on \(n\)-th roots by their exact cardinalities, and
+  proves that every finite-order element of
+  \(\overline{k}^{\times}\) is an integral unit.  Thus the identification
+  \(O_{\overline{k}}^{\triangle,\mu}\cong\mathbb Q/\mathbb Z\), the
+  identity-augmentation mono-analytic model pair, and its coefficient-identity
+  unit-Kummer embedding are source-constructed without caller data.
   The fraction-field theorem identifies the actual Grothendieck group of this
   cancellative monoid with \(\overline{k}^{\times}\).  Algebraic closedness
   makes this group rootable, and injectivity of divisible abelian groups

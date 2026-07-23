@@ -197,6 +197,17 @@ audited one layer lower: Lean records the determinant-free measure/summand
 formula source and the full summand-charted construction of the determinant
 source, deriving determinant log-volume, normalized determinant, family-hull,
 and theta-signed equalities from the finite adjusted-summand Hodge calibration.
+The literal mono-analytic MLF model no longer accepts the cyclotomic
+identification as a caller-supplied certificate.  Lean identifies
+\(\mathbb{Q}/\mathbb{Z}\) with the torsion units of \(\mathbb{C}\), proves
+that an embedding between algebraically closed characteristic-zero fields is
+bijective on torsion units by comparing the exact cardinalities of the
+\(n\)-th roots of unity, and transports this result through algebraic closures.
+Finite-order units of the algebraic closure are then identified with the units
+of \(\mathcal{O}_{\overline K}^{\triangle}\).  This constructs the
+torsion-cyclotomic monoid, the identity-augmented mono-analytic MLF-Galois
+TM-pair, and its coefficient-identity unit Kummer embedding without an
+external torsion-isomorphism field.
 On the active IUT~II Kummer route, Lean now proves the arithmetic core of
 Absolute Anabelian Topics~III, Remark~1.5.4(i): for every finite extension of a
 mixed-characteristic local field, the unit group of the integral closure of

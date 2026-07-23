@@ -380,6 +380,16 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootSystem.quotientUnit_exists
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootRealization.ofRootSystem
+#print axioms Iut.SourceMLFCyclotome.rationalCircleToComplexTorsion_bijective
+#print axioms Iut.SourceMLFCyclotome.torsionUnitsMap_bijective
+#print axioms Iut.SourceMLFCyclotome.rationalCircleMulEquivAlgebraicClosureUnitsTorsion
+#print axioms Iut.SourceMLFIntegralMonoid.torsionToAlgebraicClosureTorsion_bijective
+#print axioms Iut.SourceMLFIntegralMonoid.torsionEquivAlgebraicClosureTorsion
+#print axioms Iut.SourceMLFModelTMStructure.canonical
+#print axioms Iut.SourceMLFModelTMPair.monoAnalytic
+#print axioms Iut.SourceMLFModelTMPair.monoAnalytic_augmentation_apply
+#print axioms Iut.SourceMLFGaloisTMPair.monoAnalytic
+#print axioms Iut.SourceMLFGaloisTMPair.monoAnalytic_augmentation_apply
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootComparison.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootTheory.chosen_rootSystem
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootRealization.ratioCyclotome_mul_group
@@ -396,6 +406,10 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceIUTIIUnitKummerEmbedding.fixed_roots_of_unitKummer_eq_one
 #print axioms Iut.SourceIUTIIUnitKummerEmbedding.unit_eq_one_of_unitKummer_eq_one
 #print axioms Iut.SourceIUTIIUnitKummerEmbedding.unitKummer_injective
+#print axioms Iut.SourceIUTIIUnitKummerEmbedding.canonical_monoidKummer
+#print axioms Iut.SourceIUTIIUnitKummerEmbedding.canonical_unitKummer
+#print axioms Iut.SourceIUTIIUnitKummerEmbedding.canonical_unitKummer_injective
+#print axioms Iut.SourceIUTIIUnitKummerEmbedding.monoAnalytic_unitKummer_injective
 #print axioms Iut.SourceIUTIIUnitKummerEmbedding.torsionUnitImage_eq_constant_torsion
 #print axioms Iut.sourceConstantTorsion_unitKummer
 #print axioms Iut.SourceIUTIICorollary112PointedRestriction.detects_constant_torsion

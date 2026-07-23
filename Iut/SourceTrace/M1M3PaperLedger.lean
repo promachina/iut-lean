@@ -800,13 +800,21 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceMLFIntegralMonoid",
         "SourceMLFAbsoluteGaloisGroup",
         "SourceMLFIntegralMonoid.galoisAction",
+        "SourceMLFCyclotome.rationalCircleToComplexTorsion_bijective",
+        "SourceMLFCyclotome.torsionUnitsMap_bijective",
+        "SourceMLFCyclotome.rationalCircleMulEquivAlgebraicClosureUnitsTorsion",
+        "SourceMLFIntegralMonoid.torsionToAlgebraicClosureTorsion_bijective",
+        "SourceMLFIntegralMonoid.torsionEquivAlgebraicClosureTorsion",
         "SourceMLFModelTMStructure",
+        "SourceMLFModelTMStructure.canonical",
         "SourceMLFModelTMPair",
+        "SourceMLFModelTMPair.monoAnalytic",
         "SourceMLFModelTMPair.augmentation_surjective",
         "SourceMLFGaloisTMPairData",
         "SourceMLFGaloisTMPairData.cyclotomeAction",
         "SourceMLFGaloisTMPairData.toActionPair",
         "SourceMLFGaloisTMPair",
+        "SourceMLFGaloisTMPair.monoAnalytic",
         "SourceMLFGaloisTMPair.augmentation",
         "SourceMLFGaloisTMPair.augmentation_surjective",
         "SourceMLFGaloisTMPair.augmentation_image_isOpen",
@@ -818,7 +826,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceMLFGaloisTMPair.fixedFieldIntegralUnit",
         "SourceIUTIIUnitKummerEmbedding"]
       .partialImplementation
-      "The model carrier is literally the nonzero elements of the integral closure of O_k in an algebraic closure, its absolute Galois group has the Krull topology and recovered compact Hausdorff totally disconnected instances, and its algebraic Galois action is constructed. A model pair has an actual continuous surjective augmentation Pi_k -> G_k; every general pair is required to be equivariantly isomorphic to such a model, and its augmentation is transported and proved surjective. For a compact acting group, the image of every open subgroup is proved open by finite index and compact closedness, and infinite Galois correspondence constructs its finite fixed field. The exact TM object uses the topology-free algebraic presentation authorized by Remark 3.1.1, so no arbitrary topology can certify the model. The cyclotome is literally Hom(Q/Z,M). Its pointwise topology is realized as a closed subspace of the product of the finite root-of-unity coordinate groups derived from the Q/Z torsion certificate; hence its compact, Hausdorff, totally disconnected, and bundled Profinite structures are proved. The Q/Z torsion identification remains a precise model certificate; the categories and morphisms of Definition 3.1(iii) remain open.",
+      "The model carrier is literally the nonzero elements of the integral closure of O_k in an algebraic closure, its absolute Galois group has the Krull topology and recovered compact Hausdorff totally disconnected instances, and its algebraic Galois action is constructed. The formerly supplied Q/Z torsion certificate is now a theorem: Lean identifies the rational circle with all complex roots of unity, proves by exact n-th-root cardinalities that embeddings of algebraically closed characteristic-zero fields are bijective on torsion units, and proves that every finite-order element of kbar^x is an integral unit. This constructs the torsion-cyclotomic model structure, the identity-augmentation mono-analytic model pair, and its literal general-pair presentation without caller data. An arbitrary model pair still has an actual continuous surjective augmentation Pi_k -> G_k; every general pair is required to be equivariantly isomorphic to such a model, and its augmentation is transported and proved surjective. For a compact acting group, the image of every open subgroup is proved open by finite index and compact closedness, and infinite Galois correspondence constructs its finite fixed field. The exact TM object uses the topology-free algebraic presentation authorized by Remark 3.1.1, so no arbitrary topology can certify the model. The cyclotome is literally Hom(Q/Z,M). Its pointwise topology is realized as a closed subspace of the product of finite root-of-unity coordinate groups; hence its compact, Hausdorff, totally disconnected, and bundled Profinite structures are proved. The categories and morphisms of Definition 3.1(iii) remain open.",
     clause "AbsTopIII.3.2(ii)" .absoluteAnabelianIII
       "Absolute Anabelian Topics III, Proposition 3.2(ii)"
       ["ContinuousH1.toGerm",
@@ -872,6 +880,10 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceMLFGaloisTMPair.modelGroupificationEquiv_action",
         "SourceMLFGaloisTMPair.fixedFieldIntegralUnit",
         "SourceIUTIIUnitKummerEmbedding",
+        "SourceIUTIIUnitKummerEmbedding.canonical",
+        "SourceIUTIIUnitKummerEmbedding.monoAnalytic",
+        "SourceIUTIIUnitKummerEmbedding.canonical_monoidKummer",
+        "SourceIUTIIUnitKummerEmbedding.canonical_unitKummer",
         "SourceIUTIIUnitKummerEmbedding.monoidKummer",
         "SourceIUTIIUnitKummerEmbedding.unitKummer",
         "SourceIUTIIUnitKummerEmbedding.fixed_roots_of_unitKummer_eq_one",
@@ -990,7 +1002,7 @@ def m1m3PaperLedger : List PaperClause :=
         "sourceZeroLabelSplittingUpToTorsion",
         "SourceIUTIICorollary28RestrictionStages.afterSecond_zero_representatives"]
       .partialImplementation
-      "M_TM^x is now the range of an injective unit Kummer homomorphism, and its torsion M_TM^mu is proved exactly equal to the image of torsion units. A pointed inversion has an actual decomposition subgroup, and the exact equality M_TM^x intersect res^-1(torsion)=M_TM^mu derives the weaker detection implication and splitting. For both finite mu_2l and infinite mu orbits, the identity representative and finite-order action prove the entire final zero-label orbit is torsion; the composite H1 restriction constructs both zero-label splittings. Constructing the MLF-Galois TM-pair and Kummer embedding, proving the pointed inverse-image equality from Corollary 1.12, and identifying the two-stage composite with that pointed restriction remain open.",
+      "M_TM^x is now the range of an injective unit Kummer homomorphism, and its torsion M_TM^mu is proved exactly equal to the image of torsion units. The literal mono-analytic absolute-Galois TM-pair and coefficient-identity Kummer embedding are source-constructed, and their full monoid and unit maps reduce definitionally to the compatible-root Kummer map. A pointed inversion has an actual decomposition subgroup, and the exact equality M_TM^x intersect res^-1(torsion)=M_TM^mu derives the weaker detection implication and splitting. For both finite mu_2l and infinite mu orbits, the identity representative and finite-order action prove the entire final zero-label orbit is torsion; the composite H1 restriction constructs both zero-label splittings. Constructing the specific tempered MLF pair and coefficient comparison from the Corollary 2.8 mono-theta data, proving the pointed inverse-image equality from Corollary 1.12, and identifying the two-stage composite with that pointed restriction remain open.",
     clause "II.3.5(i)" .iutII "IUT II, Corollary 3.5(i)"
       ["IUTIPositiveLabel.signLabelEquiv",
         "etaleThetaUnitActionOnSignLabel",

@@ -8,11 +8,13 @@ import Iut.Foundations.SourceMLFKummerFaithfulness
 import Iut.Foundations.SourceProcession
 import Mathlib.Algebra.Category.Grp.Injective
 import Mathlib.Algebra.GroupWithZero.NonZeroDivisors
+import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
 import Mathlib.FieldTheory.Galois.Profinite
 import Mathlib.GroupTheory.MonoidLocalization.GrothendieckGroup
 import Mathlib.NumberTheory.LocalField.Basic
 import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
 import Mathlib.RingTheory.Localization.Integral
+import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
 import Mathlib.Topology.Instances.AddCircle.Defs
 import Mathlib.Topology.Separation.Profinite
 
@@ -2077,6 +2079,383 @@ noncomputable def groupificationRootableByNat :
 
 end SourceMLFIntegralMonoid
 
+/-!
+## The literal cyclotomic torsion of the MLF model monoid
+
+Absolute Anabelian Topics III, Definition 3.1(i), requires the torsion subgroup
+of the units of `O_kbar^triangle` to be abstractly `Q/Z`.  The construction below
+proves this from algebraic closedness and characteristic zero.  It first realizes
+the rational circle as all complex roots of unity, transports roots of unity
+through an algebraic closure of `Q`, and finally identifies finite-order elements
+of `kbar^times` with integral units.
+-/
+
+namespace SourceMLFCyclotome
+
+/-- The inclusion `Q/Z -> R/Z` induced by the rational embedding. -/
+noncomputable def rationalToRealCircle :
+    AddCircle (1 : ℚ) →+ AddCircle (1 : ℝ) :=
+  QuotientAddGroup.map
+    (AddSubgroup.zmultiples (1 : ℚ))
+    (AddSubgroup.zmultiples (1 : ℝ))
+    (Rat.castHom ℝ).toAddMonoidHom
+    (by
+      intro value hvalue
+      rw [AddSubgroup.mem_zmultiples_iff] at hvalue
+      rcases hvalue with ⟨integer, rfl⟩
+      change
+        (Rat.castHom ℝ).toAddMonoidHom (integer • (1 : ℚ)) ∈
+          AddSubgroup.zmultiples (1 : ℝ)
+      rw [map_zsmul]
+      have hone :
+          (Rat.castHom ℝ).toAddMonoidHom (1 : ℚ) = 1 := by
+        norm_num
+      rw [hone]
+      change integer • (1 : ℝ) ∈ AddSubgroup.zmultiples (1 : ℝ)
+      rw [AddSubgroup.mem_zmultiples_iff]
+      exact ⟨integer, rfl⟩)
+
+@[simp]
+theorem rationalToRealCircle_mk (q : ℚ) :
+    rationalToRealCircle (q : AddCircle (1 : ℚ)) =
+      ((q : ℝ) : AddCircle (1 : ℝ)) :=
+  QuotientAddGroup.map_mk' _ _ _ _ q
+
+/-- The rational-circle inclusion is injective. -/
+theorem rationalToRealCircle_injective :
+    Function.Injective rationalToRealCircle := by
+  intro first second h
+  induction first using QuotientAddGroup.induction_on with
+  | _ first =>
+    induction second using QuotientAddGroup.induction_on with
+    | _ second =>
+      rw [rationalToRealCircle_mk,
+        rationalToRealCircle_mk,
+        QuotientAddGroup.eq_iff_sub_mem] at h
+      rw [QuotientAddGroup.eq_iff_sub_mem]
+      rw [AddSubgroup.mem_zmultiples_iff] at h ⊢
+      rcases h with ⟨integer, hinteger⟩
+      refine ⟨integer, ?_⟩
+      apply Rat.cast_injective (α := ℝ)
+      simpa using hinteger
+
+/-- Exponentiation embeds the rational circle in the units of `C`. -/
+noncomputable def rationalCircleToComplexUnits :
+    Multiplicative (AddCircle (1 : ℚ)) →* ℂˣ where
+  toFun value := Circle.toUnits
+    (AddCircle.toCircle (rationalToRealCircle value.toAdd))
+  map_one' := by simp [rationalToRealCircle]
+  map_mul' first second := by
+    change Circle.toUnits
+        (AddCircle.toCircle
+          (rationalToRealCircle (first.toAdd + second.toAdd))) = _
+    rw [map_add, AddCircle.toCircle_add, map_mul]
+
+@[simp]
+theorem rationalCircleToComplexUnits_mk (q : ℚ) :
+    rationalCircleToComplexUnits
+        (Multiplicative.ofAdd (q : AddCircle (1 : ℚ))) =
+      Units.mk0 (Complex.exp (2 * Real.pi * Complex.I * (q : ℝ)))
+        (Complex.exp_ne_zero _) := by
+  apply Units.ext
+  simp [rationalCircleToComplexUnits, AddCircle.toCircle_apply_mk]
+  ring_nf
+
+/-- Every point of the rational circle has finite multiplicative order. -/
+theorem rationalCircle_isOfFinOrder
+    (value : Multiplicative (AddCircle (1 : ℚ))) :
+    IsOfFinOrder value := by
+  change IsOfFinAddOrder value.toAdd
+  induction value.toAdd using QuotientAddGroup.induction_on with
+  | _ q =>
+    apply isOfFinAddOrder_iff_nsmul_eq_zero.mpr
+    refine ⟨q.den, q.pos, ?_⟩
+    rw [← AddCircle.coe_nsmul, nsmul_eq_mul]
+    rw [Rat.den_mul_eq_num]
+    apply (AddCircle.coe_eq_zero_iff (1 : ℚ)).mpr
+    exact ⟨q.num, by simp⟩
+
+/-- The complex exponential is injective on the rational circle modulo `Z`. -/
+theorem rationalCircleToComplexUnits_injective :
+    Function.Injective rationalCircleToComplexUnits := by
+  intro first second equality
+  apply Multiplicative.toAdd.injective
+  apply rationalToRealCircle_injective
+  apply AddCircle.injective_toCircle one_ne_zero
+  apply Subtype.ext
+  exact congrArg Units.val equality
+
+/-- The complex exponential with codomain restricted to finite-order units. -/
+noncomputable def rationalCircleToComplexTorsion :
+    Multiplicative (AddCircle (1 : ℚ)) →*
+      CommGroup.torsion ℂˣ where
+  toFun value :=
+    ⟨rationalCircleToComplexUnits value,
+      (CommGroup.mem_torsion ℂˣ _).mpr
+        (rationalCircleToComplexUnits.isOfFinOrder
+          (rationalCircle_isOfFinOrder value))⟩
+  map_one' := Subtype.ext (map_one rationalCircleToComplexUnits)
+  map_mul' first second :=
+    Subtype.ext (map_mul rationalCircleToComplexUnits first second)
+
+/-- Every finite-order complex unit is the exponential of a rational angle. -/
+theorem rationalCircleToComplexTorsion_bijective :
+    Function.Bijective rationalCircleToComplexTorsion := by
+  constructor
+  · intro first second equality
+    apply rationalCircleToComplexUnits_injective
+    exact congrArg Subtype.val equality
+  · intro target
+    rcases isOfFinOrder_iff_pow_eq_one.mp
+        ((CommGroup.mem_torsion ℂˣ target).mp target.property) with
+      ⟨n, hn, hpow⟩
+    letI : NeZero n := ⟨hn.ne'⟩
+    have hroot : (target : ℂˣ) ∈ rootsOfUnity n ℂ := by
+      rw [mem_rootsOfUnity]
+      exact hpow
+    rcases (Complex.mem_rootsOfUnity n (target : ℂˣ)).mp hroot with
+      ⟨i, _hi, heq⟩
+    let q : ℚ := (i : ℚ) / (n : ℚ)
+    refine
+      ⟨Multiplicative.ofAdd
+          (q : AddCircle (1 : ℚ)), ?_⟩
+    apply Subtype.ext
+    change
+      rationalCircleToComplexUnits
+          (Multiplicative.ofAdd (q : AddCircle (1 : ℚ))) =
+        (target : ℂˣ)
+    rw [rationalCircleToComplexUnits_mk]
+    apply Units.ext
+    change Complex.exp (2 * Real.pi * Complex.I * (q : ℝ)) =
+      (target : ℂˣ)
+    simpa [q] using heq
+
+/-- The roots of unity in `C` form the multiplicative rational circle. -/
+noncomputable def rationalCircleMulEquivComplexTorsion :
+    Multiplicative (AddCircle (1 : ℚ)) ≃*
+      CommGroup.torsion ℂˣ :=
+  MulEquiv.ofBijective rationalCircleToComplexTorsion
+    rationalCircleToComplexTorsion_bijective
+
+/-- A field embedding restricted to finite-order units. -/
+noncomputable def torsionUnitsMap
+    {F E : Type*} [Field F] [Field E]
+    (embedding : F →+* E) :
+    CommGroup.torsion Fˣ →* CommGroup.torsion Eˣ where
+  toFun value :=
+    ⟨Units.map embedding.toMonoidHom value,
+      (CommGroup.mem_torsion Eˣ _).mpr
+        ((Units.map embedding.toMonoidHom).isOfFinOrder
+          ((CommGroup.mem_torsion Fˣ value).mp value.property))⟩
+  map_one' := Subtype.ext (map_one (Units.map embedding.toMonoidHom))
+  map_mul' first second := by
+    apply Subtype.ext
+    exact map_mul (Units.map embedding.toMonoidHom)
+      (first : Fˣ) (second : Fˣ)
+
+/--
+An embedding of algebraically closed characteristic-zero fields is bijective on
+torsion units.  In each positive degree both root groups have exactly `n`
+elements, so injectivity forces surjectivity.
+-/
+theorem torsionUnitsMap_bijective
+    {F E : Type*} [Field F] [Field E]
+    [IsAlgClosed F] [IsAlgClosed E]
+    [CharZero F] [CharZero E]
+    (embedding : F →+* E) :
+    Function.Bijective (torsionUnitsMap embedding) := by
+  constructor
+  · intro first second equality
+    apply Subtype.ext
+    apply Units.ext
+    apply embedding.injective
+    change
+      embedding ((first : Fˣ) : F) =
+        embedding ((second : Fˣ) : F)
+    exact congrArg (fun value : CommGroup.torsion Eˣ =>
+      ((value : Eˣ) : E)) equality
+  · intro target
+    rcases isOfFinOrder_iff_pow_eq_one.mp
+        ((CommGroup.mem_torsion Eˣ target).mp target.property) with
+      ⟨n, hn, hpow⟩
+    letI : NeZero n := ⟨hn.ne'⟩
+    let targetRoot : rootsOfUnity n E :=
+      ⟨(target : Eˣ), by
+        rw [mem_rootsOfUnity]
+        exact hpow⟩
+    have rootMapInjective :
+        Function.Injective (restrictRootsOfUnity embedding n) := by
+      intro first second equality
+      apply Subtype.ext
+      apply Units.map_injective embedding.injective
+      exact congrArg Subtype.val equality
+    have rootMapBijective :
+        Function.Bijective (restrictRootsOfUnity embedding n) :=
+      rootMapInjective.bijective_of_nat_card_le
+        (by
+          rw [HasEnoughRootsOfUnity.natCard_rootsOfUnity E n,
+            HasEnoughRootsOfUnity.natCard_rootsOfUnity F n])
+    rcases rootMapBijective.surjective targetRoot with
+      ⟨sourceRoot, hsourceRoot⟩
+    let sourceTorsion : CommGroup.torsion Fˣ :=
+      ⟨(sourceRoot : Fˣ),
+        (CommGroup.mem_torsion Fˣ _).mpr
+          (isOfFinOrder_iff_pow_eq_one.mpr
+            ⟨n, hn, (mem_rootsOfUnity _ _).mp sourceRoot.property⟩)⟩
+    refine ⟨sourceTorsion, ?_⟩
+    apply Subtype.ext
+    change
+      Units.map embedding.toMonoidHom (sourceRoot : Fˣ) =
+        (target : Eˣ)
+    exact congrArg Subtype.val hsourceRoot
+
+/-- The induced equivalence on all roots of unity. -/
+noncomputable def torsionUnitsMapEquiv
+    {F E : Type*} [Field F] [Field E]
+    [IsAlgClosed F] [IsAlgClosed E]
+    [CharZero F] [CharZero E]
+    (embedding : F →+* E) :
+    CommGroup.torsion Fˣ ≃* CommGroup.torsion Eˣ :=
+  MulEquiv.ofBijective (torsionUnitsMap embedding)
+    (torsionUnitsMap_bijective embedding)
+
+/-- The roots of unity in any algebraic closure of a characteristic-zero field are `Q/Z`. -/
+noncomputable def rationalCircleMulEquivAlgebraicClosureUnitsTorsion
+    (K : Type u) [Field K] [CharZero K] :
+    Multiplicative (AddCircle (1 : ℚ)) ≃*
+      CommGroup.torsion (AlgebraicClosure K)ˣ := by
+  letI : Algebra ℚ (AlgebraicClosure ℚ) :=
+    AlgebraicClosure.instAlgebra ℚ
+  let qbarToComplex : AlgebraicClosure ℚ →+* ℂ :=
+    (IsAlgClosed.lift : AlgebraicClosure ℚ →ₐ[ℚ] ℂ).toRingHom
+  let qbarToKbar : AlgebraicClosure ℚ →+* AlgebraicClosure K :=
+    (IsAlgClosed.lift :
+      AlgebraicClosure ℚ →ₐ[ℚ] AlgebraicClosure K).toRingHom
+  exact
+    rationalCircleMulEquivComplexTorsion.trans
+      ((torsionUnitsMapEquiv qbarToComplex).symm.trans
+        (torsionUnitsMapEquiv qbarToKbar))
+
+end SourceMLFCyclotome
+
+namespace SourceMLFIntegralMonoid
+
+variable
+  (K : Type u) [Field K] [ValuativeRel K]
+  [TopologicalSpace K] [IsNonarchimedeanLocalField K]
+  [CharZero K]
+
+/-- Include a unit of `O_kbar^triangle` in `kbar^times`. -/
+noncomputable def unitToAlgebraicClosureUnit :
+    (SourceMLFIntegralMonoid K)ˣ →* (AlgebraicClosure K)ˣ where
+  toFun value :=
+    toAlgebraicClosureUnits K
+      (value : SourceMLFIntegralMonoid K)
+  map_one' := by
+    change
+      toAlgebraicClosureUnits K
+          (1 : SourceMLFIntegralMonoid K) = 1
+    exact map_one _
+  map_mul' first second := by
+    change
+      toAlgebraicClosureUnits K
+          ((first : SourceMLFIntegralMonoid K) *
+            (second : SourceMLFIntegralMonoid K)) =
+        toAlgebraicClosureUnits K first *
+          toAlgebraicClosureUnits K second
+    exact
+      (toAlgebraicClosureUnits K).map_mul
+        (first : SourceMLFIntegralMonoid K)
+        (second : SourceMLFIntegralMonoid K)
+
+/-- The inclusion of integral-monoid units in `kbar^times` is injective. -/
+theorem unitToAlgebraicClosureUnit_injective :
+    Function.Injective (unitToAlgebraicClosureUnit K) := by
+  intro first second equality
+  apply Units.ext
+  apply Subtype.ext
+  apply Subtype.ext
+  have underlying := congrArg Units.val equality
+  change
+    (first.val.1.1 : AlgebraicClosure K) =
+      (second.val.1.1 : AlgebraicClosure K) at underlying
+  exact underlying
+
+@[simp]
+theorem unitToAlgebraicClosureUnit_torsionUnit
+    (value : (AlgebraicClosure K)ˣ)
+    (n : ℕ) (n_ne_zero : n ≠ 0)
+    (value_pow : value ^ n = 1) :
+    unitToAlgebraicClosureUnit K
+        (torsionUnit K value n n_ne_zero value_pow) =
+      value := by
+  apply Units.ext
+  change
+    ((torsionUnit
+        K value n n_ne_zero value_pow).val.1.1 : AlgebraicClosure K) =
+      (value : AlgebraicClosure K)
+  rfl
+
+/-- The inclusion restricted to finite-order units. -/
+noncomputable def torsionToAlgebraicClosureTorsion :
+    CommGroup.torsion (SourceMLFIntegralMonoid K)ˣ →*
+      CommGroup.torsion (AlgebraicClosure K)ˣ where
+  toFun value :=
+    ⟨unitToAlgebraicClosureUnit K value,
+      (CommGroup.mem_torsion (AlgebraicClosure K)ˣ _).mpr
+        ((unitToAlgebraicClosureUnit K).isOfFinOrder
+          ((CommGroup.mem_torsion (SourceMLFIntegralMonoid K)ˣ value).mp
+            value.property))⟩
+  map_one' := Subtype.ext (map_one _)
+  map_mul' first second := by
+    apply Subtype.ext
+    exact map_mul (unitToAlgebraicClosureUnit K)
+      (first : (SourceMLFIntegralMonoid K)ˣ)
+      (second : (SourceMLFIntegralMonoid K)ˣ)
+
+/--
+Every finite-order element of `kbar^times` is an integral unit, so the preceding
+inclusion is bijective on torsion.
+-/
+theorem torsionToAlgebraicClosureTorsion_bijective :
+    Function.Bijective
+      (torsionToAlgebraicClosureTorsion K) := by
+  constructor
+  · intro first second equality
+    apply Subtype.ext
+    apply unitToAlgebraicClosureUnit_injective K
+    exact congrArg Subtype.val equality
+  · intro target
+    rcases isOfFinOrder_iff_pow_eq_one.mp
+        ((CommGroup.mem_torsion (AlgebraicClosure K)ˣ target).mp
+          target.property) with
+      ⟨n, hn, hpow⟩
+    let sourceUnit := torsionUnit
+      K (target : (AlgebraicClosure K)ˣ) n hn.ne' hpow
+    have sourcePower : sourceUnit ^ n = 1 := by
+      apply unitToAlgebraicClosureUnit_injective K
+      rw [map_pow, map_one,
+        unitToAlgebraicClosureUnit_torsionUnit, hpow]
+    let sourceTorsion :
+        CommGroup.torsion (SourceMLFIntegralMonoid K)ˣ :=
+      ⟨sourceUnit,
+        (CommGroup.mem_torsion (SourceMLFIntegralMonoid K)ˣ _).mpr
+          (isOfFinOrder_iff_pow_eq_one.mpr ⟨n, hn, sourcePower⟩)⟩
+    refine ⟨sourceTorsion, ?_⟩
+    apply Subtype.ext
+    exact unitToAlgebraicClosureUnit_torsionUnit
+      K (target : (AlgebraicClosure K)ˣ) n hn.ne' hpow
+
+/-- Torsion integral units and roots of unity in `kbar` are equivalent. -/
+noncomputable def torsionEquivAlgebraicClosureTorsion :
+    CommGroup.torsion (SourceMLFIntegralMonoid K)ˣ ≃*
+      CommGroup.torsion (AlgebraicClosure K)ˣ :=
+  MulEquiv.ofBijective
+    (torsionToAlgebraicClosureTorsion K)
+    (torsionToAlgebraicClosureTorsion_bijective K)
+
+end SourceMLFIntegralMonoid
+
 end Iut
 
 namespace Algebra.GrothendieckGroup
@@ -2142,11 +2521,7 @@ end Algebra.GrothendieckGroup
 
 namespace Iut
 
-/--
-The remaining torsion-cyclotomic certificate on the literal model monoid
-`O_(kbar)^triangle`.  Its carrier and Galois action are constructed above;
-identifying all roots of unity with `Q/Z` is the exact library gap.
--/
+/-- The torsion-cyclotomic structure carried by the literal model monoid. -/
 structure SourceMLFModelTMStructure
     (K : Type u) [Field K] [ValuativeRel K]
     [TopologicalSpace K] [IsNonarchimedeanLocalField K]
@@ -2162,6 +2537,17 @@ variable
   {K : Type u} [Field K] [ValuativeRel K]
   [TopologicalSpace K] [IsNonarchimedeanLocalField K]
   [CharZero K]
+
+/--
+The source-constructed torsion-cyclotomic structure on
+`O_kbar^triangle`: its torsion units are exactly the roots of unity in
+`kbar^times`, hence are abstractly `Q/Z`.
+-/
+noncomputable def canonical : SourceMLFModelTMStructure K where
+  torsion_cyclotomic :=
+    ⟨(SourceMLFIntegralMonoid.torsionEquivAlgebraicClosureTorsion K).trans
+      (SourceMLFCyclotome.rationalCircleMulEquivAlgebraicClosureUnitsTorsion
+        K).symm⟩
 
 /-- The literal model monoid packaged as a torsion-cyclotomic object. -/
 noncomputable def arithmeticMonoid
@@ -2207,6 +2593,28 @@ variable
   {K : Type u} [Field K] [ValuativeRel K]
   [TopologicalSpace K] [IsNonarchimedeanLocalField K]
   [CharZero K]
+
+/--
+The mono-analytic model of Absolute Anabelian Topics III, Definition 3.1(ii):
+the absolute Galois group itself, with identity Galois augmentation.
+-/
+noncomputable def monoAnalyticOfStructure
+    (modelStructure : SourceMLFModelTMStructure K) :
+    SourceMLFModelTMPair K where
+  modelStructure := modelStructure
+  galoisGroup := SourceMLFAbsoluteGaloisGroup K
+  augmentation := 𝟙 _
+  augmentation_surjective := Function.surjective_id
+
+/-- The canonical mono-analytic model pair, with no caller-supplied certificate. -/
+noncomputable def monoAnalytic : SourceMLFModelTMPair K :=
+  monoAnalyticOfStructure SourceMLFModelTMStructure.canonical
+
+@[simp]
+theorem monoAnalytic_augmentation_apply
+    (sigma : SourceMLFAbsoluteGaloisGroup K) :
+    monoAnalytic.augmentation sigma = sigma :=
+  rfl
 
 /-- The model action obtained by composing with the Galois augmentation. -/
 noncomputable def action
@@ -2326,6 +2734,49 @@ attribute [instance]
 namespace SourceMLFGaloisTMPair
 
 variable {G : TopologicalGroupCat.{u}}
+
+/--
+The literal mono-analytic `TM`-pair attached to an MLF.  No presentation
+isomorphism is chosen: both the group and monoid are the model objects of
+Absolute Anabelian Topics III, Definition 3.1(i), and the augmentation is the
+identity as in Definition 3.1(ii).
+-/
+noncomputable def monoAnalyticOfStructure
+    {K : Type u} [Field K] [ValuativeRel K]
+    [TopologicalSpace K] [IsNonarchimedeanLocalField K]
+    [CharZero K]
+    (modelStructure : SourceMLFModelTMStructure K) :
+    SourceMLFGaloisTMPair (SourceMLFAbsoluteGaloisGroup K) where
+  arithmeticMonoid := modelStructure.arithmeticMonoid
+  action := SourceMLFIntegralMonoid.galoisAction K
+  modelField := K
+  model := SourceMLFModelTMPair.monoAnalyticOfStructure modelStructure
+  groupIso := ContinuousMulEquiv.refl _
+  monoidIso := MulEquiv.refl _
+  equivariant _ _ := rfl
+
+/--
+The literal mono-analytic `TM`-pair with its torsion-cyclotomic structure
+derived from roots of unity.
+-/
+noncomputable def monoAnalytic
+    (K : Type u) [Field K] [ValuativeRel K]
+    [TopologicalSpace K] [IsNonarchimedeanLocalField K]
+    [CharZero K] :
+    SourceMLFGaloisTMPair (SourceMLFAbsoluteGaloisGroup K) :=
+  monoAnalyticOfStructure
+    (SourceMLFModelTMStructure.canonical (K := K))
+
+@[simp]
+theorem monoAnalytic_action
+    {K : Type u} [Field K] [ValuativeRel K]
+    [TopologicalSpace K] [IsNonarchimedeanLocalField K]
+    [CharZero K]
+    (sigma : SourceMLFAbsoluteGaloisGroup K)
+    (value : SourceMLFIntegralMonoid K) :
+    (monoAnalytic K).action sigma value =
+      SourceMLFIntegralMonoid.galoisAction K sigma value :=
+  rfl
 
 /-- Pull the Krull-open stabilizer of a model element back to the model group `Pi_k`. -/
 noncomputable def modelOpenStabilizer
@@ -5545,6 +5996,15 @@ noncomputable def augmentation
     (ContinuousMonoidHom.toContinuousMonoidHom
       pair.groupIso.symm)
 
+@[simp]
+theorem monoAnalytic_augmentation_apply
+    {K : Type u} [Field K] [ValuativeRel K]
+    [TopologicalSpace K] [IsNonarchimedeanLocalField K]
+    [CharZero K]
+    (sigma : SourceMLFAbsoluteGaloisGroup K) :
+    (monoAnalytic K).augmentation sigma = sigma :=
+  rfl
+
 /-- The transported Galois augmentation remains surjective. -/
 theorem augmentation_surjective
     (pair : SourceMLFGaloisTMPair G) :
@@ -5827,6 +6287,54 @@ variable
   [Group A] [TopologicalSpace A] [IsTopologicalGroup A]
   [IsMulCommutative A]
   {coefficientAction : ContinuousGroupAction G A}
+
+/--
+The coefficient-identity Kummer embedding canonically attached to every
+MLF-Galois `TM`-pair.  This is Proposition 3.2(ii) with coefficients
+`mu_Z(M)` itself; no comparison map or Kummer homomorphism is supplied by a
+caller.
+-/
+noncomputable def canonical
+    (pair : SourceMLFGaloisTMPair G) :
+    SourceIUTIIUnitKummerEmbedding
+      G pair.continuousCyclotomeAction where
+  tmPair := pair
+  coefficientCyclotomeEquiv := ContinuousMulEquiv.refl _
+  coefficientCyclotomeEquiv_equivariant _ _ := rfl
+
+/--
+The canonical unit-Kummer embedding for the mono-analytic absolute-Galois
+model of an MLF.
+-/
+noncomputable def monoAnalytic
+    (K : Type u) [Field K] [ValuativeRel K]
+    [TopologicalSpace K] [IsNonarchimedeanLocalField K]
+    [CharZero K] :
+    SourceIUTIIUnitKummerEmbedding
+      (SourceMLFAbsoluteGaloisGroup K)
+      (SourceMLFGaloisTMPair.monoAnalytic
+        K).continuousCyclotomeAction :=
+  canonical (SourceMLFGaloisTMPair.monoAnalytic K)
+
+/-- The canonical embedding uses the source-constructed full monoid Kummer map. -/
+theorem canonical_monoidKummer
+    (pair : SourceMLFGaloisTMPair G) :
+    (canonical pair).monoidKummer =
+      pair.KummerRootTheory.canonicalKummerMap :=
+  rfl
+
+/--
+The canonical unit map is exactly the restriction of Proposition 3.2(ii)'s
+monoid Kummer map to `M^times`, as required in Proposition 3.3(i).
+-/
+theorem canonical_unitKummer
+    (pair : SourceMLFGaloisTMPair G) :
+    (canonical pair).unitKummer =
+      pair.KummerRootTheory.canonicalKummerMap.comp
+        { toFun := Units.val
+          map_one' := rfl
+          map_mul' := fun _ _ => rfl } :=
+  rfl
 
 /-- The continuous root theory is derived from the coefficient identification. -/
 noncomputable def rootTheory
@@ -6184,6 +6692,25 @@ theorem unitKummer_injective
     embedding.unit_eq_one_of_unitKummer_eq_one
       (first / second) hquotient
   exact div_eq_one.mp quotient_eq_one
+
+/-- Proposition 3.3(i)'s unit Kummer map is faithful for the canonical pair. -/
+theorem canonical_unitKummer_injective
+    [CompactSpace G]
+    (pair : SourceMLFGaloisTMPair G) :
+    Function.Injective (canonical pair).unitKummer :=
+  unitKummer_injective (canonical pair)
+
+/--
+Faithfulness specialized to the literal mono-analytic absolute-Galois model;
+compactness is supplied by the Krull profinite topology, not by an input
+certificate.
+-/
+theorem monoAnalytic_unitKummer_injective
+    (K : Type u) [Field K] [ValuativeRel K]
+    [TopologicalSpace K] [IsNonarchimedeanLocalField K]
+    [CharZero K] :
+    Function.Injective (monoAnalytic K).unitKummer :=
+  unitKummer_injective (monoAnalytic K)
 
 /--
 IUT II's `M_TM^x`, as the actual image of the unit Kummer map rather than an
