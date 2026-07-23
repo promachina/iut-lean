@@ -447,6 +447,33 @@ visible to Lean's axiom reporter.
   Iut.SourceSemiGraphSubgroupDiagram.profiniteVertexSection_stabilizer_eq
 #print axioms
   Iut.SourceSemiGraphSubgroupDiagram.profiniteEdgeSection_stabilizer_eq
+#print axioms
+  Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevel_vertexCoset_finite
+#print axioms
+  Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevel_edgeCoset_finite
+#print axioms
+  Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevel_branchCosetMap_transition
+#print axioms Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelTransition
+#print axioms
+  Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelVertexMap_comp
+#print axioms
+  Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelEdgeMap_comp
+#print axioms
+  Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelVertexMap_surjective
+#print axioms
+  Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelEdgeMap_surjective
+#print axioms
+  Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelVertexMap_action
+#print axioms
+  Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelEdgeMap_action
+#print axioms
+  Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelTransition_totalBranchMap_comp
+#print axioms
+  Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelTransition_totalBranchMap_surjective
+#print axioms
+  Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelTransition_totalBranchMap_action
+#print axioms
+  Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelTransition_isProper
 #print axioms Iut.SourceGraphAction.dist_image
 #print axioms Iut.SourceFiniteTree.exists_degree_ne_one
 #print axioms Iut.SourceFiniteTree.induce_degree_ne_one_connected

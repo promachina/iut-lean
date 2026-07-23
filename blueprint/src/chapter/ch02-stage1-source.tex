@@ -301,6 +301,22 @@
   \lean{Iut.SourceSemiGraphSubgroupDiagram.profiniteEdgeSection}
   \lean{Iut.SourceSemiGraphSubgroupDiagram.profiniteVertexSection_stabilizer_eq}
   \lean{Iut.SourceSemiGraphSubgroupDiagram.profiniteEdgeSection_stabilizer_eq}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevel}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelSemiGraph}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevel_vertices_finite}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevel_edges_finite}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevel_branchCosetMap_transition}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelTransition}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelVertexMap_comp}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelEdgeMap_comp}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelVertexMap_surjective}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelEdgeMap_surjective}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelVertexMap_action}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelEdgeMap_action}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelTransition_totalBranchMap_comp}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelTransition_totalBranchMap_surjective}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelTransition_totalBranchMap_action}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.normalOpenLevelTransition_isProper}
   \lean{Iut.SourceGraphAction}
   \lean{Iut.SourceGraphAction.dist_image}
   \lean{Iut.SourceFiniteTree.induce_degree_ne_one_connected}
@@ -368,10 +384,14 @@
   functor, derives $\bigcap_N(H\vee N)=H$ from profinite separation, injects
   each $H$-coset into a compatible finite-level system, and proves that the
   compatible vertex and edge stabilizers equal the Bass--Serre stabilizers.
-  Assembling these component systems and branch maps into finite etale
-  covering semi-graphs, proving that every compatible component system is so
-  obtained, and connecting the abstract subgroups to constituent anabelioid
-  fundamental groups remain open.
+  The constituent systems are assembled into normal-open coset semi-graphs.
+  Normality extends every branch transport from $H_e$ to $H_e\vee N$; quotient
+  maps give proper semi-graph morphisms with finite component fibers.  Lean
+  proves incidence compatibility, surjectivity, identity and composition, and
+  deck equivariance for their vertex, edge, and branch maps.  Proving that
+  every compatible component system is obtained from a $G/H$ coset, enriching
+  these raw levels to finite etale coverings of anabelioids, and connecting the
+  abstract subgroups to constituent fundamental groups remain open.
 
   A finite group acting on an arbitrary simple tree fixes a vertex or an edge
   setwise.  Lean proves this by constructing the finite connected invariant

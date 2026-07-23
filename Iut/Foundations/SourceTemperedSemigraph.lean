@@ -10,7 +10,7 @@ import Mathlib.Combinatorics.SimpleGraph.Diam
 import Mathlib.Topology.Algebra.Group.Basic
 import Iut.Foundations.SourceSemiGraph
 import Iut.Foundations.SourceSemiGraphAction
-import Iut.Foundations.SourceProfiniteCosetSystem
+import Iut.Foundations.SourceProfiniteSemiGraphSystem
 
 /-!
 # Tempered semi-graph source mathematics

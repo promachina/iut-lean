@@ -471,9 +471,25 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceSemiGraphSubgroupDiagram.profiniteVertexSection",
         "SourceSemiGraphSubgroupDiagram.profiniteEdgeSection",
         "SourceSemiGraphSubgroupDiagram.profiniteVertexSection_stabilizer_eq",
-        "SourceSemiGraphSubgroupDiagram.profiniteEdgeSection_stabilizer_eq"]
+        "SourceSemiGraphSubgroupDiagram.profiniteEdgeSection_stabilizer_eq",
+        "SourceSemiGraphSubgroupDiagram.normalOpenLevel",
+        "SourceSemiGraphSubgroupDiagram.normalOpenLevelSemiGraph",
+        "SourceSemiGraphSubgroupDiagram.normalOpenLevel_vertices_finite",
+        "SourceSemiGraphSubgroupDiagram.normalOpenLevel_edges_finite",
+        "SourceSemiGraphSubgroupDiagram.normalOpenLevel_branchCosetMap_transition",
+        "SourceSemiGraphSubgroupDiagram.normalOpenLevelTransition",
+        "SourceSemiGraphSubgroupDiagram.normalOpenLevelVertexMap_comp",
+        "SourceSemiGraphSubgroupDiagram.normalOpenLevelEdgeMap_comp",
+        "SourceSemiGraphSubgroupDiagram.normalOpenLevelVertexMap_surjective",
+        "SourceSemiGraphSubgroupDiagram.normalOpenLevelEdgeMap_surjective",
+        "SourceSemiGraphSubgroupDiagram.normalOpenLevelVertexMap_action",
+        "SourceSemiGraphSubgroupDiagram.normalOpenLevelEdgeMap_action",
+        "SourceSemiGraphSubgroupDiagram.normalOpenLevelTransition_totalBranchMap_comp",
+        "SourceSemiGraphSubgroupDiagram.normalOpenLevelTransition_totalBranchMap_surjective",
+        "SourceSemiGraphSubgroupDiagram.normalOpenLevelTransition_totalBranchMap_action",
+        "SourceSemiGraphSubgroupDiagram.normalOpenLevelTransition_isProper"]
       .partialImplementation
-      "Lean defines coherent actions on raw vertices, edges, and total branches; proves that fixing an incident branch fixes its edge and abutting vertex; and constructs the action on compatible sections of a cofiltered finite system. For a semi-graph of subgroups, Lean constructs the Bass-Serre coset semi-graph with general branch transports and proves the exact conjugate stabilizer formulas. For every closed constituent subgroup H of a profinite ambient group G, the normal open subgroups now index the actual finite coset systems G/(H sup N). Lean constructs their equivariant transition functor, derives the intersection of H sup N to be H from profinite separation, embeds every H-coset into a compatible system, and proves that the compatible vertex and edge stabilizers agree with the Bass-Serre stabilizers. Assembling these component systems and branch maps into finite etale covering semi-graphs, proving exhaustion of all compatible systems, and connecting the abstract subgroup diagram to the constituent anabelioid fundamental groups remain open.",
+      "Lean defines coherent actions on raw vertices, edges, and total branches and constructs the action on compatible sections of a cofiltered finite system. For a semi-graph of subgroups, Lean constructs the Bass-Serre coset semi-graph with general branch transports and proves the exact conjugate stabilizer formulas. For every closed constituent subgroup H of a profinite ambient group G, normal open subgroups index the finite coset systems G/(H sup N); profinite separation derives their intersection to be H, embeds every H-coset into a compatible system, and identifies the compatible stabilizers. These constituent systems are now assembled into actual normal-open coset semi-graphs: normality extends every branch transport, quotient maps give proper semi-graph morphisms, and Lean proves finite component fibers, incidence compatibility, surjectivity, identity and composition laws, and ambient deck equivariance on vertices, edges, and branches. Proving that every compatible component system comes from a G/H coset, enriching the raw levels to finite etale coverings of anabelioids, and connecting the abstract subgroup diagram to the constituent fundamental groups remain open.",
     clause "SemiAnbd.2.4(iv)" .semiGraphsAnabelioids
       "Semi-graphs of Anabelioids, Definition 2.4(iv)"
       ["SourceEstrangedIncidentBranchSystem",
