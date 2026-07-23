@@ -17,6 +17,7 @@ import Iut.Foundations.SourceDefinition52LocalJointContinuity
 import Iut.Foundations.SourceDefinition52IndSystem
 import Iut.Foundations.SourceDefinition52Sequential
 import Iut.Foundations.SourceTemperedSemigraph
+import Iut.Foundations.SourceContinuousAnabelioid
 import Iut.Foundations.SourceSemiGraphOfAnabelioids
 
 open Iut
@@ -429,6 +430,13 @@ visible to Lean's axiom reporter.
   Iut.SourceCofilteredFiniteActionSystem.sectionStabilizer_eq_iInf_coordinateStabilizer
 #print axioms Iut.continuous_mapAut_whiskeringLeft
 #print axioms Iut.continuous_conjAut
+#print axioms Iut.continuousAction_preGaloisCategory
+#print axioms Iut.continuousAction_fiberFunctor
+#print axioms Iut.continuousAction_isFundamentalGroup
+#print axioms Iut.continuousActionEtaleFundamentalGroup
+#print axioms Iut.continuousActionPointedHom_fundamentalGroupHom
+#print axioms
+  Iut.SourceConnectedFiniteEtaleHom.ofProfiniteOpenEmbedding_fundamentalGroupHom
 #print axioms
   Iut.SourcePointedAnabelioidHom.fundamentalGroupHom_comp
 #print axioms

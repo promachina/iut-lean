@@ -464,6 +464,20 @@ def m1m3PaperLedger : List PaperClause :=
         "SourcePointedAnabelioidHom.TwoIso.fundamentalGroupHom_eq_conjugate"]
       .partialImplementation
       "For two pointed morphisms whose exact pullback functors are naturally isomorphic, Lean derives the basepoint discrepancy in Aut(fiber), reconstructs the corresponding certified target fundamental-group element, and proves that the two induced homomorphisms differ by its inner conjugation. The converse construction and the full equivalence between the category of morphisms and continuous homomorphisms modulo conjugation remain open.",
+    clause "GeoAn.1.2.1-1.2.2.1" .geometryAnabelioids
+      "The Geometry of Anabelioids, Proposition 1.2.1, Definition 1.2.2, and Remark 1.2.2.1"
+      ["continuousFiniteAction",
+        "continuousAction_preGaloisCategory",
+        "continuousAction_fiberFunctor",
+        "continuousAction_isFundamentalGroup",
+        "continuousActionEtaleFundamentalGroup",
+        "continuousActionPointedHom",
+        "continuousActionPointedHom_fundamentalGroupHom",
+        "SourceConnectedFiniteEtaleHom",
+        "SourceConnectedFiniteEtaleHom.ofProfiniteOpenEmbedding",
+        "SourceConnectedFiniteEtaleHom.ofProfiniteOpenEmbedding_fundamentalGroupHom"]
+      .partialImplementation
+      "Lean constructs B(G) as the actual Galois category of finite discrete continuous G-actions. Open stabilizers prove closure under finite limits, finite colimits, and finite-group quotients; invariant image complements prove the direct-summand axiom. Continuous orbit subactions and finite quotients by open normal subgroups certify the original profinite G as the fundamental group. Restriction along every continuous homomorphism is an exact pointed functor, its derived fundamental-group map is the original homomorphism, and an open embedding therefore constructs the connected finite-etale open-image certificate of Remark 1.2.2.1. Constructing the slice anabelioid X_S, its adjunction, the induced-set equivalence B(H) ≃ B(G)_(G/H), and the factorization definition of finite-etale morphisms remains open.",
     clause "SemiAnbd.2.1" .semiGraphsAnabelioids
       "Semi-graphs of Anabelioids, Definition 2.1"
       ["SourcePointedSemiGraphOfAnabelioids",
@@ -2320,8 +2334,8 @@ def clauseIdsWithStatus (status : ClauseStatus) : List String :=
   m1m3PaperLedger.filterMap fun entry =>
     if entry.status = status then some entry.id else none
 
-/-- The source-closure ledger contains 127 separately audited clauses. -/
-theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 127 := by
+/-- The source-closure ledger contains 128 separately audited clauses. -/
+theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 128 := by
   set_option maxRecDepth 2048 in
     rfl
 
@@ -2331,9 +2345,9 @@ theorem m1m3PaperLedger_ids_nodup :
   set_option maxRecDepth 2048 in
     decide
 
-/-- One hundred one clauses currently have a genuine but incomplete implementation. -/
+/-- One hundred two clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 101 :=
+    (clauseIdsWithStatus .partialImplementation).length = 102 :=
   rfl
 
 /-- Four clauses currently point only to explicitly classified toy models. -/

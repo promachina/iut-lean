@@ -35,13 +35,13 @@ open CategoryTheory.PreGaloisCategory
 automorphism group.  The target topology is initial with respect to evaluation,
 and evaluation after precomposition at `Y` is evaluation at `pullback.obj Y`. -/
 theorem continuous_mapAut_whiskeringLeft
-    {C D : Type u} [Category.{u} C] [Category.{u} D]
+    {C D : Type (u + 1)} [Category.{u} C] [Category.{u} D]
     (pullback : D ⥤ C) (fiber : C ⥤ FintypeCat.{u}) :
     Continuous
-      (((Functor.whiskeringLeft D C FintypeCat).obj pullback).mapAut fiber) := by
+      (((Functor.whiskeringLeft D C FintypeCat.{u}).obj pullback).mapAut fiber) := by
   rw [Topology.IsInducing.continuous_iff
     (autEmbedding_isClosedEmbedding
-      (((Functor.whiskeringLeft D C FintypeCat).obj pullback).obj fiber)).isInducing]
+      (((Functor.whiskeringLeft D C FintypeCat.{u}).obj pullback).obj fiber)).isInducing]
   rw [continuous_pi_iff]
   intro Y
   change Continuous (fun automorphism : Aut fiber =>
@@ -51,7 +51,7 @@ theorem continuous_mapAut_whiskeringLeft
 /-- Conjugating natural automorphisms through an isomorphism of fiber functors
 is continuous for their canonical profinite topologies. -/
 theorem continuous_conjAut
-    {C : Type u} [Category.{u} C]
+    {C : Type (u + 1)} [Category.{u} C]
     {first second : C ⥤ FintypeCat.{u}}
     (identification : first ≅ second) :
     Continuous identification.conjAut := by

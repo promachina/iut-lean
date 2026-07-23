@@ -170,9 +170,16 @@ into normal-open coset semi-graphs.  Normality extends every branch transport
 from $H_e$ to $H_e\vee N$, and quotient maps give proper semi-graph morphisms
 with finite component fibers.  Their incidence compatibility, surjectivity,
 identity and composition laws, and deck equivariance are proved on vertices,
-edges, and branches.  Each constituent anabelioid is now an actual Galois
-category with a chosen fiber functor and certified profinite fundamental
-group.  Its branch and constituent-to-total morphisms are exact
+edges, and branches.  For every profinite group $G$, Lean now constructs
+$\mathcal B(G)$ as the actual Galois category of finite discrete continuous
+$G$-actions and proves that its canonical fiber functor has fundamental group
+$G$.  Restriction along a continuous homomorphism is exact and induces the
+original homomorphism on certified fundamental groups.  Hence every open
+embedding $H\hookrightarrow G$ constructs the connected finite-etale
+open-image morphism $\mathcal B(H)\to\mathcal B(G)$.  The source slice
+equivalence $\mathcal B(H)\simeq\mathcal B(G)_{G/H}$ remains open.
+Each constituent anabelioid is now an actual Galois category with a chosen
+fiber functor and certified profinite fundamental group.  Its branch and constituent-to-total morphisms are exact
 contravariant functors.  Categorical $2$-isomorphisms derive the conjugating
 branch transports, so the closed Bass--Serre subgroup diagram is constructed
 from the images of the induced fundamental-group maps rather than supplied.

@@ -365,7 +365,7 @@ A chosen fiber functor and certified profinite fundamental group for a Galois
 category of finite etale covers.
 -/
 structure EtaleFundamentalGroup where
-  Cover : Type u
+  Cover : Type (u + 1)
   coverCategory : Category.{u} Cover
   galoisCategory : @GaloisCategory Cover coverCategory
   fiber : letI := coverCategory; Cover ⥤ FintypeCat.{u}
