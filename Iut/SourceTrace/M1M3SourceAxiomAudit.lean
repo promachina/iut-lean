@@ -20,6 +20,7 @@ import Iut.Foundations.SourceTemperedSemigraph
 import Iut.Foundations.SourceContinuousAnabelioid
 import Iut.Foundations.SourceAnabelioidSlice
 import Iut.Foundations.SourceAnabelioidComponents
+import Iut.Foundations.SourceAnabelioidEquivalence
 import Iut.Foundations.SourceSemiGraphOfAnabelioids
 
 open Iut
@@ -464,9 +465,15 @@ visible to Lean's axiom reporter.
 #print axioms
   Iut.SourcePointedAnabelioidHom.fundamentalGroupHom_comp
 #print axioms
+  Iut.SourcePointedAnabelioidHom.fundamentalGroupHom_identity
+#print axioms
   Iut.SourcePointedAnabelioidHom.TwoIso.fundamentalGroupHom_eq_conjugate
 #print axioms
   Iut.SourcePointedAnabelioidHom.fundamentalGroupImageContinuousMulEquiv
+#print axioms
+  Iut.SourcePointedAnabelioidEquivalence.fundamentalGroupHom_bijective
+#print axioms
+  Iut.SourcePointedAnabelioidEquivalence.fundamentalGroupContinuousMulEquiv
 #print axioms
   Iut.SourcePointedSemiGraphOfAnabelioids.vertexFundamentalGroupImageEquiv
 #print axioms

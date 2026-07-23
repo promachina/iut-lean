@@ -331,6 +331,16 @@ theorem fundamentalGroupHom_comp
     first element]
   exact first.fiberAutHom_comp second _
 
+/-- The identity pointed morphism induces the identity on the certified
+profinite fundamental group. -/
+theorem fundamentalGroupHom_identity
+    (data : EtaleFundamentalGroup.{u}) (element : data.group) :
+    (identity data).fundamentalGroupHom element = element := by
+  letI := data.coverCategory
+  apply (certifiedFundamentalGroupEquiv data).injective
+  rw [certifiedFundamentalGroupEquiv_fundamentalGroupHom]
+  rw [fiberAutHom_identity]
+
 /-! ## Two-isomorphisms and the inner ambiguity of unpointed morphisms -/
 
 /--
