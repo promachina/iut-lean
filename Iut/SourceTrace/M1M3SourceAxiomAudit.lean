@@ -432,6 +432,10 @@ visible to Lean's axiom reporter.
   Iut.SourceCompactSemiGraphAction.fixesSubjoint_of_three_fixed_vertices
 #print axioms
   Iut.SourceCofilteredFixedSubjointSystem.exists_compatible_fixedSubjoints
+#print axioms
+  Iut.SourceEstrangedIncidentBranchSystem.subgroup_eq_bot_of_le_branch_intersection
+#print axioms
+  Iut.SourceEstrangedIncidentBranchSystem.not_le_two_branches_of_ne_bot
 #print axioms Iut.SourceGraphAction.fixes_path_pointwise
 #print axioms Iut.SourceGraphAction.subgroup_fixes_geodesic_pointwise
 #print axioms

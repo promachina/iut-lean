@@ -161,13 +161,16 @@ At cofinal levels with three fixed vertices, Lean constructs a fixed subjoint
 without requiring the acting group itself to be finite, transports the
 subjoint through an equivariant locally injective quotient map, and applies
 the nonempty finite cofiltered-limit theorem to obtain a compatible system of
-finite-level subjoints.
+finite-level subjoints.  The incident-branch form of Definition~2.4(iv) is also
+encoded: Lean proves that a subgroup contained in two estranged branch images
+is trivial, yielding the contradiction once Remark~2.2.1 supplies those
+containments.
 The
 exact subgroup configuration of \IUT{} I, Proposition~2.4(i), is typed; from
 its compact-conjugate rigidity conclusion and a nontrivial compact cusp
 inertia subgroup, Lean derives both cusp-conjugacy assertions of
 Corollary~2.5.  The general branch-set/morphism formalism and arbitrary finite
-semi-graph quotients, the group-containment and total-estrangement argument,
+semi-graph quotients, Remark~2.2.1's derivation of the branch containments,
 the one-or-two compatible fixed-vertex systems,
 maximal-compact/verticial classification, and the inverse-limit proof of
 Proposition~2.4(i) remain open.
@@ -1087,11 +1090,11 @@ the local estimates of \IUT{} IV.
 
 \subsection{Source-faithful construction before the Theorem 3.11 boundary}
 
-The machine-checked source-closure ledger now contains 121 clauses from
+The machine-checked source-closure ledger now contains 122 clauses from
 \IUT{} I--III together with transitive dependencies in \emph{Frobenioids},
 \emph{The Etale Theta Function}, \emph{Semi-graphs of Anabelioids}, and
 \emph{Absolute Anabelian Topics III}.
-It classifies 96 clauses as partially implemented, 4 as toy models, 15 as
+It classifies 97 clauses as partially implemented, 4 as toy models, 15 as
 unformalized, and 6 as source-faithful.  None of the complete M1--M3
 milestones or Theorem~3.11 clauses is classified as source-faithful.
 The new partial Definition~3.1 path constructs etale stacks and

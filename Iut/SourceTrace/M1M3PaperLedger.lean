@@ -419,6 +419,13 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceSemiGraphTree.Action.fixesSubjoint_of_three_fixed_vertices"]
       .partialImplementation
       "In the marked-compactification encoding, Lean proves for an arbitrary group action that three distinct fixed original vertices yield a fixed subjoint; finiteness of the acting group is not used after the vertices are fixed. It extracts consecutive edges from a fixed geodesic and uses the unique-neighbor boundary condition to prove their common point is original; truncating those edges gives the two open branches of the joint. The branch-level sub-semi-graph object is not yet constructed as a separate raw semi-graph datatype.",
+    clause "SemiAnbd.2.4(iv)" .semiGraphsAnabelioids
+      "Semi-graphs of Anabelioids, Definition 2.4(iv)"
+      ["SourceEstrangedIncidentBranchSystem",
+        "SourceEstrangedIncidentBranchSystem.subgroup_eq_bot_of_le_branch_intersection",
+        "SourceEstrangedIncidentBranchSystem.not_le_two_branches_of_ne_bot"]
+      .partialImplementation
+      "At a fixed vertex, Lean records the source estrangement condition for distinct incident branches and for a branch conjugated by an element outside its own subgroup. It proves that a subgroup contained in both branch images is trivial, and hence obtains the nontrivial-subgroup contradiction used in Theorem 3.7(iii). Packaging these incident systems over every edge and vertex of a raw semi-graph of anabelioids remains open.",
     clause "SemiAnbd.3.7(iii)" .semiGraphsAnabelioids
       "Semi-graphs of Anabelioids, Theorem 3.7(iii)"
       ["SourceSemiGraphTree.edge_abuts_vertex",
@@ -435,9 +442,11 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceSemiGraphTree.Action.EquivariantLocalMap",
         "SourceSemiGraphTree.Action.FixedSubjoint.map",
         "SourceCofilteredFixedSubjointSystem",
-        "SourceCofilteredFixedSubjointSystem.exists_compatible_fixedSubjoints"]
+        "SourceCofilteredFixedSubjointSystem.exists_compatible_fixedSubjoints",
+        "SourceEstrangedIncidentBranchSystem.subgroup_eq_bot_of_le_branch_intersection",
+        "SourceEstrangedIncidentBranchSystem.not_le_two_branches_of_ne_bot"]
       .partialImplementation
-      "Lean formalizes the initial fixed-vertex steps and the finite inverse-system step. A compact-to-discrete deck image is finite; Lemma 1.8 yields a fixed component; the over-base branch projection and connectedness upgrade this to a fixed original vertex. At cofinal levels with three fixed vertices, Lean constructs an upstairs fixed subjoint, transports it through an equivariant locally injective quotient map, and derives a compatible system of finite-level subjoints from the nonempty finite cofiltered-limit theorem. Arbitrary finite semi-graph quotients beyond the marked-tree encoding, the Remark 2.2.1 group-containment passage, total-estrangement contradiction, one-or-two fixed-vertex systems, and maximal compact/verticial classification remain open.",
+      "Lean formalizes the initial fixed-vertex steps, finite inverse-system step, and final estranged-branch algebra once the branch containments are supplied. A compact-to-discrete deck image is finite; Lemma 1.8 and the over-base branch projection yield a fixed original vertex. At cofinal levels with three fixed vertices, Lean constructs an upstairs fixed subjoint, transports it through an equivariant locally injective quotient map, and derives a compatible system of finite-level subjoints from the nonempty finite cofiltered-limit theorem. Definition 2.4(iv) then makes any subgroup contained in the two incident branch images trivial. Arbitrary finite semi-graph quotients beyond the marked-tree encoding, Remark 2.2.1's derivation of the branch containments, one-or-two fixed-vertex systems, and maximal compact/verticial classification remain open.",
     clause "I.0.pseudo-monoid" .iutI
       "IUT I, Section 0: topological pseudo-monoids"
       ["SourceTopologicalPseudoMonoid",
@@ -2184,8 +2193,8 @@ def clauseIdsWithStatus (status : ClauseStatus) : List String :=
   m1m3PaperLedger.filterMap fun entry =>
     if entry.status = status then some entry.id else none
 
-/-- The source-closure ledger contains 121 separately audited clauses. -/
-theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 121 :=
+/-- The source-closure ledger contains 122 separately audited clauses. -/
+theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 122 :=
   rfl
 
 /-- No source clause occurs twice in the direct-citation ledger. -/
@@ -2193,9 +2202,9 @@ theorem m1m3PaperLedger_ids_nodup :
     (m1m3PaperLedger.map PaperClause.id).Nodup := by
   decide
 
-/-- Ninety-six clauses currently have a genuine but incomplete implementation. -/
+/-- Ninety-seven clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 96 :=
+    (clauseIdsWithStatus .partialImplementation).length = 97 :=
   rfl
 
 /-- Four clauses currently point only to explicitly classified toy models. -/

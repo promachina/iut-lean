@@ -21,10 +21,12 @@ derives the cuspidal portion of IUT I, Corollary 2.5 from Proposition 2.4(i).
 For the first step of *Semi-graphs of Anabelioids*, Theorem 3.7(iii), it also
 proves that the continuous image of a compact group in a discrete deck group
 is finite, applies Lemma 1.8 to obtain a fixed component, and uses the
-over-base branch map to upgrade it to a fixed original vertex.  The subsequent
-group-containment, total-estrangement, one-or-two-fixed-vertex-system,
-maximal-compact/verticial classification, and the inverse-limit passage in IUT
-I, Proposition 2.4(i), are not asserted here.
+over-base branch map to upgrade it to a fixed original vertex.  It also proves
+the Definition 2.4(iv) estranged-branch contradiction once the subgroup
+containments supplied by Remark 2.2.1 are available.  That group-containment
+passage, the one-or-two-fixed-vertex-system, maximal-compact/verticial
+classification, and the inverse-limit passage in IUT I, Proposition 2.4(i),
+are not asserted here.
 -/
 
 namespace Iut
@@ -1403,6 +1405,67 @@ theorem exists_compatible_fixedSubjoints :
 end SourceCofilteredFixedSubjointSystem
 
 open scoped Pointwise
+
+/-- The incident-branch subgroup formulation of *Semi-graphs of
+Anabelioids*, Definition 2.4(iv), at a fixed vertex.  Distinct branches have
+trivial intersection after arbitrary conjugation; a branch also has trivial
+intersection with a conjugate by an element outside that branch subgroup. -/
+structure SourceEstrangedIncidentBranchSystem
+    (Ambient : Type u) [Group Ambient] where
+  Branch : Type v
+  branchSubgroup : Branch → Subgroup Ambient
+  estranged_intersection :
+    ∀ (first second : Branch) (conjugator : Ambient),
+      (first ≠ second ∨
+        (first = second ∧ conjugator ∉ branchSubgroup first)) →
+      branchSubgroup first ⊓
+          MulAut.conj conjugator • branchSubgroup second = ⊥
+
+namespace SourceEstrangedIncidentBranchSystem
+
+variable
+  {Ambient : Type u} [Group Ambient]
+  (data : SourceEstrangedIncidentBranchSystem Ambient)
+
+/-- A subgroup contained in two estranged incident branch images is trivial.
+This is the algebraic contradiction used in Theorem 3.7(iii) after applying
+Remark 2.2.1 to a compatible fixed-subjoint system. -/
+theorem subgroup_eq_bot_of_le_branch_intersection
+    (subgroup : Subgroup Ambient)
+    (first second : data.Branch) (conjugator : Ambient)
+    (branches_separated :
+      first ≠ second ∨
+        (first = second ∧
+          conjugator ∉ data.branchSubgroup first))
+    (le_first : subgroup ≤ data.branchSubgroup first)
+    (le_second :
+      subgroup ≤
+        MulAut.conj conjugator • data.branchSubgroup second) :
+    subgroup = ⊥ := by
+  apply le_antisymm
+  · rw [← data.estranged_intersection
+      first second conjugator branches_separated]
+    exact le_inf le_first le_second
+  · exact bot_le
+
+/-- Hence a nontrivial subgroup cannot be contained in two estranged incident
+branch images. -/
+theorem not_le_two_branches_of_ne_bot
+    (subgroup : Subgroup Ambient)
+    (subgroup_ne_bot : subgroup ≠ ⊥)
+    (first second : data.Branch) (conjugator : Ambient)
+    (branches_separated :
+      first ≠ second ∨
+        (first = second ∧
+          conjugator ∉ data.branchSubgroup first)) :
+    ¬(subgroup ≤ data.branchSubgroup first ∧
+      subgroup ≤ MulAut.conj conjugator • data.branchSubgroup second) := by
+  rintro ⟨le_first, le_second⟩
+  exact subgroup_ne_bot
+    (data.subgroup_eq_bot_of_le_branch_intersection subgroup
+      first second conjugator branches_separated le_first le_second)
+
+end SourceEstrangedIncidentBranchSystem
 
 /-- The exact subgroup configuration of IUT I, Proposition 2.4(i).
 
