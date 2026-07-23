@@ -170,9 +170,15 @@ into normal-open coset semi-graphs.  Normality extends every branch transport
 from $H_e$ to $H_e\vee N$, and quotient maps give proper semi-graph morphisms
 with finite component fibers.  Their incidence compatibility, surjectivity,
 identity and composition laws, and deck equivariance are proved on vertices,
-edges, and branches.  Enriching the raw levels to finite etale coverings of
-anabelioids and connecting the abstract subgroups to constituent fundamental
-groups remain open in Remark~2.2.1.
+edges, and branches.  Each constituent anabelioid is now an actual Galois
+category with a chosen fiber functor and certified profinite fundamental
+group.  Its branch and constituent-to-total morphisms are exact
+contravariant functors.  Categorical $2$-isomorphisms derive the conjugating
+branch transports, so the closed Bass--Serre subgroup diagram is constructed
+from the images of the induced fundamental-group maps rather than supplied.
+Constructing the total glued category $\mathcal B(\mathbb G)$ from the
+constituents and enriching the raw normal-open levels by connected finite
+etale component anabelioids remain open in Remark~2.2.1.
 The tree-action dependency has been lowered to the original source.  Lean constructs a finite
 connected invariant hull for a finite group acting on an arbitrary simple
 tree, prunes its invariant leaves, and proves that the group fixes a vertex or
@@ -1127,12 +1133,13 @@ the local estimates of \IUT{} IV.
 
 \subsection{Source-faithful construction before the Theorem 3.11 boundary}
 
-The machine-checked source-closure ledger now contains 124 clauses from
+The machine-checked source-closure ledger now contains 127 clauses from
 \IUT{} I--III together with transitive dependencies in \emph{Frobenioids},
-\emph{The Etale Theta Function}, \emph{Semi-graphs of Anabelioids}, and
+\emph{The Etale Theta Function}, \emph{The Geometry of Anabelioids},
+\emph{Semi-graphs of Anabelioids}, and
 \emph{Absolute Anabelian Topics III}.
-It classifies 99 clauses as partially implemented, 4 as toy models, 15 as
-unformalized, and 6 as source-faithful.  None of the complete M1--M3
+It classifies 101 clauses as partially implemented, 4 as toy models, 15 as
+unformalized, and 7 as source-faithful.  None of the complete M1--M3
 milestones or Theorem~3.11 clauses is classified as source-faithful.
 The new partial Definition~3.1 path constructs etale stacks and
 strong-transformation morphisms, a coherent \(C_2\)-action pseudofunctor and

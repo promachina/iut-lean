@@ -280,6 +280,19 @@
   \lean{Iut.SourceCofilteredFiniteActionSystem.sectionStabilizer}
   \lean{Iut.SourceCofilteredFiniteActionSystem.mem_sectionStabilizer_iff_forall_coordinate}
   \lean{Iut.SourceCofilteredFiniteActionSystem.sectionStabilizer_eq_iInf_coordinateStabilizer}
+  \lean{Iut.SourcePointedAnabelioidHom}
+  \lean{Iut.SourcePointedAnabelioidHom.fundamentalGroupHom}
+  \lean{Iut.SourcePointedAnabelioidHom.fundamentalGroupHom_comp}
+  \lean{Iut.SourcePointedAnabelioidHom.TwoIso}
+  \lean{Iut.SourcePointedAnabelioidHom.TwoIso.fundamentalGroupHom_eq_conjugate}
+  \lean{Iut.SourcePointedAnabelioidHom.fundamentalGroupImageContinuousMulEquiv}
+  \lean{Iut.SourcePointedSemiGraphOfAnabelioids}
+  \lean{Iut.SourcePointedSemiGraphOfAnabelioids.vertexFundamentalGroupImageEquiv}
+  \lean{Iut.SourcePointedSemiGraphOfAnabelioids.edgeFundamentalGroupImageEquiv}
+  \lean{Iut.SourcePointedSemiGraphOfAnabelioids.branchTransport}
+  \lean{Iut.SourcePointedSemiGraphOfAnabelioids.subgroupDiagram}
+  \lean{Iut.SourcePointedSemiGraphOfAnabelioids.subgroupDiagram_vertexGroup_isClosed}
+  \lean{Iut.SourcePointedSemiGraphOfAnabelioids.subgroupDiagram_edgeGroup_isClosed}
   \lean{Iut.SourceSemiGraphSubgroupDiagram}
   \lean{Iut.SourceSemiGraphSubgroupDiagram.branchCosetMap}
   \lean{Iut.SourceSemiGraphSubgroupDiagram.branchCosetMap_smul}
@@ -395,13 +408,20 @@
   their intersection.  Consequently $G/H$ is equivalent to the full type of
   compatible systems, and the compatible vertex and edge stabilizers equal
   the Bass--Serre stabilizers.
+  Each constituent anabelioid is now an actual Galois category with a chosen
+  fiber functor and certified profinite fundamental group.  Branch and
+  constituent-to-total morphisms are exact contravariant functors.  A
+  categorical $2$-isomorphism derives its basepoint discrepancy, hence the
+  conjugating branch transport, and Lean constructs the preceding closed
+  subgroup diagram from the images of the induced fundamental-group maps.
   The constituent systems are assembled into normal-open coset semi-graphs.
   Normality extends every branch transport from $H_e$ to $H_e\vee N$; quotient
   maps give proper semi-graph morphisms with finite component fibers.  Lean
   proves incidence compatibility, surjectivity, identity and composition, and
-  deck equivariance for their vertex, edge, and branch maps.  Enriching these
-  raw levels to finite etale coverings of anabelioids and connecting the
-  abstract subgroups to constituent fundamental groups remain open.
+  deck equivariance for their vertex, edge, and branch maps.  Constructing the
+  total glued category $\mathcal B(\mathbb G)$ from the constituent categories
+  and enriching the raw normal-open levels by connected finite etale
+  component anabelioids remain open.
 
   A finite group acting on an arbitrary simple tree fixes a vertex or an edge
   setwise.  Lean proves this by constructing the finite connected invariant

@@ -27,6 +27,7 @@ inductive PaperVolume
   | iutII
   | iutIII
   | etaleTheta
+  | geometryAnabelioids
   | semiGraphsAnabelioids
   | absoluteAnabelianIII
   deriving DecidableEq, Repr
@@ -76,6 +77,9 @@ def m1m3SourceDocuments : List PaperSourceDocument :=
     { volume := .etaleTheta,
       repositoryPath := "docs/papers/mochizuki-etale-theta-frobenioid.pdf",
       sha256 := "42c5d9180c69bc9fa6596ce1a11662494315954ed74301060bf1819f955a7406" },
+    { volume := .geometryAnabelioids,
+      repositoryPath := "docs/papers/mochizuki-geometry-anabelioids.pdf",
+      sha256 := "78a92a9b6d9a0ab41fa6172c676b5fa5d281f16b0cf0a935712991f52ace2028" },
     { volume := .semiGraphsAnabelioids,
       repositoryPath := "docs/papers/mochizuki-semi-graphs-anabelioids.pdf",
       sha256 := "dcc05b22ff858af670c9346ca7a483d4d9b640df5561ec0e82c27314a2416892" },
@@ -83,7 +87,7 @@ def m1m3SourceDocuments : List PaperSourceDocument :=
       repositoryPath := "docs/papers/mochizuki-absolute-anabelian-topics-iii.pdf",
       sha256 := "e8115df30a86dea26e2ebf60cb333558ff28fe3e4d57017a80421787b53421a9" } ]
 
-theorem m1m3SourceDocuments_count : m1m3SourceDocuments.length = 8 :=
+theorem m1m3SourceDocuments_count : m1m3SourceDocuments.length = 9 :=
   rfl
 
 private def clause
@@ -439,6 +443,38 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceSemiGraphTree.Action.fixesSubjoint_of_three_fixed_vertices"]
       .partialImplementation
       "In the marked-compactification encoding, Lean proves for an arbitrary group action that three distinct fixed original vertices yield a fixed subjoint; finiteness of the acting group is not used after the vertices are fixed. It extracts consecutive edges from a fixed geodesic and uses the unique-neighbor boundary condition to prove their common point is original. Raw sub-semi-graphs and their truncation rule are now defined, but constructing this fixed subjoint as a raw joint and proving its connected topological realization remain open.",
+    clause "GeoAn.1.1.1-1.1.2" .geometryAnabelioids
+      "The Geometry of Anabelioids, Definitions 1.1.1-1.1.2"
+      ["EtaleFundamentalGroup",
+        "EtaleFundamentalGroup.certified",
+        "SourcePointedAnabelioidHom",
+        "SourcePointedAnabelioidHom.identity",
+        "SourcePointedAnabelioidHom.comp",
+        "SourcePointedAnabelioidHom.fiberAutHom",
+        "SourcePointedAnabelioidHom.fundamentalGroupHom",
+        "SourcePointedAnabelioidHom.fundamentalGroupHom_comp",
+        "SourcePointedAnabelioidHom.fundamentalGroupImageContinuousMulEquiv"]
+      .sourceFaithful
+      "A connected anabelioid is represented by an actual Mathlib Galois category, a fiber functor, and a certified profinite fundamental group. A pointed morphism is an exact pullback functor in the source's contravariant direction together with an identification of the induced and chosen basepoints. Its continuous fundamental-group homomorphism, closed image, identity, and composition laws are derived from automorphisms of fiber functors.",
+    clause "GeoAn.1.1.4" .geometryAnabelioids
+      "The Geometry of Anabelioids, Proposition 1.1.4"
+      ["SourcePointedAnabelioidHom.TwoIso",
+        "SourcePointedAnabelioidHom.TwoIso.fiberDiscrepancy",
+        "SourcePointedAnabelioidHom.TwoIso.fundamentalGroupTransport",
+        "SourcePointedAnabelioidHom.TwoIso.fundamentalGroupHom_eq_conjugate"]
+      .partialImplementation
+      "For two pointed morphisms whose exact pullback functors are naturally isomorphic, Lean derives the basepoint discrepancy in Aut(fiber), reconstructs the corresponding certified target fundamental-group element, and proves that the two induced homomorphisms differ by its inner conjugation. The converse construction and the full equivalence between the category of morphisms and continuous homomorphisms modulo conjugation remain open.",
+    clause "SemiAnbd.2.1" .semiGraphsAnabelioids
+      "Semi-graphs of Anabelioids, Definition 2.1"
+      ["SourcePointedSemiGraphOfAnabelioids",
+        "SourcePointedSemiGraphOfAnabelioids.vertexFundamentalGroupImageEquiv",
+        "SourcePointedSemiGraphOfAnabelioids.edgeFundamentalGroupImageEquiv",
+        "SourcePointedSemiGraphOfAnabelioids.branchTransport",
+        "SourcePointedSemiGraphOfAnabelioids.subgroupDiagram",
+        "SourcePointedSemiGraphOfAnabelioids.subgroupDiagram_vertexGroup_isClosed",
+        "SourcePointedSemiGraphOfAnabelioids.subgroupDiagram_edgeGroup_isClosed"]
+      .partialImplementation
+      "Lean represents every constituent by a connected Galois category, every branch arrow by an exact pointed pullback functor, and injective type by injectivity of the derived map on certified profinite fundamental groups. Constituent-to-total maps and their categorical 2-isomorphisms derive the closed vertex and edge images and the branch transport elements, hence construct the Bass-Serre subgroup diagram without storing any subgroup. Constructing the total anabelioid B(G) itself as the source's category of glued constituent objects, rather than accepting it with its constituent morphisms, remains open.",
     clause "SemiAnbd.2.2.1" .semiGraphsAnabelioids
       "Semi-graphs of Anabelioids, Remark 2.2.1"
       ["SourceSemiGraph.Action",
@@ -451,6 +487,13 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceCofilteredFiniteActionSystem.sectionStabilizer",
         "SourceCofilteredFiniteActionSystem.mem_sectionStabilizer_iff_forall_coordinate",
         "SourceCofilteredFiniteActionSystem.sectionStabilizer_eq_iInf_coordinateStabilizer",
+        "SourcePointedAnabelioidHom",
+        "SourcePointedAnabelioidHom.fundamentalGroupHom",
+        "SourcePointedAnabelioidHom.TwoIso.fundamentalGroupHom_eq_conjugate",
+        "SourcePointedSemiGraphOfAnabelioids",
+        "SourcePointedSemiGraphOfAnabelioids.vertexFundamentalGroupImageEquiv",
+        "SourcePointedSemiGraphOfAnabelioids.edgeFundamentalGroupImageEquiv",
+        "SourcePointedSemiGraphOfAnabelioids.subgroupDiagram",
         "SourceSemiGraphSubgroupDiagram",
         "SourceSemiGraphSubgroupDiagram.branchCosetMap",
         "SourceSemiGraphSubgroupDiagram.branchCosetMap_smul",
@@ -497,7 +540,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceSemiGraphSubgroupDiagram.normalOpenLevelTransition_totalBranchMap_action",
         "SourceSemiGraphSubgroupDiagram.normalOpenLevelTransition_isProper"]
       .partialImplementation
-      "Lean defines coherent actions on raw vertices, edges, and total branches and constructs the action on compatible sections of a cofiltered finite system. For a semi-graph of subgroups, Lean constructs the Bass-Serre coset semi-graph with general branch transports and proves the exact conjugate stabilizer formulas. For every closed constituent subgroup H of a profinite ambient group G, normal open subgroups index the finite coset systems G/(H sup N). Profinite separation proves injectivity into compatible systems. Conversely, the coordinate representative fibers of any compatible system are proved nonempty, closed, and directed; compactness produces a simultaneous representative. Thus G/H is equivalent to the full compatible-system type, and the compatible vertex and edge stabilizers are exactly the Bass-Serre stabilizers. The constituent systems are assembled into actual normal-open coset semi-graphs: normality extends branch transports, quotient maps give proper semi-graph morphisms, and Lean proves finite component fibers, incidence compatibility, surjectivity, identity and composition laws, and ambient deck equivariance on vertices, edges, and branches. Enriching the raw levels to finite etale coverings of anabelioids and connecting the abstract subgroup diagram to the constituent fundamental groups remain open.",
+      "Lean defines coherent actions on raw vertices, edges, and total branches and constructs the action on compatible sections of a cofiltered finite system. Each constituent is now an actual Galois category with a fiber functor and certified profinite fundamental group. Exact pointed branch and constituent-to-total functors derive continuous maps on fundamental groups; categorical 2-isomorphisms derive the inner-conjugacy transport elements. Injectivity identifies every constituent group homeomorphically with its closed image, and these images construct the Bass-Serre subgroup diagram rather than being supplied independently. Lean then constructs its coset semi-graph and proves the exact conjugate stabilizer formulas. For every closed constituent subgroup H of a profinite ambient group G, normal open subgroups index the finite coset systems G/(H sup N). Profinite separation proves injectivity into compatible systems. Conversely, the coordinate representative fibers of any compatible system are proved nonempty, closed, and directed; compactness produces a simultaneous representative. Thus G/H is equivalent to the full compatible-system type. The constituent systems are assembled into actual normal-open coset semi-graphs: normality extends branch transports, quotient maps give proper semi-graph morphisms, and Lean proves finite component fibers, incidence compatibility, surjectivity, identity and composition laws, and ambient deck equivariance on vertices, edges, and branches. Enriching each raw finite level with its connected finite-etale component anabelioids remains open.",
     clause "SemiAnbd.2.4(iv)" .semiGraphsAnabelioids
       "Semi-graphs of Anabelioids, Definition 2.4(iv)"
       ["SourceEstrangedIncidentBranchSystem",
@@ -2277,18 +2320,20 @@ def clauseIdsWithStatus (status : ClauseStatus) : List String :=
   m1m3PaperLedger.filterMap fun entry =>
     if entry.status = status then some entry.id else none
 
-/-- The source-closure ledger contains 124 separately audited clauses. -/
-theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 124 :=
-  rfl
+/-- The source-closure ledger contains 127 separately audited clauses. -/
+theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 127 := by
+  set_option maxRecDepth 2048 in
+    rfl
 
 /-- No source clause occurs twice in the direct-citation ledger. -/
 theorem m1m3PaperLedger_ids_nodup :
     (m1m3PaperLedger.map PaperClause.id).Nodup := by
-  decide
+  set_option maxRecDepth 2048 in
+    decide
 
-/-- Ninety-nine clauses currently have a genuine but incomplete implementation. -/
+/-- One hundred one clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 99 :=
+    (clauseIdsWithStatus .partialImplementation).length = 101 :=
   rfl
 
 /-- Four clauses currently point only to explicitly classified toy models. -/
@@ -2301,11 +2346,11 @@ theorem unformalized_count :
     (clauseIdsWithStatus .unformalized).length = 15 :=
   rfl
 
-/-- Six clauses currently pass the clause-level source audit. -/
+/-- Seven clauses currently pass the clause-level source audit. -/
 theorem sourceFaithfulClauseIds_eq :
     sourceFaithfulClauseIds =
       ["FrdI.2.7", "FrdI.4.4", "FrdI.5.2(i)", "FrdI.5.2(ii)",
-        "I.0.pseudo-monoid", "I.4.10"] :=
+        "GeoAn.1.1.1-1.1.2", "I.0.pseudo-monoid", "I.4.10"] :=
   rfl
 
 end Iut.SourceTrace

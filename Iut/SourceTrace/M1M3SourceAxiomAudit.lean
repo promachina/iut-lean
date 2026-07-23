@@ -17,6 +17,7 @@ import Iut.Foundations.SourceDefinition52LocalJointContinuity
 import Iut.Foundations.SourceDefinition52IndSystem
 import Iut.Foundations.SourceDefinition52Sequential
 import Iut.Foundations.SourceTemperedSemigraph
+import Iut.Foundations.SourceSemiGraphOfAnabelioids
 
 open Iut
 
@@ -426,6 +427,24 @@ visible to Lean's axiom reporter.
   Iut.SourceCofilteredFiniteActionSystem.mem_sectionStabilizer_iff_forall_coordinate
 #print axioms
   Iut.SourceCofilteredFiniteActionSystem.sectionStabilizer_eq_iInf_coordinateStabilizer
+#print axioms Iut.continuous_mapAut_whiskeringLeft
+#print axioms Iut.continuous_conjAut
+#print axioms
+  Iut.SourcePointedAnabelioidHom.fundamentalGroupHom_comp
+#print axioms
+  Iut.SourcePointedAnabelioidHom.TwoIso.fundamentalGroupHom_eq_conjugate
+#print axioms
+  Iut.SourcePointedAnabelioidHom.fundamentalGroupImageContinuousMulEquiv
+#print axioms
+  Iut.SourcePointedSemiGraphOfAnabelioids.vertexFundamentalGroupImageEquiv
+#print axioms
+  Iut.SourcePointedSemiGraphOfAnabelioids.edgeFundamentalGroupImageEquiv
+#print axioms
+  Iut.SourcePointedSemiGraphOfAnabelioids.subgroupDiagram
+#print axioms
+  Iut.SourcePointedSemiGraphOfAnabelioids.subgroupDiagram_vertexGroup_isClosed
+#print axioms
+  Iut.SourcePointedSemiGraphOfAnabelioids.subgroupDiagram_edgeGroup_isClosed
 #print axioms Iut.SourceSemiGraphSubgroupDiagram.branchCosetMap_smul
 #print axioms Iut.SourceSemiGraphSubgroupDiagram.cosetAction
 #print axioms
