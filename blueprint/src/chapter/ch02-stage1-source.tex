@@ -280,6 +280,15 @@
   \lean{Iut.SourceCofilteredFiniteActionSystem.sectionStabilizer}
   \lean{Iut.SourceCofilteredFiniteActionSystem.mem_sectionStabilizer_iff_forall_coordinate}
   \lean{Iut.SourceCofilteredFiniteActionSystem.sectionStabilizer_eq_iInf_coordinateStabilizer}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.branchCosetMap}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.branchCosetMap_smul}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.cosetSemiGraph}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.cosetAction}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.stabilizer_leftCoset_eq_conjugate}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.cosetAction_vertexStabilizer_eq_conjugate}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.cosetAction_edgeStabilizer_eq_conjugate}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.cosetAction_branchStabilizer_eq_edgeStabilizer}
   \lean{Iut.SourceGraphAction}
   \lean{Iut.SourceGraphAction.dist_image}
   \lean{Iut.SourceFiniteTree.induce_degree_ne_one_connected}
@@ -337,7 +346,13 @@
   compatible sections and proves that the stabilizer of a compatible system is
   the intersection of all finite-level coordinate stabilizers.  This is the
   action-and-stabilizer portion of Remark~2.2.1; the graph-of-groups
-  identification with constituent fundamental-group images remains open.
+  identification is then constructed on the Bass--Serre coset semi-graph.
+  Branch transport elements allow general loop-edge and HNN-type incidence
+  maps.  These maps are equivariant for the ambient action, and Lean proves
+  that every lifted vertex and edge stabilizer is exactly the corresponding
+  conjugate constituent subgroup.  Constructing the universal profinite
+  covering from normal open subgroups and identifying its inverse-limit
+  components with this coset semi-graph remain open.
 
   A finite group acting on an arbitrary simple tree fixes a vertex or an edge
   setwise.  Lean proves this by constructing the finite connected invariant

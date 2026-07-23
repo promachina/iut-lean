@@ -450,9 +450,18 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceCofilteredFiniteActionSystem.sectionAction",
         "SourceCofilteredFiniteActionSystem.sectionStabilizer",
         "SourceCofilteredFiniteActionSystem.mem_sectionStabilizer_iff_forall_coordinate",
-        "SourceCofilteredFiniteActionSystem.sectionStabilizer_eq_iInf_coordinateStabilizer"]
+        "SourceCofilteredFiniteActionSystem.sectionStabilizer_eq_iInf_coordinateStabilizer",
+        "SourceSemiGraphSubgroupDiagram",
+        "SourceSemiGraphSubgroupDiagram.branchCosetMap",
+        "SourceSemiGraphSubgroupDiagram.branchCosetMap_smul",
+        "SourceSemiGraphSubgroupDiagram.cosetSemiGraph",
+        "SourceSemiGraphSubgroupDiagram.cosetAction",
+        "SourceSemiGraphSubgroupDiagram.stabilizer_leftCoset_eq_conjugate",
+        "SourceSemiGraphSubgroupDiagram.cosetAction_vertexStabilizer_eq_conjugate",
+        "SourceSemiGraphSubgroupDiagram.cosetAction_edgeStabilizer_eq_conjugate",
+        "SourceSemiGraphSubgroupDiagram.cosetAction_branchStabilizer_eq_edgeStabilizer"]
       .partialImplementation
-      "Lean defines coherent actions on raw vertices, edges, and total branches; proves that fixing an incident branch fixes its edge and abutting vertex; and constructs the action on compatible sections of a cofiltered finite system. The stabilizer of a compatible system is proved equal to the intersection of all finite-level coordinate stabilizers. Constructing the universal pro-finite etale covering from normal open subgroups of Pi_G and proving that its compatible vertex and edge stabilizers equal the images of Pi_v and Pi_b remain open.",
+      "Lean defines coherent actions on raw vertices, edges, and total branches; proves that fixing an incident branch fixes its edge and abutting vertex; and constructs the action on compatible sections of a cofiltered finite system. The stabilizer of a compatible system is the intersection of all coordinate stabilizers. For a semi-graph of subgroups in an ambient group, Lean also constructs the Bass-Serre coset semi-graph with general branch transport elements, proves equivariance of its incidence maps, and proves that lifted vertex and edge stabilizers are exactly conjugates of the constituent subgroups. Constructing the universal pro-finite etale covering from normal open subgroups of Pi_G and identifying its inverse-limit component systems with this coset semi-graph remain open.",
     clause "SemiAnbd.2.4(iv)" .semiGraphsAnabelioids
       "Semi-graphs of Anabelioids, Definition 2.4(iv)"
       ["SourceEstrangedIncidentBranchSystem",

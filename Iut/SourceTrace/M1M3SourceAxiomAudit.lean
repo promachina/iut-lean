@@ -426,6 +426,16 @@ visible to Lean's axiom reporter.
   Iut.SourceCofilteredFiniteActionSystem.mem_sectionStabilizer_iff_forall_coordinate
 #print axioms
   Iut.SourceCofilteredFiniteActionSystem.sectionStabilizer_eq_iInf_coordinateStabilizer
+#print axioms Iut.SourceSemiGraphSubgroupDiagram.branchCosetMap_smul
+#print axioms Iut.SourceSemiGraphSubgroupDiagram.cosetAction
+#print axioms
+  Iut.SourceSemiGraphSubgroupDiagram.stabilizer_leftCoset_eq_conjugate
+#print axioms
+  Iut.SourceSemiGraphSubgroupDiagram.cosetAction_vertexStabilizer_eq_conjugate
+#print axioms
+  Iut.SourceSemiGraphSubgroupDiagram.cosetAction_edgeStabilizer_eq_conjugate
+#print axioms
+  Iut.SourceSemiGraphSubgroupDiagram.cosetAction_branchStabilizer_eq_edgeStabilizer
 #print axioms Iut.SourceGraphAction.dist_image
 #print axioms Iut.SourceFiniteTree.exists_degree_ne_one
 #print axioms Iut.SourceFiniteTree.induce_degree_ne_one_connected

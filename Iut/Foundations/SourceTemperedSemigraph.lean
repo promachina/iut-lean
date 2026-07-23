@@ -10,6 +10,7 @@ import Mathlib.Combinatorics.SimpleGraph.Diam
 import Mathlib.Topology.Algebra.Group.Basic
 import Iut.Foundations.SourceSemiGraph
 import Iut.Foundations.SourceSemiGraphAction
+import Iut.Foundations.SourceSemiGraphOfSubgroups
 
 /-!
 # Tempered semi-graph source mathematics

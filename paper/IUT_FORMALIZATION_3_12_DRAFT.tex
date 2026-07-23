@@ -153,9 +153,14 @@ A coherent raw action is defined on vertices, edges, and total branches.
 Lean proves that fixing an incident branch fixes its supporting edge and
 abutting vertex, constructs the action on compatible sections of a cofiltered
 finite system, and identifies a compatible system's stabilizer with the
-intersection of all finite-level coordinate stabilizers.  The graph-of-groups
-identification of these subgroups with constituent fundamental-group images in
-Remark~2.2.1 remains open.
+intersection of all finite-level coordinate stabilizers.  For a semi-graph of
+subgroups in an ambient group, Lean constructs the Bass--Serre coset
+semi-graph with general branch transport elements, proves equivariance of its
+incidence maps, and proves that lifted vertex and edge stabilizers are exactly
+the corresponding conjugate constituent subgroups.  Constructing the
+universal profinite covering from normal open subgroups and identifying its
+inverse-limit components with this coset semi-graph remain open in
+Remark~2.2.1.
 The tree-action dependency has been lowered to the original source.  Lean constructs a finite
 connected invariant hull for a finite group acting on an arbitrary simple
 tree, prunes its invariant leaves, and proves that the group fixes a vertex or
