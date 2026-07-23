@@ -466,15 +466,19 @@
   isomorphism and Proposition~1.2.1(v) then identify the $c$-factor with the
   certified connected anabelioid
   $\mathcal B(\operatorname{Stab}_G(s_c))$.  This proves
-  Proposition~1.2.1(i) in the continuous-action model.  Lean also proves the
-  categorical-equivalence prerequisite for the converse: from a pointed exact
-  pullback equivalence it constructs the quasi-inverse pointed morphism, uses
-  both triangle $2$-isomorphisms to prove bijectivity of the derived
-  fundamental-group map up to the source's inner ambiguity, and obtains a
-  continuous profinite-group equivalence.  It remains to prove that a
-  connected slice object is transitive, construct the required comparison of
-  basepoints, and classify the original morphism as restriction along the
-  resulting open stabilizer.
+  Proposition~1.2.1(i) in the continuous-action model.  Conversely, suppose a
+  Definition~1.2.2 factorization has connected Galois source.  Lean proves that
+  terminal objects of Galois categories are connected and transports this
+  property through the slice equivalence.  Every noninitial orbit subobject of
+  the slice terminal object is therefore an isomorphism, so the slicing action
+  is nonempty and transitive.  Its stabilizer $H$ is open, the action is
+  isomorphic to $G/H$, the source is equivalent to $\mathcal B(H)$, and the
+  original pullback becomes restriction along $H\leq G$.  For a pointed exact
+  equivalence, the quasi-inverse and both triangle $2$-isomorphisms also derive
+  a continuous profinite-group equivalence.  It remains to construct the
+  noncanonical comparison between arbitrary fiber functors and identify the
+  original pointed fundamental-group map with the open inclusion up to inner
+  conjugacy.
   \lean{Iut.sourceDependentSection_continuous}
   \lean{Iut.sourceSliceDependentSectionHomEquiv}
   \lean{Iut.sourceSliceProductAdjDependentSection}
@@ -485,6 +489,9 @@
   \lean{Iut.sourceActionComponentEtaleFundamentalGroup}
   \lean{Iut.SourcePointedAnabelioidEquivalence.fundamentalGroupHom_bijective}
   \lean{Iut.SourcePointedAnabelioidEquivalence.fundamentalGroupContinuousMulEquiv}
+  \lean{Iut.sourceSlice_equivalentToGalois_implies_pretransitive}
+  \lean{Iut.SourceFiniteEtaleFunctorFactorization.connectedObjectCosetActionIso}
+  \lean{Iut.SourceFiniteEtaleFunctorFactorization.connectedSourcePullbackIsoRestriction}
   Each constituent anabelioid is now an actual Galois category with a chosen
   fiber functor and certified profinite fundamental group.  Branch and
   constituent-to-total morphisms are exact contravariant functors.  A

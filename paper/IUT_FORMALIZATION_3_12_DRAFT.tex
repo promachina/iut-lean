@@ -210,11 +210,15 @@ Proposition~1.2.1(i) in the continuous-action model.  Lean also constructs the
 quasi-inverse of every pointed exact pullback equivalence, uses the two
 categorical triangle isomorphisms and the inner-conjugacy theorem to prove
 that its derived fundamental-group map is bijective, and upgrades this map to
-a continuous equivalence of profinite groups.  This discharges one
-prerequisite of the finite-etale converse.  Proving that a connected slice
-object is transitive, constructing the required basepoint comparison, and
-classifying the original morphism as restriction along the resulting open
-stabilizer remain open.
+a continuous equivalence of profinite groups.  The unpointed categorical
+finite-etale converse is also constructed for the continuous-action model.
+If a Definition~1.2.2 factorization has connected Galois source, its slicing
+action is proved nonempty and transitive.  Lean recovers the open stabilizer
+$H$, constructs the isomorphism with $G/H$ and the source equivalence with
+$\mathcal B(H)$, and proves that the original pullback becomes restriction
+along $H\leq G$.  Constructing the noncanonical comparison between arbitrary
+fiber functors and identifying the original pointed fundamental-group map
+with the open inclusion up to inner conjugacy remain open.
 Each constituent anabelioid is now an actual Galois category with a chosen
 fiber functor and certified profinite fundamental group.  Its branch and constituent-to-total morphisms are exact
 contravariant functors.  Categorical $2$-isomorphisms derive the conjugating

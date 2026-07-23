@@ -21,6 +21,7 @@ import Iut.Foundations.SourceContinuousAnabelioid
 import Iut.Foundations.SourceAnabelioidSlice
 import Iut.Foundations.SourceAnabelioidComponents
 import Iut.Foundations.SourceAnabelioidEquivalence
+import Iut.Foundations.SourceConnectedAnabelioidSlice
 import Iut.Foundations.SourceSemiGraphOfAnabelioids
 
 open Iut
@@ -474,6 +475,12 @@ visible to Lean's axiom reporter.
   Iut.SourcePointedAnabelioidEquivalence.fundamentalGroupHom_bijective
 #print axioms
   Iut.SourcePointedAnabelioidEquivalence.fundamentalGroupContinuousMulEquiv
+#print axioms
+  Iut.sourceSlice_equivalentToGalois_implies_pretransitive
+#print axioms
+  Iut.SourceFiniteEtaleFunctorFactorization.connectedObjectCosetActionIso
+#print axioms
+  Iut.SourceFiniteEtaleFunctorFactorization.connectedSourcePullbackIsoRestriction
 #print axioms
   Iut.SourcePointedSemiGraphOfAnabelioids.vertexFundamentalGroupImageEquiv
 #print axioms
