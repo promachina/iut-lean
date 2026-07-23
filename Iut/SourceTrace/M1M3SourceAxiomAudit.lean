@@ -391,6 +391,34 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceMLFModelTMPair.monoAnalytic_augmentation_apply
 #print axioms Iut.SourceMLFGaloisTMPair.monoAnalytic
 #print axioms Iut.SourceMLFGaloisTMPair.monoAnalytic_augmentation_apply
+#print axioms Iut.EtaleTheta.thetaCenter_le_center
+#print axioms Iut.EtaleTheta.thetaCenter_isMulCommutative
+#print axioms Iut.EtaleTheta.lDeltaTheta_le_thetaCenter
+#print axioms Iut.EtaleTheta.lDeltaTheta_le_center
+#print axioms Iut.EtaleTheta.lDeltaTheta_normal
+#print axioms Iut.EtaleTheta.lDeltaThetaProjection_ker
+#print axioms Iut.EtaleTheta.lDeltaThetaProjection_surjective
+#print axioms Iut.EtaleTheta.lDeltaThetaSubquotientEquiv
+#print axioms
+  Iut.GlobalLTorsionCoverInput.standardGeometricLDeltaThetaMulEquiv
+#print axioms
+  Iut.GlobalLTorsionCoverInput.standardThetaRootArithmeticSubgroup_isOpen
+#print axioms
+  Iut.GlobalLTorsionCoverInput.standardThetaRootContinuousMulEquiv
+#print axioms
+  Iut.GlobalLTorsionCoverInput.standardModLThetaCenterNumerator_eq_center_preimage
+#print axioms
+  Iut.GlobalLTorsionCoverInput.standardModLThetaCenterProjection_ker
+#print axioms
+  Iut.GlobalLTorsionCoverInput.standardModLThetaCenterProjection_surjective
+#print axioms
+  Iut.GlobalLTorsionCoverInput.standardModLThetaCenterContinuousMulEquivCenterImage
+#print axioms
+  Iut.GlobalLTorsionCoverInput.standardModLThetaCenterContinuousMulEquivCenterImage_projection
+#print axioms
+  Iut.GlobalLTorsionCoverInput.standardThetaCenterImageHom_bijective
+#print axioms
+  Iut.GlobalLTorsionCoverInput.standardModLThetaCenterMulEquiv
 #print axioms Iut.SourceMLFGaloisComparison.continuous_autCongr
 #print axioms Iut.SourceMLFGaloisComparison.continuousAutCongr
 #print axioms Iut.SourceMLFGaloisComparison.separableClosureEquivAlgebraicClosure

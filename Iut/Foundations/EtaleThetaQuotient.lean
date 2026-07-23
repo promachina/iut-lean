@@ -20,6 +20,7 @@ already been realized by finite etale covers of an orbicurve.
 -/
 
 open Function
+open scoped commutatorElement IsMulCommutative
 
 namespace Iut.EtaleTheta
 
@@ -156,6 +157,164 @@ theorem thetaToElliptic_surjective :
   refine QuotientGroup.induction_on x ?_
   intro g
   exact ⟨QuotientGroup.mk g, rfl⟩
+
+/-- The integral theta direction `Delta^Theta`: the kernel of the canonical
+two-step-nilpotent quotient map to the elliptic abelianization. -/
+def ThetaCenter : Subgroup (ThetaQuotient G) :=
+  (thetaToElliptic G).ker
+
+instance thetaCenter_normal : (ThetaCenter G).Normal := by
+  change (thetaToElliptic G).ker.Normal
+  infer_instance
+
+/-- The integral theta direction is central in the two-step nilpotent
+theta quotient. This is the lower-central-series reason that the kernel of
+`thetaToElliptic` is the theta center, rather than merely a normal subgroup. -/
+theorem thetaCenter_le_center :
+    ThetaCenter G ≤ Subgroup.center (ThetaQuotient G) := by
+  intro z hz
+  rw [Subgroup.mem_center_iff]
+  obtain ⟨g, rfl⟩ :=
+    QuotientGroup.mk'_surjective (thetaCommutatorKernel G) z
+  have hg : g ∈ derivedSubgroup G := by
+    apply (QuotientGroup.eq_one_iff g).mp
+    exact hz
+  intro q
+  refine QuotientGroup.induction_on q ?_
+  intro h
+  apply commutatorElement_eq_one_iff_mul_comm.mp
+  change QuotientGroup.mk' (thetaCommutatorKernel G) ⁅h, g⁆ = 1
+  apply (QuotientGroup.eq_one_iff (⁅h, g⁆ : G)).mpr
+  exact Subgroup.commutator_mem_commutator (Subgroup.mem_top h) hg
+
+/-- The integral theta center is commutative because it lies in the center of
+the two-step nilpotent quotient. -/
+instance thetaCenter_isMulCommutative :
+    IsMulCommutative (ThetaCenter G) where
+  is_comm := ⟨by
+      intro first second
+      apply Subtype.ext
+      exact
+        (Subgroup.mem_center_iff.mp
+          (thetaCenter_le_center G first.2) second.1).symm⟩
+
+/-- The subgroup `l * Delta^Theta`, constructed as the literal image of the
+`l`-th-power homomorphism on the integral theta direction. This is distinct
+from the finite center of the exponent-`l` theta quotient. -/
+def LDeltaTheta (l : ℕ) : Subgroup (ThetaQuotient G) :=
+  MonoidHom.range
+    ((ThetaCenter G).subtype.comp
+      (powMonoidHom l : ThetaCenter G →* ThetaCenter G))
+
+/-- Every `l`-multiple theta element remains in the integral theta center. -/
+theorem lDeltaTheta_le_thetaCenter (l : ℕ) :
+    LDeltaTheta G l ≤ ThetaCenter G := by
+  rintro value ⟨center, rfl⟩
+  exact (ThetaCenter G).pow_mem center.2 l
+
+/-- Consequently, `l * Delta^Theta` is itself central in the theta quotient. -/
+theorem lDeltaTheta_le_center (l : ℕ) :
+    LDeltaTheta G l ≤ Subgroup.center (ThetaQuotient G) :=
+  (lDeltaTheta_le_thetaCenter G l).trans (thetaCenter_le_center G)
+
+instance lDeltaTheta_normal (l : ℕ) : (LDeltaTheta G l).Normal where
+  conj_mem value hvalue conjugator := by
+    have hcommutes : conjugator * value = value * conjugator :=
+      Subgroup.mem_center_iff.mp
+        (lDeltaTheta_le_center G l hvalue) conjugator
+    rw [hcommutes, mul_assoc, mul_inv_cancel, mul_one]
+    exact hvalue
+
+/-- The canonical projection `Delta_X -> Delta_X^Theta`. -/
+def thetaProjection : G →* ThetaQuotient G :=
+  QuotientGroup.mk' (thetaCommutatorKernel G)
+
+/-- The numerator in `Delta_X` whose theta-quotient image lies in
+`l * Delta^Theta`. -/
+def LDeltaThetaNumerator (l : ℕ) : Subgroup G :=
+  Subgroup.comap (thetaProjection G) (LDeltaTheta G l)
+
+/-- The exact lower-central denominator, restricted to the
+`l * Delta^Theta` numerator. -/
+def LDeltaThetaDenominator (l : ℕ) :
+    Subgroup (LDeltaThetaNumerator G l) :=
+  Subgroup.comap
+    (LDeltaThetaNumerator G l).subtype
+    (thetaCommutatorKernel G)
+
+instance lDeltaThetaDenominator_normal (l : ℕ) :
+    (LDeltaThetaDenominator G l).Normal := by
+  change
+    (Subgroup.comap
+      (LDeltaThetaNumerator G l).subtype
+      (thetaCommutatorKernel G)).Normal
+  infer_instance
+
+/-- The literal algebraic subquotient representing `l * Delta^Theta`. -/
+abbrev LDeltaThetaSubquotient (l : ℕ) :=
+  LDeltaThetaNumerator G l ⧸ LDeltaThetaDenominator G l
+
+/-- Projection of the pulled-back numerator onto the actual
+`l * Delta^Theta` subgroup. -/
+def lDeltaThetaProjection (l : ℕ) :
+    LDeltaThetaNumerator G l →* LDeltaTheta G l where
+  toFun source := ⟨thetaProjection G source.1, source.2⟩
+  map_one' := by
+    apply Subtype.ext
+    exact map_one (thetaProjection G)
+  map_mul' first second := by
+    apply Subtype.ext
+    exact map_mul (thetaProjection G) first.1 second.1
+
+@[simp]
+theorem lDeltaThetaProjection_apply
+    (l : ℕ) (source : LDeltaThetaNumerator G l) :
+    (lDeltaThetaProjection G l source).1 = thetaProjection G source.1 :=
+  rfl
+
+/-- The lower-central denominator is exactly the kernel of the restricted
+projection. -/
+theorem lDeltaThetaProjection_ker (l : ℕ) :
+    (lDeltaThetaProjection G l).ker =
+      LDeltaThetaDenominator G l := by
+  ext source
+  simp only [MonoidHom.mem_ker]
+  change
+    lDeltaThetaProjection G l source = 1 ↔
+      source.1 ∈ thetaCommutatorKernel G
+  constructor
+  · intro hsource
+    exact
+      (QuotientGroup.eq_one_iff source.1).mp
+        (congrArg Subtype.val hsource)
+  · intro hsource
+    apply Subtype.ext
+    exact (QuotientGroup.eq_one_iff source.1).mpr hsource
+
+/-- The restricted projection is onto `l * Delta^Theta`. -/
+theorem lDeltaThetaProjection_surjective (l : ℕ) :
+    Surjective (lDeltaThetaProjection G l) := by
+  intro target
+  obtain ⟨source, hsource⟩ :=
+    QuotientGroup.mk'_surjective (thetaCommutatorKernel G) target.1
+  refine ⟨⟨source, ?_⟩, ?_⟩
+  · change
+      QuotientGroup.mk' (thetaCommutatorKernel G) source ∈
+        LDeltaTheta G l
+    rw [hsource]
+    exact target.2
+  · apply Subtype.ext
+    exact hsource
+
+/-- The first isomorphism theorem identifies the literal pulled-back quotient
+with the actual integral `l * Delta^Theta` subgroup. -/
+noncomputable def lDeltaThetaSubquotientEquiv (l : ℕ) :
+    LDeltaThetaSubquotient G l ≃* LDeltaTheta G l :=
+  (QuotientGroup.quotientMulEquivOfEq
+      (lDeltaThetaProjection_ker G l).symm).trans
+    (QuotientGroup.quotientKerEquivOfSurjective
+      (lDeltaThetaProjection G l)
+      (lDeltaThetaProjection_surjective G l))
 
 theorem modLThetaToElliptic_surjective (l : ℕ) :
     Surjective (modLThetaToElliptic G l) := by

@@ -274,6 +274,27 @@
   \lean{Iut.SourceIUTIIDefinition27PartII.localGaloisSubquotient}
   \lean{Iut.SourceIUTIIDefinition27PartII.cyclotomicRigidity_source}
   \lean{Iut.SourceIUTIIDefinition27PartII.narrowInverseImage_le_wide}
+  \lean{Iut.EtaleTheta.ThetaCenter}
+  \lean{Iut.EtaleTheta.thetaCenter_le_center}
+  \lean{Iut.EtaleTheta.thetaCenter_isMulCommutative}
+  \lean{Iut.EtaleTheta.LDeltaTheta}
+  \lean{Iut.EtaleTheta.lDeltaTheta_le_thetaCenter}
+  \lean{Iut.EtaleTheta.lDeltaTheta_le_center}
+  \lean{Iut.EtaleTheta.LDeltaThetaNumerator}
+  \lean{Iut.EtaleTheta.LDeltaThetaDenominator}
+  \lean{Iut.EtaleTheta.lDeltaThetaProjection_ker}
+  \lean{Iut.EtaleTheta.lDeltaThetaProjection_surjective}
+  \lean{Iut.EtaleTheta.lDeltaThetaSubquotientEquiv}
+  \lean{Iut.GlobalLTorsionCoverInput.standardGeometricLDeltaThetaSubquotient}
+  \lean{Iut.GlobalLTorsionCoverInput.standardGeometricLDeltaThetaMulEquiv}
+  \lean{Iut.GlobalLTorsionCoverInput.standardThetaRootArithmeticSubgroup_isOpen}
+  \lean{Iut.GlobalLTorsionCoverInput.standardThetaRootSubquotient}
+  \lean{Iut.GlobalLTorsionCoverInput.standardThetaRootContinuousMulEquiv}
+  \lean{Iut.GlobalLTorsionCoverInput.standardModLThetaCenterSubquotient}
+  \lean{Iut.GlobalLTorsionCoverInput.standardModLThetaCenterNumerator_eq_center_preimage}
+  \lean{Iut.GlobalLTorsionCoverInput.standardModLThetaCenterContinuousMulEquivCenterImage}
+  \lean{Iut.GlobalLTorsionCoverInput.standardThetaCenterImageEquiv}
+  \lean{Iut.GlobalLTorsionCoverInput.standardModLThetaCenterMulEquiv}
   \lean{Iut.ProfiniteFundamentalExactSequence.localGaloisSubquotient}
   \lean{Iut.ProfiniteFundamentalExactSequence.localGalois_denominator_eq_geometric_range_comap}
   \lean{Iut.ProfiniteFundamentalExactSequence.localGaloisContinuousMulEquiv}
@@ -298,10 +319,28 @@
   equivalence between these derived endpoints.  For the local orbicurve exact
   sequence, the full arithmetic group modulo the geometric image is now
   constructed and proved topologically equivalent to the stored local Galois
-  group.  Construction from tempered geometry, the \(\ell\Delta^\Theta\) and
-  restricted-tempered ambient subquotients, identification of the generic
-  Definition~2.7 local-Galois input with this quotient, the full reduction
-  morphisms, and the link to Corollary~2.8 remain source obligations.
+  group.  Lean now distinguishes the integral and finite theta directions.
+  The integral \(\Delta^\Theta\) is the kernel of the two-step-nilpotent
+  quotient to the elliptic abelianization; a lower-central commutator
+  calculation proves that this kernel is central and hence commutative.  The
+  subgroup \(\ell\Delta^\Theta\) is the literal range of the \(\ell\)-th-power
+  homomorphism on that center, and is consequently central and normal.  Pullback
+  through \(\Delta_X\to\Delta_X^\Theta\) gives a literal numerator and
+  lower-central denominator, and the first isomorphism theorem identifies the
+  resulting geometric subquotient with \(\ell\Delta^\Theta\).  Separately, the
+  profinite theta-root cover is the proved-open inverse image of the selected
+  Galois section in \(\Pi_X^{\mathrm{ell}}\).  The quotient
+  \[
+    \ker(\Pi_X\to\Pi_X^{\mathrm{ell}})/
+    \ker(\Pi_X\to\Pi_X^\Theta)
+  \]
+  is recorded under its correct name: the finite mod-\(\ell\) theta-center
+  residue.  It is identified topologically with the arithmetic exponent-\(\ell\)
+  theta-center kernel and is not conflated with the integral subgroup
+  \(\ell\Delta^\Theta\).  Transport of the latter into the arithmetic tempered
+  group, its Corollary~2.5 subgraph restriction, identification of all three
+  generic Definition~2.7 inputs, the full reduction morphisms, and the link to
+  Corollary~2.8 remain source obligations.
 \end{definition}
 
 \begin{definition}[Continuous theta-value germs and Gaussian monoids]

@@ -25,7 +25,9 @@ unrelated finite action.
 
 No constructor from initial theta data is provided here: constructing the
 tempered fundamental groups, Kummer extensions, and transition reductions is
-the remaining source obligation.
+the remaining source obligation.  The profinite standard-type realization does,
+however, construct its theta-root cover and theta-center subquotient below from
+the exact quotient diagrams of *Etale Theta*, Section 2.
 -/
 
 open CategoryTheory
@@ -208,6 +210,360 @@ def comap
       (Q.comapNumeratorHom f)
 
 end SourceTopologicalSubquotient
+
+namespace GlobalLTorsionCoverInput
+
+variable
+  {l : PrimeGeFive}
+  {F : Type u} [Field F]
+  {curve : PuncturedEllipticCurve F}
+  {orbicurves : SignQuotientOrbicurveData F curve}
+  (data : GlobalLTorsionCoverInput l orbicurves)
+
+/-- The composite arithmetic quotient `Pi_X -> Pi_X^ell` in *Etale Theta*,
+Section 2. -/
+def standardThetaToEllipticHom :
+    orbicurves.xFundamentalGroups.arithmetic.group →*
+      data.piEll :=
+  data.arithmeticElliptic.quotient.comp
+    data.arithmeticTheta.arithmeticQuotient
+
+/-- The arithmetic-to-elliptic quotient as a continuous homomorphism. -/
+def standardThetaToEllipticContinuousHom :
+    TopologicalGroupCat.ofProfinite
+        orbicurves.xFundamentalGroups.arithmetic.group ⟶
+      TopologicalGroupCat.ofProfinite data.piEll where
+  toMonoidHom := data.standardThetaToEllipticHom
+  continuous_toFun :=
+    data.arithmeticEllipticQuotientContinuous.comp
+      data.arithmeticThetaQuotientContinuous
+
+/-- The theta-root cover group is the inverse image of the selected Galois
+section in `Pi_X^ell`.  Thus it is derived from the theta-root splitting, rather
+than supplied as an unrelated subgroup. -/
+noncomputable def standardThetaRootArithmeticSubgroup :
+    Subgroup orbicurves.xFundamentalGroups.arithmetic.group :=
+  Subgroup.comap data.standardThetaToEllipticHom
+    data.thetaRoot.thetaRootSubgroup
+
+/-- The theta-root arithmetic subgroup is open. -/
+theorem standardThetaRootArithmeticSubgroup_isOpen :
+    IsOpen
+      ((data.standardThetaRootArithmeticSubgroup :
+          Subgroup orbicurves.xFundamentalGroups.arithmetic.group) :
+        Set orbicurves.xFundamentalGroups.arithmetic.group) := by
+  exact data.thetaRootSubgroup_isOpen.preimage
+    data.standardThetaToEllipticContinuousHom.continuous_toFun
+
+/-- The standard-type theta-root cover as a literal ambient subquotient with
+trivial denominator. -/
+noncomputable def standardThetaRootSubquotient :
+    SourceTopologicalSubquotient
+      (TopologicalGroupCat.ofProfinite
+        orbicurves.xFundamentalGroups.arithmetic.group) where
+  numerator := data.standardThetaRootArithmeticSubgroup
+  denominator := ⊥
+  denominator_normal := inferInstance
+
+/-- Quotienting the theta-root cover subgroup by the trivial denominator
+recovers that same topological group. -/
+noncomputable def standardThetaRootContinuousMulEquiv :
+    data.standardThetaRootSubquotient.Carrier ≃ₜ*
+      data.standardThetaRootArithmeticSubgroup := by
+  unfold SourceTopologicalSubquotient.Carrier
+  unfold standardThetaRootSubquotient
+  exact
+    { toMulEquiv := QuotientGroup.quotientBot
+      continuous_toFun := by
+        apply Continuous.quotient_lift
+        exact continuous_id
+      continuous_invFun := QuotientGroup.continuous_mk }
+
+/-- The actual integral `l * Delta^Theta` subquotient on the geometric
+fundamental group.  Both numerator and denominator are derived from the
+lower-central theta quotient, not from its finite exponent-`l` residue. -/
+def standardGeometricLDeltaThetaSubquotient
+    (_data : GlobalLTorsionCoverInput l orbicurves) :
+    SourceTopologicalSubquotient
+      (TopologicalGroupCat.ofProfinite
+        orbicurves.xFundamentalGroups.geometric.group) where
+  numerator :=
+    EtaleTheta.LDeltaThetaNumerator
+      orbicurves.xFundamentalGroups.geometric.group l.value
+  denominator :=
+    EtaleTheta.LDeltaThetaDenominator
+      orbicurves.xFundamentalGroups.geometric.group l.value
+  denominator_normal :=
+    EtaleTheta.lDeltaThetaDenominator_normal
+      orbicurves.xFundamentalGroups.geometric.group l.value
+
+/-- The literal geometric source subquotient is the integral
+`l * Delta^Theta` subgroup by the first isomorphism theorem. -/
+noncomputable def standardGeometricLDeltaThetaMulEquiv :
+    data.standardGeometricLDeltaThetaSubquotient.Carrier ≃*
+      EtaleTheta.LDeltaTheta
+        orbicurves.xFundamentalGroups.geometric.group l.value := by
+  unfold SourceTopologicalSubquotient.Carrier
+  unfold standardGeometricLDeltaThetaSubquotient
+  exact EtaleTheta.lDeltaThetaSubquotientEquiv
+    orbicurves.xFundamentalGroups.geometric.group l.value
+
+/-- The numerator of the finite mod-`l` theta-center residue: the kernel of
+the composite arithmetic-to-elliptic quotient. -/
+def standardModLThetaCenterNumerator :
+    Subgroup orbicurves.xFundamentalGroups.arithmetic.group :=
+  data.standardThetaToEllipticHom.ker
+
+/-- Its denominator is the arithmetic exponent-`l` theta-quotient kernel,
+restricted to the numerator. -/
+def standardModLThetaCenterDenominator :
+    Subgroup data.standardModLThetaCenterNumerator :=
+  Subgroup.comap
+    data.standardModLThetaCenterNumerator.subtype
+    data.arithmeticTheta.arithmeticQuotient.ker
+
+instance standardModLThetaCenterDenominator_normal :
+    data.standardModLThetaCenterDenominator.Normal := by
+  change
+    (Subgroup.comap
+      data.standardModLThetaCenterNumerator.subtype
+      data.arithmeticTheta.arithmeticQuotient.ker).Normal
+  infer_instance
+
+/-- The finite theta-center residue
+`ker(Pi_X -> Pi_X^ell) / ker(Pi_X -> Pi_X^Theta)`.  This quotient is not the
+integral subgroup `l * Delta^Theta` constructed above. -/
+def standardModLThetaCenterSubquotient :
+    SourceTopologicalSubquotient
+      (TopologicalGroupCat.ofProfinite
+        orbicurves.xFundamentalGroups.arithmetic.group) where
+  numerator := data.standardModLThetaCenterNumerator
+  denominator := data.standardModLThetaCenterDenominator
+  denominator_normal :=
+    data.standardModLThetaCenterDenominator_normal
+
+/-- The numerator is exactly the inverse image of the embedded geometric theta
+center. This is the theta-center kernel equation expressed back in the original
+arithmetic group. -/
+theorem standardModLThetaCenterNumerator_eq_center_preimage :
+    data.standardModLThetaCenterNumerator =
+      Subgroup.comap
+        data.arithmeticTheta.arithmeticQuotient
+        ((EtaleTheta.ModLThetaCenter
+            orbicurves.xFundamentalGroups.geometric.group l.value).map
+          data.arithmeticTheta.quotientExact.inclusion) := by
+  ext source
+  change
+    data.arithmeticElliptic.quotient
+        (data.arithmeticTheta.arithmeticQuotient source) = 1 ↔
+      data.arithmeticTheta.arithmeticQuotient source ∈
+        (EtaleTheta.ModLThetaCenter
+            orbicurves.xFundamentalGroups.geometric.group l.value).map
+          data.arithmeticTheta.quotientExact.inclusion
+  rw [← data.arithmeticElliptic.thetaCenter_kernel]
+  exact MonoidHom.mem_ker
+
+/-- The numerator maps onto the theta-center image, i.e. the kernel of
+`Pi_X^Theta -> Pi_X^ell`. -/
+def standardModLThetaCenterProjection :
+    data.standardModLThetaCenterNumerator →*
+      data.arithmeticElliptic.quotient.ker where
+  toFun source :=
+    ⟨data.arithmeticTheta.arithmeticQuotient source.1, source.2⟩
+  map_one' := by
+    apply Subtype.ext
+    exact map_one data.arithmeticTheta.arithmeticQuotient
+  map_mul' first second := by
+    apply Subtype.ext
+    exact map_mul data.arithmeticTheta.arithmeticQuotient first.1 second.1
+
+@[simp]
+theorem standardModLThetaCenterProjection_apply
+    (source : data.standardModLThetaCenterNumerator) :
+    (data.standardModLThetaCenterProjection source).1 =
+      data.arithmeticTheta.arithmeticQuotient source.1 :=
+  rfl
+
+/-- Its kernel is exactly the denominator of the source subquotient. -/
+theorem standardModLThetaCenterProjection_ker :
+    data.standardModLThetaCenterProjection.ker =
+      data.standardModLThetaCenterDenominator := by
+  ext source
+  simp only [MonoidHom.mem_ker]
+  change
+    data.standardModLThetaCenterProjection source = 1 ↔
+      data.arithmeticTheta.arithmeticQuotient source.1 = 1
+  exact Subtype.ext_iff
+
+/-- Surjectivity follows from surjectivity of the arithmetic theta quotient. -/
+theorem standardModLThetaCenterProjection_surjective :
+    Function.Surjective data.standardModLThetaCenterProjection := by
+  intro target
+  obtain ⟨source, hsource⟩ :=
+    data.arithmeticTheta.arithmeticQuotient_surjective target.1
+  refine ⟨⟨source, ?_⟩, ?_⟩
+  · change
+      data.arithmeticElliptic.quotient
+          (data.arithmeticTheta.arithmeticQuotient source) = 1
+    rw [hsource]
+    exact target.2
+  · apply Subtype.ext
+    exact hsource
+
+/-- The quotient map from the numerator to the theta-center image is continuous. -/
+theorem continuous_standardModLThetaCenterProjection :
+    Continuous data.standardModLThetaCenterProjection := by
+  apply Continuous.subtype_mk
+  exact data.arithmeticThetaQuotientContinuous.comp
+    continuous_subtype_val
+
+/-- The theta-center numerator is closed in the profinite arithmetic group. -/
+theorem standardModLThetaCenterNumerator_isClosed :
+    IsClosed
+      ((data.standardModLThetaCenterNumerator :
+          Subgroup orbicurves.xFundamentalGroups.arithmetic.group) :
+        Set orbicurves.xFundamentalGroups.arithmetic.group) := by
+  change IsClosed
+    { source |
+      data.standardThetaToEllipticHom source = 1 }
+  exact isClosed_singleton.preimage
+    data.standardThetaToEllipticContinuousHom.continuous_toFun
+
+/-- The closed theta-center numerator is compact. -/
+noncomputable instance standardModLThetaCenterNumeratorCompactSpace :
+    CompactSpace data.standardModLThetaCenterNumerator :=
+  data.standardModLThetaCenterNumerator_isClosed
+    |>.isClosedEmbedding_subtypeVal.compactSpace
+
+/-- Its quotient by the arithmetic theta kernel is compact. -/
+noncomputable instance standardModLThetaCenterSubquotientCompactSpace :
+    CompactSpace data.standardModLThetaCenterSubquotient.Carrier := by
+  letI : CompactSpace data.standardModLThetaCenterSubquotient.numerator := by
+    change CompactSpace data.standardModLThetaCenterNumerator
+    infer_instance
+  exact Quotient.compactSpace
+
+/-- The first isomorphism theorem identifies the literal subquotient with the
+theta-center image in the arithmetic theta quotient. -/
+noncomputable def standardModLThetaCenterMulEquivCenterImage :
+    data.standardModLThetaCenterSubquotient.Carrier ≃*
+      data.arithmeticElliptic.quotient.ker := by
+  unfold SourceTopologicalSubquotient.Carrier
+  unfold standardModLThetaCenterSubquotient
+  change
+    data.standardModLThetaCenterNumerator ⧸
+        data.standardModLThetaCenterDenominator ≃*
+      data.arithmeticElliptic.quotient.ker
+  exact
+    (QuotientGroup.quotientMulEquivOfEq
+      data.standardModLThetaCenterProjection_ker.symm).trans
+        (QuotientGroup.quotientKerEquivOfSurjective
+          data.standardModLThetaCenterProjection
+          data.standardModLThetaCenterProjection_surjective)
+
+/-- Continuity of the first-isomorphism-theorem map follows by testing it on
+the quotient projection. -/
+theorem continuous_standardModLThetaCenterMulEquivCenterImage :
+    Continuous data.standardModLThetaCenterMulEquivCenterImage := by
+  apply
+    (QuotientGroup.isQuotientMap_mk
+      data.standardModLThetaCenterSubquotient.denominator).continuous_iff.mpr
+  change Continuous
+    (data.standardModLThetaCenterMulEquivCenterImage ∘
+      QuotientGroup.mk)
+  convert data.continuous_standardModLThetaCenterProjection using 1
+
+/-- The first-isomorphism-theorem identification is an equivalence of
+topological groups. -/
+noncomputable def standardModLThetaCenterContinuousMulEquivCenterImage :
+    data.standardModLThetaCenterSubquotient.Carrier ≃ₜ*
+      data.arithmeticElliptic.quotient.ker where
+  toMulEquiv := data.standardModLThetaCenterMulEquivCenterImage
+  continuous_toFun :=
+    data.continuous_standardModLThetaCenterMulEquivCenterImage
+  continuous_invFun :=
+    Continuous.continuous_symm_of_equiv_compact_to_t2
+      data.continuous_standardModLThetaCenterMulEquivCenterImage
+
+@[simp]
+theorem standardModLThetaCenterContinuousMulEquivCenterImage_projection
+    (source : data.standardModLThetaCenterSubquotient.numerator) :
+    data.standardModLThetaCenterContinuousMulEquivCenterImage
+        (data.standardModLThetaCenterSubquotient.projection source) =
+      data.standardModLThetaCenterProjection source :=
+  rfl
+
+/-- The embedded geometric theta center maps into the arithmetic theta-center
+kernel. -/
+def standardThetaCenterImageHom :
+    EtaleTheta.ModLThetaCenter
+        orbicurves.xFundamentalGroups.geometric.group l.value →*
+      data.arithmeticElliptic.quotient.ker where
+  toFun center := by
+    refine
+      ⟨data.arithmeticTheta.quotientExact.inclusion center.1, ?_⟩
+    have hsquare :
+        data.arithmeticElliptic.exact.inclusion
+            (EtaleTheta.modLThetaToElliptic
+              orbicurves.xFundamentalGroups.geometric.group
+              l.value center.1) =
+          data.arithmeticElliptic.quotient
+            (data.arithmeticTheta.quotientExact.inclusion center.1) :=
+      DFunLike.congr_fun
+        data.arithmeticElliptic.geometric_square center.1
+    change
+      data.arithmeticElliptic.quotient
+          (data.arithmeticTheta.quotientExact.inclusion center.1) = 1
+    rw [← hsquare, center.2]
+    exact map_one data.arithmeticElliptic.exact.inclusion
+  map_one' := by
+    apply Subtype.ext
+    exact map_one data.arithmeticTheta.quotientExact.inclusion
+  map_mul' first second := by
+    apply Subtype.ext
+    exact map_mul data.arithmeticTheta.quotientExact.inclusion first.1 second.1
+
+/-- The geometric theta center embeds bijectively onto the arithmetic
+theta-center kernel. -/
+theorem standardThetaCenterImageHom_bijective :
+    Function.Bijective data.standardThetaCenterImageHom := by
+  constructor
+  · intro first second heq
+    apply Subtype.ext
+    apply data.arithmeticTheta.quotientExact.inclusion_injective
+    exact congrArg Subtype.val heq
+  · intro target
+    have target_mem :
+        target.1 ∈
+          (EtaleTheta.ModLThetaCenter
+              orbicurves.xFundamentalGroups.geometric.group l.value).map
+            data.arithmeticTheta.quotientExact.inclusion := by
+      rw [← data.arithmeticElliptic.thetaCenter_kernel]
+      exact target.2
+    obtain ⟨center, center_mem, hcenter⟩ := target_mem
+    refine ⟨⟨center, center_mem⟩, ?_⟩
+    apply Subtype.ext
+    exact hcenter
+
+/-- The center-image kernel is the actual finite geometric theta center of the
+exponent-`l` quotient, not merely an isomorphic cyclic group. -/
+noncomputable def standardThetaCenterImageEquiv :
+    EtaleTheta.ModLThetaCenter
+        orbicurves.xFundamentalGroups.geometric.group l.value ≃*
+      data.arithmeticElliptic.quotient.ker :=
+  MulEquiv.ofBijective data.standardThetaCenterImageHom
+    data.standardThetaCenterImageHom_bijective
+
+/-- Combining both exact identifications gives the source subquotient's
+canonical algebraic equivalence with the derived geometric theta center. -/
+noncomputable def standardModLThetaCenterMulEquiv :
+    data.standardModLThetaCenterSubquotient.Carrier ≃*
+      EtaleTheta.ModLThetaCenter
+        orbicurves.xFundamentalGroups.geometric.group l.value :=
+  data.standardModLThetaCenterMulEquivCenterImage.trans
+    data.standardThetaCenterImageEquiv.symm
+
+end GlobalLTorsionCoverInput
 
 /-- Continuous automorphisms of a topological group. -/
 abbrev ContinuousAutomorphism (G : TopologicalGroupCat.{u}) :=

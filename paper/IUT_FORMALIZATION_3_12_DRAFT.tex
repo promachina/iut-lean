@@ -123,6 +123,27 @@ implemented as \(f^{-1}(U)/f^{-1}(N)\): the exterior cyclotome comes from the
 exact kernel in part (i), while the other three narrow-level objects are
 pullbacks of ambient subquotients.  Cyclotomic rigidity is represented by a
 continuous group equivalence between the derived endpoints.  Independently,
+Lean now distinguishes the integral theta direction from its finite residue.
+The integral \(\Delta^\Theta\) is the kernel of the two-step-nilpotent quotient
+to the elliptic abelianization; a lower-central commutator calculation proves
+that this kernel is central and hence commutative.  The subgroup
+\(\ell\Delta^\Theta\) is the literal range of the \(\ell\)-th-power
+homomorphism on this center, and is consequently central and normal.  Pullback through
+\(\Delta_X\to\Delta_X^\Theta\) constructs its literal numerator and
+lower-central denominator, and the first isomorphism theorem identifies the
+resulting geometric subquotient with \(\ell\Delta^\Theta\).  Separately, the
+profinite standard-type realization constructs the theta-root cover as the
+proved-open inverse image of the selected Galois section in
+\(\Pi_X^{\mathrm{ell}}\).  The quotient
+\[
+ \ker(\Pi_X\longrightarrow\Pi_X^{\mathrm{ell}})/
+ \ker(\Pi_X\longrightarrow\Pi_X^\Theta).
+\]
+is recorded under its correct name: the finite mod-\(\ell\) theta-center
+residue.  Its numerator is the inverse image of the embedded finite geometric
+theta center, and it is identified topologically with the arithmetic
+exponent-\(\ell\) theta-center kernel.  It is not used as a replacement for
+the integral subgroup \(\ell\Delta^\Theta\).  Independently,
 every local orbicurve exact sequence now constructs the quotient of its full
 arithmetic fundamental group by the geometric image; exactness and the first
 isomorphism theorem identify this quotient topologically with its local Galois
@@ -142,11 +163,13 @@ constant/theta multiplication map are also constructed; if every zero-label
 theta value is torsion, this map is proved bijective.  Given a zero-to-base
 action-pair comparison, the zero-labeled constant monoid is also proved
 multiplicatively equivalent to its actual diagonal range, compatibly with the
-transported labeled actions.  Construction of the
-precise restricted-tempered and \(\ell\Delta^\Theta\) subquotients, their comparison with
-the constructed local-Galois quotient, the remaining homomorphisms, actions,
-input theta orbits, and independent conjugacy compatibility, together with the
-paper-specific splitting compatibility, remains open.
+transported labeled actions.  Transport of the integral geometric
+\(\ell\Delta^\Theta\) subquotient into the arithmetic tempered group,
+construction of its Corollary~2.5 subgraph restriction and the corresponding
+theta-root restriction, their comparison with the constructed local-Galois
+quotient, the remaining homomorphisms, actions, input theta orbits, and
+independent conjugacy compatibility, together with the paper-specific
+splitting compatibility, remains open.
 
 For IUT~II, Corollary~3.5, multiplication by
 \((\mathbb Z/l\mathbb Z)^\times\) has been descended through the sign-label
@@ -246,7 +269,8 @@ cyclotomic coefficient action back across this equivalence, constructs the
 induced continuous-\(H^1\) restriction, proves the monoid and unit Kummer
 restriction squares commute, and proves injectivity of the canonical unit
 Kummer map on the quotient.  Constructing the restricted-tempered mono-theta
-map to this endpoint remains an explicit source obligation.
+map to this endpoint remains an explicit source obligation; the profinite
+theta-root cover constructed above is not identified with that tempered map.
 The canonical
 \(C_\Theta\)-scale equality is derived from the q-normalized theta/log-volume
 identity plus q-pilot positivity.  Conversely, the checked p-adic finite,
