@@ -267,6 +267,11 @@
   \lean{Iut.SourceTopologicalSubquotient}
   \lean{Iut.SourceTopologicalSubquotient.projection}
   \lean{Iut.SourceTopologicalSubquotient.comap}
+  \lean{Iut.SourceTopologicalSubquotient.comapToOriginal_injective}
+  \lean{Iut.SourceTopologicalSubquotient.comapToOriginal_surjective_of_cuspidalInertia}
+  \lean{Iut.SourceIUTIICorollary25CuspidalRestriction}
+  \lean{Iut.SourceIUTIICorollary25CuspidalRestriction.restrictionMulEquiv}
+  \lean{Iut.SourceIUTIICorollary25CuspidalRestriction.restrictionContinuousMulEquiv}
   \lean{Iut.SourceIUTIIDefinition27PartII}
   \lean{Iut.SourceIUTIIDefinition27PartII.exteriorCyclotomeSubquotient}
   \lean{Iut.SourceIUTIIDefinition27PartII.lDeltaThetaSubquotient}
@@ -287,6 +292,9 @@
   \lean{Iut.EtaleTheta.lDeltaThetaSubquotientEquiv}
   \lean{Iut.GlobalLTorsionCoverInput.standardGeometricLDeltaThetaSubquotient}
   \lean{Iut.GlobalLTorsionCoverInput.standardGeometricLDeltaThetaMulEquiv}
+  \lean{Iut.GlobalLTorsionCoverInput.standardArithmeticLDeltaThetaSubquotient}
+  \lean{Iut.GlobalLTorsionCoverInput.standardGeometricToArithmeticLDeltaThetaMulEquiv}
+  \lean{Iut.GlobalLTorsionCoverInput.standardArithmeticLDeltaThetaMulEquiv}
   \lean{Iut.GlobalLTorsionCoverInput.standardThetaRootArithmeticSubgroup_isOpen}
   \lean{Iut.GlobalLTorsionCoverInput.standardThetaRootSubquotient}
   \lean{Iut.GlobalLTorsionCoverInput.standardThetaRootContinuousMulEquiv}
@@ -327,7 +335,14 @@
   homomorphism on that center, and is consequently central and normal.  Pullback
   through \(\Delta_X\to\Delta_X^\Theta\) gives a literal numerator and
   lower-central denominator, and the first isomorphism theorem identifies the
-  resulting geometric subquotient with \(\ell\Delta^\Theta\).  Separately, the
+  resulting geometric subquotient with \(\ell\Delta^\Theta\).  Its numerator
+  and denominator are transported through the injective geometric-to-arithmetic
+  profinite map, giving an actual arithmetic-image subquotient and a derived
+  equivalence with the geometric coefficient group.  For a subgraph inclusion,
+  the canonical map from the pulled-back quotient is proved injective; the two
+  cusp-inertia facts cited in IUT~II, Corollary~2.5(i), derive its surjectivity
+  and hence its algebraic and topological isomorphisms.  The isomorphism itself
+  is not stored as an input.  Separately, the
   profinite theta-root cover is the proved-open inverse image of the selected
   Galois section in \(\Pi_X^{\mathrm{ell}}\).  The quotient
   \[
@@ -337,10 +352,11 @@
   is recorded under its correct name: the finite mod-\(\ell\) theta-center
   residue.  It is identified topologically with the arithmetic exponent-\(\ell\)
   theta-center kernel and is not conflated with the integral subgroup
-  \(\ell\Delta^\Theta\).  Transport of the latter into the arithmetic tempered
-  group, its Corollary~2.5 subgraph restriction, identification of all three
-  generic Definition~2.7 inputs, the full reduction morphisms, and the link to
-  Corollary~2.8 remain source obligations.
+  \(\ell\Delta^\Theta\).  Construction of the arithmetic tempered group and
+  subgraph inclusion, derivation of the two cusp-inertia facts from the
+  stable-reduction semi-graph and IUT~I, Corollary~2.5, identification of all
+  three generic Definition~2.7 inputs, the full reduction morphisms, and the
+  link to Corollary~2.8 remain source obligations.
 \end{definition}
 
 \begin{definition}[Continuous theta-value germs and Gaussian monoids]

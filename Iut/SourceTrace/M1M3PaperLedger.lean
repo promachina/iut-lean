@@ -926,6 +926,9 @@ def m1m3PaperLedger : List PaperClause :=
         "EtaleTheta.lDeltaThetaSubquotientEquiv",
         "GlobalLTorsionCoverInput.standardGeometricLDeltaThetaSubquotient",
         "GlobalLTorsionCoverInput.standardGeometricLDeltaThetaMulEquiv",
+        "GlobalLTorsionCoverInput.standardArithmeticLDeltaThetaSubquotient",
+        "GlobalLTorsionCoverInput.standardGeometricToArithmeticLDeltaThetaMulEquiv",
+        "GlobalLTorsionCoverInput.standardArithmeticLDeltaThetaMulEquiv",
         "GlobalLTorsionCoverInput.standardThetaRootArithmeticSubgroup",
         "GlobalLTorsionCoverInput.standardThetaRootArithmeticSubgroup_isOpen",
         "GlobalLTorsionCoverInput.standardThetaRootSubquotient",
@@ -937,7 +940,7 @@ def m1m3PaperLedger : List PaperClause :=
         "GlobalLTorsionCoverInput.standardModLThetaCenterMulEquiv",
         "SourceIUTIIThetaEvaluationOrbits",
         "SourceIUTIIInfiniteThetaRelation"] .partialImplementation
-      "The integral theta direction is now the kernel of the two-step-nilpotent quotient to the elliptic abelianization, and a lower-central commutator calculation proves that this kernel is central and hence commutative. Its l-multiple subgroup is the literal range of the l-th-power homomorphism on that center and is consequently central and normal. Pullback through Delta_X -> Delta_X^Theta constructs a literal numerator and lower-central denominator; the kernel and surjectivity theorems give a first-isomorphism equivalence with lDelta^Theta. The profinite standard-type realization exposes this exact geometric subquotient. Its theta-root cover is separately the proved-open inverse image of the selected Galois section in Pi_X^ell. Lean also distinguishes the finite mod-l theta-center residue ker(Pi_X -> Pi_X^ell)/ker(Pi_X -> Pi_X^Theta), identifying it topologically with the finite arithmetic theta-center kernel. Theta and infinite-theta values inhabit actual continuous H1 germs and retain their root-of-unity orbits. Transporting the integral geometric subquotient into the arithmetic tempered group, restricting it along Corollary 2.5, and constructing the standard-type class, l-th root, l*Z-by-mu2 orbit, and exact power-up-to-torsion relation remain open.",
+      "The integral theta direction is now the kernel of the two-step-nilpotent quotient to the elliptic abelianization, and a lower-central commutator calculation proves that this kernel is central and hence commutative. Its l-multiple subgroup is the literal range of the l-th-power homomorphism on that center and is consequently central and normal. Pullback through Delta_X -> Delta_X^Theta constructs a literal numerator and lower-central denominator; the kernel and surjectivity theorems give a first-isomorphism equivalence with lDelta^Theta. The standard-type realization exposes this exact geometric subquotient and transports its numerator and denominator through the injective geometric-to-arithmetic profinite map, deriving an arithmetic-image quotient equivalent to the geometric coefficient group. Its theta-root cover is separately the proved-open inverse image of the selected Galois section in Pi_X^ell. Lean also distinguishes the finite mod-l theta-center residue ker(Pi_X -> Pi_X^ell)/ker(Pi_X -> Pi_X^Theta), identifying it topologically with the finite arithmetic theta-center kernel. Theta and infinite-theta values inhabit actual continuous H1 germs and retain their root-of-unity orbits. Constructing the tempered realization of the arithmetic-image subquotient, the stable-reduction cusp-inertia inputs, and the standard-type class, l-th root, l*Z-by-mu2 orbit, and exact power-up-to-torsion relation remain open.",
     clause "II.1.5(i-iv)" .iutII "IUT II, Proposition 1.5(i)-(iv)"
       ["SourceMonoThetaProjectiveSystem",
         "SourceMonoThetaProjectiveSystem.inverseLimit",
@@ -955,6 +958,18 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceIUTIICorollary112PointedRestriction.splittingUpToTorsion"]
       .partialImplementation
       "A pointed inversion is an actual continuous automorphism of outer order two relative to the geometric subgroup and preserves the geometric-conjugacy class of an actual decomposition subgroup. Restriction is induced on continuous H1; the equality M_TM^x intersect res^-1(torsion)=M_TM^mu derives torsion detection and the splitting. The group-theoretic construction of pointed inversions, proof of this equality by standard-type theta evaluation, invariant subsets, and vertical cyclotomic-rigidity diagram remain open.",
+    clause "II.2.5(i)" .iutII "IUT II, Corollary 2.5(i)"
+      ["SourceTopologicalSubquotient.comapToOriginal",
+        "SourceTopologicalSubquotient.comapToOriginal_injective",
+        "SourceTopologicalSubquotient.comapToOriginal_surjective_of_cuspidalInertia",
+        "SourceTopologicalSubquotient.comapMulEquivOfCuspidalInertia",
+        "SourceTopologicalSubquotient.comapContinuousMulEquivOfCuspidalInertia",
+        "SourceIUTIICorollary25CuspidalRestriction",
+        "SourceIUTIICorollary25CuspidalRestriction.restriction_surjective",
+        "SourceIUTIICorollary25CuspidalRestriction.restrictionMulEquiv",
+        "SourceIUTIICorollary25CuspidalRestriction.restrictionContinuousMulEquiv"]
+      .partialImplementation
+      "For any ambient topological subquotient U/N and subgraph inclusion, Lean constructs the canonical map from f^-1(U)/f^-1(N), proves it injective from the pullback denominator, and derives surjectivity and the algebraic isomorphism from the two cusp-inertia facts cited in the paper: ambient cusp inertia generates U/N and subgraph cusp inertia maps onto it. Compactness and Hausdorffness upgrade this to a topological group equivalence. The isomorphism is therefore a theorem, not stored input. Constructing the tempered fundamental groups and proving the two cusp-inertia facts from the stable-reduction semi-graph and IUT I, Corollary 2.5, remain open; parts (ii)-(iii) are not claimed.",
     clause "II.2.7(i)" .iutII "IUT II, Definition 2.7(i)"
       ["MonoThetaModulus", "SourceMonoThetaProjectiveSystem",
         "SourceMonoThetaProjectiveSystem.inverseLimit",
@@ -967,6 +982,8 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceTopologicalSubquotient.Carrier",
         "SourceTopologicalSubquotient.projection",
         "SourceTopologicalSubquotient.comap",
+        "SourceTopologicalSubquotient.comapToOriginal",
+        "SourceTopologicalSubquotient.comapToOriginal_injective",
         "SourceIUTIIDefinition27PartI.inverseImage",
         "SourceIUTIIDefinition27PartI.exteriorCyclotomeRestriction",
         "SourceIUTIIDefinition27PartI.restrictAmbientSubquotient",
@@ -986,6 +1003,9 @@ def m1m3PaperLedger : List PaperClause :=
         "EtaleTheta.lDeltaThetaSubquotientEquiv",
         "GlobalLTorsionCoverInput.standardGeometricLDeltaThetaSubquotient",
         "GlobalLTorsionCoverInput.standardGeometricLDeltaThetaMulEquiv",
+        "GlobalLTorsionCoverInput.standardArithmeticLDeltaThetaSubquotient",
+        "GlobalLTorsionCoverInput.standardGeometricToArithmeticLDeltaThetaMulEquiv",
+        "GlobalLTorsionCoverInput.standardArithmeticLDeltaThetaMulEquiv",
         "GlobalLTorsionCoverInput.standardThetaRootSubquotient",
         "GlobalLTorsionCoverInput.standardModLThetaCenterSubquotient",
         "GlobalLTorsionCoverInput.standardModLThetaCenterNumerator_eq_center_preimage",
@@ -997,7 +1017,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceThetaFiniteLocalCoreData.xLocalGaloisSubquotient",
         "SourceThetaFiniteLocalCoreData.xLocalGaloisContinuousMulEquiv"]
       .partialImplementation
-      "The nested groups are actual inverse images under the Definition 2.7(i) ambient homomorphism. Pullback of a topological subquotient is implemented as f^-1(U)/f^-1(N). The exterior cyclotome is restricted from the exact kernel in part (i), while the other three narrow-level subquotients are derived by pulling back ambient subquotients; rigidity is a continuous group equivalence between the derived endpoints. At the standard-type geometric endpoint, Lean proves that the lower-central theta kernel is central and commutative, defines integral lDelta^Theta as the literal range of its l-th-power homomorphism, proves it central and normal, pulls it back to an exact subquotient of Delta_X, and proves the resulting first-isomorphism equivalence. The theta-root cover is an open profinite inverse image. The distinct finite mod-l theta-center residue is identified topologically with the arithmetic exponent-l theta-center kernel. For every local orbicurve exact sequence, Lean constructs the local Galois quotient of the full arithmetic group, proves its denominator is the geometric image by exactness, and upgrades the first-isomorphism-theorem map to a topological group equivalence with G_v. Transporting integral lDelta^Theta from the geometric group into the arithmetic tempered group, constructing the Corollary 2.5 subgraph restriction, identifying all three generic Definition 2.7 inputs, and proving that rigidity is the restriction of Proposition 1.5(iii), remain open.",
+      "The nested groups are actual inverse images under the Definition 2.7(i) ambient homomorphism. Pullback of a topological subquotient is implemented as f^-1(U)/f^-1(N). The exterior cyclotome is restricted from the exact kernel in part (i), while the other three narrow-level subquotients are derived by pulling back ambient subquotients; rigidity is a continuous group equivalence between the derived endpoints. At the standard-type geometric endpoint, Lean proves that the lower-central theta kernel is central and commutative, defines integral lDelta^Theta as the literal range of its l-th-power homomorphism, proves it central and normal, pulls it back to an exact subquotient of Delta_X, and proves the resulting first-isomorphism equivalence. Its numerator and denominator are transported through the injective map Delta_X -> Pi_X, yielding an actual arithmetic profinite image subquotient and a derived equivalence with the geometric coefficient group. Corollary 2.5 restriction is proved abstractly from its exact cusp-inertia hypotheses. The theta-root cover is an open profinite inverse image. The distinct finite mod-l theta-center residue is identified topologically with the arithmetic exponent-l theta-center kernel. For every local orbicurve exact sequence, Lean constructs the local Galois quotient of the full arithmetic group, proves its denominator is the geometric image by exactness, and upgrades the first-isomorphism-theorem map to a topological group equivalence with G_v. Constructing the tempered fundamental group and subgraph inclusion, deriving the cusp-inertia hypotheses from stable reduction, identifying all three generic Definition 2.7 inputs, and proving that rigidity is the restriction of Proposition 1.5(iii), remain open.",
     clause "II.2.8(i)" .iutII "IUT II, Corollary 2.8(i)"
       ["ContinuousGroupAction", "ContinuousOneCocycle",
         "ContinuousH1", "ContinuousH1.restrict",
@@ -2098,8 +2118,8 @@ def clauseIdsWithStatus (status : ClauseStatus) : List String :=
   m1m3PaperLedger.filterMap fun entry =>
     if entry.status = status then some entry.id else none
 
-/-- The source-closure ledger contains 114 separately audited clauses. -/
-theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 114 :=
+/-- The source-closure ledger contains 115 separately audited clauses. -/
+theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 115 :=
   rfl
 
 /-- No source clause occurs twice in the direct-citation ledger. -/
@@ -2107,9 +2127,9 @@ theorem m1m3PaperLedger_ids_nodup :
     (m1m3PaperLedger.map PaperClause.id).Nodup := by
   decide
 
-/-- Eighty-nine clauses currently have a genuine but incomplete implementation. -/
+/-- Ninety clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 89 :=
+    (clauseIdsWithStatus .partialImplementation).length = 90 :=
   rfl
 
 /-- Four clauses currently point only to explicitly classified toy models. -/

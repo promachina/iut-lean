@@ -402,6 +402,23 @@ visible to Lean's axiom reporter.
 #print axioms
   Iut.GlobalLTorsionCoverInput.standardGeometricLDeltaThetaMulEquiv
 #print axioms
+  Iut.GlobalLTorsionCoverInput.standardArithmeticLDeltaThetaDenominator_normal
+#print axioms
+  Iut.GlobalLTorsionCoverInput.standardGeometricToArithmeticLDeltaThetaMulEquiv
+#print axioms
+  Iut.GlobalLTorsionCoverInput.standardArithmeticLDeltaThetaMulEquiv
+#print axioms
+  Iut.GlobalLTorsionCoverInput.standardGeometricToArithmeticLDeltaThetaMulEquiv_projection
+#print axioms Iut.SourceTopologicalSubquotient.comapToOriginal_injective
+#print axioms
+  Iut.SourceTopologicalSubquotient.comapToOriginal_surjective_of_cuspidalInertia
+#print axioms
+  Iut.SourceIUTIICorollary25CuspidalRestriction.restriction_surjective
+#print axioms
+  Iut.SourceIUTIICorollary25CuspidalRestriction.restrictionMulEquiv
+#print axioms
+  Iut.SourceIUTIICorollary25CuspidalRestriction.restrictionMulEquiv_projection
+#print axioms
   Iut.GlobalLTorsionCoverInput.standardThetaRootArithmeticSubgroup_isOpen
 #print axioms
   Iut.GlobalLTorsionCoverInput.standardThetaRootContinuousMulEquiv
