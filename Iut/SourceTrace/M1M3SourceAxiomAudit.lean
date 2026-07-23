@@ -22,6 +22,7 @@ import Iut.Foundations.SourceAnabelioidSlice
 import Iut.Foundations.SourceAnabelioidComponents
 import Iut.Foundations.SourceAnabelioidEquivalence
 import Iut.Foundations.SourceConnectedAnabelioidSlice
+import Iut.Foundations.SourceConnectedFiniteEtaleConverse
 import Iut.Foundations.SourceSemiGraphOfAnabelioids
 
 open Iut
@@ -481,6 +482,16 @@ visible to Lean's axiom reporter.
   Iut.SourceFiniteEtaleFunctorFactorization.connectedObjectCosetActionIso
 #print axioms
   Iut.SourceFiniteEtaleFunctorFactorization.connectedSourcePullbackIsoRestriction
+#print axioms
+  Iut.SourceEquivalenceBasepoint.etaleFundamentalGroup
+#print axioms
+  Iut.SourceFiniteEtaleFunctorFactorization.connectedPointedHom_fundamentalGroupHom_eq
+#print axioms
+  Iut.SourceFiniteEtaleFunctorFactorization.connectedObjectProfiniteInclusion_isOpenEmbedding
+#print axioms
+  Iut.SourceFiniteEtaleFunctorFactorization.connectedFiniteEtaleHom
+#print axioms
+  Iut.SourceFiniteEtaleFunctorFactorization.connectedFiniteEtaleHom_fundamentalGroupHom_eq
 #print axioms
   Iut.SourcePointedSemiGraphOfAnabelioids.vertexFundamentalGroupImageEquiv
 #print axioms

@@ -216,9 +216,15 @@ If a Definition~1.2.2 factorization has connected Galois source, its slicing
 action is proved nonempty and transitive.  Lean recovers the open stabilizer
 $H$, constructs the isomorphism with $G/H$ and the source equivalence with
 $\mathcal B(H)$, and proves that the original pullback becomes restriction
-along $H\leq G$.  Constructing the noncanonical comparison between arbitrary
-fiber functors and identifying the original pointed fundamental-group map
-with the open inclusion up to inner conjugacy remain open.
+along $H\leq G$.  Lean then makes the ``appropriate basepoints'' choice of
+Remark~1.2.2.1 by transporting the canonical fiber functor of
+$\mathcal B(H)$ back across the source equivalence and certifying $H$ as its
+fundamental group.  With this basepoint, the original pullback becomes an
+exact pointed morphism whose derived profinite-group map is literally the
+open inclusion $H\hookrightarrow G$, and is packaged as a connected
+finite-etale morphism.  The comparison of arbitrary fiber functors belongs to
+the broader Proposition~1.1.4 generality and is not required for this
+chosen-basepoint converse.
 Each constituent anabelioid is now an actual Galois category with a chosen
 fiber functor and certified profinite fundamental group.  Its branch and constituent-to-total morphisms are exact
 contravariant functors.  Categorical $2$-isomorphisms derive the conjugating

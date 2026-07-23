@@ -475,10 +475,16 @@
   isomorphic to $G/H$, the source is equivalent to $\mathcal B(H)$, and the
   original pullback becomes restriction along $H\leq G$.  For a pointed exact
   equivalence, the quasi-inverse and both triangle $2$-isomorphisms also derive
-  a continuous profinite-group equivalence.  It remains to construct the
-  noncanonical comparison between arbitrary fiber functors and identify the
-  original pointed fundamental-group map with the open inclusion up to inner
-  conjugacy.
+  a continuous profinite-group equivalence.  Lean now also makes the
+  ``appropriate basepoints'' choice of Remark~1.2.2.1: it transports the
+  canonical fiber functor of $\mathcal B(H)$ back across the source
+  equivalence and certifies $H$ as its fundamental group.  With this basepoint,
+  the original pullback is an exact pointed morphism whose derived
+  profinite-group map is literally the inclusion $H\hookrightarrow G$.  This
+  inclusion is proved to be an open embedding, yielding the connected
+  finite-etale morphism asserted by the remark.  Comparison of arbitrary
+  fiber functors remains in the broader Proposition~1.1.4 work and is not used
+  for this chosen-basepoint converse.
   \lean{Iut.sourceDependentSection_continuous}
   \lean{Iut.sourceSliceDependentSectionHomEquiv}
   \lean{Iut.sourceSliceProductAdjDependentSection}
@@ -488,6 +494,10 @@
   \lean{Iut.sourceSliceAnabelioidEquivalence}
   \lean{Iut.sourceActionComponentEtaleFundamentalGroup}
   \lean{Iut.SourcePointedAnabelioidEquivalence.fundamentalGroupHom_bijective}
+  \lean{Iut.SourceEquivalenceBasepoint.etaleFundamentalGroup}
+  \lean{Iut.SourceFiniteEtaleFunctorFactorization.connectedPointedHom_fundamentalGroupHom_eq}
+  \lean{Iut.SourceFiniteEtaleFunctorFactorization.connectedObjectProfiniteInclusion_isOpenEmbedding}
+  \lean{Iut.SourceFiniteEtaleFunctorFactorization.connectedFiniteEtaleHom}
   \lean{Iut.SourcePointedAnabelioidEquivalence.fundamentalGroupContinuousMulEquiv}
   \lean{Iut.sourceSlice_equivalentToGalois_implies_pretransitive}
   \lean{Iut.SourceFiniteEtaleFunctorFactorization.connectedObjectCosetActionIso}
