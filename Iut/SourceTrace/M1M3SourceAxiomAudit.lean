@@ -10,6 +10,7 @@ import Iut.Foundations.SourceTimesMuPrimeStrip
 import Iut.Foundations.SourceTimesMuPrimeStripIsomorphism
 import Iut.Foundations.SourceTimesMuPrimeStripFullPolyIsomorphism
 import Iut.Foundations.SourceModelFrobenioidRationalNaturality
+import Iut.Foundations.SourceFiniteLocalMLFComparison
 import Iut.Foundations.SourceTheorem311
 import Iut.Foundations.SourceTheorem311Assembly
 import Iut.Foundations.SourceDefinition52LocalJointContinuity
@@ -395,8 +396,26 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceMLFGaloisComparison.separableClosureEquivAlgebraicClosure
 #print axioms Iut.SourceMLFGaloisComparison.absoluteGaloisEquiv
 #print axioms Iut.SourceMLFGaloisTMPair.monoAnalyticSeparable
+#print axioms
+  Iut.ProfiniteFundamentalExactSequence.localGalois_denominator_eq_geometric_range_comap
+#print axioms
+  Iut.ProfiniteFundamentalExactSequence.localGaloisContinuousMulEquiv
+#print axioms
+  Iut.ProfiniteFundamentalExactSequence.localGaloisContinuousMulEquiv_projection
+#print axioms Iut.SourceMLFGaloisTMPair.pullbackActingGroup
 #print axioms Iut.SourceThetaFiniteLocalCoreData.mlfGaloisTMPair
+#print axioms
+  Iut.SourceThetaFiniteLocalCoreData.xLocalGaloisContinuousMulEquiv
+#print axioms Iut.SourceThetaFiniteLocalCoreData.xLocalGaloisTMPair_action
+#print axioms
+  Iut.SourceThetaFiniteLocalCoreData.xLocalGaloisCoefficientAction_act
+#print axioms Iut.SourceThetaFiniteLocalCoreData.xLocalGaloisH1Restriction
+#print axioms
+  Iut.SourceThetaFiniteLocalCoreData.xLocalGaloisRestrictedMonoidKummer_commutes
+#print axioms
+  Iut.SourceThetaFiniteLocalCoreData.xLocalGaloisRestrictedUnitKummer_commutes
 #print axioms Iut.SourceThetaFiniteLocalCoreData.unitKummer_injective
+#print axioms Iut.SourceThetaFiniteLocalCoreData.xLocalGaloisUnitKummer_injective
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootComparison.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootTheory.chosen_rootSystem
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootRealization.ratioCyclotome_mul_group

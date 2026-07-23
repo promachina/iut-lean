@@ -20,6 +20,118 @@ universe u
 
 open scoped Topology
 
+namespace ProfiniteFundamentalExactSequence
+
+variable {geometric arithmetic galois : ProfiniteGrp.{u}}
+variable (sequence :
+  ProfiniteFundamentalExactSequence geometric arithmetic galois)
+
+/-- The arithmetic term of a profinite fundamental-group exact sequence as a
+general topological group. -/
+def arithmeticTopologicalGroup (arithmetic : ProfiniteGrp.{u}) :
+    TopologicalGroupCat.{u} :=
+  TopologicalGroupCat.ofProfinite arithmetic
+
+/-- The full arithmetic group, used as the numerator of the local Galois
+subquotient in IUT II, Definition 2.7(ii). -/
+def arithmeticNumerator (arithmetic : ProfiniteGrp.{u}) :
+    Subgroup (arithmeticTopologicalGroup arithmetic) :=
+  ⊤
+
+/-- The projection from the full arithmetic numerator to the Galois term. -/
+def numeratorProjection :
+    arithmeticNumerator arithmetic →ₜ* galois where
+  toMonoidHom :=
+    sequence.projection.hom.toMonoidHom.comp
+      (arithmeticNumerator arithmetic).subtype
+  continuous_toFun :=
+    sequence.projection.hom.continuous_toFun.comp
+      continuous_subtype_val
+
+/-- Surjectivity of the numerator projection is inherited from exactness data. -/
+theorem numeratorProjection_surjective :
+    Function.Surjective sequence.numeratorProjection := by
+  intro target
+  obtain ⟨source, hsource⟩ := sequence.projection_surjective target
+  exact ⟨⟨source, Subgroup.mem_top source⟩, hsource⟩
+
+/-- The local Galois subquotient of the arithmetic fundamental group. -/
+def localGaloisSubquotient :
+    SourceTopologicalSubquotient
+      (arithmeticTopologicalGroup arithmetic) where
+  numerator := arithmeticNumerator arithmetic
+  denominator := sequence.numeratorProjection.toMonoidHom.ker
+  denominator_normal := by infer_instance
+
+/-- Exactness identifies the quotient denominator with the geometric image. -/
+theorem localGalois_denominator_eq_geometric_range_comap :
+    sequence.localGaloisSubquotient.denominator =
+      Subgroup.comap
+        (arithmeticNumerator arithmetic).subtype
+        sequence.inclusion.hom.toMonoidHom.range := by
+  ext source
+  change sequence.projection source.1 = 1 ↔
+    source.1 ∈ sequence.inclusion.hom.toMonoidHom.range
+  constructor
+  · intro hsource
+    rw [sequence.exact]
+    exact hsource
+  · intro hsource
+    rw [sequence.exact] at hsource
+    exact hsource
+
+/-- The first-isomorphism-theorem equivalence from the local subquotient to
+the Galois term. -/
+noncomputable def localGaloisMulEquiv :
+    sequence.localGaloisSubquotient.Carrier ≃* galois :=
+  QuotientGroup.quotientKerEquivOfSurjective
+    sequence.numeratorProjection.toMonoidHom
+    sequence.numeratorProjection_surjective
+
+/-- The forward local Galois quotient equivalence is continuous. -/
+theorem continuous_localGaloisMulEquiv :
+    Continuous sequence.localGaloisMulEquiv := by
+  apply Continuous.quotient_lift
+  exact sequence.numeratorProjection.continuous_toFun
+
+/-- The full numerator inherits compactness from the profinite arithmetic
+fundamental group. -/
+noncomputable instance arithmeticNumeratorCompactSpace :
+    CompactSpace (arithmeticNumerator arithmetic) := by
+  change CompactSpace (⊤ : Subgroup arithmetic)
+  exact isClosed_univ.isClosedEmbedding_subtypeVal.compactSpace
+
+/-- The local Galois subquotient is compact. -/
+noncomputable instance localGaloisSubquotientCompactSpace :
+    CompactSpace sequence.localGaloisSubquotient.Carrier := by
+  letI : CompactSpace sequence.localGaloisSubquotient.numerator := by
+    change CompactSpace (arithmeticNumerator arithmetic)
+    infer_instance
+  exact Quotient.compactSpace
+
+/-- The arithmetic quotient and the Galois term are topologically isomorphic.
+Continuity of the inverse follows from compactness of the quotient and the
+Hausdorff profinite topology on the Galois term. -/
+noncomputable def localGaloisContinuousMulEquiv :
+    sequence.localGaloisSubquotient.Carrier ≃ₜ* galois where
+  toMulEquiv := sequence.localGaloisMulEquiv
+  continuous_toFun := sequence.continuous_localGaloisMulEquiv
+  continuous_invFun :=
+    Continuous.continuous_symm_of_equiv_compact_to_t2
+      sequence.continuous_localGaloisMulEquiv
+
+/-- The topological quotient equivalence is induced by the original
+arithmetic-to-Galois projection. -/
+@[simp]
+theorem localGaloisContinuousMulEquiv_projection
+    (source : sequence.localGaloisSubquotient.numerator) :
+    sequence.localGaloisContinuousMulEquiv
+        (sequence.localGaloisSubquotient.projection source) =
+      sequence.numeratorProjection source :=
+  rfl
+
+end ProfiniteFundamentalExactSequence
+
 namespace SourceMLFGaloisComparison
 
 /--
@@ -134,6 +246,48 @@ noncomputable def monoAnalyticSeparable
               modelMonoidElement
         rw [comparison.apply_symm_apply] }
 
+/-- Pull an MLF-Galois pair back across an isomorphism of acting groups. -/
+noncomputable def pullbackActingGroup
+    {G H : TopologicalGroupCat.{u}}
+    (pair : SourceMLFGaloisTMPair H)
+    (equivalence : G ≃ₜ* H) :
+    SourceMLFGaloisTMPair G where
+  arithmeticMonoid := pair.arithmeticMonoid
+  action := pair.action.comp equivalence.toMonoidHom
+  modelField := pair.modelField
+  modelFieldStructure := pair.modelFieldStructure
+  modelValuativeRel := pair.modelValuativeRel
+  modelTopology := pair.modelTopology
+  modelIsMLF := pair.modelIsMLF
+  modelCharZero := pair.modelCharZero
+  model := pair.model
+  groupIso := pair.groupIso.trans equivalence.symm
+  monoidIso := pair.monoidIso
+  equivariant := by
+    intro modelGroupElement modelMonoidElement
+    change
+      pair.monoidIso
+          (pair.model.action modelGroupElement modelMonoidElement) =
+        pair.action
+          (equivalence
+            (equivalence.symm
+              (pair.groupIso modelGroupElement)))
+          (pair.monoidIso modelMonoidElement)
+    rw [equivalence.apply_symm_apply]
+    exact pair.equivariant modelGroupElement modelMonoidElement
+
+@[simp]
+theorem pullbackActingGroup_action
+    {G H : TopologicalGroupCat.{u}}
+    (pair : SourceMLFGaloisTMPair H)
+    (equivalence : G ≃ₜ* H)
+    (groupElement : G)
+    (monoidElement : pair.arithmeticMonoid.carrier) :
+    (pair.pullbackActingGroup equivalence).action
+        groupElement monoidElement =
+      pair.action (equivalence groupElement) monoidElement :=
+  rfl
+
 end SourceMLFGaloisTMPair
 
 noncomputable instance ThetaFinitePlace.completionValuativeRel
@@ -200,6 +354,127 @@ theorem unitKummer_injective
     Function.Injective core.unitKummerEmbedding.unitKummer :=
   SourceIUTIIUnitKummerEmbedding.canonical_unitKummer_injective
     core.mlfGaloisTMPair
+
+/-- The local-Galois subquotient of the arithmetic `X_v` fundamental group. -/
+noncomputable def xLocalGaloisSubquotient
+    (core : SourceThetaFiniteLocalCoreData K curve kOrbicurves v) :=
+  core.orbicurves.xFundamentalGroups.exactSequence.localGaloisSubquotient
+
+/-- The exact-sequence quotient is the stored local absolute Galois group. -/
+noncomputable def xLocalGaloisContinuousMulEquiv
+    (core : SourceThetaFiniteLocalCoreData K curve kOrbicurves v) :
+    core.xLocalGaloisSubquotient.toTopologicalGroupCat ≃ₜ*
+      TopologicalGroupCat.ofProfinite core.orbicurves.absoluteGalois :=
+  core.orbicurves.xFundamentalGroups.exactSequence.localGaloisContinuousMulEquiv
+
+/-- The canonical MLF pair transported to the actual `X_v` local-Galois
+subquotient of IUT II, Definition 2.7(ii). -/
+noncomputable def xLocalGaloisTMPair
+    (core : SourceThetaFiniteLocalCoreData K curve kOrbicurves v) :
+    SourceMLFGaloisTMPair
+      core.xLocalGaloisSubquotient.toTopologicalGroupCat :=
+  core.mlfGaloisTMPair.pullbackActingGroup
+    core.xLocalGaloisContinuousMulEquiv
+
+@[simp]
+theorem xLocalGaloisTMPair_action
+    (core : SourceThetaFiniteLocalCoreData K curve kOrbicurves v)
+    (groupElement : core.xLocalGaloisSubquotient.Carrier)
+    (monoidElement : core.mlfGaloisTMPair.arithmeticMonoid.carrier) :
+    core.xLocalGaloisTMPair.action groupElement monoidElement =
+      core.mlfGaloisTMPair.action
+        (core.xLocalGaloisContinuousMulEquiv groupElement)
+        monoidElement :=
+  rfl
+
+/-- The canonical cyclotomic coefficient action pulled back from `G_v` to its
+exact-sequence quotient. -/
+noncomputable def xLocalGaloisCoefficientAction
+    (core : SourceThetaFiniteLocalCoreData K curve kOrbicurves v) :=
+  core.mlfGaloisTMPair.continuousCyclotomeAction.comap
+    (ContinuousMonoidHom.toContinuousMonoidHom
+      core.xLocalGaloisContinuousMulEquiv)
+
+@[simp]
+theorem xLocalGaloisCoefficientAction_act
+    (core : SourceThetaFiniteLocalCoreData K curve kOrbicurves v)
+    (groupElement : core.xLocalGaloisSubquotient.Carrier)
+    (coefficient :
+      SourceMonoidCyclotome
+        core.mlfGaloisTMPair.arithmeticMonoid.carrier) :
+    core.xLocalGaloisCoefficientAction.act groupElement coefficient =
+      core.mlfGaloisTMPair.continuousCyclotomeAction.act
+        (core.xLocalGaloisContinuousMulEquiv groupElement)
+        coefficient :=
+  rfl
+
+/-- Cohomological restriction from the stored `G_v` to its isomorphic
+arithmetic-group quotient. This supplies the local-Galois endpoint comparison
+needed before the two restrictions of IUT II, Corollary 2.8(i). -/
+noncomputable def xLocalGaloisH1Restriction
+    (core : SourceThetaFiniteLocalCoreData K curve kOrbicurves v) :
+    ContinuousH1Germ
+        core.mlfGaloisTMPair.continuousCyclotomeAction →*
+      ContinuousH1Germ core.xLocalGaloisCoefficientAction :=
+  ContinuousH1Germ.restrictMonoidHom
+    (ContinuousMonoidHom.toContinuousMonoidHom
+      core.xLocalGaloisContinuousMulEquiv)
+
+/-- The local monoid Kummer map induced by cohomological restriction. -/
+noncomputable def xLocalGaloisRestrictedMonoidKummer
+    (core : SourceThetaFiniteLocalCoreData K curve kOrbicurves v) :
+    core.mlfGaloisTMPair.arithmeticMonoid.carrier →*
+      ContinuousH1Germ core.xLocalGaloisCoefficientAction :=
+  core.xLocalGaloisH1Restriction.comp
+    core.unitKummerEmbedding.monoidKummer
+
+/-- The monoid Kummer/restriction square commutes. -/
+theorem xLocalGaloisRestrictedMonoidKummer_commutes
+    (core : SourceThetaFiniteLocalCoreData K curve kOrbicurves v)
+    (value : core.mlfGaloisTMPair.arithmeticMonoid.carrier) :
+    core.xLocalGaloisRestrictedMonoidKummer value =
+      core.xLocalGaloisH1Restriction
+        (core.unitKummerEmbedding.monoidKummer value) :=
+  rfl
+
+/-- The local unit Kummer map induced by the same cohomological restriction. -/
+noncomputable def xLocalGaloisRestrictedUnitKummer
+    (core : SourceThetaFiniteLocalCoreData K curve kOrbicurves v) :
+    core.mlfGaloisTMPair.arithmeticMonoid.carrierˣ →*
+      ContinuousH1Germ core.xLocalGaloisCoefficientAction :=
+  core.xLocalGaloisH1Restriction.comp
+    core.unitKummerEmbedding.unitKummer
+
+/-- The unit Kummer/restriction square commutes. -/
+theorem xLocalGaloisRestrictedUnitKummer_commutes
+    (core : SourceThetaFiniteLocalCoreData K curve kOrbicurves v)
+    (value : core.mlfGaloisTMPair.arithmeticMonoid.carrierˣ) :
+    core.xLocalGaloisRestrictedUnitKummer value =
+      core.xLocalGaloisH1Restriction
+        (core.unitKummerEmbedding.unitKummer value) :=
+  rfl
+
+/-- The canonical unit Kummer embedding on the literal local-Galois quotient. -/
+noncomputable def xLocalGaloisUnitKummerEmbedding
+    (core : SourceThetaFiniteLocalCoreData K curve kOrbicurves v) :=
+  SourceIUTIIUnitKummerEmbedding.canonical core.xLocalGaloisTMPair
+
+/-- Compactness of the literal local-Galois quotient. -/
+noncomputable instance xLocalGaloisCompactSpace
+    (core : SourceThetaFiniteLocalCoreData K curve kOrbicurves v) :
+    CompactSpace
+      core.xLocalGaloisSubquotient.toTopologicalGroupCat := by
+  change CompactSpace core.xLocalGaloisSubquotient.Carrier
+  change CompactSpace
+    core.orbicurves.xFundamentalGroups.exactSequence.localGaloisSubquotient.Carrier
+  infer_instance
+
+/-- The quotient-local canonical unit Kummer map is faithful. -/
+theorem xLocalGaloisUnitKummer_injective
+    (core : SourceThetaFiniteLocalCoreData K curve kOrbicurves v) :
+    Function.Injective core.xLocalGaloisUnitKummerEmbedding.unitKummer :=
+  SourceIUTIIUnitKummerEmbedding.canonical_unitKummer_injective
+    core.xLocalGaloisTMPair
 
 end SourceThetaFiniteLocalCoreData
 

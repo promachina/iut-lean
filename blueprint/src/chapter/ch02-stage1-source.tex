@@ -274,6 +274,12 @@
   \lean{Iut.SourceIUTIIDefinition27PartII.localGaloisSubquotient}
   \lean{Iut.SourceIUTIIDefinition27PartII.cyclotomicRigidity_source}
   \lean{Iut.SourceIUTIIDefinition27PartII.narrowInverseImage_le_wide}
+  \lean{Iut.ProfiniteFundamentalExactSequence.localGaloisSubquotient}
+  \lean{Iut.ProfiniteFundamentalExactSequence.localGalois_denominator_eq_geometric_range_comap}
+  \lean{Iut.ProfiniteFundamentalExactSequence.localGaloisContinuousMulEquiv}
+  \lean{Iut.ProfiniteFundamentalExactSequence.localGaloisContinuousMulEquiv_projection}
+  \lean{Iut.SourceThetaFiniteLocalCoreData.xLocalGaloisSubquotient}
+  \lean{Iut.SourceThetaFiniteLocalCoreData.xLocalGaloisContinuousMulEquiv}
   \leanok
   The source boundary for Etale Theta Definition~2.13 uses genuine
   topological groups, continuous automorphisms, the proved-normal exact range
@@ -289,8 +295,12 @@
   \(f^{-1}(U)/f^{-1}(N)\): the exterior cyclotome is restricted from the exact
   kernel in part (i), and the other three objects are pulled back from ambient
   subquotients.  Restricted cyclotomic rigidity is a continuous group
-  equivalence between these derived endpoints.  Construction from tempered
-  geometry, the three precise ambient subquotients, the full reduction
+  equivalence between these derived endpoints.  For the local orbicurve exact
+  sequence, the full arithmetic group modulo the geometric image is now
+  constructed and proved topologically equivalent to the stored local Galois
+  group.  Construction from tempered geometry, the \(\ell\Delta^\Theta\) and
+  restricted-tempered ambient subquotients, identification of the generic
+  Definition~2.7 local-Galois input with this quotient, the full reduction
   morphisms, and the link to Corollary~2.8 remain source obligations.
 \end{definition}
 
@@ -418,9 +428,21 @@
   \lean{Iut.SourceMLFGaloisComparison.separableClosureEquivAlgebraicClosure}
   \lean{Iut.SourceMLFGaloisComparison.absoluteGaloisEquiv}
   \lean{Iut.SourceMLFGaloisTMPair.monoAnalyticSeparable}
+  \lean{Iut.SourceMLFGaloisTMPair.pullbackActingGroup}
   \lean{Iut.SourceThetaFiniteLocalCoreData.mlfGaloisTMPair}
   \lean{Iut.SourceThetaFiniteLocalCoreData.unitKummerEmbedding}
   \lean{Iut.SourceThetaFiniteLocalCoreData.unitKummer_injective}
+  \lean{Iut.SourceThetaFiniteLocalCoreData.xLocalGaloisTMPair}
+  \lean{Iut.SourceThetaFiniteLocalCoreData.xLocalGaloisTMPair_action}
+  \lean{Iut.SourceThetaFiniteLocalCoreData.xLocalGaloisCoefficientAction}
+  \lean{Iut.SourceThetaFiniteLocalCoreData.xLocalGaloisCoefficientAction_act}
+  \lean{Iut.SourceThetaFiniteLocalCoreData.xLocalGaloisH1Restriction}
+  \lean{Iut.SourceThetaFiniteLocalCoreData.xLocalGaloisRestrictedMonoidKummer}
+  \lean{Iut.SourceThetaFiniteLocalCoreData.xLocalGaloisRestrictedMonoidKummer_commutes}
+  \lean{Iut.SourceThetaFiniteLocalCoreData.xLocalGaloisRestrictedUnitKummer}
+  \lean{Iut.SourceThetaFiniteLocalCoreData.xLocalGaloisRestrictedUnitKummer_commutes}
+  \lean{Iut.SourceThetaFiniteLocalCoreData.xLocalGaloisUnitKummerEmbedding}
+  \lean{Iut.SourceThetaFiniteLocalCoreData.xLocalGaloisUnitKummer_injective}
   \lean{Iut.SourceFiniteTimesMuKummerInput}
   \lean{Iut.SourceFiniteTimesMuKummerInput.timesMuMonoid}
   \lean{Iut.SourceFiniteTimesMuKummerInput.timesMuUnitsEquiv}
@@ -643,8 +665,13 @@
   proved compatible with its topology and makes the completion an MLF.  These
   results transport the canonical pair and its injective coefficient-identity
   unit Kummer map to the literal local absolute Galois group stored by each
-  finite Initial Theta core.  Constructing the tempered mono-theta subquotient
-  map to this endpoint remains open.
+  finite Initial Theta core.  Exactness then identifies that group with the
+  arithmetic fundamental-group quotient by the geometric image.  Lean
+  transports the MLF pair and faithful canonical unit Kummer map to this
+  literal quotient, pulls back the cyclotomic coefficient action, constructs
+  the induced continuous-\(H^1\) restriction, and proves the monoid and unit
+  Kummer restriction squares commute.  Constructing the restricted-tempered
+  mono-theta map to this endpoint remains open.
   At a finite place, the Definition~4.9 input now ties the selected splitting
   at an isotropic reference object to an actual MLF-Galois \(TM\)-pair, a
   stable characteristic submonoid, and the genuine \(\operatorname{Ism}\)

@@ -122,7 +122,11 @@ actual topological quotients by normal subgroups.  Subquotient restriction is
 implemented as \(f^{-1}(U)/f^{-1}(N)\): the exterior cyclotome comes from the
 exact kernel in part (i), while the other three narrow-level objects are
 pullbacks of ambient subquotients.  Cyclotomic rigidity is represented by a
-continuous group equivalence between the derived endpoints.  Continuous nonabelian
+continuous group equivalence between the derived endpoints.  Independently,
+every local orbicurve exact sequence now constructs the quotient of its full
+arithmetic fundamental group by the geometric image; exactness and the first
+isomorphism theorem identify this quotient topologically with its local Galois
+group.  Continuous nonabelian
 \(H^1\) and its direct limit over open subgroups are quotient constructions,
 and pullback along a continuous group homomorphism descends to this direct
 limit.  With abelian coefficients, both quotient constructions carry proved
@@ -139,10 +143,10 @@ theta value is torsion, this map is proved bijective.  Given a zero-to-base
 action-pair comparison, the zero-labeled constant monoid is also proved
 multiplicatively equivalent to its actual diagonal range, compatibly with the
 transported labeled actions.  Construction of the
-precise geometric
-subquotients, homomorphisms, actions, input theta orbits, and independent
-conjugacy compatibility, together with the paper-specific splitting
-compatibility, remains open.
+precise restricted-tempered and \(\ell\Delta^\Theta\) subquotients, their comparison with
+the constructed local-Galois quotient, the remaining homomorphisms, actions,
+input theta orbits, and independent conjugacy compatibility, together with the
+paper-specific splitting compatibility, remains open.
 
 For IUT~II, Corollary~3.5, multiplication by
 \((\mathbb Z/l\mathbb Z)^\times\) has been descended through the sign-label
@@ -234,9 +238,15 @@ discrete valuation of each number-field completion is also proved compatible
 with its topology and supplies the mixed-characteristic local-field structure.
 Consequently the canonical MLF pair, coefficient-identity unit Kummer map, and
 its injectivity theorem are transported to the exact local absolute Galois
-group already stored by every finite Initial Theta core.  The subsequent map
-from the tempered mono-theta subquotient to this endpoint remains an explicit
-source obligation.
+group already stored by every finite Initial Theta core.  The arithmetic
+fundamental-group exact sequence then constructs its local-Galois quotient
+with denominator equal to the geometric image and supplies a topological group
+equivalence to that stored Galois group.  Lean pulls the MLF pair and
+cyclotomic coefficient action back across this equivalence, constructs the
+induced continuous-\(H^1\) restriction, proves the monoid and unit Kummer
+restriction squares commute, and proves injectivity of the canonical unit
+Kummer map on the quotient.  Constructing the restricted-tempered mono-theta
+map to this endpoint remains an explicit source obligation.
 The canonical
 \(C_\Theta\)-scale equality is derived from the q-normalized theta/log-volume
 identity plus q-pilot positivity.  Conversely, the checked p-adic finite,
