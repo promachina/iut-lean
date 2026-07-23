@@ -410,6 +410,13 @@ visible to Lean's axiom reporter.
   Iut.GlobalLTorsionCoverInput.standardArithmeticLDeltaThetaMulEquiv
 #print axioms
   Iut.GlobalLTorsionCoverInput.standardGeometricToArithmeticLDeltaThetaMulEquiv_projection
+#print axioms
+  Iut.SourceSemiGraph.isClosed_iff_verticialCardinality_eq_two
+#print axioms
+  Iut.SourceSemiGraph.Hom.isProper_iff_preserves_verticialCardinality
+#print axioms Iut.SourceSemiGraph.Sub.coincidence_eq_some_iff
+#print axioms Iut.SourceSemiGraph.compactification_isGraph
+#print axioms Iut.SourceSemiGraph.Hom.compactificationMap
 #print axioms Iut.SourceGraphAction.dist_image
 #print axioms Iut.SourceFiniteTree.exists_degree_ne_one
 #print axioms Iut.SourceFiniteTree.induce_degree_ne_one_connected

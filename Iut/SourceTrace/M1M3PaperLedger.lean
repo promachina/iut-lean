@@ -389,6 +389,24 @@ def m1m3PaperLedger : List PaperClause :=
       "Frobenioids II, Definition 5.3"
       [] .unformalized
       "GC/LC-admissibility and poly-Frobenioids remain to be formalized.",
+    clause "SemiAnbd.1.semigraph-core" .semiGraphsAnabelioids
+      "Semi-graphs of Anabelioids, Section 1, pp. 11-14: semi-graphs and morphisms"
+      ["SourceSemiGraph", "SourceSemiGraph.TotalBranch",
+        "SourceSemiGraph.verticialPortion",
+        "SourceSemiGraph.verticialCardinality",
+        "SourceSemiGraph.isClosed_iff_verticialCardinality_eq_two",
+        "SourceSemiGraph.Hom", "SourceSemiGraph.Hom.incidentBranchMap",
+        "SourceSemiGraph.Hom.IsImmersion",
+        "SourceSemiGraph.Hom.IsExcision",
+        "SourceSemiGraph.Hom.IsProper",
+        "SourceSemiGraph.Hom.isProper_iff_preserves_verticialCardinality",
+        "SourceSemiGraph.Hom.IsGraphCovering", "SourceSemiGraph.Sub",
+        "SourceSemiGraph.Sub.coincidence_eq_some_iff",
+        "SourceSemiGraph.compactification",
+        "SourceSemiGraph.compactification_isGraph",
+        "SourceSemiGraph.Hom.compactificationMap"]
+      .partialImplementation
+      "Lean now implements the paper's disjoint two-branch fibers, partial coincidence maps, verticial portions and cardinalities, loops, parallel/open/isolated edges, sub-semi-graph truncation, general morphisms that may close an open branch, incident-branch maps, immersion, excision, properness, graph-coverings, compactification, and the induced compactification morphism. Properness is proved equivalent to preservation of verticial cardinality. The associated topological realization, paths and connectedness, joints, the local G[v]/G[e]/G[b] constructions, embeddings, identity/composition laws for compactification, and universal graph-coverings remain open.",
     clause "SemiAnbd.1.8(ii)(a)" .semiGraphsAnabelioids
       "Semi-graphs of Anabelioids, Lemma 1.8(ii)(a)"
       ["SourceFiniteTree.exists_degree_ne_one",
@@ -403,7 +421,7 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceSemiGraphTree.Action.fixedOpenEdge_of_fixed_boundary",
         "SourceSemiGraphTree.Action.fixesVertexOrEdge"]
       .partialImplementation
-      "For a finite group acting on an arbitrary simple tree, Lean constructs a finite connected invariant hull of an orbit and prunes invariant leaves to prove the fixed-vertex or setwise-fixed-edge alternative. The source compactification is encoded by marking original vertices and requiring each appended boundary point to have a unique neighbor. A fixed boundary point is then converted into its fixed open edge, proving the full component alternative in this encoding. The paper's branch-set definition and general semi-graph morphisms remain to be formalized.",
+      "For a finite group acting on an arbitrary simple tree, Lean constructs a finite connected invariant hull of an orbit and prunes invariant leaves to prove the fixed-vertex or setwise-fixed-edge alternative. The paper's raw branch-set semi-graphs, general morphisms, and compactification are now formalized separately. The fixed-component proof still uses the marked simple-tree encoding; connecting the raw compactification's topological tree property and actions to that theorem remains open.",
     clause "SemiAnbd.1.8(ii)(b)" .semiGraphsAnabelioids
       "Semi-graphs of Anabelioids, Lemma 1.8(ii)(b)"
       ["SourceGraphAction", "SourceGraphAction.graphIso",
@@ -413,14 +431,14 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceSemiGraphTree.Action.fixedVertexSet",
         "SourceSemiGraphTree.Action.adjacent_of_fixedVertexSet_eq_pair"]
       .partialImplementation
-      "For an action by automorphisms of a simple tree, Lean proves distance invariance and that a subgroup fixing two endpoints fixes every vertex on their unique geodesic. It also proves the Theorem 3.7 application: if the fixed original vertex set is exactly a distinct pair, the geodesic has length one, so the pair is joined by a closed edge. The paper's general branch-set and morphism formalism remains open.",
+      "For an action by automorphisms of a simple tree, Lean proves distance invariance and that a subgroup fixing two endpoints fixes every vertex on their unique geodesic. It also proves the Theorem 3.7 application: if the fixed original vertex set is exactly a distinct pair, the geodesic has length one, so the pair is joined by a closed edge. Transporting this proof from the marked simple-tree encoding to the raw semi-graph compactification remains open.",
     clause "SemiAnbd.1.8(ii)(c)" .semiGraphsAnabelioids
       "Semi-graphs of Anabelioids, Lemma 1.8(ii)(c)"
       ["SourceSemiGraphTree.Action.FixedSubjoint",
         "SourceSemiGraphTree.Action.FixesSubjoint",
         "SourceSemiGraphTree.Action.fixesSubjoint_of_three_fixed_vertices"]
       .partialImplementation
-      "In the marked-compactification encoding, Lean proves for an arbitrary group action that three distinct fixed original vertices yield a fixed subjoint; finiteness of the acting group is not used after the vertices are fixed. It extracts consecutive edges from a fixed geodesic and uses the unique-neighbor boundary condition to prove their common point is original; truncating those edges gives the two open branches of the joint. The branch-level sub-semi-graph object is not yet constructed as a separate raw semi-graph datatype.",
+      "In the marked-compactification encoding, Lean proves for an arbitrary group action that three distinct fixed original vertices yield a fixed subjoint; finiteness of the acting group is not used after the vertices are fixed. It extracts consecutive edges from a fixed geodesic and uses the unique-neighbor boundary condition to prove their common point is original. Raw sub-semi-graphs and their truncation rule are now defined, but constructing this fixed subjoint as a raw joint and proving its connected topological realization remain open.",
     clause "SemiAnbd.2.4(iv)" .semiGraphsAnabelioids
       "Semi-graphs of Anabelioids, Definition 2.4(iv)"
       ["SourceEstrangedIncidentBranchSystem",
@@ -2200,8 +2218,8 @@ def clauseIdsWithStatus (status : ClauseStatus) : List String :=
   m1m3PaperLedger.filterMap fun entry =>
     if entry.status = status then some entry.id else none
 
-/-- The source-closure ledger contains 122 separately audited clauses. -/
-theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 122 :=
+/-- The source-closure ledger contains 123 separately audited clauses. -/
+theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 123 :=
   rfl
 
 /-- No source clause occurs twice in the direct-citation ledger. -/
@@ -2209,9 +2227,9 @@ theorem m1m3PaperLedger_ids_nodup :
     (m1m3PaperLedger.map PaperClause.id).Nodup := by
   decide
 
-/-- Ninety-seven clauses currently have a genuine but incomplete implementation. -/
+/-- Ninety-eight clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 97 :=
+    (clauseIdsWithStatus .partialImplementation).length = 98 :=
   rfl
 
 /-- Four clauses currently point only to explicitly classified toy models. -/

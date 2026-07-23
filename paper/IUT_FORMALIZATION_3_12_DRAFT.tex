@@ -140,8 +140,16 @@ from the pulled-back quotient is proved injective.  Its surjectivity, and hence
 its algebraic and topological isomorphisms, are derived from precisely the two
 cusp-inertia facts cited in IUT~II, Corollary~2.5(i): ambient cusp inertia
 generates the coefficient quotient and subgraph cusp inertia maps onto it.
-The restriction isomorphism is not supplied as a field.  The tree-action
-dependency has been lowered to the original source.  Lean constructs a finite
+The restriction isomorphism is not supplied as a field.  The semi-graph layer
+now starts from the paper's raw definition: every edge has a dependent
+two-element branch fiber and a partial coincidence map to vertices.  This
+retains loops, parallel edges, and closed, open, and isolated edges.  General
+morphisms carry branch equivalences and may turn a nonverticial branch into a
+verticial one.  Lean constructs incident-branch maps, immersion and excision,
+proves properness equivalent to preservation of verticial cardinality,
+constructs truncated sub-semi-graphs, and constructs compactification together
+with the compactification morphism induced by every general morphism.
+The tree-action dependency has been lowered to the original source.  Lean constructs a finite
 connected invariant hull for a finite group acting on an arbitrary simple
 tree, prunes its invariant leaves, and proves that the group fixes a vertex or
 fixes a closed edge setwise.  It also proves that graph automorphisms preserve
@@ -173,8 +181,8 @@ The
 exact subgroup configuration of \IUT{} I, Proposition~2.4(i), is typed; from
 its compact-conjugate rigidity conclusion and a nontrivial compact cusp
 inertia subgroup, Lean derives both cusp-conjugacy assertions of
-Corollary~2.5.  The general branch-set/morphism formalism and arbitrary finite
-semi-graph quotients, Remark~2.2.1's derivation of the branch containments,
+Corollary~2.5.  The associated topological realization and raw tree/action
+bridge, arbitrary finite semi-graph quotients, Remark~2.2.1's derivation of the branch containments,
 the stabilizer-to-verticial subgroup identification and assembly of the
 cofinal pair bound,
 maximal-compact/verticial classification, and the inverse-limit proof of
@@ -1095,11 +1103,11 @@ the local estimates of \IUT{} IV.
 
 \subsection{Source-faithful construction before the Theorem 3.11 boundary}
 
-The machine-checked source-closure ledger now contains 122 clauses from
+The machine-checked source-closure ledger now contains 123 clauses from
 \IUT{} I--III together with transitive dependencies in \emph{Frobenioids},
 \emph{The Etale Theta Function}, \emph{Semi-graphs of Anabelioids}, and
 \emph{Absolute Anabelian Topics III}.
-It classifies 97 clauses as partially implemented, 4 as toy models, 15 as
+It classifies 98 clauses as partially implemented, 4 as toy models, 15 as
 unformalized, and 6 as source-faithful.  None of the complete M1--M3
 milestones or Theorem~3.11 clauses is classified as source-faithful.
 The new partial Definition~3.1 path constructs etale stacks and

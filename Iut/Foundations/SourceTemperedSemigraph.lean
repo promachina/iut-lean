@@ -8,6 +8,7 @@ import Mathlib.CategoryTheory.CofilteredSystem
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
 import Mathlib.Combinatorics.SimpleGraph.Diam
 import Mathlib.Topology.Algebra.Group.Basic
+import Iut.Foundations.SourceSemiGraph
 
 /-!
 # Tempered semi-graph source mathematics
