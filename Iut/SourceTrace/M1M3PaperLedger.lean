@@ -397,9 +397,13 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceGraphAction.restrict",
         "SourceGraphAction.exists_invariant_subtree_card_le_two",
         "SourceGraphAction.finite_fixesVertexOrEdge",
-        "SourceGraphAction.fixesVertexOrEdge"]
+        "SourceGraphAction.fixesVertexOrEdge",
+        "SourceSemiGraphTree",
+        "SourceSemiGraphTree.IsOpenEdge",
+        "SourceSemiGraphTree.Action.fixedOpenEdge_of_fixed_boundary",
+        "SourceSemiGraphTree.Action.fixesVertexOrEdge"]
       .partialImplementation
-      "For a finite group acting on an arbitrary simple tree, Lean constructs a finite connected invariant hull of an orbit, prunes invariant leaves to obtain a subtree with at most two vertices, and proves the fixed-vertex or setwise-fixed-edge alternative. This is the complete closed-edge simple-graph case. The source semi-graph type and its open edges remain to be formalized.",
+      "For a finite group acting on an arbitrary simple tree, Lean constructs a finite connected invariant hull of an orbit and prunes invariant leaves to prove the fixed-vertex or setwise-fixed-edge alternative. The source compactification is encoded by marking original vertices and requiring each appended boundary point to have a unique neighbor. A fixed boundary point is then converted into its fixed open edge, proving the full component alternative in this encoding. The paper's branch-set definition and general semi-graph morphisms remain to be formalized.",
     clause "SemiAnbd.1.8(ii)(b)" .semiGraphsAnabelioids
       "Semi-graphs of Anabelioids, Lemma 1.8(ii)(b)"
       ["SourceGraphAction", "SourceGraphAction.graphIso",
@@ -407,7 +411,13 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceGraphAction.fixes_path_pointwise",
         "SourceGraphAction.subgroup_fixes_geodesic_pointwise"]
       .partialImplementation
-      "For an action by automorphisms of a simple tree, Lean proves distance invariance and that a subgroup fixing two endpoints fixes every vertex on their unique geodesic. This is the closed-edge vertex shadow of part (ii)(b). The source semi-graph formalism, open edges, and part (ii)(c)'s subjoint statement remain open.",
+      "For an action by automorphisms of a simple tree, Lean proves distance invariance and that a subgroup fixing two endpoints fixes every vertex on their unique geodesic. This is exactly the closed-edge geodesic statement used by the marked compactification. The paper's general branch-set and morphism formalism remains open.",
+    clause "SemiAnbd.1.8(ii)(c)" .semiGraphsAnabelioids
+      "Semi-graphs of Anabelioids, Lemma 1.8(ii)(c)"
+      ["SourceSemiGraphTree.Action.FixesSubjoint",
+        "SourceSemiGraphTree.Action.fixesSubjoint_of_three_fixed_vertices"]
+      .partialImplementation
+      "In the marked-compactification encoding, Lean proves that three distinct fixed original vertices yield a fixed subjoint. It extracts consecutive edges from a fixed geodesic and uses the unique-neighbor boundary condition to prove their common point is original; truncating those edges gives the two open branches of the joint. The branch-level sub-semi-graph object is not yet constructed as a separate datatype.",
     clause "I.0.pseudo-monoid" .iutI
       "IUT I, Section 0: topological pseudo-monoids"
       ["SourceTopologicalPseudoMonoid",
@@ -2154,8 +2164,8 @@ def clauseIdsWithStatus (status : ClauseStatus) : List String :=
   m1m3PaperLedger.filterMap fun entry =>
     if entry.status = status then some entry.id else none
 
-/-- The source-closure ledger contains 119 separately audited clauses. -/
-theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 119 :=
+/-- The source-closure ledger contains 120 separately audited clauses. -/
+theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 120 :=
   rfl
 
 /-- No source clause occurs twice in the direct-citation ledger. -/
@@ -2163,9 +2173,9 @@ theorem m1m3PaperLedger_ids_nodup :
     (m1m3PaperLedger.map PaperClause.id).Nodup := by
   decide
 
-/-- Ninety-four clauses currently have a genuine but incomplete implementation. -/
+/-- Ninety-five clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 94 :=
+    (clauseIdsWithStatus .partialImplementation).length = 95 :=
   rfl
 
 /-- Four clauses currently point only to explicitly classified toy models. -/

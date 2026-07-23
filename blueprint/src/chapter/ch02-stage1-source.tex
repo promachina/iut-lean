@@ -262,8 +262,13 @@
   \lean{Iut.SourceGraphAction.exists_invariant_subtree_card_le_two}
   \lean{Iut.SourceGraphAction.finite_fixesVertexOrEdge}
   \lean{Iut.SourceGraphAction.fixesVertexOrEdge}
+  \lean{Iut.SourceSemiGraphTree}
+  \lean{Iut.SourceSemiGraphTree.Action.fixedOpenEdge_of_fixed_boundary}
+  \lean{Iut.SourceSemiGraphTree.Action.fixesVertexOrEdge}
   \lean{Iut.SourceGraphAction.fixes_path_pointwise}
   \lean{Iut.SourceGraphAction.subgroup_fixes_geodesic_pointwise}
+  \lean{Iut.SourceSemiGraphTree.Action.FixesSubjoint}
+  \lean{Iut.SourceSemiGraphTree.Action.fixesSubjoint_of_three_fixed_vertices}
   \lean{Iut.SourceIUTIProposition24PartI}
   \lean{Iut.SourceIUTIProposition24PartI.CuspidalInertia}
   \lean{Iut.SourceIUTIProposition24PartI.CuspidalInertia.conjugate_le_arithmeticTempered_iff}
@@ -275,13 +280,17 @@
   hull of one orbit and repeatedly pruning its invariant leaves until at most
   two vertices remain.  A group action by tree automorphisms also preserves
   graph distance; if a subgroup fixes two vertices, it fixes every vertex on
-  their unique geodesic.  These results formalize the closed-edge simple-graph
-  content of \emph{Semi-graphs of Anabelioids}, Lemma~1.8(ii)(a--b).  The exact subgroup
+  their unique geodesic.  The source compactification is represented by marking
+  the original vertices and requiring each appended boundary point to have a
+  unique neighbor.  A fixed appended point therefore determines a fixed open
+  edge.  Three distinct fixed original vertices also yield two fixed incident
+  branches, hence a fixed subjoint.  This formalizes Lemma~1.8(ii)(a--c) in the
+  marked-compactification encoding.  The exact subgroup
   configuration of \IUT{} I, Proposition~2.4(i), is typed separately.  From
   its compact-conjugate rigidity conclusion, normality of the geometric
   subgroup, and a nontrivial compact cusp inertia subgroup, Lean derives the
-  two cusp-conjugacy conclusions of Corollary~2.5.  The source semi-graph type
-  with open edges, the maximal-compact/verticial classification, the inverse-limit
+  two cusp-conjugacy conclusions of Corollary~2.5.  The source branch-set and
+  general morphism formalism, the maximal-compact/verticial classification, the inverse-limit
   proof of Proposition~2.4(i), and construction of cusp inertia from stable
   reduction remain open.
 \end{definition}

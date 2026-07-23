@@ -13,8 +13,8 @@ import Mathlib.Topology.Algebra.Group.Basic
 
 This module starts the source-faithful reconstruction of the semi-graph results
 used by IUT I, Proposition 2.4 and Corollary 2.5.  It formalizes the finite-group
-fixed-point alternative and unique-geodesic rigidity in *Semi-graphs of
-Anabelioids*, Lemma 1.8(ii)(a-b), and the subgroup-conjugation argument that
+fixed-component, unique-geodesic, and subjoint results in *Semi-graphs of
+Anabelioids*, Lemma 1.8(ii)(a-c), and the subgroup-conjugation argument that
 derives the cuspidal portion of IUT I, Corollary 2.5 from Proposition 2.4(i).
 
 The maximal-compact/verticial classification of *Semi-graphs of Anabelioids*,
@@ -712,6 +712,236 @@ theorem subgroup_fixes_geodesic_pointwise
         (first_fixed g) (second_fixed g) path path_isPath⟩
 
 end SourceGraphAction
+
+/-- A semi-graph tree represented exactly by the compactification construction
+in *Semi-graphs of Anabelioids*, Section 1.  `vertexSet` consists of the
+original vertices; the remaining vertices are the points appended at
+non-verticial branches.  Such boundary vertices have degree one. -/
+structure SourceSemiGraphTree (Point : Type v) where
+  compactification : SimpleGraph Point
+  vertexSet : Set Point
+  boundary_unique_neighbor :
+    ∀ point, point ∉ vertexSet →
+      ∃! neighbor, compactification.Adj point neighbor
+  compactification_isTree : compactification.IsTree
+
+namespace SourceSemiGraphTree
+
+variable {Point : Type v} (semiGraph : SourceSemiGraphTree Point)
+
+/-- An edge of the compactification is open in the original semi-graph exactly
+when at least one endpoint was appended during compactification. -/
+def IsOpenEdge (first second : Point) : Prop :=
+  semiGraph.compactification.Adj first second ∧
+    (first ∉ semiGraph.vertexSet ∨ second ∉ semiGraph.vertexSet)
+
+/-- A group action on a semi-graph tree, expressed on its compactification and
+required to preserve the subset of original vertices. -/
+structure Action (Acting : Type u) [Group Acting] where
+  toGraphAction :
+    SourceGraphAction Acting Point semiGraph.compactification
+  vertexSet_stable :
+    ∀ g point,
+      SourceGraphAction.graphIso toGraphAction g point ∈
+          semiGraph.vertexSet ↔
+        point ∈ semiGraph.vertexSet
+
+namespace Action
+
+variable
+  {Acting : Type u} [Group Acting]
+  (data : semiGraph.Action Acting)
+
+/-- The fixed-component conclusion in the source semi-graph, distinguishing
+genuine vertices from the boundary vertices of its compactification. -/
+def FixesVertexOrEdge : Prop :=
+  (∃ vertex ∈ semiGraph.vertexSet,
+      ∀ g : Acting,
+        SourceGraphAction.graphIso data.toGraphAction g vertex = vertex) ∨
+    ∃ first second,
+      semiGraph.compactification.Adj first second ∧
+        ∀ g : Acting,
+          (SourceGraphAction.graphIso data.toGraphAction g first = first ∧
+              SourceGraphAction.graphIso data.toGraphAction g second = second) ∨
+            (SourceGraphAction.graphIso data.toGraphAction g first = second ∧
+              SourceGraphAction.graphIso data.toGraphAction g second = first)
+
+/-- A fixed boundary point determines a fixed open edge: its unique neighbor
+is fixed because graph automorphisms preserve adjacency. -/
+theorem fixedOpenEdge_of_fixed_boundary
+    {boundary : Point}
+    (boundary_not_vertex : boundary ∉ semiGraph.vertexSet)
+    (boundary_fixed :
+      ∀ g : Acting,
+        SourceGraphAction.graphIso data.toGraphAction g boundary = boundary) :
+    ∃ neighbor,
+      semiGraph.IsOpenEdge boundary neighbor ∧
+        ∀ g : Acting,
+          SourceGraphAction.graphIso data.toGraphAction g boundary = boundary ∧
+            SourceGraphAction.graphIso data.toGraphAction g neighbor = neighbor := by
+  obtain ⟨neighbor, boundary_adjacent, neighbor_unique⟩ :=
+    semiGraph.boundary_unique_neighbor boundary boundary_not_vertex
+  refine ⟨neighbor, ⟨boundary_adjacent, Or.inl boundary_not_vertex⟩, ?_⟩
+  intro g
+  refine ⟨boundary_fixed g, ?_⟩
+  apply neighbor_unique
+  have image_adjacent :=
+    (data.toGraphAction.map_adj_iff g boundary neighbor).mpr
+      boundary_adjacent
+  change semiGraph.compactification.Adj
+    (SourceGraphAction.graphIso data.toGraphAction g boundary)
+    (SourceGraphAction.graphIso data.toGraphAction g neighbor) at image_adjacent
+  rw [boundary_fixed g] at image_adjacent
+  exact image_adjacent
+
+/-- Full fixed-component alternative of *Semi-graphs of Anabelioids*,
+Lemma 1.8(ii)(a), in the marked-compactification encoding of a semi-graph tree.
+A fixed appended vertex is converted back into its fixed open edge. -/
+theorem fixesVertexOrEdge
+    [Finite Acting] :
+    FixesVertexOrEdge semiGraph data := by
+  rcases SourceGraphAction.fixesVertexOrEdge data.toGraphAction
+      semiGraph.compactification_isTree with
+    ⟨point, point_fixed⟩ |
+      ⟨first, second, adjacent, edge_fixed⟩
+  · by_cases point_is_vertex : point ∈ semiGraph.vertexSet
+    · exact Or.inl ⟨point, point_is_vertex, point_fixed⟩
+    · right
+      obtain ⟨neighbor, openEdge, edge_fixed⟩ :=
+        fixedOpenEdge_of_fixed_boundary semiGraph data
+          point_is_vertex point_fixed
+      exact ⟨point, neighbor, openEdge.1, fun g =>
+        Or.inl (edge_fixed g)⟩
+  · exact Or.inr ⟨first, second, adjacent, edge_fixed⟩
+
+/-- A fixed subjoint is represented by an original center vertex and two
+distinct incident branches.  Passing to the corresponding sub-semi-graph
+truncates the two selected compactification edges at their other endpoints,
+so they become the two open edges of the joint. -/
+def FixesSubjoint : Prop :=
+  ∃ center ∈ semiGraph.vertexSet, ∃ first second,
+    first ≠ second ∧
+      semiGraph.compactification.Adj center first ∧
+      semiGraph.compactification.Adj center second ∧
+      ∀ g : Acting,
+        SourceGraphAction.graphIso data.toGraphAction g center = center ∧
+          SourceGraphAction.graphIso data.toGraphAction g first = first ∧
+          SourceGraphAction.graphIso data.toGraphAction g second = second
+
+/-- *Semi-graphs of Anabelioids*, Lemma 1.8(ii)(c): if a finite group fixes
+three distinct original vertices of a semi-graph tree, it acts trivially on a
+subjoint.  The proof extracts two consecutive edges from one of two fixed
+geodesics, using the degree-one boundary condition to show that their common
+point is an original vertex. -/
+theorem fixesSubjoint_of_three_fixed_vertices
+    [Finite Acting]
+    {first second third : Point}
+    (first_vertex : first ∈ semiGraph.vertexSet)
+    (_second_vertex : second ∈ semiGraph.vertexSet)
+    (_third_vertex : third ∈ semiGraph.vertexSet)
+    (first_ne_second : first ≠ second)
+    (first_ne_third : first ≠ third)
+    (second_ne_third : second ≠ third)
+    (first_fixed :
+      ∀ g : Acting,
+        SourceGraphAction.graphIso data.toGraphAction g first = first)
+    (second_fixed :
+      ∀ g : Acting,
+        SourceGraphAction.graphIso data.toGraphAction g second = second)
+    (third_fixed :
+      ∀ g : Acting,
+        SourceGraphAction.graphIso data.toGraphAction g third = third) :
+    FixesSubjoint semiGraph data := by
+  let graph := semiGraph.compactification
+  have subjoint_of_long_path
+      {start finish : Point}
+      (path : graph.Walk start finish)
+      (path_isPath : path.IsPath)
+      (two_le : 2 ≤ path.length)
+      (start_fixed :
+        ∀ g : Acting,
+          SourceGraphAction.graphIso data.toGraphAction g start = start)
+      (finish_fixed :
+        ∀ g : Acting,
+          SourceGraphAction.graphIso data.toGraphAction g finish = finish) :
+      FixesSubjoint semiGraph data := by
+    let left := path.getVert 0
+    let center := path.getVert 1
+    let right := path.getVert 2
+    have left_adj_center : graph.Adj left center := by
+      exact path.adj_getVert_succ (by omega : 0 < path.length)
+    have center_adj_right : graph.Adj center right := by
+      simpa [center, right] using
+        path.adj_getVert_succ (i := 1) (by omega : 1 < path.length)
+    have left_ne_right : left ≠ right := by
+      intro equality
+      have support_nodup := path_isPath.support_nodup
+      have zero_bound : 0 < path.support.length := by
+        rw [path.length_support]
+        omega
+      have two_bound : 2 < path.support.length := by
+        rw [path.length_support]
+        omega
+      have support_eq : path.support[0] = path.support[2] := by
+        rw [path.support_getElem_eq_getVert zero_bound]
+        rw [path.support_getElem_eq_getVert two_bound]
+        exact equality
+      have index_eq : (0 : Nat) = 2 := by
+        exact (List.Nodup.getElem_inj_iff support_nodup).mp support_eq
+      omega
+    have center_vertex : center ∈ semiGraph.vertexSet := by
+      by_contra center_not_vertex
+      obtain ⟨neighbor, _, neighbor_unique⟩ :=
+        semiGraph.boundary_unique_neighbor center center_not_vertex
+      have left_eq : left = neighbor :=
+        neighbor_unique left left_adj_center.symm
+      have right_eq : right = neighbor :=
+        neighbor_unique right center_adj_right
+      exact left_ne_right (left_eq.trans right_eq.symm)
+    refine ⟨center, center_vertex, left, right, left_ne_right,
+      left_adj_center.symm, center_adj_right, ?_⟩
+    intro g
+    have path_fixed :=
+      SourceGraphAction.fixes_path_pointwise data.toGraphAction
+        semiGraph.compactification_isTree g
+        (start_fixed g) (finish_fixed g) path path_isPath
+    exact
+      ⟨path_fixed center (path.getVert_mem_support 1),
+        path_fixed left (path.getVert_mem_support 0),
+        path_fixed right (path.getVert_mem_support 2)⟩
+  obtain ⟨firstSecondPath, firstSecondIsPath⟩ :=
+    semiGraph.compactification_isTree.connected.exists_isPath first second
+  by_cases firstSecondLong : 2 ≤ firstSecondPath.length
+  · exact subjoint_of_long_path firstSecondPath firstSecondIsPath
+      firstSecondLong first_fixed second_fixed
+  have firstSecondPositive : 0 < firstSecondPath.length := by
+    by_contra not_positive
+    have length_zero : firstSecondPath.length = 0 := by omega
+    exact first_ne_second
+      (SimpleGraph.Walk.eq_of_length_eq_zero length_zero)
+  have firstSecondLength : firstSecondPath.length = 1 := by omega
+  have first_adj_second : graph.Adj first second :=
+    SimpleGraph.Walk.adj_of_length_eq_one firstSecondLength
+  obtain ⟨firstThirdPath, firstThirdIsPath⟩ :=
+    semiGraph.compactification_isTree.connected.exists_isPath first third
+  by_cases firstThirdLong : 2 ≤ firstThirdPath.length
+  · exact subjoint_of_long_path firstThirdPath firstThirdIsPath
+      firstThirdLong first_fixed third_fixed
+  have firstThirdPositive : 0 < firstThirdPath.length := by
+    by_contra not_positive
+    have length_zero : firstThirdPath.length = 0 := by omega
+    exact first_ne_third
+      (SimpleGraph.Walk.eq_of_length_eq_zero length_zero)
+  have firstThirdLength : firstThirdPath.length = 1 := by omega
+  have first_adj_third : graph.Adj first third :=
+    SimpleGraph.Walk.adj_of_length_eq_one firstThirdLength
+  exact ⟨first, first_vertex, second, third, second_ne_third,
+    first_adj_second, first_adj_third, fun g =>
+      ⟨first_fixed g, second_fixed g, third_fixed g⟩⟩
+
+end Action
+
+end SourceSemiGraphTree
 
 open scoped Pointwise
 

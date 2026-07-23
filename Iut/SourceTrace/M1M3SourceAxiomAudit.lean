@@ -416,6 +416,11 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceGraphAction.exists_invariant_subtree_card_le_two
 #print axioms Iut.SourceGraphAction.finite_fixesVertexOrEdge
 #print axioms Iut.SourceGraphAction.fixesVertexOrEdge
+#print axioms
+  Iut.SourceSemiGraphTree.Action.fixedOpenEdge_of_fixed_boundary
+#print axioms Iut.SourceSemiGraphTree.Action.fixesVertexOrEdge
+#print axioms
+  Iut.SourceSemiGraphTree.Action.fixesSubjoint_of_three_fixed_vertices
 #print axioms Iut.SourceGraphAction.fixes_path_pointwise
 #print axioms Iut.SourceGraphAction.subgroup_fixes_geodesic_pointwise
 #print axioms
