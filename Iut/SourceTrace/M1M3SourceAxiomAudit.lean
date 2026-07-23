@@ -417,6 +417,15 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceSemiGraph.Sub.coincidence_eq_some_iff
 #print axioms Iut.SourceSemiGraph.compactification_isGraph
 #print axioms Iut.SourceSemiGraph.Hom.compactificationMap
+#print axioms
+  Iut.SourceSemiGraph.Action.branchStabilizer_le_edgeStabilizer
+#print axioms
+  Iut.SourceSemiGraph.Action.branchStabilizer_le_vertexStabilizer
+#print axioms Iut.SourceSemiGraph.Action.actIncidentBranch_bijective
+#print axioms
+  Iut.SourceCofilteredFiniteActionSystem.mem_sectionStabilizer_iff_forall_coordinate
+#print axioms
+  Iut.SourceCofilteredFiniteActionSystem.sectionStabilizer_eq_iInf_coordinateStabilizer
 #print axioms Iut.SourceGraphAction.dist_image
 #print axioms Iut.SourceFiniteTree.exists_degree_ne_one
 #print axioms Iut.SourceFiniteTree.induce_degree_ne_one_connected

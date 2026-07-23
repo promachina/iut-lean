@@ -270,6 +270,16 @@
   \lean{Iut.SourceSemiGraph.compactification}
   \lean{Iut.SourceSemiGraph.compactification_isGraph}
   \lean{Iut.SourceSemiGraph.Hom.compactificationMap}
+  \lean{Iut.SourceSemiGraph.Action}
+  \lean{Iut.SourceSemiGraph.Action.branchStabilizer_le_edgeStabilizer}
+  \lean{Iut.SourceSemiGraph.Action.branchStabilizer_le_vertexStabilizer}
+  \lean{Iut.SourceSemiGraph.Action.actIncidentBranch_bijective}
+  \lean{Iut.SourceCofilteredFiniteActionSystem}
+  \lean{Iut.SourceCofilteredFiniteActionSystem.actSection}
+  \lean{Iut.SourceCofilteredFiniteActionSystem.sectionAction}
+  \lean{Iut.SourceCofilteredFiniteActionSystem.sectionStabilizer}
+  \lean{Iut.SourceCofilteredFiniteActionSystem.mem_sectionStabilizer_iff_forall_coordinate}
+  \lean{Iut.SourceCofilteredFiniteActionSystem.sectionStabilizer_eq_iInf_coordinateStabilizer}
   \lean{Iut.SourceGraphAction}
   \lean{Iut.SourceGraphAction.dist_image}
   \lean{Iut.SourceFiniteTree.induce_degree_ne_one_connected}
@@ -320,6 +330,14 @@
   cardinality, constructs sub-semi-graphs by truncating omitted abutments, and
   proves that compactification is a graph and constructs the compactification
   morphism induced by every general morphism.
+  A coherent raw action is then defined on vertices, edges, and total branches.
+  Fixing an incident branch forces fixation of its edge and abutting vertex,
+  and every acting element permutes incident branches bijectively.  For a
+  cofiltered finite system, Lean constructs the componentwise action on
+  compatible sections and proves that the stabilizer of a compatible system is
+  the intersection of all finite-level coordinate stabilizers.  This is the
+  action-and-stabilizer portion of Remark~2.2.1; the graph-of-groups
+  identification with constituent fundamental-group images remains open.
 
   A finite group acting on an arbitrary simple tree fixes a vertex or an edge
   setwise.  Lean proves this by constructing the finite connected invariant

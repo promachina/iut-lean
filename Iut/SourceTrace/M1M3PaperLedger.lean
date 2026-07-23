@@ -439,6 +439,20 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceSemiGraphTree.Action.fixesSubjoint_of_three_fixed_vertices"]
       .partialImplementation
       "In the marked-compactification encoding, Lean proves for an arbitrary group action that three distinct fixed original vertices yield a fixed subjoint; finiteness of the acting group is not used after the vertices are fixed. It extracts consecutive edges from a fixed geodesic and uses the unique-neighbor boundary condition to prove their common point is original. Raw sub-semi-graphs and their truncation rule are now defined, but constructing this fixed subjoint as a raw joint and proving its connected topological realization remain open.",
+    clause "SemiAnbd.2.2.1" .semiGraphsAnabelioids
+      "Semi-graphs of Anabelioids, Remark 2.2.1"
+      ["SourceSemiGraph.Action",
+        "SourceSemiGraph.Action.branchStabilizer_le_edgeStabilizer",
+        "SourceSemiGraph.Action.branchStabilizer_le_vertexStabilizer",
+        "SourceSemiGraph.Action.actIncidentBranch_bijective",
+        "SourceCofilteredFiniteActionSystem",
+        "SourceCofilteredFiniteActionSystem.actSection",
+        "SourceCofilteredFiniteActionSystem.sectionAction",
+        "SourceCofilteredFiniteActionSystem.sectionStabilizer",
+        "SourceCofilteredFiniteActionSystem.mem_sectionStabilizer_iff_forall_coordinate",
+        "SourceCofilteredFiniteActionSystem.sectionStabilizer_eq_iInf_coordinateStabilizer"]
+      .partialImplementation
+      "Lean defines coherent actions on raw vertices, edges, and total branches; proves that fixing an incident branch fixes its edge and abutting vertex; and constructs the action on compatible sections of a cofiltered finite system. The stabilizer of a compatible system is proved equal to the intersection of all finite-level coordinate stabilizers. Constructing the universal pro-finite etale covering from normal open subgroups of Pi_G and proving that its compatible vertex and edge stabilizers equal the images of Pi_v and Pi_b remain open.",
     clause "SemiAnbd.2.4(iv)" .semiGraphsAnabelioids
       "Semi-graphs of Anabelioids, Definition 2.4(iv)"
       ["SourceEstrangedIncidentBranchSystem",
@@ -2218,8 +2232,8 @@ def clauseIdsWithStatus (status : ClauseStatus) : List String :=
   m1m3PaperLedger.filterMap fun entry =>
     if entry.status = status then some entry.id else none
 
-/-- The source-closure ledger contains 123 separately audited clauses. -/
-theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 123 :=
+/-- The source-closure ledger contains 124 separately audited clauses. -/
+theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 124 :=
   rfl
 
 /-- No source clause occurs twice in the direct-citation ledger. -/
@@ -2227,9 +2241,9 @@ theorem m1m3PaperLedger_ids_nodup :
     (m1m3PaperLedger.map PaperClause.id).Nodup := by
   decide
 
-/-- Ninety-eight clauses currently have a genuine but incomplete implementation. -/
+/-- Ninety-nine clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 98 :=
+    (clauseIdsWithStatus .partialImplementation).length = 99 :=
   rfl
 
 /-- Four clauses currently point only to explicitly classified toy models. -/
