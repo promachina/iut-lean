@@ -446,6 +446,10 @@ visible to Lean's axiom reporter.
 #print axioms Iut.sourcePaperInducedActionIso
 #print axioms Iut.sourceOpenCosetSliceEquivalence
 #print axioms Iut.sourceSliceForgetAdjProduct
+#print axioms Iut.sourceDependentSection_continuous
+#print axioms Iut.sourceSliceDependentSectionHomEquiv
+#print axioms Iut.sourceSliceProductAdjDependentSection
+#print axioms Iut.sourceSliceProduct_preservesFiniteColimits
 #print axioms Iut.sourceInductionRestrictionAdjunction
 #print axioms Iut.sourceOpenSubgroupRestrictionSliceIso
 #print axioms Iut.sourceOpenSubgroupFiniteEtaleFactorization

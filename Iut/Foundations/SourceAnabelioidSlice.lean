@@ -29,6 +29,7 @@ namespace Iut
 universe u v w v'
 
 open CategoryTheory
+open CategoryTheory.Limits
 open scoped FintypeCatDiscrete
 
 /-! ## Open normal cores -/
@@ -1423,6 +1424,896 @@ noncomputable instance sourceSliceProduct_preservesFiniteLimits
     (sourceSliceForgetAdjProduct G S).rightAdjoint_preservesLimits
   infer_instance
 
+/-! ## Dependent sections and arbitrary-base exactness -/
+
+/-- A dependent section of an object `T -> S` in the slice is a choice of a
+point of every fiber. -/
+structure SourceDependentSection
+    {G : ProfiniteGrp.{u}} {S : ContAction FintypeCat.{u} G}
+    (T : Over S) where
+  toFun : S.obj.V → T.left.obj.V
+  mapsToFiber : ∀ s, T.hom.hom.hom (toFun s) = s
+
+namespace SourceDependentSection
+
+variable {G : ProfiniteGrp.{u}} {S : ContAction FintypeCat.{u} G}
+variable (T : Over S)
+
+instance : FunLike (SourceDependentSection T) S.obj.V T.left.obj.V where
+  coe := toFun
+  coe_injective' first second h := by
+    cases first
+    cases second
+    cases h
+    rfl
+
+@[ext]
+theorem ext
+    {first second : SourceDependentSection T}
+    (h : ∀ s, first s = second s) :
+    first = second :=
+  DFunLike.ext _ _ h
+
+instance : Finite (SourceDependentSection T) :=
+  Finite.of_injective
+    SourceDependentSection.toFun
+    (fun _ _ h => SourceDependentSection.ext T (congrFun h))
+
+noncomputable instance : Fintype (SourceDependentSection T) :=
+  Fintype.ofFinite _
+
+/-- Conjugation transports a dependent section to a dependent section. -/
+instance : SMul G (SourceDependentSection T) where
+  smul g value :=
+    { toFun := fun s => g • value (g⁻¹ • s)
+      mapsToFiber := fun s => by
+        calc
+          T.hom.hom.hom (g • value (g⁻¹ • s)) =
+              g • T.hom.hom.hom (value (g⁻¹ • s)) := by
+                exact ConcreteCategory.congr_hom
+                  (T.hom.hom.comm g) (value (g⁻¹ • s))
+          _ = g • (g⁻¹ • s) := by
+            exact congrArg (g • ·)
+              (value.mapsToFiber (g⁻¹ • s))
+          _ = s := by simp only [← mul_smul, mul_inv_cancel, one_smul] }
+
+instance : MulAction G (SourceDependentSection T) where
+  one_smul value := by
+    ext s
+    change (1 : G) • value ((1 : G)⁻¹ • s) = value s
+    simp
+  mul_smul first second value := by
+    ext s
+    change
+      (first * second) • value ((first * second)⁻¹ • s) =
+        first • (second • value (second⁻¹ • (first⁻¹ • s)))
+    simp only [mul_inv_rev, mul_smul]
+
+@[simp]
+theorem smul_apply
+    (g : G) (value : SourceDependentSection T) (s : S.obj.V) :
+    (g • value) s = g • value (g⁻¹ • s) :=
+  rfl
+
+noncomputable instance : TopologicalSpace (SourceDependentSection T) := ⊥
+
+instance : DiscreteTopology (SourceDependentSection T) := ⟨rfl⟩
+
+end SourceDependentSection
+
+/-- The finite intersection of the pointwise stabilizers of an action. -/
+def sourceActionGlobalKernel
+    (G : ProfiniteGrp.{u}) (X : ContAction FintypeCat.{u} G) :
+    Subgroup G :=
+  ⨅ x : X.obj.V, MulAction.stabilizer G x
+
+/-- The global kernel of a finite continuous action is open. -/
+theorem sourceActionGlobalKernel_isOpen
+    (G : ProfiniteGrp.{u}) (X : ContAction FintypeCat.{u} G) :
+    IsOpen (sourceActionGlobalKernel G X : Set G) := by
+  rw [sourceActionGlobalKernel, Subgroup.coe_iInf]
+  exact isOpen_iInter_of_finite fun x => by
+    haveI : ContinuousSMul G X.obj.V := X.property
+    exact stabilizer_isOpen G x
+
+/-- An element of the global kernel fixes every point. -/
+theorem sourceActionGlobalKernel_fixes
+    (G : ProfiniteGrp.{u}) (X : ContAction FintypeCat.{u} G)
+    {g : G} (hg : g ∈ sourceActionGlobalKernel G X)
+    (x : X.obj.V) :
+    g • x = x := by
+  rw [← MulAction.mem_stabilizer_iff]
+  exact Subgroup.mem_iInf.mp hg x
+
+/-- The dependent-section action is continuous.  The stabilizer of every
+section contains the intersection of the global kernels on the base and total
+space. -/
+theorem sourceDependentSection_continuous
+    (G : ProfiniteGrp.{u}) (S : ContAction FintypeCat.{u} G)
+    (T : Over S) :
+    ContinuousSMul G (SourceDependentSection T) := by
+  rw [continuousSMul_iff_stabilizer_isOpen]
+  intro value
+  let K : Subgroup G :=
+    sourceActionGlobalKernel G S ⊓
+      sourceActionGlobalKernel G T.left
+  have hK_open : IsOpen (K : Set G) := by
+    exact
+      (sourceActionGlobalKernel_isOpen G S).inter
+        (sourceActionGlobalKernel_isOpen G T.left)
+  apply Subgroup.isOpen_mono
+    (H₁ := K)
+    (H₂ := MulAction.stabilizer G value) _ hK_open
+  intro g hg
+  rw [MulAction.mem_stabilizer_iff]
+  apply SourceDependentSection.ext
+  intro s
+  have hg_base :
+      g ∈ sourceActionGlobalKernel G S :=
+    (Subgroup.mem_inf.mp hg).1
+  have hg_total :
+      g ∈ sourceActionGlobalKernel G T.left :=
+    (Subgroup.mem_inf.mp hg).2
+  have hginv_base :
+      g⁻¹ ∈ sourceActionGlobalKernel G S :=
+    (sourceActionGlobalKernel G S).inv_mem hg_base
+  change g • value (g⁻¹ • s) = value s
+  rw [sourceActionGlobalKernel_fixes G S hginv_base s]
+  exact
+    sourceActionGlobalKernel_fixes
+      G T.left hg_total (value s)
+
+/-- The finite continuous action of dependent sections of `T -> S`. -/
+noncomputable def sourceDependentSectionAction
+    (G : ProfiniteGrp.{u}) (S : ContAction FintypeCat.{u} G)
+    (T : Over S) :
+    ContAction FintypeCat.{u} G := by
+  exact
+    ⟨Action.FintypeCat.ofMulAction G
+      (FintypeCat.of (SourceDependentSection T)),
+      sourceDependentSection_continuous G S T⟩
+
+/-- Postcomposition maps dependent sections along a morphism in the slice. -/
+def sourceDependentSectionMapFunction
+    {G : ProfiniteGrp.{u}} {S : ContAction FintypeCat.{u} G}
+    {T U : Over S} (f : T ⟶ U) :
+    SourceDependentSection T → SourceDependentSection U :=
+  fun value =>
+    { toFun := fun s => f.left.hom.hom (value s)
+      mapsToFiber := fun s => by
+        have hwFiber :=
+          congrArg
+            (fun map : T.left ⟶ S =>
+              (continuousActionFiber G).map map)
+            (Over.w f)
+        dsimp only at hwFiber
+        rw [Functor.map_comp] at hwFiber
+        have hpoint :=
+          ConcreteCategory.congr_hom hwFiber (value s)
+        exact hpoint.trans (value.mapsToFiber s) }
+
+@[simp]
+theorem sourceDependentSectionMapFunction_apply
+    {G : ProfiniteGrp.{u}} {S : ContAction FintypeCat.{u} G}
+    {T U : Over S} (f : T ⟶ U)
+    (value : SourceDependentSection T) (s : S.obj.V) :
+    sourceDependentSectionMapFunction f value s =
+      f.left.hom.hom (value s) :=
+  rfl
+
+/-- Postcomposition of dependent sections is equivariant. -/
+theorem sourceDependentSectionMapFunction_equivariant
+    {G : ProfiniteGrp.{u}} {S : ContAction FintypeCat.{u} G}
+    {T U : Over S} (f : T ⟶ U)
+    (g : G) (value : SourceDependentSection T) :
+    sourceDependentSectionMapFunction f (g • value) =
+      g • sourceDependentSectionMapFunction f value := by
+  apply SourceDependentSection.ext
+  intro s
+  change
+    f.left.hom.hom (g • value (g⁻¹ • s)) =
+      g • f.left.hom.hom (value (g⁻¹ • s))
+  exact ConcreteCategory.congr_hom
+    (f.left.hom.comm g) (value (g⁻¹ • s))
+
+/-- Postcomposition as a morphism of finite continuous actions. -/
+noncomputable def sourceDependentSectionMap
+    {G : ProfiniteGrp.{u}} {S : ContAction FintypeCat.{u} G}
+    {T U : Over S} (f : T ⟶ U) :
+    sourceDependentSectionAction G S T ⟶
+      sourceDependentSectionAction G S U :=
+  ObjectProperty.homMk
+    ({ hom :=
+        FintypeCat.homMk
+          (sourceDependentSectionMapFunction f)
+       comm := fun g => by
+         ext value
+         exact
+           sourceDependentSectionMapFunction_equivariant
+             f g value } :
+      (sourceDependentSectionAction G S T).obj ⟶
+        (sourceDependentSectionAction G S U).obj)
+
+/-- The dependent-section construction as a functor from the slice. -/
+noncomputable def sourceDependentSectionFunctor
+    (G : ProfiniteGrp.{u}) (S : ContAction FintypeCat.{u} G) :
+    Over S ⥤ ContAction FintypeCat.{u} G where
+  obj := sourceDependentSectionAction G S
+  map := sourceDependentSectionMap
+  map_id T := by
+    apply ObjectProperty.hom_ext
+    apply Action.Hom.ext
+    ext value
+    apply SourceDependentSection.ext
+    intro s
+    rfl
+  map_comp f g := by
+    apply ObjectProperty.hom_ext
+    apply Action.Hom.ext
+    ext value
+    apply SourceDependentSection.ext
+    intro s
+    rfl
+
+/-- The chosen categorical product of two continuous actions, compared with
+the ordinary product of their underlying finite sets. -/
+noncomputable def sourceActionProductEquiv
+    (G : ProfiniteGrp.{u})
+    (first second : ContAction FintypeCat.{u} G) :
+    (first ⨯ second).obj.V ≃ first.obj.V × second.obj.V := by
+  letI :
+      PreservesLimit (pair first second)
+        (forget (ContAction FintypeCat.{u} G)) := by
+    change
+      PreservesLimit (pair first second)
+        (continuousActionFiber G ⋙ FintypeCat.incl)
+    infer_instance
+  exact Concrete.prodEquiv first second
+
+@[simp]
+theorem sourceActionProductEquiv_fst
+    (G : ProfiniteGrp.{u})
+    (first second : ContAction FintypeCat.{u} G)
+    (point : (first ⨯ second).obj.V) :
+    (sourceActionProductEquiv G first second point).1 =
+      (prod.fst : first ⨯ second ⟶ first).hom.hom point := by
+  letI :
+      PreservesLimit (pair first second)
+        (forget (ContAction FintypeCat.{u} G)) := by
+    change
+      PreservesLimit (pair first second)
+        (continuousActionFiber G ⋙ FintypeCat.incl)
+    infer_instance
+  exact Concrete.prodEquiv_apply_fst first second point
+
+@[simp]
+theorem sourceActionProductEquiv_snd
+    (G : ProfiniteGrp.{u})
+    (first second : ContAction FintypeCat.{u} G)
+    (point : (first ⨯ second).obj.V) :
+    (sourceActionProductEquiv G first second point).2 =
+      (prod.snd : first ⨯ second ⟶ second).hom.hom point := by
+  letI :
+      PreservesLimit (pair first second)
+        (forget (ContAction FintypeCat.{u} G)) := by
+    change
+      PreservesLimit (pair first second)
+        (continuousActionFiber G ⋙ FintypeCat.incl)
+    infer_instance
+  exact Concrete.prodEquiv_apply_snd first second point
+
+/-- The product comparison is equivariant. -/
+theorem sourceActionProductEquiv_smul
+    (G : ProfiniteGrp.{u})
+    (first second : ContAction FintypeCat.{u} G)
+    (g : G) (point : (first ⨯ second).obj.V) :
+    sourceActionProductEquiv G first second (g • point) =
+      (g • (sourceActionProductEquiv G first second point).1,
+        g • (sourceActionProductEquiv G first second point).2) := by
+  apply Prod.ext
+  · rw [sourceActionProductEquiv_fst,
+      sourceActionProductEquiv_fst]
+    exact ConcreteCategory.congr_hom
+      ((prod.fst : first ⨯ second ⟶ first).hom.comm g) point
+  · rw [sourceActionProductEquiv_snd,
+      sourceActionProductEquiv_snd]
+    exact ConcreteCategory.congr_hom
+      ((prod.snd : first ⨯ second ⟶ second).hom.comm g) point
+
+/-- Pair two points in the chosen categorical product. -/
+noncomputable def sourceActionProductMk
+    (G : ProfiniteGrp.{u})
+    (first second : ContAction FintypeCat.{u} G)
+    (firstPoint : first.obj.V) (secondPoint : second.obj.V) :
+    (first ⨯ second).obj.V :=
+  (sourceActionProductEquiv G first second).symm
+    (firstPoint, secondPoint)
+
+@[simp]
+theorem sourceActionProductEquiv_mk
+    (G : ProfiniteGrp.{u})
+    (first second : ContAction FintypeCat.{u} G)
+    (firstPoint : first.obj.V) (secondPoint : second.obj.V) :
+    sourceActionProductEquiv G first second
+        (sourceActionProductMk G first second firstPoint secondPoint) =
+      (firstPoint, secondPoint) :=
+  Equiv.apply_symm_apply _ _
+
+@[simp]
+theorem sourceActionProductMk_fst
+    (G : ProfiniteGrp.{u})
+    (first second : ContAction FintypeCat.{u} G)
+    (firstPoint : first.obj.V) (secondPoint : second.obj.V) :
+    (prod.fst : first ⨯ second ⟶ first).hom.hom
+        (sourceActionProductMk G first second firstPoint secondPoint) =
+      firstPoint := by
+  rw [← sourceActionProductEquiv_fst]
+  exact congrArg Prod.fst
+    (sourceActionProductEquiv_mk
+      G first second firstPoint secondPoint)
+
+@[simp]
+theorem sourceActionProductMk_snd
+    (G : ProfiniteGrp.{u})
+    (first second : ContAction FintypeCat.{u} G)
+    (firstPoint : first.obj.V) (secondPoint : second.obj.V) :
+    (prod.snd : first ⨯ second ⟶ second).hom.hom
+        (sourceActionProductMk G first second firstPoint secondPoint) =
+      secondPoint := by
+  rw [← sourceActionProductEquiv_snd]
+  exact congrArg Prod.snd
+    (sourceActionProductEquiv_mk
+      G first second firstPoint secondPoint)
+
+@[simp]
+theorem sourceActionProductMk_smul
+    (G : ProfiniteGrp.{u})
+    (first second : ContAction FintypeCat.{u} G)
+    (g : G)
+    (firstPoint : first.obj.V) (secondPoint : second.obj.V) :
+    g • sourceActionProductMk G first second firstPoint secondPoint =
+      sourceActionProductMk G first second
+        (g • firstPoint) (g • secondPoint) := by
+  apply (sourceActionProductEquiv G first second).injective
+  rw [sourceActionProductEquiv_smul]
+  simp only [sourceActionProductEquiv_mk]
+
+/-- The structure map of the object `S x X -> S` is the first product
+projection. -/
+theorem sourceSliceProduct_hom_eq_fst
+    (G : ProfiniteGrp.{u})
+    (S X : ContAction FintypeCat.{u} G) :
+    ((sourceSliceProductFunctor G S).obj X).hom =
+      (prod.fst : S ⨯ X ⟶ S) := by
+  dsimp only [sourceSliceProductFunctor]
+  change
+    prod.lift prod.fst (𝟙 (S ⨯ X)) ≫ prod.fst =
+      (prod.fst : S ⨯ X ⟶ S)
+  exact prod.lift_fst _ _
+
+/-- Currying an arrow `S x X -> T` over `S` produces an ordinary function
+from `X` to the dependent sections of `T -> S`. -/
+noncomputable def sourceSliceHomToDependentSectionFunction
+    (G : ProfiniteGrp.{u})
+    (S X : ContAction FintypeCat.{u} G)
+    (T : Over S)
+    (f : (sourceSliceProductFunctor G S).obj X ⟶ T) :
+    X.obj.V → SourceDependentSection T :=
+  fun x =>
+    { toFun := fun s =>
+        f.left.hom.hom
+          (sourceActionProductMk G S X s x)
+      mapsToFiber := fun s => by
+        let point :=
+          sourceActionProductMk G S X s x
+        have hwFiber :=
+          congrArg
+            (fun map :
+                ((sourceSliceProductFunctor G S).obj X).left ⟶ S =>
+              (continuousActionFiber G).map map)
+            (Over.w f)
+        dsimp only at hwFiber
+        rw [Functor.map_comp] at hwFiber
+        have hpoint :=
+          ConcreteCategory.congr_hom hwFiber point
+        calc
+          T.hom.hom.hom (f.left.hom.hom point) =
+              ((sourceSliceProductFunctor G S).obj X).hom.hom.hom
+                point :=
+            hpoint
+          _ =
+              (prod.fst : S ⨯ X ⟶ S).hom.hom point := by
+            exact congrArg
+              (fun map : (S ⨯ X) ⟶ S =>
+                map.hom.hom point)
+              (sourceSliceProduct_hom_eq_fst G S X)
+          _ = s :=
+            sourceActionProductMk_fst G S X s x }
+
+@[simp]
+theorem sourceSliceHomToDependentSectionFunction_apply
+    (G : ProfiniteGrp.{u})
+    (S X : ContAction FintypeCat.{u} G)
+    (T : Over S)
+    (f : (sourceSliceProductFunctor G S).obj X ⟶ T)
+    (x : X.obj.V) (s : S.obj.V) :
+    sourceSliceHomToDependentSectionFunction G S X T f x s =
+      f.left.hom.hom
+        (sourceActionProductMk G S X s x) :=
+  rfl
+
+/-- The curried function is equivariant. -/
+theorem sourceSliceHomToDependentSectionFunction_equivariant
+    (G : ProfiniteGrp.{u})
+    (S X : ContAction FintypeCat.{u} G)
+    (T : Over S)
+    (f : (sourceSliceProductFunctor G S).obj X ⟶ T)
+    (g : G) (x : X.obj.V) :
+    sourceSliceHomToDependentSectionFunction G S X T f (g • x) =
+      g • sourceSliceHomToDependentSectionFunction G S X T f x := by
+  apply SourceDependentSection.ext
+  intro s
+  change
+    f.left.hom.hom
+        (sourceActionProductMk G S X s (g • x)) =
+      g •
+        f.left.hom.hom
+          (sourceActionProductMk G S X (g⁻¹ • s) x)
+  have hpair :
+      g • sourceActionProductMk G S X (g⁻¹ • s) x =
+        sourceActionProductMk G S X s (g • x) := by
+    rw [sourceActionProductMk_smul]
+    simp only [← mul_smul, mul_inv_cancel, one_smul]
+  calc
+    f.left.hom.hom
+          (sourceActionProductMk G S X s (g • x)) =
+        f.left.hom.hom
+          (g •
+            sourceActionProductMk G S X (g⁻¹ • s) x) :=
+      congrArg f.left.hom.hom hpair.symm
+    _ =
+        g •
+          f.left.hom.hom
+            (sourceActionProductMk G S X (g⁻¹ • s) x) :=
+      ConcreteCategory.congr_hom
+        (f.left.hom.comm g)
+        (sourceActionProductMk G S X (g⁻¹ • s) x)
+
+/-- Currying as a morphism of finite continuous actions. -/
+noncomputable def sourceSliceHomToDependentSection
+    (G : ProfiniteGrp.{u})
+    (S X : ContAction FintypeCat.{u} G)
+    (T : Over S)
+    (f : (sourceSliceProductFunctor G S).obj X ⟶ T) :
+    X ⟶ (sourceDependentSectionFunctor G S).obj T :=
+  ObjectProperty.homMk
+    ({ hom :=
+        FintypeCat.homMk
+          (sourceSliceHomToDependentSectionFunction G S X T f)
+       comm := fun g => by
+         ext x
+         exact
+           sourceSliceHomToDependentSectionFunction_equivariant
+             G S X T f g x } :
+      X.obj ⟶
+        ((sourceDependentSectionFunctor G S).obj T).obj)
+
+/-- Evaluating a family of dependent sections at the two coordinates of
+`S x X` gives the inverse uncurrying function. -/
+noncomputable def sourceDependentSectionHomToSliceFunction
+    (G : ProfiniteGrp.{u})
+    (S X : ContAction FintypeCat.{u} G)
+    (T : Over S)
+    (f : X ⟶ (sourceDependentSectionFunctor G S).obj T) :
+    (S ⨯ X).obj.V → T.left.obj.V :=
+  fun point =>
+    let coordinates :=
+      sourceActionProductEquiv G S X point
+    (show SourceDependentSection T from
+      f.hom.hom coordinates.2) coordinates.1
+
+@[simp]
+theorem sourceDependentSectionHomToSliceFunction_mk
+    (G : ProfiniteGrp.{u})
+    (S X : ContAction FintypeCat.{u} G)
+    (T : Over S)
+    (f : X ⟶ (sourceDependentSectionFunctor G S).obj T)
+    (s : S.obj.V) (x : X.obj.V) :
+    sourceDependentSectionHomToSliceFunction G S X T f
+        (sourceActionProductMk G S X s x) =
+      (show SourceDependentSection T from
+        f.hom.hom x) s := by
+  simp only [sourceDependentSectionHomToSliceFunction,
+    sourceActionProductEquiv_mk]
+
+/-- Evaluation of an equivariant family of sections is equivariant. -/
+theorem sourceDependentSectionHomToSliceFunction_equivariant
+    (G : ProfiniteGrp.{u})
+    (S X : ContAction FintypeCat.{u} G)
+    (T : Over S)
+    (f : X ⟶ (sourceDependentSectionFunctor G S).obj T)
+    (g : G) (point : (S ⨯ X).obj.V) :
+    sourceDependentSectionHomToSliceFunction G S X T f
+        (g • point) =
+      g • sourceDependentSectionHomToSliceFunction G S X T f point := by
+  let coordinates :=
+    sourceActionProductEquiv G S X point
+  have hcoordinates :
+      sourceActionProductEquiv G S X (g • point) =
+        (g • coordinates.1, g • coordinates.2) :=
+    sourceActionProductEquiv_smul G S X g point
+  have hmap :
+      f.hom.hom (g • coordinates.2) =
+        g • f.hom.hom coordinates.2 :=
+    ConcreteCategory.congr_hom
+      (f.hom.comm g) coordinates.2
+  change
+    (show SourceDependentSection T from
+      f.hom.hom
+        (sourceActionProductEquiv G S X (g • point)).2)
+        (sourceActionProductEquiv G S X (g • point)).1 =
+      g •
+        (show SourceDependentSection T from
+          f.hom.hom coordinates.2) coordinates.1
+  rw [hcoordinates]
+  change
+    (show SourceDependentSection T from
+      f.hom.hom (g • coordinates.2)) (g • coordinates.1) =
+      g •
+        (show SourceDependentSection T from
+          f.hom.hom coordinates.2) coordinates.1
+  rw [hmap]
+  change
+    (g •
+      (show SourceDependentSection T from
+        f.hom.hom coordinates.2)) (g • coordinates.1) =
+      g •
+        (show SourceDependentSection T from
+          f.hom.hom coordinates.2) coordinates.1
+  rw [SourceDependentSection.smul_apply]
+  simp only [← mul_smul, inv_mul_cancel, one_smul]
+
+/-- Evaluation as a morphism of continuous `G`-actions. -/
+noncomputable def sourceDependentSectionHomToProductAction
+    (G : ProfiniteGrp.{u})
+    (S X : ContAction FintypeCat.{u} G)
+    (T : Over S)
+    (f : X ⟶ (sourceDependentSectionFunctor G S).obj T) :
+    S ⨯ X ⟶ T.left :=
+  ObjectProperty.homMk
+    ({ hom :=
+        FintypeCat.homMk
+          (sourceDependentSectionHomToSliceFunction G S X T f)
+       comm := fun g => by
+         ext point
+         exact
+           sourceDependentSectionHomToSliceFunction_equivariant
+             G S X T f g point } :
+      (S ⨯ X).obj ⟶ T.left.obj)
+
+/-- Uncurrying an equivariant family of dependent sections gives an arrow in
+the slice over `S`. -/
+noncomputable def sourceDependentSectionHomToSlice
+    (G : ProfiniteGrp.{u})
+    (S X : ContAction FintypeCat.{u} G)
+    (T : Over S)
+    (f : X ⟶ (sourceDependentSectionFunctor G S).obj T) :
+    (sourceSliceProductFunctor G S).obj X ⟶ T :=
+  Over.homMk
+    (sourceDependentSectionHomToProductAction G S X T f)
+    (by
+      apply ObjectProperty.hom_ext
+      apply Action.Hom.ext
+      ext point
+      let coordinates :=
+        sourceActionProductEquiv G S X point
+      change
+        T.hom.hom.hom
+            (sourceDependentSectionHomToSliceFunction
+              G S X T f point) =
+          ((sourceSliceProductFunctor G S).obj X).hom.hom.hom
+            point
+      calc
+        T.hom.hom.hom
+              (sourceDependentSectionHomToSliceFunction
+                G S X T f point) =
+            coordinates.1 :=
+          (show SourceDependentSection T from
+            f.hom.hom coordinates.2).mapsToFiber coordinates.1
+        _ =
+            (prod.fst : S ⨯ X ⟶ S).hom.hom point :=
+          sourceActionProductEquiv_fst G S X point
+        _ =
+            ((sourceSliceProductFunctor G S).obj X).hom.hom.hom
+              point := by
+          exact congrArg
+            (fun map : (S ⨯ X) ⟶ S =>
+              map.hom.hom point)
+            (sourceSliceProduct_hom_eq_fst G S X).symm)
+
+/-- Uncurrying after currying recovers the original arrow over `S`. -/
+theorem sourceSliceDependentSection_leftInverse
+    (G : ProfiniteGrp.{u})
+    (S X : ContAction FintypeCat.{u} G)
+    (T : Over S)
+    (f : (sourceSliceProductFunctor G S).obj X ⟶ T) :
+    sourceDependentSectionHomToSlice G S X T
+        (sourceSliceHomToDependentSection G S X T f) =
+      f := by
+  apply Over.OverMorphism.ext
+  apply ObjectProperty.hom_ext
+  apply Action.Hom.ext
+  ext point
+  let coordinates :=
+    sourceActionProductEquiv G S X point
+  have hpoint :
+      sourceActionProductMk G S X
+          coordinates.1 coordinates.2 =
+        point :=
+    (sourceActionProductEquiv G S X).symm_apply_apply point
+  change
+    (sourceSliceHomToDependentSectionFunction
+      G S X T f coordinates.2) coordinates.1 =
+      f.left.hom.hom point
+  rw [sourceSliceHomToDependentSectionFunction_apply]
+  exact congrArg f.left.hom.hom hpoint
+
+/-- Currying after uncurrying recovers the original equivariant family of
+dependent sections. -/
+theorem sourceSliceDependentSection_rightInverse
+    (G : ProfiniteGrp.{u})
+    (S X : ContAction FintypeCat.{u} G)
+    (T : Over S)
+    (f : X ⟶ (sourceDependentSectionFunctor G S).obj T) :
+    sourceSliceHomToDependentSection G S X T
+        (sourceDependentSectionHomToSlice G S X T f) =
+      f := by
+  apply ObjectProperty.hom_ext
+  apply Action.Hom.ext
+  ext x
+  apply SourceDependentSection.ext
+  intro s
+  change
+    sourceDependentSectionHomToSliceFunction G S X T f
+        (sourceActionProductMk G S X s x) =
+      (show SourceDependentSection T from f.hom.hom x) s
+  exact sourceDependentSectionHomToSliceFunction_mk G S X T f s x
+
+/-- The explicit currying equivalence for product with an arbitrary finite
+continuous base action. -/
+noncomputable def sourceSliceDependentSectionHomEquiv
+    (G : ProfiniteGrp.{u})
+    (S X : ContAction FintypeCat.{u} G)
+    (T : Over S) :
+    ((sourceSliceProductFunctor G S).obj X ⟶ T) ≃
+      (X ⟶ (sourceDependentSectionFunctor G S).obj T) where
+  toFun := sourceSliceHomToDependentSection G S X T
+  invFun := sourceDependentSectionHomToSlice G S X T
+  left_inv := sourceSliceDependentSection_leftInverse G S X T
+  right_inv := sourceSliceDependentSection_rightInverse G S X T
+
+/-- Composition of morphisms of continuous actions is ordinary composition
+on underlying points. -/
+theorem sourceContinuousAction_comp_apply
+    {G : ProfiniteGrp.{u}}
+    {X Y Z : ContAction FintypeCat.{u} G}
+    (f : X ⟶ Y) (g : Y ⟶ Z) (x : X.obj.V) :
+    (f ≫ g).hom.hom x = g.hom.hom (f.hom.hom x) := by
+  have hmap :=
+    Functor.map_comp (continuousActionFiber G) f g
+  have hpoint :=
+    ConcreteCategory.congr_hom hmap x
+  simpa only [FintypeCat.comp_apply] using hpoint
+
+/-- On left objects, the slice product functor maps `f` by
+`id_S x f`. -/
+theorem sourceSliceProduct_map_left
+    (G : ProfiniteGrp.{u})
+    (S : ContAction FintypeCat.{u} G)
+    {X Y : ContAction FintypeCat.{u} G}
+    (f : X ⟶ Y) :
+    ((sourceSliceProductFunctor G S).map f).left =
+      prod.map (𝟙 S) f := by
+  dsimp only [sourceSliceProductFunctor]
+  rfl
+
+/-- The map `id_S x f` sends the explicit pair `(s,x)` to `(s,f(x))`. -/
+theorem sourceSliceProduct_map_mk
+    (G : ProfiniteGrp.{u})
+    (S : ContAction FintypeCat.{u} G)
+    {X Y : ContAction FintypeCat.{u} G}
+    (f : X ⟶ Y) (s : S.obj.V) (x : X.obj.V) :
+    ((sourceSliceProductFunctor G S).map f).left.hom.hom
+        (sourceActionProductMk G S X s x) =
+      sourceActionProductMk G S Y s (f.hom.hom x) := by
+  let point :=
+    sourceActionProductMk G S X s x
+  apply (sourceActionProductEquiv G S Y).injective
+  rw [sourceActionProductEquiv_mk]
+  apply Prod.ext
+  · change
+      (sourceActionProductEquiv G S Y
+        (((sourceSliceProductFunctor G S).map f).left.hom.hom
+          (sourceActionProductMk G S X s x))).1 = s
+    rw [sourceActionProductEquiv_fst]
+    have hfirst :
+        ((sourceSliceProductFunctor G S).map f).left ≫
+            (prod.fst : S ⨯ Y ⟶ S) =
+          (prod.fst : S ⨯ X ⟶ S) := by
+      rw [sourceSliceProduct_map_left]
+      exact (prod.map_fst (𝟙 S) f).trans (Category.comp_id _)
+    let mappedPoint :=
+      ((sourceSliceProductFunctor G S).map f).left.hom.hom point
+    calc
+      (prod.fst : S ⨯ Y ⟶ S).hom.hom mappedPoint =
+          (((sourceSliceProductFunctor G S).map f).left ≫
+            (prod.fst : S ⨯ Y ⟶ S)).hom.hom point :=
+        (sourceContinuousAction_comp_apply
+          ((sourceSliceProductFunctor G S).map f).left
+          (prod.fst : S ⨯ Y ⟶ S) point).symm
+      _ =
+          (prod.fst : S ⨯ X ⟶ S).hom.hom point := by
+        exact congrArg
+          (fun map : (S ⨯ X) ⟶ S => map.hom.hom point)
+          hfirst
+      _ = s := sourceActionProductMk_fst G S X s x
+  · change
+      (sourceActionProductEquiv G S Y
+        (((sourceSliceProductFunctor G S).map f).left.hom.hom
+          (sourceActionProductMk G S X s x))).2 =
+        f.hom.hom x
+    rw [sourceActionProductEquiv_snd]
+    have hsecond :
+        ((sourceSliceProductFunctor G S).map f).left ≫
+            (prod.snd : S ⨯ Y ⟶ Y) =
+          (prod.snd : S ⨯ X ⟶ X) ≫ f := by
+      rw [sourceSliceProduct_map_left]
+      exact prod.map_snd (𝟙 S) f
+    let mappedPoint :=
+      ((sourceSliceProductFunctor G S).map f).left.hom.hom point
+    calc
+      (prod.snd : S ⨯ Y ⟶ Y).hom.hom mappedPoint =
+          (((sourceSliceProductFunctor G S).map f).left ≫
+            (prod.snd : S ⨯ Y ⟶ Y)).hom.hom point :=
+        (sourceContinuousAction_comp_apply
+          ((sourceSliceProductFunctor G S).map f).left
+          (prod.snd : S ⨯ Y ⟶ Y) point).symm
+      _ =
+          ((prod.snd : S ⨯ X ⟶ X) ≫ f).hom.hom point := by
+        exact congrArg
+          (fun map : (S ⨯ X) ⟶ Y => map.hom.hom point)
+          hsecond
+      _ =
+          f.hom.hom
+            ((prod.snd : S ⨯ X ⟶ X).hom.hom point) :=
+        sourceContinuousAction_comp_apply
+          (prod.snd : S ⨯ X ⟶ X) f point
+      _ = f.hom.hom x := by
+        dsimp only [point]
+        rw [sourceActionProductMk_snd]
+
+/-- Naturality of uncurrying in the action variable. -/
+theorem sourceSliceDependentSection_naturality_left_symm
+    (G : ProfiniteGrp.{u})
+    (S : ContAction FintypeCat.{u} G)
+    {X' X : ContAction FintypeCat.{u} G}
+    (T : Over S)
+    (f : X' ⟶ X)
+    (g : X ⟶ (sourceDependentSectionFunctor G S).obj T) :
+    (sourceSliceDependentSectionHomEquiv G S X' T).symm (f ≫ g) =
+      (sourceSliceProductFunctor G S).map f ≫
+        (sourceSliceDependentSectionHomEquiv G S X T).symm g := by
+  apply Over.OverMorphism.ext
+  apply ObjectProperty.hom_ext
+  apply Action.Hom.ext
+  ext point
+  let coordinates :=
+    sourceActionProductEquiv G S X' point
+  have hpoint :
+      sourceActionProductMk G S X'
+          coordinates.1 coordinates.2 =
+        point :=
+    (sourceActionProductEquiv G S X').symm_apply_apply point
+  rw [← hpoint]
+  change
+    sourceDependentSectionHomToSliceFunction G S X' T (f ≫ g)
+        (sourceActionProductMk G S X'
+          coordinates.1 coordinates.2) =
+      (((sourceSliceProductFunctor G S).map f).left ≫
+        (sourceDependentSectionHomToSlice G S X T g).left).hom.hom
+          (sourceActionProductMk G S X'
+            coordinates.1 coordinates.2)
+  calc
+    sourceDependentSectionHomToSliceFunction G S X' T (f ≫ g)
+          (sourceActionProductMk G S X'
+            coordinates.1 coordinates.2) =
+        (show SourceDependentSection T from
+          (f ≫ g).hom.hom coordinates.2) coordinates.1 :=
+      sourceDependentSectionHomToSliceFunction_mk
+        G S X' T (f ≫ g) coordinates.1 coordinates.2
+    _ =
+        (show SourceDependentSection T from
+          g.hom.hom (f.hom.hom coordinates.2)) coordinates.1 := by
+      rw [sourceContinuousAction_comp_apply f g coordinates.2]
+    _ =
+        sourceDependentSectionHomToSliceFunction G S X T g
+          (sourceActionProductMk G S X coordinates.1
+            (f.hom.hom coordinates.2)) :=
+      (sourceDependentSectionHomToSliceFunction_mk
+        G S X T g coordinates.1
+          (f.hom.hom coordinates.2)).symm
+    _ =
+        sourceDependentSectionHomToSliceFunction G S X T g
+          (((sourceSliceProductFunctor G S).map f).left.hom.hom
+            (sourceActionProductMk G S X'
+              coordinates.1 coordinates.2)) := by
+      rw [sourceSliceProduct_map_mk]
+    _ =
+        (((sourceSliceProductFunctor G S).map f).left ≫
+          (sourceDependentSectionHomToSlice G S X T g).left).hom.hom
+            (sourceActionProductMk G S X'
+              coordinates.1 coordinates.2) := by
+      exact
+        (sourceContinuousAction_comp_apply
+          ((sourceSliceProductFunctor G S).map f).left
+          (sourceDependentSectionHomToSlice G S X T g).left
+          (sourceActionProductMk G S X'
+            coordinates.1 coordinates.2)).symm
+
+/-- Naturality of currying in the slice variable. -/
+theorem sourceSliceDependentSection_naturality_right
+    (G : ProfiniteGrp.{u})
+    (S X : ContAction FintypeCat.{u} G)
+    {T U : Over S}
+    (f : (sourceSliceProductFunctor G S).obj X ⟶ T)
+    (g : T ⟶ U) :
+    sourceSliceDependentSectionHomEquiv G S X U (f ≫ g) =
+      sourceSliceDependentSectionHomEquiv G S X T f ≫
+        (sourceDependentSectionFunctor G S).map g := by
+  apply ObjectProperty.hom_ext
+  apply Action.Hom.ext
+  ext x
+  apply SourceDependentSection.ext
+  intro s
+  change
+    (f.left ≫ g.left).hom.hom
+        (sourceActionProductMk G S X s x) =
+      g.left.hom.hom
+        (f.left.hom.hom
+          (sourceActionProductMk G S X s x))
+  exact sourceContinuousAction_comp_apply f.left g.left
+    (sourceActionProductMk G S X s x)
+
+/-- Product with an arbitrary finite continuous `G`-set is left adjoint to
+the action of dependent sections. -/
+noncomputable def sourceSliceProductAdjDependentSection
+    (G : ProfiniteGrp.{u})
+    (S : ContAction FintypeCat.{u} G) :
+    sourceSliceProductFunctor G S ⊣
+      sourceDependentSectionFunctor G S :=
+  Adjunction.mkOfHomEquiv
+    { homEquiv := sourceSliceDependentSectionHomEquiv G S
+      homEquiv_naturality_left_symm :=
+        fun f g =>
+          sourceSliceDependentSection_naturality_left_symm
+            G S _ f g
+      homEquiv_naturality_right :=
+        fun f g =>
+          sourceSliceDependentSection_naturality_right
+            G S _ f g }
+
+/-- Proposition 1.2.1(iii) of *The Geometry of Anabelioids*: product with
+any object `S` preserves finite colimits.  Together with finite-limit
+preservation above, this is the exactness of `i_S^*`. -/
+noncomputable instance sourceSliceProduct_preservesFiniteColimits
+    (G : ProfiniteGrp.{u})
+    (S : ContAction FintypeCat.{u} G) :
+    Limits.PreservesFiniteColimits
+      (sourceSliceProductFunctor G S) := by
+  letI :=
+    (sourceSliceProductAdjDependentSection G S).leftAdjoint_preservesColimits
+  infer_instance
+
 /-! ## Induction as the extension functor -/
 
 /-- The continuous inclusion of an open subgroup into its ambient profinite
@@ -1694,33 +2585,6 @@ noncomputable def sourceOpenSubgroupRestrictionSliceIso
         sourceSliceFiberFunctor G H :=
   (sourceInductionRestrictionAdjunction G H).rightAdjointUniq
     (sourceSliceTransportedAdjunction G H)
-
-/-- For the transitive object `G/H`, product with `G/H` also preserves
-finite colimits.  The proof transports exactness of restriction through the
-slice equivalence and reflects colimits back across that equivalence. -/
-noncomputable instance sourceOpenCosetSliceProduct_preservesFiniteColimits
-    (G : ProfiniteGrp.{u}) (H : OpenSubgroup G) :
-    Limits.PreservesFiniteColimits
-      (sourceSliceProductFunctor G (sourceOpenCosetAction G H)) := by
-  letI : IsTopologicalGroup H :=
-    inferInstanceAs <| IsTopologicalGroup H.toSubgroup
-  letI :
-      Limits.PreservesFiniteColimits
-        (sourceOpenSubgroupRestriction G H) :=
-    continuousActionRes_preservesFiniteColimits
-      (sourceOpenSubgroupInclusion G H)
-  letI :
-      Limits.PreservesFiniteColimits
-        (sourceSliceProductFunctor G (sourceOpenCosetAction G H) ⋙
-          sourceSliceFiberFunctor G H) :=
-    Limits.preservesFiniteColimits_of_natIso
-      (sourceOpenSubgroupRestrictionSliceIso G H)
-  letI : (sourceSliceFiberFunctor G H).IsEquivalence :=
-    (sourceOpenCosetSliceEquivalence G H).isEquivalence_inverse
-  exact
-    Limits.preservesFiniteColimits_of_reflects_of_preserves
-      (sourceSliceProductFunctor G (sourceOpenCosetAction G H))
-      (sourceSliceFiberFunctor G H)
 
 /-- Definition 1.2.2(i), expressed on the contravariant pullback functor:
 `pullback : X → Y` is finite etale when `Y` is equivalent to a slice `X_S`

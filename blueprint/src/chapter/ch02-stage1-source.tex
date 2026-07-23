@@ -441,11 +441,25 @@
   $\mathcal B(H)\simeq\mathcal B(G)_{G/H}$.  The source adjunction
   $j_{G/H}\dashv(-\times G/H)$ and an explicit induction--restriction
   adjunction identify restriction with product by $G/H$ under this
-  equivalence.  Product by $G/H$ preserves finite limits and colimits, and the
+  equivalence.  For an arbitrary finite continuous $G$-set $S$, Lean
+  constructs the conjugation action on dependent sections of every
+  $T\to S$, proves the natural currying equivalence
+  \[
+    \operatorname{Hom}_{\mathcal B(G)_S}(S\times X,T)
+      \simeq
+    \operatorname{Hom}_{\mathcal B(G)}(X,\Gamma_S(T)),
+  \]
+  and obtains the second adjunction
+  $(-\times S)\dashv\Gamma_S$.  Thus product by every $S$ preserves finite
+  limits and finite colimits, proving Proposition~1.2.1(iii), and the
   pullback is packaged by the factorization criterion of
-  Definition~1.2.2.  The arbitrary-object component decomposition and
-  exactness statement, and the converse classification of all connected
-  finite-etale morphisms, remain open.
+  Definition~1.2.2.  The arbitrary-object component decomposition and the
+  converse classification of all connected finite-etale morphisms remain
+  open.
+  \lean{Iut.sourceDependentSection_continuous}
+  \lean{Iut.sourceSliceDependentSectionHomEquiv}
+  \lean{Iut.sourceSliceProductAdjDependentSection}
+  \lean{Iut.sourceSliceProduct_preservesFiniteColimits}
   Each constituent anabelioid is now an actual Galois category with a chosen
   fiber functor and certified profinite fundamental group.  Branch and
   constituent-to-total morphisms are exact contravariant functors.  A

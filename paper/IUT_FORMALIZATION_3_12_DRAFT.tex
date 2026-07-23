@@ -184,10 +184,18 @@ equivalence $\mathcal B(H)\simeq\mathcal B(G)_{G/H}$, proves
 $j_{G/H}\dashv(-\times G/H)$ and induction--restriction adjunctions, and
 identifies their right adjoints.  Thus restriction is categorically
 factorized, up to natural isomorphism, through product with $G/H$ and the
-inverse slice equivalence as in Definition~1.2.2.  Product with $G/H$ is
-proved to preserve finite limits and finite colimits.  The arbitrary-$S$
-component decomposition and exactness statement, and the converse
-classification of all connected finite-etale morphisms, remain open.
+inverse slice equivalence as in Definition~1.2.2.  For arbitrary finite
+continuous $G$-sets $S$, Lean constructs the conjugation action on dependent
+sections of $T\to S$ and proves the natural currying equivalence
+\[
+\operatorname{Hom}_{\mathcal B(G)_S}(S\times X,T)
+\simeq
+\operatorname{Hom}_{\mathcal B(G)}(X,\Gamma_S(T)).
+\]
+Thus product with $S$ is both a right adjoint and a left adjoint, so it
+preserves finite limits and finite colimits as required by
+Proposition~1.2.1(iii).  The arbitrary-$S$ component decomposition and the
+converse classification of all connected finite-etale morphisms remain open.
 Each constituent anabelioid is now an actual Galois category with a chosen
 fiber functor and certified profinite fundamental group.  Its branch and constituent-to-total morphisms are exact
 contravariant functors.  Categorical $2$-isomorphisms derive the conjugating
