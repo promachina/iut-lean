@@ -18,6 +18,7 @@ import Iut.Foundations.SourceDefinition52IndSystem
 import Iut.Foundations.SourceDefinition52Sequential
 import Iut.Foundations.SourceTemperedSemigraph
 import Iut.Foundations.SourceContinuousAnabelioid
+import Iut.Foundations.SourceAnabelioidSlice
 import Iut.Foundations.SourceSemiGraphOfAnabelioids
 
 open Iut
@@ -437,6 +438,17 @@ visible to Lean's axiom reporter.
 #print axioms Iut.continuousActionPointedHom_fundamentalGroupHom
 #print axioms
   Iut.SourceConnectedFiniteEtaleHom.ofProfiniteOpenEmbedding_fundamentalGroupHom
+#print axioms Iut.SourcePaperInducedSet.equivStandard
+#print axioms Iut.SourcePaperInducedSet.toStandard_smul
+#print axioms Iut.sourceInducedSet_stabilizer_isOpen
+#print axioms Iut.sourceInducedAction
+#print axioms Iut.sourcePaperInducedAction
+#print axioms Iut.sourcePaperInducedActionIso
+#print axioms Iut.sourceOpenCosetSliceEquivalence
+#print axioms Iut.sourceSliceForgetAdjProduct
+#print axioms Iut.sourceInductionRestrictionAdjunction
+#print axioms Iut.sourceOpenSubgroupRestrictionSliceIso
+#print axioms Iut.sourceOpenSubgroupFiniteEtaleFactorization
 #print axioms
   Iut.SourcePointedAnabelioidHom.fundamentalGroupHom_comp
 #print axioms

@@ -176,8 +176,18 @@ $G$-actions and proves that its canonical fiber functor has fundamental group
 $G$.  Restriction along a continuous homomorphism is exact and induces the
 original homomorphism on certified fundamental groups.  Hence every open
 embedding $H\hookrightarrow G$ constructs the connected finite-etale
-open-image morphism $\mathcal B(H)\to\mathcal B(G)$.  The source slice
-equivalence $\mathcal B(H)\simeq\mathcal B(G)_{G/H}$ remains open.
+open-image morphism $\mathcal B(H)\to\mathcal B(G)$.  For every open
+$H\leq G$, Lean constructs the paper's left-diagonal quotient
+$(G\times T)/H$ with its right-inverse $G$-action and proves it equivariantly
+equivalent to standard induction.  It then constructs the natural slice
+equivalence $\mathcal B(H)\simeq\mathcal B(G)_{G/H}$, proves
+$j_{G/H}\dashv(-\times G/H)$ and induction--restriction adjunctions, and
+identifies their right adjoints.  Thus restriction is categorically
+factorized, up to natural isomorphism, through product with $G/H$ and the
+inverse slice equivalence as in Definition~1.2.2.  Product with $G/H$ is
+proved to preserve finite limits and finite colimits.  The arbitrary-$S$
+component decomposition and exactness statement, and the converse
+classification of all connected finite-etale morphisms, remain open.
 Each constituent anabelioid is now an actual Galois category with a chosen
 fiber functor and certified profinite fundamental group.  Its branch and constituent-to-total morphisms are exact
 contravariant functors.  Categorical $2$-isomorphisms derive the conjugating

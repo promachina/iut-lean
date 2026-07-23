@@ -475,9 +475,21 @@ def m1m3PaperLedger : List PaperClause :=
         "continuousActionPointedHom_fundamentalGroupHom",
         "SourceConnectedFiniteEtaleHom",
         "SourceConnectedFiniteEtaleHom.ofProfiniteOpenEmbedding",
-        "SourceConnectedFiniteEtaleHom.ofProfiniteOpenEmbedding_fundamentalGroupHom"]
+        "SourceConnectedFiniteEtaleHom.ofProfiniteOpenEmbedding_fundamentalGroupHom",
+        "SourcePaperInducedSet.equivStandard",
+        "SourcePaperInducedSet.toStandard_smul",
+        "sourceInducedSet_stabilizer_isOpen",
+        "sourceInducedAction",
+        "sourcePaperInducedAction",
+        "sourcePaperInducedActionIso",
+        "sourceOpenCosetSliceEquivalence",
+        "sourceSliceForgetAdjProduct",
+        "sourceInductionRestrictionAdjunction",
+        "sourceOpenSubgroupRestrictionSliceIso",
+        "SourceFiniteEtaleFunctorFactorization",
+        "sourceOpenSubgroupFiniteEtaleFactorization"]
       .partialImplementation
-      "Lean constructs B(G) as the actual Galois category of finite discrete continuous G-actions. Open stabilizers prove closure under finite limits, finite colimits, and finite-group quotients; invariant image complements prove the direct-summand axiom. Continuous orbit subactions and finite quotients by open normal subgroups certify the original profinite G as the fundamental group. Restriction along every continuous homomorphism is an exact pointed functor, its derived fundamental-group map is the original homomorphism, and an open embedding therefore constructs the connected finite-etale open-image certificate of Remark 1.2.2.1. Constructing the slice anabelioid X_S, its adjunction, the induced-set equivalence B(H) ≃ B(G)_(G/H), and the factorization definition of finite-etale morphisms remains open.",
+      "Lean constructs B(G) as the actual Galois category of finite discrete continuous G-actions and certifies its original profinite fundamental group. For every open H ≤ G it constructs the transitive action G/H, the paper's left-diagonal quotient and right-inverse G-action, the equivalent standard induced action, and the natural equivalence B(H) ≃ B(G)_(G/H). The forgetful slice functor is proved left adjoint to product with S. Explicit inverse Hom maps prove induction left adjoint to restriction; uniqueness of right adjoints then identifies restriction with product by G/H under the slice equivalence. Product by G/H is proved to preserve finite limits and colimits, and the resulting pullback is packaged by the factorization definition of finite-etale morphisms. The general connected-component assertions for arbitrary S, finite-colimit preservation of product by arbitrary S, and the converse classification of every connected finite-etale morphism from Remark 1.2.2.1 remain open.",
     clause "SemiAnbd.2.1" .semiGraphsAnabelioids
       "Semi-graphs of Anabelioids, Definition 2.1"
       ["SourcePointedSemiGraphOfAnabelioids",

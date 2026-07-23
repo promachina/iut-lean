@@ -295,6 +295,18 @@
   \lean{Iut.SourceConnectedFiniteEtaleHom}
   \lean{Iut.SourceConnectedFiniteEtaleHom.ofProfiniteOpenEmbedding}
   \lean{Iut.SourceConnectedFiniteEtaleHom.ofProfiniteOpenEmbedding_fundamentalGroupHom}
+  \lean{Iut.SourcePaperInducedSet.equivStandard}
+  \lean{Iut.SourcePaperInducedSet.toStandard_smul}
+  \lean{Iut.sourceInducedSet_stabilizer_isOpen}
+  \lean{Iut.sourceInducedAction}
+  \lean{Iut.sourcePaperInducedAction}
+  \lean{Iut.sourcePaperInducedActionIso}
+  \lean{Iut.sourceOpenCosetSliceEquivalence}
+  \lean{Iut.sourceSliceForgetAdjProduct}
+  \lean{Iut.sourceInductionRestrictionAdjunction}
+  \lean{Iut.sourceOpenSubgroupRestrictionSliceIso}
+  \lean{Iut.SourceFiniteEtaleFunctorFactorization}
+  \lean{Iut.sourceOpenSubgroupFiniteEtaleFactorization}
   \lean{Iut.SourcePointedSemiGraphOfAnabelioids}
   \lean{Iut.SourcePointedSemiGraphOfAnabelioids.vertexFundamentalGroupImageEquiv}
   \lean{Iut.SourcePointedSemiGraphOfAnabelioids.edgeFundamentalGroupImageEquiv}
@@ -423,8 +435,17 @@
   along a continuous homomorphism is exact and induces that same homomorphism
   on certified fundamental groups.  Thus an open embedding $H\hookrightarrow
   G$ constructs the connected finite-etale open-image morphism
-  $\mathcal B(H)\to\mathcal B(G)$.  The slice equivalence
-  $\mathcal B(H)\simeq\mathcal B(G)_{G/H}$ remains to be constructed.
+  $\mathcal B(H)\to\mathcal B(G)$.  Lean constructs the exact left-diagonal
+  quotient convention of Proposition~1.2.1(v), proves it equivariantly
+  equivalent to standard induction, and constructs the natural equivalence
+  $\mathcal B(H)\simeq\mathcal B(G)_{G/H}$.  The source adjunction
+  $j_{G/H}\dashv(-\times G/H)$ and an explicit induction--restriction
+  adjunction identify restriction with product by $G/H$ under this
+  equivalence.  Product by $G/H$ preserves finite limits and colimits, and the
+  pullback is packaged by the factorization criterion of
+  Definition~1.2.2.  The arbitrary-object component decomposition and
+  exactness statement, and the converse classification of all connected
+  finite-etale morphisms, remain open.
   Each constituent anabelioid is now an actual Galois category with a chosen
   fiber functor and certified profinite fundamental group.  Branch and
   constituent-to-total morphisms are exact contravariant functors.  A
