@@ -27,6 +27,7 @@ import Iut.Foundations.SourceTimesMuReconstructionAlgorithm
 import Iut.Foundations.SourceThetaSplitting
 import Iut.Foundations.SourceConjugateSynchronization
 import Iut.Foundations.SourceHodgeArakelovEvaluation
+import Iut.Foundations.SourceTopologicalActionPairCategory
 import Iut.Foundations.Frobenioid
 import Iut.Foundations.SourceModelFrobenioid
 import Iut.Foundations.Procession

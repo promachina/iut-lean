@@ -2603,7 +2603,9 @@ noncomputable def monoAnalyticOfStructure
     SourceMLFModelTMPair K where
   modelStructure := modelStructure
   galoisGroup := SourceMLFAbsoluteGaloisGroup K
-  augmentation := 𝟙 _
+  augmentation :=
+    TopologicalGroupCat.identity
+      (SourceMLFAbsoluteGaloisGroup K)
   augmentation_surjective := Function.surjective_id
 
 /-- The canonical mono-analytic model pair, with no caller-supplied certificate. -/
@@ -2613,8 +2615,9 @@ noncomputable def monoAnalytic : SourceMLFModelTMPair K :=
 @[simp]
 theorem monoAnalytic_augmentation_apply
     (sigma : SourceMLFAbsoluteGaloisGroup K) :
-    monoAnalytic.augmentation sigma = sigma :=
-  rfl
+    monoAnalytic.augmentation.toFun sigma = sigma :=
+  by
+    exact TopologicalGroupCat.identity_apply _ sigma
 
 /-- The model action obtained by composing with the Galois augmentation. -/
 noncomputable def action
@@ -2748,7 +2751,9 @@ noncomputable def monoAnalyticOfStructure
     (modelStructure : SourceMLFModelTMStructure K) :
     SourceMLFGaloisTMPair (SourceMLFAbsoluteGaloisGroup K) where
   arithmeticMonoid := modelStructure.arithmeticMonoid
-  action := SourceMLFIntegralMonoid.galoisAction K
+  action :=
+    (SourceMLFModelTMPair.monoAnalyticOfStructure
+      modelStructure).action
   modelField := K
   model := SourceMLFModelTMPair.monoAnalyticOfStructure modelStructure
   groupIso := ContinuousMulEquiv.refl _
@@ -2766,17 +2771,6 @@ noncomputable def monoAnalytic
     SourceMLFGaloisTMPair (SourceMLFAbsoluteGaloisGroup K) :=
   monoAnalyticOfStructure
     (SourceMLFModelTMStructure.canonical (K := K))
-
-@[simp]
-theorem monoAnalytic_action
-    {K : Type u} [Field K] [ValuativeRel K]
-    [TopologicalSpace K] [IsNonarchimedeanLocalField K]
-    [CharZero K]
-    (sigma : SourceMLFAbsoluteGaloisGroup K)
-    (value : SourceMLFIntegralMonoid K) :
-    (monoAnalytic K).action sigma value =
-      SourceMLFIntegralMonoid.galoisAction K sigma value :=
-  rfl
 
 /-- Pull the Krull-open stabilizer of a model element back to the model group `Pi_k`. -/
 noncomputable def modelOpenStabilizer
@@ -6002,8 +5996,15 @@ theorem monoAnalytic_augmentation_apply
     [TopologicalSpace K] [IsNonarchimedeanLocalField K]
     [CharZero K]
     (sigma : SourceMLFAbsoluteGaloisGroup K) :
-    (monoAnalytic K).augmentation sigma = sigma :=
-  rfl
+    (monoAnalytic K).augmentation.toFun sigma = sigma :=
+  by
+    change
+      (TopologicalGroupCat.identity
+        (SourceMLFAbsoluteGaloisGroup K)).toMonoidHom
+          ((ContinuousMulEquiv.refl
+            (SourceMLFAbsoluteGaloisGroup K)).symm sigma) = sigma
+    rw [TopologicalGroupCat.identity_apply]
+    rfl
 
 /-- The transported Galois augmentation remains surjective. -/
 theorem augmentation_surjective
@@ -6316,26 +6317,6 @@ noncomputable def monoAnalytic
         K).continuousCyclotomeAction :=
   canonical (SourceMLFGaloisTMPair.monoAnalytic K)
 
-/-- The canonical embedding uses the source-constructed full monoid Kummer map. -/
-theorem canonical_monoidKummer
-    (pair : SourceMLFGaloisTMPair G) :
-    (canonical pair).monoidKummer =
-      pair.KummerRootTheory.canonicalKummerMap :=
-  rfl
-
-/--
-The canonical unit map is exactly the restriction of Proposition 3.2(ii)'s
-monoid Kummer map to `M^times`, as required in Proposition 3.3(i).
--/
-theorem canonical_unitKummer
-    (pair : SourceMLFGaloisTMPair G) :
-    (canonical pair).unitKummer =
-      pair.KummerRootTheory.canonicalKummerMap.comp
-        { toFun := Units.val
-          map_one' := rfl
-          map_mul' := fun _ _ => rfl } :=
-  rfl
-
 /-- The continuous root theory is derived from the coefficient identification. -/
 noncomputable def rootTheory
     (embedding :
@@ -6369,6 +6350,26 @@ noncomputable def unitKummer
     { toFun := Units.val
       map_one' := rfl
       map_mul' := fun _ _ => rfl }
+
+/-- The canonical embedding uses the source-constructed full monoid Kummer map. -/
+theorem canonical_monoidKummer
+    (pair : SourceMLFGaloisTMPair G) :
+    (canonical pair).monoidKummer =
+      SourceMLFGaloisTMPair.KummerRootTheory.canonicalKummerMap pair :=
+  rfl
+
+/--
+The canonical unit map is exactly the restriction of Proposition 3.2(ii)'s
+monoid Kummer map to `M^times`, as required in Proposition 3.3(i).
+-/
+theorem canonical_unitKummer
+    (pair : SourceMLFGaloisTMPair G) :
+    (canonical pair).unitKummer =
+      (SourceMLFGaloisTMPair.KummerRootTheory.canonicalKummerMap pair).comp
+        { toFun := Units.val
+          map_one' := rfl
+          map_mul' := fun _ _ => rfl } :=
+  rfl
 
 /--
 If a unit has trivial Kummer germ, one common open subgroup fixes compatible

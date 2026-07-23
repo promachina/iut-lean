@@ -99,6 +99,16 @@ def subgroupInclusion
   toMonoidHom := H.subtype
   continuous_toFun := continuous_subtype_val
 
+/-- The identity morphism with its continuous-group-homomorphism structure exposed. -/
+def identity (G : TopologicalGroupCat.{u}) : G ⟶ G where
+  toMonoidHom := MonoidHom.id G
+  continuous_toFun := continuous_id
+
+@[simp]
+theorem identity_apply (G : TopologicalGroupCat.{u}) (g : G) :
+    (identity G).toMonoidHom g = g :=
+  rfl
+
 end TopologicalGroupCat
 
 /--

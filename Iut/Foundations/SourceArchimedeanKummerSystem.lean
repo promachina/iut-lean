@@ -648,6 +648,8 @@ def isColimitEquivRestricted
   (Functor.Final.isColimitWhiskerEquiv
     subset.indexInclusion cocone).symm
 
+end MultiplicativelyCofinalSubset
+
 namespace FrobenioidSystem
 
 /-- The carrier categories of the reconstructed split Frobenioids form a functor. -/
@@ -726,6 +728,8 @@ def restrictedRationalMonoidDiagram
   subset.indexInclusion ⋙ rationalMonoidDiagram system
 
 end FrobenioidSystem
+
+namespace MultiplicativelyCofinalSubset
 
 /-- The full positive-integer indexing set is multiplicatively cofinal. -/
 def all : MultiplicativelyCofinalSubset where
