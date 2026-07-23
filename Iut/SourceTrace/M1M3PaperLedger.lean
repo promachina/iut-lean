@@ -459,9 +459,21 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceSemiGraphSubgroupDiagram.stabilizer_leftCoset_eq_conjugate",
         "SourceSemiGraphSubgroupDiagram.cosetAction_vertexStabilizer_eq_conjugate",
         "SourceSemiGraphSubgroupDiagram.cosetAction_edgeStabilizer_eq_conjugate",
-        "SourceSemiGraphSubgroupDiagram.cosetAction_branchStabilizer_eq_edgeStabilizer"]
+        "SourceSemiGraphSubgroupDiagram.cosetAction_branchStabilizer_eq_edgeStabilizer",
+        "SourceProfiniteCosetSystem.levelSubgroup",
+        "SourceProfiniteCosetSystem.carrier",
+        "SourceProfiniteCosetSystem.system",
+        "SourceProfiniteCosetSystem.cosetSection",
+        "SourceProfiniteCosetSystem.iInf_levelSubgroup_eq",
+        "SourceProfiniteCosetSystem.cosetSection_injective",
+        "SourceProfiniteCosetSystem.sectionStabilizer_baseSection_eq",
+        "SourceProfiniteCosetSystem.sectionStabilizer_cosetSection_eq_conjugate",
+        "SourceSemiGraphSubgroupDiagram.profiniteVertexSection",
+        "SourceSemiGraphSubgroupDiagram.profiniteEdgeSection",
+        "SourceSemiGraphSubgroupDiagram.profiniteVertexSection_stabilizer_eq",
+        "SourceSemiGraphSubgroupDiagram.profiniteEdgeSection_stabilizer_eq"]
       .partialImplementation
-      "Lean defines coherent actions on raw vertices, edges, and total branches; proves that fixing an incident branch fixes its edge and abutting vertex; and constructs the action on compatible sections of a cofiltered finite system. The stabilizer of a compatible system is the intersection of all coordinate stabilizers. For a semi-graph of subgroups in an ambient group, Lean also constructs the Bass-Serre coset semi-graph with general branch transport elements, proves equivariance of its incidence maps, and proves that lifted vertex and edge stabilizers are exactly conjugates of the constituent subgroups. Constructing the universal pro-finite etale covering from normal open subgroups of Pi_G and identifying its inverse-limit component systems with this coset semi-graph remain open.",
+      "Lean defines coherent actions on raw vertices, edges, and total branches; proves that fixing an incident branch fixes its edge and abutting vertex; and constructs the action on compatible sections of a cofiltered finite system. For a semi-graph of subgroups, Lean constructs the Bass-Serre coset semi-graph with general branch transports and proves the exact conjugate stabilizer formulas. For every closed constituent subgroup H of a profinite ambient group G, the normal open subgroups now index the actual finite coset systems G/(H sup N). Lean constructs their equivariant transition functor, derives the intersection of H sup N to be H from profinite separation, embeds every H-coset into a compatible system, and proves that the compatible vertex and edge stabilizers agree with the Bass-Serre stabilizers. Assembling these component systems and branch maps into finite etale covering semi-graphs, proving exhaustion of all compatible systems, and connecting the abstract subgroup diagram to the constituent anabelioid fundamental groups remain open.",
     clause "SemiAnbd.2.4(iv)" .semiGraphsAnabelioids
       "Semi-graphs of Anabelioids, Definition 2.4(iv)"
       ["SourceEstrangedIncidentBranchSystem",

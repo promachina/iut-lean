@@ -436,6 +436,17 @@ visible to Lean's axiom reporter.
   Iut.SourceSemiGraphSubgroupDiagram.cosetAction_edgeStabilizer_eq_conjugate
 #print axioms
   Iut.SourceSemiGraphSubgroupDiagram.cosetAction_branchStabilizer_eq_edgeStabilizer
+#print axioms Iut.SourceProfiniteCosetSystem.transition_equivariant
+#print axioms Iut.SourceProfiniteCosetSystem.iInf_levelSubgroup_eq
+#print axioms Iut.SourceProfiniteCosetSystem.cosetSection_injective
+#print axioms
+  Iut.SourceProfiniteCosetSystem.sectionStabilizer_baseSection_eq
+#print axioms
+  Iut.SourceProfiniteCosetSystem.sectionStabilizer_cosetSection_eq_conjugate
+#print axioms
+  Iut.SourceSemiGraphSubgroupDiagram.profiniteVertexSection_stabilizer_eq
+#print axioms
+  Iut.SourceSemiGraphSubgroupDiagram.profiniteEdgeSection_stabilizer_eq
 #print axioms Iut.SourceGraphAction.dist_image
 #print axioms Iut.SourceFiniteTree.exists_degree_ne_one
 #print axioms Iut.SourceFiniteTree.induce_degree_ne_one_connected

@@ -289,6 +289,18 @@
   \lean{Iut.SourceSemiGraphSubgroupDiagram.cosetAction_vertexStabilizer_eq_conjugate}
   \lean{Iut.SourceSemiGraphSubgroupDiagram.cosetAction_edgeStabilizer_eq_conjugate}
   \lean{Iut.SourceSemiGraphSubgroupDiagram.cosetAction_branchStabilizer_eq_edgeStabilizer}
+  \lean{Iut.SourceProfiniteCosetSystem.levelSubgroup}
+  \lean{Iut.SourceProfiniteCosetSystem.carrier}
+  \lean{Iut.SourceProfiniteCosetSystem.system}
+  \lean{Iut.SourceProfiniteCosetSystem.cosetSection}
+  \lean{Iut.SourceProfiniteCosetSystem.iInf_levelSubgroup_eq}
+  \lean{Iut.SourceProfiniteCosetSystem.cosetSection_injective}
+  \lean{Iut.SourceProfiniteCosetSystem.sectionStabilizer_baseSection_eq}
+  \lean{Iut.SourceProfiniteCosetSystem.sectionStabilizer_cosetSection_eq_conjugate}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.profiniteVertexSection}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.profiniteEdgeSection}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.profiniteVertexSection_stabilizer_eq}
+  \lean{Iut.SourceSemiGraphSubgroupDiagram.profiniteEdgeSection_stabilizer_eq}
   \lean{Iut.SourceGraphAction}
   \lean{Iut.SourceGraphAction.dist_image}
   \lean{Iut.SourceFiniteTree.induce_degree_ne_one_connected}
@@ -350,9 +362,16 @@
   Branch transport elements allow general loop-edge and HNN-type incidence
   maps.  These maps are equivariant for the ambient action, and Lean proves
   that every lifted vertex and edge stabilizer is exactly the corresponding
-  conjugate constituent subgroup.  Constructing the universal profinite
-  covering from normal open subgroups and identifying its inverse-limit
-  components with this coset semi-graph remain open.
+  conjugate constituent subgroup.  For a closed constituent subgroup $H$ in a
+  profinite ambient group $G$, open normal subgroups $N$ index actual finite
+  coset levels $G/(H\vee N)$.  Lean constructs their equivariant transition
+  functor, derives $\bigcap_N(H\vee N)=H$ from profinite separation, injects
+  each $H$-coset into a compatible finite-level system, and proves that the
+  compatible vertex and edge stabilizers equal the Bass--Serre stabilizers.
+  Assembling these component systems and branch maps into finite etale
+  covering semi-graphs, proving that every compatible component system is so
+  obtained, and connecting the abstract subgroups to constituent anabelioid
+  fundamental groups remain open.
 
   A finite group acting on an arbitrary simple tree fixes a vertex or an edge
   setwise.  Lean proves this by constructing the finite connected invariant

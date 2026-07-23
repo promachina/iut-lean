@@ -157,10 +157,15 @@ intersection of all finite-level coordinate stabilizers.  For a semi-graph of
 subgroups in an ambient group, Lean constructs the Bass--Serre coset
 semi-graph with general branch transport elements, proves equivariance of its
 incidence maps, and proves that lifted vertex and edge stabilizers are exactly
-the corresponding conjugate constituent subgroups.  Constructing the
-universal profinite covering from normal open subgroups and identifying its
-inverse-limit components with this coset semi-graph remain open in
-Remark~2.2.1.
+the corresponding conjugate constituent subgroups.  For every closed
+constituent subgroup $H$ in a profinite ambient group $G$, Lean constructs the
+finite normal-open coset system $G/(H\vee N)$ and its equivariant transition
+maps.  Profinite separation derives $\bigcap_N(H\vee N)=H$, so every $H$-coset
+injects into a compatible finite-level system and its stabilizer agrees with
+the Bass--Serre stabilizer.  Assembling these component systems and branch
+maps into finite etale covering semi-graphs, proving exhaustion of all
+compatible systems, and connecting the abstract subgroups to constituent
+anabelioid fundamental groups remain open in Remark~2.2.1.
 The tree-action dependency has been lowered to the original source.  Lean constructs a finite
 connected invariant hull for a finite group acting on an arbitrary simple
 tree, prunes its invariant leaves, and proves that the group fixes a vertex or
