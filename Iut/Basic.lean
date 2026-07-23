@@ -34,6 +34,7 @@ import Iut.Foundations.Procession
 import Iut.Foundations.SourceThetaHodgeTheater
 import Iut.Foundations.SourceProcession
 import Iut.Foundations.SourceTheorem311
+import Iut.Foundations.SourceFiniteLocalMLFComparison
 import Iut.Foundations.SourceFThetaBridge
 import Iut.Foundations.ThetaHodgeTheater
 import Iut.Foundations.AlgorithmicOutput

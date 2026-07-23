@@ -78,6 +78,22 @@ def ofProfinite (G : ProfiniteGrp.{u}) : TopologicalGroupCat where
       isTopologicalGroup := inferInstance
       topologyKind := .profinite }
 
+noncomputable instance ofProfiniteCompactSpace (G : ProfiniteGrp.{u}) :
+    CompactSpace (ofProfinite G) := by
+  change CompactSpace G
+  infer_instance
+
+noncomputable instance ofProfiniteT2Space (G : ProfiniteGrp.{u}) :
+    T2Space (ofProfinite G) := by
+  change T2Space G
+  infer_instance
+
+noncomputable instance ofProfiniteTotallyDisconnectedSpace
+    (G : ProfiniteGrp.{u}) :
+    TotallyDisconnectedSpace (ofProfinite G) := by
+  change TotallyDisconnectedSpace G
+  infer_instance
+
 /-- A subgroup with its induced topological-group structure. -/
 def ofSubgroup
     (G : TopologicalGroupCat.{u})

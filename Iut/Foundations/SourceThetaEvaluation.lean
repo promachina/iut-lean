@@ -1694,34 +1694,6 @@ noncomputable abbrev SourceMLFAbsoluteGaloisGroup
     (InfiniteGalois.profiniteGalGrp
       K (AlgebraicClosure K))
 
-noncomputable instance sourceMLFAbsoluteGaloisGroupCompactSpace
-    (K : Type u) [Field K] [CharZero K] :
-    CompactSpace (SourceMLFAbsoluteGaloisGroup K) := by
-  change
-    CompactSpace
-      (InfiniteGalois.profiniteGalGrp
-        K (AlgebraicClosure K))
-  infer_instance
-
-noncomputable instance sourceMLFAbsoluteGaloisGroupT2Space
-    (K : Type u) [Field K] [CharZero K] :
-    T2Space (SourceMLFAbsoluteGaloisGroup K) := by
-  change
-    T2Space
-      (InfiniteGalois.profiniteGalGrp
-        K (AlgebraicClosure K))
-  infer_instance
-
-noncomputable instance sourceMLFAbsoluteGaloisGroupTotallyDisconnectedSpace
-    (K : Type u) [Field K] [CharZero K] :
-    TotallyDisconnectedSpace
-      (SourceMLFAbsoluteGaloisGroup K) := by
-  change
-    TotallyDisconnectedSpace
-      (InfiniteGalois.profiniteGalGrp
-        K (AlgebraicClosure K))
-  infer_instance
-
 namespace SourceMLFIntegralMonoid
 
 variable

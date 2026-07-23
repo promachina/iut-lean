@@ -3,7 +3,7 @@ Copyright (c) 2026 IUT Lean formalization contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: IUT Lean formalization contributors
 -/
-import Iut.Foundations.SourceTheorem311
+import Iut.Foundations.SourceFiniteLocalMLFComparison
 
 /-!
 # Finite-place reconstruction for IUT I, Definition 5.2(v)
@@ -46,11 +46,6 @@ noncomputable instance closureNormedAlgebra
     (place : NumberField.FinitePlace K) :
     NormedAlgebra (Base place) (Closure place) :=
   spectralNorm.normedAlgebra (Base place) (Closure place)
-
-noncomputable instance baseValuativeRel
-    (place : NumberField.FinitePlace K) : ValuativeRel (Base place) :=
-  ValuativeRel.ofValuation
-    (Valued.v : Valuation (Base place) (WithZero (Multiplicative ℤ)))
 
 abbrev StageIndex (place : NumberField.FinitePlace K) :=
   FiniteGaloisIntermediateField (Base place) (Closure place)

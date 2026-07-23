@@ -390,6 +390,13 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceMLFModelTMPair.monoAnalytic_augmentation_apply
 #print axioms Iut.SourceMLFGaloisTMPair.monoAnalytic
 #print axioms Iut.SourceMLFGaloisTMPair.monoAnalytic_augmentation_apply
+#print axioms Iut.SourceMLFGaloisComparison.continuous_autCongr
+#print axioms Iut.SourceMLFGaloisComparison.continuousAutCongr
+#print axioms Iut.SourceMLFGaloisComparison.separableClosureEquivAlgebraicClosure
+#print axioms Iut.SourceMLFGaloisComparison.absoluteGaloisEquiv
+#print axioms Iut.SourceMLFGaloisTMPair.monoAnalyticSeparable
+#print axioms Iut.SourceThetaFiniteLocalCoreData.mlfGaloisTMPair
+#print axioms Iut.SourceThetaFiniteLocalCoreData.unitKummer_injective
 #print axioms Iut.SourceMLFGaloisTMPair.CompatibleRootComparison.ofModel
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootTheory.chosen_rootSystem
 #print axioms Iut.SourceMLFGaloisTMPair.KummerRootRealization.ratioCyclotome_mul_group

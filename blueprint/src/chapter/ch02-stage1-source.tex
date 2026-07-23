@@ -413,6 +413,14 @@
   \lean{Iut.SourceMLFGaloisTMPair}
   \lean{Iut.SourceMLFGaloisTMPair.monoAnalytic}
   \lean{Iut.SourceMLFGaloisTMPair.monoAnalytic_augmentation_apply}
+  \lean{Iut.SourceMLFGaloisComparison.continuous_autCongr}
+  \lean{Iut.SourceMLFGaloisComparison.continuousAutCongr}
+  \lean{Iut.SourceMLFGaloisComparison.separableClosureEquivAlgebraicClosure}
+  \lean{Iut.SourceMLFGaloisComparison.absoluteGaloisEquiv}
+  \lean{Iut.SourceMLFGaloisTMPair.monoAnalyticSeparable}
+  \lean{Iut.SourceThetaFiniteLocalCoreData.mlfGaloisTMPair}
+  \lean{Iut.SourceThetaFiniteLocalCoreData.unitKummerEmbedding}
+  \lean{Iut.SourceThetaFiniteLocalCoreData.unitKummer_injective}
   \lean{Iut.SourceFiniteTimesMuKummerInput}
   \lean{Iut.SourceFiniteTimesMuKummerInput.timesMuMonoid}
   \lean{Iut.SourceFiniteTimesMuKummerInput.timesMuUnitsEquiv}
@@ -626,6 +634,17 @@
   inverse integral by the power criterion.  Residual finiteness of that
   integral-unit group forces the original unit to be one, so the constructed
   unit Kummer homomorphism is injective without a stored faithfulness field.
+  The local endpoint is now the exact one used by Initial Theta data.  Lean
+  proves continuity of Galois conjugation across an algebra equivalence by
+  pulling each finite-intermediate-field stabilizer back to the stabilizer of
+  its inverse image.  In characteristic zero, the separable closure therefore
+  gives a topological absolute-Galois group equivalent to the algebraic-closure
+  model.  The canonical valuation on every finite number-field completion is
+  proved compatible with its topology and makes the completion an MLF.  These
+  results transport the canonical pair and its injective coefficient-identity
+  unit Kummer map to the literal local absolute Galois group stored by each
+  finite Initial Theta core.  Constructing the tempered mono-theta subquotient
+  map to this endpoint remains open.
   At a finite place, the Definition~4.9 input now ties the selected splitting
   at an isotropic reference object to an actual MLF-Galois \(TM\)-pair, a
   stable characteristic submonoid, and the genuine \(\operatorname{Ism}\)
