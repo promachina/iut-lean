@@ -35,6 +35,7 @@ import Iut.Foundations.SourceThetaHodgeTheater
 import Iut.Foundations.SourceProcession
 import Iut.Foundations.SourceContinuousAnabelioid
 import Iut.Foundations.SourceAnabelioidSlice
+import Iut.Foundations.SourceAnabelioidComponents
 import Iut.Foundations.SourceSemiGraphOfAnabelioids
 import Iut.Foundations.SourceTheorem311
 import Iut.Foundations.SourceFiniteLocalMLFComparison

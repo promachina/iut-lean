@@ -194,8 +194,20 @@ sections of $T\to S$ and proves the natural currying equivalence
 \]
 Thus product with $S$ is both a right adjoint and a left adjoint, so it
 preserves finite limits and finite colimits as required by
-Proposition~1.2.1(iii).  The arbitrary-$S$ component decomposition and the
-converse classification of all connected finite-etale morphisms remain open.
+Proposition~1.2.1(iii).  Lean also forms the finite orbit set $\pi_0(S)$,
+constructs restriction to every orbit and gluing by dependent disjoint union,
+and proves both natural inverse isomorphisms.  Hence
+\[
+\mathcal B(G)_S\simeq
+\prod_{c\in\pi_0(S)}\mathcal B(G)_{S_c}.
+\]
+For the canonical representative $s_c$, continuity makes
+$\operatorname{Stab}_G(s_c)$ open.  An equivariant orbit--stabilizer
+isomorphism and the open-subgroup slice equivalence identify the $c$-factor
+with the certified connected anabelioid
+$\mathcal B(\operatorname{Stab}_G(s_c))$.  This proves
+Proposition~1.2.1(i) in the continuous-action model.  The converse
+classification of all connected finite-etale morphisms remains open.
 Each constituent anabelioid is now an actual Galois category with a chosen
 fiber functor and certified profinite fundamental group.  Its branch and constituent-to-total morphisms are exact
 contravariant functors.  Categorical $2$-isomorphisms derive the conjugating

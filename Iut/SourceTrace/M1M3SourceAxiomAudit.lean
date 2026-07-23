@@ -19,6 +19,7 @@ import Iut.Foundations.SourceDefinition52Sequential
 import Iut.Foundations.SourceTemperedSemigraph
 import Iut.Foundations.SourceContinuousAnabelioid
 import Iut.Foundations.SourceAnabelioidSlice
+import Iut.Foundations.SourceAnabelioidComponents
 import Iut.Foundations.SourceSemiGraphOfAnabelioids
 
 open Iut
@@ -450,6 +451,13 @@ visible to Lean's axiom reporter.
 #print axioms Iut.sourceSliceDependentSectionHomEquiv
 #print axioms Iut.sourceSliceProductAdjDependentSection
 #print axioms Iut.sourceSliceProduct_preservesFiniteColimits
+#print axioms Iut.sourceSliceComponentsGlueNatIso
+#print axioms Iut.sourceSliceComponentsSplitNatIso
+#print axioms Iut.sourceSliceComponentProductEquivalence
+#print axioms Iut.sourceActionComponentCosetActionIso
+#print axioms Iut.sourceActionComponentConnectedFactorEquivalence
+#print axioms Iut.sourceSliceAnabelioidEquivalence
+#print axioms Iut.sourceActionComponentEtaleFundamentalGroup
 #print axioms Iut.sourceInductionRestrictionAdjunction
 #print axioms Iut.sourceOpenSubgroupRestrictionSliceIso
 #print axioms Iut.sourceOpenSubgroupFiniteEtaleFactorization

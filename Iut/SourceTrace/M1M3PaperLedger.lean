@@ -488,12 +488,22 @@ def m1m3PaperLedger : List PaperClause :=
         "sourceSliceDependentSectionHomEquiv",
         "sourceSliceProductAdjDependentSection",
         "sourceSliceProduct_preservesFiniteColimits",
+        "SourceActionComponent",
+        "sourceActionComponentAction_pretransitive",
+        "sourceSliceComponentsGlueNatIso",
+        "sourceSliceComponentsSplitNatIso",
+        "sourceSliceComponentProductEquivalence",
+        "sourceActionComponentOpenStabilizer",
+        "sourceActionComponentCosetActionIso",
+        "sourceActionComponentConnectedFactorEquivalence",
+        "sourceSliceAnabelioidEquivalence",
+        "sourceActionComponentEtaleFundamentalGroup",
         "sourceInductionRestrictionAdjunction",
         "sourceOpenSubgroupRestrictionSliceIso",
         "SourceFiniteEtaleFunctorFactorization",
         "sourceOpenSubgroupFiniteEtaleFactorization"]
       .partialImplementation
-      "Lean constructs B(G) as the actual Galois category of finite discrete continuous G-actions and certifies its original profinite fundamental group. For every open H ≤ G it constructs the transitive action G/H, the paper's left-diagonal quotient and right-inverse G-action, the equivalent standard induced action, and the natural equivalence B(H) ≃ B(G)_(G/H). The forgetful slice functor is proved left adjoint to product with S. For arbitrary S, Lean constructs the finite continuous conjugation action on dependent sections, proves the explicit currying equivalence natural in both variables, and derives that product with S is also a left adjoint. Hence i_S^* preserves finite limits and finite colimits exactly as Proposition 1.2.1(iii) requires. Explicit inverse Hom maps prove induction left adjoint to restriction; uniqueness of right adjoints then identifies restriction with product by G/H under the slice equivalence. The resulting pullback is packaged by the factorization definition of finite-etale morphisms. The general connected-component assertions for arbitrary S and the converse classification of every connected finite-etale morphism from Remark 1.2.2.1 remain open.",
+      "Lean constructs B(G) as the actual Galois category of finite discrete continuous G-actions and certifies its original profinite fundamental group. For every open H ≤ G it constructs the transitive action G/H, the paper's left-diagonal quotient and right-inverse G-action, the equivalent standard induced action, and the natural equivalence B(H) ≃ B(G)_(G/H). The forgetful slice functor is proved left adjoint to product with S. For arbitrary S, Lean constructs the finite continuous conjugation action on dependent sections, proves the explicit currying equivalence natural in both variables, and derives that product with S is also a left adjoint. Hence i_S^* preserves finite limits and finite colimits exactly as Proposition 1.2.1(iii) requires. It also constructs the finite orbit set of S, restriction and gluing functors, both natural inverse isomorphisms, and the resulting equivalence between B(G)_S and the product of its orbit slices. Orbit-stabilizer then identifies every factor with B(Stab(s)) for an explicitly open stabilizer and supplies its connected Galois-category certificate, proving Proposition 1.2.1(i) in the continuous-action model. Explicit inverse Hom maps prove induction left adjoint to restriction; uniqueness of right adjoints identifies restriction with product by G/H under the slice equivalence. The resulting pullback is packaged by the factorization definition of finite-etale morphisms. The converse classification of every connected finite-etale morphism from Remark 1.2.2.1 remains open.",
     clause "SemiAnbd.2.1" .semiGraphsAnabelioids
       "Semi-graphs of Anabelioids, Definition 2.1"
       ["SourcePointedSemiGraphOfAnabelioids",

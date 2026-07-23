@@ -453,13 +453,29 @@
   $(-\times S)\dashv\Gamma_S$.  Thus product by every $S$ preserves finite
   limits and finite colimits, proving Proposition~1.2.1(iii), and the
   pullback is packaged by the factorization criterion of
-  Definition~1.2.2.  The arbitrary-object component decomposition and the
-  converse classification of all connected finite-etale morphisms remain
-  open.
+  Definition~1.2.2.  Lean also forms the finite orbit set $\pi_0(S)$,
+  restricts an object over $S$ to every orbit, and glues an orbit-indexed
+  family by dependent disjoint union.  Explicit natural isomorphisms in both
+  directions prove
+  \[
+    \mathcal B(G)_S \simeq
+      \prod_{c\in\pi_0(S)}\mathcal B(G)_{S_c}.
+  \]
+  For the canonical representative $s_c$, continuity makes
+  $\operatorname{Stab}_G(s_c)$ open.  An equivariant orbit--stabilizer
+  isomorphism and Proposition~1.2.1(v) then identify the $c$-factor with the
+  certified connected anabelioid
+  $\mathcal B(\operatorname{Stab}_G(s_c))$.  This proves
+  Proposition~1.2.1(i) in the continuous-action model.  The converse
+  classification of all connected finite-etale morphisms remains open.
   \lean{Iut.sourceDependentSection_continuous}
   \lean{Iut.sourceSliceDependentSectionHomEquiv}
   \lean{Iut.sourceSliceProductAdjDependentSection}
   \lean{Iut.sourceSliceProduct_preservesFiniteColimits}
+  \lean{Iut.sourceSliceComponentProductEquivalence}
+  \lean{Iut.sourceActionComponentCosetActionIso}
+  \lean{Iut.sourceSliceAnabelioidEquivalence}
+  \lean{Iut.sourceActionComponentEtaleFundamentalGroup}
   Each constituent anabelioid is now an actual Galois category with a chosen
   fiber functor and certified profinite fundamental group.  Branch and
   constituent-to-total morphisms are exact contravariant functors.  A
