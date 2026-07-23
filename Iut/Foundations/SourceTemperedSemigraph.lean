@@ -24,9 +24,9 @@ is finite, applies Lemma 1.8 to obtain a fixed component, and uses the
 over-base branch map to upgrade it to a fixed original vertex.  It also proves
 the Definition 2.4(iv) estranged-branch contradiction once the subgroup
 containments supplied by Remark 2.2.1 are available.  That group-containment
-passage, the one-or-two-fixed-vertex-system, maximal-compact/verticial
-classification, and the inverse-limit passage in IUT I, Proposition 2.4(i),
-are not asserted here.
+passage, its stabilizer-to-verticial-subgroup identification, the
+maximal-compact/verticial classification, and the inverse-limit passage in IUT
+I, Proposition 2.4(i), are not asserted here.
 -/
 
 namespace Iut
@@ -881,6 +881,97 @@ def FixesVertexOrEdge : Prop :=
             (SourceGraphAction.graphIso data.toGraphAction g first = second ∧
               SourceGraphAction.graphIso data.toGraphAction g second = first)
 
+/-- The set of original vertices fixed by the entire acting group. -/
+def fixedVertexSet : Set Point :=
+  {point | point ∈ semiGraph.vertexSet ∧
+    ∀ g : Acting,
+      SourceGraphAction.graphIso data.toGraphAction g point = point}
+
+/-- An original vertex fixed by the entire acting group. -/
+def FixedVertex :=
+  {point : Point // point ∈ fixedVertexSet semiGraph data}
+
+/-- If the fixed original vertex set consists of two distinct vertices, those
+vertices are joined by a single closed edge.  Otherwise the internal vertex of
+their unique geodesic would be a third fixed original vertex.  This is the
+application of Lemma 1.8(ii)(b) in Theorem 3.7(iii). -/
+theorem adjacent_of_fixedVertexSet_eq_pair
+    {first second : Point}
+    (first_ne_second : first ≠ second)
+    (fixed_vertices :
+      fixedVertexSet semiGraph data = {first, second}) :
+    semiGraph.compactification.Adj first second := by
+  have first_mem : first ∈ fixedVertexSet semiGraph data := by
+    rw [fixed_vertices]
+    simp
+  have second_mem : second ∈ fixedVertexSet semiGraph data := by
+    rw [fixed_vertices]
+    simp
+  obtain ⟨path, path_isPath⟩ :=
+    semiGraph.compactification_isTree.connected.exists_isPath first second
+  by_contra not_adjacent
+  have path_length_pos : 0 < path.length := by
+    by_contra not_positive
+    have path_length_zero : path.length = 0 := by omega
+    exact first_ne_second
+      (SimpleGraph.Walk.eq_of_length_eq_zero path_length_zero)
+  have path_length_ne_one : path.length ≠ 1 := by
+    intro path_length_one
+    exact not_adjacent
+      (SimpleGraph.Walk.adj_of_length_eq_one path_length_one)
+  have two_le_path_length : 2 ≤ path.length := by omega
+  let left := path.getVert 0
+  let center := path.getVert 1
+  let right := path.getVert 2
+  have left_adj_center :
+      semiGraph.compactification.Adj left center := by
+    exact path.adj_getVert_succ (by omega : 0 < path.length)
+  have center_adj_right :
+      semiGraph.compactification.Adj center right := by
+    simpa [center, right] using
+      path.adj_getVert_succ (i := 1) (by omega : 1 < path.length)
+  have left_ne_right : left ≠ right := by
+    intro equality
+    have support_nodup := path_isPath.support_nodup
+    have zero_bound : 0 < path.support.length := by
+      rw [path.length_support]
+      omega
+    have two_bound : 2 < path.support.length := by
+      rw [path.length_support]
+      omega
+    have support_eq : path.support[0] = path.support[2] := by
+      rw [path.support_getElem_eq_getVert zero_bound]
+      rw [path.support_getElem_eq_getVert two_bound]
+      exact equality
+    have index_eq : (0 : Nat) = 2 :=
+      (List.Nodup.getElem_inj_iff support_nodup).mp support_eq
+    omega
+  have center_vertex : center ∈ semiGraph.vertexSet := by
+    by_contra center_not_vertex
+    obtain ⟨neighbor, _, neighbor_unique⟩ :=
+      semiGraph.boundary_unique_neighbor center center_not_vertex
+    have left_eq : left = neighbor :=
+      neighbor_unique left left_adj_center.symm
+    have right_eq : right = neighbor :=
+      neighbor_unique right center_adj_right
+    exact left_ne_right (left_eq.trans right_eq.symm)
+  have center_fixed :
+      ∀ g : Acting,
+        SourceGraphAction.graphIso data.toGraphAction g center = center := by
+    intro g
+    exact SourceGraphAction.fixes_path_pointwise data.toGraphAction
+      semiGraph.compactification_isTree g (first_mem.2 g) (second_mem.2 g)
+      path path_isPath center (path.getVert_mem_support 1)
+  have center_mem : center ∈ fixedVertexSet semiGraph data :=
+    ⟨center_vertex, center_fixed⟩
+  rw [fixed_vertices] at center_mem
+  have first_adj_center :
+      semiGraph.compactification.Adj first center := by
+    simpa [left] using left_adj_center
+  rcases center_mem with center_eq_first | center_eq_second
+  · exact first_adj_center.ne center_eq_first.symm
+  · exact not_adjacent (center_eq_second ▸ first_adj_center)
+
 /-- The fixed-component alternative upgrades to a fixed original vertex for
 an action over the base on a connected semi-graph with a vertex.  This is the
 second step of the proof of Theorem 3.7(iii). -/
@@ -1163,6 +1254,28 @@ def map
 
 end FixedSubjoint
 
+namespace FixedVertex
+
+variable
+  {TargetPoint : Type w}
+  {targetSemiGraph : SourceSemiGraphTree TargetPoint}
+  {targetData : targetSemiGraph.Action Acting}
+
+/-- Transport a fixed original vertex along an equivariant local semi-graph
+map. -/
+def map
+    (transition : data.EquivariantLocalMap
+      semiGraph targetSemiGraph targetData)
+    (vertex : FixedVertex semiGraph data) :
+    FixedVertex targetSemiGraph targetData :=
+  ⟨transition.pointMap vertex.1,
+    transition.map_vertex vertex.2.1,
+    fun g =>
+      (transition.equivariant g vertex.1).trans
+        (congrArg transition.pointMap (vertex.2.2 g))⟩
+
+end FixedVertex
+
 end Action
 
 end SourceSemiGraphTree
@@ -1403,6 +1516,174 @@ theorem exists_compatible_fixedSubjoints :
   exact nonempty_sections_of_finite_cofiltered_system system.fixedSubjoints
 
 end SourceCofilteredFixedSubjointSystem
+
+/-- The fixed-vertex inverse system in the final paragraph of the proof of
+*Semi-graphs of Anabelioids*, Theorem 3.7(iii).  Its transitions agree with
+actual equivariant local maps, and every fixed set is bounded by two vertices.
+-/
+structure SourceCofilteredFixedVertexSystem
+    (Index : Type u) [Category.{w} Index] [IsCofilteredOrEmpty Index]
+    (Acting : Type u) [Group Acting] where
+  Point : Index → Type v
+  semiGraph : ∀ index, SourceSemiGraphTree (Point index)
+  action : ∀ index, (semiGraph index).Action Acting
+  fixedVertices : Index ⥤ Type v
+  realize :
+    ∀ index,
+      fixedVertices.obj index ≃
+        SourceSemiGraphTree.Action.FixedVertex
+          (semiGraph index) (action index)
+  transition :
+    ∀ {source target} (_map : source ⟶ target),
+      (action source).EquivariantLocalMap
+        (semiGraph source) (semiGraph target) (action target)
+  transition_realize :
+    ∀ {source target} (map : source ⟶ target)
+      (vertex : fixedVertices.obj source),
+      realize target (fixedVertices.map map vertex) =
+        SourceSemiGraphTree.Action.FixedVertex.map
+          (semiGraph source) (action source)
+          (transition map) (realize source vertex)
+  fixed_vertex_nonempty :
+    ∀ index,
+      Nonempty
+        (SourceSemiGraphTree.Action.FixedVertex
+          (semiGraph index) (action index))
+  fixed_vertices_le_pair :
+    ∀ index,
+      ∃ first second,
+        SourceSemiGraphTree.Action.fixedVertexSet
+            (semiGraph index) (action index) ⊆
+          {first, second}
+
+namespace SourceCofilteredFixedVertexSystem
+
+variable
+  {Index : Type u} [Category.{w} Index] [IsCofilteredOrEmpty Index]
+  {Acting : Type u} [Group Acting]
+  (system : SourceCofilteredFixedVertexSystem Index Acting)
+
+/-- Nonempty fixed-vertex sets bounded by two points admit a compatible
+choice over the cofiltered system. -/
+theorem exists_compatible_fixedVertices :
+    system.fixedVertices.sections.Nonempty := by
+  letI (index : Index) :
+      Finite
+        (SourceSemiGraphTree.Action.FixedVertex
+          (system.semiGraph index) (system.action index)) := by
+    obtain ⟨first, second, fixed_le⟩ :=
+      system.fixed_vertices_le_pair index
+    exact (((Set.finite_singleton second).insert first).subset
+      fixed_le).to_subtype
+  letI (index : Index) : Finite (system.fixedVertices.obj index) :=
+    Finite.of_equiv
+      (SourceSemiGraphTree.Action.FixedVertex
+        (system.semiGraph index) (system.action index))
+      (system.realize index).symm
+  letI (index : Index) : Nonempty (system.fixedVertices.obj index) :=
+    Nonempty.map (system.realize index).symm
+      (system.fixed_vertex_nonempty index)
+  exact nonempty_sections_of_finite_cofiltered_system system.fixedVertices
+
+/-- There are at most two compatible fixed-vertex systems.  Three pairwise
+distinct sections would remain pairwise distinct at a common cofiltered
+predecessor, contradicting the two-point bound in that fiber. -/
+theorem three_compatible_fixedVertices_not_pairwise_distinct
+    (first second third : system.fixedVertices.sections) :
+    first = second ∨ first = third ∨ second = third := by
+  classical
+  by_cases first_eq_second : first = second
+  · exact Or.inl first_eq_second
+  by_cases first_eq_third : first = third
+  · exact Or.inr (Or.inl first_eq_third)
+  by_cases second_eq_third : second = third
+  · exact Or.inr (Or.inr second_eq_third)
+  have exists_ne_index
+      {left right : system.fixedVertices.sections}
+      (not_equal : left ≠ right) :
+      ∃ index, left.1 index ≠ right.1 index := by
+    have not_all : ¬∀ index, left.1 index = right.1 index :=
+      fun all_equal => not_equal
+        (CategoryTheory.Functor.sections_ext_iff.mpr all_equal)
+    push Not at not_all
+    exact not_all
+  obtain ⟨firstSecondIndex, firstSecond_ne⟩ :=
+    exists_ne_index first_eq_second
+  obtain ⟨firstThirdIndex, firstThird_ne⟩ :=
+    exists_ne_index first_eq_third
+  obtain ⟨secondThirdIndex, secondThird_ne⟩ :=
+    exists_ne_index second_eq_third
+  let pairIndex :=
+    CategoryTheory.IsCofiltered.min firstSecondIndex firstThirdIndex
+  let commonIndex :=
+    CategoryTheory.IsCofiltered.min pairIndex secondThirdIndex
+  let commonToPair : commonIndex ⟶ pairIndex :=
+    CategoryTheory.IsCofiltered.minToLeft pairIndex secondThirdIndex
+  let commonToFirstSecond : commonIndex ⟶ firstSecondIndex :=
+    commonToPair ≫
+      CategoryTheory.IsCofiltered.minToLeft
+        firstSecondIndex firstThirdIndex
+  let commonToFirstThird : commonIndex ⟶ firstThirdIndex :=
+    commonToPair ≫
+      CategoryTheory.IsCofiltered.minToRight
+        firstSecondIndex firstThirdIndex
+  let commonToSecondThird : commonIndex ⟶ secondThirdIndex :=
+    CategoryTheory.IsCofiltered.minToRight pairIndex secondThirdIndex
+  have ne_at_common
+      (left right : system.fixedVertices.sections)
+      {target : Index} (map : commonIndex ⟶ target)
+      (ne_at_target : left.1 target ≠ right.1 target) :
+      left.1 commonIndex ≠ right.1 commonIndex := by
+    intro equal_at_common
+    apply ne_at_target
+    rw [← left.property map, ← right.property map, equal_at_common]
+  have firstSecond_ne_common :
+      first.1 commonIndex ≠ second.1 commonIndex :=
+    ne_at_common first second commonToFirstSecond firstSecond_ne
+  have firstThird_ne_common :
+      first.1 commonIndex ≠ third.1 commonIndex :=
+    ne_at_common first third commonToFirstThird firstThird_ne
+  have secondThird_ne_common :
+      second.1 commonIndex ≠ third.1 commonIndex :=
+    ne_at_common second third commonToSecondThird secondThird_ne
+  obtain ⟨leftPoint, rightPoint, fixed_le⟩ :=
+    system.fixed_vertices_le_pair commonIndex
+  let firstVertex := system.realize commonIndex (first.1 commonIndex)
+  let secondVertex := system.realize commonIndex (second.1 commonIndex)
+  let thirdVertex := system.realize commonIndex (third.1 commonIndex)
+  have first_side : firstVertex.1 = leftPoint ∨ firstVertex.1 = rightPoint :=
+    fixed_le firstVertex.2
+  have second_side : secondVertex.1 = leftPoint ∨ secondVertex.1 = rightPoint :=
+    fixed_le secondVertex.2
+  have third_side : thirdVertex.1 = leftPoint ∨ thirdVertex.1 = rightPoint :=
+    fixed_le thirdVertex.2
+  have value_eq_of_point_eq
+      {left right : system.fixedVertices.obj commonIndex}
+      (point_eq :
+        (system.realize commonIndex left).1 =
+          (system.realize commonIndex right).1) :
+      left = right := by
+    apply (system.realize commonIndex).injective
+    exact Subtype.ext point_eq
+  rcases first_side with first_left | first_right
+  · rcases second_side with second_left | second_right
+    · exact firstSecond_ne_common
+        (value_eq_of_point_eq (first_left.trans second_left.symm)) |>.elim
+    · rcases third_side with third_left | third_right
+      · exact firstThird_ne_common
+          (value_eq_of_point_eq (first_left.trans third_left.symm)) |>.elim
+      · exact secondThird_ne_common
+          (value_eq_of_point_eq (second_right.trans third_right.symm)) |>.elim
+  · rcases second_side with second_left | second_right
+    · rcases third_side with third_left | third_right
+      · exact secondThird_ne_common
+          (value_eq_of_point_eq (second_left.trans third_left.symm)) |>.elim
+      · exact firstThird_ne_common
+          (value_eq_of_point_eq (first_right.trans third_right.symm)) |>.elim
+    · exact firstSecond_ne_common
+        (value_eq_of_point_eq (first_right.trans second_right.symm)) |>.elim
+
+end SourceCofilteredFixedVertexSystem
 
 open scoped Pointwise
 

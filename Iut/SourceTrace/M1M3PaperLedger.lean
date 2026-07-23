@@ -409,9 +409,11 @@ def m1m3PaperLedger : List PaperClause :=
       ["SourceGraphAction", "SourceGraphAction.graphIso",
         "SourceGraphAction.dist_image",
         "SourceGraphAction.fixes_path_pointwise",
-        "SourceGraphAction.subgroup_fixes_geodesic_pointwise"]
+        "SourceGraphAction.subgroup_fixes_geodesic_pointwise",
+        "SourceSemiGraphTree.Action.fixedVertexSet",
+        "SourceSemiGraphTree.Action.adjacent_of_fixedVertexSet_eq_pair"]
       .partialImplementation
-      "For an action by automorphisms of a simple tree, Lean proves distance invariance and that a subgroup fixing two endpoints fixes every vertex on their unique geodesic. This is exactly the closed-edge geodesic statement used by the marked compactification. The paper's general branch-set and morphism formalism remains open.",
+      "For an action by automorphisms of a simple tree, Lean proves distance invariance and that a subgroup fixing two endpoints fixes every vertex on their unique geodesic. It also proves the Theorem 3.7 application: if the fixed original vertex set is exactly a distinct pair, the geodesic has length one, so the pair is joined by a closed edge. The paper's general branch-set and morphism formalism remains open.",
     clause "SemiAnbd.1.8(ii)(c)" .semiGraphsAnabelioids
       "Semi-graphs of Anabelioids, Lemma 1.8(ii)(c)"
       ["SourceSemiGraphTree.Action.FixedSubjoint",
@@ -444,9 +446,14 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceCofilteredFixedSubjointSystem",
         "SourceCofilteredFixedSubjointSystem.exists_compatible_fixedSubjoints",
         "SourceEstrangedIncidentBranchSystem.subgroup_eq_bot_of_le_branch_intersection",
-        "SourceEstrangedIncidentBranchSystem.not_le_two_branches_of_ne_bot"]
+        "SourceEstrangedIncidentBranchSystem.not_le_two_branches_of_ne_bot",
+        "SourceSemiGraphTree.Action.adjacent_of_fixedVertexSet_eq_pair",
+        "SourceSemiGraphTree.Action.FixedVertex.map",
+        "SourceCofilteredFixedVertexSystem",
+        "SourceCofilteredFixedVertexSystem.exists_compatible_fixedVertices",
+        "SourceCofilteredFixedVertexSystem.three_compatible_fixedVertices_not_pairwise_distinct"]
       .partialImplementation
-      "Lean formalizes the initial fixed-vertex steps, finite inverse-system step, and final estranged-branch algebra once the branch containments are supplied. A compact-to-discrete deck image is finite; Lemma 1.8 and the over-base branch projection yield a fixed original vertex. At cofinal levels with three fixed vertices, Lean constructs an upstairs fixed subjoint, transports it through an equivariant locally injective quotient map, and derives a compatible system of finite-level subjoints from the nonempty finite cofiltered-limit theorem. Definition 2.4(iv) then makes any subgroup contained in the two incident branch images trivial. Arbitrary finite semi-graph quotients beyond the marked-tree encoding, Remark 2.2.1's derivation of the branch containments, one-or-two fixed-vertex systems, and maximal compact/verticial classification remain open.",
+      "Lean formalizes the initial fixed-vertex steps, both finite inverse-system arguments, and the estranged-branch algebra once the branch containments are supplied. A compact-to-discrete deck image is finite; Lemma 1.8 and the over-base branch projection yield a fixed original vertex. Three fixed vertices produce compatible finite-level subjoints; Definition 2.4(iv) then makes a subgroup contained in both incident branch images trivial. Given the resulting cofinal two-point bounds, Lean constructs a compatible fixed-vertex system, proves that there are at most two such systems, and proves that an exact fixed pair is joined by one edge. Arbitrary finite semi-graph quotients beyond the marked-tree encoding, Remark 2.2.1's branch-containment and stabilizer-to-verticial identifications, derivation of the cofinal pair bounds in one assembled theorem, and maximal compact/verticial classification remain open.",
     clause "I.0.pseudo-monoid" .iutI
       "IUT I, Section 0: topological pseudo-monoids"
       ["SourceTopologicalPseudoMonoid",

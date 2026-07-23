@@ -285,6 +285,11 @@
   \lean{Iut.SourceEstrangedIncidentBranchSystem}
   \lean{Iut.SourceEstrangedIncidentBranchSystem.subgroup_eq_bot_of_le_branch_intersection}
   \lean{Iut.SourceEstrangedIncidentBranchSystem.not_le_two_branches_of_ne_bot}
+  \lean{Iut.SourceSemiGraphTree.Action.adjacent_of_fixedVertexSet_eq_pair}
+  \lean{Iut.SourceSemiGraphTree.Action.FixedVertex.map}
+  \lean{Iut.SourceCofilteredFixedVertexSystem}
+  \lean{Iut.SourceCofilteredFixedVertexSystem.exists_compatible_fixedVertices}
+  \lean{Iut.SourceCofilteredFixedVertexSystem.three_compatible_fixedVertices_not_pairwise_distinct}
   \lean{Iut.SourceIUTIProposition24PartI}
   \lean{Iut.SourceIUTIProposition24PartI.CuspidalInertia}
   \lean{Iut.SourceIUTIProposition24PartI.CuspidalInertia.conjugate_le_arithmeticTempered_iff}
@@ -313,14 +318,19 @@
   resulting subjoint to a finite level, and the finite cofiltered-limit theorem
   supplies a compatible system of such finite-level subjoints.  Definition~2.4(iv)
   is encoded on incident branch subgroups; Lean proves that containment in two
-  estranged branch images forces the contained subgroup to be trivial.  The exact subgroup
+  estranged branch images forces the contained subgroup to be trivial.  Given
+  the resulting cofinal two-point bounds, a second finite cofiltered-limit
+  argument supplies a compatible fixed-vertex system, and a common-predecessor
+  argument proves that there are at most two such systems.  If a level has
+  exactly two fixed vertices, their unique geodesic is a single edge.  The exact subgroup
   configuration of \IUT{} I, Proposition~2.4(i), is typed separately.  From
   its compact-conjugate rigidity conclusion, normality of the geometric
   subgroup, and a nontrivial compact cusp inertia subgroup, Lean derives the
   two cusp-conjugacy conclusions of Corollary~2.5.  The source branch-set and
   general morphism formalism and arbitrary finite semi-graph quotients, Remark~2.2.1's
-  derivation of the two branch containments, the one-or-two compatible
-  fixed-vertex systems, maximal-compact/verticial classification, the
+  derivation of the two branch containments and the stabilizer-to-verticial
+  subgroup identification, assembly of the cofinal pair bound from these
+  pieces, maximal-compact/verticial classification, the
   inverse-limit proof of Proposition~2.4(i), and construction of cusp inertia
   from stable reduction remain open.
 \end{definition}

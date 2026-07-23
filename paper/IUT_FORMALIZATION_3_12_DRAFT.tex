@@ -164,14 +164,19 @@ the nonempty finite cofiltered-limit theorem to obtain a compatible system of
 finite-level subjoints.  The incident-branch form of Definition~2.4(iv) is also
 encoded: Lean proves that a subgroup contained in two estranged branch images
 is trivial, yielding the contradiction once Remark~2.2.1 supplies those
-containments.
+containments.  Given the resulting cofinal two-point bounds, Lean constructs a
+compatible fixed-vertex system by a second finite cofiltered-limit argument,
+proves by a common-predecessor argument that there are at most two compatible
+systems, and proves that an exact pair of fixed vertices is joined by a single
+edge.
 The
 exact subgroup configuration of \IUT{} I, Proposition~2.4(i), is typed; from
 its compact-conjugate rigidity conclusion and a nontrivial compact cusp
 inertia subgroup, Lean derives both cusp-conjugacy assertions of
 Corollary~2.5.  The general branch-set/morphism formalism and arbitrary finite
 semi-graph quotients, Remark~2.2.1's derivation of the branch containments,
-the one-or-two compatible fixed-vertex systems,
+the stabilizer-to-verticial subgroup identification and assembly of the
+cofinal pair bound,
 maximal-compact/verticial classification, and the inverse-limit proof of
 Proposition~2.4(i) remain open.
 Separately, the
