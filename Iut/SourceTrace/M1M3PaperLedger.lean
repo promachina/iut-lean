@@ -27,6 +27,7 @@ inductive PaperVolume
   | iutII
   | iutIII
   | etaleTheta
+  | semiGraphsAnabelioids
   | absoluteAnabelianIII
   deriving DecidableEq, Repr
 
@@ -75,11 +76,14 @@ def m1m3SourceDocuments : List PaperSourceDocument :=
     { volume := .etaleTheta,
       repositoryPath := "docs/papers/mochizuki-etale-theta-frobenioid.pdf",
       sha256 := "42c5d9180c69bc9fa6596ce1a11662494315954ed74301060bf1819f955a7406" },
+    { volume := .semiGraphsAnabelioids,
+      repositoryPath := "docs/papers/mochizuki-semi-graphs-anabelioids.pdf",
+      sha256 := "dcc05b22ff858af670c9346ca7a483d4d9b640df5561ec0e82c27314a2416892" },
     { volume := .absoluteAnabelianIII,
       repositoryPath := "docs/papers/mochizuki-absolute-anabelian-topics-iii.pdf",
       sha256 := "e8115df30a86dea26e2ebf60cb333558ff28fe3e4d57017a80421787b53421a9" } ]
 
-theorem m1m3SourceDocuments_count : m1m3SourceDocuments.length = 7 :=
+theorem m1m3SourceDocuments_count : m1m3SourceDocuments.length = 8 :=
   rfl
 
 private def clause
@@ -385,6 +389,14 @@ def m1m3PaperLedger : List PaperClause :=
       "Frobenioids II, Definition 5.3"
       [] .unformalized
       "GC/LC-admissibility and poly-Frobenioids remain to be formalized.",
+    clause "SemiAnbd.1.8(ii)(b)" .semiGraphsAnabelioids
+      "Semi-graphs of Anabelioids, Lemma 1.8(ii)(b)"
+      ["SourceGraphAction", "SourceGraphAction.graphIso",
+        "SourceGraphAction.dist_image",
+        "SourceGraphAction.fixes_path_pointwise",
+        "SourceGraphAction.subgroup_fixes_geodesic_pointwise"]
+      .partialImplementation
+      "For an action by automorphisms of a simple tree, Lean proves distance invariance and that a subgroup fixing two endpoints fixes every vertex on their unique geodesic. This is the closed-edge vertex shadow of part (ii)(b). The source semi-graph formalism, open edges, part (ii)(a)'s finite-group fixed vertex-or-edge theorem, and part (ii)(c)'s subjoint statement remain open.",
     clause "I.0.pseudo-monoid" .iutI
       "IUT I, Section 0: topological pseudo-monoids"
       ["SourceTopologicalPseudoMonoid",
@@ -404,6 +416,19 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceTopologicalGroupPseudoMonoidActionPair.action_partialMul"]
       .sourceFaithful
       "The chosen ambient topological abelian group and embedded image are retained. Multiplication is defined exactly on pairs whose ambient product remains in the image, is continuous, commutative, and associative wherever the relevant composites exist. Divisibility and cyclotomicity are the paper's ambient-root, power-membership, torsion Q/Z, and torsion-stability conditions. Continuous morphisms preserve defined products, categorical isomorphisms reflect their domain, and continuous group actions are by these actual pseudo-monoid automorphisms.",
+    clause "I.2.4(i)" .iutI "IUT I, Proposition 2.4(i)"
+      ["SourceIUTIProposition24PartI",
+        "SourceIUTIProposition24PartI.geometricTempered_le_arithmeticTempered",
+        "SourceIUTIProposition24PartI.geometricTempered_le_geometric"]
+      .partialImplementation
+      "The exact geometric, arithmetic-tempered, and geometric-tempered subgroup configuration is typed, including Delta_X^tp = Pi_X^tp intersection Delta_X and normality of Delta_X. The proposition's compact-conjugate rigidity conclusion is still a structure field: deriving it from finite approximations, Semi-graphs of Anabelioids Theorem 3.7, and the inverse-limit argument in the paper remains open.",
+    clause "I.2.5.cusp" .iutI "IUT I, Corollary 2.5: cuspidal inertia portion"
+      ["SourceIUTIProposition24PartI.CuspidalInertia",
+        "SourceIUTIProposition24PartI.CuspidalInertia.conjugate_le_arithmeticTempered_iff",
+        "SourceIUTIProposition24PartI.CuspidalInertia.conjugate_classification",
+        "SourceIUTIProposition24PartI.CuspidalInertia.inertia_le_conjugate_arithmeticTempered_iff"]
+      .partialImplementation
+      "From Proposition 2.4(i), normality of the geometric subgroup, compactness, nontriviality, and the cusp-inertia inclusion, Lean derives both cuspidal conjugacy assertions used by IUT II: ambient conjugates contained in Pi_X^tp are exactly Pi_X^tp-conjugates, and a conjugate of Pi_X^tp containing the inertia group equals Pi_X^tp. Constructing the cusp inertia subgroups and their inclusion from the stable-reduction semi-graph remains open.",
     clause "I.3.1(a)" .iutI "IUT I, Definition 3.1(a)"
       ["PrimeGeFive", "ThetaFieldTower", "SqrtMinusOneData",
         "AbsoluteGaloisProfinite", "SignQuotientOrbicurveData.absoluteGalois_def",
@@ -2118,8 +2143,8 @@ def clauseIdsWithStatus (status : ClauseStatus) : List String :=
   m1m3PaperLedger.filterMap fun entry =>
     if entry.status = status then some entry.id else none
 
-/-- The source-closure ledger contains 115 separately audited clauses. -/
-theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 115 :=
+/-- The source-closure ledger contains 118 separately audited clauses. -/
+theorem m1m3PaperLedger_count : m1m3PaperLedger.length = 118 :=
   rfl
 
 /-- No source clause occurs twice in the direct-citation ledger. -/
@@ -2127,9 +2152,9 @@ theorem m1m3PaperLedger_ids_nodup :
     (m1m3PaperLedger.map PaperClause.id).Nodup := by
   decide
 
-/-- Ninety clauses currently have a genuine but incomplete implementation. -/
+/-- Ninety-three clauses currently have a genuine but incomplete implementation. -/
 theorem partialImplementation_count :
-    (clauseIdsWithStatus .partialImplementation).length = 90 :=
+    (clauseIdsWithStatus .partialImplementation).length = 93 :=
   rfl
 
 /-- Four clauses currently point only to explicitly classified toy models. -/

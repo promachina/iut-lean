@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: IUT Lean formalization contributors
 -/
 import Iut.Foundations.SourceInitialThetaData
+import Iut.Foundations.SourceTemperedSemigraph
 import Mathlib.Algebra.Group.MinimalAxioms
 import Mathlib.CategoryTheory.Category.Preorder
 import Mathlib.Data.PNat.Basic

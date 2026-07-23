@@ -409,6 +409,15 @@ visible to Lean's axiom reporter.
   Iut.GlobalLTorsionCoverInput.standardArithmeticLDeltaThetaMulEquiv
 #print axioms
   Iut.GlobalLTorsionCoverInput.standardGeometricToArithmeticLDeltaThetaMulEquiv_projection
+#print axioms Iut.SourceGraphAction.dist_image
+#print axioms Iut.SourceGraphAction.fixes_path_pointwise
+#print axioms Iut.SourceGraphAction.subgroup_fixes_geodesic_pointwise
+#print axioms
+  Iut.SourceIUTIProposition24PartI.CuspidalInertia.conjugate_le_arithmeticTempered_iff
+#print axioms
+  Iut.SourceIUTIProposition24PartI.CuspidalInertia.conjugate_classification
+#print axioms
+  Iut.SourceIUTIProposition24PartI.CuspidalInertia.inertia_le_conjugate_arithmeticTempered_iff
 #print axioms Iut.SourceTopologicalSubquotient.comapToOriginal_injective
 #print axioms
   Iut.SourceTopologicalSubquotient.comapToOriginal_surjective_of_cuspidalInertia
