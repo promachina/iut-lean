@@ -414,10 +414,11 @@ def m1m3PaperLedger : List PaperClause :=
       "For an action by automorphisms of a simple tree, Lean proves distance invariance and that a subgroup fixing two endpoints fixes every vertex on their unique geodesic. This is exactly the closed-edge geodesic statement used by the marked compactification. The paper's general branch-set and morphism formalism remains open.",
     clause "SemiAnbd.1.8(ii)(c)" .semiGraphsAnabelioids
       "Semi-graphs of Anabelioids, Lemma 1.8(ii)(c)"
-      ["SourceSemiGraphTree.Action.FixesSubjoint",
+      ["SourceSemiGraphTree.Action.FixedSubjoint",
+        "SourceSemiGraphTree.Action.FixesSubjoint",
         "SourceSemiGraphTree.Action.fixesSubjoint_of_three_fixed_vertices"]
       .partialImplementation
-      "In the marked-compactification encoding, Lean proves that three distinct fixed original vertices yield a fixed subjoint. It extracts consecutive edges from a fixed geodesic and uses the unique-neighbor boundary condition to prove their common point is original; truncating those edges gives the two open branches of the joint. The branch-level sub-semi-graph object is not yet constructed as a separate datatype.",
+      "In the marked-compactification encoding, Lean proves for an arbitrary group action that three distinct fixed original vertices yield a fixed subjoint; finiteness of the acting group is not used after the vertices are fixed. It extracts consecutive edges from a fixed geodesic and uses the unique-neighbor boundary condition to prove their common point is original; truncating those edges gives the two open branches of the joint. The branch-level sub-semi-graph object is not yet constructed as a separate raw semi-graph datatype.",
     clause "SemiAnbd.3.7(iii)" .semiGraphsAnabelioids
       "Semi-graphs of Anabelioids, Theorem 3.7(iii)"
       ["SourceSemiGraphTree.edge_abuts_vertex",
@@ -429,9 +430,14 @@ def m1m3PaperLedger : List PaperClause :=
         "SourceCompactSemiGraphAction.compactActionOverBase",
         "SourceCompactSemiGraphAction.deckMap_range_finite",
         "SourceCompactSemiGraphAction.fixesVertexOrEdge",
-        "SourceCompactSemiGraphAction.fixesVertex"]
+        "SourceCompactSemiGraphAction.fixesVertex",
+        "SourceCompactSemiGraphAction.fixesSubjoint_of_three_fixed_vertices",
+        "SourceSemiGraphTree.Action.EquivariantLocalMap",
+        "SourceSemiGraphTree.Action.FixedSubjoint.map",
+        "SourceCofilteredFixedSubjointSystem",
+        "SourceCofilteredFixedSubjointSystem.exists_compatible_fixedSubjoints"]
       .partialImplementation
-      "Lean formalizes the first two source proof steps: a continuous homomorphism from a compact group to the discrete deck group has finite image, restriction to this image yields a fixed component by Lemma 1.8(ii)(a), the oriented branch projection over the base rules out swapping a fixed edge, and connectedness plus a nonempty original vertex set upgrades the component to a fixed original vertex. The cofinal compatible fixed-vertex systems, total-estrangement contradiction, and maximal compact/verticial classification remain open.",
+      "Lean formalizes the initial fixed-vertex steps and the finite inverse-system step. A compact-to-discrete deck image is finite; Lemma 1.8 yields a fixed component; the over-base branch projection and connectedness upgrade this to a fixed original vertex. At cofinal levels with three fixed vertices, Lean constructs an upstairs fixed subjoint, transports it through an equivariant locally injective quotient map, and derives a compatible system of finite-level subjoints from the nonempty finite cofiltered-limit theorem. Arbitrary finite semi-graph quotients beyond the marked-tree encoding, the Remark 2.2.1 group-containment passage, total-estrangement contradiction, one-or-two fixed-vertex systems, and maximal compact/verticial classification remain open.",
     clause "I.0.pseudo-monoid" .iutI
       "IUT I, Section 0: topological pseudo-monoids"
       ["SourceTopologicalPseudoMonoid",

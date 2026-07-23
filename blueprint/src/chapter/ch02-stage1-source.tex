@@ -277,6 +277,11 @@
   \lean{Iut.SourceCompactSemiGraphAction.deckMap_range_finite}
   \lean{Iut.SourceCompactSemiGraphAction.fixesVertexOrEdge}
   \lean{Iut.SourceCompactSemiGraphAction.fixesVertex}
+  \lean{Iut.SourceCompactSemiGraphAction.fixesSubjoint_of_three_fixed_vertices}
+  \lean{Iut.SourceSemiGraphTree.Action.EquivariantLocalMap}
+  \lean{Iut.SourceSemiGraphTree.Action.FixedSubjoint.map}
+  \lean{Iut.SourceCofilteredFixedSubjointSystem}
+  \lean{Iut.SourceCofilteredFixedSubjointSystem.exists_compatible_fixedSubjoints}
   \lean{Iut.SourceIUTIProposition24PartI}
   \lean{Iut.SourceIUTIProposition24PartI.CuspidalInertia}
   \lean{Iut.SourceIUTIProposition24PartI.CuspidalInertia.conjugate_le_arithmeticTempered_iff}
@@ -299,13 +304,18 @@
   group.  Its oriented branch map over the base prevents an edge swap, while
   connectedness and the existence of an original vertex ensure that every
   edge abuts an original vertex.  Thus the compact group fixes an original
-  vertex, as in the next sentence of the source proof.  The exact subgroup
+  vertex, as in the next sentence of the source proof.  At cofinal levels with
+  three fixed vertices, the fixed-subjoint theorem no longer requires a finite
+  acting group.  An equivariant locally injective quotient map transports the
+  resulting subjoint to a finite level, and the finite cofiltered-limit theorem
+  supplies a compatible system of such finite-level subjoints.  The exact subgroup
   configuration of \IUT{} I, Proposition~2.4(i), is typed separately.  From
   its compact-conjugate rigidity conclusion, normality of the geometric
   subgroup, and a nontrivial compact cusp inertia subgroup, Lean derives the
   two cusp-conjugacy conclusions of Corollary~2.5.  The source branch-set and
-  general morphism formalism, cofinal compatible fixed-vertex systems,
-  total-estrangement argument, maximal-compact/verticial classification, the
+  general morphism formalism and arbitrary finite semi-graph quotients, the
+  group-containment and total-estrangement argument, the one-or-two compatible
+  fixed-vertex systems, maximal-compact/verticial classification, the
   inverse-limit proof of Proposition~2.4(i), and construction of cusp inertia
   from stable reduction remain open.
 \end{definition}

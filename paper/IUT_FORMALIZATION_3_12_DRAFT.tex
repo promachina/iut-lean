@@ -157,12 +157,18 @@ fixes an original vertex or an edge of the covering semi-graph.  The oriented
 branch projection over the base prevents swapping the fixed edge, and
 connectedness plus the existence of an original vertex ensures that the edge
 abuts an original vertex.  Thus the compact group fixes an original vertex.
+At cofinal levels with three fixed vertices, Lean constructs a fixed subjoint
+without requiring the acting group itself to be finite, transports the
+subjoint through an equivariant locally injective quotient map, and applies
+the nonempty finite cofiltered-limit theorem to obtain a compatible system of
+finite-level subjoints.
 The
 exact subgroup configuration of \IUT{} I, Proposition~2.4(i), is typed; from
 its compact-conjugate rigidity conclusion and a nontrivial compact cusp
 inertia subgroup, Lean derives both cusp-conjugacy assertions of
-Corollary~2.5.  The general branch-set/morphism formalism, cofinal compatible
-fixed-vertex systems, total-estrangement argument,
+Corollary~2.5.  The general branch-set/morphism formalism and arbitrary finite
+semi-graph quotients, the group-containment and total-estrangement argument,
+the one-or-two compatible fixed-vertex systems,
 maximal-compact/verticial classification, and the inverse-limit proof of
 Proposition~2.4(i) remain open.
 Separately, the

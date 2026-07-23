@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: IUT Lean formalization contributors
 -/
 import Mathlib.Algebra.Group.Subgroup.Pointwise
+import Mathlib.CategoryTheory.CofilteredSystem
 import Mathlib.Combinatorics.SimpleGraph.Acyclic
 import Mathlib.Combinatorics.SimpleGraph.Diam
 import Mathlib.Topology.Algebra.Group.Basic
@@ -21,14 +22,14 @@ For the first step of *Semi-graphs of Anabelioids*, Theorem 3.7(iii), it also
 proves that the continuous image of a compact group in a discrete deck group
 is finite, applies Lemma 1.8 to obtain a fixed component, and uses the
 over-base branch map to upgrade it to a fixed original vertex.  The subsequent
-cofinal-system, total-estrangement, maximal-compact/verticial classification,
-and the inverse-limit passage in IUT I, Proposition 2.4(i), are not asserted
-here.
+group-containment, total-estrangement, one-or-two-fixed-vertex-system,
+maximal-compact/verticial classification, and the inverse-limit passage in IUT
+I, Proposition 2.4(i), are not asserted here.
 -/
 
 namespace Iut
 
-universe u v
+universe u v w
 
 namespace SourceFiniteTree
 
@@ -955,27 +956,47 @@ theorem fixesVertexOrEdge
         Or.inl (edge_fixed g)⟩
   · exact Or.inr ⟨first, second, adjacent, edge_fixed⟩
 
-/-- A fixed subjoint is represented by an original center vertex and two
-distinct incident branches.  Passing to the corresponding sub-semi-graph
-truncates the two selected compactification edges at their other endpoints,
-so they become the two open edges of the joint. -/
-def FixesSubjoint : Prop :=
-  ∃ center ∈ semiGraph.vertexSet, ∃ first second,
-    first ≠ second ∧
-      semiGraph.compactification.Adj center first ∧
-      semiGraph.compactification.Adj center second ∧
-      ∀ g : Acting,
-        SourceGraphAction.graphIso data.toGraphAction g center = center ∧
-          SourceGraphAction.graphIso data.toGraphAction g first = first ∧
-          SourceGraphAction.graphIso data.toGraphAction g second = second
+/-- A fixed subjoint is an original center vertex and two distinct incident
+branches fixed pointwise by the acting group.  Passing to the corresponding
+sub-semi-graph truncates the two selected compactification edges at their
+other endpoints, so they become the two open edges of the joint. -/
+@[ext]
+structure FixedSubjoint where
+  center : Point
+  center_vertex : center ∈ semiGraph.vertexSet
+  first : Point
+  second : Point
+  first_ne_second : first ≠ second
+  center_adj_first : semiGraph.compactification.Adj center first
+  center_adj_second : semiGraph.compactification.Adj center second
+  fixed_pointwise :
+    ∀ g : Acting,
+      SourceGraphAction.graphIso data.toGraphAction g center = center ∧
+        SourceGraphAction.graphIso data.toGraphAction g first = first ∧
+        SourceGraphAction.graphIso data.toGraphAction g second = second
 
-/-- *Semi-graphs of Anabelioids*, Lemma 1.8(ii)(c): if a finite group fixes
-three distinct original vertices of a semi-graph tree, it acts trivially on a
-subjoint.  The proof extracts two consecutive edges from one of two fixed
-geodesics, using the degree-one boundary condition to show that their common
-point is an original vertex. -/
+/-- The acting group fixes some subjoint. -/
+def FixesSubjoint : Prop :=
+  Nonempty (FixedSubjoint semiGraph data)
+
+noncomputable instance [Finite Point] :
+    Finite (FixedSubjoint semiGraph data) := by
+  apply Finite.of_injective
+    (fun subjoint =>
+      (subjoint.center, subjoint.first, subjoint.second))
+  intro first second equality
+  apply FixedSubjoint.ext
+  · exact congrArg (fun points => points.1) equality
+  · exact congrArg (fun points => points.2.1) equality
+  · exact congrArg (fun points => points.2.2) equality
+
+/-- *Semi-graphs of Anabelioids*, Lemma 1.8(ii)(c): if a group fixes three
+distinct original vertices of a semi-graph tree, it acts trivially on a
+subjoint.  Once the three vertices are fixed, the proof does not use finiteness
+of the acting group.  It extracts consecutive edges from fixed geodesics and
+uses the degree-one boundary condition to show that their common point is an
+original vertex. -/
 theorem fixesSubjoint_of_three_fixed_vertices
-    [Finite Acting]
     {first second third : Point}
     (first_vertex : first ∈ semiGraph.vertexSet)
     (_second_vertex : second ∈ semiGraph.vertexSet)
@@ -1039,8 +1060,8 @@ theorem fixesSubjoint_of_three_fixed_vertices
       have right_eq : right = neighbor :=
         neighbor_unique right center_adj_right
       exact left_ne_right (left_eq.trans right_eq.symm)
-    refine ⟨center, center_vertex, left, right, left_ne_right,
-      left_adj_center.symm, center_adj_right, ?_⟩
+    refine ⟨⟨center, center_vertex, left, right, left_ne_right,
+      left_adj_center.symm, center_adj_right, ?_⟩⟩
     intro g
     have path_fixed :=
       SourceGraphAction.fixes_path_pointwise data.toGraphAction
@@ -1076,9 +1097,69 @@ theorem fixesSubjoint_of_three_fixed_vertices
   have firstThirdLength : firstThirdPath.length = 1 := by omega
   have first_adj_third : graph.Adj first third :=
     SimpleGraph.Walk.adj_of_length_eq_one firstThirdLength
-  exact ⟨first, first_vertex, second, third, second_ne_third,
+  exact ⟨⟨first, first_vertex, second, third, second_ne_third,
     first_adj_second, first_adj_third, fun g =>
-      ⟨first_fixed g, second_fixed g, third_fixed g⟩⟩
+      ⟨first_fixed g, second_fixed g, third_fixed g⟩⟩⟩
+
+/-- A locally injective equivariant map between marked semi-graph trees.  These
+are the exact properties of a covering transition needed to transport fixed
+subjoints. -/
+structure EquivariantLocalMap
+    {TargetPoint : Type w}
+    (targetSemiGraph : SourceSemiGraphTree TargetPoint)
+    (targetData : targetSemiGraph.Action Acting) where
+  pointMap : Point → TargetPoint
+  map_vertex :
+    ∀ {point}, point ∈ semiGraph.vertexSet →
+      pointMap point ∈ targetSemiGraph.vertexSet
+  map_adjacent :
+    ∀ {first second}, semiGraph.compactification.Adj first second →
+      targetSemiGraph.compactification.Adj
+        (pointMap first) (pointMap second)
+  locally_injective :
+    ∀ {center first second},
+      semiGraph.compactification.Adj center first →
+      semiGraph.compactification.Adj center second →
+      pointMap first = pointMap second → first = second
+  equivariant :
+    ∀ g point,
+      SourceGraphAction.graphIso targetData.toGraphAction g (pointMap point) =
+        pointMap (SourceGraphAction.graphIso data.toGraphAction g point)
+
+namespace FixedSubjoint
+
+variable
+  {TargetPoint : Type w}
+  {targetSemiGraph : SourceSemiGraphTree TargetPoint}
+  {targetData : targetSemiGraph.Action Acting}
+
+/-- Transport a fixed subjoint along an equivariant locally injective
+semi-graph map. -/
+def map
+    (transition : data.EquivariantLocalMap
+      semiGraph targetSemiGraph targetData)
+    (subjoint : FixedSubjoint semiGraph data) :
+    FixedSubjoint targetSemiGraph targetData where
+  center := transition.pointMap subjoint.center
+  center_vertex := transition.map_vertex subjoint.center_vertex
+  first := transition.pointMap subjoint.first
+  second := transition.pointMap subjoint.second
+  first_ne_second := by
+    intro equality
+    exact subjoint.first_ne_second
+      (transition.locally_injective
+        subjoint.center_adj_first subjoint.center_adj_second equality)
+  center_adj_first := transition.map_adjacent subjoint.center_adj_first
+  center_adj_second := transition.map_adjacent subjoint.center_adj_second
+  fixed_pointwise := fun g =>
+    ⟨(transition.equivariant g subjoint.center).trans
+        (congrArg transition.pointMap (subjoint.fixed_pointwise g).1),
+      (transition.equivariant g subjoint.first).trans
+        (congrArg transition.pointMap (subjoint.fixed_pointwise g).2.1),
+      (transition.equivariant g subjoint.second).trans
+        (congrArg transition.pointMap (subjoint.fixed_pointwise g).2.2)⟩
+
+end FixedSubjoint
 
 end Action
 
@@ -1191,7 +1272,135 @@ theorem fixesVertex
     semiGraph data.compactAction (data.compactActionOverBase overBase)
       vertex_nonempty data.fixesVertexOrEdge
 
+/-- Three distinct original vertices fixed by the compact group determine a
+subjoint fixed pointwise by that compact group. -/
+theorem fixesSubjoint_of_three_fixed_vertices
+    {first second third : Point}
+    (first_vertex : first ∈ semiGraph.vertexSet)
+    (second_vertex : second ∈ semiGraph.vertexSet)
+    (third_vertex : third ∈ semiGraph.vertexSet)
+    (first_ne_second : first ≠ second)
+    (first_ne_third : first ≠ third)
+    (second_ne_third : second ≠ third)
+    (first_fixed :
+      ∀ g : CompactGroup,
+        SourceGraphAction.graphIso
+          data.compactAction.toGraphAction g first = first)
+    (second_fixed :
+      ∀ g : CompactGroup,
+        SourceGraphAction.graphIso
+          data.compactAction.toGraphAction g second = second)
+    (third_fixed :
+      ∀ g : CompactGroup,
+        SourceGraphAction.graphIso
+          data.compactAction.toGraphAction g third = third) :
+    SourceSemiGraphTree.Action.FixesSubjoint
+      semiGraph data.compactAction :=
+  SourceSemiGraphTree.Action.fixesSubjoint_of_three_fixed_vertices
+    semiGraph data.compactAction first_vertex second_vertex third_vertex
+      first_ne_second first_ne_third second_ne_third
+      first_fixed second_fixed third_fixed
+
 end SourceCompactSemiGraphAction
+
+open CategoryTheory CategoryTheory.FunctorToTypes
+
+/-- The finite fixed-subjoint inverse system used in the middle of the proof
+of *Semi-graphs of Anabelioids*, Theorem 3.7(iii).  Its transition functor is
+required to agree with actual equivariant locally injective maps of the
+covering semi-graphs. -/
+structure SourceCofilteredFixedSubjointSystem
+    (Index : Type u) [Category.{w} Index] [IsCofilteredOrEmpty Index]
+    (Acting : Type u) [Group Acting] where
+  CoverPoint : Index → Type v
+  FinitePoint : Index → Type v
+  coverSemiGraph : ∀ index, SourceSemiGraphTree (CoverPoint index)
+  finiteSemiGraph : ∀ index, SourceSemiGraphTree (FinitePoint index)
+  coverAction : ∀ index, (coverSemiGraph index).Action Acting
+  finiteAction : ∀ index, (finiteSemiGraph index).Action Acting
+  quotientMap :
+    ∀ index,
+      (coverAction index).EquivariantLocalMap
+        (coverSemiGraph index) (finiteSemiGraph index) (finiteAction index)
+  fixedSubjoints : Index ⥤ Type v
+  realize :
+    ∀ index,
+      fixedSubjoints.obj index ≃
+        SourceSemiGraphTree.Action.FixedSubjoint
+          (finiteSemiGraph index) (finiteAction index)
+  transition :
+    ∀ {source target} (_map : source ⟶ target),
+      (finiteAction source).EquivariantLocalMap
+        (finiteSemiGraph source) (finiteSemiGraph target) (finiteAction target)
+  transition_realize :
+    ∀ {source target} (map : source ⟶ target)
+      (subjoint : fixedSubjoints.obj source),
+      realize target (fixedSubjoints.map map subjoint) =
+        SourceSemiGraphTree.Action.FixedSubjoint.map
+          (finiteSemiGraph source) (finiteAction source)
+          (transition map) (realize source subjoint)
+  finite_points : ∀ index, Finite (FinitePoint index)
+  first : ∀ index, CoverPoint index
+  second : ∀ index, CoverPoint index
+  third : ∀ index, CoverPoint index
+  first_vertex :
+    ∀ index, first index ∈ (coverSemiGraph index).vertexSet
+  second_vertex :
+    ∀ index, second index ∈ (coverSemiGraph index).vertexSet
+  third_vertex :
+    ∀ index, third index ∈ (coverSemiGraph index).vertexSet
+  first_ne_second : ∀ index, first index ≠ second index
+  first_ne_third : ∀ index, first index ≠ third index
+  second_ne_third : ∀ index, second index ≠ third index
+  first_fixed :
+    ∀ index g,
+      SourceGraphAction.graphIso
+        (coverAction index).toGraphAction g (first index) = first index
+  second_fixed :
+    ∀ index g,
+      SourceGraphAction.graphIso
+        (coverAction index).toGraphAction g (second index) = second index
+  third_fixed :
+    ∀ index g,
+      SourceGraphAction.graphIso
+        (coverAction index).toGraphAction g (third index) = third index
+
+namespace SourceCofilteredFixedSubjointSystem
+
+variable
+  {Index : Type u} [Category.{w} Index] [IsCofilteredOrEmpty Index]
+  {Acting : Type u} [Group Acting]
+  (system : SourceCofilteredFixedSubjointSystem Index Acting)
+
+/-- Nonempty finite fixed-subjoint sets over a cofiltered system admit a
+compatible choice.  This is the finite inverse-limit argument used in
+Theorem 3.7(iii), rather than a separately assumed compatible system. -/
+theorem exists_compatible_fixedSubjoints :
+    system.fixedSubjoints.sections.Nonempty := by
+  letI (index : Index) : Finite (system.FinitePoint index) :=
+    system.finite_points index
+  letI (index : Index) : Finite (system.fixedSubjoints.obj index) :=
+    Finite.of_equiv
+      (SourceSemiGraphTree.Action.FixedSubjoint
+        (system.finiteSemiGraph index) (system.finiteAction index))
+      (system.realize index).symm
+  letI (index : Index) : Nonempty (system.fixedSubjoints.obj index) :=
+    let coverSubjoint :=
+      SourceSemiGraphTree.Action.fixesSubjoint_of_three_fixed_vertices
+        (system.coverSemiGraph index) (system.coverAction index)
+          (system.first_vertex index) (system.second_vertex index)
+          (system.third_vertex index) (system.first_ne_second index)
+          (system.first_ne_third index) (system.second_ne_third index)
+          (system.first_fixed index) (system.second_fixed index)
+          (system.third_fixed index)
+    Nonempty.map (system.realize index).symm
+      (Nonempty.map
+        (SourceSemiGraphTree.Action.FixedSubjoint.map
+          (system.coverSemiGraph index) (system.coverAction index)
+          (system.quotientMap index)) coverSubjoint)
+  exact nonempty_sections_of_finite_cofiltered_system system.fixedSubjoints
+
+end SourceCofilteredFixedSubjointSystem
 
 open scoped Pointwise
 

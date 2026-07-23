@@ -428,6 +428,10 @@ visible to Lean's axiom reporter.
 #print axioms Iut.SourceCompactSemiGraphAction.deckMap_range_finite
 #print axioms Iut.SourceCompactSemiGraphAction.fixesVertexOrEdge
 #print axioms Iut.SourceCompactSemiGraphAction.fixesVertex
+#print axioms
+  Iut.SourceCompactSemiGraphAction.fixesSubjoint_of_three_fixed_vertices
+#print axioms
+  Iut.SourceCofilteredFixedSubjointSystem.exists_compatible_fixedSubjoints
 #print axioms Iut.SourceGraphAction.fixes_path_pointwise
 #print axioms Iut.SourceGraphAction.subgroup_fixes_geodesic_pointwise
 #print axioms
